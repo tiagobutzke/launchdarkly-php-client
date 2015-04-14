@@ -1,3 +1,4 @@
-app:
-    resource: "@AppBundle/Controller/"
+volo_frontend:
+    resource: "@VoloFrontendBundle/Controller/"
     type:     annotation
+    prefix:   /
