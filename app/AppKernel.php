@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Volo\FrontendBundle\VoloFrontendBundle(),
             new Volo\EntityBundle\VoloEntityBundle(),
+            new Volo\ApiClientBundle\VoloApiClientBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
