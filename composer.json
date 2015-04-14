@@ -15,6 +15,7 @@
         "sensio/distribution-bundle": "~3.0,>=3.0.12",
         "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
+        "friendsofsymfony/jsrouting-bundle": "1.5.4",
         "guzzlehttp/guzzle": "~5.0"
     },
     "require-dev": {
