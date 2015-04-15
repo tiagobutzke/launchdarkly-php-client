@@ -58,3 +58,11 @@ checks:
         spacing_around_conditional_operators: true
         spacing_of_function_arguments: true
 
+build:
+    tests:
+        override:
+            -
+                command: 'phpunit -c app/'
+                coverage:
+                    file: 'app/Resources/tools/clover.xml'
+                    format: 'php-clover'
