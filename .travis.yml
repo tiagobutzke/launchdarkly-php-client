@@ -28,7 +28,7 @@ branches:
   only:
     - master
     - develop
-    - /^SGFD-.*$/
+    - /^feature\/SGFD-.*$/
     - /^hotfix\/.*$/
 
 script:
