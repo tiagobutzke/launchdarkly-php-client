@@ -64,7 +64,7 @@ build:
             -
                 command: 'phpunit -c app/'
                 coverage:
-                    file: 'app/Resources/tools/clover.xml'
+                    file: 'build/logs/clover.xml'
                     format: 'php-clover'
     environment:
         php:
