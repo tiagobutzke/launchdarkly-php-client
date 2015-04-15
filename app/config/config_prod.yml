@@ -6,11 +6,18 @@ imports:
 #        cache: apc
 
 monolog:
+    channels: ["api"]
     handlers:
+        api:
+            type:   stream
+            path:   "%kernel.logs_dir%/%kernel.environment%-api.log"
+            level:  error
+            channels: ['api']
         main:
             type:         fingers_crossed
             action_level: error
             handler:      nested
+            channels: ['!api']
         nested:
             type:  stream
             path:  "%kernel.logs_dir%/%kernel.environment%.log"

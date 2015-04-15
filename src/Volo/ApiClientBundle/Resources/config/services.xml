@@ -6,12 +6,30 @@
 
     <parameters>
         <parameter key="guzzle.http_client.class">GuzzleHttp\Client</parameter>
+        <parameter key="guzzle.event.emitter.class">GuzzleHttp\Event\Emitter</parameter>
+        <parameter key="guzzle.subscriber.log.log_subscriber.class">GuzzleHttp\Subscriber\Log\LogSubscriber</parameter>
+        <parameter key="guzzle.subscriber.log.formatter.format" type="constant">GuzzleHttp\Subscriber\Log\Formatter::DEBUG</parameter>
     </parameters>
 
     <services>
+        <service id="volo_api_client.log_subscriber" class="%guzzle.event.emitter.class%">
+        </service>
+
+        <service id="guzzle.subscriber.log.log_subscriber" class="%guzzle.subscriber.log.log_subscriber.class%">
+            <argument type="service" id="monolog.logger.api" />
+            <argument type="string" id="guzzle.subscriber.log.formatter.format">%guzzle.subscriber.log.formatter.format%</argument>
+        </service>
+
+        <service id="volo_api_client.guzzle.event.emitter" class="%guzzle.event.emitter.class%">
+            <call method="attach">
+                <argument type="service" id="guzzle.subscriber.log.log_subscriber" />
+            </call>
+        </service>
+
         <service id="volo_api_client.guzzle.client" class="%guzzle.http_client.class%">
             <argument type="collection">
                 <argument key="base_url" type="string" id="guzzle.base_url">%foodpanda.api.base_url%</argument>
+                <argument key="emitter" type="service" id="volo_api_client.guzzle.event.emitter" />
             </argument>
         </service>
 
