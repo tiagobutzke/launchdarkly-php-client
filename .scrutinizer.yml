@@ -66,3 +66,6 @@ build:
                 coverage:
                     file: 'app/Resources/tools/clover.xml'
                     format: 'php-clover'
+    environment:
+        php:
+            version: 5.5.14
