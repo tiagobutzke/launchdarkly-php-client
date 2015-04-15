@@ -5,4 +5,4 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
 
-    foodpanda.api.base_url: front.fp
+    foodpanda.api.base_url: http://front.fp
