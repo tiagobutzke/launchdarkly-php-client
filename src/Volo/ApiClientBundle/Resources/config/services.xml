@@ -9,6 +9,10 @@
         <parameter key="guzzle.event.emitter.class">GuzzleHttp\Event\Emitter</parameter>
         <parameter key="guzzle.subscriber.log.log_subscriber.class">GuzzleHttp\Subscriber\Log\LogSubscriber</parameter>
         <parameter key="guzzle.subscriber.log.formatter.format" type="constant">GuzzleHttp\Subscriber\Log\Formatter::DEBUG</parameter>
+        <parameter key="volo_api_client.api.abstract_api_client.class">Volo\ApiClientBundle\Api\AbstractApiClient</parameter>
+        <parameter key="volo_api_client.api.configuration_api_client.class">Volo\ApiClientBundle\Api\ConfigurationApiClient</parameter>
+        <parameter key="volo_api_client.api.location_api_client.class">Volo\ApiClientBundle\Api\LocationApiClient</parameter>
+        <parameter key="volo_api_client.api.translation_api_client.class">Volo\ApiClientBundle\Api\TranslationApiClient</parameter>
     </parameters>
 
     <services>
@@ -38,8 +42,13 @@
             </argument>
         </service>
 
-        <service id="volo_api_client.client" class="Volo\ApiClientBundle\Api\Client">
-            <argument type="service" id="volo_api_client.guzzle.client" />
+        <service id="volo_api_client.api.abstract_api_client" class="%volo_api_client.api.abstract_api_client.class%" abstract="true">
+            <argument id="volo_api_client.guzzle.client" type="service"/>
         </service>
+
+        <service id="volo_api_client.api.configuration_api_client" class="%volo_api_client.api.configuration_api_client.class%" parent="volo_api_client.api.abstract_api_client" />
+        <service id="volo_api_client.api.location_api_client" class="%volo_api_client.api.location_api_client.class%" parent="volo_api_client.api.abstract_api_client" />
+        <service id="volo_api_client.api.translation_api_client" class="%volo_api_client.api.translation_api_client.class%" parent="volo_api_client.api.abstract_api_client" />
+
     </services>
 </container>

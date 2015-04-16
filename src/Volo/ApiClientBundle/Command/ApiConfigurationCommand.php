@@ -2,30 +2,40 @@
 
 namespace Volo\ApiClientBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
+use Volo\ApiClientBundle\Api\ConfigurationApiClient;
 
-class ApiConfigurationCommand extends ContainerAwareCommand
+class ApiConfigurationCommand extends AbstractApiClientCommand
 {
-    protected function configure()
+    /**
+     * @return string
+     */
+    protected function getCommandName()
     {
-        $this
-            ->setName('api:get:configuration')
-            ->setDescription('Display the configuration')
-            ->addOption('dump', 'd', InputOption::VALUE_NONE, 'var_dump output format');
+        return 'api:configuration:configuration';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCommandDescription()
+    {
+        return 'Display the configuration';
+    }
+
+    /**
+     * @return ConfigurationApiClient
+     */
+    protected function getClientApi()
+    {
+        return $this->getContainer()->get('volo_api_client.api.configuration_api_client');
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function executeApiCall(InputInterface $input)
     {
-        $apiClient = $this->getContainer()->get('volo_api_client.client');
-
-        $data = $apiClient->getConfiguration();
-
-        $input->getOption('dump') ? dump($data) : $output->writeln(json_encode($data, JSON_PRETTY_PRINT));
+        return $this->getClientApi()->getConfiguration();
     }
 }
