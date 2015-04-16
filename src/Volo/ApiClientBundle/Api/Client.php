@@ -79,4 +79,20 @@ class Client
 
         return $this->send($request);
     }
+
+    /**
+     * @param null $languageId
+     * @param null $include
+     *
+     * @return array
+     */
+    public function getConfiguration($languageId = null, $include = null)
+    {
+        $request = $this->client->createRequest('GET', 'configuration', [
+            'language_id' => $languageId,
+            'include'     => $include,
+        ]);
+
+        return $this->send($request);
+    }
 }
