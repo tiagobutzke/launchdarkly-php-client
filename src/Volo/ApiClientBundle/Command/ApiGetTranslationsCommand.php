@@ -7,14 +7,15 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ApiGetCitiesCommand extends ContainerAwareCommand
+class ApiGetTranslationsCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
         $this
-            ->setName('api:get:cities')
-            ->setDescription('Display a list of cities')
+            ->setName('api:get:translations')
+            ->setDescription('Display a list of translations')
             ->addOption('dump', 'd', InputOption::VALUE_NONE, 'var_dump output format');
+        ;
     }
 
     /**
@@ -25,7 +26,7 @@ class ApiGetCitiesCommand extends ContainerAwareCommand
     {
         $apiClient = $this->getContainer()->get('volo_api_client.client');
 
-        $data = $apiClient->getCities();
+        $data = $apiClient->getTranslations();
 
         $input->getOption('dump') ? dump($data) : $output->writeln(json_encode($data, JSON_PRETTY_PRINT));
     }

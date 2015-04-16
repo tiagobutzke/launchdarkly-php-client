@@ -6,3 +6,4 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     foodpanda.api.base_url: http://front.fp
+    foodpanda.api.client_id: HTML5

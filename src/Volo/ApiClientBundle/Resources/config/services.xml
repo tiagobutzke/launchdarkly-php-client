@@ -17,7 +17,7 @@
 
         <service id="guzzle.subscriber.log.log_subscriber" class="%guzzle.subscriber.log.log_subscriber.class%">
             <argument type="service" id="monolog.logger.api" />
-            <argument type="string" id="guzzle.subscriber.log.formatter.format">%guzzle.subscriber.log.formatter.format%</argument>
+            <argument type="string">%guzzle.subscriber.log.formatter.format%</argument>
         </service>
 
         <service id="volo_api_client.guzzle.event.emitter" class="%guzzle.event.emitter.class%">
@@ -28,8 +28,13 @@
 
         <service id="volo_api_client.guzzle.client" class="%guzzle.http_client.class%">
             <argument type="collection">
-                <argument key="base_url" type="string" id="guzzle.base_url">%foodpanda.api.base_url%</argument>
+                <argument key="base_url" type="string">%foodpanda.api.base_url%</argument>
                 <argument key="emitter" type="service" id="volo_api_client.guzzle.event.emitter" />
+                <argument key="defaults" type="collection">
+                    <argument key="headers" type="collection">
+                        <argument key="X-FP-API-KEY" type="string">%foodpanda.api.client_id%</argument>
+                    </argument>
+                </argument>
             </argument>
         </service>
 
