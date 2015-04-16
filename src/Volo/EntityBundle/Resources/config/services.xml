@@ -1,15 +1,11 @@
 <?xml version="1.0" ?>
-
 <container xmlns="http://symfony.com/schema/dic/services"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="symfony.service.json_encoder"
-                 class="Symfony\Component\Serializer\Encoder\JsonEncoder">
-        </service>
-
-        <service id="symfony.service.custom_normalizer" class="Symfony\Component\Serializer\Normalizer\CustomNormalizer"/>
-
+        <service id="symfony.service.json_encoder" class="Symfony\Component\Serializer\Encoder\JsonEncoder"/>
+        <service id="symfony.service.custom_normalizer"
+                 class="Symfony\Component\Serializer\Normalizer\CustomNormalizer"/>
         <service id="symfony.service.serializer" class="Symfony\Component\Serializer\Serializer" public="false">
             <argument type="collection">
                 <argument type="service" id="symfony.service.custom_normalizer"/>
@@ -19,11 +15,11 @@
             </argument>
         </service>
         <service id="volo_entity.service.entity_generator" class="Volo\EntityBundle\Service\EntityGenerator">
-            <argument type="service" id="symfony.service.serializer"></argument>
+            <argument type="service" id="symfony.service.serializer"/>
         </service>
 
         <service id="volo_entity.service.entity_normalizer" class="Volo\EntityBundle\Service\EntityNormalizer">
-            <argument type="service" id="symfony.service.serializer"></argument>
+            <argument type="service" id="symfony.service.serializer"/>
         </service>
     </services>
 </container>

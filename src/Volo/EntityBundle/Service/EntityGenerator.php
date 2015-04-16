@@ -4,6 +4,9 @@ namespace Volo\EntityBundle\Service;
 
 use Symfony\Component\Serializer\Serializer;
 use Volo\EntityBundle\Entity\Cms\CmsResults;
+use Volo\EntityBundle\Entity\Discount\DiscountResults;
+use Volo\EntityBundle\Entity\Vendor\Vendor;
+use Volo\EntityBundle\Entity\Vendor\VendorResults;
 
 class EntityGenerator
 {
@@ -24,10 +27,40 @@ class EntityGenerator
     /**
      * @param array $data
      *
-     * @return Data
+     * @return CmsResults
      */
     public function generateCms(array $data)
     {
         return $this->serializer->denormalize($data, CmsResults::class);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return VendorResults
+     */
+    public function generateVendors(array $data)
+    {
+        return $this->serializer->denormalize($data, VendorResults::class);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return Vendor
+     */
+    public function generateVendor(array $data)
+    {
+        return $this->serializer->denormalize($data, Vendor::class);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return DiscountResults
+     */
+    public function generateDiscounts(array $data)
+    {
+        return $this->serializer->denormalize($data, DiscountResults::class);
     }
 }

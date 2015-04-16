@@ -21,9 +21,11 @@ abstract class DataObjectCollection extends ArrayCollection implements Denormali
     public function denormalize(DenormalizerInterface $denormalizer, $items, $format = null, array $context = array())
     {
         $className = $this->getCollectionItemClass();
-        foreach ($items as $itemValues) {
-            $item = $denormalizer->denormalize($itemValues, $className, $format, $context);
-            $this->add($item);
+        if (is_array($items)) {
+            foreach ($items as $itemValues) {
+                $item = $denormalizer->denormalize($itemValues, $className, $format, $context);
+                $this->add($item);
+            }
         }
     }
 

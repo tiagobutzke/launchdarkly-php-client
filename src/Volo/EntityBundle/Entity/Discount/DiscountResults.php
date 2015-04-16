@@ -1,18 +1,18 @@
 <?php
 
-namespace Volo\EntityBundle\Entity\Cms;
+namespace Volo\EntityBundle\Entity\Discount;
 
 use Volo\EntityBundle\Entity\DataResultObject;
 
-class CmsResults extends DataResultObject
+class DiscountResults extends DataResultObject
 {
     public function __construct()
     {
-        $this->items = new CmsItemCollection();
+        $this->items = new DiscountsCollection();
     }
 
     /**
-     * @return CmsItemCollection|CmsItem[]
+     * @return DiscountsCollection
      */
     public function getItems()
     {
@@ -20,7 +20,7 @@ class CmsResults extends DataResultObject
     }
 
     /**
-     * @param CmsItemCollection
+     * @param DiscountsCollection $items
      */
     public function setItems($items)
     {

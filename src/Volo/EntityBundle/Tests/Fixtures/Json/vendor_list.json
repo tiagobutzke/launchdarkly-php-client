@@ -1,0 +1,2098 @@
+{
+  "status_code": 200,
+  "data": {
+    "returned_count": 10,
+    "available_count": 10,
+    "items": [
+      {
+        "payment_types": [
+          {
+            "id": 9,
+            "name": "Online Payment",
+            "description": "Pay with Visa or MasterCard. You will be redirected to the secured page of our payment partner.",
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_9.png",
+            "payment_type_code": "adyen",
+            "checkout_text": "Then the restaurant will prepare your meal so it will arrive fresh and tasty in <DELIVERYTIME> (<DELIVERYDATE>).",
+            "has_need_for_change": false,
+            "is_need_for_change_required": false,
+            "is_hosted": false
+          },
+          {
+            "id": 1,
+            "name": "Cash On Delivery",
+            "description": "Pay by cash once you receive the order on your address.",
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_1.png",
+            "payment_type_code": "cod",
+            "checkout_text": "",
+            "has_need_for_change": true,
+            "is_need_for_change_required": true,
+            "is_hosted": false
+          }
+        ],
+        "id": 18817,
+        "code": "v1vd",
+        "name": "Sagar Ratna ( NIT faridanad )",
+        "description": null,
+        "logo": "http://ir0.mobify.com/jpg/%s/%s/http://assets-st.foodpanda.in/images/vendors/v1vd_1423222977.jpg",
+        "rating": 3.3,
+        "review_number": 9,
+        "city": {
+          "id": 5,
+          "name": "Faridabad",
+          "is_top_city": null
+        },
+        "chain": {
+          "id": 0,
+          "name": null
+        },
+        "address": "​1H26, Arya Samaj Road, Opp KL Mehta Dayanand School, Faridabad - 121001",
+        "post_code": "121001",
+        "latitude": 28.387802,
+        "longitude": 77.302513,
+        "minimum_order_amount": 300,
+        "minimum_delivery_fee": null,
+        "minimum_delivery_time": 55,
+        "minimum_pickup_time": 45,
+        "is_delivery_enabled": true,
+        "is_pickup_enabled": true,
+        "is_preorder_enabled": true,
+        "is_voucher_enabled": true,
+        "is_vat_disabled": false,
+        "is_vat_visible": true,
+        "is_vat_included_in_product_price": false,
+        "vat_percentage_amount": 13.12,
+        "is_service_tax_enabled": true,
+        "is_service_tax_visible": true,
+        "service_tax_percentage_amount": 4.94,
+        "is_service_fee_enabled": true,
+        "service_fee_percentage_amount": 5,
+        "cuisines": [
+          {
+            "id": 81,
+            "name": "Chinese"
+          },
+          {
+            "id": 175,
+            "name": "North Indian"
+          },
+          {
+            "id": 166,
+            "name": "South Indian"
+          }
+        ],
+        "food_characteristics": [
+          {
+            "id": 7,
+            "name": "Pure Vegetarian",
+            "is_halal": false,
+            "is_vegetarian": false,
+            "is_mobile_filter": null
+          },
+          {
+            "id": 25,
+            "name": "Navratra Special Dishes",
+            "is_halal": false,
+            "is_vegetarian": true,
+            "is_mobile_filter": null
+          }
+        ],
+        "schedules": [
+          {
+            "id": 256689,
+            "weekday": 1,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 256682,
+            "weekday": 1,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 256690,
+            "weekday": 2,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 256683,
+            "weekday": 2,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 256691,
+            "weekday": 3,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 256684,
+            "weekday": 3,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 256692,
+            "weekday": 4,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 256685,
+            "weekday": 4,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 256693,
+            "weekday": 5,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 256686,
+            "weekday": 5,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 256694,
+            "weekday": 6,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 256687,
+            "weekday": 6,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 256695,
+            "weekday": 7,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 256688,
+            "weekday": 7,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          }
+        ],
+        "discounts": [],
+        "metadata": {
+          "is_delivery_available": true,
+          "is_pickup_available": true,
+          "has_discount": false,
+          "available_in": null,
+          "opening_times": null,
+          "timezone": "Asia/Kolkata",
+          "events": []
+        },
+        "is_checkout_comment_enabled": true,
+        "is_replacement_dish_enabled": true,
+        "custom_location_url": null,
+        "customer_type": "all",
+        "web_path": "https://www-st.foodpanda.in/restaurant/v1vd/sagar-ratna-nit-faridanad",
+        "is_test": false,
+        "redirection_url": null
+      },
+      {
+        "payment_types": [
+          {
+            "id": 9,
+            "name": "Online Payment",
+            "description": "Pay with Visa or MasterCard. You will be redirected to the secured page of our payment partner.",
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_9.png",
+            "payment_type_code": "adyen",
+            "checkout_text": "Then the restaurant will prepare your meal so it will arrive fresh and tasty in <DELIVERYTIME> (<DELIVERYDATE>).",
+            "has_need_for_change": false,
+            "is_need_for_change_required": false,
+            "is_hosted": false
+          },
+          {
+            "id": 1,
+            "name": "Cash On Delivery",
+            "description": "Pay by cash once you receive the order on your address.",
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_1.png",
+            "payment_type_code": "cod",
+            "checkout_text": "",
+            "has_need_for_change": true,
+            "is_need_for_change_required": true,
+            "is_hosted": false
+          }
+        ],
+        "id": 19989,
+        "code": "v9zx",
+        "name": "RawKing",
+        "description": null,
+        "logo": "http://ir0.mobify.com/jpg/%s/%s/http://assets-st.foodpanda.in/images/vendors/v9zx.jpg?v=20150225130022",
+        "rating": 3,
+        "review_number": 2,
+        "city": {
+          "id": 1,
+          "name": "Delhi",
+          "is_top_city": null
+        },
+        "chain": {
+          "id": 0,
+          "name": null
+        },
+        "address": null,
+        "post_code": "110043",
+        "latitude": 28.614134,
+        "longitude": 77.009666,
+        "minimum_order_amount": null,
+        "minimum_delivery_fee": 50,
+        "minimum_delivery_time": 2880,
+        "minimum_pickup_time": 0,
+        "is_delivery_enabled": true,
+        "is_pickup_enabled": false,
+        "is_preorder_enabled": true,
+        "is_voucher_enabled": true,
+        "is_vat_disabled": false,
+        "is_vat_visible": false,
+        "is_vat_included_in_product_price": true,
+        "vat_percentage_amount": 12.5,
+        "is_service_tax_enabled": false,
+        "is_service_tax_visible": false,
+        "service_tax_percentage_amount": 4.94,
+        "is_service_fee_enabled": true,
+        "service_fee_percentage_amount": 0,
+        "cuisines": [],
+        "food_characteristics": [
+          {
+            "id": 7,
+            "name": "Pure Vegetarian",
+            "is_halal": false,
+            "is_vegetarian": false,
+            "is_mobile_filter": null
+          },
+          {
+            "id": 25,
+            "name": "Navratra Special Dishes",
+            "is_halal": false,
+            "is_vegetarian": true,
+            "is_mobile_filter": null
+          }
+        ],
+        "schedules": [
+          {
+            "id": 287951,
+            "weekday": 1,
+            "opening_type": "delivering",
+            "opening_time": "0:00",
+            "closing_time": "23:59"
+          },
+          {
+            "id": 287953,
+            "weekday": 2,
+            "opening_type": "delivering",
+            "opening_time": "0:00",
+            "closing_time": "23:59"
+          },
+          {
+            "id": 294710,
+            "weekday": 3,
+            "opening_type": "delivering",
+            "opening_time": "0:00",
+            "closing_time": "23:59"
+          },
+          {
+            "id": 287957,
+            "weekday": 4,
+            "opening_type": "delivering",
+            "opening_time": "0:00",
+            "closing_time": "23:59"
+          },
+          {
+            "id": 287959,
+            "weekday": 5,
+            "opening_type": "delivering",
+            "opening_time": "0:00",
+            "closing_time": "23:59"
+          },
+          {
+            "id": 287961,
+            "weekday": 6,
+            "opening_type": "delivering",
+            "opening_time": "0:00",
+            "closing_time": "23:59"
+          },
+          {
+            "id": 287963,
+            "weekday": 7,
+            "opening_type": "delivering",
+            "opening_time": "0:00",
+            "closing_time": "23:59"
+          }
+        ],
+        "discounts": [],
+        "metadata": {
+          "is_delivery_available": true,
+          "is_pickup_available": false,
+          "has_discount": false,
+          "available_in": null,
+          "opening_times": null,
+          "timezone": "Asia/Kolkata",
+          "events": []
+        },
+        "is_checkout_comment_enabled": true,
+        "is_replacement_dish_enabled": false,
+        "custom_location_url": null,
+        "customer_type": "all",
+        "web_path": "https://www-st.foodpanda.in/restaurant/v9zx/raw-king",
+        "is_test": false,
+        "redirection_url": null
+      },
+      {
+        "payment_types": [
+          {
+            "id": 9,
+            "name": "Online Payment",
+            "description": "Pay with Visa or MasterCard. You will be redirected to the secured page of our payment partner.",
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_9.png",
+            "payment_type_code": "adyen",
+            "checkout_text": "Then the restaurant will prepare your meal so it will arrive fresh and tasty in <DELIVERYTIME> (<DELIVERYDATE>).",
+            "has_need_for_change": false,
+            "is_need_for_change_required": false,
+            "is_hosted": false
+          },
+          {
+            "id": 10,
+            "name": "PayTM Wallet",
+            "description": null,
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_10.png",
+            "payment_type_code": "paytm",
+            "checkout_text": "Then the restaurant will prepare your meal so it will arrive fresh and tasty in <DELIVERYTIME> (<DELIVERYDATE>). Please pay the delivery man",
+            "has_need_for_change": false,
+            "is_need_for_change_required": false,
+            "is_hosted": true
+          },
+          {
+            "id": 1,
+            "name": "Cash On Delivery",
+            "description": "Pay by cash once you receive the order on your address.",
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_1.png",
+            "payment_type_code": "cod",
+            "checkout_text": "",
+            "has_need_for_change": true,
+            "is_need_for_change_required": true,
+            "is_hosted": false
+          }
+        ],
+        "id": 20253,
+        "code": "v5ac",
+        "name": "Swastik Food Chain (Sector 22)",
+        "description": null,
+        "logo": null,
+        "rating": 0,
+        "review_number": 0,
+        "city": {
+          "id": 5,
+          "name": "Faridabad",
+          "is_top_city": null
+        },
+        "chain": {
+          "id": 0,
+          "name": null
+        },
+        "address": "1041, Sector 22 - C, Old Housing Board Market, Near HDFC Bank,Old Faridabad",
+        "post_code": "121001",
+        "latitude": 28.3645,
+        "longitude": 77.294174,
+        "minimum_order_amount": 150,
+        "minimum_delivery_fee": null,
+        "minimum_delivery_time": 45,
+        "minimum_pickup_time": 45,
+        "is_delivery_enabled": true,
+        "is_pickup_enabled": true,
+        "is_preorder_enabled": true,
+        "is_voucher_enabled": true,
+        "is_vat_disabled": false,
+        "is_vat_visible": false,
+        "is_vat_included_in_product_price": true,
+        "vat_percentage_amount": 13.12,
+        "is_service_tax_enabled": false,
+        "is_service_tax_visible": false,
+        "service_tax_percentage_amount": 4.94,
+        "is_service_fee_enabled": true,
+        "service_fee_percentage_amount": 0,
+        "cuisines": [
+          {
+            "id": 93,
+            "name": "Fast Food"
+          },
+          {
+            "id": 175,
+            "name": "North Indian"
+          }
+        ],
+        "food_characteristics": [],
+        "schedules": [
+          {
+            "id": 293730,
+            "weekday": 1,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 293723,
+            "weekday": 1,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 293731,
+            "weekday": 2,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 293724,
+            "weekday": 2,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 293732,
+            "weekday": 3,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 293725,
+            "weekday": 3,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 293733,
+            "weekday": 4,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 293726,
+            "weekday": 4,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 293734,
+            "weekday": 5,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 293727,
+            "weekday": 5,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 293735,
+            "weekday": 6,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 293728,
+            "weekday": 6,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 293736,
+            "weekday": 7,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 293729,
+            "weekday": 7,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          }
+        ],
+        "discounts": [],
+        "metadata": {
+          "is_delivery_available": true,
+          "is_pickup_available": true,
+          "has_discount": false,
+          "available_in": null,
+          "opening_times": null,
+          "timezone": "Asia/Kolkata",
+          "events": []
+        },
+        "is_checkout_comment_enabled": true,
+        "is_replacement_dish_enabled": true,
+        "custom_location_url": null,
+        "customer_type": "all",
+        "web_path": "https://www-st.foodpanda.in/restaurant/v5ac/swastik-food-chain-sector-22",
+        "is_test": false,
+        "redirection_url": null
+      },
+      {
+        "payment_types": [
+          {
+            "id": 9,
+            "name": "Online Payment",
+            "description": "Pay with Visa or MasterCard. You will be redirected to the secured page of our payment partner.",
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_9.png",
+            "payment_type_code": "adyen",
+            "checkout_text": "Then the restaurant will prepare your meal so it will arrive fresh and tasty in <DELIVERYTIME> (<DELIVERYDATE>).",
+            "has_need_for_change": false,
+            "is_need_for_change_required": false,
+            "is_hosted": false
+          },
+          {
+            "id": 10,
+            "name": "PayTM Wallet",
+            "description": null,
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_10.png",
+            "payment_type_code": "paytm",
+            "checkout_text": "Then the restaurant will prepare your meal so it will arrive fresh and tasty in <DELIVERYTIME> (<DELIVERYDATE>). Please pay the delivery man",
+            "has_need_for_change": false,
+            "is_need_for_change_required": false,
+            "is_hosted": true
+          },
+          {
+            "id": 1,
+            "name": "Cash On Delivery",
+            "description": "Pay by cash once you receive the order on your address.",
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_1.png",
+            "payment_type_code": "cod",
+            "checkout_text": "",
+            "has_need_for_change": true,
+            "is_need_for_change_required": true,
+            "is_hosted": false
+          }
+        ],
+        "id": 20750,
+        "code": "v0gv",
+        "name": "Sattviko (Dry Snacks)",
+        "description": null,
+        "logo": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/vendors/v0gv.png?v=20150323175311",
+        "rating": 0,
+        "review_number": 0,
+        "city": {
+          "id": 1,
+          "name": "Delhi",
+          "is_top_city": null
+        },
+        "chain": {
+          "id": 426,
+          "name": "Sattviko"
+        },
+        "address": "Available in Mumbai + Bangalore + Pune + Hyderabad + Lucknow + Jaipur + Ncr +",
+        "post_code": null,
+        "latitude": 28.424837,
+        "longitude": 76.989784,
+        "minimum_order_amount": 300,
+        "minimum_delivery_fee": null,
+        "minimum_delivery_time": 1440,
+        "minimum_pickup_time": 30,
+        "is_delivery_enabled": true,
+        "is_pickup_enabled": true,
+        "is_preorder_enabled": true,
+        "is_voucher_enabled": true,
+        "is_vat_disabled": false,
+        "is_vat_visible": false,
+        "is_vat_included_in_product_price": true,
+        "vat_percentage_amount": 12.5,
+        "is_service_tax_enabled": false,
+        "is_service_tax_visible": false,
+        "service_tax_percentage_amount": 4.94,
+        "is_service_fee_enabled": true,
+        "service_fee_percentage_amount": 0,
+        "cuisines": [
+          {
+            "id": 129,
+            "name": "Snacks"
+          }
+        ],
+        "food_characteristics": [],
+        "schedules": [
+          {
+            "id": 309073,
+            "weekday": 1,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 309074,
+            "weekday": 1,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 309075,
+            "weekday": 2,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 309076,
+            "weekday": 2,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 309077,
+            "weekday": 3,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 309078,
+            "weekday": 3,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 309079,
+            "weekday": 4,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 309080,
+            "weekday": 4,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 309081,
+            "weekday": 5,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 309087,
+            "weekday": 5,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 309083,
+            "weekday": 6,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 309084,
+            "weekday": 6,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 309085,
+            "weekday": 7,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          },
+          {
+            "id": 309086,
+            "weekday": 7,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "23:00"
+          }
+        ],
+        "discounts": [],
+        "metadata": {
+          "is_delivery_available": true,
+          "is_pickup_available": true,
+          "has_discount": false,
+          "available_in": null,
+          "opening_times": null,
+          "timezone": "Asia/Kolkata",
+          "events": []
+        },
+        "is_checkout_comment_enabled": true,
+        "is_replacement_dish_enabled": false,
+        "custom_location_url": null,
+        "customer_type": "all",
+        "web_path": "https://www-st.foodpanda.in/restaurant/v0gv/sattviko-all-india-menu",
+        "is_test": false,
+        "redirection_url": null
+      },
+      {
+        "payment_types": [
+          {
+            "id": 9,
+            "name": "Online Payment",
+            "description": "Pay with Visa or MasterCard. You will be redirected to the secured page of our payment partner.",
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_9.png",
+            "payment_type_code": "adyen",
+            "checkout_text": "Then the restaurant will prepare your meal so it will arrive fresh and tasty in <DELIVERYTIME> (<DELIVERYDATE>).",
+            "has_need_for_change": false,
+            "is_need_for_change_required": false,
+            "is_hosted": false
+          },
+          {
+            "id": 10,
+            "name": "PayTM Wallet",
+            "description": null,
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_10.png",
+            "payment_type_code": "paytm",
+            "checkout_text": "Then the restaurant will prepare your meal so it will arrive fresh and tasty in <DELIVERYTIME> (<DELIVERYDATE>). Please pay the delivery man",
+            "has_need_for_change": false,
+            "is_need_for_change_required": false,
+            "is_hosted": true
+          },
+          {
+            "id": 1,
+            "name": "Cash On Delivery",
+            "description": "Pay by cash once you receive the order on your address.",
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_1.png",
+            "payment_type_code": "cod",
+            "checkout_text": "",
+            "has_need_for_change": true,
+            "is_need_for_change_required": true,
+            "is_hosted": false
+          }
+        ],
+        "id": 13074,
+        "code": "t6pr",
+        "name": "Batra Restaurant (Faridabad NIT)",
+        "description": null,
+        "logo": null,
+        "rating": 0,
+        "review_number": 0,
+        "city": {
+          "id": 5,
+          "name": "Faridabad",
+          "is_top_city": null
+        },
+        "chain": {
+          "id": 0,
+          "name": null
+        },
+        "address": "B 408, Behind Reliance Estate Agency, Nehru Ground, NIT, Faridabad",
+        "post_code": "121001",
+        "latitude": 28.391369,
+        "longitude": 77.305565,
+        "minimum_order_amount": 400,
+        "minimum_delivery_fee": null,
+        "minimum_delivery_time": 45,
+        "minimum_pickup_time": 45,
+        "is_delivery_enabled": true,
+        "is_pickup_enabled": true,
+        "is_preorder_enabled": true,
+        "is_voucher_enabled": true,
+        "is_vat_disabled": false,
+        "is_vat_visible": false,
+        "is_vat_included_in_product_price": true,
+        "vat_percentage_amount": 13.12,
+        "is_service_tax_enabled": false,
+        "is_service_tax_visible": false,
+        "service_tax_percentage_amount": 4.94,
+        "is_service_fee_enabled": true,
+        "service_fee_percentage_amount": 0,
+        "cuisines": [
+          {
+            "id": 81,
+            "name": "Chinese"
+          },
+          {
+            "id": 175,
+            "name": "North Indian"
+          },
+          {
+            "id": 128,
+            "name": "Wraps"
+          }
+        ],
+        "food_characteristics": [
+          {
+            "id": 7,
+            "name": "Pure Vegetarian",
+            "is_halal": false,
+            "is_vegetarian": false,
+            "is_mobile_filter": null
+          }
+        ],
+        "schedules": [
+          {
+            "id": 301709,
+            "weekday": 1,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "16:30"
+          },
+          {
+            "id": 301724,
+            "weekday": 1,
+            "opening_type": "pickup",
+            "opening_time": "19:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 200956,
+            "weekday": 1,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "16:30"
+          },
+          {
+            "id": 200957,
+            "weekday": 1,
+            "opening_type": "delivering",
+            "opening_time": "19:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 301711,
+            "weekday": 2,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "16:30"
+          },
+          {
+            "id": 301725,
+            "weekday": 2,
+            "opening_type": "pickup",
+            "opening_time": "19:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 200958,
+            "weekday": 2,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "16:30"
+          },
+          {
+            "id": 200959,
+            "weekday": 2,
+            "opening_type": "delivering",
+            "opening_time": "19:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 301712,
+            "weekday": 3,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "16:30"
+          },
+          {
+            "id": 301726,
+            "weekday": 3,
+            "opening_type": "pickup",
+            "opening_time": "19:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 200960,
+            "weekday": 3,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "16:30"
+          },
+          {
+            "id": 200961,
+            "weekday": 3,
+            "opening_type": "delivering",
+            "opening_time": "19:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 301713,
+            "weekday": 4,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "16:30"
+          },
+          {
+            "id": 301727,
+            "weekday": 4,
+            "opening_type": "pickup",
+            "opening_time": "19:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 200962,
+            "weekday": 4,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "16:30"
+          },
+          {
+            "id": 200963,
+            "weekday": 4,
+            "opening_type": "delivering",
+            "opening_time": "19:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 301714,
+            "weekday": 5,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "16:30"
+          },
+          {
+            "id": 301728,
+            "weekday": 5,
+            "opening_type": "pickup",
+            "opening_time": "19:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 200964,
+            "weekday": 5,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "16:30"
+          },
+          {
+            "id": 200965,
+            "weekday": 5,
+            "opening_type": "delivering",
+            "opening_time": "19:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 301717,
+            "weekday": 6,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "16:30"
+          },
+          {
+            "id": 301729,
+            "weekday": 6,
+            "opening_type": "pickup",
+            "opening_time": "19:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 200966,
+            "weekday": 6,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "16:30"
+          },
+          {
+            "id": 200967,
+            "weekday": 6,
+            "opening_type": "delivering",
+            "opening_time": "19:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 301723,
+            "weekday": 7,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "16:30"
+          },
+          {
+            "id": 301730,
+            "weekday": 7,
+            "opening_type": "pickup",
+            "opening_time": "19:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 200968,
+            "weekday": 7,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "16:30"
+          },
+          {
+            "id": 200969,
+            "weekday": 7,
+            "opening_type": "delivering",
+            "opening_time": "19:00",
+            "closing_time": "22:30"
+          }
+        ],
+        "discounts": [],
+        "metadata": {
+          "is_delivery_available": true,
+          "is_pickup_available": true,
+          "has_discount": false,
+          "available_in": null,
+          "opening_times": null,
+          "timezone": "Asia/Kolkata",
+          "events": []
+        },
+        "is_checkout_comment_enabled": true,
+        "is_replacement_dish_enabled": true,
+        "custom_location_url": null,
+        "customer_type": "all",
+        "web_path": "https://www-st.foodpanda.in/restaurant/t6pr/batra-restaurant-faridabad-nit",
+        "is_test": false,
+        "redirection_url": null
+      },
+      {
+        "payment_types": [
+          {
+            "id": 9,
+            "name": "Online Payment",
+            "description": "Pay with Visa or MasterCard. You will be redirected to the secured page of our payment partner.",
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_9.png",
+            "payment_type_code": "adyen",
+            "checkout_text": "Then the restaurant will prepare your meal so it will arrive fresh and tasty in <DELIVERYTIME> (<DELIVERYDATE>).",
+            "has_need_for_change": false,
+            "is_need_for_change_required": false,
+            "is_hosted": false
+          },
+          {
+            "id": 10,
+            "name": "PayTM Wallet",
+            "description": null,
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_10.png",
+            "payment_type_code": "paytm",
+            "checkout_text": "Then the restaurant will prepare your meal so it will arrive fresh and tasty in <DELIVERYTIME> (<DELIVERYDATE>). Please pay the delivery man",
+            "has_need_for_change": false,
+            "is_need_for_change_required": false,
+            "is_hosted": true
+          },
+          {
+            "id": 1,
+            "name": "Cash On Delivery",
+            "description": "Pay by cash once you receive the order on your address.",
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_1.png",
+            "payment_type_code": "cod",
+            "checkout_text": "",
+            "has_need_for_change": true,
+            "is_need_for_change_required": true,
+            "is_hosted": false
+          }
+        ],
+        "id": 2328,
+        "code": "n9ki",
+        "name": "Gupha Restaurant (Sector 11 D Faridabad)",
+        "description": "We don't serve any Non-Veg. Item on Tuesday.",
+        "logo": null,
+        "rating": 1,
+        "review_number": 1,
+        "city": {
+          "id": 5,
+          "name": "Faridabad",
+          "is_top_city": null
+        },
+        "chain": {
+          "id": 0,
+          "name": null
+        },
+        "address": "B17, DLF, Sector 11 D, Faridabad",
+        "post_code": "121001",
+        "latitude": 28.369253,
+        "longitude": 77.315567,
+        "minimum_order_amount": 150,
+        "minimum_delivery_fee": null,
+        "minimum_delivery_time": 45,
+        "minimum_pickup_time": 45,
+        "is_delivery_enabled": true,
+        "is_pickup_enabled": true,
+        "is_preorder_enabled": true,
+        "is_voucher_enabled": true,
+        "is_vat_disabled": false,
+        "is_vat_visible": false,
+        "is_vat_included_in_product_price": true,
+        "vat_percentage_amount": 13.12,
+        "is_service_tax_enabled": false,
+        "is_service_tax_visible": false,
+        "service_tax_percentage_amount": 4.94,
+        "is_service_fee_enabled": true,
+        "service_fee_percentage_amount": 0,
+        "cuisines": [
+          {
+            "id": 81,
+            "name": "Chinese"
+          },
+          {
+            "id": 93,
+            "name": "Fast Food"
+          },
+          {
+            "id": 139,
+            "name": "Kebab"
+          },
+          {
+            "id": 175,
+            "name": "North Indian"
+          },
+          {
+            "id": 80,
+            "name": "Pizza"
+          },
+          {
+            "id": 89,
+            "name": "Seafood"
+          },
+          {
+            "id": 128,
+            "name": "Wraps"
+          }
+        ],
+        "food_characteristics": [],
+        "schedules": [
+          {
+            "id": 37947,
+            "weekday": 1,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 37954,
+            "weekday": 1,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 37948,
+            "weekday": 2,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 37955,
+            "weekday": 2,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 37949,
+            "weekday": 3,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 37956,
+            "weekday": 3,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 37950,
+            "weekday": 4,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 37957,
+            "weekday": 4,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 37951,
+            "weekday": 5,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 37958,
+            "weekday": 5,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 37952,
+            "weekday": 6,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 37959,
+            "weekday": 6,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 37953,
+            "weekday": 7,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 37960,
+            "weekday": 7,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          }
+        ],
+        "discounts": [],
+        "metadata": {
+          "is_delivery_available": true,
+          "is_pickup_available": true,
+          "has_discount": false,
+          "available_in": null,
+          "opening_times": null,
+          "timezone": "Asia/Kolkata",
+          "events": []
+        },
+        "is_checkout_comment_enabled": true,
+        "is_replacement_dish_enabled": true,
+        "custom_location_url": null,
+        "customer_type": "all",
+        "web_path": "https://www-st.foodpanda.in/restaurant/n9ki/gupha-restaurant-sector-11-d-faridabad",
+        "is_test": false,
+        "redirection_url": null
+      },
+      {
+        "payment_types": [
+          {
+            "id": 9,
+            "name": "Online Payment",
+            "description": "Pay with Visa or MasterCard. You will be redirected to the secured page of our payment partner.",
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_9.png",
+            "payment_type_code": "adyen",
+            "checkout_text": "Then the restaurant will prepare your meal so it will arrive fresh and tasty in <DELIVERYTIME> (<DELIVERYDATE>).",
+            "has_need_for_change": false,
+            "is_need_for_change_required": false,
+            "is_hosted": false
+          },
+          {
+            "id": 1,
+            "name": "Cash On Delivery",
+            "description": "Pay by cash once you receive the order on your address.",
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_1.png",
+            "payment_type_code": "cod",
+            "checkout_text": "",
+            "has_need_for_change": true,
+            "is_need_for_change_required": true,
+            "is_hosted": false
+          }
+        ],
+        "id": 13680,
+        "code": "t9va",
+        "name": "Hot And Tasty Chinese Food (Sector 11)",
+        "description": null,
+        "logo": null,
+        "rating": 0,
+        "review_number": 0,
+        "city": {
+          "id": 5,
+          "name": "Faridabad",
+          "is_top_city": null
+        },
+        "chain": {
+          "id": 0,
+          "name": null
+        },
+        "address": "18, DLF Market, Sector 11, Faridabad",
+        "post_code": "121001",
+        "latitude": 28.371883,
+        "longitude": 77.318619,
+        "minimum_order_amount": 150,
+        "minimum_delivery_fee": null,
+        "minimum_delivery_time": 45,
+        "minimum_pickup_time": 45,
+        "is_delivery_enabled": true,
+        "is_pickup_enabled": true,
+        "is_preorder_enabled": true,
+        "is_voucher_enabled": true,
+        "is_vat_disabled": false,
+        "is_vat_visible": false,
+        "is_vat_included_in_product_price": true,
+        "vat_percentage_amount": 13.12,
+        "is_service_tax_enabled": false,
+        "is_service_tax_visible": false,
+        "service_tax_percentage_amount": 4.94,
+        "is_service_fee_enabled": true,
+        "service_fee_percentage_amount": 0,
+        "cuisines": [
+          {
+            "id": 92,
+            "name": "Burgers"
+          },
+          {
+            "id": 81,
+            "name": "Chinese"
+          },
+          {
+            "id": 93,
+            "name": "Fast Food"
+          },
+          {
+            "id": 129,
+            "name": "Snacks"
+          },
+          {
+            "id": 128,
+            "name": "Wraps"
+          }
+        ],
+        "food_characteristics": [],
+        "schedules": [
+          {
+            "id": 303717,
+            "weekday": 1,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 206101,
+            "weekday": 1,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 303718,
+            "weekday": 2,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 206102,
+            "weekday": 2,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 303719,
+            "weekday": 3,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 206103,
+            "weekday": 3,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 303720,
+            "weekday": 4,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 206104,
+            "weekday": 4,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 303721,
+            "weekday": 5,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 206105,
+            "weekday": 5,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 303722,
+            "weekday": 6,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 206106,
+            "weekday": 6,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 303723,
+            "weekday": 7,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 206107,
+            "weekday": 7,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "22:30"
+          }
+        ],
+        "discounts": [],
+        "metadata": {
+          "is_delivery_available": true,
+          "is_pickup_available": true,
+          "has_discount": false,
+          "available_in": null,
+          "opening_times": null,
+          "timezone": "Asia/Kolkata",
+          "events": []
+        },
+        "is_checkout_comment_enabled": true,
+        "is_replacement_dish_enabled": true,
+        "custom_location_url": null,
+        "customer_type": "all",
+        "web_path": "https://www-st.foodpanda.in/restaurant/t9va/hot-and-tasty-chinese-food-sector-11",
+        "is_test": false,
+        "redirection_url": null
+      },
+      {
+        "payment_types": [
+          {
+            "id": 1,
+            "name": "Cash On Delivery",
+            "description": "Pay by cash once you receive the order on your address.",
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_1.png",
+            "payment_type_code": "cod",
+            "checkout_text": "",
+            "has_need_for_change": true,
+            "is_need_for_change_required": true,
+            "is_hosted": false
+          }
+        ],
+        "id": 13656,
+        "code": "t5zf",
+        "name": "Shahi Kebab (NIT)",
+        "description": null,
+        "logo": null,
+        "rating": 0,
+        "review_number": 0,
+        "city": {
+          "id": 5,
+          "name": "Faridabad",
+          "is_top_city": null
+        },
+        "chain": {
+          "id": 0,
+          "name": null
+        },
+        "address": "Shop No. 41, Market No. 5, G Block, NIT Near Singh Sabha Gurudwara, G Block , Faridabad",
+        "post_code": "121001",
+        "latitude": 28.397259,
+        "longitude": 77.304359,
+        "minimum_order_amount": 500,
+        "minimum_delivery_fee": null,
+        "minimum_delivery_time": 45,
+        "minimum_pickup_time": 45,
+        "is_delivery_enabled": true,
+        "is_pickup_enabled": true,
+        "is_preorder_enabled": true,
+        "is_voucher_enabled": true,
+        "is_vat_disabled": false,
+        "is_vat_visible": false,
+        "is_vat_included_in_product_price": true,
+        "vat_percentage_amount": 13.12,
+        "is_service_tax_enabled": false,
+        "is_service_tax_visible": false,
+        "service_tax_percentage_amount": 4.94,
+        "is_service_fee_enabled": true,
+        "service_fee_percentage_amount": 0,
+        "cuisines": [
+          {
+            "id": 200,
+            "name": "Biryani"
+          },
+          {
+            "id": 81,
+            "name": "Chinese"
+          },
+          {
+            "id": 139,
+            "name": "Kebab"
+          },
+          {
+            "id": 176,
+            "name": "Mughlai"
+          },
+          {
+            "id": 175,
+            "name": "North Indian"
+          },
+          {
+            "id": 89,
+            "name": "Seafood"
+          },
+          {
+            "id": 128,
+            "name": "Wraps"
+          }
+        ],
+        "food_characteristics": [],
+        "schedules": [
+          {
+            "id": 303843,
+            "weekday": 1,
+            "opening_type": "pickup",
+            "opening_time": "17:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 205898,
+            "weekday": 1,
+            "opening_type": "delivering",
+            "opening_time": "17:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 303844,
+            "weekday": 2,
+            "opening_type": "pickup",
+            "opening_time": "17:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 205899,
+            "weekday": 2,
+            "opening_type": "delivering",
+            "opening_time": "17:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 303845,
+            "weekday": 3,
+            "opening_type": "pickup",
+            "opening_time": "17:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 205900,
+            "weekday": 3,
+            "opening_type": "delivering",
+            "opening_time": "17:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 303846,
+            "weekday": 4,
+            "opening_type": "pickup",
+            "opening_time": "17:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 205901,
+            "weekday": 4,
+            "opening_type": "delivering",
+            "opening_time": "17:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 303847,
+            "weekday": 5,
+            "opening_type": "pickup",
+            "opening_time": "17:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 205902,
+            "weekday": 5,
+            "opening_type": "delivering",
+            "opening_time": "17:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 303848,
+            "weekday": 6,
+            "opening_type": "pickup",
+            "opening_time": "17:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 205903,
+            "weekday": 6,
+            "opening_type": "delivering",
+            "opening_time": "17:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 303849,
+            "weekday": 7,
+            "opening_type": "pickup",
+            "opening_time": "17:00",
+            "closing_time": "22:30"
+          },
+          {
+            "id": 205904,
+            "weekday": 7,
+            "opening_type": "delivering",
+            "opening_time": "17:00",
+            "closing_time": "22:30"
+          }
+        ],
+        "discounts": [],
+        "metadata": {
+          "is_delivery_available": true,
+          "is_pickup_available": true,
+          "has_discount": false,
+          "available_in": null,
+          "opening_times": null,
+          "timezone": "Asia/Kolkata",
+          "events": []
+        },
+        "is_checkout_comment_enabled": true,
+        "is_replacement_dish_enabled": true,
+        "custom_location_url": null,
+        "customer_type": "all",
+        "web_path": "https://www-st.foodpanda.in/restaurant/t5zf/shahi-kebab-nit",
+        "is_test": false,
+        "redirection_url": null
+      },
+      {
+        "payment_types": [
+          {
+            "id": 9,
+            "name": "Online Payment",
+            "description": "Pay with Visa or MasterCard. You will be redirected to the secured page of our payment partner.",
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_9.png",
+            "payment_type_code": "adyen",
+            "checkout_text": "Then the restaurant will prepare your meal so it will arrive fresh and tasty in <DELIVERYTIME> (<DELIVERYDATE>).",
+            "has_need_for_change": false,
+            "is_need_for_change_required": false,
+            "is_hosted": false
+          },
+          {
+            "id": 10,
+            "name": "PayTM Wallet",
+            "description": null,
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_10.png",
+            "payment_type_code": "paytm",
+            "checkout_text": "Then the restaurant will prepare your meal so it will arrive fresh and tasty in <DELIVERYTIME> (<DELIVERYDATE>). Please pay the delivery man",
+            "has_need_for_change": false,
+            "is_need_for_change_required": false,
+            "is_hosted": true
+          },
+          {
+            "id": 1,
+            "name": "Cash On Delivery",
+            "description": "Pay by cash once you receive the order on your address.",
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_1.png",
+            "payment_type_code": "cod",
+            "checkout_text": "",
+            "has_need_for_change": true,
+            "is_need_for_change_required": true,
+            "is_hosted": false
+          }
+        ],
+        "id": 6554,
+        "code": "n6xx",
+        "name": "Farsaan",
+        "description": null,
+        "logo": null,
+        "rating": 0,
+        "review_number": 0,
+        "city": {
+          "id": 1,
+          "name": "Delhi",
+          "is_top_city": null
+        },
+        "chain": {
+          "id": 0,
+          "name": null
+        },
+        "address": "#14, Square One Mall, C-2, Saket District Centre",
+        "post_code": "110017",
+        "latitude": 28.526545,
+        "longitude": 77.220375,
+        "minimum_order_amount": 1500,
+        "minimum_delivery_fee": 100,
+        "minimum_delivery_time": 300,
+        "minimum_pickup_time": 35,
+        "is_delivery_enabled": true,
+        "is_pickup_enabled": true,
+        "is_preorder_enabled": true,
+        "is_voucher_enabled": true,
+        "is_vat_disabled": false,
+        "is_vat_visible": false,
+        "is_vat_included_in_product_price": true,
+        "vat_percentage_amount": 12.5,
+        "is_service_tax_enabled": false,
+        "is_service_tax_visible": false,
+        "service_tax_percentage_amount": 4.94,
+        "is_service_fee_enabled": true,
+        "service_fee_percentage_amount": 0,
+        "cuisines": [
+          {
+            "id": 175,
+            "name": "North Indian"
+          }
+        ],
+        "food_characteristics": [
+          {
+            "id": 21,
+            "name": "Panda Recommends",
+            "is_halal": false,
+            "is_vegetarian": false,
+            "is_mobile_filter": null
+          }
+        ],
+        "schedules": [
+          {
+            "id": 108730,
+            "weekday": 1,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "18:00"
+          },
+          {
+            "id": 108729,
+            "weekday": 1,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "18:00"
+          },
+          {
+            "id": 108731,
+            "weekday": 2,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "18:00"
+          },
+          {
+            "id": 108732,
+            "weekday": 2,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "18:00"
+          },
+          {
+            "id": 108733,
+            "weekday": 3,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "18:00"
+          },
+          {
+            "id": 108734,
+            "weekday": 3,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "18:00"
+          },
+          {
+            "id": 108735,
+            "weekday": 4,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "18:00"
+          },
+          {
+            "id": 108736,
+            "weekday": 4,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "18:00"
+          },
+          {
+            "id": 108737,
+            "weekday": 5,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "18:00"
+          },
+          {
+            "id": 108738,
+            "weekday": 5,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "18:00"
+          },
+          {
+            "id": 108739,
+            "weekday": 6,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "17:30"
+          },
+          {
+            "id": 108740,
+            "weekday": 6,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "17:30"
+          }
+        ],
+        "discounts": [],
+        "metadata": {
+          "is_delivery_available": false,
+          "is_pickup_available": false,
+          "has_discount": false,
+          "available_in": "2015-04-17T11:00:00+0530",
+          "opening_times": null,
+          "timezone": "Asia/Kolkata",
+          "events": []
+        },
+        "is_checkout_comment_enabled": true,
+        "is_replacement_dish_enabled": true,
+        "custom_location_url": null,
+        "customer_type": "all",
+        "web_path": "https://www-st.foodpanda.in/restaurant/n6xx/farsaan",
+        "is_test": false,
+        "redirection_url": null
+      },
+      {
+        "payment_types": [
+          {
+            "id": 9,
+            "name": "Online Payment",
+            "description": "Pay with Visa or MasterCard. You will be redirected to the secured page of our payment partner.",
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_9.png",
+            "payment_type_code": "adyen",
+            "checkout_text": "Then the restaurant will prepare your meal so it will arrive fresh and tasty in <DELIVERYTIME> (<DELIVERYDATE>).",
+            "has_need_for_change": false,
+            "is_need_for_change_required": false,
+            "is_hosted": false
+          },
+          {
+            "id": 10,
+            "name": "PayTM Wallet",
+            "description": null,
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_10.png",
+            "payment_type_code": "paytm",
+            "checkout_text": "Then the restaurant will prepare your meal so it will arrive fresh and tasty in <DELIVERYTIME> (<DELIVERYDATE>). Please pay the delivery man",
+            "has_need_for_change": false,
+            "is_need_for_change_required": false,
+            "is_hosted": true
+          },
+          {
+            "id": 1,
+            "name": "Cash On Delivery",
+            "description": "Pay by cash once you receive the order on your address.",
+            "file_name": "http://ir0.mobify.com/png/%s/%s/http://assets-st.foodpanda.in/images/paymenttypes/filepath_1.png",
+            "payment_type_code": "cod",
+            "checkout_text": "",
+            "has_need_for_change": true,
+            "is_need_for_change_required": true,
+            "is_hosted": false
+          }
+        ],
+        "id": 13135,
+        "code": "t6re",
+        "name": "Ice Cream Plaza",
+        "description": null,
+        "logo": null,
+        "rating": 0,
+        "review_number": 0,
+        "city": {
+          "id": 5,
+          "name": "Faridabad",
+          "is_top_city": null
+        },
+        "chain": {
+          "id": 0,
+          "name": null
+        },
+        "address": "945, 7 & 10 Chowk, YMCA Road, Sector 10, Faridabad",
+        "post_code": "121006",
+        "latitude": 28.376808,
+        "longitude": 77.325233,
+        "minimum_order_amount": 200,
+        "minimum_delivery_fee": null,
+        "minimum_delivery_time": 45,
+        "minimum_pickup_time": 45,
+        "is_delivery_enabled": true,
+        "is_pickup_enabled": true,
+        "is_preorder_enabled": true,
+        "is_voucher_enabled": true,
+        "is_vat_disabled": false,
+        "is_vat_visible": false,
+        "is_vat_included_in_product_price": true,
+        "vat_percentage_amount": 13.12,
+        "is_service_tax_enabled": false,
+        "is_service_tax_visible": false,
+        "service_tax_percentage_amount": 4.94,
+        "is_service_fee_enabled": true,
+        "service_fee_percentage_amount": 0,
+        "cuisines": [
+          {
+            "id": 91,
+            "name": "Desserts"
+          },
+          {
+            "id": 117,
+            "name": "Ice creams"
+          }
+        ],
+        "food_characteristics": [],
+        "schedules": [
+          {
+            "id": 302247,
+            "weekday": 1,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "21:00"
+          },
+          {
+            "id": 201446,
+            "weekday": 1,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "21:00"
+          },
+          {
+            "id": 302248,
+            "weekday": 2,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "21:00"
+          },
+          {
+            "id": 201447,
+            "weekday": 2,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "21:00"
+          },
+          {
+            "id": 302249,
+            "weekday": 3,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "21:00"
+          },
+          {
+            "id": 201448,
+            "weekday": 3,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "21:00"
+          },
+          {
+            "id": 302250,
+            "weekday": 4,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "21:00"
+          },
+          {
+            "id": 201449,
+            "weekday": 4,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "21:00"
+          },
+          {
+            "id": 302251,
+            "weekday": 5,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "21:00"
+          },
+          {
+            "id": 201450,
+            "weekday": 5,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "21:00"
+          },
+          {
+            "id": 302252,
+            "weekday": 6,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "21:00"
+          },
+          {
+            "id": 201451,
+            "weekday": 6,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "21:00"
+          },
+          {
+            "id": 302253,
+            "weekday": 7,
+            "opening_type": "pickup",
+            "opening_time": "11:00",
+            "closing_time": "21:00"
+          },
+          {
+            "id": 201452,
+            "weekday": 7,
+            "opening_type": "delivering",
+            "opening_time": "11:00",
+            "closing_time": "21:00"
+          }
+        ],
+        "discounts": [],
+        "metadata": {
+          "is_delivery_available": false,
+          "is_pickup_available": false,
+          "has_discount": false,
+          "available_in": "2015-04-17T11:00:00+0530",
+          "opening_times": null,
+          "timezone": "Asia/Kolkata",
+          "events": []
+        },
+        "is_checkout_comment_enabled": true,
+        "is_replacement_dish_enabled": true,
+        "custom_location_url": null,
+        "customer_type": "all",
+        "web_path": "https://www-st.foodpanda.in/restaurant/t6re/ice-cream-plaza",
+        "is_test": false,
+        "redirection_url": null
+      }
+    ]
+  }
+}
