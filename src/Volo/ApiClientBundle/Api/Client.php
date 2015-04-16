@@ -51,7 +51,7 @@ class Client
      */
     public function getCities(array $arguments = array())
     {
-        $request = $this->client->createRequest('GET', '/api/v4/cities', $arguments);
+        $request = $this->client->createRequest('GET', 'cities', $arguments);
 
         return $this->send($request);
     }
@@ -63,7 +63,7 @@ class Client
      */
     public function getTranslations(array $arguments = array())
     {
-        $request = $this->client->createRequest('GET', '/api/v4/translations', $arguments);
+        $request = $this->client->createRequest('GET', 'translations', $arguments);
 
         return $this->send($request);
     }
@@ -75,7 +75,7 @@ class Client
      */
     public function getCustomers(array $arguments = array())
     {
-        $request = $this->client->createRequest('GET', '/api/v4/customers', $arguments);
+        $request = $this->client->createRequest('GET', 'customers', $arguments);
 
         return $this->send($request);
     }
