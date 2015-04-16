@@ -2,32 +2,40 @@
 
 namespace Volo\ApiClientBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
+use Volo\ApiClientBundle\Api\TranslationApiClient;
 
-class ApiGetTranslationsCommand extends ContainerAwareCommand
+class ApiGetTranslationsCommand extends AbstractApiClientCommand
 {
-    protected function configure()
+    /**
+     * @return string
+     */
+    protected function getCommandName()
     {
-        $this
-            ->setName('api:get:translations')
-            ->setDescription('Display a list of translations')
-            ->addOption('dump', 'd', InputOption::VALUE_NONE, 'var_dump output format');
-        ;
+        return 'api:translation:translations';
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * @return string
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function getCommandDescription()
     {
-        $apiClient = $this->getContainer()->get('volo_api_client.client');
+        return 'Display a list of translations';
+    }
 
-        $data = $apiClient->getTranslations();
+    /**
+     * @return TranslationApiClient
+     */
+    protected function getClientApi()
+    {
+        return $this->getContainer()->get('volo_api_client.api.translation_api_client');
+    }
 
-        $input->getOption('dump') ? dump($data) : $output->writeln(json_encode($data, JSON_PRETTY_PRINT));
+    /**
+     * {@inheritdoc}
+     */
+    protected function executeApiCall(InputInterface $input)
+    {
+        return $this->getClientApi()->getTranslations();
     }
 }
