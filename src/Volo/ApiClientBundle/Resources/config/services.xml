@@ -13,6 +13,7 @@
         <parameter key="volo_api_client.api.configuration_api_client.class">Volo\ApiClientBundle\Api\ConfigurationApiClient</parameter>
         <parameter key="volo_api_client.api.location_api_client.class">Volo\ApiClientBundle\Api\LocationApiClient</parameter>
         <parameter key="volo_api_client.api.translation_api_client.class">Volo\ApiClientBundle\Api\TranslationApiClient</parameter>
+        <parameter key="volo_api_client.api.customer_api_client.class">Volo\ApiClientBundle\Api\CustomerApiClient</parameter>
     </parameters>
 
     <services>
@@ -44,9 +45,12 @@
 
         <service id="volo_api_client.api.abstract_api_client" class="%volo_api_client.api.abstract_api_client.class%" abstract="true">
             <argument id="volo_api_client.guzzle.client" type="service"/>
+            <argument>%foodpanda.api.client_id%</argument>
+            <argument>%foodpanda.api.client_secret%</argument>
         </service>
 
         <service id="volo_api_client.api.configuration_api_client" class="%volo_api_client.api.configuration_api_client.class%" parent="volo_api_client.api.abstract_api_client" />
+        <service id="volo_api_client.api.customer_api_client" class="%volo_api_client.api.customer_api_client.class%" parent="volo_api_client.api.abstract_api_client" />
         <service id="volo_api_client.api.location_api_client" class="%volo_api_client.api.location_api_client.class%" parent="volo_api_client.api.abstract_api_client" />
         <service id="volo_api_client.api.translation_api_client" class="%volo_api_client.api.translation_api_client.class%" parent="volo_api_client.api.abstract_api_client" />
 
