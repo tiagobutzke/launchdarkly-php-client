@@ -36,26 +36,26 @@ class EntityGeneratorTest extends WebTestCase
     /**
      * @var EntityGenerator
      */
-    protected $sut;
+    protected $entityGenerator;
 
     /**
      * @var EntityNormalizer
      */
-    protected $sut2;
+    protected $entityNormalizer;
 
     public function setUp()
     {
         $client = static::createClient();
-        $this->sut = $client->getContainer()->get('volo_entity.service.entity_generator');
-        $this->sut2 = $client->getContainer()->get('volo_entity.service.entity_normalizer');
+        $this->entityGenerator = $client->getContainer()->get('volo_entity.service.entity_generator');
+        $this->entityNormalizer = $client->getContainer()->get('volo_entity.service.entity_normalizer');
         $this->apiDataResponseProvider = new ApiDataResponseFixtures();
     }
 
     public function testGenerateCms()
     {
         $sourceData = $this->apiDataResponseProvider->getCmsResponseData();
-        $entity = $this->sut->generateCms($sourceData);
-        $resultData = $this->sut2->normalizeEntity($entity);
+        $entity = $this->entityGenerator->generateCms($sourceData);
+        $resultData = $this->entityNormalizer->normalizeEntity($entity);
 
         static::assertEquals($sourceData, $resultData);
     }
@@ -63,8 +63,8 @@ class EntityGeneratorTest extends WebTestCase
     public function testGenerateVendorList()
     {
         $sourceData = $this->apiDataResponseProvider->getVendorListResponseData();
-        $entity = $this->sut->generateVendors($sourceData);
-        $resultsData = $this->sut2->normalizeEntity($entity);
+        $entity = $this->entityGenerator->generateVendors($sourceData);
+        $resultsData = $this->entityNormalizer->normalizeEntity($entity);
         static::assertInstanceOf(VendorResults::class, $entity);
 
         static::assertEquals($sourceData, $resultsData);
@@ -73,8 +73,8 @@ class EntityGeneratorTest extends WebTestCase
     public function testGenerateVendor()
     {
         $sourceData = $this->apiDataResponseProvider->getVendorResponseData();
-        $entity = $this->sut->generateVendor($sourceData);
-        $resultsData = $this->sut2->normalizeEntity($entity);
+        $entity = $this->entityGenerator->generateVendor($sourceData);
+        $resultsData = $this->entityNormalizer->normalizeEntity($entity);
         $this->assertTheValidityOfVendorEntityStructure($entity);
 
         static::assertEquals($sourceData, $resultsData);

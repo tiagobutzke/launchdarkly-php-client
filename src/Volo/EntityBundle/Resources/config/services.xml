@@ -2,24 +2,24 @@
 <container xmlns="http://symfony.com/schema/dic/services"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="volo_entity.normalizer.class">Symfony\Component\Serializer\Normalizer\CustomNormalizer</parameter>
+        <parameter key="volo_entity.service.entity_generator.class">Volo\EntityBundle\Service\EntityGenerator</parameter>
+        <parameter key="volo_entity.service.entity_normalizer.class">Volo\EntityBundle\Service\EntityNormalizer</parameter>
+    </parameters>
+
     <services>
-        <service id="symfony.service.json_encoder" class="Symfony\Component\Serializer\Encoder\JsonEncoder"/>
-        <service id="symfony.service.custom_normalizer"
-                 class="Symfony\Component\Serializer\Normalizer\CustomNormalizer"/>
-        <service id="symfony.service.serializer" class="Symfony\Component\Serializer\Serializer" public="false">
-            <argument type="collection">
-                <argument type="service" id="symfony.service.custom_normalizer"/>
-            </argument>
-            <argument type="collection">
-                <argument type="service" id="symfony.service.json_encoder"/>
-            </argument>
-        </service>
-        <service id="volo_entity.service.entity_generator" class="Volo\EntityBundle\Service\EntityGenerator">
-            <argument type="service" id="symfony.service.serializer"/>
+        <service id="volo_entity.normalizer" class="%volo_entity.normalizer.class%">
+            <tag name="serializer.normalizer" />
         </service>
 
-        <service id="volo_entity.service.entity_normalizer" class="Volo\EntityBundle\Service\EntityNormalizer">
-            <argument type="service" id="symfony.service.serializer"/>
+        <service id="volo_entity.service.entity_generator" class="%volo_entity.service.entity_generator.class%">
+            <argument type="service" id="serializer"/>
+        </service>
+
+        <service id="volo_entity.service.entity_normalizer" class="%volo_entity.service.entity_normalizer.class%">
+            <argument type="service" id="serializer"/>
         </service>
     </services>
 </container>
