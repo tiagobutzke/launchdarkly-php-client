@@ -63,6 +63,10 @@ build:
         before:
             - sudo apt-get update
             - sudo apt-get install -y graphicsmagick libgraphicsmagick1-dev
+            - npm install -g grunt-cli
+    project_setup:
+        before:
+            - grunt
     tests:
         override:
             -
