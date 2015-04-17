@@ -12,3 +12,8 @@
 /composer.phar
 
 /.idea
+
+# nodejs
+node_modules/*
+bower_components/*
+/src/Volo/FrontendBundle/Resources/public/dist/*

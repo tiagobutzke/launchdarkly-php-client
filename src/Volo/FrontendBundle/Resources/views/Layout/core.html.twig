@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+            {{ block('head_stylesheets') }}
+            {{ block('head_scripts') }}
+        {% endblock %}
+    </head>
+    <body>
+    <div class="page-wrapper">
+        {% block body %}
+            <div class="content-wrapper">
+                {% block content_wrapper %}
+                    {{ block('header') }}
+                    {{ block('breadcrumbs') }}
+                    {{ block('flash_messages') }}
+                    {{ block('page') }}
+                {% endblock content_wrapper %}
+            </div>
+            {{ block('footer') }}
+            {{ block('footer_scripts') }}
+        {% endblock %}
+    </div>
+    </body>
+</html>

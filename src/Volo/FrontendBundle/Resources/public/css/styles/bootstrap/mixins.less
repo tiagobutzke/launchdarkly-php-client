@@ -1,0 +1,196 @@
+// ----------------------- BACKGROUNDS START -----------------------
+// Vertical gradient, from top to bottom
+//
+// Creates two color stops, start and end, by specifying a color and position for each color stop.
+// Color stops are not available in IE9 and below.
+.gradient-vertical-percents (@startColor: #555, @endColor: #333, @startPercent: 0%, @endPercent: 100%) when (@startPercent >= 75%) {
+    background-color: @startColor;
+}
+
+.gradient-vertical-percents (@startColor: #555, @endColor: #333, @startPercent: 0%, @endPercent: 100%) when (@startPercent < 75%) {
+    background-color: mix(@startColor, @endColor, @startPercent);
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",argb(@startColor), argb(@endColor))); // IE9 and down
+}
+
+.gradient-vertical-percents(@startColor: #555, @endColor: #333, @startPercent: 0%, @endPercent: 100%) {
+    background-image: -webkit-gradient(linear, left @startPercent, left @endPercent, from(@startColor), to(@endColor)); // Safari 4+, Chrome 2+
+    background-image: -webkit-linear-gradient(top, @startColor, @startPercent, @endColor, @endPercent); // Safari 5.1+, Chrome 10+
+    background-image: -moz-linear-gradient(top, @startColor @startPercent, @endColor @endPercent); // FF 3.6+
+    background-image: -o-linear-gradient(top, @startColor, @endColor); // Opera 11.10
+    background-image: linear-gradient(to bottom, @startColor @startPercent, @endColor @endPercent); // Standard, IE10
+    background-repeat: repeat-x;
+}
+
+// ----------------------- BACKGROUNDS END -----------------------
+
+// ---------- REMOVES HYPHENS AND WORD BREAKS START ---------
+.noWordBreaksAndNoHyphens() {
+    -ms-word-break: normal;
+    word-break: normal;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+}
+// ----------- REMOVES HYPHENS AND WORD BREAKS END ----------
+
+// ---------- ADDS HYPHENS AND WORD BREAKS START ---------
+.wordBreaksAndHyphens() {
+    -ms-word-break: break-all;
+    word-break: break-all;
+    word-break: break-word; /* Non standard for webkit */
+
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+}
+// ----------- ADDS HYPHENS AND WORD BREAKS END ----------
+
+// ----------- CENTERS ELEMENTS START ----------
+.centerElement() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+// ----------- CENTERS ELEMENTS END ----------
+
+// ----------- CENTERS ELEMENTS START ----------
+.centerElementVertically() {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+// ----------- CENTERS ELEMENTS END ----------
+
+// ----------- CENTERS TEXT VERTICALLY BY A GIVEN HEIGHT START ----------
+.centerTextVerticallyByHeight(@height) {
+    height: @height;
+    line-height: @height;
+}
+// ----------- CENTERS TEXT VERTICALLY BY A GIVEN HEIGHT END  ----------
+
+// ----------- CUSTOM BUTTON DISABLED STYLE START ----------- //
+
+.button-variant(@color; @background; @border) {
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        &,
+        &:hover,
+        &:focus,
+        &.focus,
+        &:active,
+        &.active {
+            border-style: dashed;
+        }
+    }
+}
+
+.button-size(@padding-vertical; @padding-horizontal; @font-size; @line-height; @border-radius) {
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        border-width: 2px;
+        padding: (@padding-vertical - 1) (@padding-horizontal - 1);
+    }
+}
+
+// ----------- CUSTOM BUTTON DISABLED STYLE END ----------- //
+
+// ----------- CIRCLE ELEMENTS START ----------- //
+.circled(@elementSize, @textColor) {
+    border-radius: 50%;
+    width: @elementSize;
+    height: @elementSize;
+    display: inline-block;
+    text-align: center;
+    color: @textColor;
+}
+
+.circled-border(@elementSize, @borderSize: 1px, @color: @dark-brownish-gray) {
+    .circled(@elementSize, @color);
+    border: @borderSize solid @color;
+    padding-top: 4px;
+}
+
+.circled-border-color-update(@color: @dark-brownish-gray) {
+    border-color: @color;
+    color: @color;
+}
+
+.circled-element(@elementSize, @backgroundColor: @dark-brownish-gray, @textColor: @white) {
+    .circled(@elementSize, @textColor);
+    background: @backgroundColor;
+}
+
+.circle-with-dot() {
+    content: '';
+    .circled-border(25px, 1px, @lightest-gray);
+    padding-top: @null;
+    background: @white;
+    .float(left);
+    .margin-right(@medium);
+}
+
+.circle-with-dot-active() {
+    background: @foodpanda-green;
+    border-color: @foodpanda-green;
+    box-shadow: inset @null @null @null @small @white;
+}
+// ----------- CIRCLE ELEMENTS END ----------- //
+
+// ----------- ASTERISK START ----------- //
+.asterix() {
+    content: '\2217';
+    color: @new-foodpanda-orange;
+    font-size: 18px;
+    line-height: 1;
+    font-weight: @font-weight-bold;
+    font-style: normal;
+    .margin-right(@small);
+}
+// ----------- ASTERISK END ----------- //
+
+// ----------- CHECKED SIGN END ----------- //
+.checkedSign() {
+    content: '\ac';
+    font-size: 70px;
+    -webkit-transform: rotateZ(130deg);
+    transform: rotateZ(130deg);
+    position: absolute;
+}
+// ----------- CHECKED SIGN END ----------- //
+
+// ----------- CHECKED SIGN END ----------- //
+.squareMe(@dimension: @medium) {
+    width: @dimension;
+    height: @dimension;
+}
+// ----------- CHECKED SIGN END ----------- //
+
+.squareElementWithBorder() {
+    display: block;
+    border: 1px solid @super-light-gray;
+    text-align: center;
+    padding: 5px;
+    font-size: 15px;
+    color: @deal-highlight-color;
+    width: 30px;
+    height: 30px;
+    line-height: 16px;
+    position: relative;
+    font-weight: @font-weight-bold;
+}
+
+
+.form-control-focus(@color: @input-border-focus) {
+    @color-rgba: rgba(red(@color), green(@color), blue(@color), .3);
+    &:focus {
+        border-color: @color;
+        outline: 0;
+        .box-shadow(~"inset 0 1px 1px rgba(0,0,0,.075), 0 0 4px @{color-rgba}");
+    }
+}
