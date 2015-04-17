@@ -3,9 +3,19 @@
 
 Brief description
 ---
-[VOLO](https://www.volo.de) will use [FoodPanda’s API](https://api-st.foodpanda.in/doc/v4/) (using which we can build the complete shop like if we would use the calls to the shop's core).
+[VOLO](https://www.volo.de) uses [FoodPanda’s API](https://api-st.foodpanda.in/doc/v4/).
 
 The VOLO website is built using vanilla Symfony2.
+
+Installation
+---
+
+You'll need **PHP >5.5**, **node.js**, **NPM**, **Bower** & **Grunt** (cli) installed
+
+1/ Clone the repository on your local machine  
+2/ Install dependencies
+
+```npm install && bower install bootstrap && bower install bootstrap-rtl && grunt && composer install```
 
 Useful links
 ---
