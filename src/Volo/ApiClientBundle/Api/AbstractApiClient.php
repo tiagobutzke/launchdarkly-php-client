@@ -63,7 +63,7 @@ abstract class AbstractApiClient
 
     /**
      * @param Request     $request
-     * @param AccessToken $token
+     * @param AccessToken $accessToken
      */
     protected function attachAuthenticationDataToRequest(Request $request, AccessToken $accessToken)
     {
