@@ -1,0 +1,21 @@
+{
+  "name": "volo",
+  "version": "0.0.1",
+  "homepage": "https://github.com/foodpanda/volo-frontend",
+  "authors": [
+    "Riccardo Bini <riccardo.bini@rocket-internet.de>"
+  ],
+  "description": "Volo Frontend",
+  "license": "propetary",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-rtl": "~3.3.2"
+  }
+}
