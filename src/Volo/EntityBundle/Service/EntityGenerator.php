@@ -3,15 +3,18 @@
 namespace Volo\EntityBundle\Service;
 
 use Symfony\Component\Serializer\Serializer;
+use Volo\EntityBundle\Entity\Address\Address;
+use Volo\EntityBundle\Entity\Address\AddressResults;
 use Volo\EntityBundle\Entity\Cms\CmsResults;
 use Volo\EntityBundle\Entity\Configuration\Configuration;
+use Volo\EntityBundle\Entity\Customer\Customer;
 use Volo\EntityBundle\Entity\Discount\DiscountResults;
+use Volo\EntityBundle\Entity\OAuth\OAuth;
 use Volo\EntityBundle\Entity\Vendor\Vendor;
 use Volo\EntityBundle\Entity\Vendor\VendorResults;
 
 class EntityGenerator
 {
-
     /**
      * @var Serializer
      */
@@ -73,5 +76,45 @@ class EntityGenerator
     public function generateConfiguration(array $data)
     {
         return $this->serializer->denormalize($data, Configuration::class);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return Customer
+     */
+    public function generateCustomer(array $data)
+    {
+        return $this->serializer->denormalize($data, Customer::class);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return Address
+     */
+    public function generateCustomerAddress(array $data)
+    {
+        return $this->serializer->denormalize($data, Address::class);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return AddressResults
+     */
+    public function generateCustomerAddresses(array $data)
+    {
+        return $this->serializer->denormalize($data, AddressResults::class);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return OAuth
+     */
+    public function generateOAuth(array $data)
+    {
+        return $this->serializer->denormalize($data, OAuth::class);
     }
 }

@@ -2,8 +2,6 @@
 
 namespace Volo\EntityBundle\Tests\Fixtures;
 
-use Symfony\Component\Config\Definition\Exception\Exception;
-
 class ApiDataResponseFixtures
 {
     /**

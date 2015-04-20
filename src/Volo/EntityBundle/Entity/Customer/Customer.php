@@ -59,7 +59,7 @@ class Customer extends DataObject
 
     public function __construct()
     {
-        $this->addresses = new AddressesCollection();
+        $this->customer_addresses = new AddressesCollection();
     }
 
     /**

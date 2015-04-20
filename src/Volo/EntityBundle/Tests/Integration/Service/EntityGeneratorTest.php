@@ -2,7 +2,6 @@
 
 namespace Volo\EntityBundle\Tests\Inte\Service;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Volo\EntityBundle\Entity\Chain\Chain;
 use Volo\EntityBundle\Entity\City\City;
