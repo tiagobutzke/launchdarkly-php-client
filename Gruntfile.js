@@ -35,69 +35,13 @@ module.exports = function (grunt) {
 
     var jsSources = {};
 
-    jsSources.head = jsSources.headIE = [
-        'bower_components/labjs/LAB.src.js',
-        frontendAssetPath('/js/tracking.js'),
-        frontendAssetPath('/js/FdNamespace.js'),
-        frontendAssetPath('/js/onloadFix.js'),
-        frontendAssetPath('/js/minimalJsSupportDetector.js'),
-        frontendAssetPath('/js/removeNoJs.js')
-    ];
-
     jsSources.head = [
-        frontendAssetPath('/js/jsErrorLog.js')
-    ].concat(jsSources.head);
-
-    jsSources.headIE = [
-        frontendAssetPath('/js/jsErrorLog.js'),
-        'bower_components/html5shiv/dist/html5shiv.js',
-        'bower_components/respond/dest/respond.src.js'
-    ].concat(jsSources.headIE);
-
-    jsSources.shop = [
-        frontendAssetPath('/js/spinPresets.js'),
-        frontendAssetPath('/js/trait/*.js'),
-        frontendAssetPath('/js/Base.js'),
-        frontendAssetPath('/js/controller/*.js'),
-        frontendAssetPath('/js/InitController.js'),
+        'bower_components/jquery/dist/jquery.js',
+        'node_modules/jquery.turbolinks/vendor/assets/javascripts/jquery.turbolinks.js',
+        'bower_components/turbolinks/assets/javascripts/turbolinks.js',
+        frontendAssetPath('/js/main.js')
     ];
 
-    jsSources.main = jsSources.mainIE = [
-        'bower_components/joii/src/joii.js',
-        'bower_components/Subtopic/subtopic.js',
-        'bower_components/Subtopic/jquery-subtopic.js',
-        'bower_components/bootstrap/js/button.js',
-        'bower_components/bootstrap/js/dropdown.js',
-        'bower_components/bootstrap/js/modal.js',
-        'bower_components/bootstrap/js/tooltip.js',
-        'bower_components/bootstrap/js/popover.js',
-        'bower_components/bootstrap/js/scrollspy.js',
-        'bower_components/bootstrap/js/tab.js',
-        'bower_components/bootstrap/js/transition.js',
-        'bower_components/typeahead.js/dist/typeahead.jquery.js',
-        'bower_components/typeahead.js/dist/bloodhound.js',
-        'bower_components/sticky/jquery.sticky.js',
-        'bower_components/spin.js/spin.js',
-        'bower_components/spin.js/jquery.spin.js',
-        'bower_components/jquery.smartbanner/jquery.smartbanner.js',
-        'bower_components/jquery.scrollTo/jquery.scrollTo.js',
-        'bower_components/lazyloadxt/dist/jquery.lazyloadxt.js',
-        'bower_components/jquery.payment/lib/jquery.payment.js',
-        'bower_components/jquery.cookie/jquery.cookie.js',
-        'bower_components/jquery-maskedinput/src/jquery.maskedinput.js',
-        'bower_components/df-visible/jquery.visible.js',
-        //'bower_components/jquery-star-rating/src/rating.js'
-    ].concat(jsSources.shop);
-
-    jsSources.main = [
-        'bower_components/jquery-modern/dist/jquery.js',
-        frontendAssetPath('/js/jquerypp.js'),
-        'bower_components/jquery-requestAnimationFrame/dist/jquery.requestAnimationFrame.js'
-    ].concat(jsSources.main);
-
-    jsSources.mainIE = [
-        'bower_components/jquery/dist/jquery.js'
-    ].concat(jsSources.mainIE);
 
     // quality is a misnomer, it actually refers to the level of compression,
     // where 0 is uncompressed and 100 is compressed to the highest degree
@@ -234,22 +178,6 @@ module.exports = function (grunt) {
         head: {
             src: jsSources.head,
             dest: frontendAssetPath('/dist/head.js')
-        },
-        headIE: {
-            options: {
-                compress: false,
-                mangle: false
-            },
-            src: jsSources.headIE,
-            dest: frontendAssetPath('/dist/head.ie.js')
-        },
-        main: {
-            src: jsSources.main,
-            dest: frontendAssetPath('/dist/main.js')
-        },
-        mainIE: {
-            src: jsSources.mainIE,
-            dest: frontendAssetPath('/dist/main.ie.js')
         }
     };
 
@@ -261,8 +189,8 @@ module.exports = function (grunt) {
         gruntfile: {
             src: 'Gruntfile.js'
         },
-        shop: {
-            src: jsSources.shop
+        head: {
+            src: jsSources.head
         }
     };
 
@@ -285,10 +213,7 @@ module.exports = function (grunt) {
         },
         js: {
             files: [
-                '<%= uglify.head.src %>',
-                '<%= uglify.headIE.src %>',
-                '<%= uglify.main.src %>',
-                '<%= uglify.mainIE.src %>'
+                '<%= uglify.head.src %>'
             ],
             tasks: ['uglify', 'copy', 'jshint']
         }
