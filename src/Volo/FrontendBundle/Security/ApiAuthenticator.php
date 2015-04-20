@@ -52,7 +52,7 @@ class ApiAuthenticator implements SimpleFormAuthenticatorInterface
                 'token' => $tokens,
             ],
             $providerKey,
-            ['CUSTOMER']
+            ['ROLE_CUSTOMER']
         );
     }
 
