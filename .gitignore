@@ -17,3 +17,4 @@
 node_modules/*
 bower_components/*
 /src/Volo/FrontendBundle/Resources/public/dist/*
+/src/Volo/FrontendBundle/Resources/public/js/dist/*

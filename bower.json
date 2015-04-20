@@ -18,9 +18,5 @@
   "dependencies": {
     "bootstrap-rtl": "~3.3.2",
     "labjs": "*"
-  },
-  "devDependencies": {
-    "labjs": "*",
-    "turbolinks": "~2.4.1"
   }
 }

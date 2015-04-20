@@ -31,14 +31,14 @@ module.exports = function (grunt) {
         return md5(hash.join(''));
     }
 
-    var env = grunt.option('env') || 'prod';
+    var env = grunt.option('env') || 'dev';
 
     var jsSources = {};
 
     jsSources.head = [
         'bower_components/jquery/dist/jquery.js',
-        'node_modules/jquery.turbolinks/vendor/assets/javascripts/jquery.turbolinks.js',
-        'bower_components/turbolinks/assets/javascripts/turbolinks.js',
+        'web/bundles/heltheturbolinks/js/jquery.turbolinks.js',
+        'web/bundles/heltheturbolinks/js/turbolinks.js',
         frontendAssetPath('/js/main.js')
     ];
 
@@ -173,18 +173,24 @@ module.exports = function (grunt) {
     config.uglify = {
         options: {
             sourceMap: (env === 'dev'),
-            sourceMapIncludeSources: (env === 'dev')
+            sourceMapIncludeSources: (env === 'dev'),
+            compress: (env !== 'dev'),
+            beautify: (env === 'dev')
         },
         head: {
             src: jsSources.head,
-            dest: frontendAssetPath('/dist/head.js')
+            dest: frontendAssetPath('/js/dist/head.js')
         }
     };
 
     config.jshint = {
         options: {
-            jshintrc: true,
-            force: true
+            force: true,
+            ignores: [
+                'bower_components/jquery/dist/jquery.js',
+                'web/bundles/heltheturbolinks/js/jquery.turbolinks.js',
+                'web/bundles/heltheturbolinks/js/turbolinks.js'
+            ]
         },
         gruntfile: {
             src: 'Gruntfile.js'
@@ -234,9 +240,12 @@ module.exports = function (grunt) {
 
     config.bower = {
         install: {
-            //just run 'grunt bower:install' and you'll see files from your Bower packages in lib directory
+            options: {
+                targetDir: './build/bower',
+                cleanTargetDir: true
+            }
         }
-    }
+    };
 
     grunt.initConfig(config);
 
@@ -249,7 +258,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-bower-task');
 
     // grunt additional tasks
-    grunt.registerTask('default', ['bower:install', 'less']);
+    grunt.registerTask('default', ['bower:install', 'less', 'uglify', 'copy', 'jshint']);
     grunt.registerTask('deploy', ['bower:install', 'less', 'uglify']);
 
     //grunt.registerTask('default', ['sprite', 'less', 'uglify', 'copy', 'jshint']);
