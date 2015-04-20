@@ -17,8 +17,9 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/jsrouting-bundle": "1.5.4",
         "guzzlehttp/guzzle": "~5.0",
-        "guzzlehttp/log-subscriber": "1.0.*", 
-        "commerceguys/guzzle-oauth2-plugin": "~2.0"
+        "guzzlehttp/log-subscriber": "1.0.*",
+        "commerceguys/guzzle-oauth2-plugin": "~2.0",
+        "helthe/turbolinks-bundle": "~1.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
@@ -37,7 +38,8 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
+            "Helthe\\Bundle\\TurbolinksBundle\\Composer\\ScriptHandler::installAssets"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
@@ -46,7 +48,8 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
+            "Helthe\\Bundle\\TurbolinksBundle\\Composer\\ScriptHandler::installAssets"
         ]
     },
     "config": {

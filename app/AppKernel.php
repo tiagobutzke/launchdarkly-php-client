@@ -17,6 +17,7 @@ class AppKernel extends Kernel
             new Volo\FrontendBundle\VoloFrontendBundle(),
             new Volo\EntityBundle\VoloEntityBundle(),
             new Volo\ApiClientBundle\VoloApiClientBundle(),
+            new Helthe\Bundle\TurbolinksBundle\HeltheTurbolinksBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
