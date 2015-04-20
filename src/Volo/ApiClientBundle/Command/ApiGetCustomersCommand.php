@@ -3,8 +3,8 @@
 namespace Volo\ApiClientBundle\Command;
 
 use Symfony\Component\Console\Input\InputOption;
-use Volo\ApiClientBundle\Api\Auth\Credentials;
-use Volo\ApiClientBundle\Api\CustomerApiClient;
+use Foodpanda\ApiSdk\Api\Auth\Credentials;
+use Foodpanda\ApiSdk\Api\CustomerApiClient;
 use Symfony\Component\Console\Input\InputInterface;
 
 class ApiGetCustomersCommand extends AbstractApiClientCommand

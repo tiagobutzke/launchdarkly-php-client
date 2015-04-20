@@ -1,6 +1,6 @@
 <?php
 
-namespace Volo\ApiClientBundle\Api;
+namespace Foodpanda\ApiSdk\Api;
 
 class LocationApiClient extends AbstractApiClient
 {

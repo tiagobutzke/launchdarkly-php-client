@@ -1,6 +1,6 @@
 <?php
 
-namespace Volo\ApiClientBundle\Api\Auth;
+namespace Foodpanda\ApiSdk\Api\Auth;
 
 class Credentials
 {

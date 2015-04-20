@@ -3,7 +3,7 @@
 namespace Volo\ApiClientBundle\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
-use Volo\ApiClientBundle\Api\TranslationApiClient;
+use Foodpanda\ApiSdk\Api\TranslationApiClient;
 
 class ApiGetTranslationsCommand extends AbstractApiClientCommand
 {

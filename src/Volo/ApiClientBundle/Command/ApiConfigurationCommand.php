@@ -3,7 +3,7 @@
 namespace Volo\ApiClientBundle\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
-use Volo\ApiClientBundle\Api\ConfigurationApiClient;
+use Foodpanda\ApiSdk\Api\ConfigurationApiClient;
 
 class ApiConfigurationCommand extends AbstractApiClientCommand
 {

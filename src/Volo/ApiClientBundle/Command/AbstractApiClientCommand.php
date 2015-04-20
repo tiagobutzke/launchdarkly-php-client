@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Volo\ApiClientBundle\Api\AbstractApiClient;
+use Foodpanda\ApiSdk\Api\AbstractApiClient;
 
 abstract class AbstractApiClientCommand extends ContainerAwareCommand
 {

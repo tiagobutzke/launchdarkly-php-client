@@ -1,9 +1,9 @@
 <?php
 
-namespace Volo\ApiClientBundle\Api;
+namespace Foodpanda\ApiSdk\Api;
 
 use CommerceGuys\Guzzle\Oauth2\AccessToken;
-use Volo\ApiClientBundle\Api\Auth\Credentials;
+use Foodpanda\ApiSdk\Api\Auth\Credentials;
 use CommerceGuys\Guzzle\Oauth2\GrantType\PasswordCredentials;
 
 class CustomerApiClient extends AbstractApiClient

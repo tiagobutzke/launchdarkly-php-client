@@ -3,7 +3,7 @@
 namespace Volo\ApiClientBundle\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
-use Volo\ApiClientBundle\Api\LocationApiClient;
+use Foodpanda\ApiSdk\Api\LocationApiClient;
 
 class ApiGetCitiesCommand extends AbstractApiClientCommand
 {

@@ -2,6 +2,8 @@
 
 namespace Volo\FrontendBundle\Security;
 
+use Foodpanda\ApiSdk\Api\Auth\Credentials;
+use Foodpanda\ApiSdk\Api\CustomerApiClient;
 use GuzzleHttp\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\SimpleFormAuthenticatorInterface;
@@ -9,8 +11,6 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Volo\ApiClientBundle\Api\Auth\Credentials;
-use Volo\ApiClientBundle\Api\CustomerApiClient;
 
 class ApiAuthenticator implements SimpleFormAuthenticatorInterface
 {

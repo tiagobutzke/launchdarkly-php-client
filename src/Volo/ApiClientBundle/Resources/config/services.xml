@@ -9,11 +9,11 @@
         <parameter key="guzzle.event.emitter.class">GuzzleHttp\Event\Emitter</parameter>
         <parameter key="guzzle.subscriber.log.log_subscriber.class">GuzzleHttp\Subscriber\Log\LogSubscriber</parameter>
         <parameter key="guzzle.subscriber.log.formatter.format" type="constant">GuzzleHttp\Subscriber\Log\Formatter::DEBUG</parameter>
-        <parameter key="volo_api_client.api.abstract_api_client.class">Volo\ApiClientBundle\Api\AbstractApiClient</parameter>
-        <parameter key="volo_api_client.api.configuration_api_client.class">Volo\ApiClientBundle\Api\ConfigurationApiClient</parameter>
-        <parameter key="volo_api_client.api.location_api_client.class">Volo\ApiClientBundle\Api\LocationApiClient</parameter>
-        <parameter key="volo_api_client.api.translation_api_client.class">Volo\ApiClientBundle\Api\TranslationApiClient</parameter>
-        <parameter key="volo_api_client.api.customer_api_client.class">Volo\ApiClientBundle\Api\CustomerApiClient</parameter>
+        <parameter key="volo_api_client.api.abstract_api_client.class">Foodpanda\ApiSdk\Api\AbstractApiClient</parameter>
+        <parameter key="volo_api_client.api.configuration_api_client.class">Foodpanda\ApiSdk\Api\ConfigurationApiClient</parameter>
+        <parameter key="volo_api_client.api.location_api_client.class">Foodpanda\ApiSdk\Api\LocationApiClient</parameter>
+        <parameter key="volo_api_client.api.translation_api_client.class">Foodpanda\ApiSdk\Api\TranslationApiClient</parameter>
+        <parameter key="volo_api_client.api.customer_api_client.class">Foodpanda\ApiSdk\Api\CustomerApiClient</parameter>
     </parameters>
 
     <services>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Volo\ApiClientBundle\Api;
+namespace Foodpanda\ApiSdk\Api;
 
 use CommerceGuys\Guzzle\Oauth2\AccessToken;
 use CommerceGuys\Guzzle\Oauth2\Oauth2Subscriber;
