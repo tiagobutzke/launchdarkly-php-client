@@ -14,3 +14,7 @@ security:
                 authenticator: volo_frontend.api_authenticator
                 login_path: /login
                 check_path: /login_check
+
+            logout:
+                path:   /logout
+                target: / 
