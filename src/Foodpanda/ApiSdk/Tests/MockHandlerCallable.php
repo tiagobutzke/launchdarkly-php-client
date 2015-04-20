@@ -27,8 +27,20 @@ class MockHandlerCallable
         if (strpos($request['url'], 'customers') !== false && $request['http_method'] === 'GET') {
             return ['status' => 200, 'body' => $this->loadDataFromFile('get-customers.json')];
         }
+        if (strpos($request['uri'], '/cities/5') !== false && $request['http_method'] === 'GET') {
+            return ['status' => 200, 'body' => $this->loadDataFromFile('get-cities_city_id_5.json')];
+        }
+        if (strpos($request['uri'], '/cities/9999') !== false && $request['http_method'] === 'GET') {
+            return ['status' => 400, 'body' => $this->loadDataFromFile('get-cities_city_id_9999.json')];
+        }
         if (strpos($request['uri'], '/cities') !== false && $request['http_method'] === 'GET') {
             return ['status' => 200, 'body' => $this->loadDataFromFile('get-cities.json')];
+        }
+        if (strpos($request['uri'], '/vendors/690') !== false && $request['http_method'] === 'GET') {
+            return ['status' => 200, 'body' => $this->loadDataFromFile('get-vendors_id_690.json')];
+        }
+        if (strpos($request['uri'], '/vendors') !== false && $request['http_method'] === 'GET') {
+            return ['status' => 200, 'body' => $this->loadDataFromFile('get-vendors_area_148.json')];
         }
 
         throw new \RuntimeException(sprintf('Missing fixture for "%s" API call', $request['uri']));

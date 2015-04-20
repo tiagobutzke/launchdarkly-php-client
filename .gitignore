@@ -18,7 +18,7 @@ node_modules/*
 bower_components/*
 
 # generated assets
-/src/Volo/FrontendBundle/Resources/public/dist/*
+/src/Volo/FrontendBundle/Resources/public/js/dist/*
 /web/css/dist/*
 /web/img/dist/*
 /web/js/dist/*

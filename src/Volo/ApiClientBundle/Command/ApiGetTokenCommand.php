@@ -30,7 +30,7 @@ class ApiGetTokenCommand extends AbstractApiClientCommand
      */
     protected function getClientApi()
     {
-        return $this->getContainer()->get('volo_api_client.api.customer_api_client');
+        return $this->getContainer()->get('volo_frontend.api.oauth_api_client');
     }
 
     protected function configure()

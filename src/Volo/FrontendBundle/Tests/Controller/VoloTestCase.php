@@ -17,7 +17,11 @@ abstract class VoloTestCase extends WebTestCase
     protected function assertValidResponse(Client $client)
     {
         $response = $client->getResponse();
-        $message = sprintf('Url "%s" failed with error "%d".', $client->getRequest()->getRequestUri(), $response->getStatusCode());
+        $message = sprintf(
+            'Url "%s" failed with error "%d".',
+            $client->getRequest()->getRequestUri(),
+            $response->getStatusCode()
+        );
 
         dump($response->getContent());
         static::assertTrue($response->isSuccessful(), $message);

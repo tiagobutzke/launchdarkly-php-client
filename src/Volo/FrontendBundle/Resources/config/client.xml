@@ -20,6 +20,7 @@
         <parameter key="volo_frontend.api.translation_api_client.class">Foodpanda\ApiSdk\Api\TranslationApiClient</parameter>
         <parameter key="volo_frontend.api.customer_api_client.class">Foodpanda\ApiSdk\Api\CustomerApiClient</parameter>
         <parameter key="volo_frontend.api.oauth_api_client.class">Foodpanda\ApiSdk\Api\OAuthApiClient</parameter>
+        <parameter key="volo_frontend.api.vendor_api_client.class">Foodpanda\ApiSdk\Api\VendorApiClient</parameter>
     </parameters>
 
     <services>
@@ -61,17 +62,18 @@
             </argument>
         </service>
 
-        <service id="volo_frontend.api.abstract_api_client" class="%volo_frontend.api.abstract_api_client.class%" abstract="true" public="false">
+        <service id="volo_frontend.api.abstract_api_client" class="%volo_frontend.api.abstract_api_client.class%" abstract="true">
             <argument id="volo_frontend.guzzle.client" type="service"/>
             <argument>%foodpanda.api.client_id%</argument>
             <argument>%foodpanda.api.client_secret%</argument>
         </service>
 
-        <service id="volo_frontend.api.configuration_api_client" class="%volo_frontend.api.configuration_api_client.class%" parent="volo_frontend.api.abstract_api_client" public="false" />
-        <service id="volo_frontend.api.oauth_api_client" class="%volo_frontend.api.oauth_api_client.class%" parent="volo_frontend.api.abstract_api_client" public="false" />
-        <service id="volo_frontend.api.customer_api_client" class="%volo_frontend.api.customer_api_client.class%" parent="volo_frontend.api.abstract_api_client" public="false" />
-        <service id="volo_frontend.api.location_api_client" class="%volo_frontend.api.location_api_client.class%" parent="volo_frontend.api.abstract_api_client" public="false" />
-        <service id="volo_frontend.api.translation_api_client" class="%volo_frontend.api.translation_api_client.class%" parent="volo_frontend.api.abstract_api_client" public="false" />
+        <service id="volo_frontend.api.configuration_api_client" class="%volo_frontend.api.configuration_api_client.class%" parent="volo_frontend.api.abstract_api_client" />
+        <service id="volo_frontend.api.oauth_api_client" class="%volo_frontend.api.oauth_api_client.class%" parent="volo_frontend.api.abstract_api_client" />
+        <service id="volo_frontend.api.customer_api_client" class="%volo_frontend.api.customer_api_client.class%" parent="volo_frontend.api.abstract_api_client" />
+        <service id="volo_frontend.api.location_api_client" class="%volo_frontend.api.location_api_client.class%" parent="volo_frontend.api.abstract_api_client" />
+        <service id="volo_frontend.api.translation_api_client" class="%volo_frontend.api.translation_api_client.class%" parent="volo_frontend.api.abstract_api_client" />
+        <service id="volo_frontend.api.vendor_api_client" class="%volo_frontend.api.vendor_api_client.class%" parent="volo_frontend.api.abstract_api_client" />
 
     </services>
 </container>
