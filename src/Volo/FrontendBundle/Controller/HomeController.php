@@ -9,11 +9,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class HomeController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="home")
      * @Template()
      */
-    public function indexAction()
+    public function homeAction()
     {
-        return $this->render('VoloFrontendBundle:Home:home.html.twig');
+        return [];
     }
 }
