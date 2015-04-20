@@ -83,6 +83,21 @@ Parameters
 
 The parameters are defined in ```app/config/countries_parameters```, for each country defined in ```composer.json```, ```composer install``` will create a file (e.g. ```de.yml```) in ```app/config/countries_parameters``` based on ```app/config/parameters.yml.dist```
 
+Translation
+---
+The dictionary is saved at [https://webtranslateit.com/en/projects/11407-Volo](https://webtranslateit.com/en/projects/11407-Volo) (next: WTI). English language is used as a fallback language. Site's locale should be ```de-DE``` (the right way would be ```de_DE```, but because of the foodpanda's translation library, we should set locale as ```de-DE```).
+
+Translations are being imported to our project using the command ```app/console foodpanda:translations:sync```. The translation dictionary
+
+Example of a non-plural translation
+
+	<h1 class="text-center">{{ 'general.motto'|trans }}</h1>
+
+Example of a plural translation
+
+	<h2 class="text-center">{{ 'vendors.list.no_location'|transchoice(2) }}</h2>
+
+A key of a translation is set in WTI's master file (which is English). You can edit the master file either in WTI UI, or using your favorite text editor and ```wti``` utility (github: [https://github.com/AtelierConvivialite/webtranslateit](https://github.com/AtelierConvivialite/webtranslateit)). In a project root execute ```wti pull```. The master file and translations (that has nothing to do with the actual symfony translations) will be pulled to ```app/Resources/translations```. There you can edit the master file ```en.yml``` and then ```wti push```. After that go to WTI UI, perform translations and ```app/console foodpanda:translations:sync```.
 
 Useful links
 ---
