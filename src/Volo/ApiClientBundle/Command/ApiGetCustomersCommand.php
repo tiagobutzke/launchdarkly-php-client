@@ -2,6 +2,7 @@
 
 namespace Volo\ApiClientBundle\Command;
 
+use CommerceGuys\Guzzle\Oauth2\AccessToken;
 use Symfony\Component\Console\Input\InputOption;
 use Foodpanda\ApiSdk\Api\Auth\Credentials;
 use Foodpanda\ApiSdk\Api\CustomerApiClient;
@@ -48,7 +49,8 @@ class ApiGetCustomersCommand extends AbstractApiClientCommand
     {
         $credentials = new Credentials($input->getOption('username'), $input->getOption('password'));
 
-        $token = $this->getClientApi()->authenticate($credentials);
+        $data  = $this->getClientApi()->authenticate($credentials);
+        $token = new AccessToken($data['access_token'], $data['token_type'], $data);
 
         return $this->getClientApi()->getCustomers($token);
     }

@@ -2,3 +2,6 @@ volo_frontend:
     resource: "@VoloFrontendBundle/Controller/"
     type:     annotation
     prefix:   /
+
+logout:
+    path:   /logout

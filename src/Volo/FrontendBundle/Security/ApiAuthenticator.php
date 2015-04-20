@@ -41,21 +41,18 @@ class ApiAuthenticator implements SimpleFormAuthenticatorInterface
 
         try {
             $data = $this->customerApiClient->authenticate($credentials);
-            $tokens = new AccessToken($data['access_token'], $data['token_type'], $data);
-            $user   = $this->customerApiClient->getCustomers($tokens);
+            $user = $this->customerApiClient->getCustomers(
+                new AccessToken($data['access_token'], $data['token_type'], $data)
+            );
         } catch (ClientException $e) {
             throw new AuthenticationException('Invalid username or password');
         }
 
-        return new UsernamePasswordToken(
-            $user['email'],
-            [
-                'user'  => $user,
-                'token' => $tokens,
-            ],
-            $providerKey,
-            ['ROLE_CUSTOMER']
-        );
+        $username = sprintf('%s %s', $user['first_name'], $user['last_name']);
+        $token    = new Token($username, $user, ['ROLE_CUSTOMER']);
+        $token->setAttribute('tokens', $data);
+
+        return $token;
     }
 
     /**

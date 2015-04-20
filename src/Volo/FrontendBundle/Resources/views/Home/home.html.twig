@@ -3,5 +3,10 @@
 {% block content %}
     <h1 class="text-center">WELCOME TO VOLO</h1>
 
-    <a href="{{ path('login') }}">Login</a>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <p>Username: {{ app.security.token.attributes.first_name }}</p>
+        <a href="{{ path('logout') }}">Logout</a>
+    {% else %}
+        <a href="{{ path('login') }}">Login</a>
+    {% endif %}
 {% endblock %}

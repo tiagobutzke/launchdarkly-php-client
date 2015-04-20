@@ -24,7 +24,7 @@ class CustomerApiClient extends AbstractApiClient
     /**
      * @param Credentials $credentials
      *
-     * @return AccessToken
+     * @return array
      */
     public function authenticate(Credentials $credentials)
     {
