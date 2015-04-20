@@ -13,6 +13,6 @@ class TranslationApiClient extends AbstractApiClient
     {
         $request = $this->client->createRequest('GET', 'translations', $arguments);
 
-        return $this->send($request);
+        return $this->send($request)['data'];
     }
 }

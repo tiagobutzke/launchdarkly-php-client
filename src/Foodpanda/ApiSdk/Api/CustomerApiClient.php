@@ -4,7 +4,6 @@ namespace Foodpanda\ApiSdk\Api;
 
 use CommerceGuys\Guzzle\Oauth2\AccessToken;
 use Foodpanda\ApiSdk\Api\Auth\Credentials;
-use CommerceGuys\Guzzle\Oauth2\GrantType\PasswordCredentials;
 
 class CustomerApiClient extends AbstractApiClient
 {
@@ -16,10 +15,10 @@ class CustomerApiClient extends AbstractApiClient
     public function getCustomers(AccessToken $token, array $arguments = array())
     {
         $request = $this->client->createRequest('GET', 'customers', $arguments);
-        
+
         $this->attachAuthenticationDataToRequest($request, $token);
-        
-        return $this->send($request);
+
+        return $this->send($request)['data'];
     }
 
     /**
@@ -38,8 +37,8 @@ class CustomerApiClient extends AbstractApiClient
             'grant_type'    => 'password',
         ];
 
-        $refreshToken = new PasswordCredentials($this->client, $config);
+        $request = $this->client->createRequest('POST', 'oauth2/token', array('body' => $config));
 
-        return $refreshToken->getToken();
+        return $this->send($request);
     }
 }

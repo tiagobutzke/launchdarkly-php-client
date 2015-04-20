@@ -13,6 +13,6 @@ class LocationApiClient extends AbstractApiClient
     {
         $request = $this->client->createRequest('GET', 'cities', $arguments);
 
-        return $this->send($request);
+        return $this->send($request)['data'];
     }
 }

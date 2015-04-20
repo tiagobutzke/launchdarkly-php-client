@@ -2,6 +2,7 @@
 
 namespace Volo\FrontendBundle\Security;
 
+use CommerceGuys\Guzzle\Oauth2\AccessToken;
 use Foodpanda\ApiSdk\Api\Auth\Credentials;
 use Foodpanda\ApiSdk\Api\CustomerApiClient;
 use GuzzleHttp\Exception\ClientException;
@@ -39,7 +40,8 @@ class ApiAuthenticator implements SimpleFormAuthenticatorInterface
         $credentials = new Credentials($token->getUsername(), $token->getCredentials());
 
         try {
-            $tokens = $this->customerApiClient->authenticate($credentials);
+            $data = $this->customerApiClient->authenticate($credentials);
+            $tokens = new AccessToken($data['access_token'], $data['token_type'], $data);
             $user   = $this->customerApiClient->getCustomers($tokens);
         } catch (ClientException $e) {
             throw new AuthenticationException('Invalid username or password');

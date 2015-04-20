@@ -17,6 +17,6 @@ class ConfigurationApiClient extends AbstractApiClient
             'include'     => $include,
         ]);
 
-        return $this->send($request);
+        return $this->send($request)['data'];
     }
 }
