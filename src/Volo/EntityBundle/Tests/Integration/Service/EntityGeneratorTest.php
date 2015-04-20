@@ -2,13 +2,23 @@
 
 namespace Volo\EntityBundle\Tests\Inte\Service;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Volo\EntityBundle\Entity\Chain\Chain;
 use Volo\EntityBundle\Entity\City\City;
+use Volo\EntityBundle\Entity\Configuration\PaymentFormConfiguration;
+use Volo\EntityBundle\Entity\Configuration\SocialConnects;
 use Volo\EntityBundle\Entity\Cuisine\Cuisine;
 use Volo\EntityBundle\Entity\Cuisine\CuisinesCollection;
+use Volo\EntityBundle\Entity\Customer\CustomerAddressConfiguration;
+use Volo\EntityBundle\Entity\Customer\CustomerConfiguration;
 use Volo\EntityBundle\Entity\Event\EventsCollection;
+use Volo\EntityBundle\Entity\FoodCharacteristics\FoodCharacteristics;
 use Volo\EntityBundle\Entity\FoodCharacteristics\FoodCharacteristicsCollection;
+use Volo\EntityBundle\Entity\FormElement\FormElement;
+use Volo\EntityBundle\Entity\FormElement\FormElementsCollection;
+use Volo\EntityBundle\Entity\Language\Language;
+use Volo\EntityBundle\Entity\Language\LanguagesCollection;
 use Volo\EntityBundle\Entity\Menu\Menu;
 use Volo\EntityBundle\Entity\Menu\MenusCollection;
 use Volo\EntityBundle\Entity\MenuCategory\MenuCategoriesCollection;
@@ -78,6 +88,53 @@ class EntityGeneratorTest extends WebTestCase
         $this->assertTheValidityOfVendorEntityStructure($entity);
 
         static::assertEquals($sourceData, $resultsData);
+    }
+
+    public function testGenerateConfiguration()
+    {
+        $sourceData = $this->apiDataResponseProvider->getConfigurationResponseData();
+        $entity = $this->entityGenerator->generateConfiguration($sourceData);
+        $resultData = $this->entityNormalizer->normalizeEntity($entity);
+
+        static::assertInstanceOf(SocialConnects::class, $entity->getEnabledSocialConnects());
+
+        static::assertInstanceOf(
+            FoodCharacteristicsCollection::class,
+            $entity->getFoodCharacteristicAvailableFilters()
+        );
+        static::assertInstanceOf(FoodCharacteristics::class, $entity->getFoodCharacteristicAvailableFilters()->first());
+
+        static::assertInstanceOf(LanguagesCollection::class, $entity->getLanguages());
+        static::assertInstanceOf(Language::class, $entity->getLanguages()->first());
+
+        // Customer Config
+        static::assertInstanceOf(CustomerConfiguration::class, $entity->getCustomerConfiguration());
+        static::assertInstanceOf(FormElementsCollection::class, $entity->getCustomerConfiguration()->getFormElements());
+        static::assertInstanceOf(FormElement::class, $entity->getCustomerConfiguration()->getFormElements()->first());
+
+        // Customer Address Config
+        static::assertInstanceOf(CustomerAddressConfiguration::class, $entity->getCustomerAddressConfiguration());
+        static::assertInstanceOf(
+            FormElementsCollection::class,
+            $entity->getCustomerAddressConfiguration()->getFormElements()
+        );
+        static::assertInstanceOf(
+            FormElement::class,
+            $entity->getCustomerAddressConfiguration()->getFormElements()->first()
+        );
+
+        // Payment Form Config
+        static::assertInstanceOf(PaymentFormConfiguration::class, $entity->getPaymentFormConfiguration());
+        static::assertInstanceOf(
+            FormElementsCollection::class,
+            $entity->getPaymentFormConfiguration()->getFormElements()
+        );
+        static::assertInstanceOf(
+            FormElement::class,
+            $entity->getPaymentFormConfiguration()->getFormElements()->first()
+        );
+
+        static::assertEquals($sourceData, $resultData);
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace Volo\EntityBundle\Tests\Fixtures;
 
+use Symfony\Component\Config\Definition\Exception\Exception;
+
 class ApiDataResponseFixtures
 {
     /**
@@ -31,6 +33,14 @@ class ApiDataResponseFixtures
     public function getVendorResponseData()
     {
         return $this->getResponseData('vendor.json');
+    }
+
+    /**
+     * @return array
+     */
+    public function getConfigurationResponseData()
+    {
+        return $this->getResponseData('configuration.json');
     }
 
     /**
