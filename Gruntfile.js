@@ -307,6 +307,12 @@ module.exports = function (grunt) {
         }
     };
 
+    config.bower = {
+        install: {
+            //just run 'grunt bower:install' and you'll see files from your Bower packages in lib directory
+        }
+    }
+
     grunt.initConfig(config);
 
     grunt.loadNpmTasks('grunt-contrib-copy');
@@ -315,10 +321,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-spritesmith');
+    grunt.loadNpmTasks('grunt-bower-task');
 
     // grunt additional tasks
-    grunt.registerTask('default', ['less']);
-    grunt.registerTask('deploy', ['less', 'uglify']);
+    grunt.registerTask('default', ['bower:install', 'less']);
+    grunt.registerTask('deploy', ['bower:install', 'less', 'uglify']);
 
     //grunt.registerTask('default', ['sprite', 'less', 'uglify', 'copy', 'jshint']);
     //grunt.registerTask('deploy', ['sprite', 'less', 'uglify']);
