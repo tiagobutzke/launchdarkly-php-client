@@ -11,3 +11,6 @@ framework:
 web_profiler:
     toolbar: false
     intercept_redirects: false
+
+parameters:
+    foodpanda.api.handler: guzzle.ring.client.mock_handler
