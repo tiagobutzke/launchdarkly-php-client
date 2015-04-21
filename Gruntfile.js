@@ -31,14 +31,14 @@ module.exports = function (grunt) {
         return md5(hash.join(''));
     }
 
-    var env = grunt.option('env') || 'dev';
+    var env = grunt.option('env') || 'prod';
 
     var jsSources = {};
 
     jsSources.head = [
         'bower_components/jquery/dist/jquery.js',
-        'web/bundles/heltheturbolinks/js/jquery.turbolinks.js',
-        'web/bundles/heltheturbolinks/js/turbolinks.js',
+        'node_modules/jquery.turbolinks/vendor/assets/javascripts/jquery.turbolinks.js',
+        'bower_components/turbolinks/assets/javascripts/turbolinks.js',
         frontendAssetPath('/js/main.js')
     ];
 
@@ -49,7 +49,7 @@ module.exports = function (grunt) {
     //    quality: 100
     // }
     var spriteCommonConfig = {
-        padding: 50,
+        padding: 5,
         engine: 'gmsmith',
         cssFormat: 'less',
         algorithm: 'top-down',
@@ -63,67 +63,33 @@ module.exports = function (grunt) {
 
     var sprite = {
         common: {},
-        homepage: {},
-        checkout: {},
-        customer: {},
-        basePath: '/bundles/foodpandashopsite/images'
+        basePath: '/bundles/volofrontend/images'
     };
-    sprite.common.src = frontendAssetPath('/images/sprite/common/*.png');
+    sprite.common.src = frontendAssetPath('/images/sprite/*.png');
+    sprite.common.srcFolder = frontendAssetPath('/images/sprite/');
     sprite.common.hash = md5Files(sprite.common.src);
-    sprite.homepage.src = frontendAssetPath('/images/sprite/home/*.png');
-    sprite.homepage.hash = md5Files(sprite.homepage.src);
-    sprite.checkout.src = frontendAssetPath('/images/sprite/checkout/*.png');
-    sprite.checkout.hash = md5Files(sprite.checkout.src);
-    sprite.customer.src = frontendAssetPath('/images/sprite/customer/*.png');
-    sprite.customer.hash = md5Files(sprite.customer.src);
 
     var config = {};
 
     config.sprite = {};
 
-    config.sprite.common = _.extend(
-        {},
-        spriteCommonConfig,
-        {
+    config.sprite = {
+        spritesheet: {
             src: sprite.common.src,
             dest: frontendAssetPath('/dist/sprite-' + sprite.common.hash + '.png'),
             destCss: frontendAssetPath('/css/styles/common/sprite-common.less'),
-            imgPath: '/bundles/foodpandashopsite/dist/sprite-' + sprite.common.hash + '.png',
+            imgPath: '/bundles/volofrontend/dist/sprite-' + sprite.common.hash + '.png'
+        },
+        retina: {
+            src: sprite.common.src,
+            dest: frontendAssetPath('/dist/sprite-' + sprite.common.hash + '.png'),
+            retinaSrcFilter:  sprite.common.srcFolder + ['*-2x.png'],
+            retinaDest: frontendAssetPath('/dist/sprite-' + sprite.common.hash + '-2x.png'),
+            destCss: frontendAssetPath('/css/styles/common/sprite-common.less'),
+            imgPath: '/bundles/volofrontend/dist/sprite-' + sprite.common.hash + '.png',
+            retinaImgPath: '/bundles/volofrontend/dist/sprite-' + sprite.common.hash + '-2x.png'
         }
-    );
-
-    config.sprite.homepage = _.extend(
-        {},
-        spriteCommonConfig,
-        {
-            src: sprite.homepage.src,
-            dest: frontendAssetPath('/dist/sprite-' + sprite.homepage.hash + '.png'),
-            destCss: frontendAssetPath('/css/styles/common/sprite-home.less'),
-            imgPath: '/bundles/foodpandashopsite/dist/sprite-' + sprite.homepage.hash + '.png',
-        }
-    );
-
-    config.sprite.checkout = _.extend(
-        {},
-        spriteCommonConfig,
-        {
-            src: sprite.checkout.src,
-            dest: frontendAssetPath('/dist/sprite-' + sprite.checkout.hash + '.png'),
-            destCss: frontendAssetPath('/css/styles/common/sprite-checkout.less'),
-            imgPath: '/bundles/foodpandashopsite/dist/sprite-' + sprite.checkout.hash + '.png',
-        }
-    );
-
-    config.sprite.customer = _.extend(
-        {},
-        spriteCommonConfig,
-        {
-            src: sprite.customer.src,
-            dest: frontendAssetPath('/dist/sprite_' + sprite.customer.hash + '.png'),
-            destCss: frontendAssetPath('/css/styles/common/sprite-customer.less'),
-            imgPath: '/bundles/foodpandashopsite/dist/sprite_' + sprite.customer.hash + '.png'
-        }
-    );
+    };
 
     config.less = {
         options: {
@@ -258,7 +224,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-bower-task');
 
     // grunt additional tasks
-    grunt.registerTask('default', ['bower:install', 'less', 'uglify', 'copy', 'jshint']);
+    grunt.registerTask('default', ['bower:install', 'sprite', 'less', 'uglify', 'copy', 'jshint']);
     grunt.registerTask('deploy', ['bower:install', 'less', 'uglify']);
 
     //grunt.registerTask('default', ['sprite', 'less', 'uglify', 'copy', 'jshint']);
