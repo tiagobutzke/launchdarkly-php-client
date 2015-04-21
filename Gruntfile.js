@@ -31,14 +31,14 @@ module.exports = function (grunt) {
         return md5(hash.join(''));
     }
 
-    var env = grunt.option('env') || 'prod';
+    var env = grunt.option('env') || 'dev';
 
     var jsSources = {};
 
     jsSources.head = [
         'bower_components/jquery/dist/jquery.js',
-        'node_modules/jquery.turbolinks/vendor/assets/javascripts/jquery.turbolinks.js',
-        'bower_components/turbolinks/assets/javascripts/turbolinks.js',
+        'web/bundles/heltheturbolinks/js/jquery.turbolinks.js',
+        'web/bundles/heltheturbolinks/js/turbolinks.js',
         frontendAssetPath('/js/main.js')
     ];
 
