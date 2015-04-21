@@ -1,3 +1,16 @@
 {% block header %}
+        <header class="topbar">
 
+            <h1 class="topbar__logo">Volo</h1>
+
+            <div class="topbar__login">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <b>Username: {{ app.security.token.attributes.first_name }}</b>
+                    <a href="{{ path('logout') }}">Logout</a>
+                {% else %}
+                    <a href="{{ path('login') }}">Login</a>
+                {% endif %}
+            </div>
+
+        </header>
 {% endblock header %}

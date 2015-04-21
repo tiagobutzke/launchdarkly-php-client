@@ -2,3 +2,48 @@
 
 @import "./_bootstrap.less";
 @import "./_shop.less";
+
+@imagepath: "../../img/";
+
+//page-wrapper
+
+.page-wrapper {
+ padding-top: 60px;
+ padding-bottom: 60px;
+}
+
+// topbar
+
+.topbar {
+  &:extend(.navbar-fixed-top);
+  background-color: #fff;
+  height: 60px;
+  text-align: center;
+}
+
+.topbar__container {
+  max-width: 1600px;
+}
+
+.topbar__logo {
+  margin: 15px auto;
+  width: 113px;
+  height: 30px;
+  display: block;
+  background-image: url("@{imagepath}logo.png");
+  overflow: hidden;
+  line-height: 500px;
+}
+.topbar__login {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+// footer
+
+.footer {
+  &:extend(.navbar-fixed-bottom);
+  background-color: #5e5e5e;
+  min-height: 60px;
+}
