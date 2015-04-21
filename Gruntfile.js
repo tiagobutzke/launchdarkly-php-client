@@ -7,14 +7,22 @@ var _ = require('lodash');
 module.exports = function (grunt) {
 
     function frontendAssetPath(path) {
-        var bundlePublicPath = 'src/Volo/FrontendBundle/Resources/public';
+        var assetsPath = 'src/Volo/FrontendBundle/Resources/public';
+        return getPath(path, assetsPath);
+    }
 
+    function frontendWebPath(path) {
+        var assetsPath = 'web';
+        return getPath(path, assetsPath);
+    }
+
+    function getPath(path, assetsPath) {
         if (Array.isArray(path)) {
             for (var i = 0; i < path.length; i++) {
-                path[i] = bundlePublicPath + path[i];
+                path[i] = assetsPath + path[i];
             }
         } else {
-            path = bundlePublicPath + path;
+            path = assetsPath + path;
         }
         return path;
     }
@@ -42,31 +50,12 @@ module.exports = function (grunt) {
         frontendAssetPath('/js/main.js')
     ];
 
-
-    // quality is a misnomer, it actually refers to the level of compression,
-    // where 0 is uncompressed and 100 is compressed to the highest degree
-    // imgOpts: {
-    //    quality: 100
-    // }
-    var spriteCommonConfig = {
-        padding: 5,
-        engine: 'gmsmith',
-        cssFormat: 'less',
-        algorithm: 'top-down',
-        cssVarMap: function (sprite) {
-            sprite.name = 'sprite-' + sprite.name;
-        },
-        imgOpts: {
-            quality: 100
-        }
-    };
-
     var sprite = {
         common: {},
-        basePath: '/bundles/volofrontend/images'
+        basePath: '/web/img/dist/'
     };
-    sprite.common.src = frontendAssetPath('/images/sprite/*.png');
-    sprite.common.srcFolder = frontendAssetPath('/images/sprite/');
+    sprite.common.src = frontendAssetPath('/img/sprite/*.png');
+    sprite.common.srcFolder = frontendAssetPath('/img/sprite/');
     sprite.common.hash = md5Files(sprite.common.src);
 
     var config = {};
@@ -76,18 +65,20 @@ module.exports = function (grunt) {
     config.sprite = {
         spritesheet: {
             src: sprite.common.src,
-            dest: frontendAssetPath('/dist/sprite-' + sprite.common.hash + '.png'),
-            destCss: frontendAssetPath('/css/styles/common/sprite-common.less'),
-            imgPath: '/bundles/volofrontend/dist/sprite-' + sprite.common.hash + '.png'
+            dest: frontendWebPath('/img/dist/sprite-' + sprite.common.hash + '.png'),
+            destCss: frontendAssetPath('/dist/less/sprite-common.less'),
+            imgPath: '/img/dist/sprite-' + sprite.common.hash + '.png',
+            algorithm: 'top-down'
         },
         retina: {
             src: sprite.common.src,
-            dest: frontendAssetPath('/dist/sprite-' + sprite.common.hash + '.png'),
+            dest: frontendWebPath('/img/dist/sprite-' + sprite.common.hash + '.png'),
             retinaSrcFilter:  sprite.common.srcFolder + ['*-2x.png'],
-            retinaDest: frontendAssetPath('/dist/sprite-' + sprite.common.hash + '-2x.png'),
-            destCss: frontendAssetPath('/css/styles/common/sprite-common.less'),
-            imgPath: '/bundles/volofrontend/dist/sprite-' + sprite.common.hash + '.png',
-            retinaImgPath: '/bundles/volofrontend/dist/sprite-' + sprite.common.hash + '-2x.png'
+            retinaDest: frontendWebPath('/img/dist/sprite-' + sprite.common.hash + '-2x.png'),
+            destCss: frontendAssetPath('/dist/less/sprite-common.less'),
+            imgPath: '/img/dist/sprite-' + sprite.common.hash + '.png',
+            retinaImgPath: '/img/dist/sprite-' + sprite.common.hash + '-2x.png',
+            algorithm: 'top-down'
         }
     };
 
@@ -125,13 +116,13 @@ module.exports = function (grunt) {
         siteBundleStyle: {
             files: [{
                 src: frontendAssetPath('/css/main.less'),
-                dest: frontendAssetPath('/dist/style.css')
+                dest: frontendWebPath('/css/dist/style.css')
             }]
         },
         siteBundleStyleRTL: {
             files: [{
                 src: frontendAssetPath('/css/main-rtl.less'),
-                dest: frontendAssetPath('/dist/style-rtl.css')
+                dest: frontendWebPath('/css/dist/style-rtl.css')
             }]
         }
     };
@@ -145,7 +136,7 @@ module.exports = function (grunt) {
         },
         head: {
             src: jsSources.head,
-            dest: frontendAssetPath('/js/dist/head.js')
+            dest: frontendWebPath('/js/dist/head.js')
         }
     };
 
@@ -188,19 +179,6 @@ module.exports = function (grunt) {
         }
     };
 
-    config.copy = {
-        main: {
-            files: [{
-                expand: true,
-                flatten: true,
-                cwd: './',
-                src: frontendAssetPath('/dist/*.map'),
-                dest: 'web/js/',
-                filter: 'isFile'
-            }]
-        }
-    };
-
     config.bower = {
         install: {
             options: {
@@ -221,7 +199,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-bower-task');
 
     // grunt additional tasks
-    grunt.registerTask('default', ['bower:install', 'sprite', 'less', 'uglify', 'copy', 'jshint']);
+    grunt.registerTask('default', ['bower:install', 'sprite', 'less', 'uglify', 'jshint']);
     grunt.registerTask('deploy', ['bower:install', 'less', 'uglify']);
 
     //grunt.registerTask('default', ['sprite', 'less', 'uglify', 'copy', 'jshint']);
