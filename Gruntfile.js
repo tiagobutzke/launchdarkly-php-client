@@ -172,10 +172,7 @@ module.exports = function (grunt) {
         },
         sprite: {
             files: [
-                '<%= sprite.common.src %>',
-                '<%= sprite.homepage.src %>',
-                '<%= sprite.checkout.src %>',
-                '<%= sprite.customer.src %>'
+                '<%= sprite.spritesheet.src %>',
             ],
             tasks: ['sprite']
         },
