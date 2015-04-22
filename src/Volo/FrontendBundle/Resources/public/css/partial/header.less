@@ -1,0 +1,25 @@
+/*
+* header declarations
+*/
+
+.topbar {
+  &:extend(.navbar-fixed-top);
+  background-color: #fff;
+  height: 60px;
+  text-align: center;
+}
+
+.topbar__logo {
+  margin: 15px auto;
+  width: 113px;
+  height: 30px;
+  display: block;
+  background-image: url("@{imagepath}logo.png");
+  overflow: hidden;
+  line-height: 500px;
+}
+.topbar__login {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
