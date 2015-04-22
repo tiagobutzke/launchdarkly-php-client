@@ -39,7 +39,8 @@
         "city": {
           "id": 5,
           "name": "Faridabad",
-          "is_top_city": null
+          "is_top_city": null,
+          "main_area": null
         },
         "chain": {
           "id": 0,
@@ -249,7 +250,8 @@
         "city": {
           "id": 1,
           "name": "Delhi",
-          "is_top_city": null
+          "is_top_city": null,
+          "main_area": null
         },
         "chain": {
           "id": 0,
@@ -408,7 +410,8 @@
         "city": {
           "id": 5,
           "name": "Faridabad",
-          "is_top_city": null
+          "is_top_city": null,
+          "main_area": null
         },
         "chain": {
           "id": 0,
@@ -610,7 +613,8 @@
         "city": {
           "id": 1,
           "name": "Delhi",
-          "is_top_city": null
+          "is_top_city": null,
+          "main_area": null
         },
         "chain": {
           "id": 426,
@@ -808,7 +812,8 @@
         "city": {
           "id": 5,
           "name": "Faridabad",
-          "is_top_city": null
+          "is_top_city": null,
+          "main_area": null
         },
         "chain": {
           "id": 0,
@@ -1120,7 +1125,8 @@
         "city": {
           "id": 5,
           "name": "Faridabad",
-          "is_top_city": null
+          "is_top_city": null,
+          "main_area": null
         },
         "chain": {
           "id": 0,
@@ -1331,7 +1337,8 @@
         "city": {
           "id": 5,
           "name": "Faridabad",
-          "is_top_city": null
+          "is_top_city": null,
+          "main_area": null
         },
         "chain": {
           "id": 0,
@@ -1523,7 +1530,8 @@
         "city": {
           "id": 5,
           "name": "Faridabad",
-          "is_top_city": null
+          "is_top_city": null,
+          "main_area": null
         },
         "chain": {
           "id": 0,
@@ -1745,7 +1753,8 @@
         "city": {
           "id": 1,
           "name": "Delhi",
-          "is_top_city": null
+          "is_top_city": null,
+          "main_area": null
         },
         "chain": {
           "id": 0,
@@ -1937,7 +1946,8 @@
         "city": {
           "id": 5,
           "name": "Faridabad",
-          "is_top_city": null
+          "is_top_city": null,
+          "main_area": null
         },
         "chain": {
           "id": 0,

@@ -35,7 +35,8 @@
     "city": {
       "id": 5,
       "name": "Faridabad",
-      "is_top_city": null
+      "is_top_city": null,
+      "main_area": null
     },
     "chain": {
       "id": 0,

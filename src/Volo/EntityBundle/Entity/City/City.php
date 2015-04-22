@@ -3,6 +3,7 @@
 namespace Volo\EntityBundle\Entity\City;
 
 use Volo\EntityBundle\Entity\DataObject;
+use Volo\EntityBundle\Entity\Geocoding\Area;
 
 class City extends DataObject
 {
@@ -14,6 +15,34 @@ class City extends DataObject
 
     /** @var int */
     protected $is_top_city;
+
+    /**
+     * @var array
+     */
+    protected $objectClasses = [
+        'main_are' => Area::class,
+    ];
+
+    /**
+     * @var Area
+     */
+    protected $main_area;
+
+    /**
+     * @return Area
+     */
+    public function getMainArea()
+    {
+        return $this->main_area;
+    }
+
+    /**
+     * @param Area $main_area
+     */
+    public function setMainArea($main_area)
+    {
+        $this->main_area = $main_area;
+    }
 
     /**
      * @return int
