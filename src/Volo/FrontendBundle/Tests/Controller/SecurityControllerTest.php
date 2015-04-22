@@ -2,39 +2,45 @@
 
 namespace Volo\FrontendBundle\Tests\Controller;
 
-class SecurityControllerTest extends BaseControllerTest
+class SecurityControllerTestCase extends VoloTestCase
 {
     public function testSuccessfulLogin()
     {
-        $crawler = $this->client->request('GET', '/login');
+        $client = static::createClient();
+        $client->followRedirects();
 
-        $this->assertTrue($this->client->getResponse()->isSuccessful());
+        $crawler = $client->request('GET', '/login');
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
 
         $form              = $crawler->selectButton('login')->form();
         $form['_username'] = 'john.doe@rocket-internet.de';
         $form['_password'] = 'good';
-        $this->client->submit($form);
+        $client->submit($form);
 
-        $this->assertTrue($this->client->getResponse()->isSuccessful());
+        $this->isSuccessful($client->getResponse());
         $this->assertInstanceOf('Volo\FrontendBundle\Security\Token',
-            $this->client->getContainer()->get('security.token_storage')->getToken()
+            $client->getContainer()->get('security.token_storage')->getToken()
         );
     }
 
     public function testFailedLogin()
     {
-        $crawler = $this->client->request('GET', '/login');
+        $client = static::createClient();
+        $client->followRedirects();
 
-        $this->assertTrue($this->client->getResponse()->isSuccessful());
+        $crawler = $client->request('GET', '/login');
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
 
         $form              = $crawler->selectButton('login')->form();
         $form['_username'] = 'john.doe@rocket-internet.de';
         $form['_password'] = 'bad';
-        $this->client->submit($form);
+        $client->submit($form);
 
-        $this->assertTrue($this->client->getResponse()->isSuccessful());
+        $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertInstanceOf('Symfony\Component\Security\Core\Authentication\Token\AnonymousToken',
-            $this->client->getContainer()->get('security.token_storage')->getToken()
+            $client->getContainer()->get('security.token_storage')->getToken()
         );
     }
 }

@@ -2,9 +2,7 @@
 
 namespace Volo\FrontendBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
-class HomeControllerTest extends WebTestCase
+class HomeControllerTestCase extends VoloTestCase
 {
     public function testIndex()
     {
@@ -12,6 +10,6 @@ class HomeControllerTest extends WebTestCase
 
         $client->request('GET', '/');
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->isSuccessful($client->getResponse());
     }
 }

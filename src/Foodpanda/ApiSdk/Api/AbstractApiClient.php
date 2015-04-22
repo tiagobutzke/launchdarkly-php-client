@@ -6,8 +6,8 @@ use CommerceGuys\Guzzle\Oauth2\AccessToken;
 use CommerceGuys\Guzzle\Oauth2\Oauth2Subscriber;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ParseException;
-use GuzzleHttp\Message\Request;
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Message\RequestInterface;
 
 abstract class AbstractApiClient
 {
@@ -39,32 +39,30 @@ abstract class AbstractApiClient
     }
 
     /**
-     * @param Request $request
+     * @param RequestInterface $request
      *
      * @return array
      * @throw ClientException|ParseException
      */
-    protected function send(Request $request)
+    protected function send(RequestInterface $request)
     {
         try {
             $response = $this->client->send($request);
-        } catch (ClientException $exception) {
-            $this->formatErrorMessage($exception->getResponse()->json(), $exception);
-        }
 
-        try {
             return $response->json();
         } catch (ParseException $e) {
             // @todo
             throw $e;
+        } catch (ClientException $exception) {
+            $this->formatErrorMessage($exception->getResponse()->json(), $exception);
         }
     }
 
     /**
-     * @param Request     $request
+     * @param RequestInterface $request
      * @param AccessToken $accessToken
      */
-    protected function attachAuthenticationDataToRequest(Request $request, AccessToken $accessToken)
+    protected function attachAuthenticationDataToRequest(RequestInterface $request, AccessToken $accessToken)
     {
         $oauth2 = new Oauth2Subscriber();
         $oauth2->setAccessToken($accessToken);

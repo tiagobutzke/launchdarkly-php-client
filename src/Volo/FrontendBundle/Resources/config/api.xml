@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="volo_frontend.api.factory.class">Foodpanda\ApiSdk\ApiFactory</parameter>
+        <parameter key="volo_frontend.provider.abstract.class">Foodpanda\ApiSdk\Provider\AbstractProvider</parameter>
+        <parameter key="volo_frontend.provider.city.class">Foodpanda\ApiSdk\Provider\CityProvider</parameter>
+        <parameter key="volo_frontend.api_authenticator.class">Volo\FrontendBundle\Security\ApiAuthenticator</parameter>
+        <parameter key="volo_frontend.provider.customer.class">Foodpanda\ApiSdk\Provider\CustomerProvider</parameter>
+        <parameter key="volo_frontend.provider.oauth.class">Foodpanda\ApiSdk\Provider\OAuthProvider</parameter>
+    </parameters>
+
+    <services>
+        <service id="volo_frontend.api.factory" class="%volo_frontend.api.factory.class%" />
+
+        <service id="volo_frontend.api.serializer" class="Symfony\Component\Serializer\Serializer">
+            <factory service="volo_frontend.api.factory" method="createSerializer" />
+        </service>
+
+        <service id="volo_frontend.api_authenticator" class="%volo_frontend.api_authenticator.class%">
+            <argument type="service" id="volo_frontend.provider.customer" />
+            <argument type="service" id="volo_frontend.provider.oauth" />
+        </service>
+
+        <service id="volo_frontend.provider.city" class="%volo_frontend.provider.city.class%">
+            <argument type="service" id="volo_frontend.api.location_api_client"/>
+            <argument type="service" id="volo_frontend.api.serializer"/>
+        </service>
+
+        <service id="volo_frontend.provider.oauth" class="%volo_frontend.provider.oauth.class%">
+            <argument type="service" id="volo_frontend.api.oauth_api_client"/>
+            <argument type="service" id="volo_frontend.api.serializer"/>
+        </service>
+
+        <service id="volo_frontend.provider.customer" class="%volo_frontend.provider.customer.class%">
+            <argument type="service" id="volo_frontend.api.customer_api_client"/>
+            <argument type="service" id="volo_frontend.api.serializer"/>
+        </service>
+
+    </services>
+</container>
