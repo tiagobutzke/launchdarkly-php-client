@@ -132,11 +132,13 @@ module.exports = function (grunt) {
             sourceMap: (env === 'dev'),
             sourceMapIncludeSources: (env === 'dev'),
             compress: (env !== 'dev'),
-            beautify: (env === 'dev')
+            beautify: (env === 'dev'),
+            sourceMapName: 'js/dist/head.js.map'
         },
         head: {
             src: jsSources.head,
-            dest: frontendWebPath('/js/dist/head.js')
+            dest: frontendWebPath('/js/dist/head.js'),
+            sourceMapRoot: 'js/dist/head.js.map'
         }
     };
 
