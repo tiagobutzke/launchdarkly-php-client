@@ -20,7 +20,7 @@ class CityProvider extends AbstractProvider
      */
     public function find($id)
     {
-        return $this->serializer->denormalize($this->client->getCity($id), CityResults::class);
+        return $this->serializer->denormalizeCity($this->client->getCity($id));
     }
 
     /**
@@ -28,6 +28,6 @@ class CityProvider extends AbstractProvider
      */
     public function findAll()
     {
-        return $this->serializer->denormalize($this->client->getCities(), CityResults::class);
+        return $this->serializer->denormalizeCities($this->client->getCities());
     }
 }

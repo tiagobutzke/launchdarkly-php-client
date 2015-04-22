@@ -8,11 +8,6 @@ use Foodpanda\ApiSdk\Entity\DataObject;
 
 class PostGuestOrderResponse extends DataObject
 {
-    protected $objectClasses = [
-        'customer' => Customer::class,
-        'customer_address' => Address::class,
-    ];
-
     /**
      * @var Customer
      */
@@ -22,6 +17,12 @@ class PostGuestOrderResponse extends DataObject
      * @var Address
      */
     protected $customer_address;
+
+    public function __construct()
+    {
+        $this->customer = new Customer();
+        $this->customer_address = new Address();
+    }
 
     /**
      * @return Customer

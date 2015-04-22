@@ -17,16 +17,14 @@ class City extends DataObject
     protected $is_top_city;
 
     /**
-     * @var array
-     */
-    protected $objectClasses = [
-        'main_are' => Area::class,
-    ];
-
-    /**
      * @var Area
      */
     protected $main_area;
+
+    public function __construct()
+    {
+        $this->main_area = new Area();
+    }
 
     /**
      * @return Area

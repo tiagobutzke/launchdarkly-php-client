@@ -4,6 +4,7 @@ namespace Volo\FrontendBundle\Security;
 
 use CommerceGuys\Guzzle\Oauth2\AccessToken;
 use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
+use Symfony\Component\Security\Core\Role\RoleInterface;
 
 class Token extends AbstractToken
 {
