@@ -6,6 +6,7 @@ filter:
         - 'src/*'
     excluded_paths:
         - 'src/Volo/*/Tests/*'
+        - 'src/Foodpanda/ApiSdk/*/Tests/*'
 
 tools:
     php_analyzer:
