@@ -15,4 +15,16 @@ class LocationApiClient extends AbstractApiClient
 
         return $this->send($request)['data'];
     }
+
+    /**
+     * @param int $id
+     *
+     * @return array
+     */
+    public function getCity($id)
+    {
+        $request = $this->client->createRequest('GET', 'cities', ['id' => $id]);
+
+        return $this->send($request)['data'];
+    }
 }

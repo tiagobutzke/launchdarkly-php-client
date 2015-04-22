@@ -5,6 +5,8 @@ namespace Volo\FrontendBundle\Security;
 use CommerceGuys\Guzzle\Oauth2\AccessToken;
 use Foodpanda\ApiSdk\Api\Auth\Credentials;
 use Foodpanda\ApiSdk\Api\CustomerApiClient;
+use Foodpanda\ApiSdk\Provider\CustomerProvider;
+use Foodpanda\ApiSdk\Provider\OAuthProvider;
 use GuzzleHttp\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\SimpleFormAuthenticatorInterface;
@@ -16,16 +18,23 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 class ApiAuthenticator implements SimpleFormAuthenticatorInterface
 {
     /**
-     * @var CustomerApiClient
+     * @var CustomerProvider
      */
-    private $customerApiClient;
+    private $customerProvider;
 
     /**
-     * @param CustomerApiClient $customerApiClient
+     * @var OAuthProvider
      */
-    public function __construct(CustomerApiClient $customerApiClient)
+    private $oAuthProvider;
+
+    /**
+     * @param CustomerProvider $customerProvider
+     * @param OAuthProvider $oAuthProvider
+     */
+    public function __construct(CustomerProvider $customerProvider, OAuthProvider $oAuthProvider)
     {
-        $this->customerApiClient = $customerApiClient;
+        $this->customerProvider = $customerProvider;
+        $this->oAuthProvider = $oAuthProvider;
     }
 
     /**
@@ -40,8 +49,8 @@ class ApiAuthenticator implements SimpleFormAuthenticatorInterface
         $credentials = new Credentials($token->getUsername(), $token->getCredentials());
 
         try {
-            $data = $this->customerApiClient->authenticate($credentials);
-            $user = $this->customerApiClient->getCustomers(
+            $data = $this->oAuthProvider->authenticate($credentials);
+            $user = $this->customerProvider->getCustomer(
                 new AccessToken($data['access_token'], $data['token_type'], $data)
             );
         } catch (ClientException $e) {

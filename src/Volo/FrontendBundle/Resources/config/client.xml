@@ -1,0 +1,77 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="guzzle.http_client.class">GuzzleHttp\Client</parameter>
+        <parameter key="guzzle.event.emitter.class">GuzzleHttp\Event\Emitter</parameter>
+        <parameter key="guzzle.subscriber.log.log_subscriber.class">GuzzleHttp\Subscriber\Log\LogSubscriber</parameter>
+        <parameter key="guzzle.subscriber.log.formatter.format" type="constant">GuzzleHttp\Subscriber\Log\Formatter::DEBUG</parameter>
+        <parameter key="guzzle.ring.client.mock_handler.class">GuzzleHttp\Ring\Client\MockHandler</parameter>
+        <parameter key="guzzle.ring.client.curl_handler.class">GuzzleHttp\Ring\Client\CurlHandler</parameter>
+
+        <parameter key="volo_frontend.api.mock.handler_callable.class">Foodpanda\ApiSdk\Tests\MockHandlerCallable</parameter>
+
+        <parameter key="volo_frontend.api.abstract_api_client.class">Foodpanda\ApiSdk\Api\AbstractApiClient</parameter>
+        <parameter key="volo_frontend.api.location_api_client.class">Foodpanda\ApiSdk\Api\LocationApiClient</parameter>
+        <parameter key="volo_frontend.api.configuration_api_client.class">Foodpanda\ApiSdk\Api\ConfigurationApiClient</parameter>
+        <parameter key="volo_frontend.api.translation_api_client.class">Foodpanda\ApiSdk\Api\TranslationApiClient</parameter>
+        <parameter key="volo_frontend.api.customer_api_client.class">Foodpanda\ApiSdk\Api\CustomerApiClient</parameter>
+        <parameter key="volo_frontend.api.oauth_api_client.class">Foodpanda\ApiSdk\Api\OAuthApiClient</parameter>
+    </parameters>
+
+    <services>
+
+        <service id="volo_frontend.log_subscriber" class="%guzzle.event.emitter.class%"/>
+        <service id="volo_frontend.api.mock.handler_callable" class="%volo_frontend.api.mock.handler_callable.class%"/>
+        <service id="guzzle.ring.client.curl_handler" class="%guzzle.ring.client.curl_handler.class%"/>
+        <service id="guzzle.ring.client.mock_handler" class="%guzzle.ring.client.mock_handler.class%">
+            <argument type="service" id="volo_frontend.api.mock.handler_callable" />
+        </service>
+
+        <service id="guzzle.ring.client.handler_factory" class="stdClass"
+                 factory-service="service_container"
+                 factory-method="get">
+            <argument>%foodpanda.api.handler%</argument>
+        </service>
+
+        <service id="guzzle.subscriber.log.log_subscriber" class="%guzzle.subscriber.log.log_subscriber.class%">
+            <argument type="service" id="monolog.logger.api" />
+            <argument type="string">%guzzle.subscriber.log.formatter.format%</argument>
+        </service>
+
+        <service id="volo_frontend.guzzle.event.emitter" class="%guzzle.event.emitter.class%" public="false">
+            <call method="attach">
+                <argument type="service" id="guzzle.subscriber.log.log_subscriber" />
+            </call>
+        </service>
+
+        <service id="volo_frontend.guzzle.client" class="%guzzle.http_client.class%" public="false">
+            <argument type="collection">
+                <argument key="base_url" type="string">%foodpanda.api.base_url%</argument>
+                <argument key="emitter" type="service" id="volo_frontend.guzzle.event.emitter" />
+                <argument key="handler" type="service" id="guzzle.ring.client.handler_factory"/>
+                <argument key="defaults" type="collection">
+                    <argument key="headers" type="collection">
+                        <argument key="X-FP-API-KEY" type="string">%foodpanda.api.client_id%</argument>
+                    </argument>
+                </argument>
+            </argument>
+        </service>
+
+        <service id="volo_frontend.api.abstract_api_client" class="%volo_frontend.api.abstract_api_client.class%" abstract="true" public="false">
+            <argument id="volo_frontend.guzzle.client" type="service"/>
+            <argument>%foodpanda.api.client_id%</argument>
+            <argument>%foodpanda.api.client_secret%</argument>
+        </service>
+
+        <service id="volo_frontend.api.configuration_api_client" class="%volo_frontend.api.configuration_api_client.class%" parent="volo_frontend.api.abstract_api_client" public="false" />
+        <service id="volo_frontend.api.oauth_api_client" class="%volo_frontend.api.oauth_api_client.class%" parent="volo_frontend.api.abstract_api_client" public="false" />
+        <service id="volo_frontend.api.customer_api_client" class="%volo_frontend.api.customer_api_client.class%" parent="volo_frontend.api.abstract_api_client" public="false" />
+        <service id="volo_frontend.api.location_api_client" class="%volo_frontend.api.location_api_client.class%" parent="volo_frontend.api.abstract_api_client" public="false" />
+        <service id="volo_frontend.api.translation_api_client" class="%volo_frontend.api.translation_api_client.class%" parent="volo_frontend.api.abstract_api_client" public="false" />
+
+    </services>
+</container>

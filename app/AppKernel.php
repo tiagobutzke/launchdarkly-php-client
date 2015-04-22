@@ -15,7 +15,6 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Volo\FrontendBundle\VoloFrontendBundle(),
-            new Volo\EntityBundle\VoloEntityBundle(),
             new Volo\ApiClientBundle\VoloApiClientBundle(),
             new Helthe\Bundle\TurbolinksBundle\HeltheTurbolinksBundle(),
         );
