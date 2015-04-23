@@ -5,7 +5,7 @@
                 <h1 class="header__logo"><b>VOLO</b></h1>
                 <div class="header__login">
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <b>Username: {{ app.security.token.attributes.firstName }}</b>
+                        <b>Username: {{ app.security.token.attributes.customer.firstName }}</b>
                         <a href="{{ path('logout') }}">Logout</a>
                     {% else %}
                         <a href="{{ path('login') }}">Login</a>
