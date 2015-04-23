@@ -3,7 +3,6 @@
 namespace Foodpanda\ApiSdk;
 
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 class ApiFactory
 {

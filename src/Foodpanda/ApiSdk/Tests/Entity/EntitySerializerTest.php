@@ -3,13 +3,14 @@
 namespace Foodpanda\ApiSdk\Tests\Entity;
 
 use Foodpanda\ApiSdk\ApiFactory;
+use Foodpanda\ApiSdk\Entity\Cms\CmsItemCollection;
+use Foodpanda\ApiSdk\Entity\Vendor\VendorsCollection;
+use Foodpanda\ApiSdk\Serializer;
 use Foodpanda\ApiSdk\Tests\Fixtures\ApiDataResponseFixtures;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\Serializer\Serializer;
 use Foodpanda\ApiSdk\Entity\Chain\Chain;
 use Foodpanda\ApiSdk\Entity\City\City;
 use Foodpanda\ApiSdk\Entity\Cms\CmsResults;
-use Foodpanda\ApiSdk\Entity\Configuration\Configuration;
 use Foodpanda\ApiSdk\Entity\Configuration\PaymentFormConfiguration;
 use Foodpanda\ApiSdk\Entity\Configuration\SocialConnects;
 use Foodpanda\ApiSdk\Entity\Cuisine\Cuisine;
@@ -58,26 +59,29 @@ class EntitySerializerTest extends WebTestCase
     public function testGenerateCms()
     {
         $sourceData = $this->apiDataResponseProvider->getCmsResponseData();
-        $entity = $this->serializer->denormalize($sourceData, CmsResults::class);
-        $resultData = $this->serializer->normalize($entity);
+        $entity = $this->serializer->denormalizeCms($sourceData);
+        static::assertInstanceOf(CmsResults::class, $entity);
+        static::assertInstanceOf(CmsItemCollection::class, $entity->getItems());
 
+        $resultData = $this->serializer->normalize($entity);
         static::assertEquals($sourceData, $resultData);
     }
 
     public function testGenerateVendorList()
     {
         $sourceData = $this->apiDataResponseProvider->getVendorListResponseData();
-        $entity = $this->serializer->denormalize($sourceData, VendorResults::class);
-        $resultsData = $this->serializer->normalize($entity);
+        $entity = $this->serializer->denormalizeVendors($sourceData);
+        static::assertInstanceOf(VendorsCollection::class, $entity->getItems());
         static::assertInstanceOf(VendorResults::class, $entity);
 
+        $resultsData = $this->serializer->normalize($entity);
         static::assertEquals($sourceData, $resultsData);
     }
 
     public function testGenerateVendor()
     {
         $sourceData = $this->apiDataResponseProvider->getVendorResponseData();
-        $entity = $this->serializer->denormalize($sourceData, Vendor::class);
+        $entity = $this->serializer->denormalizeVendor($sourceData);
         $resultsData = $this->serializer->normalize($entity);
         $this->assertTheValidityOfVendorEntityStructure($entity);
 
@@ -87,8 +91,7 @@ class EntitySerializerTest extends WebTestCase
     public function testGenerateConfiguration()
     {
         $sourceData = $this->apiDataResponseProvider->getConfigurationResponseData();
-        $entity = $this->serializer->denormalize($sourceData, Configuration::class);
-        $resultData = $this->serializer->normalize($entity);
+        $entity = $this->serializer->denormalizeConfiguration($sourceData);
 
         static::assertInstanceOf(SocialConnects::class, $entity->getEnabledSocialConnects());
 
@@ -127,6 +130,8 @@ class EntitySerializerTest extends WebTestCase
             FormElement::class,
             $entity->getPaymentFormConfiguration()->getFormElements()->first()
         );
+
+        $resultData = $this->serializer->normalize($entity);
 
         static::assertEquals($sourceData, $resultData);
     }

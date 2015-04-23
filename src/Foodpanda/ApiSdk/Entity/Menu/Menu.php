@@ -4,6 +4,7 @@ namespace Foodpanda\ApiSdk\Entity\Menu;
 
 use Foodpanda\ApiSdk\Entity\DataObject;
 use Foodpanda\ApiSdk\Entity\MenuCategory\MenuCategoriesCollection;
+use Foodpanda\ApiSdk\Entity\MenuCategory\MenuCategory;
 
 class Menu extends DataObject
 {
@@ -128,7 +129,7 @@ class Menu extends DataObject
     }
 
     /**
-     * @return MenuCategoriesCollection
+     * @return MenuCategoriesCollection|MenuCategory[]
      */
     public function getMenuCategories()
     {

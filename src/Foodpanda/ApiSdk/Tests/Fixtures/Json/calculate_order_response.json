@@ -1,0 +1,77 @@
+{
+  "status_code": 200,
+  "data": {
+    "subtotal": 160,
+    "subtotal_before_discount": 160,
+    "subtotal_after_product_discount": 160,
+    "subtotal_after_discount": 160,
+    "subtotal_after_discount_and_delivery_fee": 160,
+    "subtotal_after_discount_and_service_fee": 160,
+    "subtotal_after_discount_and_delivery_fee_and_service_fee": 160,
+    "total_value": 183.2,
+    "group_joiner_total": 183.2,
+    "container_charge": 0,
+    "delivery_fee": 0,
+    "vat_total": 23.2,
+    "voucher_total": 0,
+    "discount_total": 0,
+    "delivery_fee_discount": 0,
+    "service_tax_total": 0,
+    "service_fee_total": 0,
+    "vendorCart": [
+      {
+        "subtotal": 160,
+        "subtotal_before_discount": 160,
+        "subtotal_after_product_discount": 160,
+        "subtotal_after_discount": 160,
+        "subtotal_after_discount_and_delivery_fee": 160,
+        "subtotal_after_discount_and_service_fee": 160,
+        "subtotal_after_discount_and_delivery_fee_and_service_fee": 160,
+        "total_value": 183.2,
+        "group_joiner_total": 183.2,
+        "container_charge": 0,
+        "delivery_fee": 0,
+        "vat_total": 23.2,
+        "voucher_total": null,
+        "discount_total": 0,
+        "delivery_fee_discount": 0,
+        "service_tax_total": 0,
+        "service_fee_total": 0,
+        "vendor_id": 5287,
+        "products": [
+          {
+            "product_variation_id": 2179465,
+            "name": "Tandoori Aloo Wrap",
+            "variation_name": "",
+            "total_price_before_discount": 160,
+            "total_price": 160,
+            "quantity": 2,
+            "toppings": [
+              {
+                "id": 206892,
+                "name": "Paratha(Maida)- Standard",
+                "description": null,
+                "price": 0,
+                "price_before_discount": null
+              },
+              {
+                "id": 206896,
+                "name": "Mayo (In Wrap Only)",
+                "description": null,
+                "price": 20,
+                "price_before_discount": null
+              }
+            ],
+            "choices": [],
+            "group_order_user_name": null,
+            "group_order_user_code": null
+          }
+        ],
+        "minimum_order_amount": 150,
+        "minimum_order_amount_difference": 0,
+        "discount_text": null
+      }
+    ],
+    "voucher": []
+  }
+}

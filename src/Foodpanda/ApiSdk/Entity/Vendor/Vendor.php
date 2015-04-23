@@ -14,12 +14,6 @@ use Foodpanda\ApiSdk\Entity\Schedule\SchedulesCollection;
 
 class Vendor extends DataObject
 {
-    protected $objectClasses = [
-        'city' => City::class,
-        'chain' => Chain::class,
-        'metadata' => MetaData::class,
-    ];
-
     /**
      * @var integer
      */
@@ -240,6 +234,10 @@ class Vendor extends DataObject
 
     public function __construct()
     {
+        $this->city = new City();
+        $this->chain = new Chain();
+        $this->metadata = new MetaData();
+
         $this->menus = new MenusCollection();
         $this->cuisines = new CuisinesCollection();
         $this->schedules = new SchedulesCollection();

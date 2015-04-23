@@ -1,0 +1,3960 @@
+{
+  "status_code": 200,
+  "data": {
+    "available_count": 988,
+    "items": [
+      {
+        "id": 132912,
+        "name": "100 Feet Road (Indiranagar)"
+      },
+      {
+        "id": 273722,
+        "name": "10th Cross ( Bommanahalli )"
+      },
+      {
+        "id": 273829,
+        "name": "10th Main Road ( Thippasandra )"
+      },
+      {
+        "id": 132903,
+        "name": "14th Main-BDA Complex Rd (HSR Layout)"
+      },
+      {
+        "id": 133262,
+        "name": "15th Cross (Malleshwaram)"
+      },
+      {
+        "id": 273826,
+        "name": "16th Main ( BTM 2nd stage )"
+      },
+      {
+        "id": 133266,
+        "name": "17th cross (Malleshwaram)"
+      },
+      {
+        "id": 133470,
+        "name": "18th Cross (Malleshwaram)"
+      },
+      {
+        "id": 273971,
+        "name": "18th Cross Rd ( HSR Layout )"
+      },
+      {
+        "id": 132902,
+        "name": "19th Main (HSR Layout)"
+      },
+      {
+        "id": 133172,
+        "name": "1st Block (HBR Layout)"
+      },
+      {
+        "id": 132925,
+        "name": "1st Block (Jayanagar)"
+      },
+      {
+        "id": 132969,
+        "name": "1st Block (Koramangala)"
+      },
+      {
+        "id": 273448,
+        "name": "1st Cross Road(hosur)"
+      },
+      {
+        "id": 273828,
+        "name": "1st Main Ganesh Juice Shop ( Domlur )"
+      },
+      {
+        "id": 132951,
+        "name": "1st Phase (JP Nagar)"
+      },
+      {
+        "id": 132901,
+        "name": "1st Sector (HSR Layout)"
+      },
+      {
+        "id": 132907,
+        "name": "1st Stage ( Indiranagar )"
+      },
+      {
+        "id": 132545,
+        "name": "1st Stage (Banashankari)"
+      },
+      {
+        "id": 132775,
+        "name": "1st Stage (Domlur)"
+      },
+      {
+        "id": 132904,
+        "name": "27th Main-NIFT College Rd.  (HSR Layout)"
+      },
+      {
+        "id": 273573,
+        "name": "29th Main ( BTM 2nd Stage )"
+      },
+      {
+        "id": 273206,
+        "name": "2nd Block ( Rajajinagar )"
+      },
+      {
+        "id": 133173,
+        "name": "2nd Block (HBR Layout)"
+      },
+      {
+        "id": 132926,
+        "name": "2nd Block (Jayanagar)"
+      },
+      {
+        "id": 132970,
+        "name": "2nd Block (Koramangala)"
+      },
+      {
+        "id": 132952,
+        "name": "2nd Phase (JP Nagar)"
+      },
+      {
+        "id": 132875,
+        "name": "2nd Sector (HSR Layout)"
+      },
+      {
+        "id": 132546,
+        "name": "2nd Stage (Banashankari)"
+      },
+      {
+        "id": 132688,
+        "name": "2nd Stage (Basaveshwara Nagar)"
+      },
+      {
+        "id": 132776,
+        "name": "2nd Stage (Domlur)"
+      },
+      {
+        "id": 132908,
+        "name": "2nd Stage (Indiranagar)"
+      },
+      {
+        "id": 133174,
+        "name": "3rd Block (HBR Layout)"
+      },
+      {
+        "id": 132927,
+        "name": "3rd Block (Jayanagar)"
+      },
+      {
+        "id": 132971,
+        "name": "3rd Block (Koramangala)"
+      },
+      {
+        "id": 273963,
+        "name": "3rd Cross Rd ( Indiranagar )"
+      },
+      {
+        "id": 132928,
+        "name": "3rd East Blcok (Jayanagar)"
+      },
+      {
+        "id": 132953,
+        "name": "3rd Phase (JP Nagar)"
+      },
+      {
+        "id": 132876,
+        "name": "3rd Sector (HSR Layout)"
+      },
+      {
+        "id": 133462,
+        "name": "3rd stage (Banashankari)"
+      },
+      {
+        "id": 132689,
+        "name": "3rd Stage (Basaveshwara Nagar)"
+      },
+      {
+        "id": 132909,
+        "name": "3rd Stage (Indiranagar)"
+      },
+      {
+        "id": 133391,
+        "name": "3rd stage (Rajarajeshwari Nagar)"
+      },
+      {
+        "id": 133175,
+        "name": "4th Block (HBR Layout)"
+      },
+      {
+        "id": 132929,
+        "name": "4th Block (Jayanagar)"
+      },
+      {
+        "id": 132972,
+        "name": "4th Block (Koramangala)"
+      },
+      {
+        "id": 132954,
+        "name": "4th Phase (JP Nagar)"
+      },
+      {
+        "id": 132877,
+        "name": "4th Sector (HSR Layout)"
+      },
+      {
+        "id": 133392,
+        "name": "4th stage (Rajarajeshwari Nagar)"
+      },
+      {
+        "id": 132930,
+        "name": "4th T Block (Jayanagar)"
+      },
+      {
+        "id": 273886,
+        "name": "5 th Main Road  ( Kaggadasapura )"
+      },
+      {
+        "id": 133177,
+        "name": "5th Block (HBR Layout)"
+      },
+      {
+        "id": 132931,
+        "name": "5th Block (Jayanagar)"
+      },
+      {
+        "id": 132973,
+        "name": "5th Block (Koramangala)"
+      },
+      {
+        "id": 132884,
+        "name": "5th Main (HSR Layout)"
+      },
+      {
+        "id": 273885,
+        "name": "5th Main Road ( Basavanagudi )"
+      },
+      {
+        "id": 132955,
+        "name": "5th Phase (JP Nagar)"
+      },
+      {
+        "id": 132878,
+        "name": "5th Sector (HSR Layout)"
+      },
+      {
+        "id": 133393,
+        "name": "5th stage (Rajarajeshwari Nagar)"
+      },
+      {
+        "id": 133511,
+        "name": "60 feet Road (BTM 1st Stage)"
+      },
+      {
+        "id": 132985,
+        "name": "60 feet Road (Koramangala)"
+      },
+      {
+        "id": 133358,
+        "name": "60 feet Road (Vijay Nagar)"
+      },
+      {
+        "id": 132932,
+        "name": "6th Block (Jayanagar)"
+      },
+      {
+        "id": 132975,
+        "name": "6th Block (Koramangala)"
+      },
+      {
+        "id": 274073,
+        "name": "6th C Main Road"
+      },
+      {
+        "id": 273825,
+        "name": "6th Main Rd"
+      },
+      {
+        "id": 132956,
+        "name": "6th Phase (JP Nagar)"
+      },
+      {
+        "id": 132879,
+        "name": "6th Sector (HSR Layout)"
+      },
+      {
+        "id": 274023,
+        "name": "7th B Cross (Yelahanka)"
+      },
+      {
+        "id": 132933,
+        "name": "7th Block (Jayanagar)"
+      },
+      {
+        "id": 132976,
+        "name": "7th Block (Koramangala)"
+      },
+      {
+        "id": 132743,
+        "name": "7th Cross Park (BTM 2nd stage)"
+      },
+      {
+        "id": 273873,
+        "name": "7th Main Road"
+      },
+      {
+        "id": 132957,
+        "name": "7th Phase (JP Nagar)"
+      },
+      {
+        "id": 132880,
+        "name": "7th Sector (HSR Layout)"
+      },
+      {
+        "id": 132913,
+        "name": "80 Feet Road (Indiranagar)"
+      },
+      {
+        "id": 133154,
+        "name": "80 Feet Road (Kammanahalli)"
+      },
+      {
+        "id": 273561,
+        "name": "8th block ( Koramangala )"
+      },
+      {
+        "id": 133506,
+        "name": "8th Block (Jayanagar)"
+      },
+      {
+        "id": 133265,
+        "name": "8th main (Malleshwaram)"
+      },
+      {
+        "id": 132937,
+        "name": "9th Block (Jayanagar)"
+      },
+      {
+        "id": 133366,
+        "name": "Adars Nagar (Vijay Nagar)"
+      },
+      {
+        "id": 133446,
+        "name": "Adarsha Nagar (Mysore Road)"
+      },
+      {
+        "id": 132992,
+        "name": "Adugodi (Koramangala)"
+      },
+      {
+        "id": 133525,
+        "name": "AECS Layout (A-D blocks) (Kundanahalli)"
+      },
+      {
+        "id": 133279,
+        "name": "AG's Officers Layout (New BEL Road)"
+      },
+      {
+        "id": 133496,
+        "name": "Aga Abbas Ali Road (Ulsoor)"
+      },
+      {
+        "id": 132872,
+        "name": "Agara Main Road (HSR Layout)"
+      },
+      {
+        "id": 133327,
+        "name": "Agrahara Dasarahalli (Rajajinagar)"
+      },
+      {
+        "id": 133251,
+        "name": "Akshaya Nagar (Ramamurthy Nagar - RM Nagar)"
+      },
+      {
+        "id": 133118,
+        "name": "Alexandria Street (Richmond Town)"
+      },
+      {
+        "id": 132825,
+        "name": "Ali Asker Road (Shivajinagar)"
+      },
+      {
+        "id": 132780,
+        "name": "Amarjyothi Layout (Domlur)"
+      },
+      {
+        "id": 132855,
+        "name": "Amarjyothi Layout (Hebbal)"
+      },
+      {
+        "id": 133044,
+        "name": "Ambedkar Nagar (Whitefield)"
+      },
+      {
+        "id": 134486,
+        "name": "amruthalli (Yelhanka)"
+      },
+      {
+        "id": 132859,
+        "name": "Anand Gokul Layout (Hebbal)"
+      },
+      {
+        "id": 133232,
+        "name": "Anandapura (KR Puram - Krishnarajapuram)"
+      },
+      {
+        "id": 133448,
+        "name": "Anandapuram (Mysore Road)"
+      },
+      {
+        "id": 133132,
+        "name": "Andree Road (Double Road)"
+      },
+      {
+        "id": 132966,
+        "name": "Anjaneya Temple Road (JP Nagar)"
+      },
+      {
+        "id": 132596,
+        "name": "Annaiah Reddy Layout (Banaswadi)"
+      },
+      {
+        "id": 133077,
+        "name": "Annasandrapalya (Old Airport Road)"
+      },
+      {
+        "id": 133054,
+        "name": "Annaswamy Mudaliar Road (Ulsoor)"
+      },
+      {
+        "id": 132914,
+        "name": "Appareddy Palya (Indiranagar)"
+      },
+      {
+        "id": 133178,
+        "name": "Arabic College (HBR Layout)"
+      },
+      {
+        "id": 132623,
+        "name": "Arekere Gate (Bannerghatta)"
+      },
+      {
+        "id": 132625,
+        "name": "Arekere Mico Layout (Bannerghatta)"
+      },
+      {
+        "id": 132629,
+        "name": "Arekere Road (Bannerghatta)"
+      },
+      {
+        "id": 132846,
+        "name": "Armstrong Road (Shivajinagar)"
+      },
+      {
+        "id": 132668,
+        "name": "Armugam Circle (Basavangudi)"
+      },
+      {
+        "id": 132946,
+        "name": "Ashoka Pillar (Jayanagar)"
+      },
+      {
+        "id": 133003,
+        "name": "Ashwath Nagar (Marathahalli)"
+      },
+      {
+        "id": 133271,
+        "name": "Ashwath Nagar (New BEL Road)"
+      },
+      {
+        "id": 273961,
+        "name": "Ashwath Nagar( Ashwath Nagar )"
+      },
+      {
+        "id": 132993,
+        "name": "Ashwini Layout (Koramangala)"
+      },
+      {
+        "id": 133061,
+        "name": "Assaye Road (Ulsoor)"
+      },
+      {
+        "id": 132758,
+        "name": "ASTE Officers Enclave (CV Raman Nagar)"
+      },
+      {
+        "id": 133409,
+        "name": "ASTE Officers Enclave (Old Madras Road)"
+      },
+      {
+        "id": 132682,
+        "name": "Asthagrama Layout (Basaveshwara Nagar)"
+      },
+      {
+        "id": 132865,
+        "name": "Atmananda Colony (Hebbal)"
+      },
+      {
+        "id": 133354,
+        "name": "Attiguppe (Vijay Nagar)"
+      },
+      {
+        "id": 132963,
+        "name": "Aurobindo Marg (JP Nagar)"
+      },
+      {
+        "id": 132553,
+        "name": "Avalahalli (Banashankari)"
+      },
+      {
+        "id": 133518,
+        "name": "AXA Building (BTM 1st Stage)"
+      },
+      {
+        "id": 133163,
+        "name": "Ayyapa Temple Road (Kammanahalli)"
+      },
+      {
+        "id": 133224,
+        "name": "Ayyappa Layout (KR Puram - Krishnarajapuram)"
+      },
+      {
+        "id": 132999,
+        "name": "Ayyappa Layout (Marathahalli)"
+      },
+      {
+        "id": 273132,
+        "name": "Ayyappa Temple ( Jalahalli )"
+      },
+      {
+        "id": 133443,
+        "name": "Azad Nagar (Mysore Road)"
+      },
+      {
+        "id": 132590,
+        "name": "B.Channasandra (Banaswadi)"
+      },
+      {
+        "id": 133109,
+        "name": "B.Narayanapura (Outer Ring Road)"
+      },
+      {
+        "id": 132583,
+        "name": "Babusapalya (Banaswadi)"
+      },
+      {
+        "id": 133480,
+        "name": "Babusapalya (Kammanahalli)"
+      },
+      {
+        "id": 132761,
+        "name": "Bagmane Tech Park (CV Raman Nagar)"
+      },
+      {
+        "id": 133382,
+        "name": "Bahubali Nagar (Jalahalli)"
+      },
+      {
+        "id": 133402,
+        "name": "Baiyappanahalli (Old Madras Road)"
+      },
+      {
+        "id": 132573,
+        "name": "Balaji Nagar (Banashankari)"
+      },
+      {
+        "id": 133386,
+        "name": "Balarama Layout (Rajarajeshwari Nagar)"
+      },
+      {
+        "id": 132574,
+        "name": "Banagiri Nagar (Banashankari)"
+      },
+      {
+        "id": 133513,
+        "name": "Banaswadi Fire Station (Banaswadi)"
+      },
+      {
+        "id": 133146,
+        "name": "Bank Avenue (Kammanahalli)"
+      },
+      {
+        "id": 274059,
+        "name": "Bannerghatta Main Road (Bannerghatta)"
+      },
+      {
+        "id": 273977,
+        "name": "Bannerghatta Road ( J P Nagar )"
+      },
+      {
+        "id": 133442,
+        "name": "Bapuji Nagar (Mysore Road)"
+      },
+      {
+        "id": 133130,
+        "name": "Basappa Road (Double Road)"
+      },
+      {
+        "id": 133080,
+        "name": "Basavanagar (Old Airport Road)"
+      },
+      {
+        "id": 133228,
+        "name": "Basavanapura Road (KR Puram - Krishnarajapuram)"
+      },
+      {
+        "id": 133374,
+        "name": "Basaveshwara HBCS Layout (Vijay Nagar)"
+      },
+      {
+        "id": 133057,
+        "name": "Bazaar Street (Ulsoor)"
+      },
+      {
+        "id": 132593,
+        "name": "BDA Complex (Banaswadi)"
+      },
+      {
+        "id": 133313,
+        "name": "BDA Complex (RT Nagar)"
+      },
+      {
+        "id": 132936,
+        "name": "BDA Flats (New Thippasandra)"
+      },
+      {
+        "id": 132940,
+        "name": "BDA Layout (Jayanagar)"
+      },
+      {
+        "id": 132722,
+        "name": "Begur Road (Bommanahalli)"
+      },
+      {
+        "id": 273198,
+        "name": "Bellandur ( RMZ Ecospace )"
+      },
+      {
+        "id": 274076,
+        "name": "bellandur ( sarjapur road )"
+      },
+      {
+        "id": 133106,
+        "name": "Bellandur - Near Bangalore Central (Outer Ring Road)"
+      },
+      {
+        "id": 133070,
+        "name": "Bellandur Road (Sarjapur Road)"
+      },
+      {
+        "id": 133334,
+        "name": "Bellary Road (Yelahanka)"
+      },
+      {
+        "id": 273798,
+        "name": "BEML Circle"
+      },
+      {
+        "id": 135342,
+        "name": "BEML Layout"
+      },
+      {
+        "id": 133394,
+        "name": "BEML Layout (Rajarajeshwari Nagar)"
+      },
+      {
+        "id": 133404,
+        "name": "Beniganahalli (Old Madras Road)"
+      },
+      {
+        "id": 133484,
+        "name": "Berlie Street (Double Road)"
+      },
+      {
+        "id": 132720,
+        "name": "Bhanu Nursing Home Road (Bommanahalli)"
+      },
+      {
+        "id": 132840,
+        "name": "Bharathi Nagar (Shivajinagar)"
+      },
+      {
+        "id": 133398,
+        "name": "BHEL Layout (Rajarajeshwari Nagar)"
+      },
+      {
+        "id": 133257,
+        "name": "BHEL Township (Malleshwaram)"
+      },
+      {
+        "id": 133283,
+        "name": "Bhoopasandra Main Road (New BEL Road)"
+      },
+      {
+        "id": 132589,
+        "name": "Bhuvanagiri (Banaswadi)"
+      },
+      {
+        "id": 132568,
+        "name": "Bhuvaneshwari Nagar (Banashankari)"
+      },
+      {
+        "id": 135349,
+        "name": "Bhuvaneswari Nagar (Mysore Road)"
+      },
+      {
+        "id": 132615,
+        "name": "Bilekahalli (Bannerghatta)"
+      },
+      {
+        "id": 132917,
+        "name": "Binnamangala (Indiranagar)"
+      },
+      {
+        "id": 133371,
+        "name": "Binny Mills Employees  Colony (Vijay Nagar)"
+      },
+      {
+        "id": 273843,
+        "name": "Bishop Cotton Complex ( Residency Road )"
+      },
+      {
+        "id": 133301,
+        "name": "BK Nagar Main Road (Yeshwanthpur)"
+      },
+      {
+        "id": 132644,
+        "name": "BMS Law College (Basavangudi)"
+      },
+      {
+        "id": 132783,
+        "name": "BMTC Bus Depot (Domlur)"
+      },
+      {
+        "id": 133032,
+        "name": "Borewell Road (Whitefield)"
+      },
+      {
+        "id": 132686,
+        "name": "Bovi Colony (Basaveshwara Nagar)"
+      },
+      {
+        "id": 133268,
+        "name": "BP Indian Public School (Malleshwaram)"
+      },
+      {
+        "id": 273894,
+        "name": "Brigade Millenium ( JP Nagar )"
+      },
+      {
+        "id": 273473,
+        "name": "Brigade Road ( Shanthala Nagar )"
+      },
+      {
+        "id": 133191,
+        "name": "Brigade Road (MG Road)"
+      },
+      {
+        "id": 133231,
+        "name": "Brindavan Layout (KR Puram - Krishnarajapuram)"
+      },
+      {
+        "id": 273972,
+        "name": "Britannia Gardens"
+      },
+      {
+        "id": 273792,
+        "name": "Brookefields Lake ( Kundalahalli )"
+      },
+      {
+        "id": 273664,
+        "name": "BRS Global School"
+      },
+      {
+        "id": 273486,
+        "name": "Brunton Road ( Ashok Nagar )"
+      },
+      {
+        "id": 273467,
+        "name": "BTM 1st stage(bangalore)"
+      },
+      {
+        "id": 132734,
+        "name": "BTM Lake Road (BTM 2nd stage)"
+      },
+      {
+        "id": 273823,
+        "name": "BTM Layout ( BTM Layout )"
+      },
+      {
+        "id": 132735,
+        "name": "BTM Water Tank (BTM 2nd stage)"
+      },
+      {
+        "id": 132647,
+        "name": "Bugle Rock Road (Basavangudi)"
+      },
+      {
+        "id": 132649,
+        "name": "Bull Temple Road (Basavangudi)"
+      },
+      {
+        "id": 273205,
+        "name": "Byadarahalli ( Byadarahalli )"
+      },
+      {
+        "id": 132551,
+        "name": "Byatarayanapura (Banashankari)"
+      },
+      {
+        "id": 133307,
+        "name": "Byatarayanapura (Sahakarnagar)"
+      },
+      {
+        "id": 132763,
+        "name": "Byrasandra (C.V.Raman Nagar)"
+      },
+      {
+        "id": 274039,
+        "name": "Cambridge Layout"
+      },
+      {
+        "id": 273614,
+        "name": "Cambridge Road"
+      },
+      {
+        "id": 133375,
+        "name": "Canara Bank Colony (Vijay Nagar)"
+      },
+      {
+        "id": 132827,
+        "name": "Cantonment (Shivajinagar)"
+      },
+      {
+        "id": 133058,
+        "name": "Car Street (Ulsoor)"
+      },
+      {
+        "id": 132540,
+        "name": "Castle Street (Ashoknagar)"
+      },
+      {
+        "id": 133195,
+        "name": "Castle Street (MG Road)"
+      },
+      {
+        "id": 133361,
+        "name": "Cauvery Nagar (Vijay Nagar)"
+      },
+      {
+        "id": 273883,
+        "name": "Central Mall PArking ( Bellandur )"
+      },
+      {
+        "id": 132838,
+        "name": "Central Street (Shivajinagar)"
+      },
+      {
+        "id": 273815,
+        "name": "Chairman Layout"
+      },
+      {
+        "id": 133376,
+        "name": "Chalukya Nagar (Vijay Nagar)"
+      },
+      {
+        "id": 134138,
+        "name": "Chandra Layout (Vijay Nagar)"
+      },
+      {
+        "id": 132704,
+        "name": "Chandra Reddy Layout (Bommanahalli)"
+      },
+      {
+        "id": 133241,
+        "name": "Chandrashekar layout (Ramamurthy Nagar - RM Nagar)"
+      },
+      {
+        "id": 133047,
+        "name": "Channasandra Main Road (Whitefield)"
+      },
+      {
+        "id": 132588,
+        "name": "Channasandra Road (Banaswadi)"
+      },
+      {
+        "id": 274006,
+        "name": "Chansandra (chansandra)"
+      },
+      {
+        "id": 133167,
+        "name": "ChelaKere (Kammanahalli)"
+      },
+      {
+        "id": 273808,
+        "name": "Chelekare ( Kalyan Nagar )"
+      },
+      {
+        "id": 132591,
+        "name": "Chikka Banaswadi (Banaswadi)"
+      },
+      {
+        "id": 132842,
+        "name": "Chikka Bazaar Road (Shivajinagar)"
+      },
+      {
+        "id": 133346,
+        "name": "Chikka Bommasandra (Yelahanka)"
+      },
+      {
+        "id": 133005,
+        "name": "Chinnappanahalli (Marathahalli)"
+      },
+      {
+        "id": 134350,
+        "name": "Chiranjeevi Layout (Hebbal)"
+      },
+      {
+        "id": 273541,
+        "name": "Chokanahalli ( Chokanahalli )"
+      },
+      {
+        "id": 134348,
+        "name": "Chokkasandra (Jalahalli)"
+      },
+      {
+        "id": 133424,
+        "name": "Chokkasandra (Peenya)"
+      },
+      {
+        "id": 132857,
+        "name": "Chola Nagar (Hebbal)"
+      },
+      {
+        "id": 132862,
+        "name": "Cholanayakanahalli (Hebbal)"
+      },
+      {
+        "id": 133294,
+        "name": "Chord Road (Yeshwanthpur)"
+      },
+      {
+        "id": 132856,
+        "name": "Chowdaiah Block (Hebbal)"
+      },
+      {
+        "id": 133002,
+        "name": "Chowdeshwari Layout (Marathahalli)"
+      },
+      {
+        "id": 133498,
+        "name": "Chowdeshwari Temple Road (Marathahalli)"
+      },
+      {
+        "id": 273505,
+        "name": "Christ School Road"
+      },
+      {
+        "id": 133512,
+        "name": "Christ School Road (Bannerghatta)"
+      },
+      {
+        "id": 133089,
+        "name": "Church Road (Old Airport Road)"
+      },
+      {
+        "id": 273462,
+        "name": "Church Street ( Shanthala Nagar )"
+      },
+      {
+        "id": 133190,
+        "name": "Church Street (MG Road)"
+      },
+      {
+        "id": 132807,
+        "name": "Cleveland Town (Frazer Town)"
+      },
+      {
+        "id": 132910,
+        "name": "CMH Road (Indiranagar)"
+      },
+      {
+        "id": 133135,
+        "name": "CMR Circle (Kammanahalli)"
+      },
+      {
+        "id": 133481,
+        "name": "CMR Public School (Kammanahalli)"
+      },
+      {
+        "id": 133526,
+        "name": "CMRIT (Kundanahalli)"
+      },
+      {
+        "id": 133306,
+        "name": "Coal Layout (Sahakarnagar)"
+      },
+      {
+        "id": 133385,
+        "name": "Coconut Grove (Rajarajeshwari Nagar)"
+      },
+      {
+        "id": 133145,
+        "name": "Coconut Grove Layout (Kammanahalli)"
+      },
+      {
+        "id": 132804,
+        "name": "Coles Road (Frazer Town)"
+      },
+      {
+        "id": 132845,
+        "name": "Colonel Hill Road (Shivajinagar)"
+      },
+      {
+        "id": 273488,
+        "name": "Commercial Street ( Shivaji Nagar )"
+      },
+      {
+        "id": 133196,
+        "name": "Commissariat Road (MG Road)"
+      },
+      {
+        "id": 133487,
+        "name": "Convent Road (Richmond Town)"
+      },
+      {
+        "id": 273981,
+        "name": "Cosmos Mall ( Brookefields )"
+      },
+      {
+        "id": 135093,
+        "name": "Creator (ITPB-ITPL Whitefield)"
+      },
+      {
+        "id": 132833,
+        "name": "Cubbon Road (Shivajinagar)"
+      },
+      {
+        "id": 273849,
+        "name": "Cunningham Road"
+      },
+      {
+        "id": 273102,
+        "name": "Cunningham Road  (Vasanth Nagar)"
+      },
+      {
+        "id": 132822,
+        "name": "Cunningham Road (Shivajinagar)"
+      },
+      {
+        "id": 133121,
+        "name": "Curley Street (Richmond Town)"
+      },
+      {
+        "id": 133210,
+        "name": "Danvanthiri Road (Gandhi Nagar)"
+      },
+      {
+        "id": 133423,
+        "name": "Dasarahalli (Peenya)"
+      },
+      {
+        "id": 132580,
+        "name": "Dattatreya Nagar (Banashankari)"
+      },
+      {
+        "id": 132579,
+        "name": "Dayanand Sagar College Road (Banashankari)"
+      },
+      {
+        "id": 133450,
+        "name": "Deepanjali Nagar (Mysore Road)"
+      },
+      {
+        "id": 132959,
+        "name": "Delmia Circle (JP Nagar)"
+      },
+      {
+        "id": 132575,
+        "name": "DevaGowda Bus stop (Banashankari)"
+      },
+      {
+        "id": 132616,
+        "name": "Devarchikkanahalli Road (Bannerghatta)"
+      },
+      {
+        "id": 132725,
+        "name": "Devarchikkanahalli Road (Bommanahalli)"
+      },
+      {
+        "id": 133270,
+        "name": "Devasandra (New BEL Road)"
+      },
+      {
+        "id": 133222,
+        "name": "Devasandra Main Road (KR Puram - Krishnarajapuram)"
+      },
+      {
+        "id": 133105,
+        "name": "Devrabisanhalli (Outer Ring Road)"
+      },
+      {
+        "id": 132782,
+        "name": "Diamond District (Domlur)"
+      },
+      {
+        "id": 132605,
+        "name": "Diary Circle (Bannerghatta)"
+      },
+      {
+        "id": 133200,
+        "name": "Dickenson Road (MG Road)"
+      },
+      {
+        "id": 132848,
+        "name": "Dickenson Road (Shivajinagar)"
+      },
+      {
+        "id": 132866,
+        "name": "Dinnur (Hebbal)"
+      },
+      {
+        "id": 133049,
+        "name": "Dinnur (Whitefield)"
+      },
+      {
+        "id": 132858,
+        "name": "Dinnur Main Road (Hebbal)"
+      },
+      {
+        "id": 133311,
+        "name": "Dinnur Main Road (RT Nagar)"
+      },
+      {
+        "id": 135091,
+        "name": "Discoverer (ITPB-ITPL Whitefield)"
+      },
+      {
+        "id": 132837,
+        "name": "Dispensary Road (Shivajinagar)"
+      },
+      {
+        "id": 132609,
+        "name": "Divyashree Towers (Bannerghatta)"
+      },
+      {
+        "id": 133436,
+        "name": "Dodda Bidarkallu (Peenya)"
+      },
+      {
+        "id": 133335,
+        "name": "Doddaballapur Road (Yelahanka)"
+      },
+      {
+        "id": 133006,
+        "name": "Doddanekundi (Marathahalli)"
+      },
+      {
+        "id": 133111,
+        "name": "Doddanekundi - Near Total Mall (Outer Ring Road)"
+      },
+      {
+        "id": 133038,
+        "name": "Dodsworth Layout (Whitefield)"
+      },
+      {
+        "id": 133273,
+        "name": "Dollars Colony (New BEL Road)"
+      },
+      {
+        "id": 273134,
+        "name": "Domlur Post Office ( Domlur )"
+      },
+      {
+        "id": 132915,
+        "name": "Doopanahalli (Indiranagar)"
+      },
+      {
+        "id": 133242,
+        "name": "Dooravani Nagar (Ramamurthy Nagar - RM Nagar)"
+      },
+      {
+        "id": 132911,
+        "name": "Double Road (Indiranagar)"
+      },
+      {
+        "id": 133290,
+        "name": "Dr. Ambedkar Nagar (Yeshwanthpur)"
+      },
+      {
+        "id": 132692,
+        "name": "Dr. Modi Hospital Road (Basaveshwara Nagar)"
+      },
+      {
+        "id": 273085,
+        "name": "Dr. Rajkumar Road (Malleshwaram)"
+      },
+      {
+        "id": 133466,
+        "name": "Dr. Rajkumar Road (Rajajinagar)"
+      },
+      {
+        "id": 132816,
+        "name": "Dr.Ambedkar Road (Frazer Town)"
+      },
+      {
+        "id": 132659,
+        "name": "Dr.Nanjappa Road (Basavangudi)"
+      },
+      {
+        "id": 132771,
+        "name": "DRDO Pase 2 (C.V.Raman Nagar)"
+      },
+      {
+        "id": 132773,
+        "name": "DRDO Phase 1 (C.V.Raman Nagar)"
+      },
+      {
+        "id": 132772,
+        "name": "DRDO Township (C.V.Raman Nagar)"
+      },
+      {
+        "id": 132648,
+        "name": "DVG Road (Basavangudi)"
+      },
+      {
+        "id": 273565,
+        "name": "dwarkanagar"
+      },
+      {
+        "id": 133483,
+        "name": "Eagles Street (Double Road)"
+      },
+      {
+        "id": 132938,
+        "name": "East End Road (Jayanagar)"
+      },
+      {
+        "id": 133042,
+        "name": "ECC Road (Whitefield)"
+      },
+      {
+        "id": 132778,
+        "name": "EGL Campus (Domlur)"
+      },
+      {
+        "id": 133501,
+        "name": "Ejipura (Koramangala)"
+      },
+      {
+        "id": 132779,
+        "name": "Embassy Golf Links Road (Domlur)"
+      },
+      {
+        "id": 133029,
+        "name": "EPIP (Whitefield)"
+      },
+      {
+        "id": 135094,
+        "name": "Explorer (ITPB-ITPL Whitefield)"
+      },
+      {
+        "id": 273879,
+        "name": "Ferne City ( Doddanakkundi Circle )"
+      },
+      {
+        "id": 132698,
+        "name": "Florence School (Basaveshwara Nagar)"
+      },
+      {
+        "id": 133199,
+        "name": "FM Cariappa Road (MG Road)"
+      },
+      {
+        "id": 133204,
+        "name": "Fort Road (MG Road)"
+      },
+      {
+        "id": 133497,
+        "name": "Forum Value Mall (Whitefield)"
+      },
+      {
+        "id": 274088,
+        "name": "G  Block (Sahakaranagar)"
+      },
+      {
+        "id": 132552,
+        "name": "Ganapathi Nagar (Banashankari)"
+      },
+      {
+        "id": 133432,
+        "name": "Ganapathy Nagar (Peenya)"
+      },
+      {
+        "id": 132640,
+        "name": "Gandhi Bazar Road (Basavangudi)"
+      },
+      {
+        "id": 133337,
+        "name": "Gandhinagar (Yelahanka)"
+      },
+      {
+        "id": 133033,
+        "name": "Gandhipuram (Whitefield)"
+      },
+      {
+        "id": 133055,
+        "name": "Gangadhar Chetty Road (Ulsoor)"
+      },
+      {
+        "id": 133317,
+        "name": "Ganganagar (RT Nagar)"
+      },
+      {
+        "id": 133333,
+        "name": "Ganganahalli (Yelahanka)"
+      },
+      {
+        "id": 133244,
+        "name": "Garden Street (Ramamurthy Nagar - RM Nagar)"
+      },
+      {
+        "id": 139518,
+        "name": "Garudacharpalya (Whitefield)"
+      },
+      {
+        "id": 133321,
+        "name": "Gayatrinagar (Rajajinagar)"
+      },
+      {
+        "id": 132700,
+        "name": "GD Naidu Hall (Basaveshwara Nagar)"
+      },
+      {
+        "id": 133165,
+        "name": "George Garden (Kammanahalli)"
+      },
+      {
+        "id": 132555,
+        "name": "Giri Nagar (Banashankari)"
+      },
+      {
+        "id": 132556,
+        "name": "Giri Nagar 2nd Phase (Banashankari)"
+      },
+      {
+        "id": 132558,
+        "name": "Giri Nagar Extension (Banashankari)"
+      },
+      {
+        "id": 132791,
+        "name": "Glass Factory Layout (Electronic City)"
+      },
+      {
+        "id": 135343,
+        "name": "Global Village TEch Park"
+      },
+      {
+        "id": 132767,
+        "name": "GM Palya (C.V.Raman Nagar)"
+      },
+      {
+        "id": 133225,
+        "name": "Gokul Extension (KR Puram - Krishnarajapuram)"
+      },
+      {
+        "id": 133277,
+        "name": "Gokula Extension (New BEL Road)"
+      },
+      {
+        "id": 133292,
+        "name": "Goraguntepalya (Yeshwanthpur)"
+      },
+      {
+        "id": 139524,
+        "name": "Goshala Road (Whitefield)"
+      },
+      {
+        "id": 132636,
+        "name": "Gottiegere (Bannerghatta)"
+      },
+      {
+        "id": 133395,
+        "name": "Gottigere (Rajarajeshwari Nagar)"
+      },
+      {
+        "id": 132641,
+        "name": "Govindappa Road (Basavangudi)"
+      },
+      {
+        "id": 133357,
+        "name": "Govindaraja Nagar (Vijay Nagar)"
+      },
+      {
+        "id": 133263,
+        "name": "Govt Ladies College (Malleshwaram)"
+      },
+      {
+        "id": 133050,
+        "name": "GR Tech Park (Whitefield)"
+      },
+      {
+        "id": 274121,
+        "name": "Green Glen Layout"
+      },
+      {
+        "id": 132597,
+        "name": "Green Park Layout (Banaswadi)"
+      },
+      {
+        "id": 133527,
+        "name": "Grren Garden Layout (Kundanahalli)"
+      },
+      {
+        "id": 132853,
+        "name": "Guddadahalli (Hebbal)"
+      },
+      {
+        "id": 133439,
+        "name": "Guddadahalli (Mysore Road)"
+      },
+      {
+        "id": 132611,
+        "name": "Gurrappanapalya (Bannerghatta)"
+      },
+      {
+        "id": 133519,
+        "name": "Gurrappanapalya Main Road (BTM 1st Stage)"
+      },
+      {
+        "id": 133238,
+        "name": "Gurumurthy Reddy layout (Ramamurthy Nagar - RM Nagar)"
+      },
+      {
+        "id": 133297,
+        "name": "H Gurumurthy Reddy Colony (Yeshwanthpur)"
+      },
+      {
+        "id": 273446,
+        "name": "H.P.Petrol Bunk"
+      },
+      {
+        "id": 133036,
+        "name": "Hagadur Main Road (Whitefield)"
+      },
+      {
+        "id": 132834,
+        "name": "Haines Road (Shivajinagar)"
+      },
+      {
+        "id": 274087,
+        "name": "HAL 2nd Stage ( 100 Feet Road )"
+      },
+      {
+        "id": 133437,
+        "name": "Handrihalli Main Road (Peenya)"
+      },
+      {
+        "id": 133444,
+        "name": "Hanumanth Nagar (Mysore Road)"
+      },
+      {
+        "id": 133046,
+        "name": "Happy Valley (Whitefield)"
+      },
+      {
+        "id": 133063,
+        "name": "Haralur Road (Sarjapur Road)"
+      },
+      {
+        "id": 132691,
+        "name": "Havanur Circle (Basaveshwara Nagar)"
+      },
+      {
+        "id": 133488,
+        "name": "Hayes Road (Richmond Town)"
+      },
+      {
+        "id": 132672,
+        "name": "HB Samaja Road (Basavangudi)"
+      },
+      {
+        "id": 132794,
+        "name": "Hebbagodi (Electronic City)"
+      },
+      {
+        "id": 133168,
+        "name": "Hennur Bus Depot (Kammanahalli)"
+      },
+      {
+        "id": 133482,
+        "name": "Hennur Main Road (Kammanahalli)"
+      },
+      {
+        "id": 132635,
+        "name": "Himagiri Meadows (Bannerghatta)"
+      },
+      {
+        "id": 133463,
+        "name": "HMT Housing Colony (Peenya)"
+      },
+      {
+        "id": 132867,
+        "name": "HMT Layout (Hebbal)"
+      },
+      {
+        "id": 133278,
+        "name": "HMT Layout (New BEL Road)"
+      },
+      {
+        "id": 133380,
+        "name": "HMT Main Road (Jalahalli)"
+      },
+      {
+        "id": 133381,
+        "name": "HMT Staff Quarters (Jalahalli)"
+      },
+      {
+        "id": 274004,
+        "name": "Hoodi (hoodi)"
+      },
+      {
+        "id": 139525,
+        "name": "Hoodi (Whitefield)"
+      },
+      {
+        "id": 133020,
+        "name": "Hope Farm Junction (Whitefield)"
+      },
+      {
+        "id": 133341,
+        "name": "Horahalli (Yelahanka)"
+      },
+      {
+        "id": 132587,
+        "name": "Horamanvu Main Road (Banaswadi)"
+      },
+      {
+        "id": 273195,
+        "name": "Horamavu (bangalore)"
+      },
+      {
+        "id": 133065,
+        "name": "Hosa Road (Sarjapur Road)"
+      },
+      {
+        "id": 133356,
+        "name": "Hosahalli (Vijay Nagar)"
+      },
+      {
+        "id": 132557,
+        "name": "Hosakerehalli Layout (Banashankari)"
+      },
+      {
+        "id": 132887,
+        "name": "Hosapalya Road (HSR Layout)"
+      },
+      {
+        "id": 273850,
+        "name": "Hosur Road ( Bommanahalli )"
+      },
+      {
+        "id": 133245,
+        "name": "Hoysalanagar (Ramamurthy Nagar - RM Nagar)"
+      },
+      {
+        "id": 132602,
+        "name": "HRBR 1st block (Banaswadi)"
+      },
+      {
+        "id": 133139,
+        "name": "HRBR 1st block (Kammanahalli)"
+      },
+      {
+        "id": 132600,
+        "name": "HRBR 2nd block (Banaswadi)"
+      },
+      {
+        "id": 133137,
+        "name": "HRBR 2nd block (Kammanahalli)"
+      },
+      {
+        "id": 133138,
+        "name": "HRBR 3rd block (Kammanahalli)"
+      },
+      {
+        "id": 132627,
+        "name": "Hulimavu Gate (Bannerghatta)"
+      },
+      {
+        "id": 132628,
+        "name": "Hulimavu Road (Bannerghatta)"
+      },
+      {
+        "id": 133508,
+        "name": "Huskur Gate (Electronic City)"
+      },
+      {
+        "id": 132790,
+        "name": "Huskur Road (Electronic City)"
+      },
+      {
+        "id": 273789,
+        "name": "Hutchins Road ( Frazer Town )"
+      },
+      {
+        "id": 133397,
+        "name": "Ideal Homes Layout (Rajarajeshwari Nagar)"
+      },
+      {
+        "id": 132620,
+        "name": "IIMB (Bannerghatta)"
+      },
+      {
+        "id": 133261,
+        "name": "IISC Gym Khana (Malleshwaram)"
+      },
+      {
+        "id": 168661,
+        "name": "Ilyas Nagar (Kanakapura Road)"
+      },
+      {
+        "id": 133164,
+        "name": "Indian Oli Stop (Kammanahalli)"
+      },
+      {
+        "id": 133141,
+        "name": "Indra Nagar (Kammanahalli)"
+      },
+      {
+        "id": 133421,
+        "name": "Industrial Area- Phase 3 (Peenya)"
+      },
+      {
+        "id": 133420,
+        "name": "Industrial Area- Phase 4 (Peenya)"
+      },
+      {
+        "id": 132982,
+        "name": "Industrial Layout (Koramangala)"
+      },
+      {
+        "id": 273477,
+        "name": "Infantry Road ( Shivaji Nagar )"
+      },
+      {
+        "id": 132801,
+        "name": "Infosys Gate 6 (Electronic City)"
+      },
+      {
+        "id": 133039,
+        "name": "Inner Circle (Whitefield)"
+      },
+      {
+        "id": 132777,
+        "name": "Inner Ring Road (Domlur)"
+      },
+      {
+        "id": 133043,
+        "name": "Inner Valley (Whitefield)"
+      },
+      {
+        "id": 133114,
+        "name": "Innovative Multiplex (Outer Ring Road)"
+      },
+      {
+        "id": 135092,
+        "name": "Innovator (ITPB-ITPL Whitefield)"
+      },
+      {
+        "id": 135095,
+        "name": "Inventor (ITPB-ITPL Whitefield)"
+      },
+      {
+        "id": 133302,
+        "name": "ISKCON (Yeshwanthpur)"
+      },
+      {
+        "id": 135108,
+        "name": "IT SEZ (ITPB-ITPL Whitefield)"
+      },
+      {
+        "id": 133229,
+        "name": "ITI Colony (KR Puram - Krishnarajapuram)"
+      },
+      {
+        "id": 133236,
+        "name": "ITI Housing Colony (Ramamurthy Nagar - RM Nagar)"
+      },
+      {
+        "id": 272774,
+        "name": "ITPL"
+      },
+      {
+        "id": 133528,
+        "name": "ITPL Main Road (Kundanahalli)"
+      },
+      {
+        "id": 134140,
+        "name": "ITPL Main Road (Whitefield)"
+      },
+      {
+        "id": 132567,
+        "name": "Ittamadugu (Banashankari)"
+      },
+      {
+        "id": 132770,
+        "name": "Jagadeeshnagar (C.V.Raman Nagar)"
+      },
+      {
+        "id": 273842,
+        "name": "Jai Bharat Nagar"
+      },
+      {
+        "id": 132978,
+        "name": "Jakkasandra (Koramangala)"
+      },
+      {
+        "id": 134485,
+        "name": "jakkur (Yelhanka)"
+      },
+      {
+        "id": 133289,
+        "name": "Jalahalli (Yeshwanthpur)"
+      },
+      {
+        "id": 133136,
+        "name": "Jalvayu Vihar Water Tank (Kammanahalli)"
+      },
+      {
+        "id": 132829,
+        "name": "Jasma Bhavan Road (Shivajinagar)"
+      },
+      {
+        "id": 133396,
+        "name": "Javarandoddi (Rajarajeshwari Nagar)"
+      },
+      {
+        "id": 133325,
+        "name": "Jayachamarajendra Nagar (Rajajinagar)"
+      },
+      {
+        "id": 132610,
+        "name": "Jayadeva Hospital (Bannerghatta)"
+      },
+      {
+        "id": 133162,
+        "name": "Jayalakshmi School (Kammanahalli)"
+      },
+      {
+        "id": 132960,
+        "name": "Jeedimara (JP Nagar)"
+      },
+      {
+        "id": 274018,
+        "name": "Jeevan Bhima Nagar Main Road (C.V.Raman Nagar)"
+      },
+      {
+        "id": 132919,
+        "name": "Jeevanbhimanagar Main Road (Jeevanbhimanagar)"
+      },
+      {
+        "id": 133120,
+        "name": "Johnson Market (Richmond Town)"
+      },
+      {
+        "id": 133156,
+        "name": "Jyothi High School  (Kammanahalli)"
+      },
+      {
+        "id": 132981,
+        "name": "Jyothi Nivas College Road (Koramangala)"
+      },
+      {
+        "id": 132560,
+        "name": "Kaalidas Layout (Banashankari)"
+      },
+      {
+        "id": 133155,
+        "name": "Kacharakanahalli (Kammanahalli)"
+      },
+      {
+        "id": 273891,
+        "name": "Kadubeesanahalli (Kadubeesanahalli )"
+      },
+      {
+        "id": 133104,
+        "name": "Kadubisanahalli (Outer Ring Road)"
+      },
+      {
+        "id": 273665,
+        "name": "Kadubisanhalli ( Marathalli )"
+      },
+      {
+        "id": 273750,
+        "name": "Kadugodi"
+      },
+      {
+        "id": 259166,
+        "name": "Kadugodi (Whitefield)"
+      },
+      {
+        "id": 273468,
+        "name": "Kadugodi(bangalore)"
+      },
+      {
+        "id": 145214,
+        "name": "Kaggadaspura (CV Raman Nagar)"
+      },
+      {
+        "id": 133064,
+        "name": "Kaikondarahalli (Sarjapur Road)"
+      },
+      {
+        "id": 133378,
+        "name": "Kalattur Layout (Jalahalli)"
+      },
+      {
+        "id": 132634,
+        "name": "Kalena Agrahara (Bannerghatta)"
+      },
+      {
+        "id": 133060,
+        "name": "Kalhalli (Ulsoor)"
+      },
+      {
+        "id": 133211,
+        "name": "Kalidas Marg (Gandhi Nagar)"
+      },
+      {
+        "id": 133249,
+        "name": "Kalkere Main Road (Ramamurthy Nagar - RM Nagar)"
+      },
+      {
+        "id": 132603,
+        "name": "Kalyan Nagar (Banaswadi)"
+      },
+      {
+        "id": 133166,
+        "name": "Kalyan Nagar (Kammanahalli)"
+      },
+      {
+        "id": 132594,
+        "name": "Kalyana Nagar Post Office (Banaswadi)"
+      },
+      {
+        "id": 133415,
+        "name": "Kamakshipalya (Magadi Road)"
+      },
+      {
+        "id": 133516,
+        "name": "Kamakya (Banashankari)"
+      },
+      {
+        "id": 133246,
+        "name": "Kamalamma Layout (Ramamurthy Nagar - RM Nagar)"
+      },
+      {
+        "id": 132696,
+        "name": "Kamalanagar (Basaveshwara Nagar)"
+      },
+      {
+        "id": 132681,
+        "name": "Kamalanagar Water Tank (Basaveshwara Nagar)"
+      },
+      {
+        "id": 133192,
+        "name": "Kamaraj Road (MG Road)"
+      },
+      {
+        "id": 132836,
+        "name": "Kamaraj Road (Shivajinagar)"
+      },
+      {
+        "id": 133379,
+        "name": "Kammagondanahalli (Jalahalli)"
+      },
+      {
+        "id": 132633,
+        "name": "Kammanahalli Main Road (Bannerghatta)"
+      },
+      {
+        "id": 132792,
+        "name": "Kammasandra (Electronic City)"
+      },
+      {
+        "id": 132861,
+        "name": "Kanaka Nagar (Hebbal)"
+      },
+      {
+        "id": 168660,
+        "name": "Kanakapura Road"
+      },
+      {
+        "id": 273982,
+        "name": "Kanakapura Road ( Banashankari )"
+      },
+      {
+        "id": 132656,
+        "name": "Kanakapura Road (Basavangudi)"
+      },
+      {
+        "id": 133503,
+        "name": "Kanakapura Road (JP Nagar)"
+      },
+      {
+        "id": 168662,
+        "name": "Kanakpura Road - 1st Main"
+      },
+      {
+        "id": 168663,
+        "name": "Kanakpura Road - 2nd Main"
+      },
+      {
+        "id": 168664,
+        "name": "Kanakpura Road - 3rd Main"
+      },
+      {
+        "id": 168665,
+        "name": "Kanakpura Road - 4th Main"
+      },
+      {
+        "id": 168667,
+        "name": "Kanakpura Road - 5th Main"
+      },
+      {
+        "id": 168666,
+        "name": "Kanakpura Road - 6th Main"
+      },
+      {
+        "id": 168668,
+        "name": "Kanakpura Road - 7th Main"
+      },
+      {
+        "id": 168669,
+        "name": "Kanakpura Road - 8th Main"
+      },
+      {
+        "id": 133134,
+        "name": "Karavali Road (Kammanahalli)"
+      },
+      {
+        "id": 133161,
+        "name": "Karianna Palya (Kammanahalli)"
+      },
+      {
+        "id": 133110,
+        "name": "Karthik nagar (Outer Ring Road)"
+      },
+      {
+        "id": 133007,
+        "name": "Karthiknagar (Marathahalli)"
+      },
+      {
+        "id": 132731,
+        "name": "KAS Officers Colony (BTM 2nd stage)"
+      },
+      {
+        "id": 273755,
+        "name": "Kasavanahalli ( Kasavanahalli )"
+      },
+      {
+        "id": 273491,
+        "name": "Kasturba Road ( Shanthala Nagar )"
+      },
+      {
+        "id": 133203,
+        "name": "Kasturba Road (MG Road)"
+      },
+      {
+        "id": 273831,
+        "name": "Kasturi Nagar Road"
+      },
+      {
+        "id": 272762,
+        "name": "Kasturinagar"
+      },
+      {
+        "id": 132565,
+        "name": "Kathriguppe Main Road (Banashankari)"
+      },
+      {
+        "id": 133316,
+        "name": "Kavalbyrasandra (RT Nagar)"
+      },
+      {
+        "id": 273810,
+        "name": "Kaverappa Layout"
+      },
+      {
+        "id": 132572,
+        "name": "Kaveri Nagar (Banashankari)"
+      },
+      {
+        "id": 132711,
+        "name": "Kaveri Nagar (Bommanahalli)"
+      },
+      {
+        "id": 139523,
+        "name": "Kaverinagar (Whitefield)"
+      },
+      {
+        "id": 273084,
+        "name": "Kempapura ( Bellandur )"
+      },
+      {
+        "id": 134351,
+        "name": "Kempapura (Hebbal)"
+      },
+      {
+        "id": 133339,
+        "name": "Kenchenahalli (Yelahanka)"
+      },
+      {
+        "id": 133388,
+        "name": "Kenchenahalli Road (Rajarajeshwari Nagar)"
+      },
+      {
+        "id": 133399,
+        "name": "Kenchenhalli (Rajarajeshwari Nagar)"
+      },
+      {
+        "id": 135340,
+        "name": "Kengeri Satellite Town"
+      },
+      {
+        "id": 133364,
+        "name": "Kesava Upanagara (Vijay Nagar)"
+      },
+      {
+        "id": 133142,
+        "name": "Keshava Nagar (Kammanahalli)"
+      },
+      {
+        "id": 132764,
+        "name": "KG Colony (C.V.Raman Nagar)"
+      },
+      {
+        "id": 133214,
+        "name": "KG Road (Gandhi Nagar)"
+      },
+      {
+        "id": 273490,
+        "name": "KH Road ( Shanti Nagar )"
+      },
+      {
+        "id": 133126,
+        "name": "KH Road (Double Road)"
+      },
+      {
+        "id": 132684,
+        "name": "KHB Colony (Basaveshwara Nagar)"
+      },
+      {
+        "id": 133349,
+        "name": "KHB Colony (Yelahanka)"
+      },
+      {
+        "id": 132676,
+        "name": "KHBS Layout (Basaveshwara Nagar)"
+      },
+      {
+        "id": 133428,
+        "name": "KIADB Housing Complex (Peenya)"
+      },
+      {
+        "id": 132675,
+        "name": "Kirloskar Colony (Basaveshwara Nagar)"
+      },
+      {
+        "id": 133299,
+        "name": "KN Extension (Yeshwanthpur)"
+      },
+      {
+        "id": 132724,
+        "name": "Kodichikkanahalli (Bommanahalli)"
+      },
+      {
+        "id": 132617,
+        "name": "Kodichikkanahalli Road (Bannerghatta)"
+      },
+      {
+        "id": 132713,
+        "name": "Kodichikkanahalli Road (Bommanahalli)"
+      },
+      {
+        "id": 133468,
+        "name": "Kodigehalli Gate (Sahakarnagar)"
+      },
+      {
+        "id": 133467,
+        "name": "Kodigehalli Main Road (Sahakarnagar)"
+      },
+      {
+        "id": 133072,
+        "name": "Kodihalli (Old Airport Road)"
+      },
+      {
+        "id": 132916,
+        "name": "Kodihalli Main Road (Indiranagar)"
+      },
+      {
+        "id": 168670,
+        "name": "Konankunte (Kanakapura Road)"
+      },
+      {
+        "id": 132800,
+        "name": "Konappana Agrahara (Electronic City)"
+      },
+      {
+        "id": 133082,
+        "name": "Konena Agrahara (Old Airport Road)"
+      },
+      {
+        "id": 273783,
+        "name": "Kothanoor"
+      },
+      {
+        "id": 132631,
+        "name": "Kothanur Main Road (Bannerghatta)"
+      },
+      {
+        "id": 133416,
+        "name": "Kottigepalya (Magadi Road)"
+      },
+      {
+        "id": 133248,
+        "name": "Kowdhenahalli (Ramamurthy Nagar - RM Nagar)"
+      },
+      {
+        "id": 133372,
+        "name": "KPA Block (Vijay Nagar)"
+      },
+      {
+        "id": 133090,
+        "name": "KR Garden (Old Airport Road)"
+      },
+      {
+        "id": 132581,
+        "name": "KR Road (Banashankari)"
+      },
+      {
+        "id": 132643,
+        "name": "KR Road (Basavangudi)"
+      },
+      {
+        "id": 132661,
+        "name": "Krishna Rao Road (Basavangudi)"
+      },
+      {
+        "id": 133223,
+        "name": "Krishnagara (KR Puram - Krishnarajapuram)"
+      },
+      {
+        "id": 133408,
+        "name": "Krishnayyanapalya (Old Madras Road)"
+      },
+      {
+        "id": 274079,
+        "name": "Kudlu Gate (HSR Layout)"
+      },
+      {
+        "id": 132977,
+        "name": "Kudremukh Colony (Koramangala)"
+      },
+      {
+        "id": 133157,
+        "name": "Kullappa Circle (Kammanahalli)"
+      },
+      {
+        "id": 273974,
+        "name": "Kumara Krupa Park East ( sadashiv nagar )"
+      },
+      {
+        "id": 132549,
+        "name": "Kumaraswamy Layout (Banashankari)"
+      },
+      {
+        "id": 273878,
+        "name": "Kundalahalli Gate"
+      },
+      {
+        "id": 274024,
+        "name": "Kundalahalli Gate (Kundalahalli )"
+      },
+      {
+        "id": 133529,
+        "name": "Kundanahalli Village (Kundanahalli)"
+      },
+      {
+        "id": 132694,
+        "name": "Kurubarahalli Main Road (Basaveshwara Nagar)"
+      },
+      {
+        "id": 132745,
+        "name": "Kuvempu Nagar (BTM 2nd stage)"
+      },
+      {
+        "id": 133239,
+        "name": "Kuvempu Nagar (Ramamurthy Nagar - RM Nagar)"
+      },
+      {
+        "id": 132948,
+        "name": "Lakkasandra (Jayanagar)"
+      },
+      {
+        "id": 132598,
+        "name": "Lakshmamma Layout (Banaswadi)"
+      },
+      {
+        "id": 273801,
+        "name": "Lakshminarayana Pura"
+      },
+      {
+        "id": 133530,
+        "name": "Lakshminarayanapura (Kundanahalli)"
+      },
+      {
+        "id": 133323,
+        "name": "Lakshminarayanapuram (Rajajinagar)"
+      },
+      {
+        "id": 133124,
+        "name": "Langford Garden (Richmond Town)"
+      },
+      {
+        "id": 133123,
+        "name": "Langford Road (Richmond Town)"
+      },
+      {
+        "id": 273478,
+        "name": "Lavelle Road ( Shanthala Nagar )"
+      },
+      {
+        "id": 133205,
+        "name": "Lavelle Road (MG Road)"
+      },
+      {
+        "id": 133076,
+        "name": "LB Shastry Nagar Road (Old Airport Road)"
+      },
+      {
+        "id": 133117,
+        "name": "Leonard Lane (Richmond Town)"
+      },
+      {
+        "id": 132920,
+        "name": "LIC Colony (Jeevanbhimanagar)"
+      },
+      {
+        "id": 274069,
+        "name": "Lido Mall"
+      },
+      {
+        "id": 274081,
+        "name": "Lido Mall (Ulsoor)"
+      },
+      {
+        "id": 132630,
+        "name": "Loyola School (Bannerghatta)"
+      },
+      {
+        "id": 273994,
+        "name": "M M Road"
+      },
+      {
+        "id": 132730,
+        "name": "Madeena Nagar (BTM 2nd stage)"
+      },
+      {
+        "id": 133216,
+        "name": "Madhav Nagar (Gandhi Nagar)"
+      },
+      {
+        "id": 132671,
+        "name": "MadhavRao Circle (Basavangudi)"
+      },
+      {
+        "id": 133353,
+        "name": "Madhura Nagar (Vijay Nagar)"
+      },
+      {
+        "id": 132989,
+        "name": "Madiwala (Koramangala)"
+      },
+      {
+        "id": 133198,
+        "name": "Madras Bank Road (MG Road)"
+      },
+      {
+        "id": 133330,
+        "name": "Magadi Road (Rajajinagar)"
+      },
+      {
+        "id": 273472,
+        "name": "Magrath Road ( Ashok Nagar )"
+      },
+      {
+        "id": 133194,
+        "name": "Magrath Road (MG Road)"
+      },
+      {
+        "id": 132741,
+        "name": "Mahadeshwara Bus Stop (BTM 2nd stage)"
+      },
+      {
+        "id": 139521,
+        "name": "Mahadevapura (Whitefield)"
+      },
+      {
+        "id": 133108,
+        "name": "Mahadevpura (Outer Ring Road)"
+      },
+      {
+        "id": 132680,
+        "name": "Mahaganapathi Nagar (Basaveshwara Nagar)"
+      },
+      {
+        "id": 133324,
+        "name": "Mahaganapathi Nagar (Rajajinagar)"
+      },
+      {
+        "id": 273499,
+        "name": "Mahalakshmi Chambers ( Ulsoor )"
+      },
+      {
+        "id": 273834,
+        "name": "Maheshwari Nagar"
+      },
+      {
+        "id": 273868,
+        "name": "Main Road (Whitefield )"
+      },
+      {
+        "id": 133144,
+        "name": "Mallappa Layout (Kammanahalli)"
+      },
+      {
+        "id": 132768,
+        "name": "Malleshpalya (C.V.Raman Nagar)"
+      },
+      {
+        "id": 132669,
+        "name": "Mallikarjuna Temple Road (Basavangudi)"
+      },
+      {
+        "id": 273521,
+        "name": "Manipal County Road ( Begur )"
+      },
+      {
+        "id": 133389,
+        "name": "Manipal Hospital Road (Rajarajeshwari Nagar)"
+      },
+      {
+        "id": 133253,
+        "name": "Manjunatha Layout (Ramamurthy Nagar - RM Nagar)"
+      },
+      {
+        "id": 133315,
+        "name": "Manoranapalya (RT Nagar)"
+      },
+      {
+        "id": 132864,
+        "name": "Manorayanpalya (Hebbal)"
+      },
+      {
+        "id": 273087,
+        "name": "Manyata Tech Park (Hebbal)"
+      },
+      {
+        "id": 132942,
+        "name": "Marenahalli (Jayanagar)"
+      },
+      {
+        "id": 133370,
+        "name": "Marenahalli (Vijay Nagar)"
+      },
+      {
+        "id": 132961,
+        "name": "Marenahalli Road (JP Nagar)"
+      },
+      {
+        "id": 133259,
+        "name": "Margosa Road (Malleshwaram)"
+      },
+      {
+        "id": 273811,
+        "name": "Mariappa Circle ( Kammanahali Rd )"
+      },
+      {
+        "id": 273471,
+        "name": "Markham Road ( Shanthala Nagar )"
+      },
+      {
+        "id": 133520,
+        "name": "Maruthi HBCS Layout Park (BTM 1st Stage)"
+      },
+      {
+        "id": 132781,
+        "name": "Maruthi Infotech Center (Domlur)"
+      },
+      {
+        "id": 132705,
+        "name": "Maruthi Layout (Bommanahalli)"
+      },
+      {
+        "id": 132769,
+        "name": "Maruthi Nagar (C.V.Raman Nagar)"
+      },
+      {
+        "id": 274043,
+        "name": "Maruthi Nagar (Madiwala)"
+      },
+      {
+        "id": 133433,
+        "name": "Maruthi Nagar (Peenya)"
+      },
+      {
+        "id": 273202,
+        "name": "Mathikere ( Mathikere )"
+      },
+      {
+        "id": 133275,
+        "name": "Mathikere (New BEL Road)"
+      },
+      {
+        "id": 133287,
+        "name": "Mathikere Extension (New BEL Road)"
+      },
+      {
+        "id": 132592,
+        "name": "Maxwell Public School (Banaswadi)"
+      },
+      {
+        "id": 133359,
+        "name": "MC Layout (Vijay Nagar)"
+      },
+      {
+        "id": 133148,
+        "name": "Meganahalli (Kammanahalli)"
+      },
+      {
+        "id": 133303,
+        "name": "MEI Road (Yeshwanthpur)"
+      },
+      {
+        "id": 132612,
+        "name": "Mico Layout (Bannerghatta)"
+      },
+      {
+        "id": 132737,
+        "name": "Mico Layout (BTM 2nd stage)"
+      },
+      {
+        "id": 132742,
+        "name": "Mico Layout Park (BTM 2nd stage)"
+      },
+      {
+        "id": 133256,
+        "name": "Milk Colony (Malleshwaram)"
+      },
+      {
+        "id": 132823,
+        "name": "Millers Road (Shivajinagar)"
+      },
+      {
+        "id": 273677,
+        "name": "Minerva Circle ( Basavanagudi )"
+      },
+      {
+        "id": 273744,
+        "name": "Mittal Tower"
+      },
+      {
+        "id": 273679,
+        "name": "MLA Layout ( RT Nagar )"
+      },
+      {
+        "id": 274093,
+        "name": "Modi Hospital Road"
+      },
+      {
+        "id": 132810,
+        "name": "Moore Road (Frazer Town)"
+      },
+      {
+        "id": 132658,
+        "name": "Mosque Road (Basavangudi)"
+      },
+      {
+        "id": 132819,
+        "name": "Mosque Road (Frazer Town)"
+      },
+      {
+        "id": 133485,
+        "name": "Moyen Ville Road (Double Road)"
+      },
+      {
+        "id": 133276,
+        "name": "MSR Road (New BEL Road)"
+      },
+      {
+        "id": 133352,
+        "name": "Mudalpalya (Vijay Nagar)"
+      },
+      {
+        "id": 132554,
+        "name": "Muneshwara Block (Banashankari)"
+      },
+      {
+        "id": 133247,
+        "name": "Muneshwaranagar (Ramamurthy Nagar - RM Nagar)"
+      },
+      {
+        "id": 133008,
+        "name": "Munnekollal (Marathahalli)"
+      },
+      {
+        "id": 133085,
+        "name": "Murugeshpalya (Old Airport Road)"
+      },
+      {
+        "id": 273487,
+        "name": "Museum Road ( Shanthala Nagar )"
+      },
+      {
+        "id": 133193,
+        "name": "Museum Road (MG Road)"
+      },
+      {
+        "id": 133343,
+        "name": "MVIT (Yelahanka)"
+      },
+      {
+        "id": 132562,
+        "name": "Mysore Bank Colony (Banashankari)"
+      },
+      {
+        "id": 133019,
+        "name": "Mythri Layout (Whitefield)"
+      },
+      {
+        "id": 133309,
+        "name": "N Damodaran Road (Sahakarnagar)"
+      },
+      {
+        "id": 133240,
+        "name": "Nagappa Reddy Layout (Ramamurthy Nagar - RM Nagar)"
+      },
+      {
+        "id": 133215,
+        "name": "Nagappa Road (Gandhi Nagar)"
+      },
+      {
+        "id": 132674,
+        "name": "Nagapura (Basaveshwara Nagar)"
+      },
+      {
+        "id": 133429,
+        "name": "Nagara Bavi (Peenya)"
+      },
+      {
+        "id": 135351,
+        "name": "Nagarabhavi (Mysore Road)"
+      },
+      {
+        "id": 132571,
+        "name": "Nagasandra Main Road (Banashankari)"
+      },
+      {
+        "id": 133285,
+        "name": "Nagashetty Halli (New BEL Road)"
+      },
+      {
+        "id": 273985,
+        "name": "Nagavara ( Bangalore )"
+      },
+      {
+        "id": 133181,
+        "name": "Nagavara (HBR Layout)"
+      },
+      {
+        "id": 273639,
+        "name": "nagavara junction"
+      },
+      {
+        "id": 133176,
+        "name": "Nagavara Main Road (HBR Layout)"
+      },
+      {
+        "id": 132756,
+        "name": "Nagavarpalya (C.V.Raman Nagar)"
+      },
+      {
+        "id": 132757,
+        "name": "Nagavarpalya Main Road (C.V.Raman Nagar)"
+      },
+      {
+        "id": 132561,
+        "name": "Nagednra Block (Banashankari)"
+      },
+      {
+        "id": 133342,
+        "name": "Nagenahalli (Yelahanka)"
+      },
+      {
+        "id": 134301,
+        "name": "Nagvar (Outer Ring Road)"
+      },
+      {
+        "id": 132939,
+        "name": "NAL Layout (Jayanagar)"
+      },
+      {
+        "id": 133430,
+        "name": "Nalagadderanahalli (Peenya)"
+      },
+      {
+        "id": 133028,
+        "name": "Nallurhalli (Whitefield)"
+      },
+      {
+        "id": 133075,
+        "name": "Nanja Reddy Colony (Old Airport Road)"
+      },
+      {
+        "id": 133122,
+        "name": "Nanjappa Circle (Richmond Town)"
+      },
+      {
+        "id": 133298,
+        "name": "Nanjappa Reddy Colony (Yeshwanthpur)"
+      },
+      {
+        "id": 133131,
+        "name": "Nanjappa Road (Double Road)"
+      },
+      {
+        "id": 133151,
+        "name": "Nanjundappa Road (Kammanahalli)"
+      },
+      {
+        "id": 133291,
+        "name": "Narasimha Layout (Yeshwanthpur)"
+      },
+      {
+        "id": 133037,
+        "name": "Narayanappa Garden (Whitefield)"
+      },
+      {
+        "id": 133431,
+        "name": "Narayanapura (Peenya)"
+      },
+      {
+        "id": 135096,
+        "name": "Navigator (ITPB-ITPL Whitefield)"
+      },
+      {
+        "id": 132584,
+        "name": "Near CMRIT College (Banaswadi)"
+      },
+      {
+        "id": 132983,
+        "name": "Near Sony world  (Koramangala)"
+      },
+      {
+        "id": 132990,
+        "name": "Near Total Mall (Koramangala)"
+      },
+      {
+        "id": 133069,
+        "name": "Near Wipro (Sarjapur Road)"
+      },
+      {
+        "id": 273836,
+        "name": "Neeladri Nagar"
+      },
+      {
+        "id": 132987,
+        "name": "Neelasandra (Koramangala)"
+      },
+      {
+        "id": 133217,
+        "name": "Nehru Nagar (Gandhi Nagar)"
+      },
+      {
+        "id": 273077,
+        "name": "Neo Town (Electronic City)"
+      },
+      {
+        "id": 133427,
+        "name": "Netaji Nagar (Peenya)"
+      },
+      {
+        "id": 132814,
+        "name": "Netaji Road (Frazer Town)"
+      },
+      {
+        "id": 133286,
+        "name": "Nethaji Nagar (New BEL Road)"
+      },
+      {
+        "id": 134349,
+        "name": "Nethajinagar (Jalahalli)"
+      },
+      {
+        "id": 132650,
+        "name": "Netkallappa Circle (Basavangudi)"
+      },
+      {
+        "id": 133107,
+        "name": "New Horizon College-Cessna Business Park (Outer Ring Road)"
+      },
+      {
+        "id": 273806,
+        "name": "New Thippasandra ( New Thippasandra )"
+      },
+      {
+        "id": 134487,
+        "name": "New Town Yelhanka"
+      },
+      {
+        "id": 133403,
+        "name": "NGEF (Old Madras Road)"
+      },
+      {
+        "id": 133502,
+        "name": "NGV - National Games Village (Koramangala)"
+      },
+      {
+        "id": 132949,
+        "name": "NIMHANS (Jayanagar)"
+      },
+      {
+        "id": 132843,
+        "name": "Noah Street (Shivajinagar)"
+      },
+      {
+        "id": 132632,
+        "name": "Nobo Nagar (Bannerghatta)"
+      },
+      {
+        "id": 133119,
+        "name": "Norris Road (Richmond Town)"
+      },
+      {
+        "id": 132652,
+        "name": "NR Colony (Basavangudi)"
+      },
+      {
+        "id": 132921,
+        "name": "NR Colony Main Road (Jeevanbhimanagar)"
+      },
+      {
+        "id": 133084,
+        "name": "NR Layout (Old Airport Road)"
+      },
+      {
+        "id": 133243,
+        "name": "NR Layout (Ramamurthy Nagar - RM Nagar)"
+      },
+      {
+        "id": 132739,
+        "name": "NS Palya (BTM 2nd stage)"
+      },
+      {
+        "id": 133160,
+        "name": "Oil Mill Road (Kammanahalli)"
+      },
+      {
+        "id": 273880,
+        "name": "Old Airport Road ( Jeevan Bima Nagar )"
+      },
+      {
+        "id": 133440,
+        "name": "Old Guddadahalli (Mysore Road)"
+      },
+      {
+        "id": 133230,
+        "name": "Old Police Station Road (KR Puram - Krishnarajapuram)"
+      },
+      {
+        "id": 273830,
+        "name": "OMBR Layout"
+      },
+      {
+        "id": 274019,
+        "name": "Opposite Mega Mart (Sarjapur Road)"
+      },
+      {
+        "id": 132847,
+        "name": "Osborne Road (Shivajinagar)"
+      },
+      {
+        "id": 133040,
+        "name": "Outer Circle (Whitefield)"
+      },
+      {
+        "id": 273820,
+        "name": "Outer Ring Rd ( Bellandur )"
+      },
+      {
+        "id": 273819,
+        "name": "Outer Ring Road ( Marathahalli )"
+      },
+      {
+        "id": 132965,
+        "name": "Oxford College Road (JP Nagar)"
+      },
+      {
+        "id": 133149,
+        "name": "P & T Layout (Kammanahalli)"
+      },
+      {
+        "id": 274020,
+        "name": "P And T Colony ( RT Nagar )"
+      },
+      {
+        "id": 133490,
+        "name": "Padarayana Pura (Mysore Road)"
+      },
+      {
+        "id": 132548,
+        "name": "Padmanabha Nagar (Banashankari)"
+      },
+      {
+        "id": 133405,
+        "name": "Pai Layout (Old Madras Road)"
+      },
+      {
+        "id": 132830,
+        "name": "Palace Road (Shivajinagar)"
+      },
+      {
+        "id": 273964,
+        "name": "Palm Meadows"
+      },
+      {
+        "id": 133112,
+        "name": "Panathur Main Road (Outer Ring Road)"
+      },
+      {
+        "id": 133400,
+        "name": "Papayya Layout (Rajarajeshwari Nagar)"
+      },
+      {
+        "id": 132881,
+        "name": "Parangipalya (HSR Layout)"
+      },
+      {
+        "id": 133469,
+        "name": "Park view Layout (Sahakarnagar)"
+      },
+      {
+        "id": 132860,
+        "name": "Patel Muniyappa Layout (Hebbal)"
+      },
+      {
+        "id": 133284,
+        "name": "Patelappa Layout (New BEL Road)"
+      },
+      {
+        "id": 133387,
+        "name": "Patnageri (Rajarajeshwari Nagar)"
+      },
+      {
+        "id": 132667,
+        "name": "Pattalamma Temple Road (Basavangudi)"
+      },
+      {
+        "id": 135344,
+        "name": "Pattanagere"
+      },
+      {
+        "id": 274009,
+        "name": "Pattandhur Agrahara (pattandhur agrahara)"
+      },
+      {
+        "id": 133023,
+        "name": "Pattandhur Agrahara Road (Whitefield)"
+      },
+      {
+        "id": 133368,
+        "name": "PF Layout (Vijay Nagar)"
+      },
+      {
+        "id": 132786,
+        "name": "Phase 1 (Electronic City)"
+      },
+      {
+        "id": 132788,
+        "name": "Phase 2 (Electronic City)"
+      },
+      {
+        "id": 132693,
+        "name": "Pipeline Road (Basaveshwara Nagar)"
+      },
+      {
+        "id": 133308,
+        "name": "Post Office (Sahakarnagar)"
+      },
+      {
+        "id": 132812,
+        "name": "Pottery Road (Frazer Town)"
+      },
+      {
+        "id": 133143,
+        "name": "Prakruthi Township (Kammanahalli)"
+      },
+      {
+        "id": 133018,
+        "name": "Prashanth Extension (Whitefield)"
+      },
+      {
+        "id": 133362,
+        "name": "Prashanth Nagar (Vijay Nagar)"
+      },
+      {
+        "id": 273090,
+        "name": "Premier Park Layout (Hennur)"
+      },
+      {
+        "id": 272801,
+        "name": "Prestige Shantiniketan (KR Puram - Krishnarajapuram)"
+      },
+      {
+        "id": 273484,
+        "name": "Primrose Road"
+      },
+      {
+        "id": 133202,
+        "name": "Primrose Road (MG Road)"
+      },
+      {
+        "id": 133021,
+        "name": "Prithvi Layout (Whitefield)"
+      },
+      {
+        "id": 133226,
+        "name": "Priyadarshini Layout (KR Puram - Krishnarajapuram)"
+      },
+      {
+        "id": 133360,
+        "name": "Priyadarshini Layout (Vijay Nagar)"
+      },
+      {
+        "id": 132806,
+        "name": "Promenade Road (Frazer Town)"
+      },
+      {
+        "id": 133521,
+        "name": "Public Library (BTM 1st Stage)"
+      },
+      {
+        "id": 133171,
+        "name": "Punappa Layout (HBR Layout)"
+      },
+      {
+        "id": 133336,
+        "name": "Puttanahalli (Yelahanka)"
+      },
+      {
+        "id": 134137,
+        "name": "Puttenahalli (JP Nagar)"
+      },
+      {
+        "id": 132826,
+        "name": "Queens Road (Shivajinagar)"
+      },
+      {
+        "id": 273847,
+        "name": "R.M.V. Hospital ( Sanjay Nagar )"
+      },
+      {
+        "id": 274120,
+        "name": "Raghavendra Circle"
+      },
+      {
+        "id": 133250,
+        "name": "Raghavendra Nagar (Ramamurthy Nagar - RM Nagar)"
+      },
+      {
+        "id": 133293,
+        "name": "Raghavendra Rao Road (Yeshwanthpur)"
+      },
+      {
+        "id": 132962,
+        "name": "Ragi Gudda (JP Nagar)"
+      },
+      {
+        "id": 132766,
+        "name": "Rahath Bagh (C.V.Raman Nagar)"
+      },
+      {
+        "id": 133295,
+        "name": "Rahman Khan Road (Yeshwanthpur)"
+      },
+      {
+        "id": 133212,
+        "name": "Railway Officers Colony (Gandhi Nagar)"
+      },
+      {
+        "id": 133296,
+        "name": "Railway Parallel Road (Yeshwanthpur)"
+      },
+      {
+        "id": 135341,
+        "name": "Rajarajeswari Nagar"
+      },
+      {
+        "id": 132832,
+        "name": "Rajbhavan Road (Shivajinagar)"
+      },
+      {
+        "id": 133152,
+        "name": "Rajkumar Park (Kammanahalli)"
+      },
+      {
+        "id": 133507,
+        "name": "Rama Temple Road (New Thippasandra)"
+      },
+      {
+        "id": 133449,
+        "name": "Ramachandra Agrahara (Mysore Road)"
+      },
+      {
+        "id": 133027,
+        "name": "Ramagondanahalli (Whitefield)"
+      },
+      {
+        "id": 133514,
+        "name": "Ramaiah Hospital Road (Banaswadi)"
+      },
+      {
+        "id": 133140,
+        "name": "Ramaiah Layout (Kammanahalli)"
+      },
+      {
+        "id": 132670,
+        "name": "Ramamandir Road (Basavangudi)"
+      },
+      {
+        "id": 133158,
+        "name": "Ramaswamy Palya (Kammanahalli)"
+      },
+      {
+        "id": 133078,
+        "name": "Ramesh Nagar (Old Airport Road)"
+      },
+      {
+        "id": 132664,
+        "name": "Ramoji Rao Road (Basavangudi)"
+      },
+      {
+        "id": 132614,
+        "name": "Ranka Colony (Bannerghatta)"
+      },
+      {
+        "id": 132654,
+        "name": "Ratna Vilas Road (Basavangudi)"
+      },
+      {
+        "id": 133495,
+        "name": "RBANMS College (Ulsoor)"
+      },
+      {
+        "id": 132868,
+        "name": "Reserve Bank Colony (Hebbal)"
+      },
+      {
+        "id": 273489,
+        "name": "Rest House Road ( Shanthala Nagar )"
+      },
+      {
+        "id": 139522,
+        "name": "RHB Colony (Whitefield)"
+      },
+      {
+        "id": 273970,
+        "name": "Richmond Bldg"
+      },
+      {
+        "id": 273474,
+        "name": "Richmond Road ( Shanthala Nagar )"
+      },
+      {
+        "id": 133477,
+        "name": "Richmond Road (MG Road)"
+      },
+      {
+        "id": 133218,
+        "name": "Risaldar Street (Gandhi Nagar)"
+      },
+      {
+        "id": 133059,
+        "name": "RK Mutt Road (Ulsoor)"
+      },
+      {
+        "id": 133304,
+        "name": "RMC Yard (Yeshwanthpur)"
+      },
+      {
+        "id": 133272,
+        "name": "RMV 2nd Stage (New BEL Road)"
+      },
+      {
+        "id": 272761,
+        "name": "RMZ Ecospace"
+      },
+      {
+        "id": 272760,
+        "name": "Rmz Ecoworld"
+      },
+      {
+        "id": 272793,
+        "name": "RMZ Infinity"
+      },
+      {
+        "id": 272792,
+        "name": "RMZ Millenia"
+      },
+      {
+        "id": 132811,
+        "name": "Robertson Road (Frazer Town)"
+      },
+      {
+        "id": 132717,
+        "name": "Roopena Agrahara (Bommanahalli)"
+      },
+      {
+        "id": 132618,
+        "name": "Rose Garden Road (Bannerghatta)"
+      },
+      {
+        "id": 132712,
+        "name": "Rotary Nagar (Bommanahalli)"
+      },
+      {
+        "id": 273780,
+        "name": "Royal Meenakshi Mall"
+      },
+      {
+        "id": 132708,
+        "name": "Royal Shelters (Bommanahalli)"
+      },
+      {
+        "id": 133373,
+        "name": "RPC Layout (Vijay Nagar)"
+      },
+      {
+        "id": 135347,
+        "name": "RR Layout (Mysore Road)"
+      },
+      {
+        "id": 132797,
+        "name": "RS Gardens (Electronic City)"
+      },
+      {
+        "id": 133312,
+        "name": "RT Nagar Post Office (RT Nagar)"
+      },
+      {
+        "id": 133083,
+        "name": "Rustumbagh (Old Airport Road)"
+      },
+      {
+        "id": 132964,
+        "name": "RV Dental College (JP Nagar)"
+      },
+      {
+        "id": 133281,
+        "name": "Sachidananda Nagar (New BEL Road)"
+      },
+      {
+        "id": 133390,
+        "name": "Sachidananda Nagar (Rajarajeshwari Nagar)"
+      },
+      {
+        "id": 273200,
+        "name": "Sadashiva Nagar ( Sadashiva Nagar )"
+      },
+      {
+        "id": 133179,
+        "name": "Sadupadesa College Road (HBR Layout)"
+      },
+      {
+        "id": 132606,
+        "name": "Sagar Apollo Hospital (Bannerghatta)"
+      },
+      {
+        "id": 132727,
+        "name": "Sai Nandhana Enclave (Bommanahalli)"
+      },
+      {
+        "id": 132798,
+        "name": "Sampige Nagar (Electronic City)"
+      },
+      {
+        "id": 133267,
+        "name": "Sampige Road (Malleshwaram)"
+      },
+      {
+        "id": 132624,
+        "name": "Samrat Layout (Bannerghatta)"
+      },
+      {
+        "id": 132943,
+        "name": "Sangam Circle (Jayanagar)"
+      },
+      {
+        "id": 133004,
+        "name": "Sanjay Nagar (Marathahalli)"
+      },
+      {
+        "id": 133274,
+        "name": "Sanjay Nagar (New BEL Road)"
+      },
+      {
+        "id": 273827,
+        "name": "Sankara Eye hospital ( Marthahalli )"
+      },
+      {
+        "id": 273845,
+        "name": "Sankey Road"
+      },
+      {
+        "id": 132967,
+        "name": "Sarakki Main Road (JP Nagar)"
+      },
+      {
+        "id": 133367,
+        "name": "Saraswathi Nagar (Vijay Nagar)"
+      },
+      {
+        "id": 133067,
+        "name": "Sarjapur Fire Station (Sarjapur Road)"
+      },
+      {
+        "id": 133034,
+        "name": "Sathya Layout (Whitefield)"
+      },
+      {
+        "id": 133031,
+        "name": "Sathya sai Hospital (Whitefield)"
+      },
+      {
+        "id": 133471,
+        "name": "Satyasaibaba Layout (KR Puram - Krishnarajapuram)"
+      },
+      {
+        "id": 132818,
+        "name": "Saunders Road (Frazer Town)"
+      },
+      {
+        "id": 133233,
+        "name": "SBI Bank Colony (KR Puram - Krishnarajapuram)"
+      },
+      {
+        "id": 132678,
+        "name": "SBI Staff Colony (Basaveshwara Nagar)"
+      },
+      {
+        "id": 132570,
+        "name": "SBM Colony (Banashankari)"
+      },
+      {
+        "id": 133213,
+        "name": "SC Road (Gandhi Nagar)"
+      },
+      {
+        "id": 133473,
+        "name": "Seegehalli (KR Puram - Krishnarajapuram) bangalore"
+      },
+      {
+        "id": 132709,
+        "name": "Seenappa Layout (Bommanahalli)"
+      },
+      {
+        "id": 273704,
+        "name": "Service Road (HSR Layout)"
+      },
+      {
+        "id": 133209,
+        "name": "Seshadri Road (Gandhi Nagar)"
+      },
+      {
+        "id": 132998,
+        "name": "SGR College Road (Marathahalli)"
+      },
+      {
+        "id": 133115,
+        "name": "SGR College Road (Outer Ring Road)"
+      },
+      {
+        "id": 133411,
+        "name": "Shakthinagar (Old Madras Road)"
+      },
+      {
+        "id": 132637,
+        "name": "Shamanna Layout (Bannerghatta)"
+      },
+      {
+        "id": 133441,
+        "name": "Shamanna Nagar (Mysore Road)"
+      },
+      {
+        "id": 132697,
+        "name": "Shanbhag Hospital (Basaveshwara Nagar)"
+      },
+      {
+        "id": 133252,
+        "name": "Shanti Layout (Ramamurthy Nagar - RM Nagar)"
+      },
+      {
+        "id": 133127,
+        "name": "Shanti Nagar (Double Road)"
+      },
+      {
+        "id": 132679,
+        "name": "Sharada Colony (Basaveshwara Nagar)"
+      },
+      {
+        "id": 273547,
+        "name": "Sheshadripuram"
+      },
+      {
+        "id": 133531,
+        "name": "Shirdi Sai Nagar (Kundanahalli)"
+      },
+      {
+        "id": 133522,
+        "name": "Shiv Shakthi Bhavan (BTM 1st Stage)"
+      },
+      {
+        "id": 132980,
+        "name": "Shiva Talkies (Koramangala)"
+      },
+      {
+        "id": 132841,
+        "name": "Shivaji Road (Shivajinagar)"
+      },
+      {
+        "id": 133074,
+        "name": "Shivalingaiah Colony (Old Airport Road)"
+      },
+      {
+        "id": 133320,
+        "name": "Shivanagar (Rajajinagar)"
+      },
+      {
+        "id": 132850,
+        "name": "Shivanchetti Gardens (Shivajinagar)"
+      },
+      {
+        "id": 132613,
+        "name": "Shoppers Stop (Bannerghatta)"
+      },
+      {
+        "id": 132795,
+        "name": "Shree Ananth Nagar Layout (Electronic City)"
+      },
+      {
+        "id": 133128,
+        "name": "Siddaiah Road (Double Road)"
+      },
+      {
+        "id": 132947,
+        "name": "Siddapura (Jayanagar)"
+      },
+      {
+        "id": 133024,
+        "name": "Siddapura (Whitefield)"
+      },
+      {
+        "id": 133026,
+        "name": "Siddapura Road (Whitefield)"
+      },
+      {
+        "id": 133328,
+        "name": "Siddaramana Dinne (Rajajinagar)"
+      },
+      {
+        "id": 132789,
+        "name": "Silicon Town (Electronic City)"
+      },
+      {
+        "id": 139519,
+        "name": "Singanyyanpalya (Whitefield)"
+      },
+      {
+        "id": 132888,
+        "name": "Somasundarapalya (HSR Layout)"
+      },
+      {
+        "id": 132889,
+        "name": "Somasundarapalya Road (HSR Layout)"
+      },
+      {
+        "id": 132653,
+        "name": "South End Road (Basavangudi)"
+      },
+      {
+        "id": 133505,
+        "name": "South End Road (Jayanagar)"
+      },
+      {
+        "id": 132585,
+        "name": "Spandana Hospital Road (Banaswadi)"
+      },
+      {
+        "id": 132805,
+        "name": "Spencer Road (Frazer Town)"
+      },
+      {
+        "id": 133494,
+        "name": "SR Layout (Old Airport Road)"
+      },
+      {
+        "id": 133340,
+        "name": "Sri Balaji Layout (Yelahanka)"
+      },
+      {
+        "id": 133517,
+        "name": "Sri Nagar (Banashankari)"
+      },
+      {
+        "id": 133451,
+        "name": "Srinagar (Mysore Road)"
+      },
+      {
+        "id": 133499,
+        "name": "Srinivagilu Road - 80 feet road (Koramangala)"
+      },
+      {
+        "id": 133351,
+        "name": "Srinivasanagar (Vijay Nagar)"
+      },
+      {
+        "id": 132563,
+        "name": "Srinivasnagar (Banashankari)"
+      },
+      {
+        "id": 132760,
+        "name": "Srinivaspura Main Road (C.V.Raman Nagar)"
+      },
+      {
+        "id": 132984,
+        "name": "ST Bed Layout (Koramangala)"
+      },
+      {
+        "id": 133153,
+        "name": "St. Charles High School (Kammanahalli)"
+      },
+      {
+        "id": 133197,
+        "name": "St. Marks Road (MG Road)"
+      },
+      {
+        "id": 133150,
+        "name": "St. Thomas Town Road (Kammanahalli)"
+      },
+      {
+        "id": 132817,
+        "name": "St.Johns Church Road (Frazer Town)"
+      },
+      {
+        "id": 132991,
+        "name": "ST.Johns Wood (Koramangala)"
+      },
+      {
+        "id": 133129,
+        "name": "St.Michael School Road (Double Road)"
+      },
+      {
+        "id": 273544,
+        "name": "Stage 1 ( Kumaraswamy Layout )"
+      },
+      {
+        "id": 132809,
+        "name": "Standage Road (Frazer Town)"
+      },
+      {
+        "id": 132808,
+        "name": "Stephens Road (Frazer Town)"
+      },
+      {
+        "id": 132601,
+        "name": "Subbaiyyapalya Extension (Banaswadi)"
+      },
+      {
+        "id": 132651,
+        "name": "Subbramanya Chetty Road (Basavangudi)"
+      },
+      {
+        "id": 133300,
+        "name": "Subedarpalya (Yeshwanthpur)"
+      },
+      {
+        "id": 132854,
+        "name": "Subramani Colony (Hebbal)"
+      },
+      {
+        "id": 132607,
+        "name": "Subramanya Arcade (Bannerghatta)"
+      },
+      {
+        "id": 133237,
+        "name": "Subramanya Layout (Ramamurthy Nagar - RM Nagar)"
+      },
+      {
+        "id": 132576,
+        "name": "Subramanyapura Main Road (Banashankari)"
+      },
+      {
+        "id": 133383,
+        "name": "Subroto Mukehrjee Road (Jalahalli)"
+      },
+      {
+        "id": 132759,
+        "name": "Suddagunta Palya (C.V.Raman Nagar)"
+      },
+      {
+        "id": 133413,
+        "name": "Suddagunta Palya (Old Madras Road)"
+      },
+      {
+        "id": 133491,
+        "name": "Sudhamnagar (Double Road)"
+      },
+      {
+        "id": 133314,
+        "name": "Sultanpalya Main Road (RT Nagar)"
+      },
+      {
+        "id": 132844,
+        "name": "Sulthangunta (Shivajinagar)"
+      },
+      {
+        "id": 133417,
+        "name": "Summanahalli (Magadi Road)"
+      },
+      {
+        "id": 133113,
+        "name": "Sun City Appts (Outer Ring Road)"
+      },
+      {
+        "id": 133220,
+        "name": "Sunshine Layout (KR Puram - Krishnarajapuram)"
+      },
+      {
+        "id": 132695,
+        "name": "SVK Layout (Basaveshwara Nagar)"
+      },
+      {
+        "id": 133472,
+        "name": "Swathantra Nagar (KR Puram - Krishnarajapuram)"
+      },
+      {
+        "id": 133509,
+        "name": "Symbiosis Institute (Electronic City)"
+      },
+      {
+        "id": 132626,
+        "name": "Syndicate Bank Colony Road (Bannerghatta)"
+      },
+      {
+        "id": 273882,
+        "name": "T M R Towers ( Thubarahalli )"
+      },
+      {
+        "id": 273813,
+        "name": "Tank Bund Road ( Lingarajapuram )"
+      },
+      {
+        "id": 132835,
+        "name": "Tasker Town (Shivajinagar)"
+      },
+      {
+        "id": 132802,
+        "name": "Tata Consultancy Services (Electronic City)"
+      },
+      {
+        "id": 133264,
+        "name": "Tata Institute (Malleshwaram)"
+      },
+      {
+        "id": 133523,
+        "name": "Tavarekere Main Road (BTM 1st Stage)"
+      },
+      {
+        "id": 133500,
+        "name": "Tavarekere Main Road (Koramangala)"
+      },
+      {
+        "id": 133221,
+        "name": "TC Palya - Thambuchetty Palya (KR Puram - Krishnarajapuram)"
+      },
+      {
+        "id": 133254,
+        "name": "TC Palya Main Road (Ramamurthy Nagar - RM Nagar)"
+      },
+      {
+        "id": 132577,
+        "name": "Teachers Colony (Banashankari)"
+      },
+      {
+        "id": 132550,
+        "name": "Telecom Colony (Banashankari)"
+      },
+      {
+        "id": 132703,
+        "name": "Thanushree Hospital (Bommanahalli)"
+      },
+      {
+        "id": 273221,
+        "name": "Thigalarapalya ( Thigalarapalya )"
+      },
+      {
+        "id": 139520,
+        "name": "Thigalarpalya (Whitefield)"
+      },
+      {
+        "id": 132828,
+        "name": "Thimmaiah Road (Shivajinagar)"
+      },
+      {
+        "id": 133515,
+        "name": "Thyagarajanagar (Banashankari)"
+      },
+      {
+        "id": 132941,
+        "name": "Tilak Nagar (Jayanagar)"
+      },
+      {
+        "id": 133406,
+        "name": "Tin Factory (Old Madras Road)"
+      },
+      {
+        "id": 133447,
+        "name": "Tipu Nagar (Mysore Road)"
+      },
+      {
+        "id": 273086,
+        "name": "Tirumenehalli (Yelahanka)"
+      },
+      {
+        "id": 133066,
+        "name": "Total Mall (Sarjapur Road)"
+      },
+      {
+        "id": 133478,
+        "name": "Trinity Circle (MG Road)"
+      },
+      {
+        "id": 133056,
+        "name": "Trinity Circle (Ulsoor)"
+      },
+      {
+        "id": 133001,
+        "name": "Tulasi Theatre Road (Marathahalli)"
+      },
+      {
+        "id": 133347,
+        "name": "Udaya Layout (Yelahanka)"
+      },
+      {
+        "id": 133322,
+        "name": "Udayam nagar (Rajajinagar)"
+      },
+      {
+        "id": 133410,
+        "name": "Udaynagar (Old Madras Road)"
+      },
+      {
+        "id": 273788,
+        "name": "Udupi Garden ( BTM 2nd Stage )"
+      },
+      {
+        "id": 132744,
+        "name": "Udupi Garden Road (BTM 2nd stage)"
+      },
+      {
+        "id": 132839,
+        "name": "Union Street (Shivajinagar)"
+      },
+      {
+        "id": 168671,
+        "name": "Utharahalli Main Road (Kanakapura Road)"
+      },
+      {
+        "id": 132715,
+        "name": "Vakil Marina Layout (Bommanahalli)"
+      },
+      {
+        "id": 132639,
+        "name": "Vanivilas Road (Basavangudi)"
+      },
+      {
+        "id": 132765,
+        "name": "Varsova Layout (C.V.Raman Nagar)"
+      },
+      {
+        "id": 133051,
+        "name": "Varthur Lake Junction (Whitefield)"
+      },
+      {
+        "id": 132831,
+        "name": "Vasanth Nagar (Shivajinagar)"
+      },
+      {
+        "id": 132793,
+        "name": "Vasundhara Layout (Electronic City)"
+      },
+      {
+        "id": 132559,
+        "name": "Veera Bhadra Nagar (Banashankari)"
+      },
+      {
+        "id": 132796,
+        "name": "Veerasandra Main Road (Electronic City)"
+      },
+      {
+        "id": 133282,
+        "name": "Vekatappa Layout (New BEL Road)"
+      },
+      {
+        "id": 132799,
+        "name": "Velankani tech Park (Electronic City)"
+      },
+      {
+        "id": 133159,
+        "name": "Venkateshwara Tent Road (Kammanahalli)"
+      },
+      {
+        "id": 133434,
+        "name": "Venugopal Nagar (Peenya)"
+      },
+      {
+        "id": 132660,
+        "name": "Viajaya College (Basavangudi)"
+      },
+      {
+        "id": 133079,
+        "name": "Vibuthipura (Old Airport Road)"
+      },
+      {
+        "id": 133476,
+        "name": "Victoria Road (MG Road)"
+      },
+      {
+        "id": 133422,
+        "name": "Vidya Nagar (Peenya)"
+      },
+      {
+        "id": 132564,
+        "name": "Vidyapeeta Circle (Banashankari)"
+      },
+      {
+        "id": 132569,
+        "name": "Vidyapeeta Main Road (Banashankari)"
+      },
+      {
+        "id": 273203,
+        "name": "Vidyaranyapura ( Vidyaranyapura )"
+      },
+      {
+        "id": 134139,
+        "name": "Vidyaranyapura (Yelahanka)"
+      },
+      {
+        "id": 132646,
+        "name": "Vidyarthi Bhavan (Basavangudi)"
+      },
+      {
+        "id": 145215,
+        "name": "Vignan Nagar (CV Raman Nagar)"
+      },
+      {
+        "id": 133045,
+        "name": "Vijay Nagar (Whitefield)"
+      },
+      {
+        "id": 132595,
+        "name": "Vijaya Bank Colony (Banaswadi)"
+      },
+      {
+        "id": 132622,
+        "name": "Vijaya Bank Layout (Bannerghatta)"
+      },
+      {
+        "id": 132945,
+        "name": "Vijaya College (Jayanagar)"
+      },
+      {
+        "id": 133147,
+        "name": "Vijaya Lakshmi Colony (Kammanahalli)"
+      },
+      {
+        "id": 133532,
+        "name": "Vijayanagar 2nd stage (Vijay Nagar)"
+      },
+      {
+        "id": 133355,
+        "name": "Vijaynagar Metro Station (Vijay Nagar)"
+      },
+      {
+        "id": 133407,
+        "name": "Vijinapura (Old Madras Road)"
+      },
+      {
+        "id": 133235,
+        "name": "Vijinapura (Ramamurthy Nagar - RM Nagar)"
+      },
+      {
+        "id": 133086,
+        "name": "Vinayak nagar - A block (Old Airport Road)"
+      },
+      {
+        "id": 133087,
+        "name": "Vinayak nagar - B block (Old Airport Road)"
+      },
+      {
+        "id": 133227,
+        "name": "Vinayaka Layout (KR Puram - Krishnarajapuram)"
+      },
+      {
+        "id": 133258,
+        "name": "Vinayaka Layout (Malleshwaram)"
+      },
+      {
+        "id": 133369,
+        "name": "Vinayaka Layout (Vijay Nagar)"
+      },
+      {
+        "id": 133035,
+        "name": "Vinayaka Layout (Whitefield)"
+      },
+      {
+        "id": 132863,
+        "name": "Vinayakanagar (Hebbal)"
+      },
+      {
+        "id": 132718,
+        "name": "Virat Nagar (Bommanahalli)"
+      },
+      {
+        "id": 132869,
+        "name": "Vishveshwaraiah Nagar (Hebbal)"
+      },
+      {
+        "id": 273485,
+        "name": "Vittal Mallya Road ( Shanthala Nagar )"
+      },
+      {
+        "id": 133206,
+        "name": "Vittal Mallya Road (MG Road)"
+      },
+      {
+        "id": 133425,
+        "name": "Vivekananda Nagar (Peenya)"
+      },
+      {
+        "id": 132986,
+        "name": "Viveknagar (Koramangala)"
+      },
+      {
+        "id": 133030,
+        "name": "Vydehi Hospital (Whitefield)"
+      },
+      {
+        "id": 132729,
+        "name": "Vysya Bank Colony (BTM 2nd stage)"
+      },
+      {
+        "id": 132958,
+        "name": "Vysya Bank Colony (JP Nagar)"
+      },
+      {
+        "id": 133207,
+        "name": "Walton Road (MG Road)"
+      },
+      {
+        "id": 133348,
+        "name": "WAP Staff Quarters (Yelahanka)"
+      },
+      {
+        "id": 133489,
+        "name": "Wellington Street (Richmond Town)"
+      },
+      {
+        "id": 132690,
+        "name": "West of Chord Road (Basaveshwara Nagar)"
+      },
+      {
+        "id": 133319,
+        "name": "West of Chord Road (Rajajinagar)"
+      },
+      {
+        "id": 132813,
+        "name": "Wheeler Road (Frazer Town)"
+      },
+      {
+        "id": 273144,
+        "name": "Whitefield Road ( Mahadevapur )"
+      },
+      {
+        "id": 133504,
+        "name": "Wilson Garden (Jayanagar)"
+      },
+      {
+        "id": 133073,
+        "name": "Wind Tunnel Road (Old Airport Road)"
+      },
+      {
+        "id": 132988,
+        "name": "Wipro Park (Koramangala)"
+      },
+      {
+        "id": 132541,
+        "name": "Wood Street (Ashoknagar)"
+      },
+      {
+        "id": 133475,
+        "name": "Wood Street (MG Road)"
+      },
+      {
+        "id": 272769,
+        "name": "World Trade Center"
+      },
+      {
+        "id": 133365,
+        "name": "Yadava Upanagara (Vijay Nagar)"
+      },
+      {
+        "id": 133474,
+        "name": "Yadhava College Road (Gandhi Nagar)"
+      },
+      {
+        "id": 132944,
+        "name": "Yediyur (Jayanagar)"
+      },
+      {
+        "id": 168672,
+        "name": "Yelachenahalli (Kanakapura Road)"
+      },
+      {
+        "id": 133344,
+        "name": "Yelahanka New Town (Yelahanka)"
+      },
+      {
+        "id": 133338,
+        "name": "Yelahanka Railway Junction (Yelahanka)"
+      },
+      {
+        "id": 273088,
+        "name": "Yelahanka Road (Vidyaranyapura)"
+      },
+      {
+        "id": 133345,
+        "name": "Yelahanka Satellite Town (Yelahanka)"
+      },
+      {
+        "id": 133000,
+        "name": "Yemalur Road (Marathahalli)"
+      }
+    ]
+  }
+}

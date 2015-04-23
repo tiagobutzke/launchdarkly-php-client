@@ -4,6 +4,7 @@ namespace Foodpanda\ApiSdk\Provider;
 
 use CommerceGuys\Guzzle\Oauth2\AccessToken;
 use Foodpanda\ApiSdk\Api\CustomerApiClient;
+use Foodpanda\ApiSdk\Entity\Customer\Customer;
 
 class CustomerProvider extends AbstractProvider
 {
@@ -15,11 +16,11 @@ class CustomerProvider extends AbstractProvider
     /**
      * @param AccessToken $token
      *
-     * @return array
+     * @return Customer
      */
     public function getCustomer(AccessToken $token)
     {
-        return $this->client->getCustomers($token, true);
+        return $this->serializer->denormalizeCustomer($this->client->getCustomers($token, true));
     }
 
     /**
@@ -29,7 +30,8 @@ class CustomerProvider extends AbstractProvider
      */
     public function getCustomerWithoutAddresses(AccessToken $token)
     {
-        return $this->client->getCustomers($token, false);
-    }
+        $customer = $this->client->getCustomers($token, false);
 
+        return $customer;
+    }
 }

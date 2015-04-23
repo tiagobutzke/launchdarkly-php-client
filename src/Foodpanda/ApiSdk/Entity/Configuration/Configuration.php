@@ -12,16 +12,6 @@ use Foodpanda\ApiSdk\Entity\DataObject;
 class Configuration extends DataObject
 {
     /**
-     * @var array
-     */
-    protected $objectClasses = [
-        'customer_configuration' => CustomerConfiguration::class,
-        'customer_address_configuration' => CustomerAddressConfiguration::class,
-        'payment_form_configuration' => PaymentFormConfiguration::class,
-        'enabled_social_connects' => SocialConnects::class,
-    ];
-
-    /**
      * @var string
      */
     protected $location_group_type;
@@ -210,6 +200,10 @@ class Configuration extends DataObject
     {
         $this->languages = new LanguagesCollection();
         $this->food_characteristic_available_filters = new FoodCharacteristicsCollection();
+        $this->customer_configuration = new CustomerConfiguration();
+        $this->customer_address_configuration = new CustomerAddressConfiguration();
+        $this->payment_form_configuration = new PaymentFormConfiguration();
+        $this->enabled_social_connects = new SocialConnects();
     }
 
     /**

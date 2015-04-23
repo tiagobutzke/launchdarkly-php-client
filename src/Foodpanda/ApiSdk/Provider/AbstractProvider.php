@@ -3,7 +3,7 @@
 namespace Foodpanda\ApiSdk\Provider;
 
 use Foodpanda\ApiSdk\Api\AbstractApiClient;
-use Symfony\Component\Serializer\Serializer;
+use Foodpanda\ApiSdk\Serializer;
 
 abstract class AbstractProvider
 {
