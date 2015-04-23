@@ -18,12 +18,4 @@ class ReviewResults extends DataResultObject
     {
         return $this->items;
     }
-
-    /**
-     * @param ReviewsCollection
-     */
-    public function setItems($items)
-    {
-        $this->items = $items;
-    }
 }

@@ -18,12 +18,4 @@ class AreaResults extends DataResultObject
     {
         return $this->items;
     }
-
-    /**
-     * @param AreasCollection
-     */
-    public function setItems($items)
-    {
-        $this->items = $items;
-    }
 }

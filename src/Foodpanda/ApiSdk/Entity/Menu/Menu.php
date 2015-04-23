@@ -57,27 +57,11 @@ class Menu extends DataObject
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return string
      */
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
     }
 
     /**
@@ -89,27 +73,11 @@ class Menu extends DataObject
     }
 
     /**
-     * @param string $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    /**
      * @return string
      */
     public function getOpeningTime()
     {
         return $this->opening_time;
-    }
-
-    /**
-     * @param string $opening_time
-     */
-    public function setOpeningTime($opening_time)
-    {
-        $this->opening_time = $opening_time;
     }
 
     /**
@@ -121,14 +89,6 @@ class Menu extends DataObject
     }
 
     /**
-     * @param string $closing_time
-     */
-    public function setClosingTime($closing_time)
-    {
-        $this->closing_time = $closing_time;
-    }
-
-    /**
      * @return MenuCategoriesCollection|MenuCategory[]
      */
     public function getMenuCategories()
@@ -137,26 +97,10 @@ class Menu extends DataObject
     }
 
     /**
-     * @param MenuCategoriesCollection $menu_categories
-     */
-    public function setMenuCategories($menu_categories)
-    {
-        $this->menu_categories = $menu_categories;
-    }
-
-    /**
      * @return string
      */
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * @param string $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
     }
 }

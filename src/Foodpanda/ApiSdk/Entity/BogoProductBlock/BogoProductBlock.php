@@ -36,14 +36,6 @@ class BogoProductBlock extends DataObject
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return string
      */
     public function getBlockType()
@@ -52,26 +44,10 @@ class BogoProductBlock extends DataObject
     }
 
     /**
-     * @param string $block_type
-     */
-    public function setBlockType($block_type)
-    {
-        $this->block_type = $block_type;
-    }
-
-    /**
      * @return ProductCategoryVouchersCollection
      */
     public function getProductCategoryVoucher()
     {
         return $this->product_category_voucher;
-    }
-
-    /**
-     * @param ProductCategoryVouchersCollection $product_category_voucher
-     */
-    public function setProductCategoryVoucher($product_category_voucher)
-    {
-        $this->product_category_voucher = $product_category_voucher;
     }
 }

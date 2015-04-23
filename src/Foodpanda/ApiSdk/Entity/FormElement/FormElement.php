@@ -50,27 +50,11 @@ class FormElement extends DataObject
     }
 
     /**
-     * @param string $field_name
-     */
-    public function setFieldName($field_name)
-    {
-        $this->field_name = $field_name;
-    }
-
-    /**
      * @return string
      */
     public function getLabel()
     {
         return $this->label;
-    }
-
-    /**
-     * @param string $label
-     */
-    public function setLabel($label)
-    {
-        $this->label = $label;
     }
 
     /**
@@ -82,27 +66,11 @@ class FormElement extends DataObject
     }
 
     /**
-     * @param string $keyboard_type
-     */
-    public function setKeyboardType($keyboard_type)
-    {
-        $this->keyboard_type = $keyboard_type;
-    }
-
-    /**
      * @return string
      */
     public function getPickerType()
     {
         return $this->picker_type;
-    }
-
-    /**
-     * @param string $picker_type
-     */
-    public function setPickerType($picker_type)
-    {
-        $this->picker_type = $picker_type;
     }
 
     /**
@@ -114,14 +82,6 @@ class FormElement extends DataObject
     }
 
     /**
-     * @param string $validation
-     */
-    public function setValidation($validation)
-    {
-        $this->validation = $validation;
-    }
-
-    /**
      * @return boolean
      */
     public function isIsRequired()
@@ -130,26 +90,10 @@ class FormElement extends DataObject
     }
 
     /**
-     * @param boolean $is_required
-     */
-    public function setIsRequired($is_required)
-    {
-        $this->is_required = $is_required;
-    }
-
-    /**
      * @return string
      */
     public function getDefaultValue()
     {
         return $this->default_value;
-    }
-
-    /**
-     * @param string $default_value
-     */
-    public function setDefaultValue($default_value)
-    {
-        $this->default_value = $default_value;
     }
 }

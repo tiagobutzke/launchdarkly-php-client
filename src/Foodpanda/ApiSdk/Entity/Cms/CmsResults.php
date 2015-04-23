@@ -18,12 +18,4 @@ class CmsResults extends DataResultObject
     {
         return $this->items;
     }
-
-    /**
-     * @param CmsItemCollection
-     */
-    public function setItems($items)
-    {
-        $this->items = $items;
-    }
 }

@@ -18,12 +18,4 @@ class AddressResults extends DataResultObject
     {
         return $this->items;
     }
-
-    /**
-     * @param AddressesCollection $items
-     */
-    public function setItems($items)
-    {
-        $this->items = $items;
-    }
 }

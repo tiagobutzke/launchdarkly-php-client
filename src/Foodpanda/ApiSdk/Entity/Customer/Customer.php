@@ -71,27 +71,11 @@ class Customer extends DataObject
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return string
      */
     public function getFirstName()
     {
         return $this->first_name;
-    }
-
-    /**
-     * @param string $first_name
-     */
-    public function setFirstName($first_name)
-    {
-        $this->first_name = $first_name;
     }
 
     /**
@@ -103,27 +87,11 @@ class Customer extends DataObject
     }
 
     /**
-     * @param string $last_name
-     */
-    public function setLastName($last_name)
-    {
-        $this->last_name = $last_name;
-    }
-
-    /**
      * @return string
      */
     public function getEmail()
     {
         return $this->email;
-    }
-
-    /**
-     * @param string $email
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
     }
 
     /**
@@ -135,27 +103,11 @@ class Customer extends DataObject
     }
 
     /**
-     * @param string $password
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-    }
-
-    /**
      * @return string
      */
     public function getMobileNumber()
     {
         return $this->mobile_number;
-    }
-
-    /**
-     * @param string $mobile_number
-     */
-    public function setMobileNumber($mobile_number)
-    {
-        $this->mobile_number = $mobile_number;
     }
 
     /**
@@ -167,27 +119,11 @@ class Customer extends DataObject
     }
 
     /**
-     * @param string $mobile_country_code
-     */
-    public function setMobileCountryCode($mobile_country_code)
-    {
-        $this->mobile_country_code = $mobile_country_code;
-    }
-
-    /**
      * @return AddressesCollection
      */
     public function getCustomerAddresses()
     {
         return $this->customer_addresses;
-    }
-
-    /**
-     * @param AddressesCollection $customer_addresses
-     */
-    public function setCustomerAddresses($customer_addresses)
-    {
-        $this->customer_addresses = $customer_addresses;
     }
 
     /**
@@ -199,26 +135,10 @@ class Customer extends DataObject
     }
 
     /**
-     * @param string $reference_code
-     */
-    public function setReferenceCode($reference_code)
-    {
-        $this->reference_code = $reference_code;
-    }
-
-    /**
      * @return boolean
      */
     public function hasPassword()
     {
         return $this->has_password;
-    }
-
-    /**
-     * @param boolean $has_password
-     */
-    public function setHasPassword($has_password)
-    {
-        $this->has_password = $has_password;
     }
 }

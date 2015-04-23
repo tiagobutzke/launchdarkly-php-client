@@ -61,27 +61,11 @@ class Product extends DataObject
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return string
      */
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
     }
 
     /**
@@ -93,27 +77,11 @@ class Product extends DataObject
     }
 
     /**
-     * @param string $code
-     */
-    public function setCode($code)
-    {
-        $this->code = $code;
-    }
-
-    /**
      * @return string
      */
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * @param string $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
     }
 
     /**
@@ -125,27 +93,11 @@ class Product extends DataObject
     }
 
     /**
-     * @param string $file_path
-     */
-    public function setFilePath($file_path)
-    {
-        $this->file_path = $file_path;
-    }
-
-    /**
      * @return string
      */
     public function getHalfType()
     {
         return $this->half_type;
-    }
-
-    /**
-     * @param string $half_type
-     */
-    public function setHalfType($half_type)
-    {
-        $this->half_type = $half_type;
     }
 
     /**
@@ -157,26 +109,10 @@ class Product extends DataObject
     }
 
     /**
-     * @param boolean $is_half_type_available
-     */
-    public function setIsHalfTypeAvailable($is_half_type_available)
-    {
-        $this->is_half_type_available = $is_half_type_available;
-    }
-
-    /**
      * @return ProductVariationsCollection
      */
     public function getProductVariations()
     {
         return $this->product_variations;
-    }
-
-    /**
-     * @param ProductVariationsCollection $product_variations
-     */
-    public function setProductVariations($product_variations)
-    {
-        $this->product_variations = $product_variations;
     }
 }

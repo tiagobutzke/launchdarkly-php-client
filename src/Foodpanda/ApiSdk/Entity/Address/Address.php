@@ -145,27 +145,11 @@ class Address extends DataObject
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return int
      */
     public function getCityId()
     {
         return $this->city_id;
-    }
-
-    /**
-     * @param int $city_id
-     */
-    public function setCityId($city_id)
-    {
-        $this->city_id = $city_id;
     }
 
     /**
@@ -177,27 +161,11 @@ class Address extends DataObject
     }
 
     /**
-     * @param string $city
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
-    }
-
-    /**
      * @return int
      */
     public function getAreaId()
     {
         return $this->area_id;
-    }
-
-    /**
-     * @param int $area_id
-     */
-    public function setAreaId($area_id)
-    {
-        $this->area_id = $area_id;
     }
 
     /**
@@ -209,27 +177,11 @@ class Address extends DataObject
     }
 
     /**
-     * @param string $areas
-     */
-    public function setAreas($areas)
-    {
-        $this->areas = $areas;
-    }
-
-    /**
      * @return string
      */
     public function getAddressLine1()
     {
         return $this->address_line1;
-    }
-
-    /**
-     * @param string $address_line1
-     */
-    public function setAddressLine1($address_line1)
-    {
-        $this->address_line1 = $address_line1;
     }
 
     /**
@@ -241,27 +193,11 @@ class Address extends DataObject
     }
 
     /**
-     * @param string $address_line2
-     */
-    public function setAddressLine2($address_line2)
-    {
-        $this->address_line2 = $address_line2;
-    }
-
-    /**
      * @return string
      */
     public function getAddressLine3()
     {
         return $this->address_line3;
-    }
-
-    /**
-     * @param string $address_line3
-     */
-    public function setAddressLine3($address_line3)
-    {
-        $this->address_line3 = $address_line3;
     }
 
     /**
@@ -273,27 +209,11 @@ class Address extends DataObject
     }
 
     /**
-     * @param string $address_line4
-     */
-    public function setAddressLine4($address_line4)
-    {
-        $this->address_line4 = $address_line4;
-    }
-
-    /**
      * @return string
      */
     public function getAddressLine5()
     {
         return $this->address_line5;
-    }
-
-    /**
-     * @param string $address_line5
-     */
-    public function setAddressLine5($address_line5)
-    {
-        $this->address_line5 = $address_line5;
     }
 
     /**
@@ -305,27 +225,11 @@ class Address extends DataObject
     }
 
     /**
-     * @param string $address_other
-     */
-    public function setAddressOther($address_other)
-    {
-        $this->address_other = $address_other;
-    }
-
-    /**
      * @return string
      */
     public function getRoom()
     {
         return $this->room;
-    }
-
-    /**
-     * @param string $room
-     */
-    public function setRoom($room)
-    {
-        $this->room = $room;
     }
 
     /**
@@ -337,27 +241,11 @@ class Address extends DataObject
     }
 
     /**
-     * @param string $flat_number
-     */
-    public function setFlatNumber($flat_number)
-    {
-        $this->flat_number = $flat_number;
-    }
-
-    /**
      * @return string
      */
     public function getStructure()
     {
         return $this->structure;
-    }
-
-    /**
-     * @param string $structure
-     */
-    public function setStructure($structure)
-    {
-        $this->structure = $structure;
     }
 
     /**
@@ -369,27 +257,11 @@ class Address extends DataObject
     }
 
     /**
-     * @param string $building
-     */
-    public function setBuilding($building)
-    {
-        $this->building = $building;
-    }
-
-    /**
      * @return string
      */
     public function getIntercom()
     {
         return $this->intercom;
-    }
-
-    /**
-     * @param string $intercom
-     */
-    public function setIntercom($intercom)
-    {
-        $this->intercom = $intercom;
     }
 
     /**
@@ -401,27 +273,11 @@ class Address extends DataObject
     }
 
     /**
-     * @param string $entrance
-     */
-    public function setEntrance($entrance)
-    {
-        $this->entrance = $entrance;
-    }
-
-    /**
      * @return string
      */
     public function getFloor()
     {
         return $this->floor;
-    }
-
-    /**
-     * @param string $floor
-     */
-    public function setFloor($floor)
-    {
-        $this->floor = $floor;
     }
 
     /**
@@ -433,27 +289,11 @@ class Address extends DataObject
     }
 
     /**
-     * @param string $district
-     */
-    public function setDistrict($district)
-    {
-        $this->district = $district;
-    }
-
-    /**
      * @return string
      */
     public function getPostcode()
     {
         return $this->postcode;
-    }
-
-    /**
-     * @param string $postcode
-     */
-    public function setPostcode($postcode)
-    {
-        $this->postcode = $postcode;
     }
 
     /**
@@ -465,27 +305,11 @@ class Address extends DataObject
     }
 
     /**
-     * @param string $company
-     */
-    public function setCompany($company)
-    {
-        $this->company = $company;
-    }
-
-    /**
      * @return float
      */
     public function getLatitude()
     {
         return $this->latitude;
-    }
-
-    /**
-     * @param float $latitude
-     */
-    public function setLatitude($latitude)
-    {
-        $this->latitude = $latitude;
     }
 
     /**
@@ -497,27 +321,11 @@ class Address extends DataObject
     }
 
     /**
-     * @param float $longitude
-     */
-    public function setLongitude($longitude)
-    {
-        $this->longitude = $longitude;
-    }
-
-    /**
      * @return boolean
      */
     public function isIsDeliveryAvailable()
     {
         return $this->is_delivery_available;
-    }
-
-    /**
-     * @param boolean $is_delivery_available
-     */
-    public function setIsDeliveryAvailable($is_delivery_available)
-    {
-        $this->is_delivery_available = $is_delivery_available;
     }
 
     /**
@@ -529,26 +337,10 @@ class Address extends DataObject
     }
 
     /**
-     * @param string $formatted_customer_address
-     */
-    public function setFormattedCustomerAddress($formatted_customer_address)
-    {
-        $this->formatted_customer_address = $formatted_customer_address;
-    }
-
-    /**
      * @return string
      */
     public function getDeliveryInstructions()
     {
         return $this->delivery_instructions;
-    }
-
-    /**
-     * @param string $delivery_instructions
-     */
-    public function setDeliveryInstructions($delivery_instructions)
-    {
-        $this->delivery_instructions = $delivery_instructions;
     }
 }

@@ -57,27 +57,11 @@ class MetaData extends DataObject
     }
 
     /**
-     * @param boolean $is_delivery_available
-     */
-    public function setIsDeliveryAvailable($is_delivery_available)
-    {
-        $this->is_delivery_available = $is_delivery_available;
-    }
-
-    /**
      * @return boolean
      */
     public function isIsPickupAvailable()
     {
         return $this->is_pickup_available;
-    }
-
-    /**
-     * @param boolean $is_pickup_available
-     */
-    public function setIsPickupAvailable($is_pickup_available)
-    {
-        $this->is_pickup_available = $is_pickup_available;
     }
 
     /**
@@ -89,27 +73,11 @@ class MetaData extends DataObject
     }
 
     /**
-     * @param boolean $has_discount
-     */
-    public function setHasDiscount($has_discount)
-    {
-        $this->has_discount = $has_discount;
-    }
-
-    /**
      * @return DateTime
      */
     public function getAvailableIn()
     {
         return $this->available_in;
-    }
-
-    /**
-     * @param DateTime $available_in
-     */
-    public function setAvailableIn($available_in)
-    {
-        $this->available_in = $available_in;
     }
 
     /**
@@ -121,14 +89,6 @@ class MetaData extends DataObject
     }
 
     /**
-     * @param string $opening_times
-     */
-    public function setOpeningTimes($opening_times)
-    {
-        $this->opening_times = $opening_times;
-    }
-
-    /**
      * @return string
      */
     public function getTimezone()
@@ -137,26 +97,10 @@ class MetaData extends DataObject
     }
 
     /**
-     * @param string $timezone
-     */
-    public function setTimezone($timezone)
-    {
-        $this->timezone = $timezone;
-    }
-
-    /**
      * @return EventsCollection
      */
     public function getEvents()
     {
         return $this->events;
-    }
-
-    /**
-     * @param EventsCollection $events
-     */
-    public function setEvents($events)
-    {
-        $this->events = $events;
     }
 }

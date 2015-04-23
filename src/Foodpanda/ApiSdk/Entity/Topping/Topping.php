@@ -40,27 +40,11 @@ class Topping extends DataObject
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return string
      */
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
     }
 
     /**
@@ -72,14 +56,6 @@ class Topping extends DataObject
     }
 
     /**
-     * @param float $price
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
-    }
-
-    /**
      * @return float
      */
     public function getPriceBeforeDiscount()
@@ -88,26 +64,10 @@ class Topping extends DataObject
     }
 
     /**
-     * @param float $price_before_discount
-     */
-    public function setPriceBeforeDiscount($price_before_discount)
-    {
-        $this->price_before_discount = $price_before_discount;
-    }
-
-    /**
      * @return string
      */
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * @param string $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
     }
 }

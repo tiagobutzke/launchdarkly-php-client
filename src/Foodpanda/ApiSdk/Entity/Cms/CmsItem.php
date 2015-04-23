@@ -35,27 +35,11 @@ class CmsItem extends DataObject
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return string
      */
     public function getCode()
     {
         return $this->code;
-    }
-
-    /**
-     * @param string $code
-     */
-    public function setCode($code)
-    {
-        $this->code = $code;
     }
 
     /**
@@ -67,26 +51,10 @@ class CmsItem extends DataObject
     }
 
     /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
      * @return string
      */
     public function getContent()
     {
         return $this->content;
-    }
-
-    /**
-     * @param string $content
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
     }
 }

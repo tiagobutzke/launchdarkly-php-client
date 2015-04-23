@@ -30,14 +30,6 @@ class OAuth extends DataObject
     }
 
     /**
-     * @param string $expires_at
-     */
-    public function setExpiresAt($expires_at)
-    {
-        $this->expires_at = $expires_at;
-    }
-
-    /**
      * @return string
      */
     public function getOAuthToken()
@@ -46,26 +38,10 @@ class OAuth extends DataObject
     }
 
     /**
-     * @param string $o_auth_token
-     */
-    public function setOAuthToken($o_auth_token)
-    {
-        $this->o_auth_token = $o_auth_token;
-    }
-
-    /**
      * @return string
      */
     public function getOAuthTokenSecret()
     {
         return $this->o_auth_token_secret;
-    }
-
-    /**
-     * @param string $o_auth_token_secret
-     */
-    public function setOAuthTokenSecret($o_auth_token_secret)
-    {
-        $this->o_auth_token_secret = $o_auth_token_secret;
     }
 }

@@ -75,27 +75,11 @@ class Address extends DataObject
     }
 
     /**
-     * @param string $extended_details_id
-     */
-    public function setExtendedDetailsId($extended_details_id)
-    {
-        $this->extended_details_id = $extended_details_id;
-    }
-
-    /**
      * @return string
      */
     public function getShortFormattedAddress()
     {
         return $this->short_formatted_address;
-    }
-
-    /**
-     * @param string $short_formatted_address
-     */
-    public function setShortFormattedAddress($short_formatted_address)
-    {
-        $this->short_formatted_address = $short_formatted_address;
     }
 
     /**
@@ -107,27 +91,11 @@ class Address extends DataObject
     }
 
     /**
-     * @param string $formatted_address
-     */
-    public function setFormattedAddress($formatted_address)
-    {
-        $this->formatted_address = $formatted_address;
-    }
-
-    /**
      * @return float
      */
     public function getLongitude()
     {
         return $this->longitude;
-    }
-
-    /**
-     * @param float $longitude
-     */
-    public function setLongitude($longitude)
-    {
-        $this->longitude = $longitude;
     }
 
     /**
@@ -139,27 +107,11 @@ class Address extends DataObject
     }
 
     /**
-     * @param float $latitude
-     */
-    public function setLatitude($latitude)
-    {
-        $this->latitude = $latitude;
-    }
-
-    /**
      * @return string
      */
     public function getPostCode()
     {
         return $this->post_code;
-    }
-
-    /**
-     * @param string $post_code
-     */
-    public function setPostCode($post_code)
-    {
-        $this->post_code = $post_code;
     }
 
     /**
@@ -171,27 +123,11 @@ class Address extends DataObject
     }
 
     /**
-     * @param string $house_number
-     */
-    public function setHouseNumber($house_number)
-    {
-        $this->house_number = $house_number;
-    }
-
-    /**
      * @return string
      */
     public function getStreet()
     {
         return $this->street;
-    }
-
-    /**
-     * @param string $street
-     */
-    public function setStreet($street)
-    {
-        $this->street = $street;
     }
 
     /**
@@ -203,27 +139,11 @@ class Address extends DataObject
     }
 
     /**
-     * @param string $district
-     */
-    public function setDistrict($district)
-    {
-        $this->district = $district;
-    }
-
-    /**
      * @return int
      */
     public function getAreaId()
     {
         return $this->area_id;
-    }
-
-    /**
-     * @param int $area_id
-     */
-    public function setAreaId($area_id)
-    {
-        $this->area_id = $area_id;
     }
 
     /**
@@ -235,26 +155,10 @@ class Address extends DataObject
     }
 
     /**
-     * @param int $city_id
-     */
-    public function setCityId($city_id)
-    {
-        $this->city_id = $city_id;
-    }
-
-    /**
      * @return string
      */
     public function getCity()
     {
         return $this->city;
-    }
-
-    /**
-     * @param string $city
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
     }
 }

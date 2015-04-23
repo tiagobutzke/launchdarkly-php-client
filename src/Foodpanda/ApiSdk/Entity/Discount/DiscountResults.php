@@ -18,12 +18,4 @@ class DiscountResults extends DataResultObject
     {
         return $this->items;
     }
-
-    /**
-     * @param DiscountsCollection $items
-     */
-    public function setItems($items)
-    {
-        $this->items = $items;
-    }
 }

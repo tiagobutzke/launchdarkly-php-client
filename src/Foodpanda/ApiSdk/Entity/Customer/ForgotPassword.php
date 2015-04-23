@@ -30,14 +30,6 @@ class ForgotPassword extends DataObject
     }
 
     /**
-     * @param string $email_status
-     */
-    public function setEmailStatus($email_status)
-    {
-        $this->email_status = $email_status;
-    }
-
-    /**
      * @return string
      */
     public function getCustomerStatus()
@@ -46,26 +38,10 @@ class ForgotPassword extends DataObject
     }
 
     /**
-     * @param string $customer_status
-     */
-    public function setCustomerStatus($customer_status)
-    {
-        $this->customer_status = $customer_status;
-    }
-
-    /**
      * @return string
      */
     public function getMessage()
     {
         return $this->message;
-    }
-
-    /**
-     * @param string $message
-     */
-    public function setMessage($message)
-    {
-        $this->message = $message;
     }
 }

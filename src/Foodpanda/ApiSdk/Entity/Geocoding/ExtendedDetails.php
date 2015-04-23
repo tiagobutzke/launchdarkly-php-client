@@ -73,27 +73,11 @@ class ExtendedDetails
     }
 
     /**
-     * @param string $city
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
-    }
-
-    /**
      * @return int
      */
     public function getCityId()
     {
         return $this->city_id;
-    }
-
-    /**
-     * @param int $city_id
-     */
-    public function setCityId($city_id)
-    {
-        $this->city_id = $city_id;
     }
 
     /**
@@ -105,27 +89,11 @@ class ExtendedDetails
     }
 
     /**
-     * @param int $area_id
-     */
-    public function setAreaId($area_id)
-    {
-        $this->area_id = $area_id;
-    }
-
-    /**
      * @return string
      */
     public function getDistrict()
     {
         return $this->district;
-    }
-
-    /**
-     * @param string $district
-     */
-    public function setDistrict($district)
-    {
-        $this->district = $district;
     }
 
     /**
@@ -137,27 +105,11 @@ class ExtendedDetails
     }
 
     /**
-     * @param string $street
-     */
-    public function setStreet($street)
-    {
-        $this->street = $street;
-    }
-
-    /**
      * @return string
      */
     public function getHouseNumber()
     {
         return $this->house_number;
-    }
-
-    /**
-     * @param string $house_number
-     */
-    public function setHouseNumber($house_number)
-    {
-        $this->house_number = $house_number;
     }
 
     /**
@@ -169,27 +121,11 @@ class ExtendedDetails
     }
 
     /**
-     * @param string $post_code
-     */
-    public function setPostCode($post_code)
-    {
-        $this->post_code = $post_code;
-    }
-
-    /**
      * @return float
      */
     public function getLatitude()
     {
         return $this->latitude;
-    }
-
-    /**
-     * @param float $latitude
-     */
-    public function setLatitude($latitude)
-    {
-        $this->latitude = $latitude;
     }
 
     /**
@@ -201,27 +137,11 @@ class ExtendedDetails
     }
 
     /**
-     * @param float $longitude
-     */
-    public function setLongitude($longitude)
-    {
-        $this->longitude = $longitude;
-    }
-
-    /**
      * @return string
      */
     public function getFormattedAddress()
     {
         return $this->formatted_address;
-    }
-
-    /**
-     * @param string $formatted_address
-     */
-    public function setFormattedAddress($formatted_address)
-    {
-        $this->formatted_address = $formatted_address;
     }
 
     /**
@@ -233,26 +153,10 @@ class ExtendedDetails
     }
 
     /**
-     * @param string $short_formatted_address
-     */
-    public function setShortFormattedAddress($short_formatted_address)
-    {
-        $this->short_formatted_address = $short_formatted_address;
-    }
-
-    /**
      * @return string
      */
     public function getExtendedDetailsId()
     {
         return $this->extended_details_id;
-    }
-
-    /**
-     * @param string $extended_details_id
-     */
-    public function setExtendedDetailsId($extended_details_id)
-    {
-        $this->extended_details_id = $extended_details_id;
     }
 }

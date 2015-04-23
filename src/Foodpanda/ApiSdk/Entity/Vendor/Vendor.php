@@ -255,27 +255,11 @@ class Vendor extends DataObject
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return string
      */
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
     }
 
     /**
@@ -287,27 +271,11 @@ class Vendor extends DataObject
     }
 
     /**
-     * @param string $code
-     */
-    public function setCode($code)
-    {
-        $this->code = $code;
-    }
-
-    /**
      * @return float
      */
     public function getLatitude()
     {
         return $this->latitude;
-    }
-
-    /**
-     * @param float $latitude
-     */
-    public function setLatitude($latitude)
-    {
-        $this->latitude = $latitude;
     }
 
     /**
@@ -319,27 +287,11 @@ class Vendor extends DataObject
     }
 
     /**
-     * @param float $longitude
-     */
-    public function setLongitude($longitude)
-    {
-        $this->longitude = $longitude;
-    }
-
-    /**
      * @return string
      */
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * @param string $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
     }
 
     /**
@@ -351,27 +303,11 @@ class Vendor extends DataObject
     }
 
     /**
-     * @param string $logo
-     */
-    public function setLogo($logo)
-    {
-        $this->logo = $logo;
-    }
-
-    /**
      * @return float
      */
     public function getRating()
     {
         return $this->rating;
-    }
-
-    /**
-     * @param float $rating
-     */
-    public function setRating($rating)
-    {
-        $this->rating = $rating;
     }
 
     /**
@@ -383,27 +319,11 @@ class Vendor extends DataObject
     }
 
     /**
-     * @param int $review_number
-     */
-    public function setReviewNumber($review_number)
-    {
-        $this->review_number = $review_number;
-    }
-
-    /**
      * @return string
      */
     public function getAddress()
     {
         return $this->address;
-    }
-
-    /**
-     * @param string $address
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
     }
 
     /**
@@ -415,27 +335,11 @@ class Vendor extends DataObject
     }
 
     /**
-     * @param string $post_code
-     */
-    public function setPostCode($post_code)
-    {
-        $this->post_code = $post_code;
-    }
-
-    /**
      * @return float
      */
     public function getMinimumOrderAmount()
     {
         return $this->minimum_order_amount;
-    }
-
-    /**
-     * @param float $minimum_order_amount
-     */
-    public function setMinimumOrderAmount($minimum_order_amount)
-    {
-        $this->minimum_order_amount = $minimum_order_amount;
     }
 
     /**
@@ -447,27 +351,11 @@ class Vendor extends DataObject
     }
 
     /**
-     * @param float $minimum_delivery_fee
-     */
-    public function setMinimumDeliveryFee($minimum_delivery_fee)
-    {
-        $this->minimum_delivery_fee = $minimum_delivery_fee;
-    }
-
-    /**
      * @return int
      */
     public function getMinimumDeliveryTime()
     {
         return $this->minimum_delivery_time;
-    }
-
-    /**
-     * @param int $minimum_delivery_time
-     */
-    public function setMinimumDeliveryTime($minimum_delivery_time)
-    {
-        $this->minimum_delivery_time = $minimum_delivery_time;
     }
 
     /**
@@ -479,27 +367,11 @@ class Vendor extends DataObject
     }
 
     /**
-     * @param int $minimum_pickup_time
-     */
-    public function setMinimumPickupTime($minimum_pickup_time)
-    {
-        $this->minimum_pickup_time = $minimum_pickup_time;
-    }
-
-    /**
      * @return boolean
      */
     public function isIsDeliveryEnabled()
     {
         return $this->is_delivery_enabled;
-    }
-
-    /**
-     * @param boolean $is_delivery_enabled
-     */
-    public function setIsDeliveryEnabled($is_delivery_enabled)
-    {
-        $this->is_delivery_enabled = $is_delivery_enabled;
     }
 
     /**
@@ -511,27 +383,11 @@ class Vendor extends DataObject
     }
 
     /**
-     * @param boolean $is_pickup_enabled
-     */
-    public function setIsPickupEnabled($is_pickup_enabled)
-    {
-        $this->is_pickup_enabled = $is_pickup_enabled;
-    }
-
-    /**
      * @return boolean
      */
     public function isIsPreorderEnabled()
     {
         return $this->is_preorder_enabled;
-    }
-
-    /**
-     * @param boolean $is_preorder_enabled
-     */
-    public function setIsPreorderEnabled($is_preorder_enabled)
-    {
-        $this->is_preorder_enabled = $is_preorder_enabled;
     }
 
     /**
@@ -543,27 +399,11 @@ class Vendor extends DataObject
     }
 
     /**
-     * @param boolean $is_voucher_enabled
-     */
-    public function setIsVoucherEnabled($is_voucher_enabled)
-    {
-        $this->is_voucher_enabled = $is_voucher_enabled;
-    }
-
-    /**
      * @return boolean
      */
     public function isIsVatDisabled()
     {
         return $this->is_vat_disabled;
-    }
-
-    /**
-     * @param boolean $is_vat_disabled
-     */
-    public function setIsVatDisabled($is_vat_disabled)
-    {
-        $this->is_vat_disabled = $is_vat_disabled;
     }
 
     /**
@@ -575,27 +415,11 @@ class Vendor extends DataObject
     }
 
     /**
-     * @param boolean $is_vat_visible
-     */
-    public function setIsVatVisible($is_vat_visible)
-    {
-        $this->is_vat_visible = $is_vat_visible;
-    }
-
-    /**
      * @return boolean
      */
     public function isIsVatIncludedInProductPrice()
     {
         return $this->is_vat_included_in_product_price;
-    }
-
-    /**
-     * @param boolean $is_vat_included_in_product_price
-     */
-    public function setIsVatIncludedInProductPrice($is_vat_included_in_product_price)
-    {
-        $this->is_vat_included_in_product_price = $is_vat_included_in_product_price;
     }
 
     /**
@@ -607,27 +431,11 @@ class Vendor extends DataObject
     }
 
     /**
-     * @param float $vat_percentage_amount
-     */
-    public function setVatPercentageAmount($vat_percentage_amount)
-    {
-        $this->vat_percentage_amount = $vat_percentage_amount;
-    }
-
-    /**
      * @return boolean
      */
     public function isIsServiceTaxEnabled()
     {
         return $this->is_service_tax_enabled;
-    }
-
-    /**
-     * @param boolean $is_service_tax_enabled
-     */
-    public function setIsServiceTaxEnabled($is_service_tax_enabled)
-    {
-        $this->is_service_tax_enabled = $is_service_tax_enabled;
     }
 
     /**
@@ -639,27 +447,11 @@ class Vendor extends DataObject
     }
 
     /**
-     * @param boolean $is_service_tax_visible
-     */
-    public function setIsServiceTaxVisible($is_service_tax_visible)
-    {
-        $this->is_service_tax_visible = $is_service_tax_visible;
-    }
-
-    /**
      * @return float
      */
     public function getServiceTaxPercentageAmount()
     {
         return $this->service_tax_percentage_amount;
-    }
-
-    /**
-     * @param float $service_tax_percentage_amount
-     */
-    public function setServiceTaxPercentageAmount($service_tax_percentage_amount)
-    {
-        $this->service_tax_percentage_amount = $service_tax_percentage_amount;
     }
 
     /**
@@ -671,27 +463,11 @@ class Vendor extends DataObject
     }
 
     /**
-     * @param boolean $is_service_fee_enabled
-     */
-    public function setIsServiceFeeEnabled($is_service_fee_enabled)
-    {
-        $this->is_service_fee_enabled = $is_service_fee_enabled;
-    }
-
-    /**
      * @return float
      */
     public function getServiceFeePercentageAmount()
     {
         return $this->service_fee_percentage_amount;
-    }
-
-    /**
-     * @param float $service_fee_percentage_amount
-     */
-    public function setServiceFeePercentageAmount($service_fee_percentage_amount)
-    {
-        $this->service_fee_percentage_amount = $service_fee_percentage_amount;
     }
 
     /**
@@ -703,27 +479,11 @@ class Vendor extends DataObject
     }
 
     /**
-     * @param boolean $is_checkout_comment_enabled
-     */
-    public function setIsCheckoutCommentEnabled($is_checkout_comment_enabled)
-    {
-        $this->is_checkout_comment_enabled = $is_checkout_comment_enabled;
-    }
-
-    /**
      * @return boolean
      */
     public function isIsReplacementDishEnabled()
     {
         return $this->is_replacement_dish_enabled;
-    }
-
-    /**
-     * @param boolean $is_replacement_dish_enabled
-     */
-    public function setIsReplacementDishEnabled($is_replacement_dish_enabled)
-    {
-        $this->is_replacement_dish_enabled = $is_replacement_dish_enabled;
     }
 
     /**
@@ -735,27 +495,11 @@ class Vendor extends DataObject
     }
 
     /**
-     * @param string $custom_location_url
-     */
-    public function setCustomLocationUrl($custom_location_url)
-    {
-        $this->custom_location_url = $custom_location_url;
-    }
-
-    /**
      * @return string
      */
     public function getCustomerType()
     {
         return $this->customer_type;
-    }
-
-    /**
-     * @param string $customer_type
-     */
-    public function setCustomerType($customer_type)
-    {
-        $this->customer_type = $customer_type;
     }
 
     /**
@@ -767,27 +511,11 @@ class Vendor extends DataObject
     }
 
     /**
-     * @param string $web_path
-     */
-    public function setWebPath($web_path)
-    {
-        $this->web_path = $web_path;
-    }
-
-    /**
      * @return boolean
      */
     public function isIsTest()
     {
         return $this->is_test;
-    }
-
-    /**
-     * @param boolean $is_test
-     */
-    public function setIsTest($is_test)
-    {
-        $this->is_test = $is_test;
     }
 
     /**
@@ -799,27 +527,11 @@ class Vendor extends DataObject
     }
 
     /**
-     * @param string $redirection_url
-     */
-    public function setRedirectionUrl($redirection_url)
-    {
-        $this->redirection_url = $redirection_url;
-    }
-
-    /**
      * @return City
      */
     public function getCity()
     {
         return $this->city;
-    }
-
-    /**
-     * @param City $city
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
     }
 
     /**
@@ -831,27 +543,11 @@ class Vendor extends DataObject
     }
 
     /**
-     * @param Chain $chain
-     */
-    public function setChain($chain)
-    {
-        $this->chain = $chain;
-    }
-
-    /**
      * @return CuisinesCollection
      */
     public function getCuisines()
     {
         return $this->cuisines;
-    }
-
-    /**
-     * @param CuisinesCollection $cuisines
-     */
-    public function setCuisines($cuisines)
-    {
-        $this->cuisines = $cuisines;
     }
 
     /**
@@ -863,27 +559,11 @@ class Vendor extends DataObject
     }
 
     /**
-     * @param FoodCharacteristicsCollection $food_characteristics
-     */
-    public function setFoodCharacteristics($food_characteristics)
-    {
-        $this->food_characteristics = $food_characteristics;
-    }
-
-    /**
      * @return MetaData
      */
     public function getMetadata()
     {
         return $this->metadata;
-    }
-
-    /**
-     * @param MetaData $metadata
-     */
-    public function setMetadata($metadata)
-    {
-        $this->metadata = $metadata;
     }
 
     /**
@@ -895,27 +575,11 @@ class Vendor extends DataObject
     }
 
     /**
-     * @param DiscountsCollection $discounts
-     */
-    public function setDiscounts($discounts)
-    {
-        $this->discounts = $discounts;
-    }
-
-    /**
      * @return SchedulesCollection
      */
     public function getSchedules()
     {
         return $this->schedules;
-    }
-
-    /**
-     * @param SchedulesCollection $schedules
-     */
-    public function setSchedules($schedules)
-    {
-        $this->schedules = $schedules;
     }
 
     /**
@@ -927,26 +591,10 @@ class Vendor extends DataObject
     }
 
     /**
-     * @param PaymentTypesCollection $payment_types
-     */
-    public function setPaymentTypes($payment_types)
-    {
-        $this->payment_types = $payment_types;
-    }
-
-    /**
      * @return MenusCollection
      */
     public function getMenus()
     {
         return $this->menus;
-    }
-
-    /**
-     * @param MenusCollection $menus
-     */
-    public function setMenus($menus)
-    {
-        $this->menus = $menus;
     }
 }

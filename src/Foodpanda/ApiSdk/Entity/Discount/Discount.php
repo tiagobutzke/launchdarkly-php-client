@@ -98,27 +98,11 @@ class Discount extends DataObject
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return string
      */
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
     }
 
     /**
@@ -130,27 +114,11 @@ class Discount extends DataObject
     }
 
     /**
-     * @param string $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    /**
      * @return DateTime
      */
     public function getStartDate()
     {
         return $this->start_date;
-    }
-
-    /**
-     * @param DateTime $start_date
-     */
-    public function setStartDate($start_date)
-    {
-        $this->start_date = $start_date;
     }
 
     /**
@@ -162,27 +130,11 @@ class Discount extends DataObject
     }
 
     /**
-     * @param DateTime $end_date
-     */
-    public function setEndDate($end_date)
-    {
-        $this->end_date = $end_date;
-    }
-
-    /**
      * @return string
      */
     public function getConditionType()
     {
         return $this->condition_type;
-    }
-
-    /**
-     * @param string $condition_type
-     */
-    public function setConditionType($condition_type)
-    {
-        $this->condition_type = $condition_type;
     }
 
     /**
@@ -194,27 +146,11 @@ class Discount extends DataObject
     }
 
     /**
-     * @param int $condition_object
-     */
-    public function setConditionObject($condition_object)
-    {
-        $this->condition_object = $condition_object;
-    }
-
-    /**
      * @return float
      */
     public function getMinimumOrderValue()
     {
         return $this->minimum_order_value;
-    }
-
-    /**
-     * @param float $minimum_order_value
-     */
-    public function setMinimumOrderValue($minimum_order_value)
-    {
-        $this->minimum_order_value = $minimum_order_value;
     }
 
     /**
@@ -226,27 +162,11 @@ class Discount extends DataObject
     }
 
     /**
-     * @param string $discount_type
-     */
-    public function setDiscountType($discount_type)
-    {
-        $this->discount_type = $discount_type;
-    }
-
-    /**
      * @return float
      */
     public function getDiscountAmount()
     {
         return $this->discount_amount;
-    }
-
-    /**
-     * @param float $discount_amount
-     */
-    public function setDiscountAmount($discount_amount)
-    {
-        $this->discount_amount = $discount_amount;
     }
 
     /**
@@ -258,27 +178,11 @@ class Discount extends DataObject
     }
 
     /**
-     * @param float $bogo_discount_unit
-     */
-    public function setBogoDiscountUnit($bogo_discount_unit)
-    {
-        $this->bogo_discount_unit = $bogo_discount_unit;
-    }
-
-    /**
      * @return string
      */
     public function getDiscountText()
     {
         return $this->discount_text;
-    }
-
-    /**
-     * @param string $discount_text
-     */
-    public function setDiscountText($discount_text)
-    {
-        $this->discount_text = $discount_text;
     }
 
     /**
@@ -290,14 +194,6 @@ class Discount extends DataObject
     }
 
     /**
-     * @param int $vendor_id
-     */
-    public function setVendorId($vendor_id)
-    {
-        $this->vendor_id = $vendor_id;
-    }
-
-    /**
      * @return string
      */
     public function getFileName()
@@ -306,26 +202,10 @@ class Discount extends DataObject
     }
 
     /**
-     * @param string $file_name
-     */
-    public function setFileName($file_name)
-    {
-        $this->file_name = $file_name;
-    }
-
-    /**
      * @return BogoProductBlocksCollection
      */
     public function getBogoProductBlocks()
     {
         return $this->bogo_product_blocks;
-    }
-
-    /**
-     * @param BogoProductBlocksCollection $bogo_product_blocks
-     */
-    public function setBogoProductBlocks($bogo_product_blocks)
-    {
-        $this->bogo_product_blocks = $bogo_product_blocks;
     }
 }

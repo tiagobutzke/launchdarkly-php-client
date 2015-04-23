@@ -33,26 +33,10 @@ class GuestCustomer extends DataObject
     }
 
     /**
-     * @param Customer $customer
-     */
-    public function setCustomer($customer)
-    {
-        $this->customer = $customer;
-    }
-
-    /**
      * @return Address
      */
     public function getCustomerAddress()
     {
         return $this->customer_address;
-    }
-
-    /**
-     * @param Address $customer_address
-     */
-    public function setCustomerAddress($customer_address)
-    {
-        $this->customer_address = $customer_address;
     }
 }

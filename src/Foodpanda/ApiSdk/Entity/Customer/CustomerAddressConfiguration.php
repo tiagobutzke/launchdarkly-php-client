@@ -31,26 +31,10 @@ class CustomerAddressConfiguration extends DataObject
     }
 
     /**
-     * @param string $list_template
-     */
-    public function setListTemplate($list_template)
-    {
-        $this->list_template = $list_template;
-    }
-
-    /**
      * @return FormElementsCollection
      */
     public function getFormElements()
     {
         return $this->form_elements;
-    }
-
-    /**
-     * @param FormElementsCollection $form_elements
-     */
-    public function setFormElements($form_elements)
-    {
-        $this->form_elements = $form_elements;
     }
 }

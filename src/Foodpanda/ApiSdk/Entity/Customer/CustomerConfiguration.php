@@ -24,12 +24,4 @@ class CustomerConfiguration extends DataObject
     {
         return $this->form_elements;
     }
-
-    /**
-     * @param FormElementsCollection $form_elements
-     */
-    public function setFormElements($form_elements)
-    {
-        $this->form_elements = $form_elements;
-    }
 }
