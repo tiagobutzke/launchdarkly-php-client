@@ -3,16 +3,16 @@
 namespace Volo\ApiClientBundle\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
-use Foodpanda\ApiSdk\Api\ConfigurationApiClient;
+use Foodpanda\ApiSdk\Api\LocationApiClient;
 
-class ApiConfigurationCommand extends AbstractApiClientCommand
+class ApiGetVendorsCommand extends AbstractApiClientCommand
 {
     /**
      * @return string
      */
     protected function getCommandName()
     {
-        return 'api:configuration:configuration';
+        return 'api:vendors:vendors';
     }
 
     /**
@@ -20,15 +20,15 @@ class ApiConfigurationCommand extends AbstractApiClientCommand
      */
     protected function getCommandDescription()
     {
-        return 'Display the configuration';
+        return 'Display a list of vendors';
     }
 
     /**
-     * @return ConfigurationApiClient
+     * @return LocationApiClient
      */
     protected function getClientApi()
     {
-        return $this->getContainer()->get('volo_frontend.api.configuration_api_client');
+        return $this->getContainer()->get('volo_frontend.api.vendor_api_client');
     }
 
     /**
@@ -36,6 +36,6 @@ class ApiConfigurationCommand extends AbstractApiClientCommand
      */
     protected function executeApiCall(InputInterface $input)
     {
-        return $this->getClientApi()->getConfiguration();
+        return $this->getClientApi()->getCities();
     }
 }

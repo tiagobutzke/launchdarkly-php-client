@@ -2,17 +2,18 @@
 
 namespace Volo\ApiClientBundle\Command;
 
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Foodpanda\ApiSdk\Api\LocationApiClient;
 
-class ApiGetCitiesCommand extends AbstractApiClientCommand
+class ApiGetVendorCommand extends AbstractApiClientCommand
 {
     /**
      * @return string
      */
     protected function getCommandName()
     {
-        return 'api:location:cities';
+        return 'api:vendors:vendor';
     }
 
     /**
@@ -20,7 +21,9 @@ class ApiGetCitiesCommand extends AbstractApiClientCommand
      */
     protected function getCommandDescription()
     {
-        return 'Display a list of cities';
+        $this->addArgument('vendor_id', InputArgument::REQUIRED);
+
+        return 'Display a vendor';
     }
 
     /**
@@ -28,7 +31,7 @@ class ApiGetCitiesCommand extends AbstractApiClientCommand
      */
     protected function getClientApi()
     {
-        return $this->getContainer()->get('volo_frontend.api.location_api_client');
+        return $this->getContainer()->get('volo_frontend.api.vendor_api_client');
     }
 
     /**
@@ -36,6 +39,6 @@ class ApiGetCitiesCommand extends AbstractApiClientCommand
      */
     protected function executeApiCall(InputInterface $input)
     {
-        return $this->getClientApi()->getCities();
+        return $this->getClientApi()->getCity($input->getArgument('vendor_id'));
     }
 }

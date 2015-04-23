@@ -31,14 +31,14 @@ class SecurityControllerTestCase extends VoloTestCase
 
         $crawler = $client->request('GET', '/login');
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->isSuccessful($client->getResponse());
 
         $form              = $crawler->selectButton('login')->form();
         $form['_username'] = 'john.doe@rocket-internet.de';
         $form['_password'] = 'bad';
         $client->submit($form);
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->isSuccessful($client->getResponse());
         $this->assertInstanceOf('Symfony\Component\Security\Core\Authentication\Token\AnonymousToken',
             $client->getContainer()->get('security.token_storage')->getToken()
         );

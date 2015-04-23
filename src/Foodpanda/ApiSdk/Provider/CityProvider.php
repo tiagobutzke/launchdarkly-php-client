@@ -3,7 +3,6 @@
 namespace Foodpanda\ApiSdk\Provider;
 
 use Foodpanda\ApiSdk\Api\LocationApiClient;
-use Foodpanda\ApiSdk\EntityManager;
 use Foodpanda\ApiSdk\Entity\City\CityResults;
 
 class CityProvider extends AbstractProvider

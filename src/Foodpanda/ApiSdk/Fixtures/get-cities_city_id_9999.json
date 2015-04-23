@@ -1,0 +1,9 @@
+{
+  "status_code": 400,
+  "data": {
+    "exception_type": "ApiObjectDoesNotExistException",
+    "message": "The city you are trying to reach is currently not active. Please try another one.",
+    "developer_message": "The city 9998 does not exist",
+    "more_information": "https:\/\/rw.front.fp\/doc\/v4\/response#ApiObjectDoesNotExistException"
+  }
+}
