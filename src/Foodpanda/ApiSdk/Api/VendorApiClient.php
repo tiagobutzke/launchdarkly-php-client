@@ -12,7 +12,12 @@ class VendorApiClient extends AbstractApiClient
      */
     public function getVendorsByArea($id)
     {
-        $request = $this->client->createRequest('GET', 'vendors', ['query' => ['area_id' => $id]]);
+        $request = $this->client->createRequest('GET', 'vendors', [
+            'query' => [
+                'area_id' => $id,
+                'include' => 'cuisines'
+            ]
+        ]);
 
         return $this->send($request)['data'];
     }
