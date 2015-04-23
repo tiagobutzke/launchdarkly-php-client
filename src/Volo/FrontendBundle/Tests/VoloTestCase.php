@@ -1,6 +1,6 @@
 <?php
 
-namespace Volo\FrontendBundle\Tests\Controller;
+namespace Volo\FrontendBundle\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

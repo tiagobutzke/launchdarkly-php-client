@@ -2,6 +2,8 @@
 
 namespace Volo\FrontendBundle\Tests\Controller;
 
+use Volo\FrontendBundle\Tests\VoloTestCase;
+
 class SecurityControllerTestCase extends VoloTestCase
 {
     public function testSuccessfulLogin()
