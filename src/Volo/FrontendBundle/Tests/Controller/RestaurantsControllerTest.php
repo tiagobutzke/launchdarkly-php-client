@@ -2,13 +2,13 @@
 
 namespace Volo\FrontendBundle\Tests\Controller;
 
-class HomeControllerTest extends VoloTestCase
+class RestaurantsControllerTest extends VoloTestCase
 {
-    public function testHome()
+    public function testRestaurants()
     {
         $client = static::createClient();
 
-        $client->request('GET', '/');
+        $client->request('GET', '/restaurants');
 
         $this->isSuccessful($client->getResponse());
     }
