@@ -2,7 +2,7 @@
 
 {% block vendorDescription %}
     <li>
-        <a href="{{ path('vendor') }}">{{ vendor.name|e }}</a><br/>
+        <a href="{{ path('vendor', {'id': vendor.id}) }}">{{ vendor.name|e }}</a><br/>
         Minimum delivery time: {{ vendor.minimumDeliveryTime|e }} min<br/>
         {% for cuisine in vendor.cuisines %}
             {{ cuisine.name }}{% if not loop.last %}, {% endif %}
