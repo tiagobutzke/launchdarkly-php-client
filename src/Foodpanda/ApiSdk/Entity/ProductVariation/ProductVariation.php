@@ -55,27 +55,11 @@ class ProductVariation extends DataObject
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return string
      */
     public function getCode()
     {
         return $this->code;
-    }
-
-    /**
-     * @param string $code
-     */
-    public function setCode($code)
-    {
-        $this->code = $code;
     }
 
     /**
@@ -87,27 +71,11 @@ class ProductVariation extends DataObject
     }
 
     /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
      * @return float
      */
     public function getPrice()
     {
         return $this->price;
-    }
-
-    /**
-     * @param float $price
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
     }
 
     /**
@@ -119,27 +87,11 @@ class ProductVariation extends DataObject
     }
 
     /**
-     * @param float $price_before_discount
-     */
-    public function setPriceBeforeDiscount($price_before_discount)
-    {
-        $this->price_before_discount = $price_before_discount;
-    }
-
-    /**
      * @return float
      */
     public function getContainerPrice()
     {
         return $this->container_price;
-    }
-
-    /**
-     * @param float $container_price
-     */
-    public function setContainerPrice($container_price)
-    {
-        $this->container_price = $container_price;
     }
 
     /**
@@ -151,26 +103,10 @@ class ProductVariation extends DataObject
     }
 
     /**
-     * @param array $choices
-     */
-    public function setChoices($choices)
-    {
-        $this->choices = $choices;
-    }
-
-    /**
      * @return array
      */
     public function getToppings()
     {
         return $this->toppings;
-    }
-
-    /**
-     * @param array $toppings
-     */
-    public function setToppings($toppings)
-    {
-        $this->toppings = $toppings;
     }
 }

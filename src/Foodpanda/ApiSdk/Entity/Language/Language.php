@@ -30,14 +30,6 @@ class Language extends DataObject
     }
 
     /**
-     * @param int $language_id
-     */
-    public function setLanguageId($language_id)
-    {
-        $this->language_id = $language_id;
-    }
-
-    /**
      * @return string
      */
     public function getLanguageCode()
@@ -46,26 +38,10 @@ class Language extends DataObject
     }
 
     /**
-     * @param string $language_code
-     */
-    public function setLanguageCode($language_code)
-    {
-        $this->language_code = $language_code;
-    }
-
-    /**
      * @return string
      */
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
     }
 }

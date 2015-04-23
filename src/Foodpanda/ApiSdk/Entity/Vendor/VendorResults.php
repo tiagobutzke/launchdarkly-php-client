@@ -18,12 +18,4 @@ class VendorResults extends DataResultObject
     {
         return $this->items;
     }
-
-    /**
-     * @param VendorsCollection $items
-     */
-    public function setItems($items)
-    {
-        $this->items = $items;
-    }
 }

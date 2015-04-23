@@ -61,27 +61,11 @@ class MenuCategory extends DataObject
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return string
      */
     public function getCode()
     {
         return $this->code;
-    }
-
-    /**
-     * @param string $code
-     */
-    public function setCode($code)
-    {
-        $this->code = $code;
     }
 
     /**
@@ -93,27 +77,11 @@ class MenuCategory extends DataObject
     }
 
     /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
      * @return string
      */
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * @param string $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
     }
 
     /**
@@ -125,27 +93,11 @@ class MenuCategory extends DataObject
     }
 
     /**
-     * @param string $file_path
-     */
-    public function setFilePath($file_path)
-    {
-        $this->file_path = $file_path;
-    }
-
-    /**
      * @return string
      */
     public function getMobifyFilePath()
     {
         return $this->mobify_file_path;
-    }
-
-    /**
-     * @param string $mobify_file_path
-     */
-    public function setMobifyFilePath($mobify_file_path)
-    {
-        $this->mobify_file_path = $mobify_file_path;
     }
 
     /**
@@ -157,26 +109,10 @@ class MenuCategory extends DataObject
     }
 
     /**
-     * @param boolean $file_name
-     */
-    public function setFileName($file_name)
-    {
-        $this->file_name = $file_name;
-    }
-
-    /**
      * @return ProductsCollection
      */
     public function getProducts()
     {
         return $this->products;
-    }
-
-    /**
-     * @param ProductsCollection $products
-     */
-    public function setProducts($products)
-    {
-        $this->products = $products;
     }
 }

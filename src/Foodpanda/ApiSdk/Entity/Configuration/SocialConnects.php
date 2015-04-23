@@ -23,12 +23,4 @@ class SocialConnects extends DataObject
     {
         return $this->social_connects;
     }
-
-    /**
-     * @param array $social_connects
-     */
-    public function setSocialConnects(array $social_connects)
-    {
-        $this->social_connects = $social_connects;
-    }
 }

@@ -14,13 +14,16 @@ class Topping extends DataObject
     /**
      * @var string
      */
-
     protected $name;
+
+    /**
+     * @var string
+     */
+    protected $description;
 
     /**
      * @var double
      */
-
     protected $price;
 
     /**
@@ -37,27 +40,11 @@ class Topping extends DataObject
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return string
      */
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
     }
 
     /**
@@ -69,14 +56,6 @@ class Topping extends DataObject
     }
 
     /**
-     * @param float $price
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
-    }
-
-    /**
      * @return float
      */
     public function getPriceBeforeDiscount()
@@ -85,10 +64,10 @@ class Topping extends DataObject
     }
 
     /**
-     * @param float $price_before_discount
+     * @return string
      */
-    public function setPriceBeforeDiscount($price_before_discount)
+    public function getDescription()
     {
-        $this->price_before_discount = $price_before_discount;
+        return $this->description;
     }
 }

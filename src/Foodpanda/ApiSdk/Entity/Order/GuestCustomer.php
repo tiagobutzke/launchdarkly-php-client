@@ -6,7 +6,7 @@ use Foodpanda\ApiSdk\Entity\Address\Address;
 use Foodpanda\ApiSdk\Entity\Customer\Customer;
 use Foodpanda\ApiSdk\Entity\DataObject;
 
-class PostGuestOrderResponse extends DataObject
+class GuestCustomer extends DataObject
 {
     /**
      * @var Customer

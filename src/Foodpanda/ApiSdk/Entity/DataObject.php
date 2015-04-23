@@ -10,7 +10,12 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 abstract class DataObject implements DenormalizableInterface, NormalizableInterface
 {
     /**
-     * {@inheritdoc}
+     * @param DenormalizerInterface $denormalizer
+     * @param array|\Symfony\Component\Serializer\Normalizer\scalar $data
+     * @param null $format
+     * @param array $context
+     *
+     * @throws \InvalidArgumentException
      */
     public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
@@ -21,6 +26,10 @@ abstract class DataObject implements DenormalizableInterface, NormalizableInterf
 
             if (is_object($this->$key) && $denormalizer->supportsDenormalization($this->$key, get_class($this->$key))) {
                 $value = $denormalizer->denormalize($value, get_class($this->$key), $format, $context);
+            }
+
+            if (!property_exists($this, $key)) {
+                throw new \InvalidArgumentException("Property $key doesn't exist in class " . self::class);
             }
 
             $this->$key = $value;

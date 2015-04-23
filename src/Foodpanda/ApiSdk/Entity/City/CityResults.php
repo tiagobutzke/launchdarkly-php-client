@@ -18,12 +18,4 @@ class CityResults extends DataResultObject
     {
         return $this->items;
     }
-
-    /**
-     * @param CitiesCollection
-     */
-    public function setItems($items)
-    {
-        $this->items = $items;
-    }
 }
