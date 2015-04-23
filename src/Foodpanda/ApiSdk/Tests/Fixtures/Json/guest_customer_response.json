@@ -7,7 +7,11 @@
       "last_name": "Shehab",
       "email": "shehabic@gmail.com",
       "mobile_number": "8052414000",
-      "mobile_country_code": "+91"
+      "mobile_country_code": "+91",
+      "reference_code": null,
+      "has_password": null,
+      "password": null,
+      "customer_addresses": []
     },
     "customer_address": {
       "id": 1068807,

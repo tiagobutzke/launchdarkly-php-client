@@ -15,6 +15,7 @@ use Foodpanda\ApiSdk\Entity\Discount\DiscountResults;
 use Foodpanda\ApiSdk\Entity\Geocoding\AreaResults;
 use Foodpanda\ApiSdk\Entity\Geocoding\ExtendedDetails;
 use Foodpanda\ApiSdk\Entity\OAuth\OAuth;
+use Foodpanda\ApiSdk\Entity\Order\GuestCustomer;
 use Foodpanda\ApiSdk\Entity\Order\PostCalculateResponse;
 use Foodpanda\ApiSdk\Entity\Order\PostOrderResponse;
 use Foodpanda\ApiSdk\Entity\Review\ReviewResults;
@@ -177,7 +178,7 @@ class Serializer extends BaseSerializer
     /**
      * @param array $data
      *
-     * @return \Foodpanda\ApiSdk\Entity\Geocoding\AddressResults::class
+     * @return \Foodpanda\ApiSdk\Entity\Geocoding\AddressResults
      */
     public function denormalizeGeocodingAddresses(array $data)
     {
@@ -228,11 +229,11 @@ class Serializer extends BaseSerializer
     /**
      * @param array $data
      *
-     * @return Customer
+     * @return GuestCustomer
      */
     public function denormalizeGuestCustomer(array $data)
     {
-        return $this->denormalizeCustomer($data);
+        return $this->denormalize($data, GuestCustomer::class);
     }
 
     /**
@@ -242,7 +243,7 @@ class Serializer extends BaseSerializer
      */
     public function denormalizePostOrderResponse(array $data)
     {
-         $this->denormalize($data, PostOrderResponse::class);
+        return $this->denormalize($data, PostOrderResponse::class);
     }
 
     /**
@@ -252,6 +253,6 @@ class Serializer extends BaseSerializer
      */
     public function denormalizePostCalculateReponse(array $data)
     {
-         $this->denormalize($data, PostCalculateResponse::class);
+         return $this->denormalize($data, PostCalculateResponse::class);
     }
 }

@@ -8,6 +8,8 @@
     "mobile_number": "8052414000",
     "mobile_country_code": "+91",
     "reference_code": null,
-    "has_password": true
+    "has_password": true,
+    "password": null,
+    "customer_addresses": []
   }
 }

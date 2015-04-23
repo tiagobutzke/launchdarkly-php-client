@@ -2,6 +2,7 @@
   "status_code": 200,
   "data": {
     "available_count": 988,
+    "returned_count": 1317,
     "items": [
       {
         "id": 132912,

@@ -14,13 +14,16 @@ class Topping extends DataObject
     /**
      * @var string
      */
-
     protected $name;
+
+    /**
+     * @var string
+     */
+    protected $description;
 
     /**
      * @var double
      */
-
     protected $price;
 
     /**
@@ -90,5 +93,21 @@ class Topping extends DataObject
     public function setPriceBeforeDiscount($price_before_discount)
     {
         $this->price_before_discount = $price_before_discount;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 }

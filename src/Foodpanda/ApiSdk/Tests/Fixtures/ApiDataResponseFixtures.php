@@ -28,6 +28,9 @@ class ApiDataResponseFixtures
         return $fixtureArray;
     }
 
+    /**
+     * @return array
+     */
     public function getVendorResponseData()
     {
         return $this->getResponseData('vendor.json');
@@ -36,9 +39,49 @@ class ApiDataResponseFixtures
     /**
      * @return array
      */
+    public function getCalculateOrderResponseData()
+    {
+        return $this->getResponseData('calculate_order_response.json');
+    }
+
+    /**
+     * @return array
+     */
     public function getConfigurationResponseData()
     {
         return $this->getResponseData('configuration.json');
+    }
+
+    /**
+     * @return array
+     */
+    public function getAreasResponseData()
+    {
+        return $this->getResponseData('areas_response.json');
+    }
+
+    /**
+     * @return array
+     */
+    public function getCitiesResponseData()
+    {
+        return $this->getResponseData('cities_response.json');
+    }
+
+    /**
+     * @return array
+     */
+    public function getCustomerReponseData()
+    {
+        return $this->getResponseData('customer_registration_response.json');
+    }
+
+    /**
+     * @return array
+     */
+    public function getGuestCustomerReponseData()
+    {
+        return $this->getResponseData('guest_customer_response.json');
     }
 
     /**

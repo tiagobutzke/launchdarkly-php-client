@@ -3,7 +3,6 @@
 namespace Foodpanda\ApiSdk\Entity\VendorCart;
 
 use Foodpanda\ApiSdk\Entity\DataObject;
-use Foodpanda\ApiSdk\Entity\Product\ProductsCollection;
 
 class VendorCart extends DataObject
 {

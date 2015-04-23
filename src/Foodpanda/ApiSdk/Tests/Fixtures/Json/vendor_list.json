@@ -40,7 +40,10 @@
           "id": 5,
           "name": "Faridabad",
           "is_top_city": null,
-          "main_area": { "id": null, "name": null}
+          "main_area": {
+            "id": null,
+            "name": null
+          }
         },
         "chain": {
           "id": 0,
@@ -251,7 +254,10 @@
           "id": 1,
           "name": "Delhi",
           "is_top_city": null,
-          "main_area": { "id": null, "name": null}
+          "main_area": {
+            "id": null,
+            "name": null
+          }
         },
         "chain": {
           "id": 0,
@@ -411,7 +417,10 @@
           "id": 5,
           "name": "Faridabad",
           "is_top_city": null,
-          "main_area": { "id": null, "name": null}
+          "main_area": {
+            "id": null,
+            "name": null
+          }
         },
         "chain": {
           "id": 0,
@@ -614,7 +623,10 @@
           "id": 1,
           "name": "Delhi",
           "is_top_city": null,
-          "main_area": { "id": null, "name": null}
+          "main_area": {
+            "id": null,
+            "name": null
+          }
         },
         "chain": {
           "id": 426,
@@ -813,7 +825,10 @@
           "id": 5,
           "name": "Faridabad",
           "is_top_city": null,
-          "main_area": { "id": null, "name": null}
+          "main_area": {
+            "id": null,
+            "name": null
+          }
         },
         "chain": {
           "id": 0,
@@ -1126,7 +1141,10 @@
           "id": 5,
           "name": "Faridabad",
           "is_top_city": null,
-          "main_area": { "id": null, "name": null}
+          "main_area": {
+            "id": null,
+            "name": null
+          }
         },
         "chain": {
           "id": 0,
@@ -1338,7 +1356,10 @@
           "id": 5,
           "name": "Faridabad",
           "is_top_city": null,
-          "main_area": { "id": null, "name": null}
+          "main_area": {
+            "id": null,
+            "name": null
+          }
         },
         "chain": {
           "id": 0,
@@ -1531,7 +1552,10 @@
           "id": 5,
           "name": "Faridabad",
           "is_top_city": null,
-          "main_area": { "id": null, "name": null}
+          "main_area": {
+            "id": null,
+            "name": null
+          }
         },
         "chain": {
           "id": 0,
@@ -1754,7 +1778,10 @@
           "id": 1,
           "name": "Delhi",
           "is_top_city": null,
-          "main_area": { "id": null, "name": null}
+          "main_area": {
+            "id": null,
+            "name": null
+          }
         },
         "chain": {
           "id": 0,
@@ -1947,7 +1974,10 @@
           "id": 5,
           "name": "Faridabad",
           "is_top_city": null,
-          "main_area": { "id": null, "name": null}
+          "main_area": {
+            "id": null,
+            "name": null
+          }
         },
         "chain": {
           "id": 0,
