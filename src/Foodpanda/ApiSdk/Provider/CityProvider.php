@@ -3,6 +3,7 @@
 namespace Foodpanda\ApiSdk\Provider;
 
 use Foodpanda\ApiSdk\Api\LocationApiClient;
+use Foodpanda\ApiSdk\Entity\City\City;
 use Foodpanda\ApiSdk\Entity\City\CityResults;
 
 class CityProvider extends AbstractProvider
@@ -15,7 +16,7 @@ class CityProvider extends AbstractProvider
     /**
      * @param int $id
      *
-     * @return CityResults
+     * @return City
      */
     public function find($id)
     {
