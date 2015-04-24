@@ -12,10 +12,14 @@ class ConfigurationApiClient extends AbstractApiClient
      */
     public function getConfiguration($languageId = null, $include = null)
     {
-        $request = $this->client->createRequest('GET', 'configuration', [
-            'language_id' => $languageId,
-            'include'     => $include,
-        ]);
+        $request = $this->client->createRequest(
+            'GET',
+            'configuration',
+            [
+                'language_id' => $languageId,
+                'include'     => $include,
+            ]
+        );
 
         return $this->send($request)['data'];
     }

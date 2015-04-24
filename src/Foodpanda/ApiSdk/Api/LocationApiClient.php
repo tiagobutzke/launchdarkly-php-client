@@ -34,10 +34,13 @@ class LocationApiClient extends AbstractApiClient
      */
     public function getAreasByCity($id)
     {
-        $request = $this->client->createRequest('GET', [
-            'areas/geocoding',
-            ['query' => ['city_id' => $id]]
-        ]);
+        $request = $this->client->createRequest(
+            'GET',
+            [
+                'areas/geocoding',
+                ['query' => ['city_id' => $id]],
+            ]
+        );
 
         return $this->send($request)['data'];
     }

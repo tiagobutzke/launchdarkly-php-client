@@ -19,6 +19,6 @@ class AreaProvider extends AbstractProvider
      */
     public function findByCity($id)
     {
-        return $this->serializer->denormalize($this->client->getAreasByCity($id), AreaResults::class);
+        return $this->serializer->denormalizeGeocodingAreas($this->client->getAreasByCity($id));
     }
 }

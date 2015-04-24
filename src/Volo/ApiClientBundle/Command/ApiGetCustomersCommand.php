@@ -52,6 +52,6 @@ class ApiGetCustomersCommand extends AbstractApiClientCommand
         $data  = $this->getClientApi()->authenticate($credentials);
         $token = new AccessToken($data['access_token'], $data['token_type'], $data);
 
-        return $this->getClientApi()->getCustomers($token);
+        return $this->getClientApi()->getCustomers($token, true);
     }
 }
