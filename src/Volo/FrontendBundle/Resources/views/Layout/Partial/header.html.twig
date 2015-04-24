@@ -2,7 +2,7 @@
     <header class="header">
         <div class="container">
             <div class="header__wrapper">
-                <h1 class="header__logo"><b>VOLO</b></h1>
+                <h1 class="header__logo">VOLO</h1>
                 <div class="header__login">
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                         <b>Username: {{ app.security.token.attributes.customer.firstName }}</b>

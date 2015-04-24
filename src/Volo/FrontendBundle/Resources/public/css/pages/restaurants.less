@@ -13,8 +13,7 @@
   .padding-right(0);
   margin-bottom: 30px;
   .respond-from("screen-sm", {
-    .padding-left(@standard-gutter-left);
-    .padding-right(@standard-gutter-right);
+    .set-default-gutter();
     height: 300px;
   });
 }
@@ -26,27 +25,23 @@
 .restaurants__item__name {
   font-size: 1.8em;
   margin: 15px 0 0 0;
-  .padding-left(@standard-gutter-left);
-  .padding-right(@standard-gutter-right);
+  .set-default-gutter();
   line-height: normal;
   text-transform: uppercase;
   .respond-from("screen-sm", {
     font-size: 1.2em;
-    .padding-left(0);
-    .padding-right(0);
+    .set-no-gutter();
   });
 }
 
 .restaurants__item__desc {
   font-size: 1.1em;
   margin: 6px 0 0 0;
-  .padding-left(@standard-gutter-left);
-  .padding-right(@standard-gutter-right);
+  .set-default-gutter();
   line-height: normal;
   .respond-from("screen-sm", {
     font-size: 0.8em;
-    .padding-left(0);
-    .padding-right(0);
+    .set-no-gutter();
   });
 }
 
@@ -57,7 +52,7 @@
 }
 
 .restaurants__item__time__icon {
-  .retina-sprite(@ico-clock-group);
+  .retina-sprite(@icon-clock-group);
   display: inline-block;
   vertical-align: text-bottom;
   .respond-from("screen-sm", {

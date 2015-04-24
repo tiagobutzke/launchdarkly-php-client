@@ -5,7 +5,8 @@
 .header {
   position: fixed;
   top: 0;
-  left: 0;
+  .left(0);
+  .right(0);
   width: 100%;
   background-color: @color-bg-navigation;
   height: 88px;
@@ -21,7 +22,7 @@
 .header__logo {
   .retina-sprite(@logo-group);
   margin: 29px auto;
-    b { display: none;}
+  text-indent: -9999px;
 }
 
 .header__login {
