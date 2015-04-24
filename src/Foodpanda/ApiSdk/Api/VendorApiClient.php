@@ -36,7 +36,14 @@ class VendorApiClient extends AbstractApiClient
             'GET',
             [
                 'vendors/{vendor_id}',
-                ['vendor_id' => $id],
+                [
+                    'vendor_id' => $id
+                ],
+            ],
+            [
+                'query' => [
+                    'include' => 'products,product_variations'
+                ]
             ]
         );
 

@@ -1,0 +1,62 @@
+{
+  "status_code": 200,
+  "data": {
+    "subtotal": 5000,
+    "subtotal_before_discount": 5000,
+    "subtotal_after_product_discount": 5000,
+    "subtotal_after_discount": 5000,
+    "subtotal_after_discount_and_delivery_fee": 6000,
+    "subtotal_after_discount_and_service_fee": 5000,
+    "subtotal_after_discount_and_delivery_fee_and_service_fee": 6000,
+    "total_value": 6000,
+    "group_joiner_total": 5000,
+    "container_charge": 0,
+    "delivery_fee": 1000,
+    "vat_total": 915.25,
+    "voucher_total": 0,
+    "discount_total": 0,
+    "delivery_fee_discount": 0,
+    "service_tax_total": 0,
+    "service_fee_total": 0,
+    "vendorCart": [
+      {
+        "subtotal": 5000,
+        "subtotal_before_discount": 5000,
+        "subtotal_after_product_discount": 5000,
+        "subtotal_after_discount": 5000,
+        "subtotal_after_discount_and_delivery_fee": 6000,
+        "subtotal_after_discount_and_service_fee": 5000,
+        "subtotal_after_discount_and_delivery_fee_and_service_fee": 6000,
+        "total_value": 6000,
+        "group_joiner_total": 5000,
+        "container_charge": 0,
+        "delivery_fee": 1000,
+        "vat_total": 915.25,
+        "voucher_total": 0,
+        "discount_total": 0,
+        "delivery_fee_discount": 0,
+        "service_tax_total": 0,
+        "service_fee_total": 0,
+        "vendor_id": 684,
+        "products": [
+          {
+            "product_variation_id": 113626,
+            "name": "Chicken avocado mayo sandwich",
+            "variation_name": "",
+            "total_price_before_discount": 5000,
+            "total_price": 5000,
+            "quantity": 1,
+            "toppings": [],
+            "choices": [],
+            "group_order_user_name": null,
+            "group_order_user_code": null
+          }
+        ],
+        "minimum_order_amount": null,
+        "minimum_order_amount_difference": 0,
+        "discount_text": null
+      }
+    ],
+    "voucher": []
+  }
+}

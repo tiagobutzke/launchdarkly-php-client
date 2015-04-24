@@ -13,6 +13,7 @@
         <parameter key="volo_frontend.provider.oauth.class">Foodpanda\ApiSdk\Provider\OAuthProvider</parameter>
         <parameter key="volo_frontend.provider.vendor.class">Foodpanda\ApiSdk\Provider\VendorProvider</parameter>
         <parameter key="volo_frontend.provider.area.class">Foodpanda\ApiSdk\Provider\AreaProvider</parameter>
+        <parameter key="volo_frontend.provider.cart.class">Foodpanda\ApiSdk\Provider\CartProvider</parameter>
     </parameters>
 
     <services>
@@ -52,8 +53,8 @@
             <argument type="service" id="volo_frontend.api.serializer"/>
         </service>
 
-        <service id="volo_frontend.provider.vendor" class="%volo_frontend.provider.vendor.class%">
-            <argument type="service" id="volo_frontend.api.vendor_api_client"/>
+        <service id="volo_frontend.provider.cart" class="%volo_frontend.provider.cart.class%">
+            <argument type="service" id="volo_frontend.api.order_api_client"/>
             <argument type="service" id="volo_frontend.api.serializer"/>
         </service>
     </services>

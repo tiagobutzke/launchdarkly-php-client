@@ -21,4 +21,12 @@ class OAuthProvider extends AbstractProvider
     {
         return $this->client->authenticate($credentials);
     }
+
+    /**
+     * @return array
+     */
+    public function authenticateClient()
+    {
+        return $this->client->authenticateClient();
+    }
 }

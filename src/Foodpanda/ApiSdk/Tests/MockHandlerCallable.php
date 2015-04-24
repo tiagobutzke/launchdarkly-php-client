@@ -24,6 +24,9 @@ class MockHandlerCallable
         if (strpos($request['url'], 'oauth2/token') !== false && $body->getField('password') === 'bad') {
             return ['status' => 400, 'body' => $this->loadDataFromFile('post-oauth2-token_bad_credentials.json')];
         }
+        if (strpos($request['url'], 'oauth2/token') !== false && $body->getField('grant_type') === 'client_credentials') {
+            return ['status' => 200, 'body' => $this->loadDataFromFile('post-oauth2-token_client.json')];
+        }
         if (strpos($request['url'], 'customers') !== false && $request['http_method'] === 'GET') {
             return ['status' => 200, 'body' => $this->loadDataFromFile('get-customers.json')];
         }
@@ -38,6 +41,16 @@ class MockHandlerCallable
         }
         if (strpos($request['uri'], '/vendors/690') !== false && $request['http_method'] === 'GET') {
             return ['status' => 200, 'body' => $this->loadDataFromFile('get-vendors_id_690.json')];
+        }
+        if (strpos(
+                $request['url'],
+                '/vendors/684?'.http_build_query(['include' => 'products,product_variations'])
+            ) !== false && $request['http_method'] === 'GET'
+        ) {
+            return ['status' => 200, 'body' => $this->loadDataFromFile('get-vendor_id_684_products.json')];
+        }
+        if (strpos($request['uri'], '/orders/calculate') !== false && $request['http_method'] === 'POST') {
+            return ['status' => 200, 'body' => $this->loadDataFromFile('post-orders-calculate.json')];
         }
         if (strpos($request['uri'], '/vendors') !== false && $request['http_method'] === 'GET') {
             return ['status' => 200, 'body' => $this->loadDataFromFile('get-vendors_area_148.json')];
