@@ -3,7 +3,6 @@
 namespace Foodpanda\ApiSdk\Api;
 
 use CommerceGuys\Guzzle\Oauth2\AccessToken;
-use Foodpanda\ApiSdk\Api\Auth\Credentials;
 
 class CustomerApiClient extends AbstractApiClient
 {

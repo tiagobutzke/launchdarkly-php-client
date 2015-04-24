@@ -21,14 +21,16 @@ class VendorProvider extends AbstractProvider
      */
     public function findVendorsByArea(Area $area)
     {
-        return $this->serializer->denormalize($this->client->getVendorsByArea($area->getId()), VendorResults::class);
+        return $this->serializer->denormalizeVendors($this->client->getVendorsByArea($area->getId()));
     }
 
     /**
+     * @param int $id
+     *
      * @return Vendor
      */
     public function find($id)
     {
-        return $this->serializer->denormalize($this->client->getVendor($id), Vendor::class);
+        return $this->serializer->denormalizeVendor($this->client->getVendor($id));
     }
 }

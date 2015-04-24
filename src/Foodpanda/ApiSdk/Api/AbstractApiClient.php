@@ -42,6 +42,7 @@ abstract class AbstractApiClient
      * @param RequestInterface $request
      *
      * @return array
+     *
      * @throw ClientException|ParseException
      */
     protected function send(RequestInterface $request)
@@ -75,6 +76,8 @@ abstract class AbstractApiClient
     /**
      * @param array           $body
      * @param ClientException $exception
+     *
+     * @throws ClientException
      */
     protected function formatErrorMessage(array $body, ClientException $exception)
     {
