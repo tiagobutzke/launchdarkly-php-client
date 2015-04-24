@@ -2,14 +2,18 @@
 * layout definitions
 */
 
-body {
-  color: @text-color;
-  font-size: @base-font-size;
-  font-family: @base-font-family;
-  font-weight: @base-font-weight;
-  line-height: @base-line-height;
-}
-
 .page-wrapper {
   padding-top: 88px;
+}
+
+.wrapper-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left:  0;
+  padding-right: 0;
+  max-width: @screen-lg-min;
+  .respond-from("screen-sm", {
+    padding-left:  @grid-gutter-width;
+    padding-right: @grid-gutter-width;
+  });
 }
