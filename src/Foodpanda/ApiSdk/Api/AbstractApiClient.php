@@ -101,6 +101,16 @@ abstract class AbstractApiClient
             throw new ClientException($errorMessage, $exception->getRequest(), $exception->getResponse());
         }
 
+        if (array_key_exists('data', $body)
+            && array_key_exists('items', $body['data'])
+            && $exception->getResponse()
+            && $exception->getResponse()->getStatusCode() === 400
+        ) {
+            $errorMessage = json_encode(json_decode($exception->getResponse()->getBody()), JSON_PRETTY_PRINT);
+
+            throw new ClientException($errorMessage, $exception->getRequest(), $exception->getResponse());
+        }
+
         throw $exception;
     }
 

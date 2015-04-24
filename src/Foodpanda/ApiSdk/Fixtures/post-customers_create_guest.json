@@ -1,0 +1,41 @@
+{
+  "status_code": 201,
+  "data": {
+    "customer": {
+      "id": 16273,
+      "first_name": "first name",
+      "last_name": "last name",
+      "email": "info@example.com",
+      "mobile_number": "722219121",
+      "mobile_country_code": "+250"
+    },
+    "customer_address": {
+      "id": 28954,
+      "city_id": 5,
+      "city": "Kigali",
+      "area_id": 127,
+      "areas": "Kacyiru",
+      "address_line1": "address 1",
+      "address_line2": null,
+      "address_line3": null,
+      "address_line4": null,
+      "address_line5": null,
+      "address_other": null,
+      "room": null,
+      "flat_number": null,
+      "structure": null,
+      "building": null,
+      "intercom": null,
+      "entrance": null,
+      "floor": null,
+      "district": "23234",
+      "postcode": "12345",
+      "company": "foodpanda",
+      "latitude": 0,
+      "longitude": 0,
+      "is_delivery_available": null,
+      "formatted_customer_address": null,
+      "delivery_instructions": null
+    }
+  }
+}
