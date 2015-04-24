@@ -42,6 +42,9 @@ class MockHandlerCallable
         if (strpos($request['uri'], '/vendors') !== false && $request['http_method'] === 'GET') {
             return ['status' => 200, 'body' => $this->loadDataFromFile('get-vendors_area_148.json')];
         }
+        if (strpos($request['uri'], '/areas/geocoding') !== false && $request['http_method'] === 'GET') {
+            return ['status' => 200, 'body' => $this->loadDataFromFile('get-areas-geocoding_city_id_5.json')];
+        }
 
         throw new \RuntimeException(sprintf('Missing fixture for "%s" API call', $request['uri']));
     }

@@ -21,7 +21,8 @@ class SecurityControllerTestCase extends VoloTestCase
         $client->submit($form);
 
         $this->isSuccessful($client->getResponse());
-        $this->assertInstanceOf('Volo\FrontendBundle\Security\Token',
+        $this->assertInstanceOf(
+            'Volo\FrontendBundle\Security\Token',
             $client->getContainer()->get('security.token_storage')->getToken()
         );
     }
@@ -41,7 +42,8 @@ class SecurityControllerTestCase extends VoloTestCase
         $client->submit($form);
 
         $this->isSuccessful($client->getResponse());
-        $this->assertInstanceOf('Symfony\Component\Security\Core\Authentication\Token\AnonymousToken',
+        $this->assertInstanceOf(
+            'Symfony\Component\Security\Core\Authentication\Token\AnonymousToken',
             $client->getContainer()->get('security.token_storage')->getToken()
         );
     }
