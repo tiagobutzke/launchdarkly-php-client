@@ -17,6 +17,7 @@
   ],
   "dependencies": {
     "bootstrap-rtl": "~3.3.2",
-    "labjs": "*"
+    "labjs": "*",
+    "blazy": "*"
   }
 }

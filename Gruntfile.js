@@ -47,7 +47,8 @@ module.exports = function (grunt) {
         'bower_components/jquery/dist/jquery.js',
         'web/bundles/heltheturbolinks/js/jquery.turbolinks.js',
         'web/bundles/heltheturbolinks/js/turbolinks.js',
-        frontendAssetPath('/js/main.js')
+        'bower_components/blazy/blazy.js',
+        frontendAssetPath('/js/main.js'),
     ];
 
     var sprite = {
@@ -148,7 +149,8 @@ module.exports = function (grunt) {
             ignores: [
                 'bower_components/jquery/dist/jquery.js',
                 'web/bundles/heltheturbolinks/js/jquery.turbolinks.js',
-                'web/bundles/heltheturbolinks/js/turbolinks.js'
+                'web/bundles/heltheturbolinks/js/turbolinks.js',
+                'bower_components/blazy/blazy.js',
             ]
         },
         gruntfile: {
