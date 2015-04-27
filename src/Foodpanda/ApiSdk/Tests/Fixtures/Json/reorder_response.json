@@ -36,7 +36,15 @@
                   "quantity": 2,
                   "is_available": true,
                   "error_message": null,
-                  "choices": [],
+                  "choices": [
+                    {
+                      "id": 1,
+                      "name": "choice 1",
+                      "position": 1,
+                      "is_available": true,
+                      "error_message": null
+                    }
+                  ],
                   "toppings": [
                     {
                       "id": 206892,

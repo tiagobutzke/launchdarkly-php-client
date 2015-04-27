@@ -18,6 +18,7 @@ use Foodpanda\ApiSdk\Entity\OAuth\OAuth;
 use Foodpanda\ApiSdk\Entity\Order\GuestCustomer;
 use Foodpanda\ApiSdk\Entity\Order\PostCalculateResponse;
 use Foodpanda\ApiSdk\Entity\Order\PostOrderResponse;
+use Foodpanda\ApiSdk\Entity\Reorder\ReorderResults;
 use Foodpanda\ApiSdk\Entity\Review\ReviewResults;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
 use Foodpanda\ApiSdk\Entity\Vendor\VendorResults;
@@ -254,5 +255,15 @@ class Serializer extends BaseSerializer
     public function denormalizePostCalculateReponse(array $data)
     {
          return $this->denormalize($data, PostCalculateResponse::class);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return ReorderResults
+     */
+    public function denormalizePreordersResponse(array $data)
+    {
+        return $this->denormalize($data, ReorderResults::class);
     }
 }

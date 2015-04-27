@@ -15,10 +15,24 @@ use Foodpanda\ApiSdk\Entity\Geocoding\AreaResults;
 use Foodpanda\ApiSdk\Entity\Geocoding\AreasCollection;
 use Foodpanda\ApiSdk\Entity\Order\GuestCustomer;
 use Foodpanda\ApiSdk\Entity\Order\PostCalculateResponse;
+use Foodpanda\ApiSdk\Entity\Reorder\Reorder;
+use Foodpanda\ApiSdk\Entity\Reorder\ReorderChoice;
+use Foodpanda\ApiSdk\Entity\Reorder\ReorderChoicesCollection;
+use Foodpanda\ApiSdk\Entity\Reorder\ReorderProduct;
+use Foodpanda\ApiSdk\Entity\Reorder\ReorderProductsCollection;
+use Foodpanda\ApiSdk\Entity\Reorder\ReorderProductVariation;
+use Foodpanda\ApiSdk\Entity\Reorder\ReorderResults;
+use Foodpanda\ApiSdk\Entity\Reorder\ReordersCollection;
+use Foodpanda\ApiSdk\Entity\Reorder\ReorderTopping;
+use Foodpanda\ApiSdk\Entity\Reorder\ReorderToppingsCollection;
+use Foodpanda\ApiSdk\Entity\Reorder\ReorderVendor;
+use Foodpanda\ApiSdk\Entity\Reorder\ReorderVendorsCollection;
 use Foodpanda\ApiSdk\Entity\Topping\Topping;
 use Foodpanda\ApiSdk\Entity\Topping\ToppingsCollection;
 use Foodpanda\ApiSdk\Entity\Vendor\VendorsCollection;
 use Foodpanda\ApiSdk\Entity\VendorCart\VendorCart;
+use Foodpanda\ApiSdk\Entity\VendorCart\VendorCartProduct;
+use Foodpanda\ApiSdk\Entity\VendorCart\VendorCartProductsCollection;
 use Foodpanda\ApiSdk\Entity\VendorCart\VendorCartsCollection;
 use Foodpanda\ApiSdk\Entity\Voucher\VouchersCollection;
 use Foodpanda\ApiSdk\Serializer;
@@ -53,7 +67,6 @@ use Foodpanda\ApiSdk\Entity\Schedule\SchedulesCollection;
 use Foodpanda\ApiSdk\Entity\Vendor\MetaData;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
 use Foodpanda\ApiSdk\Entity\Vendor\VendorResults;
-use Foodpanda\ApiSdk\Entity\VendorCart\ProductsCollection as VendorCartProductsColleciton;
 
 class SerializerTest extends WebTestCase
 {
@@ -77,22 +90,22 @@ class SerializerTest extends WebTestCase
     {
         $sourceData = $this->apiDataResponseFixtures->getCmsResponseData();
         $entity = $this->serializer->denormalizeCms($sourceData);
-        static::assertInstanceOf(CmsResults::class, $entity);
-        static::assertInstanceOf(CmsItemCollection::class, $entity->getItems());
+        $this->assertInstanceOf(CmsResults::class, $entity);
+        $this->assertInstanceOf(CmsItemCollection::class, $entity->getItems());
 
         $resultData = $this->serializer->normalize($entity);
-        static::assertEquals($sourceData, $resultData);
+        $this->assertEquals($sourceData, $resultData);
     }
 
     public function testDenormalizeVendorList()
     {
         $sourceData = $this->apiDataResponseFixtures->getVendorListResponseData();
         $entity = $this->serializer->denormalizeVendors($sourceData);
-        static::assertInstanceOf(VendorsCollection::class, $entity->getItems());
-        static::assertInstanceOf(VendorResults::class, $entity);
+        $this->assertInstanceOf(VendorsCollection::class, $entity->getItems());
+        $this->assertInstanceOf(VendorResults::class, $entity);
 
         $resultsData = $this->serializer->normalize($entity);
-        static::assertEquals($sourceData, $resultsData);
+        $this->assertEquals($sourceData, $resultsData);
     }
 
     public function testDenormalizeVendor()
@@ -102,7 +115,7 @@ class SerializerTest extends WebTestCase
         $resultsData = $this->serializer->normalize($entity);
         $this->assertTheValidityOfVendorEntityStructure($entity);
 
-        static::assertEquals($sourceData, $resultsData);
+        $this->assertEquals($sourceData, $resultsData);
     }
 
     public function testDenormalizeConfiguration()
@@ -110,47 +123,47 @@ class SerializerTest extends WebTestCase
         $sourceData = $this->apiDataResponseFixtures->getConfigurationResponseData();
         $entity = $this->serializer->denormalizeConfiguration($sourceData);
 
-        static::assertInstanceOf(SocialConnects::class, $entity->getEnabledSocialConnects());
+        $this->assertInstanceOf(SocialConnects::class, $entity->getEnabledSocialConnects());
 
-        static::assertInstanceOf(
+        $this->assertInstanceOf(
             FoodCharacteristicsCollection::class,
             $entity->getFoodCharacteristicAvailableFilters()
         );
-        static::assertInstanceOf(FoodCharacteristics::class, $entity->getFoodCharacteristicAvailableFilters()->first());
+        $this->assertInstanceOf(FoodCharacteristics::class, $entity->getFoodCharacteristicAvailableFilters()->first());
 
-        static::assertInstanceOf(LanguagesCollection::class, $entity->getLanguages());
-        static::assertInstanceOf(Language::class, $entity->getLanguages()->first());
+        $this->assertInstanceOf(LanguagesCollection::class, $entity->getLanguages());
+        $this->assertInstanceOf(Language::class, $entity->getLanguages()->first());
 
         // Customer Config
-        static::assertInstanceOf(CustomerConfiguration::class, $entity->getCustomerConfiguration());
-        static::assertInstanceOf(FormElementsCollection::class, $entity->getCustomerConfiguration()->getFormElements());
-        static::assertInstanceOf(FormElement::class, $entity->getCustomerConfiguration()->getFormElements()->first());
+        $this->assertInstanceOf(CustomerConfiguration::class, $entity->getCustomerConfiguration());
+        $this->assertInstanceOf(FormElementsCollection::class, $entity->getCustomerConfiguration()->getFormElements());
+        $this->assertInstanceOf(FormElement::class, $entity->getCustomerConfiguration()->getFormElements()->first());
 
         // Customer Address Config
-        static::assertInstanceOf(CustomerAddressConfiguration::class, $entity->getCustomerAddressConfiguration());
-        static::assertInstanceOf(
+        $this->assertInstanceOf(CustomerAddressConfiguration::class, $entity->getCustomerAddressConfiguration());
+        $this->assertInstanceOf(
             FormElementsCollection::class,
             $entity->getCustomerAddressConfiguration()->getFormElements()
         );
-        static::assertInstanceOf(
+        $this->assertInstanceOf(
             FormElement::class,
             $entity->getCustomerAddressConfiguration()->getFormElements()->first()
         );
 
         // Payment Form Config
-        static::assertInstanceOf(PaymentFormConfiguration::class, $entity->getPaymentFormConfiguration());
-        static::assertInstanceOf(
+        $this->assertInstanceOf(PaymentFormConfiguration::class, $entity->getPaymentFormConfiguration());
+        $this->assertInstanceOf(
             FormElementsCollection::class,
             $entity->getPaymentFormConfiguration()->getFormElements()
         );
-        static::assertInstanceOf(
+        $this->assertInstanceOf(
             FormElement::class,
             $entity->getPaymentFormConfiguration()->getFormElements()->first()
         );
 
         $resultData = $this->serializer->normalize($entity);
 
-        static::assertEquals($sourceData, $resultData);
+        $this->assertEquals($sourceData, $resultData);
     }
 
     public function testDenormalizeCalculateOrder()
@@ -158,25 +171,25 @@ class SerializerTest extends WebTestCase
         $sourceData = $this->apiDataResponseFixtures->getCalculateOrderResponseData();
         $entity = $this->serializer->denormalizePostCalculateReponse($sourceData);
 
-        static::assertInstanceOf(PostCalculateResponse::class, $entity);
-        static::assertInstanceOf(VouchersCollection::class, $entity->getVoucher());
+        $this->assertInstanceOf(PostCalculateResponse::class, $entity);
+        $this->assertInstanceOf(VouchersCollection::class, $entity->getVoucher());
 
-        static::assertInstanceOf(VendorCartsCollection::class, $entity->getVendorCart());
+        $this->assertInstanceOf(VendorCartsCollection::class, $entity->getVendorCart());
         /** @var VendorCart $vendorCart */
         $vendorCart = $entity->getVendorCart()->first();
-        static::assertInstanceOf(VendorCart::class, $vendorCart);
-        static::assertInstanceOf(VendorCartProductsColleciton::class, $vendorCart->getProducts());
+        $this->assertInstanceOf(VendorCart::class, $vendorCart);
+        $this->assertInstanceOf(VendorCartProductsCollection::class, $vendorCart->getProducts());
 
-        /** @var \Foodpanda\ApiSdk\Entity\VendorCart\Product $product */
+        /** @var VendorCartProduct $product */
         $product = $vendorCart->getProducts()->first();
-        static::assertInstanceOf(\Foodpanda\ApiSdk\Entity\VendorCart\Product::class, $product);
-        static::assertInstanceOf(ChoicesCollection::class, $product->getChoices());
-        static::assertInstanceOf(ToppingsCollection::class, $product->getToppings());
-        static::assertInstanceOf(Topping::class, $product->getToppings()->first());
+        $this->assertInstanceOf(VendorCartProduct::class, $product);
+        $this->assertInstanceOf(ChoicesCollection::class, $product->getChoices());
+        $this->assertInstanceOf(ToppingsCollection::class, $product->getToppings());
+        $this->assertInstanceOf(Topping::class, $product->getToppings()->first());
 
         $resultData = $this->serializer->normalize($entity);
 
-        static::assertEquals($sourceData, $resultData);
+        $this->assertEquals($sourceData, $resultData);
     }
 
     public function testDenormalizeAreas()
@@ -184,38 +197,38 @@ class SerializerTest extends WebTestCase
         $sourceData = $this->apiDataResponseFixtures->getAreasResponseData();
         $entity = $this->serializer->denormalizeGeocodingAreas($sourceData);
 
-        static::assertInstanceOf(AreaResults::class, $entity);
-        static::assertInstanceOf(AreasCollection::class, $entity->getItems());
-        static::assertInstanceOf(Area::class, $entity->getItems()->first());
+        $this->assertInstanceOf(AreaResults::class, $entity);
+        $this->assertInstanceOf(AreasCollection::class, $entity->getItems());
+        $this->assertInstanceOf(Area::class, $entity->getItems()->first());
 
         $resultData = $this->serializer->normalize($entity);
 
-        static::assertEquals($sourceData, $resultData);
+        $this->assertEquals($sourceData, $resultData);
     }
 
     public function testDenormalizeCustomer()
     {
         $sourceData = $this->apiDataResponseFixtures->getCustomerReponseData();
         $entity = $this->serializer->denormalizeCustomer($sourceData);
-        static::assertInstanceOf(Customer::class, $entity);
-        static::assertInstanceOf(AddressesCollection::class, $entity->getCustomerAddresses());
+        $this->assertInstanceOf(Customer::class, $entity);
+        $this->assertInstanceOf(AddressesCollection::class, $entity->getCustomerAddresses());
 
         $resultData = $this->serializer->normalize($entity);
 
-        static::assertEquals($sourceData, $resultData);
+        $this->assertEquals($sourceData, $resultData);
     }
 
     public function testDenormalizeGuestCustomer()
     {
         $sourceData = $this->apiDataResponseFixtures->getGuestCustomerReponseData();
         $entity = $this->serializer->denormalizeGuestCustomer($sourceData);
-        static::assertInstanceOf(GuestCustomer::class, $entity);
-        static::assertInstanceOf(Customer::class, $entity->getCustomer());
-        static::assertInstanceOf(Address::class, $entity->getCustomerAddress());
+        $this->assertInstanceOf(GuestCustomer::class, $entity);
+        $this->assertInstanceOf(Customer::class, $entity->getCustomer());
+        $this->assertInstanceOf(Address::class, $entity->getCustomerAddress());
 
         $resultData = $this->serializer->normalize($entity);
 
-        static::assertEquals($sourceData, $resultData);
+        $this->assertEquals($sourceData, $resultData);
     }
 
     public function testDenormalizeCities()
@@ -223,13 +236,42 @@ class SerializerTest extends WebTestCase
         $sourceData = $this->apiDataResponseFixtures->getCitiesResponseData();
         $entity = $this->serializer->denormalizeCities($sourceData);
 
-        static::assertInstanceOf(CityResults::class, $entity);
-        static::assertInstanceOf(CitiesCollection::class, $entity->getItems());
-        static::assertInstanceOf(City::class, $entity->getItems()->first());
+        $this->assertInstanceOf(CityResults::class, $entity);
+        $this->assertInstanceOf(CitiesCollection::class, $entity->getItems());
+        $this->assertInstanceOf(City::class, $entity->getItems()->first());
 
         $resultData = $this->serializer->normalize($entity);
 
-        static::assertEquals($sourceData, $resultData);
+        $this->assertEquals($sourceData, $resultData);
+    }
+
+    public function testDenormalizeReorders()
+    {
+        $sourceData = $this->apiDataResponseFixtures->getReOrderResponseData();
+        $entity = $this->serializer->denormalizePreordersResponse($sourceData);
+        
+        $this->assertInstanceOf(ReorderResults::class, $entity);
+        $this->assertInstanceOf(ReordersCollection::class, $entity->getItems());
+        /** @var Reorder $reorder */
+        $reorder = $entity->getItems()->first();
+        $this->assertInstanceOf(Reorder::class, $reorder);
+
+        $this->assertInstanceOf(ReorderVendorsCollection::class, $reorder->getVendors());
+
+        /** @var ReorderVendor $vendor */
+        $vendor = $reorder->getVendors()->first();
+        $this->assertInstanceOf(ReorderVendor::class, $vendor);
+        $this->assertInstanceOf(ReorderProductsCollection::class, $vendor->getProducts());
+
+        /** @var ReorderProduct $product */
+        $product = $vendor->getProducts()->first();
+        $this->assertInstanceOf(ReorderProduct::class, $product);
+        $this->assertInstanceOf(ReorderProductVariation::class, $product->getProductVariation());
+        $this->assertInstanceOf(ReorderChoicesCollection::class, $product->getProductVariation()->getChoices());
+        $this->assertInstanceOf(ReorderChoice::class, $product->getProductVariation()->getChoices()->first());
+
+        $this->assertInstanceOf(ReorderToppingsCollection::class, $product->getProductVariation()->getToppings());
+        $this->assertInstanceOf(ReorderTopping::class, $product->getProductVariation()->getToppings()->first());
     }
 
     /**
@@ -237,42 +279,42 @@ class SerializerTest extends WebTestCase
      */
     protected function assertTheValidityOfVendorEntityStructure(Vendor $entity)
     {
-        static::assertInstanceOf(Vendor::class, $entity);
-        static::assertInstanceOf(MenusCollection::class, $entity->getMenus());
+        $this->assertInstanceOf(Vendor::class, $entity);
+        $this->assertInstanceOf(MenusCollection::class, $entity->getMenus());
 
         /** @var Menu $menu */
         $menu = $entity->getMenus()->first();
-        static::assertInstanceOf(Menu::class, $menu);
-        static::assertInstanceOf(MenuCategoriesCollection::class, $menu->getMenuCategories());
+        $this->assertInstanceOf(Menu::class, $menu);
+        $this->assertInstanceOf(MenuCategoriesCollection::class, $menu->getMenuCategories());
 
         /** @var MenuCategory $menuCategory */
         $menuCategory = $menu->getMenuCategories()->first();
-        static::assertInstanceOf(MenuCategory::class, $menuCategory);
+        $this->assertInstanceOf(MenuCategory::class, $menuCategory);
 
-        static::assertInstanceOf(ProductsCollection::class, $menuCategory->getProducts());
+        $this->assertInstanceOf(ProductsCollection::class, $menuCategory->getProducts());
 
         /** @var Product $product */
         $product = $menuCategory->getProducts()->first();
-        static::assertInstanceOf(Product::class, $product);
-        static::assertInstanceOf(ProductVariationsCollection::class, $product->getProductVariations());
+        $this->assertInstanceOf(Product::class, $product);
+        $this->assertInstanceOf(ProductVariationsCollection::class, $product->getProductVariations());
 
         /** @var ProductVariation $productVariation */
         $productVariation = $product->getProductVariations()->first();
-        static::assertInstanceOf(ProductVariation::class, $productVariation);
+        $this->assertInstanceOf(ProductVariation::class, $productVariation);
 
-        static::assertInstanceOf(Chain::class, $entity->getChain());
-        static::assertInstanceOf(City::class, $entity->getCity());
+        $this->assertInstanceOf(Chain::class, $entity->getChain());
+        $this->assertInstanceOf(City::class, $entity->getCity());
 
-        static::assertInstanceOf(CuisinesCollection::class, $entity->getCuisines());
-        static::assertInstanceOf(Cuisine::class, $entity->getCuisines()->first());
+        $this->assertInstanceOf(CuisinesCollection::class, $entity->getCuisines());
+        $this->assertInstanceOf(Cuisine::class, $entity->getCuisines()->first());
 
-        static::assertInstanceOf(MetaData::class, $entity->getMetadata());
-        static::assertInstanceOf(EventsCollection::class, $entity->getMetadata()->getEvents());
+        $this->assertInstanceOf(MetaData::class, $entity->getMetadata());
+        $this->assertInstanceOf(EventsCollection::class, $entity->getMetadata()->getEvents());
 
-        static::assertInstanceOf(SchedulesCollection::class, $entity->getSchedules());
-        static::assertInstanceOf(Schedule::class, $entity->getSchedules()->first());
+        $this->assertInstanceOf(SchedulesCollection::class, $entity->getSchedules());
+        $this->assertInstanceOf(Schedule::class, $entity->getSchedules()->first());
 
 
-        static::assertInstanceOf(FoodCharacteristicsCollection::class, $entity->getFoodCharacteristics());
+        $this->assertInstanceOf(FoodCharacteristicsCollection::class, $entity->getFoodCharacteristics());
     }
 }
