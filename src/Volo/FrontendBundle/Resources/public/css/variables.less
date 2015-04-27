@@ -3,38 +3,105 @@
 */
 
 // ----------------------- FONTS START -----------------------
-@text-color-default: #333;
-@text-color-secondary: #999;
 @base-font-size: 16px;
-@base-font-family: 'Arial';
+@base-font-family: 'Avenir Roman', Arial, sans-serif;
 @base-font-weight: 400;
-@base-line-height: 1.6;
-// ----------------------- FONTS END -----------------------
+@base-line-height: 1.6em;
+@color-text-primary: #292929;
+@color-text-secondary: #666;
+@color-text-highlight: #d70f64;
+@color-text-inactive: #bcbcbc;
+@color-text-selection: #fff;
+@color-bg-text-selection: #d70f64;
 
+// ----------------------- FONTS END --------------------------
 
 // ----------------------- IMAGES START -----------------------
 @imagepath: "../../img/";
-// ----------------------- IMAGES END -----------------------
-
+// ----------------------- IMAGES END -------------------------
 
 // ----------------------- COLORS START -----------------------
-@color-bg-navigation: #fff;
-@color-bg-general: #f0ebe1;
+@color-text-link: #d70f64;
+@color-text-link-hover: #ac0c50;
+@color-icons-separator: #c8c8c8;
+@color-bg-primary: #fff;
+@color-bg-secondary: #f7f7f7;
 @color-bg-footer: #5e5e5e;
-@color-cta-default: #821432;
-@color-cta-special: #eb2341;
-@color-success: #2dc869;
-@color-error: #f0502d;
-// ----------------------- COLORS END -----------------------
+// ----------------------- COLORS END -------------------------
 
 // ----------------------- SPACES START -----------------------
 @space-xs: 5px;
 @space-sm: 10px;
 @space-md: 15px;
 @space-lg: 20px;
-// ----------------------- SPACES END -----------------------
+// ----------------------- SPACES END --------------------------
 
+// ----------------------- BORDER RADIUS START -----------------
+@border-radius-default: 2px;
+// ----------------------- BORDER RADIUS END -------------------
 
-// ----------------------- HOMEPAGE START -----------------------
-// ----------------------- HOMEPAGE END -----------------------
+// ----------------------- BUTTONS START -----------------------
+@cta-font-family: 'Avenir Heavy', Arial, sans-serif;
+@cta-font-size: 0.875em;
+@cta-text-align: center;
+@cta-text-transform: uppercase;
+@cta-padding-left: 20px;
+@cta-padding-right: 20px;
+@cta-border-radius: @border-radius-default;
+@cta-height: 44px;
+// Primary button
+@cta-color-text-primary: #fff;
+@cta-color-bg-primary: #d70f64;
+@cta-color-bg-primary-hover: #ac0c50;
+// Secondary button
+@cta-color-text-secondary: #d70f64;
+@cta-color-bg-secondary: transparent;
+@cta-color-bg-secondary-hover: #ac0c50;
+@cta-secondary-border: 1px solid #d70f64;
+// Disabled button
+@cta-color-bg-disabled: transparent;
+// Pressed state
+@cta-pressed-box-shadow: inset 0 2px 0 1px #8a0a40;
+// ----------------------- BUTTONS END -------------------------
+
+// ----------------------- INPUT FIELDS START ------------------
+@input-font-family: 'Avenir Book', Arial, sans-serif;
+@input-font-size: 0.875em;
+@input-text-align: left;
+@input-padding-left: 12px;
+@input-padding-right: 12px;
+@input-border-radius: @border-radius-default;
+@input-height: 44px;
+@input-color-text: #bcbcbc;
+@input-color-bg: #fff;
+@input-border: 1px solid #c8c8c8;
+// Focus state
+@input-color-text-active: #292929;
+@input-border-active: 1px solid #d70f64;
+// Error state
+@input-color-text-error: #ff6464;
+@input-color-bg-error: #ffefef;
+@input-border-error: 1px solid #ff6464;
+// Error contextual message
+@error-msg-font-family: 'Avenir Book', Arial, sans-serif;
+@error-msg-font-size: 0.750em;
+@error-msg-color-bg: #ff6464;
+@error-msg-color-text: #fff;
+@error-msg-height: 20px;
+// ----------------------- INPUT FIELDS END --------------------
+
+// ----------------------- DROP DOWNS START --------------------
+@dropdown-font-family: 'Avenir Book', Arial, sans-serif;
+@dropdown-font-size: 0.875em;
+@dropdown-color-text: #bcbcbc;
+@dropdown-color-bg-1: #fff;
+@dropdown-color-bg-2: transparent;
+@dropdown-border: 1px solid #c8c8c8;
+@dropdown-text-align: left;
+@dropdown-padding-left: 12px;
+@dropdown-padding-right: 12px;
+// ----------------------- DROP DOWNS END ----------------------
+
+// ----------------------- HOMEPAGE START ----------------------
+// ----------------------- HOMEPAGE END ------------------------
 
