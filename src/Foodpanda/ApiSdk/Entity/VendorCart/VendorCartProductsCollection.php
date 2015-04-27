@@ -4,13 +4,13 @@ namespace Foodpanda\ApiSdk\Entity\VendorCart;
 
 use Foodpanda\ApiSdk\Entity\DataObjectCollection;
 
-class ProductsCollection extends DataObjectCollection
+class VendorCartProductsCollection extends DataObjectCollection
 {
     /**
      * {@inheritdoc}
      */
     protected function getCollectionItemClass()
     {
-        return Product::class;
+        return VendorCartProduct::class;
     }
 }

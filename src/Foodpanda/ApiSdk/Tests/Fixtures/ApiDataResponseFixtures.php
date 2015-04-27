@@ -85,6 +85,14 @@ class ApiDataResponseFixtures
     }
 
     /**
+     * @return array
+     */
+    public function getReOrderResponseData()
+    {
+        return $this->getResponseData('reorder_response.json');
+    }
+
+    /**
      * @param string $file
      *
      * @return array

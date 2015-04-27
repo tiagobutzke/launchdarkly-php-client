@@ -6,7 +6,7 @@ use Foodpanda\ApiSdk\Entity\Choice\ChoicesCollection;
 use Foodpanda\ApiSdk\Entity\DataObject;
 use Foodpanda\ApiSdk\Entity\Topping\ToppingsCollection;
 
-class Product extends DataObject
+class VendorCartProduct extends DataObject
 {
     /**
      * @var int

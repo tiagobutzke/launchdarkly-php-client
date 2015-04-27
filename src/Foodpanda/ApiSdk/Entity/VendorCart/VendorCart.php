@@ -112,13 +112,13 @@ class VendorCart extends DataObject
     protected $discount_text;
 
     /**
-     * @var ProductsCollection
+     * @var VendorCartProductsCollection
      */
     protected $products;
 
     public function __construct()
     {
-        $this->products = new ProductsCollection();
+        $this->products = new VendorCartProductsCollection();
     }
 
     /**
@@ -290,7 +290,7 @@ class VendorCart extends DataObject
     }
 
     /**
-     * @return ProductsCollection
+     * @return VendorCartProductsCollection
      */
     public function getProducts()
     {
