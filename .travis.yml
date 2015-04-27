@@ -41,3 +41,16 @@ notifications:
     rooms:
       - hydrolo:W3sf04Zamqrz1d0CMFW3omV2#general
     on_success: [never]
+
+before_deploy:
+    - $TRAVIS_BUILD_DIR/build-tools/create-artifact-archive -o $TRAVIS_BUILD_DIR/build-tools/build.tar.gz
+
+deploy:
+    provider: releases
+    api-key: "4f43a5306c7dfbc3e7ab9d1d6791de2e4d98a711"
+    file: $TRAVIS_BUILD_DIR/build-tools/build.tar.gz
+    skip_cleanup: true
+    on:
+        tags: true
+        all_branches: true
+        condition: $TRAVIS_PHP_VERSION != hhvm
