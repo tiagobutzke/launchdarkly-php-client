@@ -20,6 +20,8 @@ cache:
     apt: true
     directories:
         - $HOME/.composer
+        - node_modules
+        - bower_components
 
 before_script:
     # Prepare cache folders for WWW. Cache gets cleared with composer install.
