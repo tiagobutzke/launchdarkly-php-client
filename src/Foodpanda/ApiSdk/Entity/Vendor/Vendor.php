@@ -8,6 +8,7 @@ use Foodpanda\ApiSdk\Entity\Cuisine\CuisinesCollection;
 use Foodpanda\ApiSdk\Entity\DataObject;
 use Foodpanda\ApiSdk\Entity\Discount\DiscountsCollection;
 use Foodpanda\ApiSdk\Entity\FoodCharacteristics\FoodCharacteristicsCollection;
+use Foodpanda\ApiSdk\Entity\Menu\Menu;
 use Foodpanda\ApiSdk\Entity\Menu\MenusCollection;
 use Foodpanda\ApiSdk\Entity\PaymentType\PaymentTypesCollection;
 use Foodpanda\ApiSdk\Entity\Schedule\SchedulesCollection;
@@ -591,7 +592,7 @@ class Vendor extends DataObject
     }
 
     /**
-     * @return MenusCollection
+     * @return MenusCollection|Menu[]
      */
     public function getMenus()
     {

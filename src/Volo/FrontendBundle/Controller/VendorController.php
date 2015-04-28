@@ -12,11 +12,12 @@ class VendorController extends Controller
     /**
      * @Route("/vendor/{id}", name="vendor")
      * @Template()
+     *
+     * @param int $id
+     * @return array
      */
     public function vendorAction($id)
     {
-        return [
-            'vendor' => $this->get('volo_frontend.provider.vendor')->find($id),
-        ];
+        return ['vendor' => $this->get('volo_frontend.provider.vendor')->find($id)];
     }
 }

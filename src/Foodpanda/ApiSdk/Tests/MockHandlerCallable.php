@@ -42,11 +42,7 @@ class MockHandlerCallable
         if (strpos($request['uri'], '/vendors/690') !== false && $request['http_method'] === 'GET') {
             return ['status' => 200, 'body' => $this->loadDataFromFile('get-vendors_id_690.json')];
         }
-        if (strpos(
-                $request['url'],
-                '/vendors/684?'.http_build_query(['include' => 'products,product_variations'])
-            ) !== false && $request['http_method'] === 'GET'
-        ) {
+        if (strpos($request['url'], '/vendors/684?include') !== false && $request['http_method'] === 'GET') {
             return ['status' => 200, 'body' => $this->loadDataFromFile('get-vendor_id_684_products.json')];
         }
         if (strpos($request['uri'], '/orders/calculate') !== false && $request['http_method'] === 'POST') {

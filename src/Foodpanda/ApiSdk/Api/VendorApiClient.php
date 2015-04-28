@@ -27,23 +27,22 @@ class VendorApiClient extends AbstractApiClient
 
     /**
      * @param int $id
+     * @param string $include
      *
      * @return array
      */
-    public function getVendor($id)
-    {
+    public function getVendor(
+        $id,
+        $include = 'cuisines,food_characteristics,menus,menu_categories,products,product_variations,discounts,metadata'
+    ) {
         $request = $this->client->createRequest(
             'GET',
             [
-                'vendors/{vendor_id}',
+                'vendors/{vendor_id}?include={include}',
                 [
-                    'vendor_id' => $id
+                    'vendor_id' => $id,
+                    'include' => $include
                 ],
-            ],
-            [
-                'query' => [
-                    'include' => 'products,product_variations'
-                ]
             ]
         );
 
