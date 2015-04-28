@@ -2,8 +2,6 @@
 
 namespace Foodpanda\ApiSdk\Tests\Provider;
 
-use Foodpanda\ApiSdk\Api\CustomerApiClient;
-use Foodpanda\ApiSdk\ApiFactory;
 use Foodpanda\ApiSdk\Entity\Address\Address;
 use Foodpanda\ApiSdk\Entity\Customer\Customer;
 use Foodpanda\ApiSdk\Entity\Order\GuestCustomer;
@@ -22,9 +20,7 @@ class OrderProviderTest extends ApiSdkTestSuite
         $newGuestCustomer->setCustomer($customer);
         $newGuestCustomer->setCustomerAddress($address);
 
-        $orderApiClient = new CustomerApiClient($this->getClient(), '', '');
-        $serializer = ApiFactory::createSerializer();
-        $provider = new CustomerProvider($orderApiClient, $serializer);
+        $provider = CustomerProvider::createInstance();
 
         $guestCustomer = $provider->create($newGuestCustomer);
         $this->assertInstanceOf(GuestCustomer::class, $guestCustomer);

@@ -37,7 +37,6 @@ use Foodpanda\ApiSdk\Entity\VendorCart\VendorCartsCollection;
 use Foodpanda\ApiSdk\Entity\Voucher\VouchersCollection;
 use Foodpanda\ApiSdk\Serializer;
 use Foodpanda\ApiSdk\Tests\Fixtures\ApiDataResponseFixtures;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Foodpanda\ApiSdk\Entity\Chain\Chain;
 use Foodpanda\ApiSdk\Entity\City\City;
 use Foodpanda\ApiSdk\Entity\Cms\CmsResults;
@@ -68,7 +67,7 @@ use Foodpanda\ApiSdk\Entity\Vendor\MetaData;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
 use Foodpanda\ApiSdk\Entity\Vendor\VendorResults;
 
-class SerializerTest extends WebTestCase
+class SerializerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var ApiDataResponseFixtures

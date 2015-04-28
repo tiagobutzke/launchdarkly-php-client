@@ -2,25 +2,28 @@
 
 namespace Foodpanda\ApiSdk\Provider;
 
-use Foodpanda\ApiSdk\Api\LocationApiClient;
-use Foodpanda\ApiSdk\Entity\City\City;
 use Foodpanda\ApiSdk\Entity\City\CityResults;
 
 class CityProvider extends AbstractProvider
 {
     /**
-     * @var LocationApiClient
-     */
-    protected $client;
-
-    /**
      * @param int $id
      *
-     * @return City
+     * @return CityResults
      */
     public function find($id)
     {
-        return $this->serializer->denormalizeCity($this->client->getCity($id));
+        $request = $this->client->createRequest(
+            'GET',
+            [
+                'cities/{city_id}',
+                ['city_id' => $id]
+            ]
+        );
+
+        $data = $this->client->send($request)['data'];
+
+        return $this->serializer->denormalizeCity($data);
     }
 
     /**
@@ -28,6 +31,10 @@ class CityProvider extends AbstractProvider
      */
     public function findAll()
     {
-        return $this->serializer->denormalizeCities($this->client->getCities());
+        $request = $this->client->createRequest('GET', 'cities');
+
+        $data = $this->client->send($request)['data'];
+
+        return $this->serializer->denormalizeCities($data);
     }
 }

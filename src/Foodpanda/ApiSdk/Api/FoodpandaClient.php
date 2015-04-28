@@ -4,51 +4,28 @@ namespace Foodpanda\ApiSdk\Api;
 
 use CommerceGuys\Guzzle\Oauth2\AccessToken;
 use CommerceGuys\Guzzle\Oauth2\Oauth2Subscriber;
+use Foodpanda\ApiSdk\Exception\ApiErrorException;
+use Foodpanda\ApiSdk\Exception\ApiException;
+use Foodpanda\ApiSdk\Exception\ValidationEntityException;
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ParseException;
-use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Message\RequestInterface;
 
-abstract class AbstractApiClient
+class FoodpandaClient extends Client
 {
-    /**
-     * @var GuzzleClient
-     */
-    protected $client;
-
-    /**
-     * @var string
-     */
-    protected $clientId;
-
-    /**
-     * @var string
-     */
-    protected $clientSecret;
-
-    /**
-     * @param GuzzleClient $client
-     * @param string       $clientId
-     * @param string       $clientSecret
-     */
-    public function __construct(GuzzleClient $client, $clientId, $clientSecret)
-    {
-        $this->client       = $client;
-        $this->clientId     = $clientId;
-        $this->clientSecret = $clientSecret;
-    }
-
     /**
      * @param RequestInterface $request
      *
      * @return array
      *
-     * @throw ClientException|ParseException
+     * @throw ApiException
+     * @throw ParseException
      */
-    protected function send(RequestInterface $request)
+    public function send(RequestInterface $request)
     {
         try {
-            $response = $this->client->send($request);
+            $response = parent::send($request);
 
             return $response->json();
         } catch (ParseException $e) {
@@ -58,14 +35,14 @@ abstract class AbstractApiClient
             $this->formatErrorMessage($exception->getResponse()->json(), $exception);
         }
 
-        throw new \RuntimeException('You should not reach this point.');
+        throw new \LogicException('You should not reach this point.');
     }
 
     /**
      * @param RequestInterface $request
      * @param AccessToken $accessToken
      */
-    protected function attachAuthenticationDataToRequest(RequestInterface $request, AccessToken $accessToken)
+    public function attachAuthenticationDataToRequest(RequestInterface $request, AccessToken $accessToken)
     {
         $oauth2 = new Oauth2Subscriber();
         $oauth2->setAccessToken($accessToken);
@@ -82,14 +59,16 @@ abstract class AbstractApiClient
      * @param array           $body
      * @param ClientException $exception
      *
-     * @throws ClientException
+     * @throws ApiErrorException
+     * @throws ApiException
+     * @throws ValidationEntityException
      */
     protected function formatErrorMessage(array $body, ClientException $exception)
     {
         if (array_key_exists('error', $body) && array_key_exists('error_description', $body)) {
             $errorMessage = sprintf('%s: %s', $body['error'], $body['error_description']);
 
-            throw new ClientException($errorMessage, $exception->getRequest(), $exception->getResponse());
+            throw new ApiErrorException($errorMessage, $exception->getRequest(), $exception->getResponse());
         }
 
         if (array_key_exists('data', $body)
@@ -98,7 +77,7 @@ abstract class AbstractApiClient
         ) {
             $errorMessage = sprintf('%s: %s', $body['data']['exception_type'], $body['data']['message']);
 
-            throw new ClientException($errorMessage, $exception->getRequest(), $exception->getResponse());
+            throw new ApiException($errorMessage, $exception->getRequest(), $exception->getResponse());
         }
 
         if (array_key_exists('data', $body)
@@ -108,26 +87,9 @@ abstract class AbstractApiClient
         ) {
             $errorMessage = json_encode(json_decode($exception->getResponse()->getBody()), JSON_PRETTY_PRINT);
 
-            throw new ClientException($errorMessage, $exception->getRequest(), $exception->getResponse());
+            throw new ValidationEntityException($errorMessage, $exception->getRequest(), $exception->getResponse());
         }
 
         throw $exception;
-    }
-
-    /**
-     * @return array
-     */
-    public function authenticateClient()
-    {
-        $config = [
-            'client_id'     => $this->clientId,
-            'client_secret' => $this->clientSecret,
-            'scope'         => 'API_CUSTOMER',
-            'grant_type'    => 'client_credentials',
-        ];
-
-        $request = $this->client->createRequest('POST', 'oauth2/token', array('body' => $config));
-
-        return $this->send($request);
     }
 }

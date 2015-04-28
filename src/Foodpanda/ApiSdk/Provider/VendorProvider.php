@@ -2,7 +2,6 @@
 
 namespace Foodpanda\ApiSdk\Provider;
 
-use Foodpanda\ApiSdk\Api\VendorApiClient;
 use Foodpanda\ApiSdk\Entity\Geocoding\Area;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
 use Foodpanda\ApiSdk\Entity\Vendor\VendorResults;
@@ -10,18 +9,27 @@ use Foodpanda\ApiSdk\Entity\Vendor\VendorResults;
 class VendorProvider extends AbstractProvider
 {
     /**
-     * @var VendorApiClient
-     */
-    protected $client;
-
-    /**
      * @param Area $area
      *
      * @return VendorResults
      */
     public function findVendorsByArea(Area $area)
     {
-        return $this->serializer->denormalizeVendors($this->client->getVendorsByArea($area->getId()));
+        $request = $this->client->createRequest(
+            'GET',
+            'vendors',
+            [
+                'query' => [
+                    'area_id' => $area->getId(),
+                    'include' => 'cuisines'
+                ]
+            ]
+        );
+
+
+        $data = $this->client->send($request)['data'];
+
+        return $this->serializer->denormalizeVendors($data);
     }
 
     /**
@@ -31,6 +39,20 @@ class VendorProvider extends AbstractProvider
      */
     public function find($id)
     {
-        return $this->serializer->denormalizeVendor($this->client->getVendor($id));
+        $include = 'cuisines,food_characteristics,menus,menu_categories,products,product_variations,discounts,metadata';
+        $request = $this->client->createRequest(
+            'GET',
+            [
+                'vendors/{vendor_id}?include={include}',
+                [
+                    'vendor_id' => $id,
+                    'include' => $include
+                ],
+            ]
+        );
+
+        $data = $this->client->send($request)['data'];
+
+        return $this->serializer->denormalizeVendor($data);
     }
 }

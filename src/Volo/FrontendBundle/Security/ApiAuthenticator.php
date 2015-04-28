@@ -2,12 +2,10 @@
 
 namespace Volo\FrontendBundle\Security;
 
-use CommerceGuys\Guzzle\Oauth2\AccessToken;
 use Foodpanda\ApiSdk\Api\Auth\Credentials;
-use Foodpanda\ApiSdk\Api\CustomerApiClient;
+use Foodpanda\ApiSdk\Api\Authenticator;
+use Foodpanda\ApiSdk\Exception\ApiException;
 use Foodpanda\ApiSdk\Provider\CustomerProvider;
-use Foodpanda\ApiSdk\Provider\OAuthProvider;
-use GuzzleHttp\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\SimpleFormAuthenticatorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -23,18 +21,18 @@ class ApiAuthenticator implements SimpleFormAuthenticatorInterface
     private $customerProvider;
 
     /**
-     * @var OAuthProvider
+     * @var Authenticator
      */
-    private $oAuthProvider;
+    private $authenticator;
 
     /**
      * @param CustomerProvider $customerProvider
-     * @param OAuthProvider $oAuthProvider
+     * @param Authenticator $authenticator
      */
-    public function __construct(CustomerProvider $customerProvider, OAuthProvider $oAuthProvider)
+    public function __construct(CustomerProvider $customerProvider, Authenticator $authenticator)
     {
         $this->customerProvider = $customerProvider;
-        $this->oAuthProvider = $oAuthProvider;
+        $this->authenticator = $authenticator;
     }
 
     /**
@@ -42,24 +40,22 @@ class ApiAuthenticator implements SimpleFormAuthenticatorInterface
      * @param UserProviderInterface $userProvider
      * @param string                $providerKey
      *
-     * @return UsernamePasswordToken
+     * @return Token
      */
     public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
     {
         $credentials = new Credentials($token->getUsername(), $token->getCredentials());
 
         try {
-            $data = $this->oAuthProvider->authenticate($credentials);
-            $customer = $this->customerProvider->getCustomer(
-                new AccessToken($data['access_token'], $data['token_type'], $data)
-            );
-        } catch (ClientException $e) {
+            $accessToken = $this->authenticator->authenticate($credentials);
+            $customer = $this->customerProvider->getCustomer($accessToken);
+        } catch (ApiException $e) {
             throw new AuthenticationException('Invalid username or password');
         }
 
         $username = sprintf('%s %s', $customer->getFirstName(), $customer->getLastName());
         $token    = new Token($username, ['customer' => $customer], ['ROLE_CUSTOMER']);
-        $token->setAttribute('tokens', $data);
+        $token->setAttribute('tokens', $accessToken);
 
         return $token;
     }

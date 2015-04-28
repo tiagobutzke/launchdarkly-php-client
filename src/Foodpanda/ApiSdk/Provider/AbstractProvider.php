@@ -2,13 +2,15 @@
 
 namespace Foodpanda\ApiSdk\Provider;
 
-use Foodpanda\ApiSdk\Api\AbstractApiClient;
+use Foodpanda\ApiSdk\Api\Authenticator;
+use Foodpanda\ApiSdk\Api\FoodpandaClient;
+use Foodpanda\ApiSdk\ApiFactory;
 use Foodpanda\ApiSdk\Serializer;
 
 abstract class AbstractProvider
 {
     /**
-     * @var AbstractApiClient
+     * @var FoodpandaClient
      */
     protected $client;
 
@@ -18,12 +20,31 @@ abstract class AbstractProvider
     protected $serializer;
 
     /**
-     * @param AbstractApiClient $client
-     * @param Serializer $serializer
+     * @var Authenticator
      */
-    public function __construct(AbstractApiClient $client, Serializer $serializer)
+    protected $authenticator;
+
+    /**
+     * @param FoodpandaClient $client
+     * @param Serializer $serializer
+     * @param Authenticator $authenticator
+     */
+    public function __construct(FoodpandaClient $client, Serializer $serializer, Authenticator $authenticator)
     {
         $this->client = $client;
         $this->serializer = $serializer;
+        $this->authenticator = $authenticator;
+    }
+
+    /**
+     * @return static
+     */
+    public static function createInstance()
+    {
+        $client = ApiFactory::createApiClient();
+        $serializer = ApiFactory::createSerializer();
+        $authenticator = new Authenticator($client, '', '');
+
+        return new static($client, $serializer, $authenticator);
     }
 }

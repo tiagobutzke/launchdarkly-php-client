@@ -2,16 +2,10 @@
 
 namespace Foodpanda\ApiSdk\Provider;
 
-use Foodpanda\ApiSdk\Api\LocationApiClient;
 use Foodpanda\ApiSdk\Entity\Geocoding\AreaResults;
 
 class AreaProvider extends AbstractProvider
 {
-    /**
-     * @var LocationApiClient
-     */
-    protected $client;
-
     /**
      * @param int $id
      *
@@ -19,6 +13,16 @@ class AreaProvider extends AbstractProvider
      */
     public function findByCity($id)
     {
-        return $this->serializer->denormalizeGeocodingAreas($this->client->getAreasByCity($id));
+        $request = $this->client->createRequest(
+            'GET',
+            [
+                'areas/geocoding',
+                ['query' => ['city_id' => $id]],
+            ]
+        );
+
+        $data = $this->client->send($request)['data'];
+
+        return $this->serializer->denormalizeGeocodingAreas($data);
     }
 }

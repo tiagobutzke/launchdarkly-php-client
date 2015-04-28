@@ -11,7 +11,7 @@ security:
         default:
             anonymous: ~
             simple_form:
-                authenticator: volo_frontend.api_authenticator
+                authenticator: volo_frontend.security.authenticator
                 login_path: /login
                 check_path: /login_check
 
