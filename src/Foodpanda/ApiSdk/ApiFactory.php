@@ -2,6 +2,7 @@
 
 namespace Foodpanda\ApiSdk;
 
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
 
 class ApiFactory
@@ -11,6 +12,6 @@ class ApiFactory
      */
     public static function createSerializer()
     {
-        return new Serializer([new CustomNormalizer()]);
+        return new Serializer([new CustomNormalizer()], [new JsonEncoder()]);
     }
 }

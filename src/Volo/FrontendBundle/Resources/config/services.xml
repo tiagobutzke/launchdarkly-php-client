@@ -8,4 +8,9 @@
         <import resource="client.xml"/>
         <import resource="api.xml"/>
     </imports>
+
+    <services>
+        <service id="volo_frontend.service.cart_manager" alias="volo_frontend.provider.cart" />
+    </services>
+
 </container>

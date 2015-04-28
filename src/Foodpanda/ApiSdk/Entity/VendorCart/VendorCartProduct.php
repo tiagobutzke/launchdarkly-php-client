@@ -73,11 +73,27 @@ class VendorCartProduct extends DataObject
     }
 
     /**
+     * @param int $productVariationId
+     */
+    public function setProductVariationId($productVariationId)
+    {
+        $this->product_variation_id = $productVariationId;
+    }
+
+    /**
      * @return string
      */
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 
     /**
@@ -89,11 +105,27 @@ class VendorCartProduct extends DataObject
     }
 
     /**
+     * @param string $variationName
+     */
+    public function setVariationName($variationName)
+    {
+        $this->variation_name = $variationName;
+    }
+
+    /**
      * @return float
      */
     public function getTotalPriceBeforeDiscount()
     {
         return $this->total_price_before_discount;
+    }
+
+    /**
+     * @param float $totalPriceBeforeDiscount
+     */
+    public function setTotalPriceBeforeDiscount($totalPriceBeforeDiscount)
+    {
+        $this->total_price_before_discount = $totalPriceBeforeDiscount;
     }
 
     /**
@@ -105,11 +137,27 @@ class VendorCartProduct extends DataObject
     }
 
     /**
+     * @param float $totalPrice
+     */
+    public function setTotalPrice($totalPrice)
+    {
+        $this->total_price = $totalPrice;
+    }
+
+    /**
      * @return int
      */
     public function getQuantity()
     {
         return $this->quantity;
+    }
+
+    /**
+     * @param int $quantity
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
     }
 
     /**
@@ -121,11 +169,27 @@ class VendorCartProduct extends DataObject
     }
 
     /**
+     * @param string $groupOrderUserName
+     */
+    public function setGroupOrderUserName($groupOrderUserName)
+    {
+        $this->group_order_user_name = $groupOrderUserName;
+    }
+
+    /**
      * @return string
      */
     public function getGroupOrderUserCode()
     {
         return $this->group_order_user_code;
+    }
+
+    /**
+     * @param string $groupOrderUserCode
+     */
+    public function setGroupOrderUserCode($groupOrderUserCode)
+    {
+        $this->group_order_user_code = $groupOrderUserCode;
     }
 
     /**
@@ -137,10 +201,26 @@ class VendorCartProduct extends DataObject
     }
 
     /**
+     * @param ToppingsCollection $toppings
+     */
+    public function setToppings($toppings)
+    {
+        $this->toppings = $toppings;
+    }
+
+    /**
      * @return ChoicesCollection
      */
     public function getChoices()
     {
         return $this->choices;
+    }
+
+    /**
+     * @param ChoicesCollection $choices
+     */
+    public function setChoices($choices)
+    {
+        $this->choices = $choices;
     }
 }

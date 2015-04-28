@@ -57,6 +57,8 @@ abstract class AbstractApiClient
         } catch (ClientException $exception) {
             $this->formatErrorMessage($exception->getResponse()->json(), $exception);
         }
+
+        throw new \RuntimeException('You should not reach this point.');
     }
 
     /**
@@ -67,7 +69,10 @@ abstract class AbstractApiClient
     {
         $oauth2 = new Oauth2Subscriber();
         $oauth2->setAccessToken($accessToken);
-        $oauth2->setRefreshToken($accessToken->getRefreshToken());
+        $refreshToken = $accessToken->getRefreshToken();
+        if (null !== $refreshToken) {
+            $oauth2->setRefreshToken($refreshToken);
+        }
 
         $request->getConfig()->set('auth', 'oauth2');
         $request->getEmitter()->attach($oauth2);
@@ -97,5 +102,22 @@ abstract class AbstractApiClient
         }
 
         throw $exception;
+    }
+
+    /**
+     * @return array
+     */
+    public function authenticateClient()
+    {
+        $config = [
+            'client_id'     => $this->clientId,
+            'client_secret' => $this->clientSecret,
+            'scope'         => 'API_CUSTOMER',
+            'grant_type'    => 'client_credentials',
+        ];
+
+        $request = $this->client->createRequest('POST', 'oauth2/token', array('body' => $config));
+
+        return $this->send($request);
     }
 }
