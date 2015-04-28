@@ -1,5 +1,3 @@
 {% block head_scripts %}
-    {% javascripts 'js/dist/head.js' %}
-        <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    <script src="{{ asset('js/dist/head.js') }}"></script>
 {% endblock %}
