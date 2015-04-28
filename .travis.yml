@@ -32,6 +32,7 @@ branches:
     - develop
     - /^feature\/SGFD-.*$/
     - /^hotfix\/.*$/
+    - /^release\/.*$/
 
 script:
     - phpunit -c $TRAVIS_BUILD_DIR/app/
