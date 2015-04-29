@@ -10,6 +10,8 @@
 /vendor/
 /bin/
 /composer.phar
+/app/config/countries_parameters/*
+!/app/config/countries_parameters/test.yml
 
 /.idea
 
@@ -22,6 +24,5 @@ bower_components/*
 /web/css/dist/*
 /web/img/dist/*
 /web/js/dist/*
-/js/*
 /src/Volo/FrontendBundle/Resources/public/dist/*
 /.sass-cache/*
