@@ -13,18 +13,35 @@
   .make-lg-column(3);
   .padding-left(0);
   .padding-right(0);
-  margin-bottom: 30px;
+  margin-bottom: 15px;
+  height: 290px;
   .respond-from("screen-sm", {
     .set-default-gutter();
+    overflow: hidden;
+    height: 285px;
+  });
+  .respond-from("screen-md", {
+    height: 292px;
+  });
+  .respond-from("screen-lg", {
+    height: 240px;
   });
 }
 
-.restaurants__item__img {
+.restaurants__item__picture {
+  height: 55%;
+  overflow: hidden;
+  .respond-from("screen-sm", {
+    height: auto;
+  });
+
+  img {
     .responsive-img();
+  }
 }
 
 .restaurants__item__name {
-  font-size: 1.8em;
+  font-size: 1.5em;
   margin: 15px 0 0 0;
   .set-default-gutter();
   line-height: normal;
@@ -36,10 +53,12 @@
 }
 
 .restaurants__item__desc {
-  font-size: 1.1em;
-  margin: 6px 0 0 0;
+  margin: 0;
   .set-default-gutter();
   line-height: normal;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   .respond-from("screen-sm", {
     font-size: 0.8em;
     .set-no-gutter();
@@ -48,8 +67,10 @@
 
 .restaurants__item__time {
   &:extend(.restaurants__item__desc);
+  margin: 5px 0 0 0;
   font-weight: normal;
   color: @color-text-secondary;
+  padding-bottom: 15px;
 }
 
 .restaurants__item__time__icon {

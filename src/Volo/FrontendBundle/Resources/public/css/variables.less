@@ -7,6 +7,28 @@
 // ----------------------- LAYOUT END -----------------------
 
 // ----------------------- FONTS START -----------------------
+@fontspath: "../../fonts/";
+
+@font-face {
+  font-family: 'Avenir Book';
+  src: url('@{fontspath}AvenirBook.eot');
+  src: url('@{fontspath}AvenirBook.eot') format('embedded-opentype'),
+  url('@{fontspath}AvenirBook.woff2') format('woff2'),
+  url('@{fontspath}AvenirBook.woff') format('woff'),
+  url('@{fontspath}AvenirBook.ttf') format('truetype'),
+  url('@{fontspath}AvenirBook.svg#AvenirBook') format('svg');
+}
+
+@font-face {
+  font-family: 'Avenir Heavy';
+  src: url('@{fontspath}AvenirHeavy.eot');
+  src: url('@{fontspath}AvenirHeavy.eot') format('embedded-opentype'),
+  url('@{fontspath}AvenirHeavy.woff2') format('woff2'),
+  url('@{fontspath}AvenirHeavy.woff') format('woff'),
+  url('@{fontspath}AvenirHeavy.ttf') format('truetype'),
+  url('@{fontspath}AvenirHeavy.svg#AvenirHeavy') format('svg');
+}
+
 @base-font-size: 16px;
 @base-font-family: 'Avenir Roman', Arial, sans-serif;
 @base-font-weight: 400;
@@ -16,22 +38,21 @@
 @color-text-highlight: #d70f64;
 @color-text-inactive: #bcbcbc;
 @color-text-selection: #fff;
-@color-bg-text-selection: #d70f64;
-
+@color-text-link: #d70f64;
+@color-text-link-hover: #ac0c50;
 // ----------------------- FONTS END --------------------------
 
 // ----------------------- IMAGES START -----------------------
 @imagepath: "../../img/";
 // ----------------------- IMAGES END -------------------------
 
-// ----------------------- COLORS START -----------------------
-@color-text-link: #d70f64;
-@color-text-link-hover: #ac0c50;
+// ----------------------- BACKGRIUND COLORS START -----------------------
 @color-icons-separator: #c8c8c8;
 @color-bg-primary: #fff;
 @color-bg-secondary: #f7f7f7;
 @color-bg-footer: #5e5e5e;
-// ----------------------- COLORS END -------------------------
+@color-bg-text-selection: #d70f64;
+// ----------------------- BACKGROUND COLORS END -------------------------
 
 // ----------------------- SPACES START -----------------------
 @space-xs: 5px;

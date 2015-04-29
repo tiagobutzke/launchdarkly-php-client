@@ -12,7 +12,7 @@
     <body>
     <div class="page-wrapper">
         {% block body %}
-            <div class="content-wrapper">
+            <div class="content-wrapper {% block content_wrapper_class %}{% endblock content_wrapper_class %}">
                 {% block content_wrapper %}
                     {{ block('header') }}
                     {{ block('breadcrumbs') }}

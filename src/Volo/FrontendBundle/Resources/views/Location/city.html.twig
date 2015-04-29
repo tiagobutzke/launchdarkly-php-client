@@ -1,29 +1,18 @@
 {% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
-
-{% block vendorDescription %}
-    <li>
-        <a href="{{ path('vendor', {'id': vendor.id}) }}">{{ vendor.name|e }}</a><br/>
-        Minimum delivery time: {{ vendor.minimumDeliveryTime|e }} min<br/>
-        {% for cuisine in vendor.cuisines %}
-            {{ cuisine.name }}{% if not loop.last %}, {% endif %}
-        {% endfor %}
-    </li>
-{% endblock %}
+{% use 'VoloFrontendBundle:Location:Partial/vendor_description.html.twig' %}
 
 {% block content %}
-    <h1 class="text-center">{{ city.name|e }}</h1>
-    <h2>Available now</h2>
-    <ul>
+    <h1 class="hide">{{ city.name|e }}</h1>
+    <h2 class="hide">Available now</h2>
+    <div class="restaurants">
         {% for vendor in openVendors %}
-            {{ block('vendorDescription') }}
+            {{ block('vendor_description') }}
         {% endfor %}
-    </ul>
+    </div>
 
-    <h2>Open soon</h2>
-    <ul>
+    <div class="restaurants">
         {% for vendor in closedVendors %}
-            {{ block('vendorDescription') }}
+            {{ block('vendor_description') }}
         {% endfor %}
-    </ul>
-
+    </div>
 {% endblock %}

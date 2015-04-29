@@ -1,0 +1,19 @@
+{% block vendor_description %}
+    <div class="restaurants__item">
+        <div class="restaurants__item__picture">
+            <a href="{{ path('vendor', {id: vendor.id}) }}">
+                <img class="b-lazy" data-src="/img/dish_types/test.jpg" alt="" src="/img/placeholder_450x250.png" />
+            </a>
+        </div>
+        <h3 class="restaurants__item__name">
+            <a href="{{ path('vendor', {id: vendor.id}) }}">
+                {{ vendor.name }}
+            </a>
+        </h3>
+        <h4 class="restaurants__item__desc">{{ vendor.description|lower }}</h4>
+        <p class="restaurants__item__time">
+            <span class="restaurants__item__time__icon"></span>
+            <span class="restaurants__item__time__label">Average delivery time:</span>  {{ vendor.minimumDeliveryTime|e }} min
+        </p>
+    </div>
+{% endblock %}
