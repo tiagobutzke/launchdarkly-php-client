@@ -36,7 +36,8 @@
             width: 250px;
             background: #DDD;
             margin-top: 10px;
-            min-height: 100px
+            min-height: 100px;
+            padding: 10px;
         }
 
         .clearfix {
@@ -171,6 +172,64 @@
             font-size: 14px;
             margin-bottom: 10px;
         }
+
+        .cart__product {
+            color: #292929;
+            display: block;
+            font-size: 14px;
+        }
+
+        .cart__product__quantity {
+            display: inline-block;
+            min-width: 10px;
+            text-align: left;
+        }
+
+        .cart__product__quantity_x {
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        .cart__product_item {
+            display: inline-block;
+            width: 150px;
+        }
+
+        .cart__product_item:hover {
+            color: #8a0a40;
+        }
+
+        .cart__total_separator {
+            font-size: 1px;
+            height: 1px;
+            background: #777777;
+            margin: 5px 0;
+        }
+
+        .cart__product__price {
+            width: 35px;
+            text-align: right;
+            display: inline-block;
+        }
+
+        .cart__delivery__currency {
+            display: inline-block;
+            text-align: center;
+        }
+
+        .cart__product_item_name {
+            display: block;
+        }
+
+        .cart__product_item_toppings {
+            display: block;
+        }
+
+        .cart__product_item_toppings_item {
+            display: block;
+            color: #999;
+            font-size: 12px;
+        }
     </style>
     <!-- and don't forget to flush :D -->
 
@@ -220,7 +279,88 @@
         {% endfor %}
     </div>
     <div class="restaurant__cart">
-        Cart
+        <!-- Cart Delivery Options -->
+        <h4>Delivery Time</h4>
+        <span class="restaurant__cart__delivery-day">
+            <select id="order-delivery-time">
+                <option selected="selected" value="2015-05-14">Today, May 14</option>
+                <option value="2015-05-15">Tomorrow, May 15</option>
+                <option value="2015-05-16">Friday, May 16</option>
+            </select>
+        </span>
+        <span class="restaurant__cart__delivery-time">
+            <select id="order-delivery-time">
+                <option selected="selected" value="17:00">17:00 - 18:00</option>
+                <option value="18:00">18:00 - 19:00</option>
+                <option value="19:00">19:00 - 20:00</option>
+            </select>
+        </span>
+
+        <!-- Actual Cart -->
+        <h4>My Order</h4>
+
+        <div class="cart__product" data-value='{product:{"name":"product name"}}'>
+            <span class="cart__product__quantity">2</span>
+            <span class="cart__product__quantity_x">x</span>
+            <span href="#" class="cart__product_item">
+                <span class="cart__product_item_name">Spaggethi Carbonara</span>
+                <span class="cart__product_item_toppings">
+
+                </span>
+            </span>
+            <span class="cart__product__price">7.5</span>
+            <span class="cart__product__currency">&euro;</span>
+            <span class="cart__product__remove"></span>
+        </div>
+
+
+        <div class="cart__product" data-value='{product:{"name":"product name"}}'>
+            <span class="cart__product__quantity">2</span>
+            <span class="cart__product__quantity_x">x</span>
+            <span href="#" class="cart__product_item">
+                <span class="cart__product_item_name">Spaggethi Carbonara</span>
+                <span class="cart__product_item_toppings">
+                    <span class="cart__product_item_toppings_item">+ Some topping</span>
+                    <span class="cart__product_item_toppings_item">+ Another topping</span>
+                    <span class="cart__product_item_toppings_item">+ Third topping</span>
+                </span>
+            </span>
+            <span class="cart__product__price">7.5</span>
+            <span class="cart__product__currency">&euro;</span>
+            <span class="cart__product__remove"></span>
+        </div>
+
+
+        <div class="cart__product" data-value='{product:{"name":"product name"}}'>
+            <span class="cart__product__quantity">2</span>
+            <span class="cart__product__quantity_x">x</span>
+            <span href="#" class="cart__product_item">
+                <span class="cart__product_item_name">Spaggethi Carbonara</span>
+                <span class="cart__product_item_toppings">
+                </span>
+            </span>
+            <span class="cart__product__price">7.5</span>
+            <span class="cart__product__currency">&euro;</span>
+            <span class="cart__product__remove"></span>
+        </div>
+
+        <div class="cart__total_separator"></div>
+
+        <div class="cart__subtotal__line">
+            <span class="cart__subtotal__title">Subtotal</span>
+            <span class="cart__subtotal__value">22.5</span>
+            <span class="cart__subtotal__currency">&euro;</span>
+        </div>
+        <div class="cart__delivery__line">
+            <span class="cart__delivery__title">Delivery</span>
+            <span class="cart__delivery__value">5</span>
+            <span class="cart__delivery__currency">&euro;</span>
+        </div>
+        <div class="cart__total__line">
+            <span class="cart__total__title">Total</span>
+            <span class="cart__total__value">27.5</span>
+            <span class="cart__total__currency">&euro;</span>
+        </div>
     </div>
 
     <div class="clearfix"></div>
