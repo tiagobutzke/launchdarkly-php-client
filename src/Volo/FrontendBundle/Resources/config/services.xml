@@ -9,8 +9,16 @@
         <import resource="api.xml"/>
     </imports>
 
+    <parameters>
+        <parameter key="volo_frontend.twig.cms_extension.class">Volo\FrontendBundle\Twig\CmsExtension</parameter>
+    </parameters>
+
     <services>
         <service id="volo_frontend.service.cart_manager" alias="volo_frontend.provider.cart" />
+        <service id="volo_frontend.twig.cms_extension" class="%volo_frontend.twig.cms_extension.class%">
+            <argument type="service" id="volo_frontend.provider.cms" />
+            <tag name="twig.extension" />
+        </service>
     </services>
 
 </container>
