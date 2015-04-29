@@ -17,7 +17,9 @@
                     {{ block('header') }}
                     {{ block('breadcrumbs') }}
                     {{ block('flash_messages') }}
-                    {{ block('page') }}
+                    <main>
+                        {{ block('content') }}
+                    </main>
                 {% endblock content_wrapper %}
             </div>
             {{ block('footer') }}

@@ -1,9 +1,6 @@
-{% extends 'VoloFrontendBundle:Layout:base.html.twig' %}
+{% extends 'core.html.twig' %}
 
-{% block page %}
-    <main>
-        <div class="wrapper-fluid">
-            {% block content %}{% endblock %}
-        </div>
-    </main>
-{% endblock %}
+{% use 'VoloFrontendBundle:Layout/Partial:head_stylesheets.html.twig' %}
+{% use 'VoloFrontendBundle:Layout/Partial:head_scripts.html.twig' %}
+{% use 'VoloFrontendBundle:Layout/Partial:header.html.twig' %}
+{% use 'VoloFrontendBundle:Layout/Partial:footer.html.twig' %}
