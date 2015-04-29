@@ -179,11 +179,11 @@
             <div class="clearfix"></div>
             <div class="restaurant__info-box">
                 <img src="path/to/assets/{{ vendor.getLogo() }}" class="restaurant__logo" alt="{{ vendor.getName() }}"/>
-                <h1 class="text-center">{{ vendor.name|e }}</h1>
-                <h3 class="restaurant__cuisines">{{ vendor.cuisines.first.name }}</h3>
+                <h1 class="text-center">{{ vendor.getName()|e }}</h1>
+                <h3 class="restaurant__cuisines">{{ vendor.cuisines.first.getName() }}</h3>
                 <span class="restaurant__closing-in">Closing in 20 minutes</span>
                 <span class="restaurant__opening-hours">10:00 - 22:30</span>
-                <span class="restaurant__address">{{ vendor.address }}</span>
+                <span class="restaurant__address">{{ vendor.getAddress() }}</span>
                 <span class="restaurant__phone">030-12345-Phone-Missing-In-Api</span>
                 <a href="#" class="restaurant__more-button">More Info</a>
             </div>
@@ -193,8 +193,8 @@
         <ul>
             {% for menuCategory in vendor.menus.first.getMenuCategories() %}
                 <li>
-                    <a data-id="{{ menuCategory.id }}" href="#restaurant-menu-{{ menuCategory.id }}">
-                        {{ menuCategory.name }}
+                    <a data-id="{{ menuCategory.getId() }}" href="#restaurant-menu-{{ menuCategory.getId() }}">
+                        {{ menuCategory.getName() }}
                     </a>
                 </li>
             {% endfor %}
@@ -203,13 +203,13 @@
     <div class="restaurant__products">
         {% for menuCategory in vendor.menus.first.getMenuCategories() %}
             <h3 class="restaurant__menu__category__header"
-                id="restaurant-menu-{{ menuCategory.id }}">{{ menuCategory.name }}</h3>
-            <div id="restaurant-menu-products-{{ menuCategory.id }}" class="restaurant__menu__products">
+                id="restaurant-menu-{{ menuCategory.getId() }}">{{ menuCategory.getName() }}</h3>
+            <div id="restaurant-menu-products-{{ menuCategory.getId() }}" class="restaurant__menu__products">
                 <ul>
-                    {% for product in menuCategory.getProducts %}
+                    {% for product in menuCategory.getProducts() %}
                         <li class="restaurant__menu__product">
                             <span class="product__name">{{ product.getName() }}</span>
-                            <span class="product__price">{{ product.getProductVariations().first().price|number_format }}</span>
+                            <span class="product__price">{{ product.getProductVariations().first().getPrice()|number_format }}</span>
                             <span class="product__price__currency">&euro;</span>
                             <span class="product__add-button">+</span>
                             <span class="product__description">{{ product.getDescription() }}</span>
