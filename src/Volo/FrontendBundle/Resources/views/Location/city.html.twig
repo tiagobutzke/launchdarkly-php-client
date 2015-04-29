@@ -2,17 +2,19 @@
 {% use 'VoloFrontendBundle:Location:Partial/vendor_description.html.twig' %}
 
 {% block content %}
-    <h1 class="hide">{{ city.name|e }}</h1>
-    <h2 class="hide">Available now</h2>
-    <div class="restaurants">
-        {% for vendor in openVendors %}
-            {{ block('vendor_description') }}
-        {% endfor %}
-    </div>
+    <div class="wrapper-fluid">
+        <h1 class="hide">{{ city.name|e }}</h1>
+        <h2 class="hide">Available now</h2>
+        <div class="restaurants">
+            {% for vendor in openVendors %}
+                {{ block('vendor_description') }}
+            {% endfor %}
+        </div>
 
-    <div class="restaurants">
-        {% for vendor in closedVendors %}
-            {{ block('vendor_description') }}
-        {% endfor %}
+        <div class="restaurants">
+            {% for vendor in closedVendors %}
+                {{ block('vendor_description') }}
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

@@ -1,24 +1,25 @@
 {% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
 
 {% block content %}
-    <h1 class="text-center">WELCOME TO VOLO</h1>
+    <div class="wrapper-fluid">
+        <h1 class="text-center">WELCOME TO VOLO</h1>
 
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <p>Username: {{ app.security.token.attributes.customer.firstName}}</p>
-        <a href="{{ path('logout') }}">Logout</a>
-    {% else %}
-        <a href="{{ path('login') }}">Login</a>
-    {% endif %}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <p>Username: {{ app.security.token.attributes.customer.firstName}}</p>
+            <a href="{{ path('logout') }}">Logout</a>
+        {% else %}
+            <a href="{{ path('login') }}">Login</a>
+        {% endif %}
 
-    <h2>Cities</h2>
-    <ul>
-        {% for city in cities %}
-            <li><a href="{{ path('city', {'id': city.id}) }}">{{ city.name|e }}</a></li>
-        {% endfor %}
-    </ul>
+        <h2>Cities</h2>
+        <ul>
+            {% for city in cities %}
+                <li><a href="{{ path('city', {'id': city.id}) }}">{{ city.name|e }}</a></li>
+            {% endfor %}
+        </ul>
 
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias amet consequatur, cum enim error eum incidunt, itaque modi mollitia odio perspiciatis provident quidem quo saepe sapiente similique sunt unde!
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. At aut quasi reiciendis suscipit vel. Deleniti ea fugiat impedit in, incidunt modi nemo nisi perferendis sapiente veritatis voluptates voluptatibus! Hic, voluptates.
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aliquam assumenda, aut consequatur dignissimos eos error fuga inventore libero neque omnis provident quam repudiandae temporibus ullam vero! Adipisci, assumenda?
-
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias amet consequatur, cum enim error eum incidunt, itaque modi mollitia odio perspiciatis provident quidem quo saepe sapiente similique sunt unde!
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. At aut quasi reiciendis suscipit vel. Deleniti ea fugiat impedit in, incidunt modi nemo nisi perferendis sapiente veritatis voluptates voluptatibus! Hic, voluptates.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aliquam assumenda, aut consequatur dignissimos eos error fuga inventore libero neque omnis provident quam repudiandae temporibus ullam vero! Adipisci, assumenda?
+    </div>
 {% endblock %}
