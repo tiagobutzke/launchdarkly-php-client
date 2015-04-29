@@ -5,27 +5,21 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}Volo{% endblock %}</title>
-        {% block head %}
-            {{ block('head_stylesheets') }}
-            {{ block('head_scripts') }}
-        {% endblock %}
+        {{ block('head_stylesheets') }}
+        {{ block('head_scripts') }}
     </head>
     <body>
-    <div class="page-wrapper">
-        {% block body %}
+        <div class="page-wrapper">
             <div class="content-wrapper {% block content_wrapper_class %}{% endblock content_wrapper_class %}">
-                {% block content_wrapper %}
-                    {{ block('header') }}
-                    {{ block('breadcrumbs') }}
-                    {{ block('flash_messages') }}
-                    <main>
-                        {{ block('content') }}
-                    </main>
-                {% endblock content_wrapper %}
+            {{ block('header') }}
+            {{ block('breadcrumbs') }}
+            {{ block('flash_messages') }}
+            <main>
+                {{ block('content') }}
+            </main>
             </div>
             {{ block('footer') }}
             {{ block('footer_scripts') }}
-        {% endblock %}
-    </div>
+        </div>
     </body>
 </html>
