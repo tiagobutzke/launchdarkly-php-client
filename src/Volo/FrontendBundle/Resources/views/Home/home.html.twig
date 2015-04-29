@@ -1,25 +1,54 @@
 {% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
 
 {% block content %}
+<div style="background-color: #d9534f; padding-top:100px; padding-bottom:100px;">
     <div class="wrapper-fluid">
-        <h1 class="text-center">WELCOME TO VOLO</h1>
+        <div class="container">
+            <div class="col-md-4 col-md-offset-4" style="background-color: #eee; padding: 40px;">
+                <div class="lead" style="text-align: center">THE FOOD YOU LOVE,<br/> DELIVERED TO YOUR<br/> HOME OR OFFICE</div>
+                <p style="text-align: center">Locally sourced, high-quality, curated restaurants.<br/> Delivered in under an hour.</p>
 
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <p>Username: {{ app.security.token.attributes.customer.firstName}}</p>
-            <a href="{{ path('logout') }}">Logout</a>
-        {% else %}
-            <a href="{{ path('login') }}">Login</a>
-        {% endif %}
-
-        <h2>Cities</h2>
-        <ul>
-            {% for city in cities %}
-                <li><a href="{{ path('city', {'id': city.id}) }}">{{ city.name|e }}</a></li>
-            {% endfor %}
-        </ul>
-
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias amet consequatur, cum enim error eum incidunt, itaque modi mollitia odio perspiciatis provident quidem quo saepe sapiente similique sunt unde!
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. At aut quasi reiciendis suscipit vel. Deleniti ea fugiat impedit in, incidunt modi nemo nisi perferendis sapiente veritatis voluptates voluptatibus! Hic, voluptates.
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aliquam assumenda, aut consequatur dignissimos eos error fuga inventore libero neque omnis provident quam repudiandae temporibus ullam vero! Adipisci, assumenda?
+                <div style="text-align: center;">
+                    <input type="text" placeholder="Zip code"/>
+                    <button>Find food</button>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
+
+<div class="wrapper-fluid">
+    <div class="container">
+        <div class="col-md-12">
+            <p class="lead" style="text-align:center;">DELIVERING FROM THE BEST RESTAURANTS</p>
+            <p style="text-align:center;">Carefully selected restaurants that you already love.</p>
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            <div class="col-md-2">
+                <img src="http://placehold.it/120x100"/>
+            </div>
+            <div class="col-md-2">
+                <img src="http://placehold.it/120x100"/>
+            </div>
+            <div class="col-md-2">
+                <img src="http://placehold.it/120x100"/>
+            </div>
+            <div class="col-md-2">
+                <img src="http://placehold.it/120x100"/>
+            </div>
+            <div class="col-md-2">
+                <img src="http://placehold.it/120x100"/>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <h2>Cities</h2>
+            <ul>
+                {% for city in cities %}
+                    <li><a href="{{ path('city', {'id': city.id}) }}">{{ city.name|e }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}
