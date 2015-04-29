@@ -9,23 +9,28 @@
   .right(0);
   width: 100%;
   background-color: @color-bg-primary;
-  height: 88px;
+  height: @header-height;
   z-index: @zindex-navbar-fixed;
-  text-align: center;
 }
 
 .header__wrapper {
-  .make-row();
-  position:  relative;
+  position: relative;
 }
 
 .header__logo {
   .retina-sprite(@logo-group);
-  margin: 29px auto;
+  position: absolute;
+  .left(30px);
+  top: 20px;
+}
+
+.header__logo__h1 {
   text-indent: -9999px;
+  margin: 0;
 }
 
 .header__login {
+    display: none;
     position: absolute;
     top: 50%;
     right: 15px;
@@ -33,4 +38,11 @@
     a {
       font-size: 0.9em;
     }
+}
+
+.header__cart {
+  position: absolute;
+  .right(30px);
+  top: 37px;
+  .retina-sprite(@cart-group);
 }

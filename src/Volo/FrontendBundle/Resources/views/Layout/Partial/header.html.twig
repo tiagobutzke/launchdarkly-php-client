@@ -1,16 +1,15 @@
 {% block header %}
     <header class="header">
-        <div class="wrapper-fluid">
-            <div class="header__wrapper">
-                <a href="{{ path('home') }}"><h1 class="header__logo">VOLO</h1></a>
-                <div class="header__login">
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <b>Username: {{ app.security.token.attributes.customer.firstName }}</b>
-                        <a href="{{ path('logout') }}">Logout</a>
-                    {% else %}
-                        <a href="{{ path('login') }}">Login</a>
-                    {% endif %}
-                </div>
+        <div class="header__wrapper wrapper-fluid">
+            <a class="header__logo" href="{{ path('home') }}"><h1 class="header__logo__h1">VOLO</h1></a>
+            <a class="header__cart"></a>
+            <div class="header__login">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <b>Username: {{ app.security.token.attributes.customer.firstName }}</b>
+                    <a href="{{ path('logout') }}">Logout</a>
+                {% else %}
+                    <a href="{{ path('login') }}">Login</a>
+                {% endif %}
             </div>
         </div>
     </header>
