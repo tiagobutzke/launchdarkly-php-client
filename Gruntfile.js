@@ -179,7 +179,7 @@ module.exports = function (grunt) {
             files: [
                 '<%= uglify.head.src %>'
             ],
-            tasks: ['uglify', 'copy', 'jshint']
+            tasks: ['uglify', 'jshint']
         }
     };
 
@@ -194,7 +194,6 @@ module.exports = function (grunt) {
 
     grunt.initConfig(config);
 
-    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-less');
