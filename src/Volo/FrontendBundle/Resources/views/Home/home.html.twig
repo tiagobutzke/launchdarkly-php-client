@@ -48,6 +48,8 @@
                     <li><a href="{{ path('city', {'id': city.id}) }}">{{ city.name|e }}</a></li>
                 {% endfor %}
             </ul>
+            
+            <a class="lead" href="{{ path('checkout', {vendorCode: 'random'}) }}">Checkout</a>
         </div>
     </div>
 </div>
