@@ -1,4 +1,4 @@
-$(document).on("ready page:change", function() {
+$(document).ready(function() {
     var bLazy = new Blazy();
 });
 
