@@ -21,4 +21,29 @@ class CustomerApiClient extends AbstractApiClient
 
         return $this->send($request)['data'];
     }
+
+    /**
+     * @param string $guestCustomerJson
+     * @param int $languageId
+     *
+     * @return mixed
+     */
+    public function createGuestCustomer($guestCustomerJson, $languageId)
+    {
+        $request = $this->client->createRequest(
+            'POST',
+            sprintf('customers/create_guest?language_id=%d', $languageId),
+            [
+                'body' => $guestCustomerJson
+            ]
+        );
+
+        $request->addHeader('Content-type', 'application/json');
+
+        $data = $this->authenticateClient();
+        $accessToken = new AccessToken($data['access_token'], $data['token_type'], $data);
+        $this->attachAuthenticationDataToRequest($request, $accessToken);
+
+        return $this->send($request)['data'];
+    }
 }

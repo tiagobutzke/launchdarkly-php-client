@@ -5,14 +5,10 @@ namespace Foodpanda\ApiSdk\Tests\Provider;
 use Foodpanda\ApiSdk\Api\LocationApiClient;
 use Foodpanda\ApiSdk\ApiFactory;
 use Foodpanda\ApiSdk\Entity\City\City;
-use Foodpanda\ApiSdk\EntityManager;
 use Foodpanda\ApiSdk\Provider\CityProvider;
-use Foodpanda\ApiSdk\Tests\MockHandlerCallable;
-use GuzzleHttp\Client;
-use GuzzleHttp\Ring\Client\MockHandler;
-use Foodpanda\ApiSdk\Entity\City\CityCollection;
+use Foodpanda\ApiSdk\Tests\ApiSdkTestSuite;
 
-class CityProviderTest extends \PHPUnit_Framework_TestCase
+class CityProviderTest extends ApiSdkTestSuite
 {
     public function testFindAll()
     {
@@ -63,15 +59,5 @@ class CityProviderTest extends \PHPUnit_Framework_TestCase
         );
 
         $cityProvider->find(99999);
-    }
-
-    /**
-     * @return Client
-     */
-    protected function getClient()
-    {
-        $mock = new MockHandler(new MockHandlerCallable());
-
-        return new Client(['handler' => $mock]);
     }
 }
