@@ -46,6 +46,7 @@ branches:
 
 script:
     - phpunit -c $TRAVIS_BUILD_DIR/app/
+    - grunt test --env=prod
 
 notifications:
   slack:

@@ -20,5 +20,8 @@
     "gmsmith": "^0.5.0",
     "md5-file": "1.0.1",
     "MD5": "1.2.1"
+  },
+  "devDependencies": {
+    "grunt-contrib-jasmine": "^0.8.2"
   }
 }
