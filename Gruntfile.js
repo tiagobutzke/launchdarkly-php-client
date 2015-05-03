@@ -67,7 +67,7 @@ module.exports = function (grunt) {
         spritesheet: {
             src: sprite.common.src,
             dest: frontendWebPath('/img/dist/sprite-' + sprite.common.hash + '.png'),
-            destCss: frontendAssetPath('/dist/less/sprite-common.less'),
+            destCss: frontendAssetPath('/dist/sass/sprite-common.scss'),
             imgPath: '/img/dist/sprite-' + sprite.common.hash + '.png',
             algorithm: 'top-down'
         },
@@ -76,54 +76,21 @@ module.exports = function (grunt) {
             dest: frontendWebPath('/img/dist/sprite-' + sprite.common.hash + '.png'),
             retinaSrcFilter:  sprite.common.srcFolder + ['*-2x.png'],
             retinaDest: frontendWebPath('/img/dist/sprite-' + sprite.common.hash + '-2x.png'),
-            destCss: frontendAssetPath('/dist/less/sprite-common.less'),
+            destCss: frontendAssetPath('/dist/sass/sprite-common.scss'),
             imgPath: '/img/dist/sprite-' + sprite.common.hash + '.png',
             retinaImgPath: '/img/dist/sprite-' + sprite.common.hash + '-2x.png',
             algorithm: 'top-down'
         }
     };
 
-    config.less = {
+    config.sass = {
         options: {
-            sourceMap: (env === 'dev'),
-            outputSourceFiles: (env === 'dev'),
-            sourceMapFileInline: (env === 'dev'),
-            ieCompat: true,
-            strictImports: true,
-            modifyVars: {
-                "image-base-path": "'" + sprite.basePath + "'"
-            },
-            plugins: [
-                new (require('less-plugin-autoprefix'))({
-                    browsers: [
-                        '> 1%',
-                        'last 3 versions',
-                        'Firefox ESR',
-                        'Opera >= 12.1',
-                        'Android >= 2.3',
-                        'BlackBerry >= 10',
-                        'iOS >= 4',
-                        'last 4 ChromeAndroid version',
-                        'last 4 FirefoxAndroid versions',
-                        'last 4 ExplorerMobile versions'
-                    ],
-                    cascade: false
-                }),
-                new (require('less-plugin-clean-css'))({
-                    compatibility: 'ie7'
-                })
-            ]
+            style: 'compressed'
         },
         siteBundleStyle: {
             files: [{
-                src: frontendAssetPath('/css/main.less'),
+                src: frontendAssetPath('/css/main.scss'),
                 dest: frontendWebPath('/css/dist/style.css')
-            }]
-        },
-        siteBundleStyleRTL: {
-            files: [{
-                src: frontendAssetPath('/css/main-rtl.less'),
-                dest: frontendWebPath('/css/dist/style-rtl.css')
             }]
         }
     };
@@ -172,8 +139,8 @@ module.exports = function (grunt) {
             tasks: ['sprite']
         },
         css: {
-            files: frontendAssetPath('/css/**/*.{less,css}'),
-            tasks: ['less']
+            files: frontendAssetPath('/css/**/*.{scss,css}'),
+            tasks: ['sass']
         },
         js: {
             files: [
@@ -194,17 +161,14 @@ module.exports = function (grunt) {
 
     grunt.initConfig(config);
 
+    grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-spritesmith');
     grunt.loadNpmTasks('grunt-bower-task');
 
     // grunt additional tasks
-    grunt.registerTask('default', ['bower:install', 'sprite', 'less', 'uglify', 'jshint']);
-    grunt.registerTask('deploy', ['bower:install', 'less', 'uglify']);
-
-    //grunt.registerTask('default', ['sprite', 'less', 'uglify', 'copy', 'jshint']);
-    //grunt.registerTask('deploy', ['sprite', 'less', 'uglify']);
+    grunt.registerTask('default', ['bower:install', 'sprite', 'sass', 'uglify', 'jshint']);
+    grunt.registerTask('deploy', ['bower:install', 'sass', 'uglify']);
 };

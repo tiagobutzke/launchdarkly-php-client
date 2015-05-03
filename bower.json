@@ -16,7 +16,7 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap-rtl": "~3.3.2",
+    "twbs-bootstrap-sass":"*",
     "labjs": "*",
     "blazy": "*"
   }

@@ -1,0 +1,33 @@
+/*
+* restaurant-page declarations
+*/
+
+.menu-gb {
+  background-color: $color-bg-secondary;
+}
+
+.menu-wrapper {
+  @include make-row();
+}
+
+.menu_items, .menu_categories {
+  background-color: $color-bg-primary;
+}
+
+
+.menu {
+  @include make-sm-column(2);
+}
+
+.menu__category-name {
+}
+
+.menu-categories {
+//  @include appear-from("screen-lg");
+  @include make-sm-column(5);
+}
+
+.menu-cart {
+//  @include appear-from("screen-lg")
+  @include make-sm-column(5);
+}

@@ -2,7 +2,7 @@
 * layout definitions
 */
 body {
-  background-color: @color-bg-primary;
+  background-color: $color-bg-primary;
 }
 
 ul {
@@ -15,7 +15,7 @@ li {
 }
 
 .page-wrapper {
-  padding-top: @header-height;
+  padding-top: $header-height;
 }
 
 .wrapper-fluid {
@@ -23,11 +23,11 @@ li {
   margin-left: auto;
   padding-left:  0;
   padding-right: 0;
-  max-width: @screen-lg-min;
-  .respond-from("screen-sm", {
-    padding-left:  @grid-gutter-width;
-    padding-right: @grid-gutter-width;
-  });
+  max-width: $screen-lg-min;
+  @include respond-from("screen-sm") {
+    padding-left:  $grid-gutter-width;
+    padding-right: $grid-gutter-width;
+  };
 }
 
 .turbolinks-progress-bar::before {

@@ -1,0 +1,19 @@
+// ----------------------- RESPONSIVE START -----------------------
+@mixin responsive-img() {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+// ----------------------- RESPONSIVE END -----------------------
+
+// ----------------------- GUTTER START -------------------------
+@mixin set-default-gutter() {
+  padding-left: ($grid-gutter-width / 2);
+  padding-right: ($grid-gutter-width / 2);
+}
+
+@mixin set-no-gutter() {
+  padding-left: 0;
+  padding-right: 0;
+}
+// ----------------------- GUTTER END ---------------------------

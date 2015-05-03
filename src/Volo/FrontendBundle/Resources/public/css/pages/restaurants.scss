@@ -8,74 +8,74 @@
   line-height: 220px;
   text-align: center;
   margin-bottom: 29px;
-  background-image: url("@{imagepath}hero_banners/hero_restaurant.jpg");
+  background-image: url("#{$imagepath}hero_banners/hero_restaurant.jpg");
   background-position: center top;
   background-size: cover;
-  color: @color-text-selection;
-  .set-default-gutter();
-  .appear-from("screen-sm");
-  .respond-from("screen-sm", {
+  color: $color-text-selection;
+  @include set-default-gutter();
+  @include appear-from("screen-sm");
+  @include respond-from("screen-sm") {
     font-size: 1.6em;
-  });
-  .respond-from("screen-md", {
+  };
+  @include respond-from("screen-md") {
     font-size: 2em;
-  });
+  };
 }
 
 .restaurants {
-  .make-row();
+  @include make-row();
   margin: 0;
 }
 
 .restaurants__item {
-  .make-xs-column(12);
- .make-sm-column(6);
-  .make-md-column(4);
-  .make-lg-column(3);
-  .padding-left(0);
-  .padding-right(0);
+  @include make-xs-column(12);
+  @include make-sm-column(6);
+  @include make-md-column(4);
+  @include make-lg-column(3);
+  padding-left: 0;
+  padding-right: 0;
   text-align: center;
   margin-bottom: 15px;
-  .respond-from("screen-sm", {
-    .set-default-gutter();
+  @include respond-from("screen-sm") {
+    @include set-default-gutter();
     margin-bottom: 29px;
-  });
+  };
 }
 
 .restaurants__item__wrapper {
   height: 290px;
   overflow: hidden;
-  .respond-from("screen-sm", {
-    .box-shadow(@shadow-restaurant-item);
+  @include respond-from("screen-sm") {
+    @include box-shadow($shadow-restaurant-item);
     height: 280px;
-  });
-  .respond-from("screen-lg", {
+  };
+  @include respond-from("screen-lg") {
     height: 245px;
-  });
+  };
 }
 
 .restaurants__item__wrapper__picture {
   height: 60%;
   overflow: hidden;
-  .respond-from("screen-sm", {
+  @include respond-from("screen-sm") {
     height: auto;
-  });
+  };
 
   img {
-    .responsive-img();
+    @include responsive-img();
   }
 }
 
 .restaurants__item__wrapper__name {
   font-size: 1.3em;
-  color: @color-text-highlight;
+  color: $color-text-highlight;
   margin: 15px 0 5px 0;
-  .set-default-gutter();
+  @include set-default-gutter();
   line-height: normal;
   text-transform: uppercase;
-  .respond-from("screen-sm", {
+  @include respond-from("screen-sm") {
     font-size: 1em;
-  });
+  };
 }
 
 .restaurants__item__wrapper__desc {
@@ -86,23 +86,22 @@
   overflow: hidden;
   text-overflow: ellipsis;
   width: 90%;
-  .respond-from("screen-sm", {
+  @include respond-from("screen-sm") {
     font-size: 0.9em;
     width: auto;
-    .set-default-gutter();
-  });
+    @include set-default-gutter();
+  };
 }
 
 .restaurants__item__wrapper__time {
-  &:extend(.restaurants__item__desc);
+//  &:extend(.restaurants__item__desc);
   margin: 5px 0 0 0;
   font-weight: normal;
   padding-bottom: 15px;
 }
 
 .restaurants__item__wrapper__time__icon {
-  .retina-sprite(@icon-delivery-group);
+  @include retina-sprite($icon-delivery-group);
   display: inline-block;
   vertical-align: middle;
 }
-
