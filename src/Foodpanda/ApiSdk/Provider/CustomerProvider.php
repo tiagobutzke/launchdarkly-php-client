@@ -3,17 +3,11 @@
 namespace Foodpanda\ApiSdk\Provider;
 
 use CommerceGuys\Guzzle\Oauth2\AccessToken;
-use Foodpanda\ApiSdk\Api\CustomerApiClient;
 use Foodpanda\ApiSdk\Entity\Customer\Customer;
 use Foodpanda\ApiSdk\Entity\Order\GuestCustomer;
 
 class CustomerProvider extends AbstractProvider
 {
-    /**
-     * @var CustomerApiClient
-     */
-    protected $client;
-
     /**
      * @param AccessToken $token
      *
@@ -21,7 +15,14 @@ class CustomerProvider extends AbstractProvider
      */
     public function getCustomer(AccessToken $token)
     {
-        return $this->serializer->denormalizeCustomer($this->client->getCustomers($token, true));
+        // TODO: add "include: $withAddress" parameter in the request
+        $request = $this->client->createRequest('GET', 'customers');
+
+        $this->client->attachAuthenticationDataToRequest($request, $token);
+
+        $data =  $this->client->send($request)['data'];
+
+        return $this->serializer->denormalizeCustomer($data);
     }
 
     /**
@@ -31,20 +32,40 @@ class CustomerProvider extends AbstractProvider
      */
     public function getCustomerWithoutAddresses(AccessToken $token)
     {
-        $customer = $this->client->getCustomers($token, false);
+        // TODO: add "include: $withAddress" parameter in the request
+        $request = $this->client->createRequest('GET', 'customers');
 
-        return $customer;
+        $this->client->attachAuthenticationDataToRequest($request, $token);
+
+        $data =  $this->client->send($request)['data'];
+
+        return $this->serializer->denormalizeCustomer($data);
     }
 
     /**
      * @param GuestCustomer $guestCustomer
+     * @param int $languageId
      *
      * @return GuestCustomer
      */
-    public function create(GuestCustomer $guestCustomer)
+    public function create(GuestCustomer $guestCustomer, $languageId = 1)
     {
-        $guestCustomer1 = $this->serializer->serialize($guestCustomer, 'json');
+        $guestCustomerJson = $this->serializer->serialize($guestCustomer, 'json');
 
-        return $this->serializer->denormalizeGuestCustomer($this->client->createGuestCustomer($guestCustomer1, 1));
+        $request = $this->client->createRequest(
+            'POST',
+            sprintf('customers/create_guest?language_id=%d', $languageId),
+            [
+                'body' => $guestCustomerJson
+            ]
+        );
+
+        $request->addHeader('Content-type', 'application/json');
+
+        $accessToken = $this->authenticator->authenticateClient();
+        $this->client->attachAuthenticationDataToRequest($request, $accessToken);
+        $data =  $this->client->send($request)['data'];
+
+        return $this->serializer->denormalizeGuestCustomer($data);
     }
 }

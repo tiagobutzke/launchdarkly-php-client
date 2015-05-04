@@ -2,6 +2,7 @@
 
 namespace Volo\FrontendBundle\Tests;
 
+use Foodpanda\ApiSdk\ApiFactory;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
@@ -13,6 +14,13 @@ abstract class VoloTestCase extends WebTestCase
      * @var \Symfony\Bundle\FrameworkBundle\Client
      */
     protected $client;
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        ApiFactory::setOptionFilename(__DIR__ . '/../../../Foodpanda/ApiSdk/Tests/config_test.php');
+    }
 
     protected function assertValidResponse(Client $client)
     {

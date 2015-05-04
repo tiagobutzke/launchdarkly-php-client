@@ -19,9 +19,9 @@ class CartProduct extends VendorCartProduct
     /**
      * @return int
      */
-    public function getVendorId()
+    public function getVariationId()
     {
-        return $this->vendor_id;
+        return $this->variation_id;
     }
 
     /**
@@ -35,9 +35,9 @@ class CartProduct extends VendorCartProduct
     /**
      * @return int
      */
-    public function getVariationId()
+    public function getVendorId()
     {
-        return $this->variation_id;
+        return $this->vendor_id;
     }
 
     /**
