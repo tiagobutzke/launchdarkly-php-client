@@ -17,7 +17,7 @@ You'll need **PHP >5.6**, **node.js**, **NPM**, **Bower**, **SASS** & **Grunt** 
 ```
 $ npm install -g grunt-cli
 $ npm install -g bower
-$ gem install sass
+$ gem install sass -v '~> 3.4.13'
 ```
 
 **Setup the project (dependecies and assets):**
