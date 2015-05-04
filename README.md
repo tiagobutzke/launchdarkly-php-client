@@ -10,13 +10,14 @@ The VOLO website is built using vanilla Symfony2.
 Installation
 ---
 
-You'll need **PHP >5.6**, **node.js**, **NPM**, **Bower** & **Grunt** (cli) installed
+You'll need **PHP >5.6**, **node.js**, **NPM**, **Bower**, **SASS** & **Grunt** (cli) installed
 
 **One time installation:**
 
 ```
 $ npm install -g grunt-cli
 $ npm install -g bower
+$ gem install sass
 ```
 
 **Setup the project (dependecies and assets):**

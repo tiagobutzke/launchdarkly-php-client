@@ -85,7 +85,8 @@ module.exports = function (grunt) {
 
     config.sass = {
         options: {
-            style: 'compressed'
+            style: 'compressed',
+            sourcemap: (env === 'dev') ? 'auto' : 'none'
         },
         siteBundleStyle: {
             files: [{
