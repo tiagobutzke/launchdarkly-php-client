@@ -102,12 +102,12 @@ module.exports = function (grunt) {
             sourceMapIncludeSources: (env === 'dev'),
             compress: (env !== 'dev'),
             beautify: (env === 'dev'),
-            sourceMapName: 'js/dist/head.js.map'
+            sourceMapName: frontendWebPath('/js/dist/head.js.map')
         },
         head: {
             src: jsSources.head,
             dest: frontendWebPath('/js/dist/head.js'),
-            sourceMapRoot: 'js/dist/head.js.map'
+            sourceMapRoot: frontendWebPath('/js/dist/head.js.map')
         }
     };
 
@@ -171,5 +171,5 @@ module.exports = function (grunt) {
 
     // grunt additional tasks
     grunt.registerTask('default', ['bower:install', 'sprite', 'sass', 'uglify', 'jshint']);
-    grunt.registerTask('deploy', ['bower:install', 'sass', 'uglify']);
+    grunt.registerTask('deploy', ['bower:install', 'sprite', 'sass', 'uglify']);
 };

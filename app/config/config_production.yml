@@ -1,0 +1,27 @@
+imports:
+    - { resource: config.yml }
+
+framework:
+    validation:
+        cache: apc
+
+monolog:
+    channels: ["api"]
+    handlers:
+        api:
+            type:     syslog
+            level:    error
+            handler:  nested
+            channels: ['api']
+        main:
+            type:         fingers_crossed
+            action_level: error
+            handler:      nested
+            channels:     ['!api']
+        nested:
+            type:     syslog
+            ident:    symfony_volo_%environment%_%country_code%
+            facility: local7
+            level:    debug
+        console:
+            type:  console

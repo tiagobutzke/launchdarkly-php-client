@@ -1,12 +1,13 @@
 # This file is a "template" of what your parameters.yml file should look like
 parameters:
-    locale:            en
+    country_code: de
+    environment: development
 
-    # A secret key that's used to generate certain security-related tokens
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    locale: de
+    secret: ThisTokenIsNotSoSecretChangeIt
 
     # 'guzzle.ring.client.curl_handler' or 'guzzle.ring.client.mock_handler'
     foodpanda.api.handler: guzzle.ring.client.curl_handler
-    foodpanda.api.base_url: http://front.fp/api/v4/
+    foodpanda.api.base_url: 'http://front.fp/api/v4'
     foodpanda.api.client_id: HTML5
     foodpanda.api.client_secret: ThisTokenIsNotSoSecretChangeIt

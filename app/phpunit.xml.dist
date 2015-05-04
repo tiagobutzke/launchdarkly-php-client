@@ -21,6 +21,9 @@
         <server name="KERNEL_DIR" value="/path/to/your/app/" />
     </php>
     -->
+    <php>
+        <server name="COUNTRY_CODE" value="test" />
+    </php>
 
     <filter>
         <whitelist>
