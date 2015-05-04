@@ -5,12 +5,12 @@
 .header {
   position: fixed;
   top: 0;
-  .left(0);
-  .right(0);
+  left: 0;
+  right: 0;
   width: 100%;
-  background-color: @color-bg-primary;
-  height: @header-height;
-  z-index: @zindex-navbar-fixed;
+  background-color: $color-bg-primary;
+  height: $header-height;
+  z-index: $zindex-navbar-fixed;
 }
 
 .header__wrapper {
@@ -18,9 +18,9 @@
 }
 
 .header__logo {
-  .retina-sprite(@logo-group);
+  @include retina-sprite($logo-group);
   position: absolute;
-  .left(30px);
+  left: 30px;
   top: 20px;
 }
 
@@ -42,7 +42,7 @@
 
 .header__cart {
   position: absolute;
-  .right(30px);
+  right: 30px;
   top: 37px;
-  .retina-sprite(@cart-group);
+  @include retina-sprite($cart-group);
 }

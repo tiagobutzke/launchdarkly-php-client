@@ -1,0 +1,42 @@
+/**
+ * @author steffen kraft - steffen.kraft@rocket-internet.de
+ */
+
+/*
+ * media query mixin
+ */
+@mixin respond-from($breakpoint) {
+  @if $breakpoint == "screen-xs" {
+    @media (max-width: $screen-sm-min - 1) {
+      @content;
+    }
+  } @else if $breakpoint == "screen-sm" {
+    @media (min-width: $screen-sm-min) {
+      @content;
+    }
+  } @else if $breakpoint == "screen-md" {
+    @media (min-width: $screen-md-min) {
+      @content;
+    }
+  } @else if $breakpoint == "screen-lg" {
+    @media (min-width: $screen-lg-min) {
+      @content;
+    }
+  }
+}
+
+@mixin appear-from($breakpoint) {
+  @if $breakpoint == "screen-sm" {
+    @media (max-width: $screen-sm-min) {
+      display: none !important;
+    }
+  } @else if $breakpoint == "screen-md" {
+    @media (max-width: $screen-md-min) {
+      display: none !important;
+    }
+  } @else if $breakpoint == "screen-lg" {
+    @media (max-width: $screen-lg-min) {
+      display: none !important;
+    }
+  }
+}

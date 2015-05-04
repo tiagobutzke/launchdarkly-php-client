@@ -65,6 +65,7 @@ build:
             - sudo apt-get update
             - sudo apt-get install -y graphicsmagick libgraphicsmagick1-dev
             - npm install -g grunt-cli
+            - gem install sass -v '~> 3.4.13'
     project_setup:
         before:
             - grunt
