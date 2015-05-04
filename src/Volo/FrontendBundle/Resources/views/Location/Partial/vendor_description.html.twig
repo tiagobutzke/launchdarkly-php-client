@@ -2,12 +2,12 @@
     <div class="restaurants__item">
         <div class="restaurants__item__wrapper">
             <div class="restaurants__item__wrapper__picture">
-                <a href="{{ path('vendor', {id: vendor.id}) }}">
+                <a href="{{ path('vendor', {code: vendor.code, slug: vendor.name|url_encode}) }}">
                     <img class="b-lazy" data-src="/img/dish_types/dish_sample.jpg" alt="" src="/img/placeholder_414x217.png" />
                 </a>
             </div>
             <h3 class="restaurants__item__wrapper__name">
-                <a href="{{ path('vendor', {id: vendor.id}) }}">
+                <a href="{{ path('vendor', {code: vendor.code, slug: vendor.name|url_encode}) }}">
                     {{ vendor.name }}
                 </a>
             </h3>
