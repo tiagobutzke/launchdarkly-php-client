@@ -2,35 +2,30 @@
 
 namespace Foodpanda\ApiSdk\Provider;
 
-use Foodpanda\ApiSdk\Entity\Cart\Cart;
-use Foodpanda\ApiSdk\Entity\Order\PostCalculateResponse;
+use GuzzleHttp\Exception\ClientException;
 
 class CartProvider extends AbstractProvider
 {
     /**
-     * @param Cart $cart
+     * @param array $cart
      *
-     * @return PostCalculateResponse
+     * @return array
      */
-    public function calculate(Cart $cart)
+    public function calculate(array $cart)
     {
-        $json = $this->serializer->serialize($cart, 'json');
-
-        $request = $this->client->createRequest(
-            'POST',
-            'orders/calculate',
-            [
-                'body' => $json
-            ]
-        );
+        $request = $this->client->createRequest('POST', 'orders/calculate', ['body' => json_encode($cart)]);
         $request->addHeader('Content-type', 'application/json');
 
         $accessToken = $this->authenticator->authenticateClient();
 
         $this->client->attachAuthenticationDataToRequest($request, $accessToken);
 
-        $response = $this->client->send($request)['data'];
+        try {
+            $data = $this->client->send($request)['data'];
+        } catch (ClientException $e) {
+            $data = (string) $e->getResponse()->getBody();
+        }
 
-        return $this->serializer->denormalizePostCalculateReponse($response);
+        return json_decode($data, true);
     }
 }

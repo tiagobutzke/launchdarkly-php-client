@@ -165,32 +165,6 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($sourceData, $resultData);
     }
 
-    public function testDenormalizeCalculateOrder()
-    {
-        $sourceData = $this->apiDataResponseFixtures->getCalculateOrderResponseData();
-        $entity = $this->serializer->denormalizePostCalculateReponse($sourceData);
-
-        $this->assertInstanceOf(PostCalculateResponse::class, $entity);
-        $this->assertInstanceOf(VouchersCollection::class, $entity->getVoucher());
-
-        $this->assertInstanceOf(VendorCartsCollection::class, $entity->getVendorCart());
-        /** @var VendorCart $vendorCart */
-        $vendorCart = $entity->getVendorCart()->first();
-        $this->assertInstanceOf(VendorCart::class, $vendorCart);
-        $this->assertInstanceOf(VendorCartProductsCollection::class, $vendorCart->getProducts());
-
-        /** @var VendorCartProduct $product */
-        $product = $vendorCart->getProducts()->first();
-        $this->assertInstanceOf(VendorCartProduct::class, $product);
-        $this->assertInstanceOf(ChoicesCollection::class, $product->getChoices());
-        $this->assertInstanceOf(ToppingsCollection::class, $product->getToppings());
-        $this->assertInstanceOf(Topping::class, $product->getToppings()->first());
-
-        $resultData = $this->serializer->normalize($entity);
-
-        $this->assertEquals($sourceData, $resultData);
-    }
-
     public function testDenormalizeAreas()
     {
         $sourceData = $this->apiDataResponseFixtures->getAreasResponseData();
