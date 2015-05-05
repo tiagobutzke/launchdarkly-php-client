@@ -55,7 +55,7 @@ server {
     }
     # PROD
     location ~ ^/app\.php(/|$) {
-        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_pass unix:/tmp/php5-fpm.sock;
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
@@ -71,6 +71,18 @@ server {
     access_log /path/to/nginx/logs/volo_access.log;
 }
 ```
+
+Please add in your ```.bashrc``` or ```.zshrc```
+
+```
+export COUNTRY_CODE=de
+```
+
+Parameters
+---
+
+The parameters are defined in ```app/config/countries_parameters```, for each country defined in ```composer.json```, ```composer install``` will create a file (e.g. ```de.yml```) in ```app/config/countries_parameters``` based on ```app/config/parameters.yml.dist```
+
 
 Useful links
 ---
