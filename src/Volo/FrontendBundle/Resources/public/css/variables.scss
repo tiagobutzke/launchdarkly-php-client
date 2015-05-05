@@ -51,6 +51,8 @@ $color-text-inactive: #bcbcbc;
 $color-text-selection: #fff;
 $color-text-link: #d70f64;
 $color-text-link-hover: #ac0c50;
+
+$bold-font-family: 'Avenir Roman', Arial, sans-serif;
 // ----------------------- FONTS END --------------------------
 
 // ----------------------- IMAGES START -----------------------
@@ -72,9 +74,11 @@ $space-md: 15px;
 $space-lg: 20px;
 // ----------------------- SPACES END --------------------------
 
-// ----------------------- BORDER RADIUS START -----------------
+// ----------------------- BORDER START -----------------
 $border-radius-default: 2px;
-// ----------------------- BORDER RADIUS END -------------------
+$base-border-color: #bcbcbc;
+$base-border: 1px solid $base-border-color;
+// ----------------------- BORDER END -------------------
 
 // ----------------------- BUTTONS START -----------------------
 $cta-font-family: 'Avenir Heavy', Arial, sans-serif;

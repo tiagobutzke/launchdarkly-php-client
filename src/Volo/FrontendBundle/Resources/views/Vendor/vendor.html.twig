@@ -1,368 +1,442 @@
 {% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
 
+{% block content_wrapper_class %}menu-bg{% endblock content_wrapper_class %}
+
 {% block content %}
-<div class="wrapper-fluid">
-    <!-- Please throw the following part in the toilet :) -->
-    <style>
 
-        .restaurant__header {
-            width: 100%;
-            height: 400px;
-            background: #DDDDDD;
-        }
-
-        .restaurant__categories__nav {
-            margin-top: 10px;
-            float: left;
-            width: 250px;
-            min-height: 500px;
-        }
-
-        .restaurant__info-box {
-            margin: 100px auto;
-            width: 600px;
-            background: rgba(255, 255, 255, 0.7);
-            height: 200px;
-        }
-
-        .restaurant__products {
-            float: left;
-            width: 780px;
-            margin: 0 10px;
-        }
-
-        .restaurant__cart {
-            float: right;
-            width: 250px;
-            background: #DDD;
-            margin-top: 10px;
-            min-height: 100px;
-            padding: 10px;
-        }
-
-        .clearfix {
-            clear: both;
-            width: 100%
-        }
-
-        .restaurant__menu__product {
-            margin: 0 0;
-            display: block;
-            padding: 15px;
-            border-bottom: 1px solid #BBB;
-        }
-
-        .restaurant__menu__product:hover {
-            background: #EEE;
-            cursor: pointer;
-        }
-
-        .restaurant__categories__nav li {
-            display: block;
-            font-size: 15px;
-            font-weight: normal;
-        }
-
-        .restaurant__categories__nav li a {
-            color: #333333;
-        }
-
-        .restaurant__categories__nav li a:hover {
-            color: #8a0a40;
-            text-decoration: none;
-        }
-
-        .restaurant__menu__category__header {
-            text-align: center;
-            font-weight: bold;
-            font-size: 20px;
-            padding: 5px;
-        }
-
-        .product__description {
-            width: 600px;
-            clear: both;
-            display: block;
-            color: #999999;
-            font-size: 12px;
-        }
-
-        .product__name {
-            float: left;
-            min-height: 40px;
-            width: 550px;
-            font-size: 15px;
-        }
-
-        .product__price {
-            float: left;
-            width: 100px;
-            color: #D00;
-            text-align: right;
-            margin-right: 10px;
-        }
-
-        .product__add-button {
-            float: right;
-            width: 30px;
-            text-align: center;
-            line-height: 30px;
-            height: 30px;
-            color: #D00;
-            font-size: 20px;
-            display: none;
-        }
-
-        .restaurant__menu__product:hover .product__add-button {
-            display: block;
-        }
-
-        .restaurant__logo {
-            height: 200px;
-            width: 150px;
-            float: left;
-            text-align: center;
-            line-height: 200px;
-            color: #FFF;
-            margin-right: 10px;
-            background: #8a0a40;
-        }
-
-        .restaurant__header h3 {
-            margin: 0;
-            font-size: 16px;
-        }
-
-        .restaurant__header h1 {
-            line-height: 50px;
-            padding: 5px;
-            margin: 0;
-        }
-
-        .restaurant__address {
-            float: left;
-            width: 320px;
-            font-size: 14px;
-        }
-
-        .restaurant__phone {
-            float: left;
-            width: 320px;
-            font-size: 14px;
-        }
-
-        .restaurant__closing-in {
-            margin-top: 10px;
-            float: left;
-            color: #8a0a40;
-            width: 320px;
-            font-size: 14px;
-        }
-
-        .restaurant__more-button {
-            float: right;
-            color: #999999;
-            font-size: 14px;
-            margin-right: 10px;
-        }
-
-        .restaurant__opening-hours {
-            float: left;
-            width: 320px;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-
-        .cart__product {
-            color: #292929;
-            display: block;
-            font-size: 14px;
-        }
-
-        .cart__product__quantity {
-            display: inline-block;
-            min-width: 10px;
-            text-align: left;
-        }
-
-        .cart__product__quantity_x {
-            display: inline-block;
-            font-weight: bold;
-        }
-
-        .cart__product_item {
-            display: inline-block;
-            width: 150px;
-        }
-
-        .cart__product_item:hover {
-            color: #8a0a40;
-        }
-
-        .cart__total_separator {
-            font-size: 1px;
-            height: 1px;
-            background: #777777;
-            margin: 5px 0;
-        }
-
-        .cart__product__price {
-            width: 35px;
-            text-align: right;
-            display: inline-block;
-        }
-
-        .cart__delivery__currency {
-            display: inline-block;
-            text-align: center;
-        }
-
-        .cart__product_item_name {
-            display: block;
-        }
-
-        .cart__product_item_toppings {
-            display: block;
-        }
-
-        .cart__product_item_toppings_item {
-            display: block;
-            color: #999;
-            font-size: 12px;
-        }
-    </style>
-    <!-- and don't forget to flush :D -->
-
-    <header>
-        <div class="restaurant__header clearfix">
-            <div class="clearfix"></div>
-            <div class="restaurant__info-box">
-                <img src="path/to/assets/{{ vendor.getLogo() }}" class="restaurant__logo" alt="{{ vendor.getName() }}"/>
-                <h1 class="text-center">{{ vendor.getName()|e }}</h1>
-                <h3 class="restaurant__cuisines">{{ vendor.cuisines.first.getName() }}</h3>
-                <span class="restaurant__closing-in">Closing in 20 minutes</span>
-                <span class="restaurant__opening-hours">10:00 - 22:30</span>
-                <span class="restaurant__address">{{ vendor.getAddress() }}</span>
-                <span class="restaurant__phone">030-12345-Phone-Missing-In-Api</span>
-                <a href="#" class="restaurant__more-button">More Info</a>
-            </div>
-        </div>
-    </header>
-    <nav class="restaurant__categories__nav">
-        <ul>
-            {% for menuCategory in vendor.menus.first.getMenuCategories() %}
-                <li>
-                    <a data-id="{{ menuCategory.getId() }}" href="#restaurant-menu-{{ menuCategory.getId() }}">
-                        {{ menuCategory.getName() }}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-    </nav>
-    <div class="restaurant__products">
-        {% for menuCategory in vendor.menus.first.getMenuCategories() %}
-            <h3 class="restaurant__menu__category__header"
-                id="restaurant-menu-{{ menuCategory.getId() }}">{{ menuCategory.getName() }}</h3>
-            <div id="restaurant-menu-products-{{ menuCategory.getId() }}" class="restaurant__menu__products">
-                <ul>
-                    {% for product in menuCategory.getProducts() %}
-                        <li class="restaurant__menu__product">
-                            <span class="product__name">{{ product.getName() }}</span>
-                            <span class="product__price">{{ product.getProductVariations().first().getPrice()|number_format }}</span>
-                            <span class="product__price__currency">&euro;</span>
-                            <span class="product__add-button">+</span>
-                            <span class="product__description">{{ product.getDescription() }}</span>
-                        </li>
+<div class="menu-wrapper--screen-md">
+    <div class="menu-wrapper">
+        <div class="bg-wrapper">
+            <div class="bg-wrapper--row">
+                <div class="menu-categories">
+                    <nav class="menu-categories__nav">
+                        <ul>
+                            {% for menuCategory in vendor.menus.first.getMenuCategories() %}
+                                <li>
+                                    <a data-id="{{ menuCategory.getId() }}" href="#menu__category-id-{{ menuCategory.getId() }}">
+                                        {{ menuCategory.getName() }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </nav>
+                </div>
+                <div class="menu">
+                    {% for menuCategory in vendor.menus.first.getMenuCategories() %}
+                        <h3 class="menu__category-name" id="menu__category-id-{{ menuCategory.getId() }}">{{ menuCategory.getName() }}</h3>
+                        {% for product in menuCategory.getProducts() %}
+                            <div class="menu__product-wrapper">
+                                <div class="menu__product-name">
+                                    {{ product.getName() }}
+                                </div>
+                                <div class="menu__product-price">
+                                    <span class="menu__items__product__price">{{ product.getProductVariations().first().getPrice()|number_format }}</span>
+                                    <span class="menu__items__product__price-currency">&euro;</span>
+                                </div>
+                                <div class="menu__product-description">
+                                    <span>{{ product.getDescription() }}</span>
+                                </div>
+                            </div>
+                        {% endfor %}
                     {% endfor %}
-                </ul>
+                </div>
             </div>
-        {% endfor %}
-    </div>
-    <div class="restaurant__cart">
-        <!-- Cart Delivery Options -->
-        <h4>Delivery Time</h4>
-        <span class="restaurant__cart__delivery-day">
-            <select id="order-delivery-time">
-                <option selected="selected" value="2015-05-14">Today, May 14</option>
-                <option value="2015-05-15">Tomorrow, May 15</option>
-                <option value="2015-05-16">Friday, May 16</option>
-            </select>
-        </span>
-        <span class="restaurant__cart__delivery-time">
-            <select id="order-delivery-time">
-                <option selected="selected" value="17:00">17:00 - 18:00</option>
-                <option value="18:00">18:00 - 19:00</option>
-                <option value="19:00">19:00 - 20:00</option>
-            </select>
-        </span>
-
-        <!-- Actual Cart -->
-        <h4>My Order</h4>
-
-        <div class="cart__product" data-value='{product:{"name":"product name"}}'>
-            <span class="cart__product__quantity">2</span>
-            <span class="cart__product__quantity_x">x</span>
-            <span href="#" class="cart__product_item">
-                <span class="cart__product_item_name">Spaggethi Carbonara</span>
-                <span class="cart__product_item_toppings">
-
-                </span>
-            </span>
-            <span class="cart__product__price">7.5</span>
-            <span class="cart__product__currency">&euro;</span>
-            <span class="cart__product__remove"></span>
         </div>
+        <div class="menu-cart">
+            <!-- Cart Delivery Options -->
+            <h3 class="menu-cart__headline">Delivery Time</h3>
+            <div class="delivery-time">
+                <div class="delivery-time__column">
+                    <select id="order-delivery-time" class="form-control delivery-time__select">
+                        <option selected="selected" value="2015-05-14">Today, May 14</option>
+                        <option value="2015-05-15">Tomorrow, May 15</option>
+                        <option value="2015-05-16">Friday, May 16</option>
+                    </select>
+                </div>
+                <div class="delivery-time__column">
+                    <select id="order-delivery-time" class="form-control delivery-time__select">
+                        <option selected="selected" value="17:00">17:00 - 18:00</option>
+                        <option value="18:00">18:00 - 19:00</option>
+                        <option value="19:00">19:00 - 20:00</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Actual Cart -->
+            <div class="order">
+                <h3 class="menu-cart__headline">My Order</h3>
+                <p class="order__empty-message">
+                    {{ 'You haven’t added anything to the cart yet! Add items by clicking on a menu item.'|trans }}
+                </p>
+            </div>
 
-
-        <div class="cart__product" data-value='{product:{"name":"product name"}}'>
-            <span class="cart__product__quantity">2</span>
-            <span class="cart__product__quantity_x">x</span>
-            <span href="#" class="cart__product_item">
-                <span class="cart__product_item_name">Spaggethi Carbonara</span>
-                <span class="cart__product_item_toppings">
-                    <span class="cart__product_item_toppings_item">+ Some topping</span>
-                    <span class="cart__product_item_toppings_item">+ Another topping</span>
-                    <span class="cart__product_item_toppings_item">+ Third topping</span>
-                </span>
-            </span>
-            <span class="cart__product__price">7.5</span>
-            <span class="cart__product__currency">&euro;</span>
-            <span class="cart__product__remove"></span>
-        </div>
-
-
-        <div class="cart__product" data-value='{product:{"name":"product name"}}'>
-            <span class="cart__product__quantity">2</span>
-            <span class="cart__product__quantity_x">x</span>
-            <span href="#" class="cart__product_item">
-                <span class="cart__product_item_name">Spaggethi Carbonara</span>
-                <span class="cart__product_item_toppings">
-                </span>
-            </span>
-            <span class="cart__product__price">7.5</span>
-            <span class="cart__product__currency">&euro;</span>
-            <span class="cart__product__remove"></span>
-        </div>
-
-        <div class="cart__total_separator"></div>
-
-        <div class="cart__subtotal__line">
-            <span class="cart__subtotal__title">Subtotal</span>
-            <span class="cart__subtotal__value">22.5</span>
-            <span class="cart__subtotal__currency">&euro;</span>
-        </div>
-        <div class="cart__delivery__line">
-            <span class="cart__delivery__title">Delivery</span>
-            <span class="cart__delivery__value">5</span>
-            <span class="cart__delivery__currency">&euro;</span>
-        </div>
-        <div class="cart__total__line">
-            <span class="cart__total__title">Total</span>
-            <span class="cart__total__value">27.5</span>
-            <span class="cart__total__currency">&euro;</span>
         </div>
     </div>
-
-    <div class="clearfix"></div>
 </div>
+
+
+    {#<header>#}
+        {#<div class="restaurant__header clearfix">#}
+            {#<div class="clearfix"></div>#}
+            {#<div class="restaurant__info-box">#}
+                {#<img src="path/to/assets/{{ vendor.getLogo() }}" class="restaurant__logo" alt="{{ vendor.getName() }}"/>#}
+                {#<h1 class="text-center">{{ vendor.getName()|e }}</h1>#}
+                {#<h3 class="restaurant__cuisines">{{ vendor.cuisines.first.getName() }}</h3>#}
+                {#<span class="restaurant__closing-in">Closing in 20 minutes</span>#}
+                {#<span class="restaurant__opening-hours">10:00 - 22:30</span>#}
+                {#<span class="restaurant__address">{{ vendor.getAddress() }}</span>#}
+                {#<span class="restaurant__phone">030-12345-Phone-Missing-In-Api</span>#}
+                {#<a href="#" class="restaurant__more-button">More Info</a>#}
+            {#</div>#}
+        {#</div>#}
+    {#</header>#}
+    {#<nav class="restaurant__categories__nav">#}
+        {#<ul>#}
+            {#{% for menuCategory in vendor.menus.first.getMenuCategories() %}#}
+                {#<li>#}
+                    {#<a data-id="{{ menuCategory.getId() }}" href="#restaurant-menu-{{ menuCategory.getId() }}">#}
+                        {#{{ menuCategory.getName() }}#}
+                    {#</a>#}
+                {#</li>#}
+            {#{% endfor %}#}
+        {#</ul>#}
+    {#</nav>#}
+    {#<div class="restaurant__products">#}
+        {#{% for menuCategory in vendor.menus.first.getMenuCategories() %}#}
+            {#<h3 class="restaurant__menu__category__header"#}
+                {#id="restaurant-menu-{{ menuCategory.getId() }}">{{ menuCategory.getName() }}</h3>#}
+            {#<div id="restaurant-menu-products-{{ menuCategory.getId() }}" class="restaurant__menu__products">#}
+                {#<ul>#}
+                    {#{% for product in menuCategory.getProducts() %}#}
+                        {#<li class="restaurant__menu__product">#}
+                            {#<span class="product__name">{{ product.getName() }}</span>#}
+                            {#<span class="product__price">{{ product.getProductVariations().first().getPrice()|number_format }}</span>#}
+                            {#<span class="product__price__currency">&euro;</span>#}
+                            {#<span class="product__add-button">+</span>#}
+                            {#<span class="product__description">{{ product.getDescription() }}</span>#}
+                        {#</li>#}
+                    {#{% endfor %}#}
+                {#</ul>#}
+            {#</div>#}
+        {#{% endfor %}#}
+    {#</div>#}
+    {#<div class="restaurant__cart">#}
+        {#<!-- Cart Delivery Options -->#}
+        {#<h4>Delivery Time</h4>#}
+        {#<span class="restaurant__cart__delivery-day">#}
+            {#<select id="order-delivery-time">#}
+                {#<option selected="selected" value="2015-05-14">Today, May 14</option>#}
+                {#<option value="2015-05-15">Tomorrow, May 15</option>#}
+                {#<option value="2015-05-16">Friday, May 16</option>#}
+            {#</select>#}
+        {#</span>#}
+        {#<span class="restaurant__cart__delivery-time">#}
+            {#<select id="order-delivery-time">#}
+                {#<option selected="selected" value="17:00">17:00 - 18:00</option>#}
+                {#<option value="18:00">18:00 - 19:00</option>#}
+                {#<option value="19:00">19:00 - 20:00</option>#}
+            {#</select>#}
+        {#</span>#}
+
+        {#<!-- Actual Cart -->#}
+        {#<h4>My Order</h4>#}
+
+        {#<div class="cart__product" data-value='{product:{"name":"product name"}}'>#}
+            {#<span class="cart__product__quantity">2</span>#}
+            {#<span class="cart__product__quantity_x">x</span>#}
+            {#<span href="#" class="cart__product_item">#}
+                {#<span class="cart__product_item_name">Spaggethi Carbonara</span>#}
+                {#<span class="cart__product_item_toppings">#}
+
+                {#</span>#}
+            {#</span>#}
+            {#<span class="cart__product__price">7.5</span>#}
+            {#<span class="cart__product__currency">&euro;</span>#}
+            {#<span class="cart__product__remove"></span>#}
+        {#</div>#}
+
+
+        {#<div class="cart__product" data-value='{product:{"name":"product name"}}'>#}
+            {#<span class="cart__product__quantity">2</span>#}
+            {#<span class="cart__product__quantity_x">x</span>#}
+            {#<span href="#" class="cart__product_item">#}
+                {#<span class="cart__product_item_name">Spaggethi Carbonara</span>#}
+                {#<span class="cart__product_item_toppings">#}
+                    {#<span class="cart__product_item_toppings_item">+ Some topping</span>#}
+                    {#<span class="cart__product_item_toppings_item">+ Another topping</span>#}
+                    {#<span class="cart__product_item_toppings_item">+ Third topping</span>#}
+                {#</span>#}
+            {#</span>#}
+            {#<span class="cart__product__price">7.5</span>#}
+            {#<span class="cart__product__currency">&euro;</span>#}
+            {#<span class="cart__product__remove"></span>#}
+        {#</div>#}
+
+
+        {#<div class="cart__product" data-value='{product:{"name":"product name"}}'>#}
+            {#<span class="cart__product__quantity">2</span>#}
+            {#<span class="cart__product__quantity_x">x</span>#}
+            {#<span href="#" class="cart__product_item">#}
+                {#<span class="cart__product_item_name">Spaggethi Carbonara</span>#}
+                {#<span class="cart__product_item_toppings">#}
+                {#</span>#}
+            {#</span>#}
+            {#<span class="cart__product__price">7.5</span>#}
+            {#<span class="cart__product__currency">&euro;</span>#}
+            {#<span class="cart__product__remove"></span>#}
+        {#</div>#}
+
+        {#<div class="cart__total_separator"></div>#}
+
+        {#<div class="cart__subtotal__line">#}
+            {#<span class="cart__subtotal__title">Subtotal</span>#}
+            {#<span class="cart__subtotal__value">22.5</span>#}
+            {#<span class="cart__subtotal__currency">&euro;</span>#}
+        {#</div>#}
+        {#<div class="cart__delivery__line">#}
+            {#<span class="cart__delivery__title">Delivery</span>#}
+            {#<span class="cart__delivery__value">5</span>#}
+            {#<span class="cart__delivery__currency">&euro;</span>#}
+        {#</div>#}
+        {#<div class="cart__total__line">#}
+            {#<span class="cart__total__title">Total</span>#}
+            {#<span class="cart__total__value">27.5</span>#}
+            {#<span class="cart__total__currency">&euro;</span>#}
+        {#</div>#}
+    {#</div>#}
+
+    {#<div class="clearfix"></div>#}
+{#</div>#}
+
+
+
+    {#<!-- Please throw the following part in the toilet :) -->#}
+    {#<style>#}
+
+    {#.restaurant__header {#}
+    {#width: 100%;#}
+    {#height: 400px;#}
+    {#background: #DDDDDD;#}
+    {#}#}
+
+    {#.restaurant__categories__nav {#}
+    {#margin-top: 10px;#}
+    {#float: left;#}
+    {#width: 250px;#}
+    {#min-height: 500px;#}
+    {#}#}
+
+    {#.restaurant__info-box {#}
+    {#margin: 100px auto;#}
+    {#width: 600px;#}
+    {#background: rgba(255, 255, 255, 0.7);#}
+    {#height: 200px;#}
+    {#}#}
+
+    {#.restaurant__products {#}
+    {#float: left;#}
+    {#width: 780px;#}
+    {#margin: 0 10px;#}
+    {#}#}
+
+    {#.restaurant__cart {#}
+    {#float: right;#}
+    {#width: 250px;#}
+    {#background: #DDD;#}
+    {#margin-top: 10px;#}
+    {#min-height: 100px;#}
+    {#padding: 10px;#}
+    {#}#}
+
+    {#.clearfix {#}
+    {#clear: both;#}
+    {#width: 100%#}
+    {#}#}
+
+    {#.restaurant__menu__product {#}
+    {#margin: 0 0;#}
+    {#display: block;#}
+    {#padding: 15px;#}
+    {#border-bottom: 1px solid #BBB;#}
+    {#}#}
+
+    {#.restaurant__menu__product:hover {#}
+    {#background: #EEE;#}
+    {#cursor: pointer;#}
+    {#}#}
+
+    {#.restaurant__categories__nav li {#}
+    {#display: block;#}
+    {#font-size: 15px;#}
+    {#font-weight: normal;#}
+    {#}#}
+
+    {#.restaurant__categories__nav li a {#}
+    {#color: #333333;#}
+    {#}#}
+
+    {#.restaurant__categories__nav li a:hover {#}
+    {#color: #8a0a40;#}
+    {#text-decoration: none;#}
+    {#}#}
+
+    {#.restaurant__menu__category__header {#}
+    {#text-align: center;#}
+    {#font-weight: bold;#}
+    {#font-size: 20px;#}
+    {#padding: 5px;#}
+    {#}#}
+
+    {#.product__description {#}
+    {#width: 600px;#}
+    {#clear: both;#}
+    {#display: block;#}
+    {#color: #999999;#}
+    {#font-size: 12px;#}
+    {#}#}
+
+    {#.product__name {#}
+    {#float: left;#}
+    {#min-height: 40px;#}
+    {#width: 550px;#}
+    {#font-size: 15px;#}
+    {#}#}
+
+    {#.product__price {#}
+    {#float: left;#}
+    {#width: 100px;#}
+    {#color: #D00;#}
+    {#text-align: right;#}
+    {#margin-right: 10px;#}
+    {#}#}
+
+    {#.product__add-button {#}
+    {#float: right;#}
+    {#width: 30px;#}
+    {#text-align: center;#}
+    {#line-height: 30px;#}
+    {#height: 30px;#}
+    {#color: #D00;#}
+    {#font-size: 20px;#}
+    {#display: none;#}
+    {#}#}
+
+    {#.restaurant__menu__product:hover .product__add-button {#}
+    {#display: block;#}
+    {#}#}
+
+    {#.restaurant__logo {#}
+    {#height: 200px;#}
+    {#width: 150px;#}
+    {#float: left;#}
+    {#text-align: center;#}
+    {#line-height: 200px;#}
+    {#color: #FFF;#}
+    {#margin-right: 10px;#}
+    {#background: #8a0a40;#}
+    {#}#}
+
+    {#.restaurant__header h3 {#}
+    {#margin: 0;#}
+    {#font-size: 16px;#}
+    {#}#}
+
+    {#.restaurant__header h1 {#}
+    {#line-height: 50px;#}
+    {#padding: 5px;#}
+    {#margin: 0;#}
+    {#}#}
+
+    {#.restaurant__address {#}
+    {#float: left;#}
+    {#width: 320px;#}
+    {#font-size: 14px;#}
+    {#}#}
+
+    {#.restaurant__phone {#}
+    {#float: left;#}
+    {#width: 320px;#}
+    {#font-size: 14px;#}
+    {#}#}
+
+    {#.restaurant__closing-in {#}
+    {#margin-top: 10px;#}
+    {#float: left;#}
+    {#color: #8a0a40;#}
+    {#width: 320px;#}
+    {#font-size: 14px;#}
+    {#}#}
+
+    {#.restaurant__more-button {#}
+    {#float: right;#}
+    {#color: #999999;#}
+    {#font-size: 14px;#}
+    {#margin-right: 10px;#}
+    {#}#}
+
+    {#.restaurant__opening-hours {#}
+    {#float: left;#}
+    {#width: 320px;#}
+    {#font-size: 14px;#}
+    {#margin-bottom: 10px;#}
+    {#}#}
+
+    {#.cart__product {#}
+    {#color: #292929;#}
+    {#display: block;#}
+    {#font-size: 14px;#}
+    {#}#}
+
+    {#.cart__product__quantity {#}
+    {#display: inline-block;#}
+    {#min-width: 10px;#}
+    {#text-align: left;#}
+    {#}#}
+
+    {#.cart__product__quantity_x {#}
+    {#display: inline-block;#}
+    {#font-weight: bold;#}
+    {#}#}
+
+    {#.cart__product_item {#}
+    {#display: inline-block;#}
+    {#width: 150px;#}
+    {#}#}
+
+    {#.cart__product_item:hover {#}
+    {#color: #8a0a40;#}
+    {#}#}
+
+    {#.cart__total_separator {#}
+    {#font-size: 1px;#}
+    {#height: 1px;#}
+    {#background: #777777;#}
+    {#margin: 5px 0;#}
+    {#}#}
+
+    {#.cart__product__price {#}
+    {#width: 35px;#}
+    {#text-align: right;#}
+    {#display: inline-block;#}
+    {#}#}
+
+    {#.cart__delivery__currency {#}
+    {#display: inline-block;#}
+    {#text-align: center;#}
+    {#}#}
+
+    {#.cart__product_item_name {#}
+    {#display: block;#}
+    {#}#}
+
+    {#.cart__product_item_toppings {#}
+    {#display: block;#}
+    {#}#}
+
+    {#.cart__product_item_toppings_item {#}
+    {#display: block;#}
+    {#color: #999;#}
+    {#font-size: 12px;#}
+    {#}#}
+    {#</style>#}
+    {#<!-- and don't forget to flush :D -->#}
 {% endblock %}

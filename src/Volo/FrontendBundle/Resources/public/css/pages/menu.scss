@@ -2,32 +2,139 @@
 * restaurant-page declarations
 */
 
-.menu-gb {
-  background-color: $color-bg-secondary;
+.menu-wrapper--screen-md {
+  @include respond-from("screen-md") {
+    @include fluid-container();
+  }
 }
 
 .menu-wrapper {
-  @include make-row();
+  @include respond-from("screen-md") {
+    @include make-row();
+  }
 }
 
 .menu_items, .menu_categories {
   background-color: $color-bg-primary;
 }
 
+.menu-bg {
+  background: $color-bg-secondary;
+}
 
+.bg-wrapper {
+  background: $color-bg-primary;
+  @include respond-from("screen-md") {
+    @include make-md-column(8);
+    @include make-lg-column(9);
+  }
+}
+
+.bg-wrapper--row {
+  @include respond-from("screen-md") {
+    @include make-row();
+  }
+}
+
+
+//menu
 .menu {
-  @include make-sm-column(2);
+  background: $color-bg-primary;
+  @include respond-from("screen-md") {
+    @include make-md-column(12);
+    @include make-lg-column(9);
+  }
 }
 
 .menu__category-name {
+  font-family: $bold-font-family;
+  font-size: 0.750em;
+  font-weight: bold;
+  @extend .text-center;
+  border-bottom: $base-border;
+  padding-bottom: $space-sm;
+  margin-bottom: 0;
+  text-transform: uppercase;
+  @include respond-from("screen-md") {
+    font-size: 0.875em;
+  }
 }
 
+.menu__product-wrapper {
+  @include clearfix;
+  border-bottom: $base-border;
+  line-height: 1.3em;
+  font-size: 0.813em;
+  padding: $space-sm 0;
+  @include respond-from("screen-md") {
+    line-height: 1.4em;
+    font-size: 0.875em;
+  }
+}
+
+.menu__product-name {
+  @include make-xs-column(8);
+}
+
+.menu__product-price {
+  @include make-xs-column(4);
+  @extend .text-right;
+}
+
+.menu__product-description {
+  @include make-xs-column(12);
+  color: $color-text-secondary;
+}
+
+
+//category
 .menu-categories {
-//  @include appear-from("screen-lg");
-  @include make-sm-column(5);
+  @include appear-from("screen-lg");
+  background: $color-bg-primary;
+  @include make-lg-column(3);
 }
 
+.menu-categories__nav {
+  padding-top: 37px;
+}
+
+.menu-categories__nav a {
+  color: $color-text-primary;
+}
+
+//cart
 .menu-cart {
-//  @include appear-from("screen-lg")
-  @include make-sm-column(5);
+  @include appear-from("screen-md");
+  @include make-md-column(4);
+  @include make-lg-column(3);
+}
+
+.delivery-time {
+  @include make-row();
+}
+.delivery-time__column {
+  @include make-xs-column(6);
+}
+
+.delivery-time__column select {
+  width: 100%;
+}
+
+.menu-cart__headline {
+  font-family: $bold-font-family;
+  font-size: 0.750em;
+  font-weight: bold;
+  @extend .text-center;
+  text-transform: uppercase;
+  @include respond-from("screen-md") {
+    font-size: 0.875em;
+  }
+}
+
+.order {
+  margin-top: $space-lg;
+}
+.order__empty-message {
+  @extend .text-center;
+  color: $color-text-secondary;
 }
