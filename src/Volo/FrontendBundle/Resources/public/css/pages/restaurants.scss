@@ -4,22 +4,16 @@
 
 .hero-restaurant {
   width: 100%;
-  height: 220px;
-  line-height: 220px;
+  @include centerTextVerticallyByHeight(220px);
   text-align: center;
-  margin-bottom: 29px;
-  background-image: url("#{$imagepath}hero_banners/hero_restaurant.jpg");
+  margin: 0 0 $grid-gutter-width 0;
+  background-image: url($hero-restaurant-img);
   background-position: center top;
   background-size: cover;
   color: $color-text-selection;
+  font-size: 2em;
   @include set-default-gutter();
-  @include appear-from("screen-sm");
-  @include respond-from("screen-sm") {
-    font-size: 1.6em;
-  };
-  @include respond-from("screen-md") {
-    font-size: 2em;
-  };
+  @include appear-from("screen-md");
 }
 
 .restaurants {
@@ -32,34 +26,36 @@
   @include make-sm-column(6);
   @include make-md-column(4);
   @include make-lg-column(3);
-  padding-left: 0;
-  padding-right: 0;
-  text-align: center;
-  margin-bottom: 15px;
+  @include set-no-gutter();
+  text-align: left;
   @include respond-from("screen-sm") {
     @include set-default-gutter();
-    margin-bottom: 29px;
-  };
+    text-align: center;
+  }
 }
 
 .restaurants__item__wrapper {
-  height: 290px;
   overflow: hidden;
+  margin-bottom: $grid-gutter-width;
   @include respond-from("screen-sm") {
-    @include box-shadow($shadow-restaurant-item);
-    height: 280px;
-  };
-  @include respond-from("screen-lg") {
-    height: 245px;
-  };
+    padding-bottom: 12px;
+    border-radius: $border-radius-default;
+    background-color: $restaurant-bg-color;
+    box-shadow: $restaurant-box-shadow;
+
+    &:hover {
+      box-shadow: $restaurant-box-shadow-hover;
+      cursor: pointer;
+    }
+  }
 }
 
 .restaurants__item__wrapper__picture {
-  height: 60%;
+  height: 150px;
   overflow: hidden;
   @include respond-from("screen-sm") {
     height: auto;
-  };
+  }
 
   img {
     @include responsive-img();
@@ -67,41 +63,47 @@
 }
 
 .restaurants__item__wrapper__name {
-  font-size: 1.3em;
+  font-size: $restaurant-font-size;
   color: $color-text-highlight;
-  margin: 15px 0 5px 0;
-  @include set-default-gutter();
-  line-height: normal;
   text-transform: uppercase;
-  @include respond-from("screen-sm") {
-    font-size: 1em;
-  };
+  margin: 10px 0 0 0;
+  @include set-default-gutter();
+  height: 20px;
+  line-height: 20px;
+  @include text-overflow();
 }
 
 .restaurants__item__wrapper__desc {
-  font-size: 0.75em;
-  margin: 0 auto;
-  line-height: normal;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 90%;
+  font-size: $restaurant-font-size;
+  margin: 0;
+  width: 57%;
+  float: left;
+  height: 20px;
+  @include text-overflow();
+  @include set-default-gutter();
   @include respond-from("screen-sm") {
-    font-size: 0.9em;
     width: auto;
-    @include set-default-gutter();
-  };
+    float: none;
+  }
 }
 
 .restaurants__item__wrapper__time {
-//  &:extend(.restaurants__item__desc);
-  margin: 5px 0 0 0;
-  font-weight: normal;
-  padding-bottom: 15px;
+  @include text-overflow();
+  @include set-default-gutter();
+  font-size: $restaurant-font-size;
+  margin: 0;
+  height: 18px;
+  color: $color-text-secondary;
+  float: right;
+  @include respond-from("screen-sm") {
+    float: none;
+  }
+
+  .icon-delivery {
+    font-size: 1.25em;
+    height: 1.25em;
+    vertical-align: middle;
+    display: inline-block;
+  }
 }
 
-.restaurants__item__wrapper__time__icon {
-  @include retina-sprite($icon-delivery-group);
-  display: inline-block;
-  vertical-align: middle;
-}

@@ -25,8 +25,8 @@ li {
   padding-right: 0;
   max-width: $screen-lg-min;
   @include respond-from("screen-sm") {
-    padding-left:  $grid-gutter-width;
-    padding-right: $grid-gutter-width;
+    padding-left:  $grid-gutter-width / 2;
+    padding-right: $grid-gutter-width / 2;
   };
 }
 

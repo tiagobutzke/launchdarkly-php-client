@@ -16,7 +16,7 @@ $screen-xs-min:              $screen-xs;
 // Small screen / tablet
 //** Deprecated `$screen-sm` as of v3.0.1
 //$screen-sm:                  768px;
-$screen-sm:                  590px;
+$screen-sm:                  500px;
 $screen-sm-min:              $screen-sm;
 
 
@@ -41,7 +41,7 @@ $screen-lg-min:              $screen-lg;
 //** Number of columns in the grid.
 $grid-columns:              12;
 //** Padding between columns. Gets divided in half for the left and right.
-$grid-gutter-width:         30px;
+$grid-gutter-width:         20px;
 // Navbar collapse
 //** Point at which the navbar becomes uncollapsed.
 $grid-float-breakpoint:     $screen-sm-min;
