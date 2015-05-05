@@ -2,8 +2,6 @@
 
 namespace Foodpanda\ApiSdk\Provider;
 
-use GuzzleHttp\Exception\ClientException;
-
 class CartProvider extends AbstractProvider
 {
     /**
@@ -20,12 +18,6 @@ class CartProvider extends AbstractProvider
 
         $this->client->attachAuthenticationDataToRequest($request, $accessToken);
 
-        try {
-            $data = $this->client->send($request)['data'];
-        } catch (ClientException $e) {
-            $data = (string) $e->getResponse()->getBody();
-        }
-
-        return json_decode($data, true);
+        return $this->client->send($request)['data'];
     }
 }

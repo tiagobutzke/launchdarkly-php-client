@@ -46,6 +46,14 @@ class MockHandlerCallable
             return ['status' => 200, 'body' => $this->loadDataFromFile('get-vendor_id_684_products.json')];
         }
         if (strpos($request['uri'], '/orders/calculate') !== false && $request['http_method'] === 'POST') {
+            $cart = json_decode($request['body'], true);
+            if (!in_array($cart['expeditionType'], ['delivery', 'pickup'], true)) {
+                return ['status' => 400, 'body' => $this->loadDataFromFile('post-orders-calculate_error_message.json')];
+            }
+            if (isset($cart['location']['area_id']) && 0 === $cart['location']['area_id']) {
+                return ['status' => 400, 'body' => $this->loadDataFromFile('post-orders-calculate_wrong-request.json')];
+            }
+
             return ['status' => 200, 'body' => $this->loadDataFromFile('post-orders-calculate.json')];
         }
         if (strpos(
@@ -55,9 +63,6 @@ class MockHandlerCallable
         ) {
             return ['status' => 200, 'body' => $this->loadDataFromFile('get-vendor_id_684_products.json')];
         }
-        if (strpos($request['uri'], '/orders/calculate') !== false && $request['http_method'] === 'POST') {
-            return ['status' => 200, 'body' => $this->loadDataFromFile('post-orders-calculate.json')];
-        }
         if (strpos($request['uri'], '/customers/create_guest') !== false && $request['http_method'] === 'POST') {
             $response = $this->loadDataFromFile('post-customers_create_guest.json');
 
@@ -65,9 +70,6 @@ class MockHandlerCallable
         }
         if (strpos($request['url'], '/vendors/684?include=products&include=product_variations') !== false && $request['http_method'] === 'GET') {
             return ['status' => 200, 'body' => $this->loadDataFromFile('get-vendor_id_684_products.json')];
-        }
-        if (strpos($request['uri'], '/orders/calculate') !== false && $request['http_method'] === 'POST') {
-            return ['status' => 200, 'body' => $this->loadDataFromFile('post-orders-calculate.json')];
         }
         if (strpos($request['uri'], '/vendors') !== false && $request['http_method'] === 'GET') {
             return ['status' => 200, 'body' => $this->loadDataFromFile('get-vendors_area_148.json')];

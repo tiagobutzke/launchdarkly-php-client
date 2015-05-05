@@ -2,27 +2,46 @@
 
 namespace Volo\FrontendBundle\Controller;
 
+use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Validator\Validator;
+use Volo\FrontendBundle\Http\JsonErrorResponse;
 
+/**
+ * @Route("/cart")
+ */
 class CartController extends Controller
 {
     /**
-     * @Route("/cart/calculate", name="cart_calculate", methods={"POST"}, defaults={"_format": "json"})
+     * @Route("/calculate", name="cart_calculate", methods={"POST"}, defaults={"_format": "json"})
+     * @param Request $request
+     *
+     * @return JsonResponse
      */
     public function calculateAction(Request $request)
     {
-        $data = json_decode($request->getContent(), true);
+        $content = $request->getContent();
 
-        if (!is_array($data)) {
-            throw new HttpException(500);
+        if('' === $content){
+            throw new BadRequestHttpException('Content is empty.');
         }
 
-        $apiResult = $this->get('volo_frontend.service.cart_manager')->calculate($data);
+        $data = json_decode($content, true);
 
-        return new Response(json_encode($apiResult['data']), $apiResult['status_code']);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new BadRequestHttpException('Content is not a valid json.');
+        }
+
+        try {
+            $apiResult = $this->get('volo_frontend.service.cart_manager')->calculate($data);
+        } catch (ApiErrorException $e) {
+            return new JsonErrorResponse($e);
+        }
+
+        return new JsonResponse($apiResult);
     }
 }
