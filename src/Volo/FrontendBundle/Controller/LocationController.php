@@ -16,8 +16,7 @@ class LocationController extends Controller
     public function cityAction($id)
     {
         $city    = $this->get('volo_frontend.provider.city')->find($id);
-        $areas   = $this->get('volo_frontend.provider.area')->findByCity($id);
-        $vendors = $this->get('volo_frontend.provider.vendor')->findVendorsByArea($areas->getItems()->first());
+        $vendors = $this->get('volo_frontend.provider.vendor')->findVendorsByCity($city);
 
         /** @var Vendor[] $openVendors */
         $openVendors = $vendors->getItems()->filter(function (Vendor $vendor) {
