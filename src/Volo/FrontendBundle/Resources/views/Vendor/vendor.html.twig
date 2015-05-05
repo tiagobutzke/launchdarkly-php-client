@@ -4,11 +4,11 @@
 
 {% block content %}
 
-<div class="menu-wrapper--screen-md">
-    <div class="menu-wrapper">
-        <div class="bg-wrapper">
+<div class="menu--fluid-container">
+    <div class="menu-wrapper--row">
+        <div class="bg-wrapper--column">
             <div class="bg-wrapper--row">
-                <div class="menu-categories">
+                <div class="menu-categories menu-categories--column">
                     <nav class="menu-categories__nav">
                         <ul>
                             {% for menuCategory in vendor.menus.first.getMenuCategories() %}
@@ -21,19 +21,19 @@
                         </ul>
                     </nav>
                 </div>
-                <div class="menu">
+                <div class="menu menu--column">
                     {% for menuCategory in vendor.menus.first.getMenuCategories() %}
                         <h3 class="menu__category-name" id="menu__category-id-{{ menuCategory.getId() }}">{{ menuCategory.getName() }}</h3>
                         {% for product in menuCategory.getProducts() %}
                             <div class="menu__product-wrapper">
-                                <div class="menu__product-name">
+                                <div class="menu__product-name--column">
                                     {{ product.getName() }}
                                 </div>
-                                <div class="menu__product-price">
+                                <div class="menu__product-price menu__product-price--column">
                                     <span class="menu__items__product__price">{{ product.getProductVariations().first().getPrice()|number_format }}</span>
                                     <span class="menu__items__product__price-currency">&euro;</span>
                                 </div>
-                                <div class="menu__product-description">
+                                <div class="menu__product-description menu__product-description--column">
                                     <span>{{ product.getDescription() }}</span>
                                 </div>
                             </div>
@@ -42,10 +42,10 @@
                 </div>
             </div>
         </div>
-        <div class="menu-cart">
+        <div class="menu-cart menu-cart--column">
             <!-- Cart Delivery Options -->
             <h3 class="menu-cart__headline">Delivery Time</h3>
-            <div class="delivery-time">
+            <div class="delivery-time delivery-time--row">
                 <div class="delivery-time__column">
                     <select id="order-delivery-time" class="form-control delivery-time__select">
                         <option selected="selected" value="2015-05-14">Today, May 14</option>

@@ -2,13 +2,13 @@
 * restaurant-page declarations
 */
 
-.menu-wrapper--screen-md {
+.menu--fluid-container {
   @include respond-from("screen-md") {
     @include fluid-container();
   }
 }
 
-.menu-wrapper {
+.menu-wrapper--row {
   @include respond-from("screen-md") {
     @include make-row();
   }
@@ -22,7 +22,7 @@
   background: $color-bg-secondary;
 }
 
-.bg-wrapper {
+.bg-wrapper--column{
   background: $color-bg-primary;
   @include respond-from("screen-md") {
     @include make-md-column(8);
@@ -40,6 +40,9 @@
 //menu
 .menu {
   background: $color-bg-primary;
+}
+
+.menu--column {
   @include respond-from("screen-md") {
     @include make-md-column(12);
     @include make-lg-column(9);
@@ -72,25 +75,33 @@
   }
 }
 
-.menu__product-name {
+.menu__product-name--column {
   @include make-xs-column(8);
 }
 
 .menu__product-price {
-  @include make-xs-column(4);
   @extend .text-right;
 }
 
+.menu__product-price--column {
+  @include make-xs-column(4);
+}
+
 .menu__product-description {
-  @include make-xs-column(12);
   color: $color-text-secondary;
 }
 
+.menu__product-description--column {
+  @include make-xs-column(12);
+}
 
 //category
 .menu-categories {
-  @include appear-from("screen-lg");
   background: $color-bg-primary;
+}
+
+.menu-categories--column {
+  @include appear-from("screen-lg");
   @include make-lg-column(3);
 }
 
@@ -103,15 +114,16 @@
 }
 
 //cart
-.menu-cart {
+.menu-cart--column {
   @include appear-from("screen-md");
   @include make-md-column(4);
   @include make-lg-column(3);
 }
 
-.delivery-time {
+.delivery-time--row {
   @include make-row();
 }
+
 .delivery-time__column {
   @include make-xs-column(6);
 }
