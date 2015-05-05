@@ -48,7 +48,7 @@ module.exports = function (grunt) {
         'web/bundles/heltheturbolinks/js/jquery.turbolinks.js',
         'web/bundles/heltheturbolinks/js/turbolinks.js',
         'bower_components/blazy/blazy.js',
-        frontendAssetPath('/js/main.js'),
+        frontendAssetPath('/js/**/*.js')
     ];
 
     var sprite = {
@@ -118,7 +118,7 @@ module.exports = function (grunt) {
                 'bower_components/jquery/dist/jquery.js',
                 'web/bundles/heltheturbolinks/js/jquery.turbolinks.js',
                 'web/bundles/heltheturbolinks/js/turbolinks.js',
-                'bower_components/blazy/blazy.js',
+                'bower_components/blazy/blazy.js'
             ]
         },
         gruntfile: {
@@ -135,7 +135,7 @@ module.exports = function (grunt) {
         },
         sprite: {
             files: [
-                '<%= sprite.spritesheet.src %>',
+                '<%= sprite.spritesheet.src %>'
             ],
             tasks: ['sprite']
         },
@@ -160,6 +160,21 @@ module.exports = function (grunt) {
         }
     };
 
+
+    config.jasmine = {
+        src: "src/Volo/FrontendBundle/Resources/public/js/**/*.js",
+        options: {
+            specs: "spec/**/*Spec.js",
+            vendor: [
+                'build/bower/lodash/lodash.js',
+                'build/bower/jquery/jquery.js',
+                'build/bower/blazy/blazy.js',
+                'vendor/helthe/turbolinks/Resources/public/js/jquery.turbolinks.js',
+                'vendor/helthe/turbolinks/Resources/public/js/turbolinks.js'
+            ]
+        }
+    };
+
     grunt.initConfig(config);
 
     grunt.loadNpmTasks('grunt-contrib-sass');
@@ -168,8 +183,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-spritesmith');
     grunt.loadNpmTasks('grunt-bower-task');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
 
     // grunt additional tasks
     grunt.registerTask('default', ['bower:install', 'sprite', 'sass', 'uglify', 'jshint']);
     grunt.registerTask('deploy', ['bower:install', 'sprite', 'sass', 'uglify']);
+    grunt.registerTask('test', ['jshint', 'jasmine']);
 };
