@@ -3697,7 +3697,28 @@
         "type": "delivery"
       }
     ],
-    "discounts": [],
+    "discounts": [
+      {
+        "id": 318,
+        "name": "\u0421\u043a\u0438\u0434\u043a\u0430 \u043d\u0430 \u0432\u0441\u0435 \u043c\u0435\u043d\u044e 30%!",
+        "description": null,
+        "start_date": "2015-03-12",
+        "end_date": "2015-12-31",
+        "opening_time": "0:00",
+        "closing_time": "23:59",
+        "condition_type": "vendor",
+        "condition_object": 1508,
+        "minimum_order_value": 0,
+        "discount_type": "percentage",
+        "discount_amount": 30,
+        "bogo_discount_unit": "amount",
+        "discount_text": null,
+        "vendor_id": 1508,
+        "promotional_limit": 0,
+        "file_name": "http:\/\/ir0.mobify.com\/jpg\/%s\/%s\/http:\/\/assets.foodpanda.kz\/images\/discounts\/318_1426135107.jpg",
+        "bogo_product_blocks": []
+      }
+    ],
     "metadata": {
       "is_delivery_available": true,
       "is_pickup_available": true,

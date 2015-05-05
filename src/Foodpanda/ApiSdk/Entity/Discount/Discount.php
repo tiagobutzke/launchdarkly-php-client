@@ -28,11 +28,25 @@ class Discount extends DataObject
      */
     protected $start_date;
 
-
     /**
      * @var DateTime
      */
     protected $end_date;
+
+    /**
+     * @var string
+     */
+    protected $opening_time;
+
+    /**
+     * @var string
+     */
+    protected $closing_time;
+
+    /**
+     * @var string
+     */
+    protected $promotional_limit;
 
     /**
      * @var string
@@ -207,5 +221,29 @@ class Discount extends DataObject
     public function getBogoProductBlocks()
     {
         return $this->bogo_product_blocks;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOpeningTime()
+    {
+        return $this->opening_time;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClosingTime()
+    {
+        return $this->closing_time;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPromotionalLimit()
+    {
+        return $this->promotional_limit;
     }
 }
