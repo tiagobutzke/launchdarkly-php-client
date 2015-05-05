@@ -18,13 +18,22 @@
 }
 // ----------------------- GUTTER END ---------------------------
 
-// ----------------------- TEXT OVERFLOW START ---------------------------
+// ----------------------- TEXT START ---------------------------
 @mixin text-overflow() {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-// ----------------------- TEXT OVERFLOW END ---------------------------
+
+@mixin make-link($color: $color-text-link, $color-hover:$color-text-link-hover) {
+  cursor: pointer;
+  color: $color;
+  &:hover, &:focus {
+    color: $color-hover;
+    text-decoration: none;
+  }
+};
+// ----------------------- TEXT END ---------------------------
 
 // ----------- CENTERS TEXT VERTICALLY BY A GIVEN HEIGHT START ----------
 @mixin centerTextVerticallyByHeight($height) {
@@ -32,6 +41,19 @@
   line-height: $height;
 }
 // ----------- CENTERS TEXT VERTICALLY BY A GIVEN HEIGHT END  ----------
+
+// ----------- BACKGROUND START  ----------
+@mixin linearGradient($top, $bottom){
+  background: $top; /* Old browsers */
+  background: -moz-linear-gradient(top,  $top 0%, $bottom 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$top), color-stop(100%,$bottom)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  $top 0%,$bottom 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  $top 0%,$bottom 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  $top 0%,$bottom 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  $top 0%,$bottom 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+}
+// ----------- BACKGROUND START  ----------
 
 // ----------- CENTERS ABSOLUTE POSITIONED BLOCK HORIZONTALLY AND VERTICALLY START ----------
 @mixin absolute-center-box {

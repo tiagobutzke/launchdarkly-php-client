@@ -2,10 +2,6 @@
 * variables declarations
 */
 
-// ----------------------- LAYOUT START -----------------------
-$header-height: 100px;
-// ----------------------- LAYOUT END -----------------------
-
 // ----------------------- FONTS START -----------------------
 $fontspath: "../../fonts/";
 
@@ -163,3 +159,9 @@ $restaurant-bg-color: #fff;
 $top-cart-height: 100px;
 // ----------------------- MENU END ------------------------
 
+// ----------------------- HEADER START ------------------------
+$header-height: 100px;
+$header-height-small: 55px;
+$header-background: $color-bg-primary;
+$link-color-bg-dark: #fff;
+// ----------------------- HEADER END ------------------------
