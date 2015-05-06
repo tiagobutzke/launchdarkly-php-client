@@ -39,9 +39,17 @@ doctrine_cache:
         translator_cache:
             namespace: %country_code%_%kernel.environment%_translator_cache
             type: php_file
+        configuration_cache:
+            namespace: %country_code%_%kernel.environment%_configuration_cache
+            type: file_system
 
 foodpanda_web_translate_it:
     base_url: %foodpanda_web_translate_it_base_url%
     public_api_key: %foodpanda_web_translate_it_public_api_key%
     private_api_key: %foodpanda_web_translate_it_private_api_key%
     main_translation_label: %foodpanda_web_translate_it_main_translation_label%
+
+volo_frontend:
+    api:
+        configuration:
+            life_time: %volo_frontend_configuration_cache_life_time%

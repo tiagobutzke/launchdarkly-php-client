@@ -25,3 +25,8 @@ monolog:
             level:    debug
         console:
             type:  console
+
+doctrine_cache:
+    providers:
+        configuration_cache:
+            type: apc
