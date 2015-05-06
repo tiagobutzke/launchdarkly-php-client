@@ -3,13 +3,22 @@
 {% block content_wrapper_class %}menu-bg{% endblock content_wrapper_class %}
 
 {% block content %}
-
-<div class="menu--fluid-container">
-    <div class="menu-wrapper--row">
-        <div class="bg-wrapper--column">
-            <div class="bg-wrapper--row">
-                <div class="menu-categories menu-categories--column">
-                    <nav class="menu-categories__nav">
+<div class="top-cart">
+    <div class="top-cart__wrapper">
+        <div class="top-cart__info">
+            grgrgr
+        </div>
+        <div class="top-cart__extra-fee">
+            Delivery fee added to your final order  <span>5,00 &euro;</span>
+        </div>
+    </div>
+</div>
+<div class="wrapper-fluid">
+    <div class="menu">
+        <div class="menu__main">
+            <div class="menu__main__list">
+                <div class="menu__main__list__categories">
+                    <nav>
                         <ul>
                             {% for menuCategory in vendor.menus.first.getMenuCategories() %}
                                 <li>
@@ -21,20 +30,20 @@
                         </ul>
                     </nav>
                 </div>
-                <div class="menu menu--column">
+                <div class="menu__main__list__items">
                     {% for menuCategory in vendor.menus.first.getMenuCategories() %}
-                        <h3 class="menu__category-name" id="menu__category-id-{{ menuCategory.getId() }}">{{ menuCategory.getName() }}</h3>
+                        <h3 class="menu__main__list__items__title" id="menu__category-id-{{ menuCategory.getId() }}">{{ menuCategory.getName() }}</h3>
                         {% for product in menuCategory.getProducts() %}
-                            <div class="menu__product-wrapper">
-                                <div class="menu__product-name--column">
+                            <div class="menu__main__list__items__item">
+                                <div class="menu__main__list__items__item__name">
                                     {{ product.getName() }}
                                 </div>
-                                <div class="menu__product-price menu__product-price--column">
-                                    <span class="menu__items__product__price">{{ product.getProductVariations().first().getPrice()|number_format }}</span>
-                                    <span class="menu__items__product__price-currency">&euro;</span>
+                                <div class="menu__main__list__items__item__price">
+                                    {{ product.getProductVariations().first().getPrice()|number_format }} &euro;
                                 </div>
-                                <div class="menu__product-description menu__product-description--column">
-                                    <span>{{ product.getDescription() }}</span>
+                                <div class="menu__main__list__items__item__description">
+                                    {{ product.getDescription() }}
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit Est expedita possimus quam quos ratione rem vitae.
                                 </div>
                             </div>
                         {% endfor %}
@@ -42,19 +51,19 @@
                 </div>
             </div>
         </div>
-        <div class="menu-cart menu-cart--column">
+        <div class="menu__desktop-cart">
             <!-- Cart Delivery Options -->
-            <h3 class="menu-cart__headline">Delivery Time</h3>
-            <div class="delivery-time delivery-time--row">
-                <div class="delivery-time__column">
-                    <select id="order-delivery-time" class="form-control delivery-time__select">
+            <h3 class="menu__desktop-cart__title">Delivery Time</h3>
+            <div class="menu__desktop-cart__time">
+                <div class="menu__desktop-cart__time__field">
+                    <select id="order-delivery-time">
                         <option selected="selected" value="2015-05-14">Today, May 14</option>
                         <option value="2015-05-15">Tomorrow, May 15</option>
                         <option value="2015-05-16">Friday, May 16</option>
                     </select>
                 </div>
-                <div class="delivery-time__column">
-                    <select id="order-delivery-time" class="form-control delivery-time__select">
+                <div class="menu__desktop-cart__time__field">
+                    <select id="order-delivery-time2">
                         <option selected="selected" value="17:00">17:00 - 18:00</option>
                         <option value="18:00">18:00 - 19:00</option>
                         <option value="19:00">19:00 - 20:00</option>
@@ -62,13 +71,21 @@
                 </div>
             </div>
             <!-- Actual Cart -->
-            <div class="order">
-                <h3 class="menu-cart__headline">My Order</h3>
-                <p class="order__empty-message">
+            <h3 class="menu__desktop-cart__title">My Order</h3>
+            <div class="menu__desktop-cart__order">
+                <p class="menu__desktop-cart_order__message">
                     {{ 'You haven’t added anything to the cart yet! Add items by clicking on a menu item.'|trans }}
                 </p>
+                <div class="menu__desktop-cart__order__total">
+                    Subtotal <span class="menu__desktop-cart__order__total__price">0,00 &euro;</span>
+                </div>
+                <div class="menu__desktop-cart__order__extra-fee">
+                    Delivery <span>0,00 &euro;</span>
+                </div>
+                <div class="menu__desktop-cart__order__total">
+                    Total <span class="menu__desktop-cart__order__total__price">0,00 &euro;</span>
+                </div>
             </div>
-
         </div>
     </div>
 </div>

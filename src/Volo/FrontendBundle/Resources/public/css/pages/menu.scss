@@ -1,55 +1,95 @@
 /*
-* restaurant-page declarations
+* menu-page declarations
 */
-
-.menu--fluid-container {
-  @include respond-from("screen-md") {
-    @include fluid-container();
-  }
-}
-
-.menu-wrapper--row {
-  @include respond-from("screen-md") {
-    @include make-row();
-  }
-}
-
-.menu_items, .menu_categories {
-  background-color: $color-bg-primary;
-}
 
 .menu-bg {
   background: $color-bg-secondary;
 }
 
-.bg-wrapper--column{
-  background: $color-bg-primary;
+//mobile top cart
+
+.top-cart {
+  width: 100%;
+  position: fixed;
+  top: $header-height;
+  left: 0;
+  height: $top-cart-height;
+  background-color: $color-bg-primary;
+  z-index: $zindex-navbar-fixed;
+  border-top: 1px solid #b2b2b2;
+  box-shadow: 0px 1px 4px rgba(1, 1, 1, 0.2);
+  @include opacity(0.90);
+  @include respond-from("screen-md") {
+    display: none;
+  }
+}
+
+.top-cart__wrapper {
+  margin: 0;
+  @include set-default-gutter();
+}
+
+.top-cart__info {
+  height: $top-cart-height / 2;
+}
+
+.top-cart__extra-fee {
+  height: $top-cart-height / 2;
+  background: $color-bg-secondary;
+  border-top: 1px solid #e6e1d7;
+  @include centerTextVerticallyByHeight($top-cart-height / 2);
+
+  span {
+    @extend .menu__desktop-cart__order__total__price;
+  }
+}
+
+.menu {
+  margin-top: $top-cart-height +  $grid-gutter-width / 2;
+  @include respond-from("screen-md") {
+    @include make-row();
+    margin-top: 0;
+  }
+}
+
+.menu__main {
+  background-color: $color-bg-primary;
   @include respond-from("screen-md") {
     @include make-md-column(8);
     @include make-lg-column(9);
   }
 }
 
-.bg-wrapper--row {
+.menu__main__list {
   @include respond-from("screen-md") {
     @include make-row();
   }
 }
 
+//category
 
-//menu
-.menu {
-  background: $color-bg-primary;
+.menu__main__list__categories  {
+  @include appear-from("screen-lg");
+  @include make-lg-column(3);
+
+  nav {
+    padding-top: 37px;
+  }
+  a {
+     color: $color-text-primary;
+   }
 }
 
-.menu--column {
+//menu items
+
+.menu__main__list__items  {
   @include respond-from("screen-md") {
     @include make-md-column(12);
     @include make-lg-column(9);
   }
 }
 
-.menu__category-name {
+.menu__main__list__items__title {
   font-family: $bold-font-family;
   font-size: 0.750em;
   font-weight: bold;
@@ -63,7 +103,7 @@
   }
 }
 
-.menu__product-wrapper {
+.menu__main__list__items__item {
   @include clearfix;
   border-bottom: $base-border;
   line-height: 1.3em;
@@ -75,64 +115,29 @@
   }
 }
 
-.menu__product-name--column {
+.menu__main__list__items__item__name {
   @include make-xs-column(8);
 }
 
-.menu__product-price {
+.menu__main__list__items__item__price {
+  @include make-xs-column(4);
   @extend .text-right;
 }
 
-.menu__product-price--column {
-  @include make-xs-column(4);
-}
-
-.menu__product-description {
+.menu__main__list__items__item__description {
+  @include make-xs-column(8);
   color: $color-text-secondary;
 }
 
-.menu__product-description--column {
-  @include make-xs-column(12);
-}
+//desktop cart
 
-//category
-.menu-categories {
-  background: $color-bg-primary;
-}
-
-.menu-categories--column {
-  @include appear-from("screen-lg");
-  @include make-lg-column(3);
-}
-
-.menu-categories__nav {
-  padding-top: 37px;
-}
-
-.menu-categories__nav a {
-  color: $color-text-primary;
-}
-
-//cart
-.menu-cart--column {
+.menu__desktop-cart {
   @include appear-from("screen-md");
   @include make-md-column(4);
   @include make-lg-column(3);
 }
 
-.delivery-time--row {
-  @include make-row();
-}
-
-.delivery-time__column {
-  @include make-xs-column(6);
-}
-
-.delivery-time__column select {
-  width: 100%;
-}
-
-.menu-cart__headline {
+.menu__desktop-cart__title {
   font-family: $bold-font-family;
   font-size: 0.750em;
   font-weight: bold;
@@ -143,10 +148,39 @@
   }
 }
 
-.order {
+.menu__desktop-cart__time {
+  @include make-row();
+}
+
+.menu__desktop-cart__time__field {
+  @include make-xs-column(6);
+  select {
+    @extend .form-control;
+  }
+}
+
+.menu__desktop-cart__order {
   margin-top: $space-lg;
 }
-.order__empty-message {
+.menu__desktop-cart_order__message {
   @extend .text-center;
   color: $color-text-secondary;
+}
+
+.menu__desktop-cart__order__total {
+  padding-top: $space-lg;
+  border-top:  $base-border;
+}
+
+.menu__desktop-cart__order__total__price {
+  display: inline-block;
+  float: right;
+}
+
+.menu__desktop-cart__order__extra-fee {
+  color: $color-text-secondary;
+  padding-bottom: $space-md;
+  span {
+    @extend .menu__desktop-cart__order__total__price;
+  }
 }

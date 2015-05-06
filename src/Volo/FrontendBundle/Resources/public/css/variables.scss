@@ -145,11 +145,15 @@ $dropdown-padding-right: 12px;
 // ----------------------- HOMEPAGE START ----------------------
 // ----------------------- HOMEPAGE END ------------------------
 
-// ----------------------- RESTAURANT LIST  END ------------------------
+// ----------------------- RESTAURANT LIST START ------------------------
 $hero-restaurant-img: "#{$imagepath}hero_banners/hero_restaurant.jpg";
 $restaurant-font-size: 0.875em;
 $restaurant-box-shadow: 0px 1px 2px 0px rgba(1,1,1,0.2);
 $restaurant-box-shadow-hover: 0px 1px 7px 1px rgba(1,1,1,0.2);
 $restaurant-bg-color: #fff;
 // ----------------------- RESTAURANT LIST END ------------------------
+
+// ----------------------- MENU START ------------------------
+$top-cart-height: 100px;
+// ----------------------- MENU END ------------------------
 
