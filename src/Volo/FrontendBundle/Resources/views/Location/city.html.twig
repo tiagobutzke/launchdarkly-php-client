@@ -2,7 +2,6 @@
 {% use 'VoloFrontendBundle:Location:Partial/vendor_description.html.twig' %}
 
 {% block content %}
-
     <h1 class="hero-restaurant">{{ 'The Best of Berlin. Brought to your doorstep.'|trans }}</h1>
     <div class="wrapper-fluid">
         <h1 class="hide">{{ city.name|e }}</h1>
@@ -12,7 +11,6 @@
                 {{ block('vendor_description') }}
             {% endfor %}
         </div>
-
         <div class="restaurants">
             {% for vendor in closedVendors %}
                 {{ block('vendor_description') }}
