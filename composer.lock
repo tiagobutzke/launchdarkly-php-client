@@ -4,20 +4,20 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7e2ed213f2925f4301cb2aaa412dfc77",
+    "hash": "b38e6554c50f2b968be1ca211f51d788",
     "packages": [
         {
             "name": "commerceguys/guzzle-oauth2-plugin",
-            "version": "v2.0.1",
+            "version": "v2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/commerceguys/guzzle-oauth2-plugin.git",
-                "reference": "663ba6c893a4b097205257089d2a18b6918e0700"
+                "reference": "7e50166335b382d8b9ab1ceea62056ea3dd1fc09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/commerceguys/guzzle-oauth2-plugin/zipball/663ba6c893a4b097205257089d2a18b6918e0700",
-                "reference": "663ba6c893a4b097205257089d2a18b6918e0700",
+                "url": "https://api.github.com/repos/commerceguys/guzzle-oauth2-plugin/zipball/7e50166335b382d8b9ab1ceea62056ea3dd1fc09",
+                "reference": "7e50166335b382d8b9ab1ceea62056ea3dd1fc09",
                 "shasum": ""
             },
             "require": {
@@ -47,8 +47,8 @@
                     "name": "Patrick Dawkins"
                 }
             ],
-            "description": "An OAuth2 plugin (subscriber) for Guzzle 5.x",
-            "time": "2015-03-26 10:17:50"
+            "description": "An OAuth2 plugin (subscriber) for Guzzle",
+            "time": "2015-05-05 09:51:27"
         },
         {
             "name": "doctrine/annotations",
