@@ -27,15 +27,15 @@
 
 @mixin appear-from($breakpoint) {
   @if $breakpoint == "screen-sm" {
-    @media (max-width: $screen-sm-min) {
+    @media (max-width: $screen-sm-min - 1) {
       display: none !important;
     }
   } @else if $breakpoint == "screen-md" {
-    @media (max-width: $screen-md-min) {
+    @media (max-width: $screen-md-min - 1) {
       display: none !important;
     }
   } @else if $breakpoint == "screen-lg" {
-    @media (max-width: $screen-lg-min) {
+    @media (max-width: $screen-lg-min - 1) {
       display: none !important;
     }
   }
