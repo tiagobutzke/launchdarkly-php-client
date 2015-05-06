@@ -19,8 +19,10 @@ class FoodpandaClient extends Client
      *
      * @return array
      *
-     * @throw ApiException
-     * @throw ParseException
+     * @throws ParseException
+     * @throws ValidationEntityException
+     * @throws ApiErrorException
+     * @throws ApiException
      */
     public function send(RequestInterface $request)
     {
@@ -68,7 +70,7 @@ class FoodpandaClient extends Client
         if (array_key_exists('error', $body) && array_key_exists('error_description', $body)) {
             $errorMessage = sprintf('%s: %s', $body['error'], $body['error_description']);
 
-            throw new ApiErrorException($errorMessage, $exception->getRequest(), $exception->getResponse());
+            throw new ApiException($errorMessage, $exception->getRequest(), $exception->getResponse());
         }
 
         if (array_key_exists('data', $body)
@@ -76,8 +78,9 @@ class FoodpandaClient extends Client
             && array_key_exists('message', $body['data'])
         ) {
             $errorMessage = sprintf('%s: %s', $body['data']['exception_type'], $body['data']['message']);
+            $jsonErrorMessage = (string) $exception->getResponse()->getBody();
 
-            throw new ApiException($errorMessage, $exception->getRequest(), $exception->getResponse());
+            throw new ApiErrorException($errorMessage, $jsonErrorMessage, $exception->getRequest(), $exception->getResponse());
         }
 
         if (array_key_exists('data', $body)
@@ -85,9 +88,10 @@ class FoodpandaClient extends Client
             && $exception->getResponse()
             && $exception->getResponse()->getStatusCode() === 400
         ) {
-            $errorMessage = json_encode(json_decode($exception->getResponse()->getBody()), JSON_PRETTY_PRINT);
+            $errorMessage = 'Validation failed.';
+            $jsonErrorMessage = (string) $exception->getResponse()->getBody();
 
-            throw new ValidationEntityException($errorMessage, $exception->getRequest(), $exception->getResponse());
+            throw new ValidationEntityException($errorMessage, $jsonErrorMessage, $exception->getRequest(), $exception->getResponse());
         }
 
         throw $exception;

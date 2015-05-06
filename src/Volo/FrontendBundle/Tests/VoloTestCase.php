@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class VoloTestCase extends WebTestCase
 {
     /**
-     * @var \Symfony\Bundle\FrameworkBundle\Client
+     * @var Client
      */
     protected $client;
 
@@ -59,10 +59,27 @@ abstract class VoloTestCase extends WebTestCase
             $title = $e->getMessage();
         }
 
+        $message = $this->formatErrorMessage($response, $title);
         if ($success) {
-            $this->assertTrue($response->isSuccessful(), 'The Response was not successful: '.$title);
+            $this->assertTrue($response->isSuccessful(), 'The Response was not successful: ' . $message);
         } else {
-            $this->assertFalse($response->isSuccessful(), 'The Response was successful: '.$title);
+
+            $this->assertFalse($response->isSuccessful(), 'The Response was not successful: ' . $message);
         }
+    }
+
+    /**
+     * @param $response
+     * @param $title
+     * @return string
+     */
+    protected function formatErrorMessage(Response $response, $title)
+    {
+        $message = $title;
+        if ($response->headers->get('Content-Type') === 'application/json') {
+            $message = json_encode(json_decode($response->getContent()), JSON_PRETTY_PRINT);
+        }
+
+        return $message;
     }
 }

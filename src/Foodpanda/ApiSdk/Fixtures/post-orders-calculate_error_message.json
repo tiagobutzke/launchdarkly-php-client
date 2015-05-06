@@ -1,0 +1,11 @@
+{
+  "status_code": 400,
+  "data": {
+    "items": [
+      {
+        "field_name": "expedition_type",
+        "violation_messages": ["This value is not a valid option"]
+      }
+    ]
+  }
+}
