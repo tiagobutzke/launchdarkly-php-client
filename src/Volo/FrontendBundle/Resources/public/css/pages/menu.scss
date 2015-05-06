@@ -16,31 +16,63 @@
   height: $top-cart-height;
   background-color: $color-bg-primary;
   z-index: $zindex-navbar-fixed;
-  border-top: 1px solid #b2b2b2;
+  border-top: 1px solid #e6e1d7;
   box-shadow: 0px 1px 4px rgba(1, 1, 1, 0.2);
+  font-size: 0.875em;
   @include opacity(0.90);
   @include respond-from("screen-md") {
     display: none;
   }
 }
 
-.top-cart__wrapper {
-  margin: 0;
-  @include set-default-gutter();
-}
-
 .top-cart__info {
+  @include make-xs-column(12);
   height: $top-cart-height / 2;
+  @extend .text-center;
+
+  h3 {
+    width: 80%;
+    margin: 0 auto;
+    @include centerTextVerticallyByHeight($top-cart-height / 2);
+    @include text-overflow();
+    font-size: 1.125em;
+    text-transform: uppercase;
+  }
 }
 
 .top-cart__extra-fee {
+  @include make-xs-column(12);
   height: $top-cart-height / 2;
   background: $color-bg-secondary;
   border-top: 1px solid #e6e1d7;
   @include centerTextVerticallyByHeight($top-cart-height / 2);
 
   span {
-    @extend .menu__desktop-cart__order__total__price;
+    @extend .desktop-cart__order__total__price;
+  }
+}
+
+//mobile bottom cart
+
+.bottom-cart {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: $top-cart-height / 2;
+  background-color: $color-bg-text-selection;
+  z-index: $zindex-navbar-fixed;
+  color: $color-text-selection;
+  @include respond-from("screen-md") {
+    display: none;
+  }
+}
+
+// main content
+
+.menu-wrapper {
+  @include respond-from("screen-md") {
+    @include fluid-container();
   }
 }
 
@@ -68,7 +100,7 @@
 
 //category
 
-.menu__main__list__categories  {
+.menu__categories  {
   @include appear-from("screen-lg");
   @include make-lg-column(3);
 
@@ -82,14 +114,14 @@
 
 //menu items
 
-.menu__main__list__items  {
+.menu__items  {
   @include respond-from("screen-md") {
     @include make-md-column(12);
     @include make-lg-column(9);
   }
 }
 
-.menu__main__list__items__title {
+.menu__items__title {
   font-family: $bold-font-family;
   font-size: 0.750em;
   font-weight: bold;
@@ -103,7 +135,7 @@
   }
 }
 
-.menu__main__list__items__item {
+.menu__item {
   @include clearfix;
   border-bottom: $base-border;
   line-height: 1.3em;
@@ -115,29 +147,29 @@
   }
 }
 
-.menu__main__list__items__item__name {
+.menu__item__name {
   @include make-xs-column(8);
 }
 
-.menu__main__list__items__item__price {
+.menu__item__price {
   @include make-xs-column(4);
   @extend .text-right;
 }
 
-.menu__main__list__items__item__description {
+.menu__item__description {
   @include make-xs-column(8);
   color: $color-text-secondary;
 }
 
 //desktop cart
 
-.menu__desktop-cart {
+.desktop-cart {
   @include appear-from("screen-md");
   @include make-md-column(4);
   @include make-lg-column(3);
 }
 
-.menu__desktop-cart__title {
+.desktop-cart__title {
   font-family: $bold-font-family;
   font-size: 0.750em;
   font-weight: bold;
@@ -148,39 +180,39 @@
   }
 }
 
-.menu__desktop-cart__time {
+.desktop-cart__time {
   @include make-row();
 }
 
-.menu__desktop-cart__time__field {
+.desktop-cart__time__field {
   @include make-xs-column(6);
   select {
     @extend .form-control;
   }
 }
 
-.menu__desktop-cart__order {
+.desktop-cart__order {
   margin-top: $space-lg;
 }
-.menu__desktop-cart_order__message {
+.desktop-cart_order__message {
   @extend .text-center;
   color: $color-text-secondary;
 }
 
-.menu__desktop-cart__order__total {
+.desktop-cart__order__total {
   padding-top: $space-lg;
   border-top:  $base-border;
 }
 
-.menu__desktop-cart__order__total__price {
+.desktop-cart__order__total__price {
   display: inline-block;
   float: right;
 }
 
-.menu__desktop-cart__order__extra-fee {
+.desktop-cart__order__extra-fee {
   color: $color-text-secondary;
   padding-bottom: $space-md;
   span {
-    @extend .menu__desktop-cart__order__total__price;
+    @extend .desktop-cart__order__total__price;
   }
 }
