@@ -19,7 +19,9 @@
         "guzzlehttp/guzzle": "~5.0",
         "guzzlehttp/log-subscriber": "1.0.*",
         "commerceguys/guzzle-oauth2-plugin": "~2.0",
-        "helthe/turbolinks-bundle": "~1.1"
+        "helthe/turbolinks-bundle": "~1.1",
+        "foodpanda/translation-library": "~1.1",
+        "foodpanda/translation-bundle": "~1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
@@ -73,5 +75,15 @@
         "branch-alias": {
             "dev-master": "2.6-dev"
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/foodpanda/translation-library.git"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/foodpanda/translation-bundle.git"
+        }
+    ]
 }

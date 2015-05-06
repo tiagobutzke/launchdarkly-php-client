@@ -11,6 +11,7 @@
     <parameters>
         <parameter key="volo_frontend.security.authenticator.class">Volo\FrontendBundle\Security\ApiAuthenticator</parameter>
         <parameter key="volo_frontend.twig.cms_extension.class">Volo\FrontendBundle\Twig\CmsExtension</parameter>
+        <parameter key="doctrine_cache.php_file.class">Volo\FrontendBundle\Service\Provider\TranslatorCache</parameter>
     </parameters>
 
     <services>
@@ -26,5 +27,4 @@
             <tag name="twig.extension" />
         </service>
     </services>
-
 </container>

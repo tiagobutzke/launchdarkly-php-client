@@ -13,6 +13,7 @@
 /app/config/countries_parameters/*
 !/app/config/countries_parameters/test.yml
 
+/app/Resources/translations/*
 /.idea
 
 # nodejs

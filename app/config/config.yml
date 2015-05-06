@@ -4,7 +4,7 @@ imports:
 
 framework:
     #esi:             ~
-    #translator:      { fallbacks: ["%locale%"] }
+    translator:      { fallbacks: ["en"] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -33,3 +33,9 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
+
+doctrine_cache:
+    providers:
+        translator_cache:
+            namespace: %country_code%_%kernel.environment%_translator_cache
+            type: php_file

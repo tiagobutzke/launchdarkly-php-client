@@ -47,6 +47,7 @@ branches:
 script:
     - phpunit -c $TRAVIS_BUILD_DIR/app/
     - grunt test --env=prod
+    - app/console foodpanda:translations:sync
 
 notifications:
   slack:
