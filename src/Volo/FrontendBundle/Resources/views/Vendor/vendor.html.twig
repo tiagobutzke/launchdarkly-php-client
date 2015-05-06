@@ -5,13 +5,27 @@
 {% block content %}
 <div class="top-cart">
     <div class="top-cart__info">
-        <h3>User Name</h3>
+        <h3>Restaurant name</h3>
     </div>
     <div class="top-cart__extra-fee">
         Delivery fee added to your final order  <span>5,00 &euro;</span>
     </div>
 </div>
-<div class="bottom-cart"></div>
+<div class="hero-menu">
+    <div class="hero-menu__info">
+        <div class="hero-menu__info__img">
+            <img src="{{ asset('img/restaurant_logos/test.png') }}" alt=""/>
+        </div>
+        <div class="hero-menu__info__txt">
+            <h3>{{ vendor.name }} <span>{{ vendor.description|lower }}</span></h3>
+            <p>Closing in 10 min. <span>8:00 AM – 5:00 PM</span>
+            </p>
+           <p> <i class="icon-pin-map"></i> Alte Schönhauser Str. 46<br/>
+            <i class="icon-call-phone"></i> 030 9929 6924</p>
+        </div>
+    </div>
+    <img src="{{ asset('img/hero_banners/hero_banner_menu.jpg') }}" alt=""/>
+</div>
 <div class="menu-wrapper">
     <div class="menu">
         <div class="menu__main">
@@ -35,7 +49,7 @@
                         {% for product in menuCategory.getProducts() %}
                             <div class="menu__item">
                                 <div class="menu__item__name">
-                                    {{ product.getName() }}
+                                    {{ product.getName() }}<i class="icon-vegetarian"></i>
                                 </div>
                                 <div class="menu__item__price">
                                     {{ product.getProductVariations().first().getPrice()|number_format }} &euro;
@@ -48,12 +62,17 @@
                             </div>
                         {% endfor %}
                     {% endfor %}
+                    <div class="menu__icon-legend">
+                        <span><i class="icon-hot"></i>{{ 'Hot'|trans }}</span>
+                        <span><i class="icon-very-hot"></i>{{ 'Very hot'|trans }}</span>
+                        <span><i class="icon-vegetarian"></i>{{ 'Vegan'|trans }}</span>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="desktop-cart">
             <!-- Cart Delivery Options -->
-            <h3 class="desktop-cart__title">Delivery Time</h3>
+            <h3 class="desktop-cart__title">{{ 'Delivery Time'|trans }}</h3>
             <div class="desktop-cart__time">
                 <div class="desktop-cart__time__field">
                     <select id="order-delivery-time">
@@ -71,25 +90,48 @@
                 </div>
             </div>
             <!-- Actual Cart -->
-            <h3 class="desktop-cart__title">My Order</h3>
+            <h3 class="desktop-cart__title">{{ 'My Order'|trans }}</h3>
             <div class="desktop-cart__order">
                 <p class="desktop-cart_order__message">
                     {{ 'You haven’t added anything to the cart yet! Add items by clicking on a menu item.'|trans }}
                 </p>
-
-                <div class="desktop-cart__products"></div>
-
-                <div class="desktop-cart__order__subtotal">
-                    Subtotal <span class="menu__desktop-cart__order__subtotal-price">0,00 &euro;</span>
+                <div class="desktop-cart__order__total">
+                    {{ 'Subtotale'|trans }} <span class="desktop-cart__order__total__price">0,00 &euro;</span>
                 </div>
                 <div class="desktop-cart__order__delivery">
-                    Delivery <span>0,00 &euro;</span>
+                    {{ 'Delivery'|trans }} <span>0,00 &euro;</span>
                 </div>
                 <div class="desktop-cart__order__total">
-                    Total <span class="menu__desktop-cart__order__total-price">0,00 &euro;</span>
+                    {{ 'Total'|trans }} <span class="desktop-cart__order__total__price">0,00 &euro;</span>
                 </div>
             </div>
         </div>
     </div>
+    <div class="menu__bottom-info">
+        <div class="menu__bottom-info__openings">
+            <h3 class="menu__bottom-info__title">Opening hours</h3>
+            <ul>
+                <li>Mon <span>10:00 AM - 8:00 PM</span></li>
+                <li>Tue <span>10:00 AM - 8:00 PM</span></li>
+                <li>Wed <span>10:00 AM - 8:00 PM</span></li>
+                <li>Thu <span>10:00 AM - 8:00 PM</span></li>
+                <li>Fri <span>10:00 AM - 8:00 PM</span></li>
+                <li>Sat <span>10:00 AM - 8:00 PM</span></li>
+                <li>Sun <span>10:00 AM - 8:00 PM</span></li>
+            </ul>
+        </div>
+        <div class="menu__bottom-info__seo">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium alias aut dolorem earum fugit ipsa maxime modi nam officia optio, pariatur perferendis porro quae quaerat reiciendis, saepe sed totam, voluptates.  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium alias aut dolorem earum fugit ipsa maxime modi nam officia optio, pariatur perferendis porro quae quaerat reiciendis, saepe sed totam, voluptates.
+        </div>
+    </div>
+    <div class="clearfix"></div>
 </div>
+<div class="bottom-cart">
+    <div class="bottom-cart__wrapper">
+        <div class="bottom-cart__quantity"><span>23</span></div>
+        <div class="bottom-cart__cta">{{ 'View this cart'|trans }}</div>
+        <div class="bottom-cart__price">131,50 &euro;</div>
+    </div>
+</div>
+
 {% endblock %}
