@@ -16,7 +16,7 @@ parameters:
     foodpanda.api.client_id: HTML5
     foodpanda.api.client_secret: ThisTokenIsNotSoSecretChangeIt
 
-    foodpanda_web_translate_it.base_url: 'https://webtranslateit.com'
-    foodpanda_web_translate_it.public_api_key: 3K--aY26LoDVtJGL1mk-1Q
-    foodpanda_web_translate_it.private_api_key: q0fqpiQyalsumAPeA5zEvw
-    foodpanda_web_translate_it.main_translation_label: ~
+    foodpanda_web_translate_it_base_url: 'https://webtranslateit.com'
+    foodpanda_web_translate_it_public_api_key: 3K--aY26LoDVtJGL1mk-1Q
+    foodpanda_web_translate_it_private_api_key: q0fqpiQyalsumAPeA5zEvw
+    foodpanda_web_translate_it_main_translation_label: ~
