@@ -1,9 +1,0 @@
-{
-  "status_code": 400,
-  "data": {
-    "exception_type": "ApiInvalidParameterException",
-    "message": "The placed request was not successful.",
-    "developer_message": "The field vendor_id is invalid",
-    "more_information": "https:\/\/rw.front.fp\/doc\/v3\/orders\/calculate-post#vendor_id"
-  }
-}

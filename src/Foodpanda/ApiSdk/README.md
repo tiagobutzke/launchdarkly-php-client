@@ -1,2 +1,0 @@
-Foodpanda API SDK
-====
