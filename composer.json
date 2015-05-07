@@ -21,7 +21,8 @@
         "commerceguys/guzzle-oauth2-plugin": "~2.0",
         "helthe/turbolinks-bundle": "~1.1",
         "foodpanda/translation-library": "~1.1",
-        "foodpanda/translation-bundle": "~1.0"
+        "foodpanda/translation-bundle": "~1.0",
+        "foodpanda/api-sdk": "dev-master#ba0204d"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
@@ -84,6 +85,10 @@
         {
             "type": "git",
             "url": "https://github.com/foodpanda/translation-bundle.git"
+        },
+        {
+            "type": "git",
+            "url": "git@github.com:foodpanda/api-sdk.git"
         }
     ]
 }
