@@ -199,6 +199,10 @@
   color: $color-text-secondary;
 }
 
+.desktop-cart__products {
+  display: none;
+}
+
 .desktop-cart__order__total {
   padding-top: $space-lg;
   border-top:  $base-border;
@@ -209,10 +213,30 @@
   float: right;
 }
 
-.desktop-cart__order__extra-fee {
+.desktop-cart__order__delivery {
   color: $color-text-secondary;
   padding-bottom: $space-md;
   span {
     @extend .desktop-cart__order__total__price;
   }
 }
+
+.menu__desktop-cart__order__subtotal-price,
+.menu__desktop-cart__order__total-price {
+    @extend .desktop-cart__order__total__price;
+}
+
+.desktop-cart__product {
+  @include make-xs-column(12);
+}
+
+.desktop-cart__product__quantity,
+.desktop-cart__product__price {
+  @include make-xs-column(2);
+}
+
+.desktop-cart__product__name {
+  @include make-xs-column(8);
+}
+
+

@@ -33,6 +33,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Foodpanda\Bundle\WebTranslateItBundle\FoodpandaWebTranslateItBundle(),
             new Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Volo\FrontendBundle\VoloFrontendBundle(),
             new Helthe\Bundle\TurbolinksBundle\HeltheTurbolinksBundle(),
         );

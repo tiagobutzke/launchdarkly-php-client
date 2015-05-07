@@ -25,6 +25,11 @@ describe("A cart manager", function() {
                 {
                     id: 4
                 }
+            ],
+            product_variations: [
+                {
+                    id: 1
+                }
             ]
         };
 
@@ -39,7 +44,12 @@ describe("A cart manager", function() {
             quantity: 3,
             groupOrderUserName: '',
             toppings: [],
-            choices: []
+            choices: [],
+            product_variations: [
+                {
+                    id: 1
+                }
+            ]
         };
         var expected = _.cloneDeep(selectedProduct);
 
@@ -58,13 +68,19 @@ describe("A cart manager", function() {
             toppings: [
                 product.toppings[0]
             ],
-            choices: []
+            choices: [],
+            product_variations: [
+                {
+                    id: 1
+                }
+            ]
         };
         var expectedFirst = _.cloneDeep(firstSelectedProduct);
 
         var secondSelectedProduct = _.cloneDeep(firstSelectedProduct);
         secondSelectedProduct.quantity = 5;
         var expectedSecond = _.cloneDeep(secondSelectedProduct);
+        expectedSecond.quantity = firstSelectedProduct.quantity + secondSelectedProduct.quantity
 
         cartManager.addProduct(cart, firstSelectedProduct);
         expect(cart.products.length).toBe(1);
@@ -84,7 +100,12 @@ describe("A cart manager", function() {
             toppings: [
                 product.toppings[0]
             ],
-            choices: []
+            choices: [],
+            product_variations: [
+                {
+                    id: 1
+                }
+            ]
         };
         var expectedFirst = _.cloneDeep(firstSelectedProduct);
 
@@ -110,7 +131,12 @@ describe("A cart manager", function() {
             toppings: [
                 product.toppings[0]
             ],
-            choices: []
+            choices: [],
+            product_variations: [
+                {
+                    id: 1
+                }
+            ]
         };
         var expectedFirst = _.cloneDeep(firstSelectedProduct);
 
@@ -120,6 +146,7 @@ describe("A cart manager", function() {
         expect(cart.products).toContain(expectedFirst);
 
         cartManager.addProduct(cart, secondSelectedProduct);
+        expectedFirst.quantity = firstSelectedProduct.quantity + secondSelectedProduct.quantity;
         expect(cart.products.length).toBe(1);
         expect(cart.products).toContain(expectedFirst);
     });
@@ -133,7 +160,12 @@ describe("A cart manager", function() {
             toppings: [
                 product.toppings[0]
             ],
-            choices: []
+            choices: [],
+            product_variations: [
+                {
+                    id: 1
+                }
+            ]
         };
 
         var secondSelectedProduct = {
@@ -144,7 +176,12 @@ describe("A cart manager", function() {
             toppings: [
                 product.toppings[1]
             ],
-            choices: []
+            choices: [],
+            product_variations: [
+                {
+                    id: 2
+                }
+            ]
         };
 
         var expectedFirst = _.cloneDeep(firstSelectedProduct);
@@ -167,7 +204,12 @@ describe("A cart manager", function() {
             quantity: 3,
             groupOrderUserName: '',
             toppings: [],
-            choices: []
+            choices: [],
+            product_variations: [
+                {
+                    id: 2
+                }
+            ]
         };
 
         var expected = _.cloneDeep(selectedProduct);
@@ -191,7 +233,12 @@ describe("A cart manager", function() {
             quantity: 3,
             groupOrderUserName: '',
             toppings: [],
-            choices: []
+            choices: [],
+            product_variations: [
+                {
+                    id: 1
+                }
+            ]
         };
         var expected = _.cloneDeep(selectedProduct);
 

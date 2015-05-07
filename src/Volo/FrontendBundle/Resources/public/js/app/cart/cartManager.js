@@ -1,6 +1,6 @@
 var Cart = function() {
     return {
-        expeditionType: '', // "delivery", "pickup"
+        expedition_type: '', // "delivery", "pickup"
         vouchers: [],
         products: [],
         location: undefined,
@@ -25,8 +25,8 @@ var CartManager = function() {
      * @return {Object} The added product
      */
     cartManager.addProduct = function(cart, selectedProduct) {
-        var quantity = selectedProduct.quantity;
-        var productToSearch = _.cloneDeep(selectedProduct);
+        var quantity = selectedProduct.quantity,
+            productToSearch = _.cloneDeep(selectedProduct);
         delete productToSearch.quantity;
 
         var foundProduct = _.chain(cart.products)
@@ -35,8 +35,8 @@ var CartManager = function() {
             .thru(function (currentProduct) {
                 if (_.isUndefined(currentProduct)) {
                     currentProduct = {
-                        variation_id: null,
-                        vendor_id: null,
+                        vendor_id: selectedProduct.vendor_id,
+                        variation_id: selectedProduct.product_variations[0].id,
                         quantity: 0,
                         groupOrderUserName: '',
                         toppings: [],
@@ -45,7 +45,7 @@ var CartManager = function() {
                 }
 
                 currentProduct = _.assign(currentProduct, productToSearch);
-                currentProduct.quantity = quantity;
+                currentProduct.quantity = quantity + currentProduct.quantity;
 
                 return currentProduct;
             })
@@ -63,7 +63,10 @@ var CartManager = function() {
      * @return {Object} The added product
      */
     cartManager.getProduct = function(cart, selectedProduct) {
-        return _.find(cart.products, selectedProduct);
+        var clone = _.cloneDeep(selectedProduct);
+        delete clone.quantity;
+
+        return _.find(cart.products, clone);
     };
 
     return cartManager;
