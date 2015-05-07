@@ -26,7 +26,7 @@ class ConfigurationService
     /**
      * @var string
      */
-    protected $cacheId = 'configuration';
+    private $cacheId = 'configuration';
 
     /**
      * @param Cache $cache
@@ -45,10 +45,10 @@ class ConfigurationService
      *
      * @return Configuration
      */
-    public function getCachedConfiguration()
+    public function getConfiguration()
     {
         if (!$this->cache->contains($this->cacheId)) {
-            $this->initCachedConfiguration();
+            $this->refreshConfiguration();
         }
 
         return $this->cache->fetch($this->cacheId);
@@ -57,7 +57,7 @@ class ConfigurationService
     /**
      * Fetch the configuration from the API and cache it
      */
-    public function initCachedConfiguration()
+    public function refreshConfiguration()
     {
         $config = $this->configurationProvider->findAll();
         $this->cache->save($this->cacheId, $config, $this->lifeTime);

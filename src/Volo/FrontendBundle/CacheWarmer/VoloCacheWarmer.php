@@ -12,6 +12,9 @@ class VoloCacheWarmer implements CacheWarmerInterface
      */
     protected $configurationService;
 
+    /**
+     * @param ConfigurationService $configurationService
+     */
     public function __construct(ConfigurationService $configurationService)
     {
         $this->configurationService = $configurationService;
@@ -39,6 +42,6 @@ class VoloCacheWarmer implements CacheWarmerInterface
      */
     public function warmUp($cacheDir)
     {
-        $this->configurationService->initCachedConfiguration();
+        $this->configurationService->refreshConfiguration();
     }
 }
