@@ -1,8 +1,0 @@
-{
-    "status_code": 200,
-    "data": {
-        "id": 5,
-        "name": "Kigali",
-        "is_top_city": false
-    }
-}

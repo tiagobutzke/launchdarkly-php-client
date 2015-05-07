@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b38e6554c50f2b968be1ca211f51d788",
+    "hash": "edd72de84bc4d8834c316c6b6605cf5a",
     "packages": [
         {
             "name": "commerceguys/guzzle-oauth2-plugin",
@@ -531,6 +531,42 @@
                 "parser"
             ],
             "time": "2014-09-09 13:34:57"
+        },
+        {
+            "name": "foodpanda/api-sdk",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:foodpanda/api-sdk.git",
+                "reference": "ba0204d"
+            },
+            "require": {
+                "commerceguys/guzzle-oauth2-plugin": "~2.0",
+                "doctrine/common": "~2.4",
+                "guzzlehttp/guzzle": "~5.0",
+                "guzzlehttp/log-subscriber": "~1.0",
+                "symfony/serializer": "~2.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Foodpanda\\ApiSdk\\": ""
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Riccardo Bini",
+                    "email": "riccardo.bini@rocket-internet.de"
+                }
+            ],
+            "description": "Foodpanda API SDK",
+            "time": "2015-05-06 08:44:57"
         },
         {
             "name": "foodpanda/translation-bundle",
@@ -2919,7 +2955,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "foodpanda/api-sdk": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
