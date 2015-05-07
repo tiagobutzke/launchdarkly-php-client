@@ -1,0 +1,13 @@
+{% extends 'VoloFrontendBundle:Checkout:base.html.twig' %}
+
+{% block delivery_information %}
+    {% include('VoloFrontendBundle:Checkout/Partial:delivery_information_edit.html.twig') %}
+{% endblock %}
+
+{% block contact_information %}
+    {% include('VoloFrontendBundle:Checkout/Partial:contact_information_edit.html.twig') %}
+{% endblock %}
+
+{% block payment %}
+    {% include('VoloFrontendBundle:Checkout/Partial:payment_form.html.twig') %}
+{% endblock %}

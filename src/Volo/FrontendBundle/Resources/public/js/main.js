@@ -37,31 +37,6 @@ $(document).on('ready page:load', function () {
                 }]
             });
     }, 100);
-
-    VOLO.cartModel = new CartModel({}, {
-        dataProvider: new CartDataProvider()
-    });
-
-    VOLO.baseView = new BaseView(); //all your window events/other magic on DOM, belongs to here
-
-    VOLO.GeocodingHandlersHome.handle();
-    VOLO.GeocodingHandlersCheckout.handle();
-
-    var $menuMain = $('.menu__main');
-    if ($menuMain.length) {
-        VOLO.menu = new MenuView({
-            el: '.menu__main',
-            cartModel: VOLO.cartModel
-        });
-
-        VOLO.cartView = new CartView({
-            el: '.desktop-cart',
-            model: VOLO.cartModel,
-            vendor_id: $menuMain.data().vendor_id
-        });
-
-        VOLO.cartView.render();
-    }
 });
 
 Turbolinks.pagesCached(0);

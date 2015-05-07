@@ -3,6 +3,7 @@
 namespace Volo\FrontendBundle\Service;
 
 use Foodpanda\ApiSdk\Entity\Customer\Customer;
+use Foodpanda\ApiSdk\Entity\Order\GuestCustomer;
 use Foodpanda\ApiSdk\Provider\CustomerProvider;
 use Foodpanda\ApiSdk\Serializer;
 
@@ -39,5 +40,23 @@ class CustomerService
 
 
         return $this->provider->createCustomer($customer);
+    }
+
+    /**
+     * @param array $customer
+     * @param array $address
+     *
+     * @return GuestCustomer
+     */
+    public function createGuestCustomer(array $customer, array $address)
+    {
+        $guestCustomerData = [
+            'customer_address' => $address,
+            'customer'         => $customer
+        ];
+
+        $guestCustomer = $this->serializer->denormalizeGuestCustomer($guestCustomerData);
+
+        return $this->provider->create($guestCustomer);
     }
 }

@@ -3,14 +3,41 @@
 {% block content_wrapper_class %}menu-bg{% endblock content_wrapper_class %}
 {% block bodyClass %}menu-page{% endblock %}
 
-{% block footer_scripts %}
-    {% if cart is defined %}
-        <script type="text/javascript">
+{% block head_scripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        var VOLO = VOLO || {};
+        VOLO.jsonCart={{ cart|json_encode|raw }};
+
+        var foo = function () {
             var VOLO = VOLO || {};
-            VOLO.jsonCart={{ cart|raw }};
-        </script>
-    {% endif %}
-{% endblock footer_scripts %}
+            VOLO.jsonCart={{ cart|json_encode|raw }};
+
+            VOLO.cartModel = new CartModel(VOLO.jsonCart, {
+                dataProvider: new CartDataProvider(),
+                vendor_id: {{ vendor.id }}
+            });
+
+            VOLO.menu = new MenuView({
+                el: '.menu__main',
+                cartModel: VOLO.cartModel
+            });
+
+            VOLO.cartView = new CartView({
+                el: '.desktop-cart',
+                model: VOLO.cartModel,
+                vendor_id: {{ vendor.id }}
+            });
+
+            VOLO.cartView.render();
+        };
+
+        $(document).on('ready page:load', foo);
+        $(document).on('after-remove', function () {
+            $(document).off(foo);
+        });
+    </script>
+{% endblock head_scripts %}
 
 {% block content %}
 <div class="top-cart">
@@ -64,7 +91,7 @@
                                 </div>
                                 <div class="menu__item__price">
                                     {{ product.getProductVariations().first().getPrice()|number_format }} &euro;
-                                    <button class="menu__item__add">+</button>
+                                    <button class="button button--add menu__item__add">+</button>
                                 </div>
                                 <div class="menu__item__description">
                                     {{ product.getDescription() }}
@@ -108,5 +135,7 @@
         <div class="bottom-cart__price">131,50 &euro;</div>
     </div>
 </div>
+
+{{ include('VoloFrontendBundle:Layout/Partial/templates:cart.html.twig') }}
 
 {% endblock %}

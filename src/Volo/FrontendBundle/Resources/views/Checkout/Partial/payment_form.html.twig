@@ -1,0 +1,38 @@
+<h4 class="checkout__subtitle">{% trans %}Credit card details{% endtrans %}</h4>
+<form action="{{ path('checkout_payment', {vendorCode: vendor.code}) }}"
+      id="checkout_form" method="post" role="form">
+    <div class="checkout__item">
+        <div class="form-group">
+            <input type="text" class="form-control" id="adyen-encrypted-form-number" value="5136333333333335" size="20"
+                   autocomplete="off" data-encrypted-name="number" placeholder="{% trans %}Card number{% endtrans %}">
+            <span id="cardType"></span>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="adyen-encrypted-form-cvc" value="737" size="4" maxlength="4"
+                   autocomplete="off" data-encrypted-name="cvc" placeholder="{% trans %}CVC{% endtrans %}">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="adyen-encrypted-form-holder-name" value="John Doe" size="20"
+                   autocomplete="off" data-encrypted-name="holderName" placeholder="{% trans %}Card holder name{% endtrans %}">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="adyen-encrypted-form-expiry-month" value="06" maxlength="2" size="2"
+                   autocomplete="off" data-encrypted-name="expiryMonth" placeholder="{% trans %}Expiration month{% endtrans %}">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="adyen-encrypted-form-expiry-year" value="2016" maxlength="4" size="4"
+                   autocomplete="off" data-encrypted-name="expiryYear" placeholder="{% trans %}Expiration year{% endtrans %}">
+        </div>
+        <div class="hide"><input type="hidden" id="adyen-encrypted-form-expiry-generationtime" value="{{ "now"|date('c') }}"
+                                 data-encrypted-name="generationtime"/></div>
+        <button class="button pull-right">{% trans %}Continue{% endtrans %}</button>
+    </div>
+</form>
+
+<script>
+    adyen.encrypt.createEncryptedForm(
+            document.getElementById('checkout_form'),
+            '{{ adyen_public_key }}',
+            {cardTypeElement: document.getElementById('cardType')}
+    );
+</script>

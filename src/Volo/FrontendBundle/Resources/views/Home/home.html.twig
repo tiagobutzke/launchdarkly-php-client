@@ -1,5 +1,14 @@
 {% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
 
+{% block head_scripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).on('ready page:load', function () {
+            VOLO.GeocodingHandlersHome.handle();
+        });
+    </script>
+{% endblock head_scripts %}
+
 {% block content %}
     <div class="teaser b-lazy"
          data-src="{{ asset("img/homepage/teaser_2400.jpg") }}"
@@ -13,7 +22,7 @@
             <input type="text" class="teaser__form__input" name="formatted_address" autofocus="" placeholder="{{ 'home.postal_code'|trans }}">
             <input type="hidden" name="lat">
             <input type="hidden" name="lng">
-            <button class="button primary" type="submit">{{ 'home.buttons_find_food'|trans }}</button>
+            <button class="button button--inline" type="submit">{{ 'home.buttons_find_food'|trans }}</button>
         </form>
         <div class="teaser__gradient"></div>
     </div>
@@ -324,8 +333,6 @@
         {% for city in cities %}
             <a href="{{ path('city', {'id': city.id}) }}">{{ city.name|e }}</a>
         {% endfor %}
-
-        <a href="{{ path('checkout', {vendorCode: 'random'}) }}">Checkout</a>
     </div>
 
 
