@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "edd72de84bc4d8834c316c6b6605cf5a",
+    "hash": "4371efd719f5e84a9c34fdccefbe574a",
     "packages": [
         {
             "name": "commerceguys/guzzle-oauth2-plugin",
@@ -538,7 +538,7 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:foodpanda/api-sdk.git",
-                "reference": "ba0204d"
+                "reference": "f85ba9f"
             },
             "require": {
                 "commerceguys/guzzle-oauth2-plugin": "~2.0",
@@ -566,7 +566,7 @@
                 }
             ],
             "description": "Foodpanda API SDK",
-            "time": "2015-05-06 08:44:57"
+            "time": "2015-05-07 15:58:52"
         },
         {
             "name": "foodpanda/translation-bundle",
