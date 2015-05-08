@@ -534,17 +534,18 @@
         },
         {
             "name": "foodpanda/api-sdk",
-            "version": "v0.5.1",
+            "version": "v0.5.2",
             "source": {
                 "type": "git",
                 "url": "git@github.com:foodpanda/api-sdk.git",
-                "reference": "bebaf2fe93043262d43faa7a5fe39f1f524f09b3"
+                "reference": "768b1a31eca2989ff67107419477ceac37307baf"
             },
             "require": {
                 "commerceguys/guzzle-oauth2-plugin": "~2.0",
                 "doctrine/common": "~2.4",
                 "guzzlehttp/guzzle": "~5.0",
                 "guzzlehttp/log-subscriber": "~1.0",
+                "php": ">=5.5.9",
                 "symfony/serializer": "~2.6"
             },
             "require-dev": {
@@ -566,7 +567,7 @@
                 }
             ],
             "description": "Foodpanda API SDK",
-            "time": "2015-05-08 12:53:38"
+            "time": "2015-05-08 14:34:56"
         },
         {
             "name": "foodpanda/translation-bundle",
