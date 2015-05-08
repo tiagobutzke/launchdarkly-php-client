@@ -10,12 +10,8 @@ body {
   line-height: $base-line-height;
 }
 
-a {
-  color: $color-text-link;
-  &:hover {
-    color: $color-text-link-hover;
-    text-decoration: none;
-  }
+a, .link {
+  @include make-link();
 }
 
 h1, .h1,

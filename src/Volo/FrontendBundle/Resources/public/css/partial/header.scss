@@ -1,50 +1,140 @@
 /*
 * header declarations
 */
-
 .header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   width: 100%;
-  background-color: $color-bg-primary;
-  height: $header-height;
-  z-index: $zindex-navbar-fixed;
-  box-shadow: 0px 1px 4px rgba(1, 1, 1, 0.2);
-  @include opacity(0.90);
+  height: $header-height-small;
+  z-index: 1;
+  @include linearGradient( rgba(0,0,0,1),  rgba(0,0,0,0));
+  @include respond-from("screen-sm") {
+    height: $header-height;
+  }
 }
 
 .header__wrapper {
+  z-index: 1000;
   position: relative;
+  text-align: center;
+  @extend .wrapper-fluid;
+  @include respond-from("screen-sm") {
+    text-align: left;
+  }
+}
+
+.header__wrapper__bg {
+  z-index: 999;
+  background-color: $header-background;
+  width: 100%;
+  position: absolute;
+  height: $header-height-small;
+  top: - $header-height-small;
+  left: 0;
+  @include transition(all .1s linear);
+}
+
+.header__profile {
+  position: absolute;
+  font-size: 1.8em;
+  left: 15px;
+  display: block;
+  @include make-link($link-color-bg-dark, $link-color-bg-dark);
+  @include respond-from("screen-sm") {
+    display: none;
+  }
 }
 
 .header__logo {
-  @include retina-sprite($logo-group);
-  position: absolute;
-  left: 30px;
-  top: 20px;
+  margin: 15px auto 0;
+  display: inline-block;
+  @include respond-from("screen-sm") {
+    padding-left: 10px;
+  }
 }
 
-.header__logo__h1 {
+.header__logo__a {
+  @include retina-sprite($logo_white_mobile-group);
+  display: block;
   text-indent: -9999px;
-  margin: 0;
-}
-
-.header__login {
-    display: none;
-    position: absolute;
-    top: 50%;
-    right: 15px;
-    transform: translateY(-50%);
-    a {
-      font-size: 0.9em;
-    }
+  @include transition(opacity .5s linear);
+  @include respond-from("screen-md") {
+    @include retina-sprite($logo_white-group);
+  }
 }
 
 .header__cart {
-  position: absolute;
-  right: 30px;
-  top: 37px;
-  @include retina-sprite($cart-group);
+  @include make-link($link-color-bg-dark, $link-color-bg-dark);
+  font-size: 1.8em;
+  right: 15px;
+  display: inline-block;
+  float: right;
+  margin: 13px 20px 0;
+  @include respond-from("screen-md") {
+    margin-top: 20px;
+  }
+}
+
+.header__login {
+  @include make-link($link-color-bg-dark, $link-color-bg-dark);
+  float: right;
+  margin-right: $grid-gutter-width / 2;
+  margin-top: 13px;
+  @include appear-from("screen-sm");
+  @include respond-from("screen-md") {
+    margin-top: 20px;
+  }
+
+  a, b {
+    @include make-link($link-color-bg-dark, $link-color-bg-dark);
+    font-size: 0.8em;
+  }
+
+  .icon-down-open-big {
+    @include make-link($link-color-bg-dark, $link-color-bg-dark);
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0.8em;
+    margin-top: 3px;
+    margin-left: 5px;
+  }
+}
+
+.header--white {
+  .header__logo__a {
+    @include retina-sprite($logo_small-group);
+  }
+
+  &.header  {
+    background: none;
+    height: $header-height-small;
+  }
+
+  .header__wrapper__bg {
+    top: 0;
+    border: 1px solid $base-border-color;
+  }
+
+  .header__logo {
+    margin-top: 10px;
+  }
+
+  .header__login {
+    margin-top: 13px;
+    a {
+      @include make-link();
+    }
+  }
+
+  .header__cart {
+    margin-top: 13px;
+  }
+
+  .header__profile,
+  .icon-down-open-big,
+  .header__cart {
+      @include make-link();
+  }
 }
