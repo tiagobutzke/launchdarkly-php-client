@@ -13,6 +13,7 @@
         <parameter key="volo_frontend.twig.cms_extension.class">Volo\FrontendBundle\Twig\CmsExtension</parameter>
         <parameter key="doctrine_cache.php_file.class">Volo\FrontendBundle\Service\Provider\TranslatorCache</parameter>
         <parameter key="volo_frontend.service.configuration.class">Volo\FrontendBundle\Service\ConfigurationService</parameter>
+        <parameter key="volo_frontend.service.customer.class">Volo\FrontendBundle\Service\CustomerService</parameter>
         <parameter key="volo_frontend.cache_warmer.class">Volo\FrontendBundle\CacheWarmer\VoloCacheWarmer</parameter>
     </parameters>
 
@@ -38,6 +39,11 @@
         <service id="volo_frontend.cache_warmer" class="%volo_frontend.cache_warmer.class%">
             <argument type="service" id="volo_frontend.service.configuration" />
             <tag name="kernel.cache_warmer" priority="90" />
+        </service>
+
+        <service id="volo_frontend.service.customer" class="%volo_frontend.service.customer.class%">
+            <argument type="service" id="volo_frontend.provider.customer" />
+            <argument type="service" id="volo_frontend.api.serializer"/>
         </service>
     </services>
 </container>
