@@ -37,7 +37,7 @@ if (empty(AppKernel::getCountryCodeEnvironmentVariable())) {
         $process->setTimeout(null);
         $process->setIdleTimeout(null);
 
-        $process->run(function ($type, $buffer) use ($countryCode) {
+        $process->mustRun(function ($type, $buffer) use ($countryCode) {
             if (Process::ERR === $type) {
                 echo "ERR[$countryCode] > " . $buffer;
             } else {
