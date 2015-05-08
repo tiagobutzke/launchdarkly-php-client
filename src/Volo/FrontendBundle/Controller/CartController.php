@@ -17,7 +17,7 @@ use Volo\FrontendBundle\Http\JsonErrorResponse;
 class CartController extends Controller
 {
     /**
-     * @Route("/calculate", name="cart_calculate", methods={"POST"}, defaults={"_format": "json"}, options={"expose"=true}))
+     * @Route("/calculate", name="cart_calculate", methods={"POST"}, defaults={"_format": "json"}, options={"expose"=true})
      * @param Request $request
      *
      * @return JsonResponse
@@ -26,7 +26,7 @@ class CartController extends Controller
     {
         $content = $request->getContent();
 
-        if('' === $content){
+        if ('' === $content) {
             throw new BadRequestHttpException('Content is empty.');
         }
 
@@ -35,9 +35,13 @@ class CartController extends Controller
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new BadRequestHttpException('Content is not a valid json.');
         }
-
+        $cartManager = $this->get('volo_frontend.service.cart_manager');
         try {
-            $apiResult = $this->get('volo_frontend.service.cart_manager')->calculate($data);
+            if (array_key_exists('products', $data) && array_key_exists(0, $data['products'])) {
+                $vendorId = $data['products'][0]['vendor_id'];
+                $cartManager->saveCart($request->getSession()->getId(), $vendorId, $data);
+            }
+            $apiResult = $cartManager->calculateCart($data);
         } catch (ApiErrorException $e) {
             return new JsonErrorResponse($e);
         }
