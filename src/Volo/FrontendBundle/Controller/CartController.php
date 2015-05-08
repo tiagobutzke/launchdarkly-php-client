@@ -17,7 +17,7 @@ use Volo\FrontendBundle\Http\JsonErrorResponse;
 class CartController extends Controller
 {
     /**
-     * @Route("/calculate", name="cart_calculate", methods={"POST"}, defaults={"_format": "json"})
+     * @Route("/calculate", name="cart_calculate", methods={"POST"}, defaults={"_format": "json"}, options={"expose"=true}))
      * @param Request $request
      *
      * @return JsonResponse

@@ -48,6 +48,7 @@ module.exports = function (grunt) {
         'web/bundles/heltheturbolinks/js/jquery.turbolinks.js',
         'web/bundles/heltheturbolinks/js/turbolinks.js',
         'bower_components/blazy/blazy.js',
+        'bower_components/lodash/lodash.js',
         frontendAssetPath('/js/**/*.js')
     ];
 
@@ -118,7 +119,8 @@ module.exports = function (grunt) {
                 'bower_components/jquery/dist/jquery.js',
                 'web/bundles/heltheturbolinks/js/jquery.turbolinks.js',
                 'web/bundles/heltheturbolinks/js/turbolinks.js',
-                'bower_components/blazy/blazy.js'
+                'bower_components/blazy/blazy.js',
+                'bower_components/lodash/lodash.js'
             ]
         },
         gruntfile: {

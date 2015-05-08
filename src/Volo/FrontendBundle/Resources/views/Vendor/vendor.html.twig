@@ -39,6 +39,7 @@
                                 </div>
                                 <div class="menu__item__price">
                                     {{ product.getProductVariations().first().getPrice()|number_format }} &euro;
+                                    <button class="menu__item__add" data-vendor_id="{{ vendor.id }}" data-object="{{ serialize(product) }}">+</button>
                                 </div>
                                 <div class="menu__item__description">
                                     {{ product.getDescription() }}
@@ -75,14 +76,17 @@
                 <p class="desktop-cart_order__message">
                     {{ 'You haven’t added anything to the cart yet! Add items by clicking on a menu item.'|trans }}
                 </p>
-                <div class="desktop-cart__order__total">
-                    Subtotal <span class="menu__desktop-cart__order__total__price">0,00 &euro;</span>
+
+                <div class="desktop-cart__products"></div>
+
+                <div class="desktop-cart__order__subtotal">
+                    Subtotal <span class="menu__desktop-cart__order__subtotal-price">0,00 &euro;</span>
                 </div>
-                <div class="desktop-cart__order__extra-fee">
+                <div class="desktop-cart__order__delivery">
                     Delivery <span>0,00 &euro;</span>
                 </div>
                 <div class="desktop-cart__order__total">
-                    Total <span class="menu__desktop-cart__order__total__price">0,00 &euro;</span>
+                    Total <span class="menu__desktop-cart__order__total-price">0,00 &euro;</span>
                 </div>
             </div>
         </div>

@@ -15,6 +15,7 @@
         <parameter key="volo_frontend.service.configuration.class">Volo\FrontendBundle\Service\ConfigurationService</parameter>
         <parameter key="volo_frontend.service.customer.class">Volo\FrontendBundle\Service\CustomerService</parameter>
         <parameter key="volo_frontend.cache_warmer.class">Volo\FrontendBundle\CacheWarmer\VoloCacheWarmer</parameter>
+        <parameter key="volo_frontend.twig.serializer_extension.class">Volo\FrontendBundle\Twig\SerializerExtension</parameter>
     </parameters>
 
     <services>
@@ -44,6 +45,11 @@
         <service id="volo_frontend.service.customer" class="%volo_frontend.service.customer.class%">
             <argument type="service" id="volo_frontend.provider.customer" />
             <argument type="service" id="volo_frontend.api.serializer"/>
+        </service>
+
+        <service id="volo_frontend.twig.serializer_extension" class="%volo_frontend.twig.serializer_extension.class%">
+            <argument type="service" id="volo_frontend.api.serializer" />
+            <tag name="twig.extension" />
         </service>
     </services>
 </container>
