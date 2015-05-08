@@ -220,6 +220,11 @@
 .menu__item__price {
   @include make-xs-column(4);
   @extend .text-right;
+
+  button {
+    height: 20px;
+    padding: 0 5px;
+  }
 }
 
 .menu__item__description {
