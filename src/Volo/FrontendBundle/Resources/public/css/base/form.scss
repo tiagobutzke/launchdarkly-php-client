@@ -1,0 +1,58 @@
+/*
+* form elements definitions
+*/
+
+// ----------------------- BUTTONS START -----------------------
+
+button {
+  font-family: $cta-font-family;
+  font-size: $cta-font-size;
+  text-align: $cta-text-align;
+  text-transform: $cta-text-transform;
+  padding-left: $cta-padding-left;
+  padding-right: $cta-padding-right;
+  border-radius: $cta-border-radius;
+  height: $cta-height;
+  border:0;
+}
+
+button.primary {
+  color: $cta-color-text-primary;
+  background-color: $cta-color-bg-primary;
+}
+
+button.primary:hover {
+  background-color: $cta-color-bg-primary-hover;
+}
+
+button.disabled {
+  background-color: $cta-color-bg-disabled;
+}
+
+button.pressed {
+  background-color: $cta-pressed-box-shadow;
+}
+
+// ----------------------- BUTTONS END -----------------------
+
+
+
+// ----------------------- INPUT FIELDS START ------------------
+
+input {
+  font-family: $input-font-family;
+  font-size: $input-font-size;
+  text-align: $input-text-align;
+  padding-left: $input-padding-left;
+  padding-right: $input-padding-right;
+  border-radius: $input-border-radius;
+  height: $input-height;
+  border:0;
+  color: $input-color-text;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+// ----------------------- INPUT FIELDS END ------------------

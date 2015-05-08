@@ -1,3 +1,185 @@
 /*
 * homepage declarations
 */
+
+section {
+  margin-bottom: 50px;
+}
+
+// -------------------------- TITLES START --------------------------
+
+.titles {
+  @include make-row();
+  margin-bottom: 30px;
+}
+
+.titles__title {
+  @include make-xs-column(12);
+  font-size: 1.2em;
+  padding: 30px 0 10px;
+  text-align: center;
+  font-family: $cta-font-family;
+  color: $color-text-highlight;
+}
+
+.titles__subtitle {
+  @include make-xs-column(12);
+  font-size: 1.8em;
+  text-align: center;
+  font-family: $base-font-family;
+  color: $color-text-primary;
+  text-transform: uppercase;
+}
+
+// -------------------------- TITLES END --------------------------
+
+// -------------------------- TEASER START --------------------------
+
+.teaser {
+  @include make-row();
+  padding-top: 130px;
+  background: url('#{$imagepath}teaser.jpg') center top no-repeat scroll;
+  background-size: auto 100%;
+  height: 720px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.teaser__slogan {
+  @include make-xs-column(12);
+  color:#fff;
+  text-align: center;
+}
+
+.teaser__slogan h2 {
+  font-family: $base-font-family;
+  line-height: 1.4em;
+  font-size: 1.4em;
+  margin-bottom: $space-lg;
+  @include respond-from('screen-md'){
+    font-size: 2em;
+  }
+}
+
+.teaser__form {
+  @include make-xs-column(12);
+  text-align: center;
+}
+
+.teaser__form input {
+  width: 250px;
+  margin-right: $space-xs;
+}
+
+.teaser__gradient {
+  @include make-xs-column(12);
+  background: url('#{$imagepath}white-gradient.png') bottom left repeat-x;
+  position: absolute;
+  bottom:0;
+  width:100%;
+  height: 115px;
+}
+
+// -------------------------- TEASER END --------------------------
+
+
+// -------------------------- LOGOS START --------------------------
+
+.restaurants-logos {
+  @include make-row();
+  @include fluid-container();
+}
+
+.logos-container {
+  @include make-xs-column(12);
+  @include make-sm-column(10);
+  @extend .col-sm-offset-1;
+  @include make-lg-column(12);
+  @extend .col-lg-offset-0;
+}
+
+.restaurants-logos__logo {
+  @include make-xs-column(6);
+  @include make-md-column(4);
+  @include make-lg-column(2);
+}
+
+.restaurants-logos__logo img {
+  @extend .img-responsive;
+  @extend .center-block;
+}
+
+// -------------------------- LOGOS END --------------------------
+
+
+// -------------------------- STATS START --------------------------
+
+.stats {
+  @include make-row();
+  background: url('#{$imagepath}fork-knife-back.png') top left repeat-x;
+  background-color: #f7f7f7;
+  background-size: auto 100%;
+}
+
+.stats__content {
+  @include make-xs-column(10);
+  @extend .col-xs-offset-1;
+  @include make-md-column(8);
+  @extend .col-md-offset-2;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: auto 100%;
+}
+
+.stats__dish {
+  @extend .img-responsive;
+  @extend .center-block;
+}
+
+// -------------------------- STATS END --------------------------
+
+
+// -------------------------- CITIES START --------------------------
+
+.cities {
+  @include make-row();
+  @include fluid-container();
+}
+
+.cities__container{
+  @include make-md-column(10);
+  @extend .col-md-offset-1;
+}
+
+.city__title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.city__title span {
+  display: block;
+  position: relative;
+  top: -50%;
+  left: -50%;
+  color:#fff;
+  text-align: center;
+  font-size: larger;
+  text-transform: uppercase;
+}
+
+.city {
+  @include make-xs-column(12);
+  @include make-md-column(6);
+
+  padding-top: $grid-gutter-width;
+  position: relative;
+  font-family: $cta-font-family;
+}
+
+.city img {
+  @extend .img-responsive;
+  @extend .center-block;
+}
+
+// -------------------------- CITIES END --------------------------

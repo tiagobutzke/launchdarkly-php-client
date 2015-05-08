@@ -18,6 +18,14 @@ li {
   padding-top: $header-height;
 }
 
+.fluid-container {
+  @include fluid-container();
+}
+
+.responsive-img {
+  @include responsive-img();
+}
+
 .wrapper-fluid {
   margin-right: auto;
   margin-left: auto;
