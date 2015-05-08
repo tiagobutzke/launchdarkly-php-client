@@ -24,7 +24,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 // ----------------------- TEXT OVERFLOW END ---------------------------
 
 // ----------- CENTERS TEXT VERTICALLY BY A GIVEN HEIGHT START ----------
@@ -33,3 +32,22 @@
   line-height: $height;
 }
 // ----------- CENTERS TEXT VERTICALLY BY A GIVEN HEIGHT END  ----------
+
+// ----------- CENTERS ABSOLUTE POSITIONED BLOCK HORIZONTALLY AND VERTICALLY START ----------
+@mixin absolute-center-box {
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+// ----------- CENTERS ABSOLUTE POSITIONED BLOCK HORIZONTALLY AND VERTICALLY END ----------
+
+// ----------- CENTERS RELATIVE POSITIONED ELEMENT VERTICALLY START ----------
+@mixin vertical-center-element {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+// ----------- CENTERS RELATIVE POSITIONED ELEMENT VERTICALLY END ----------

@@ -6,9 +6,86 @@
   background: $color-bg-secondary;
 }
 
+// hero banner
+
+.hero-menu {
+  width: 100%;
+  position: relative;
+  max-height: 400px;
+  @media(min-width: 1400px) {
+    overflow: hidden;
+  }
+
+  img {
+    @include responsive-img();
+  }
+}
+
+.hero-menu__info {
+  width: 48%;
+  height: 80%;
+  background-color: $color-bg-primary;
+  border-radius: $border-radius-default;
+  box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.3);
+  font-size:0.75em;
+  overflow: hidden;
+  @include opacity(0.90);
+  @include absolute-center-box();
+  @include appear-from("screen-md");
+    @media(min-width: 960px) {
+      width: 40%;
+      height: 65%;
+    }
+  @include respond-from("screen-lg") {
+    width: 32%;
+    height: 60%;
+  }
+}
+
+.hero-menu__info__img {
+  @include make-md-column(4);
+  padding: 0 0 0 $grid-gutter-width;
+  height: 100%;
+
+  img {
+    @include vertical-center-element();
+  }
+}
+
+.hero-menu__info__txt {
+  @include make-md-column(8);
+  @include vertical-center-element();
+  padding-left: $grid-gutter-width;
+
+  h3 {
+    font-size: 1.2em;
+    text-transform: uppercase;
+    line-height: normal;
+    @include text-overflow();
+    @include respond-from("screen-lg") {
+      font-size: 1.375em;
+    }
+
+    span {
+      display: block;
+      @include text-overflow();
+      font-size: 0.75em;
+    }
+  }
+  p {
+   margin: 0;
+
+    span {
+      display: block;
+      margin-top: -5px;
+    }
+  }
+}
+
 //mobile top cart
 
 .top-cart {
+  display: none;
   width: 100%;
   position: fixed;
   top: $header-height;
@@ -52,22 +129,6 @@
   }
 }
 
-//mobile bottom cart
-
-.bottom-cart {
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  height: $top-cart-height / 2;
-  background-color: $color-bg-text-selection;
-  z-index: $zindex-navbar-fixed;
-  color: $color-text-selection;
-  @include respond-from("screen-md") {
-    display: none;
-  }
-}
-
 // main content
 
 .menu-wrapper {
@@ -77,7 +138,7 @@
 }
 
 .menu {
-  margin-top: $top-cart-height +  $grid-gutter-width / 2;
+  //margin-top: $top-cart-height +  $grid-gutter-width / 2;
   @include respond-from("screen-md") {
     @include make-row();
     margin-top: 0;
@@ -109,6 +170,7 @@
   }
   a {
      color: $color-text-primary;
+     font-size: 0.875em;
    }
 }
 
@@ -124,11 +186,10 @@
 .menu__items__title {
   font-family: $bold-font-family;
   font-size: 0.750em;
-  font-weight: bold;
   @extend .text-center;
   border-bottom: $base-border;
-  padding-bottom: $space-sm;
-  margin-bottom: 0;
+  padding: $space-sm 0;
+  margin: 0;
   text-transform: uppercase;
   @include respond-from("screen-md") {
     font-size: 0.875em;
@@ -149,6 +210,11 @@
 
 .menu__item__name {
   @include make-xs-column(8);
+
+  i {
+    color: $color-text-light;
+    margin-left: 6px;
+  }
 }
 
 .menu__item__price {
@@ -161,20 +227,91 @@
   color: $color-text-secondary;
 }
 
+.menu__icon-legend {
+  text-align:  center;
+  font-size: 0.875em;
+  color: $color-text-secondary;
+  padding: $space-sm * 3;
+
+  span {
+    display: inline-block;
+    margin-right: 14px;
+  }
+  i {
+    margin-right: 6px;
+    color: $color-text-light;
+  }
+}
+
+.menu__bottom-info {
+  font-size: 0.875em;
+  margin:  $space-md 0 0 0;
+  padding-bottom:  $space-md;
+  @include respond-from("screen-md") {
+    @include make-md-column(8);
+    @include make-lg-column(9);
+    padding: 0 0 $space-md 0;
+  }
+}
+
+.menu__bottom-info__title {
+  @extend .menu__items__title;
+  border: none;
+}
+
+.menu__bottom-info__openings {
+  text-align: center;
+  @include respond-from("screen-lg") {
+    @include make-lg-column(3);
+    text-align: left;
+    padding: 0;
+  }
+
+  ul {
+    margin: 0 auto;
+    display: inline-block;
+
+    li {
+      text-align: left;
+      font-size: 0.875em;
+      color: $color-text-secondary;
+    }
+
+    span {
+      color: $color-text-primary;
+      display: inline-block;
+      margin-left: 25px;
+      float: right;
+    }
+  }
+
+}
+
+.menu__bottom-info__seo {
+  padding:  $grid-gutter-width / 2;
+  font-size: 0.875em;
+  color: $color-text-secondary;
+  @include respond-from("screen-lg") {
+    @include make-lg-column(9);
+    margin-top: 40px;
+    padding: 0;
+  }
+}
+
 //desktop cart
 
 .desktop-cart {
   @include appear-from("screen-md");
   @include make-md-column(4);
   @include make-lg-column(3);
+  font-size: 0.875em;
 }
 
 .desktop-cart__title {
   font-family: $bold-font-family;
-  font-size: 0.750em;
-  font-weight: bold;
   @extend .text-center;
   text-transform: uppercase;
+  margin-top: $space-md;
   @include respond-from("screen-md") {
     font-size: 0.875em;
   }
@@ -192,19 +329,18 @@
 }
 
 .desktop-cart__order {
-  margin-top: $space-lg;
+  margin-top: $space-md;
 }
 .desktop-cart_order__message {
   @extend .text-center;
   color: $color-text-secondary;
-}
-
-.desktop-cart__products {
-  display: none;
+  width: 85%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .desktop-cart__order__total {
-  padding-top: $space-lg;
+  padding-top: $space-md;
   border-top:  $base-border;
 }
 
@@ -220,6 +356,66 @@
     @extend .desktop-cart__order__total__price;
   }
 }
+
+//mobile bottom cart
+
+.bottom-cart {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: $top-cart-height / 2;
+  padding-left:  $grid-gutter-width / 2;
+  padding-right: $grid-gutter-width / 2;
+  background-color: $color-bg-text-selection;
+  z-index: $zindex-navbar-fixed;
+  color: $color-text-selection;
+  font-size: 0.875em;
+  @include respond-from("screen-md") {
+    display: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.bottom-cart__wrapper {
+  @include make-row();
+}
+
+.bottom-cart__quantity {
+  @include make-xs-column(3);
+  @include centerTextVerticallyByHeight($top-cart-height / 2);
+
+  span {
+    display: block;
+    color: $color-text-highlight;
+    background-color: $color-bg-primary;
+    text-align: center;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    @include centerTextVerticallyByHeight(26px);
+    @include vertical-center-element();
+    padding-top: 1px;
+  }
+}
+
+.bottom-cart__cta {
+  @include make-xs-column(6);
+  @include centerTextVerticallyByHeight($top-cart-height / 2);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+
+.bottom-cart__price {
+  @include make-xs-column(3);
+  @include centerTextVerticallyByHeight($top-cart-height / 2);
+  text-align: right;
+}
+
 
 .menu__desktop-cart__order__subtotal-price,
 .menu__desktop-cart__order__total-price {
