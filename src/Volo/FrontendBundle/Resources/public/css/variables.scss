@@ -80,7 +80,10 @@ $base-border-color: #bcbcbc;
 $base-border: 1px solid $base-border-color;
 // ----------------------- BORDER END -------------------
 
-// ----------------------- BUTTONS START -----------------------
+// ----------------------- FORM ELEMENTS START -----------------------
+$form-element-height-default: 44px;
+
+//  BUTTONS START
 $cta-font-family: 'Avenir Heavy', Arial, sans-serif;
 $cta-font-size: 0.875em;
 $cta-text-align: center;
@@ -88,7 +91,7 @@ $cta-text-transform: uppercase;
 $cta-padding-left: 20px;
 $cta-padding-right: 20px;
 $cta-border-radius: $border-radius-default;
-$cta-height: 44px;
+$cta-height: $form-element-height-default;
 // Primary button
 $cta-color-text-primary: #fff;
 $cta-color-bg-primary: #d70f64;
@@ -102,17 +105,17 @@ $cta-secondary-border: 1px solid #d70f64;
 $cta-color-bg-disabled: transparent;
 // Pressed state
 $cta-pressed-box-shadow: inset 0 2px 0 1px #8a0a40;
-// ----------------------- BUTTONS END -------------------------
+// BUTTONS END
 
-// ----------------------- INPUT FIELDS START ------------------
+//  INPUT FIELDS START
 $input-font-family: 'Avenir Book', Arial, sans-serif;
-$input-font-size: 0.875em;
+$input-font-size: 1em;
 $input-text-align: left;
 $input-padding-left: 12px;
 $input-padding-right: 12px;
 $input-border-radius: $border-radius-default;
-$input-height: 44px;
-$input-color-text: #bcbcbc;
+$input-height: $form-element-height-default;
+$input-color-text: #666;
 $input-color-bg: #fff;
 $input-border: 1px solid #c8c8c8;
 // Focus state
@@ -128,7 +131,9 @@ $error-msg-font-size: 0.750em;
 $error-msg-color-bg: #ff6464;
 $error-msg-color-text: #fff;
 $error-msg-height: 20px;
-// ----------------------- INPUT FIELDS END --------------------
+//  INPUT FIELDS END
+
+// ----------------------- FORM ELEMENTS END -----------------------
 
 // ----------------------- DROP DOWNS START --------------------
 $dropdown-font-family: 'Avenir Book', Arial, sans-serif;
