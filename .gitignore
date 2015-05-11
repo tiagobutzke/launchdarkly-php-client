@@ -27,3 +27,4 @@ bower_components/*
 /web/js/dist/*
 /src/Volo/FrontendBundle/Resources/public/dist/*
 /.sass-cache/*
+/.grunt/*
