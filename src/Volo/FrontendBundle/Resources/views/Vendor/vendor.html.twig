@@ -1,6 +1,7 @@
 {% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
 
 {% block content_wrapper_class %}menu-bg{% endblock content_wrapper_class %}
+{% block bodyClass %}menu-page{% endblock %}
 
 {% block content %}
 <div class="top-cart">
@@ -24,7 +25,7 @@
             <i class="icon-call-phone"></i> 030 9929 6924</p>
         </div>
     </div>
-    <img src="{{ asset('img/hero_banners/hero_banner_menu.jpg') }}" alt=""/>
+    {% include 'VoloFrontendBundle:Layout/ImageTag:menu_hero_banner.html.twig' with {'filePath' : 'img/hero_banners/'} %}
 </div>
 <div class="menu-wrapper">
     <div class="menu">

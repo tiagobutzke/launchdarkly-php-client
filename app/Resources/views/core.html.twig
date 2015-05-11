@@ -11,7 +11,7 @@
         {{ block('head_stylesheets') }}
         {{ block('head_scripts') }}
     </head>
-    <body>
+    <body class="{% block bodyClass %}{% endblock %}">
         <div class="page-wrapper">
             <div class="content-wrapper {% block content_wrapper_class %}{% endblock content_wrapper_class %}">
             {{ block('header') }}

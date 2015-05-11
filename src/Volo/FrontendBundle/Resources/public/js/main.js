@@ -1,7 +1,47 @@
 $(document).on('ready page:load', function () {
     setTimeout(function() {
-        new Blazy();
+        if ($('body').hasClass('menu-page')) {
+            new Blazy({
+                breakpoints: [{
+                    width: 300, // max-width
+                    src: 'data-src-300',
+                    mode: 'viewport'
+                },{
+                    width: 400, // max-width
+                    src: 'data-src-400',
+                    mode: 'viewport'
+                }, {
+                    width: 600, // max-width
+                    src: 'data-src-600',
+                    mode: 'viewport'
+                }, {
+                    width: 800, // max-width
+                    src: 'data-src-800',
+                    mode: 'viewport'
+                }, {
+                    width: 1000, // max-width
+                    src: 'data-src-1000',
+                    mode: 'viewport'
+                }, {
+                    width: 1200, // max-width
+                    src: 'data-src-1200',
+                    mode: 'viewport'
+                },{
+                    width: 1400, // max-width
+                    src: 'data-src-1400',
+                    mode: 'viewport'
+                }, {
+                    width: 2000, // max-width
+                    src: 'data-src-2000',
+                    mode: 'viewport'
+                }],
+                selector: '.b-lazy.hero-menu__img'
+            });
+        } else {
+            new Blazy();
+        }
     }, 100);
+
 
     $('.menu__item__add').on('click', function(e) {
         eventHandler.addProduct(cart, $(this));

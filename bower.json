@@ -18,7 +18,6 @@
   "dependencies": {
     "twbs-bootstrap-sass": "~3.3.2",
     "labjs": "*",
-    "blazy": "*",
     "lodash": "~3.7.0"
   }
 }
