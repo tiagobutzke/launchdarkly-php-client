@@ -1,0 +1,48 @@
+{% block templates %}
+    {# cart item #}
+    <script type="text/template" id="template-cart-item">
+        <div class="desktop-cart__product">
+            <span class="desktop-cart__product__quantity"><%- quantity %> x</span>
+            <span class="desktop-cart__product__name"><%- name %></span>
+            <span class="desktop-cart__product__price"><%- total_price %> &euro;</span>
+        </div>
+    </script>
+
+    {#cart#}
+    <script type="text/template" id="template-cart">
+        <h3 class="desktop-cart__title">{{ 'Delivery Time'|trans }}</h3>
+        <div class="desktop-cart__time">
+            <div class="desktop-cart__time__field">
+                <select id="order-delivery-time">
+                    <option selected="selected" value="2015-05-14">Today, May 14</option>
+                    <option value="2015-05-15">Tomorrow, May 15</option>
+                    <option value="2015-05-16">Friday, May 16</option>
+                </select>
+            </div>
+            <div class="desktop-cart__time__field">
+                <select id="order-delivery-time2">
+                    <option selected="selected" value="17:00">17:00 - 18:00</option>
+                    <option value="18:00">18:00 - 19:00</option>
+                    <option value="19:00">19:00 - 20:00</option>
+                </select>
+            </div>
+        </div>
+
+        <h3 class="desktop-cart__title">{{ 'My Order'|trans }}</h3>
+        <div class="desktop-cart__order">
+                <p class="desktop-cart_order__message">
+                    {{ 'You haven’t added anything to the cart yet! Add items by clicking on a menu item.'|trans }}
+                </p>
+                <p class="desktop-cart__products"></p>
+                <div class="desktop-cart__order__total">
+                    {{ 'Subtotale'|trans }} <span class="desktop-cart__order__subtotal__price"><%- subtotal_after_discount %>&euro;</span>
+                </div>
+                <div class="desktop-cart__order__delivery">
+                    {{ 'Delivery'|trans }} <span><%- delivery_fee %>&euro;</span>
+                </div>
+                <div class="desktop-cart__order__total">
+                    {{ 'Total'|trans }} <span class="desktop-cart__order__total__price"><%- total_value %>&euro;</span>
+                </div>
+        </div>
+    </script>
+{% endblock templates %}

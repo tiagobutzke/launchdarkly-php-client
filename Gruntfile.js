@@ -48,7 +48,10 @@ module.exports = function (grunt) {
         'web/bundles/heltheturbolinks/js/jquery.turbolinks.js',
         'web/bundles/heltheturbolinks/js/turbolinks.js',
         'web/js/lib/andr3pt-blazy.js',
+        'web/bundles/fosjsrouting/js/router.js',
+        'web/js/fos_js_routes.js',
         'bower_components/lodash/lodash.js',
+        'bower_components/backbone/backbone.js',
         frontendAssetPath('/js/**/*.js')
     ];
 
@@ -120,7 +123,9 @@ module.exports = function (grunt) {
                 'web/bundles/heltheturbolinks/js/jquery.turbolinks.js',
                 'web/bundles/heltheturbolinks/js/turbolinks.js',
                 'web/js/lib/andr3pt-blazy.js',
-                'bower_components/lodash/lodash.js'
+                'bower_components/lodash/lodash.js',
+                'bower_components/backbone/backbone.js',
+                'web/bundles/fosjsrouting/js/router.js'
             ]
         },
         gruntfile: {
@@ -164,12 +169,18 @@ module.exports = function (grunt) {
 
 
     config.jasmine = {
-        src: "src/Volo/FrontendBundle/Resources/public/js/**/*.js",
+        src: [
+            "src/Volo/FrontendBundle/Resources/public/js/**/*.js",
+            "!src/Volo/FrontendBundle/Resources/public/js/main.js"
+        ],
         options: {
             specs: "spec/**/*Spec.js",
             vendor: [
                 'build/bower/lodash/lodash.js',
                 'build/bower/jquery/jquery.js',
+                'build/bower/backbone/backbone.js',
+                'web/bundles/fosjsrouting/js/router.js',
+                'web/js/fos_js_routes.js',
                 'build/bower/blazy/blazy.js',
                 'vendor/helthe/turbolinks/Resources/public/js/jquery.turbolinks.js',
                 'vendor/helthe/turbolinks/Resources/public/js/turbolinks.js'

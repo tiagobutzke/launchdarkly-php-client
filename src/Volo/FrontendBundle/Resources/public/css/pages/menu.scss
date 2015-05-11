@@ -349,6 +349,7 @@
   border-top:  $base-border;
 }
 
+.desktop-cart__order__subtotal__price,
 .desktop-cart__order__total__price {
   display: inline-block;
   float: right;
@@ -433,11 +434,11 @@
 
 .desktop-cart__product__quantity,
 .desktop-cart__product__price {
-  @include make-xs-column(2);
+  @include make-xs-column(3);
 }
 
 .desktop-cart__product__name {
-  @include make-xs-column(8);
+  @include make-xs-column(6);
 }
 
 

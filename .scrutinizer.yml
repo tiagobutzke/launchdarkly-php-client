@@ -67,6 +67,7 @@ build:
             - npm install -g grunt-cli
             - gem install sass -v '~> 3.4.13'
             - SYMFONY_ENV=test composer install --no-interaction
+            - app/console fos:js-routing:dump --env=test
     project_setup:
         before:
             - grunt
