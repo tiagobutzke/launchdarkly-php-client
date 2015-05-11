@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fa41a469ea1a79a2b03c54000a7033e4",
+    "hash": "671f9c7a6ce23986ecbe380bfee98409",
     "packages": [
         {
             "name": "commerceguys/guzzle-oauth2-plugin",
@@ -534,11 +534,11 @@
         },
         {
             "name": "foodpanda/api-sdk",
-            "version": "v0.5.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "git@github.com:foodpanda/api-sdk.git",
-                "reference": "768b1a31eca2989ff67107419477ceac37307baf"
+                "reference": "2d4df35"
             },
             "require": {
                 "commerceguys/guzzle-oauth2-plugin": "~2.0",
@@ -567,7 +567,7 @@
                 }
             ],
             "description": "Foodpanda API SDK",
-            "time": "2015-05-08 14:34:56"
+            "time": "2015-05-11 11:17:13"
         },
         {
             "name": "foodpanda/translation-bundle",
@@ -2956,7 +2956,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "foodpanda/api-sdk": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

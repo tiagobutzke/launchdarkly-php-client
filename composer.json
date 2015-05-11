@@ -22,7 +22,7 @@
         "helthe/turbolinks-bundle": "~1.1",
         "foodpanda/translation-library": "~1.1",
         "foodpanda/translation-bundle": "~1.0",
-        "foodpanda/api-sdk": "0.*"
+        "foodpanda/api-sdk": "dev-master#2d4df35"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
