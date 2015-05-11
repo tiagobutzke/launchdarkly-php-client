@@ -45,9 +45,9 @@ var EventHandler = function(cartManager, cartDataHandler) {
 
     var _setCartData = function(cart) {
         cartDataHandler.getCartData(cart).done(function(data) {
-            $('.menu__desktop-cart__order__subtotal-price').html(data.subtotal_after_discount + '&euro;');
+            $('.desktop-cart__order__subtotal__price').html(data.subtotal_after_discount + '&euro;');
             $('.desktop-cart__order__delivery span').html(data.delivery_fee + '&euro;');
-            $('.menu__desktop-cart__order__total-price').html(data.total_value + '&euro;');
+            $('.desktop-cart__order__total__price').html(data.total_value + '&euro;');
             $('.desktop-cart__products').empty();
 
             data.vendorCart[0].products.map(function(product) {
