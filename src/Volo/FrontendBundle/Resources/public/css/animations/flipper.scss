@@ -1,0 +1,44 @@
+/*
+* animations
+*/
+
+// -------------------------- FLIPPER START --------------------------
+
+.flipper   {
+  top:$grid-gutter-width;
+  bottom:0;
+  left:0;
+  right:$grid-gutter-width;
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: transform 0.3s cubic-bezier(0,.79,.63,1.31);
+
+  & figure {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background-repeat: no-repeat;
+  }
+
+  & .front {
+    background-color: #f7f7f7;
+    background-size: 100%;
+  }
+
+  & .back {
+    background-color: #f7f7f7;
+    background-size: 100%;
+    transform: rotateX( 180deg );
+  }
+
+  &.flipped {
+    transform: rotateX( 180deg );
+  }
+}
+
+// -------------------------- FLIPPER END --------------------------
+

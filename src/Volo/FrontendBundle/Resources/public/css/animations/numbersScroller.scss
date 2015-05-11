@@ -1,0 +1,67 @@
+/*
+* animations
+*/
+
+
+// -------------------------- NUMBERS SCROLLER START --------------------------
+
+.numbers__scroller {
+  position: absolute;
+  top:0;
+  left:0;
+  width:100%;
+}
+
+.number__spacer {
+  @extend .img-responsive;
+  @extend .center-block;
+}
+
+.numbers__sprite {
+  width:100%;
+  background: url('#{$imagepath}/numbers/numbers-sprite.jpg') top left no-repeat scroll;
+  background-size: 100%;
+  overflow: auto;
+}
+
+.number1 {
+  background-position: 0 88.888%;
+}
+
+.number2 {
+  background-position: 0 77.777%;
+}
+
+.number3 {
+  background-position: 0 66.666%;
+}
+
+.number4 {
+  background-position: 0 55.555%;
+}
+
+.number5 {
+  background-position: 0 44.444%;
+}
+
+.number6 {
+  background-position: 0 33.333%;
+}
+
+.number7 {
+  background-position: 0 22.222%;
+}
+
+.number8 {
+  background-position: 0 11.111%;
+}
+
+.number9 {
+  background-position: 0 0;
+}
+
+.number0 {
+  background-position: 0 99.999%;
+}
+
+// -------------------------- NUMBERS SCROLLER END --------------------------

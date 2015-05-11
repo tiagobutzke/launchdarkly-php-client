@@ -5,9 +5,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}Volo{% endblock %}</title>
-        <link rel="apple-touch-icon" href="img/favicon/favicon_114x114.png?v=1" sizes="114x114">
-        <link rel="icon" type="image/png" href="img/favicon/favicon_16x16.png?v=1" sizes="16x16">
-        <link rel="icon" type="image/png" href="img/favicon/favicon_32x32.png?v=1" sizes="32x32">
+        <link rel="apple-touch-icon" href="{{ asset('img/favicon/favicon_114x114.png') }}" sizes="114x114">
+        <link rel="icon" type="image/png" href="{{ asset('img/favicon/favicon_16x16.png') }}" sizes="16x16">
+        <link rel="icon" type="image/png" href="{{ asset('img/favicon/favicon_32x32.png') }}" sizes="32x32">
         {{ block('head_stylesheets') }}
         {{ block('head_scripts') }}
     </head>

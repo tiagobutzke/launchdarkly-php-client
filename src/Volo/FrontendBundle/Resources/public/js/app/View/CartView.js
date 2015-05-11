@@ -24,6 +24,8 @@ var CartView = Backbone.View.extend({
     render: function() {
         this.$el.html(this.template(this.model.toJSON()));
 
+        this._makeCartAndMenuSticky();
+
         return this;
     },
 
@@ -34,6 +36,27 @@ var CartView = Backbone.View.extend({
 
         this.$('.desktop-cart__products').append(view.render().el);
         this._toggleContainerVisibility();
+    },
+
+    _makeCartAndMenuSticky: function() {
+        var $menuCache = $('.menu'),
+            $headerCache = $('.header');
+
+        new StickOnTop(
+            $('.desktop-cart-container'),
+            $('.desktop-cart'),
+            function(){ return $headerCache.height(); },
+            function(){ return $menuCache.position().top; },
+            function(){ return $menuCache.offset().top + $menuCache.height(); }
+        );
+
+        new StickOnTop(
+            $('.menu__categories nav'),
+            $('.menu__categories'),
+            function(){ return $headerCache.height(); },
+            function(){ return $menuCache.offset().top + 27; },
+            function(){ return $menuCache.offset().top + $menuCache.height(); }
+        );
     },
 
     _toggleContainerVisibility: function() {
