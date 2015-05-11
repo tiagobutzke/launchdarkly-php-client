@@ -85,7 +85,7 @@ The parameters are defined in ```app/config/countries_parameters```, for each co
 
 Translation
 ---
-The dictionary is saved at [https://webtranslateit.com/en/projects/11407-Volo](https://webtranslateit.com/en/projects/11407-Volo) (next: WTI). English language is used as a fallback language. Site's locale should be ```de-DE``` (the right way would be ```de_DE```, but because of the foodpanda's translation library, we should set locale as ```de-DE```).
+The dictionary is saved at [https://webtranslateit.com/en/projects/11407-Volo](https://webtranslateit.com/en/projects/11407-Volo) (next: WTI). English language is used as a fallback language. Site's locale should be ```de```.
 
 Translations are being imported to our project using the command ```app/console foodpanda:translations:sync```. The translation dictionary
 
