@@ -57,7 +57,7 @@ class CartManagerService
      */
     public function getCart($sessionId, $vendorIdentifier)
     {
-        $cart = [];
+        $cart = null;
         $cartKey = $this->createCartKey($sessionId, $vendorIdentifier);
         $cartCollection = $this->getCartCollection($sessionId);
 
@@ -88,11 +88,8 @@ class CartManagerService
     protected function getCartCollection($sessionId)
     {
         $carts = $this->cache->fetch($this->createCartCollectionKey($sessionId));
-        if (!$carts) {
-            $carts = [];
-        }
 
-        return $carts;
+        return false === $carts ? [] : $carts;
     }
 
     /**
@@ -103,7 +100,7 @@ class CartManagerService
     public function getDefaultCart($sessionId)
     {
         $cartCollection = $this->getCartCollection($sessionId);
-        $defaultCart = [];
+        $defaultCart = null;
 
         foreach ($cartCollection as $values) {
             if ($values[static::DEFAULT_CART_FLAG] || count($defaultCart) === 0) {
