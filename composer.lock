@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ebc75036d45b912d81496077de8b64ed",
+    "hash": "2cf35327f849c2fd396aa7ffc4b9c0ac",
     "packages": [
         {
             "name": "commerceguys/guzzle-oauth2-plugin",
@@ -531,6 +531,43 @@
                 "parser"
             ],
             "time": "2014-09-09 13:34:57"
+        },
+        {
+            "name": "drak/native-session",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zikula/NativeSession.git",
+                "reference": "81653296944b00be03364a6ccc111ccafa52f087"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zikula/NativeSession/zipball/81653296944b00be03364a6ccc111ccafa52f087",
+                "reference": "81653296944b00be03364a6ccc111ccafa52f087",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "symfony/http-foundation": ">=2.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Drak": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Drak",
+                    "email": "drak@zikula.org"
+                }
+            ],
+            "description": "Native session handlers for Symfony2",
+            "time": "2015-03-31 17:40:46"
         },
         {
             "name": "foodpanda/api-sdk",
