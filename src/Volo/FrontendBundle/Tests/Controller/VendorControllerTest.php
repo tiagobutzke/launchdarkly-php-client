@@ -10,7 +10,7 @@ class VendorControllerTest extends VoloTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/vendor/690');
+        $client->request('GET', '/restaurant/m0zt/royal-garden-restaurant');
 
         $this->isSuccessful($client->getResponse());
     }
