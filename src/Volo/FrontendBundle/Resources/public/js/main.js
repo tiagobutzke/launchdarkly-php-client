@@ -47,7 +47,7 @@ $(document).on('ready page:load', function () {
         eventHandler.addProduct(cart, $(this));
     });
 
-    var cart = VOLO.cart || new Cart(); //state-full object with info about order
+    var cart = document.cart || new Cart(); //state-full object with info about order
     var cartManager  = new CartManager(); //service for cart action
     var dataHandler  = new CartDataHandler();
     var eventHandler = new EventHandler(cartManager, dataHandler); //dom events handling
