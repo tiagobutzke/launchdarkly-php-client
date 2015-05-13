@@ -14,6 +14,7 @@
         <parameter key="doctrine_cache.php_file.class">Volo\FrontendBundle\Service\Provider\TranslatorCache</parameter>
         <parameter key="volo_frontend.service.configuration.class">Volo\FrontendBundle\Service\ConfigurationService</parameter>
         <parameter key="volo_frontend.service.customer.class">Volo\FrontendBundle\Service\CustomerService</parameter>
+        <parameter key="volo_frontend.service.phone_number.class">Volo\FrontendBundle\Service\PhoneNumberService</parameter>
         <parameter key="volo_frontend.service.cart_manager.class">Volo\FrontendBundle\Service\CartManagerService</parameter>
         <parameter key="volo_frontend.service.order_manager.class">Volo\FrontendBundle\Service\OrderManagerService</parameter>
         <parameter key="volo_frontend.cache_warmer.class">Volo\FrontendBundle\CacheWarmer\VoloCacheWarmer</parameter>
@@ -59,6 +60,7 @@
         <service id="volo_frontend.service.customer" class="%volo_frontend.service.customer.class%">
             <argument type="service" id="volo_frontend.provider.customer" />
             <argument type="service" id="volo_frontend.api.serializer"/>
+            <argument type="service" id="volo_frontend.service.phone_number" />
         </service>
 
         <service id="volo_frontend.twig.serializer_extension" class="%volo_frontend.twig.serializer_extension.class%">
@@ -68,6 +70,11 @@
 
         <service id="volo_frontend.service.customer_location" class="%volo_frontend.service.customer_location.class%">
             <argument type="service" id="doctrine_cache.providers.configuration_cache" />
+        </service>
+
+        <service id="volo_frontend.service.phone_number" class="%volo_frontend.service.phone_number.class%">
+            <argument type="service" id="libphonenumber.phone_number_util" />
+            <argument>%country_code%</argument>
         </service>
     </services>
 </container>

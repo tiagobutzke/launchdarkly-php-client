@@ -23,7 +23,8 @@
         "foodpanda/translation-library": "~1.1",
         "foodpanda/translation-bundle": "~1.0",
         "foodpanda/api-sdk": "dev-master#c3f9ef0b38e2e34946016633b46b7ad6beb6b565",
-        "drak/native-session": "^1.0"
+        "drak/native-session": "^1.0",
+        "misd/phone-number-bundle": "~1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

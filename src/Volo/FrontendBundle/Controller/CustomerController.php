@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
 
 class CustomerController extends Controller
 {
@@ -46,6 +47,8 @@ class CustomerController extends Controller
 
             // @TODO: Do something here, redirect or auto-login the user or anything similar (not sure about it yet)
             return dump($newCustomer);
+        } catch (PhoneNumberValidationException $e) {
+            $this->addFlash('error', sprintf('%s: %s', 'Phone number', $e->getMessage()));
         } catch (ValidationEntityException $e) {
             $errors = json_decode($e->getMessage(), true)['data']['items'];
             $this->createErrors($errors);

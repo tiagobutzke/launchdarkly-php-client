@@ -36,6 +36,7 @@ class AppKernel extends Kernel
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Volo\FrontendBundle\VoloFrontendBundle(),
             new Helthe\Bundle\TurbolinksBundle\HeltheTurbolinksBundle(),
+            new Misd\PhoneNumberBundle\MisdPhoneNumberBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
