@@ -1,8 +1,11 @@
 {% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
 
 {% block content %}
+    <div class="teaser b-lazy"
+         data-src="{{ asset("img/homepage/teaser_2400.jpg") }}"
+         data-src-1400="{{ asset("img/homepage/teaser_2800.jpg") }}"
+         data-src-biggest="{{ asset("img/homepage/teaser_4000.jpg") }}">
 
-    <section class="teaser">
         <div class="teaser__slogan">
             <h2>Essen der besten Restaurants, <br />blitzschnell zu Ihnen nach Hause oder ins Büro.</h2>
         </div>
@@ -11,7 +14,7 @@
             <button class="button primary">FIND FOOD</button>
         </form>
         <div class="teaser__gradient"></div>
-    </section>
+    </div>
 
     <div class="titles">
         <div class="titles__title">
@@ -73,7 +76,7 @@
                     <div class="city__title">
                         <span>Berlin</span>
                     </div>
-                    <img class="b-lazy" data-src="/img/cities/berlin.jpg" alt="" src="/img/placeholder_414x217.png" />
+                    <img class="b-lazy" data-src-biggest="/img/cities/berlin.jpg" alt="" src="/img/placeholder_414x217.png" />
                 </a>
             </div>
             <div class="city">

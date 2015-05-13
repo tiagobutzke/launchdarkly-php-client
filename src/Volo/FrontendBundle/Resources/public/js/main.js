@@ -1,6 +1,6 @@
+var VOLO = VOLO || {};
 $(document).on('ready page:load', function () {
     setTimeout(function() {
-        if ($('body').hasClass('menu-page')) {
             new Blazy({
                 breakpoints: [{
                     width: 300, // max-width
@@ -31,15 +31,11 @@ $(document).on('ready page:load', function () {
                     src: 'data-src-1400',
                     mode: 'viewport'
                 }, {
-                    width: 2000, // max-width
-                    src: 'data-src-2000',
+                    width: 99999999, // max-width
+                    src: 'data-src-biggest',
                     mode: 'viewport'
-                }],
-                selector: '.b-lazy.hero-menu__img'
+                }]
             });
-        } else {
-            new Blazy();
-        }
     }, 100);
 
 
