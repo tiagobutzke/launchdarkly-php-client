@@ -52,6 +52,7 @@ module.exports = function (grunt) {
         'web/js/fos_js_routes.js',
         'bower_components/lodash/lodash.js',
         'bower_components/backbone/backbone.js',
+        'bower_components/geocomplete/jquery.geocomplete.js',
         frontendAssetPath('/js/**/*.js')
     ];
 

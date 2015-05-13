@@ -49,6 +49,9 @@ $(document).on('ready page:load', function () {
         cartModel: VOLO.cartModel
     });
 
+    GeocodingService.attach($('#postal_index_form'));
+    GeocodingHandlersHome.handle($('#postal_index_form'));
+
     VOLO.cartView = new CartView({
         el: '.desktop-cart',
         model: VOLO.cartModel,

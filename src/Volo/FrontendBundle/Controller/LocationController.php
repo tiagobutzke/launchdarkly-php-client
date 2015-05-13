@@ -3,6 +3,7 @@
 namespace Volo\FrontendBundle\Controller;
 
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -32,6 +33,29 @@ class LocationController extends Controller
             'city'          => $city,
             'openVendors'   => $openVendors,
             'closedVendors' => $closedVendorsWithPreorder
+        ];
+    }
+
+    /**
+     * @Route(
+     *      "/search/{lat}/{lng}",
+     *      name="search_vendors",
+     *      options={
+     *          "expose"=true
+ *          }
+     * )
+     * @Template()
+     * @Method({"GET"})
+     *
+     * @param float $lat
+     * @param float $lng
+     *
+     * @return array
+     */
+    public function searchAction($lat, $lng)
+    {
+        return [
+            'vendors' => [],
         ];
     }
 }
