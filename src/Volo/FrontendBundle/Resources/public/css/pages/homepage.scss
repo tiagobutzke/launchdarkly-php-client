@@ -38,8 +38,10 @@ section {
 .teaser {
   @include make-row();
   padding-top: 130px;
-  background: url('#{$imagepath}teaser.jpg') center top no-repeat scroll;
-  background-size: auto 100%;
+  background-color: #000;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
   height: 720px;
   position: relative;
   margin-bottom: 20px;
