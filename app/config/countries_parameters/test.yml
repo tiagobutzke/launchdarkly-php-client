@@ -24,3 +24,7 @@ parameters:
     volo_frontend_configuration_cache_life_time: 300
 
     session_handler_redis_save_path: "tcp://127.0.0.1:6379?prefix=test"
+
+    volo_frontend.thumbor_base_url: '/app_%kernel.environment%.php/thumbor/fake'
+    volo_frontend.thumbor_secret: ~
+    volo_frontend.image_server_base_url: https://s3.eu-central-1.amazonaws.com/test-volo-bucket

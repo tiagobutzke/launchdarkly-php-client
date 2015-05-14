@@ -16,6 +16,10 @@ framework:
     templating:
         engines: ['twig']
         assets_version: 1
+        packages:
+            cdn_s3:
+                base_urls:
+                    [ "%volo_frontend.image_server_base_url%/%kernel.environment%/%country_code%" ]
     default_locale:  "%locale%"
     trusted_hosts:   ~
     trusted_proxies: ~
@@ -52,6 +56,51 @@ foodpanda_web_translate_it:
     public_api_key: %foodpanda_web_translate_it_public_api_key%
     private_api_key: %foodpanda_web_translate_it_private_api_key%
     main_translation_label: %foodpanda_web_translate_it_main_translation_label%
+
+jb_phumbor:
+    server:
+        url: %volo_frontend.thumbor_base_url%
+        secret: %volo_frontend.thumbor_secret%
+    transformations:
+        300:
+            resize: { width: 300, height: 0 }
+        300_retina:
+            resize: { width: 600, height: 0 }
+
+        400:
+            resize: { width: 400, height: 0 }
+        400_retina:
+            resize: { width: 800, height: 0 }
+
+        600:
+            resize: { width: 600, height: 0 }
+        600_retina:
+            resize: { width: 1200, height: 0 }
+
+        800:
+            resize: { width: 800, height: 0 }
+        800_retina:
+            resize: { width: 1600, height: 0 }
+
+        1000:
+            resize: { width: 1000, height: 0 }
+        1000_retina:
+            resize: { width: 2000, height: 0 }
+
+        1200:
+            resize: { width: 1200, height: 0 }
+        1200_retina:
+            resize: { width: 2400, height: 0 }
+
+        1400:
+            resize: { width: 1400, height: 0 }
+        1400_retina:
+            resize: { width: 2800, height: 0 }
+
+        biggest:
+            resize: { width: 2000, height: 0 }
+        biggest_retina:
+            resize: { width: 4000, height: 0 }
 
 volo_frontend:
     api:

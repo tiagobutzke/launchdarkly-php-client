@@ -20,7 +20,7 @@
         <parameter key="volo_frontend.cache_warmer.class">Volo\FrontendBundle\CacheWarmer\VoloCacheWarmer</parameter>
         <parameter key="volo_frontend.twig.serializer_extension.class">Volo\FrontendBundle\Twig\SerializerExtension</parameter>
         <parameter key="volo_frontend.service.customer_location.class">Volo\FrontendBundle\Service\CustomerLocationService</parameter>
-        <parameter key="volo_frontend.twig.vendor_image_extension.class">Volo\FrontendBundle\Twig\VendorImageExtension</parameter>
+        <parameter key="volo_frontend.twig.vendor_image_extension.class">Volo\FrontendBundle\Twig\ThumborImageExtension</parameter>
         <parameter key="volo_frontend.thumbor_builder_factory.class">Thumbor\Url\BuilderFactory</parameter>
     </parameters>
 
@@ -74,11 +74,16 @@
             <argument type="string">%volo_frontend.thumbor_base_url%</argument>
             <argument type="string">%volo_frontend.thumbor_secret%</argument>
         </service>
+
+        <!-- the class property is needed even if the service is constructed by a factory
+             since symfony might need to add method calls based on compile-time checks. -->
+        <service id="volo_frontend.thumbor_transformers" class="ArrayObject" public="false">
+            <factory service="service_container" method="getParameter"/>
+            <argument>phumbor.transformations</argument>
+        </service>
+
         <service id="volo_frontend.twig.vendor_image_extension" class="%volo_frontend.twig.vendor_image_extension.class%">
-            <argument type="string">%volo_frontend.image_server_base_url%</argument>
-            <argument type="string">%country_code%</argument>
-            <argument type="string">%kernel.environment%</argument>
-            <argument type="service" id="volo_frontend.thumbor_builder_factory" />
+            <argument type="service" id="volo_frontend.thumbor_transformers" />
             <tag name="twig.extension" />
         </service>
 
