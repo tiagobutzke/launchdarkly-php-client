@@ -31,7 +31,19 @@
                             <div class="col-md-5">
                                 <p>DELIVERY ADDRESS</p>
 
-                                <p>Johanisstrasse 20<br/>10117 Berlin</p>
+                                <form id="checkout_form">
+                                    <p>
+                                        <input type="text"
+                                               name="shipping_address_formatted"
+                                               value="{{ shippingAddress.formatted|e }}"
+                                               style="border: 1px solid red;width:350px;"
+                                               onfocus="this.select()"
+                                               id="checkout_shipping_address"
+                                        >
+                                        <input type="hidden" name="shipping_address_lat" value="{{ shippingAddress.lat|e }}">
+                                        <input type="hidden" name="shipping_address_lng" value="{{ shippingAddress.lng|e }}">
+                                    </p>
+                                </form>
 
                                 <p>"Please for for "Stone-Garfield" at the door upon arrival"</p>
                             </div>

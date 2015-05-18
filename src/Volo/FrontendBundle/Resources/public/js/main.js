@@ -49,6 +49,9 @@ $(document).on('ready page:load', function () {
         cartModel: VOLO.cartModel
     });
 
+    VOLO.GeocodingHandlersHome.handle();
+    VOLO.GeocodingHandlersCheckout.handle();
+
     VOLO.cartView = new CartView({
         el: '.desktop-cart',
         model: VOLO.cartModel,
