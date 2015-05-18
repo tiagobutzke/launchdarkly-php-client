@@ -12,6 +12,7 @@
         {{ block('head_scripts') }}
     </head>
     <body class="{% block bodyClass %}{% endblock %}">
+        {{ block('modals') }}
         <div class="page-wrapper">
             <div class="content-wrapper {% block content_wrapper_class %}{% endblock content_wrapper_class %}">
             {{ block('header') }}

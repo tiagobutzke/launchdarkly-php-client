@@ -44,21 +44,24 @@ $(document).on('ready page:load', function () {
 
     VOLO.baseView = new BaseView(); //all your window events/other magic on DOM, belongs to here
 
-    VOLO.menu = new MenuView({
-        el: '.menu__main',
-        cartModel: VOLO.cartModel
-    });
-
     VOLO.GeocodingHandlersHome.handle();
     VOLO.GeocodingHandlersCheckout.handle();
 
-    VOLO.cartView = new CartView({
-        el: '.desktop-cart',
-        model: VOLO.cartModel,
-        vendor_id: $('.menu__main').data().vendor_id
-    });
+    var $menuMain = $('.menu__main');
+    if ($menuMain.length) {
+        VOLO.menu = new MenuView({
+            el: '.menu__main',
+            cartModel: VOLO.cartModel
+        });
 
-    VOLO.cartView.render();
+        VOLO.cartView = new CartView({
+            el: '.desktop-cart',
+            model: VOLO.cartModel,
+            vendor_id: $menuMain.data().vendor_id
+        });
+
+        VOLO.cartView.render();
+    }
 });
 
 Turbolinks.pagesCached(0);

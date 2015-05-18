@@ -53,6 +53,7 @@ module.exports = function (grunt) {
         'bower_components/lodash/lodash.js',
         'bower_components/backbone/backbone.js',
         'bower_components/geocomplete/jquery.geocomplete.js',
+        'bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/modal.js',
         frontendAssetPath('/js/**/*.js')
     ];
 
@@ -126,7 +127,8 @@ module.exports = function (grunt) {
                 'web/js/lib/andr3pt-blazy.js',
                 'bower_components/lodash/lodash.js',
                 'bower_components/backbone/backbone.js',
-                'web/bundles/fosjsrouting/js/router.js'
+                'web/bundles/fosjsrouting/js/router.js',
+                'bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/modal.js'
             ]
         },
         gruntfile: {
