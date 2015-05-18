@@ -8,10 +8,13 @@
         <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
     {% endif %}
     <script type="text/javascript">
-        var VOLOTranslations = {
+        var VOLO = VOLO || {};
+        VOLO.Translations = {
             home: {
                 postal_index_form_please_select_option: '{{ 'home.postal_index_form_please_select_option'|trans|e }}'
             }
         };
+        VOLO.Configuration = VOLO.Configuration || {};
+        VOLO.Configuration.countryCode = '{{ country_code }}';
     </script>
 {% endblock %}
