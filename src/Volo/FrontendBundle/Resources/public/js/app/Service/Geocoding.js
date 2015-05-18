@@ -6,7 +6,7 @@ VOLO.GeocodingService = {
         input
             .geocomplete({
                 types: ["geocode", "establishment"],
-                country: "de"
+                country: VOLO.Configuration.countryCode
             })
             .bind("geocode:result", function(event, result){
                 callbackResult(result.geometry);
@@ -33,7 +33,7 @@ VOLO.GeocodingHandlersHome = {
             var lng = form.find('input[name="lng"]').val();
 
             if (lat === '' || lng === '') {
-                alert(VOLOTranslations.home.postal_index_form_please_select_option);
+                alert(VOLO.Translations.home.postal_index_form_please_select_option);
 
                 return false;
             }
