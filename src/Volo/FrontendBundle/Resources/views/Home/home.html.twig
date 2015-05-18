@@ -9,7 +9,7 @@
         <div class="teaser__slogan">
             <h2>Essen der besten Restaurants, <br />blitzschnell zu Ihnen nach Hause oder ins Büro.</h2>
         </div>
-        <form class="teaser__form" id="postal_index_form" action="/search" method="GET">
+        <form class="teaser__form" id="postal_index_form" action="/search" method="POST">
             <input type="text" class="teaser__form__input" name="formatted_address" autofocus="" placeholder="{{ 'home.postal_code'|trans }}">
             <input type="hidden" name="lat">
             <input type="hidden" name="lng">

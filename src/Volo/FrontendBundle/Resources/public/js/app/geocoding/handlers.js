@@ -9,20 +9,6 @@ var GeocodingHandlersHome = {
 
                 return false;
             }
-
-            GeocodingHandlersHome.navigateToSearchPage(lat, lng);
-
-            return false;
         });
-    },
-
-    navigateToSearchPage: function(lat, lng) {
-        location = Routing.generate(
-            'search_vendors',
-            {
-                lat: lat,
-                lng: lng
-            }
-        );
     }
 };
