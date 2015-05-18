@@ -42,7 +42,17 @@ class CustomerLocationService
      */
     public function get($sessionId)
     {
-        return $this->cache->fetch($this->createSessionKey($sessionId));
+        $value = $this->cache->fetch($this->createSessionKey($sessionId));
+
+        if (!$value) {
+            $value = [
+                static::KEY_FORMATTED_ADDRESS => null,
+                static::KEY_LAT => null,
+                static::KEY_LNG=> null,
+            ];
+        }
+
+        return $value;
     }
 
     /**
