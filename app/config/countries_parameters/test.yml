@@ -22,3 +22,5 @@ parameters:
     foodpanda_web_translate_it_main_translation_label: ~
 
     volo_frontend_configuration_cache_life_time: 300
+
+    session_handler_redis_save_path: "tcp://127.0.0.1:6379?prefix=test"
