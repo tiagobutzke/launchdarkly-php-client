@@ -8,50 +8,49 @@
 {% endblock %}
 
 {% block content %}
-    <div class="teaser b-lazy"
+    <section class="home-section teaser__home-section fullWindowHeight teaser b-lazy"
          data-src="{{ asset("img/homepage/teaser_2400.jpg") }}"
          data-src-1400="{{ asset("img/homepage/teaser_2800.jpg") }}"
          data-src-biggest="{{ asset("img/homepage/teaser_4000.jpg") }}">
-
         <div class="teaser__slogan">
-            <h2>Essen der besten Restaurants, <br />blitzschnell zu Ihnen nach Hause oder ins Büro.</h2>
+            <h2 class="teaser__slogan__h2">{{ 'The restaurants you love brought to you'|trans }}</h2>
         </div>
         <form class="teaser__form" id="postal_index_form" action="{{ path('search_vendors') }}" method="GET">
             <input type="text" class="teaser__form__input" name="formatted_address" autofocus="" placeholder="{{ 'home.postal_code'|trans }}">
             <input type="hidden" name="lat">
             <input type="hidden" name="lng">
-            <button class="button button--inline" type="submit">{{ 'home.buttons_find_food'|trans }}</button>
+            <button class="teaser__button button button--inline" type="submit">{{ 'home.buttons_find_food'|trans }}</button>
         </form>
-        <div class="teaser__gradient"></div>
-    </div>
+        <div class="teaser__white-gradient b-lazy" data-src="{{ asset('img/white-gradient.png') }}"></div>
+        <div class="teaser__arrow data-icon icon-down-open-big"></div>
+    </section>
 
-    <div class="titles">
+    <div class="titles restaurants__titles">
         <div class="titles__title">
-            Only the best.
+            {{ 'Only the best.'|trans }}
         </div>
         <div class="titles__subtitle">
-            Carefully selected.
+            {{ 'Carefully selected.'|trans }}
         </div>
     </div>
-    <section class="restaurants-logos">
-
-        <div class="logos-container">
-            <div class="restaurants-logos__logo">
+    <section class="home-section restaurants-home">
+        <div class="restaurants-home__logos">
+            <div class="restaurants-home__logos__logo">
                 <img src="{{ asset('img/logos/logo01.png') }}">
             </div>
-            <div class="restaurants-logos__logo">
+            <div class="restaurants-home__logos__logo">
                 <img src="{{ asset('img/logos/logo02.png') }}">
             </div>
-            <div class="restaurants-logos__logo">
+            <div class="restaurants-home__logos__logo">
                 <img src="{{ asset('img/logos/logo03.png') }}">
             </div>
-            <div class="restaurants-logos__logo">
+            <div class="restaurants-home__logos__logo">
                 <img src="{{ asset('img/logos/logo04.png') }}">
             </div>
-            <div class="restaurants-logos__logo">
+            <div class="restaurants-home__logos__logo">
                 <img src="{{ asset('img/logos/logo05.png') }}">
             </div>
-            <div class="restaurants-logos__logo">
+            <div class="restaurants-home__logos__logo">
                 <img src="{{ asset('img/logos/logo01.png') }}">
             </div>
         </div>
@@ -59,181 +58,75 @@
 
     <div class="titles">
         <div class="titles__title">
-            Always hot.
+            {{ 'No long waits.'|trans }}
         </div>
         <div class="titles__subtitle">
-            Get your meals fast.
+            {{ 'Get your meals fast.'|trans }}
         </div>
     </div>
-    <section class="stats">
+    <section class="home-section stats">
         <div class="stats__container">
             <div class="stats__content" >
-                <img id="stats__fork-knife" alt="" src="{{ asset('img/fork-knife.png') }}" />
+                <img class="stats__fork-knife" alt="" src="{{ asset('img/fork-knife.png') }}" />
                 <div class="stats__numbers">
                     <div class="stats__numbers__first">
-                        <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
                         <div class="numbers__scroller">
-                            <div class="numbers__sprite number6">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number5">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number5">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number5">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number5">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number5">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number5">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number5">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number5">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number5">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number5">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number4">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number4">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number4">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number4">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number4">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number4">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number4">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number4">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number4">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number4">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number3">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number3">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number3">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number3">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number3">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number3">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number3">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number3">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number3">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number3">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number2">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number2">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number2">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number2">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number2">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number2">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number2">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number2">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number2">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number2">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number1">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number1">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number1">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number1">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number1">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number1">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number1">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number1">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number1">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
-                            <div class="numbers__sprite number1">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
+                            <div class="numbers__sprite number6"></div>
+                            <div class="numbers__sprite number5"></div>
+                            <div class="numbers__sprite number5"></div>
+                            <div class="numbers__sprite number5"></div>
+                            <div class="numbers__sprite number5"></div>
+                            <div class="numbers__sprite number5"></div>
+                            <div class="numbers__sprite number5"></div>
+                            <div class="numbers__sprite number5"></div>
+                            <div class="numbers__sprite number5"></div>
+                            <div class="numbers__sprite number5"></div>
+                            <div class="numbers__sprite number5"></div>
+                            <div class="numbers__sprite number4"></div>
+                            <div class="numbers__sprite number4"></div>
+                            <div class="numbers__sprite number4"></div>
+                            <div class="numbers__sprite number4"></div>
+                            <div class="numbers__sprite number4"></div>
+                            <div class="numbers__sprite number4"></div>
+                            <div class="numbers__sprite number4"></div>
+                            <div class="numbers__sprite number4"></div>
+                            <div class="numbers__sprite number4"></div>
+                            <div class="numbers__sprite number4"></div>
+                            <div class="numbers__sprite number3"></div>
+                            <div class="numbers__sprite number3"></div>
+                            <div class="numbers__sprite number3"></div>
+                            <div class="numbers__sprite number3"></div>
+                            <div class="numbers__sprite number3"></div>
+                            <div class="numbers__sprite number3"></div>
+                            <div class="numbers__sprite number3"></div>
+                            <div class="numbers__sprite number3"></div>
+                            <div class="numbers__sprite number3"></div>
+                            <div class="numbers__sprite number3"></div>
+                            <div class="numbers__sprite number2"></div>
+                            <div class="numbers__sprite number2"></div>
+                            <div class="numbers__sprite number2"></div>
+                            <div class="numbers__sprite number2"></div>
+                            <div class="numbers__sprite number2"></div>
+                            <div class="numbers__sprite number2"></div>
+                            <div class="numbers__sprite number2"></div>
+                            <div class="numbers__sprite number2"></div>
+                            <div class="numbers__sprite number2"></div>
+                            <div class="numbers__sprite number2"></div>
+                            <div class="numbers__sprite number1"></div>
+                            <div class="numbers__sprite number1"></div>
+                            <div class="numbers__sprite number1"></div>
+                            <div class="numbers__sprite number1"></div>
+                            <div class="numbers__sprite number1"></div>
+                            <div class="numbers__sprite number1"></div>
+                            <div class="numbers__sprite number1"></div>
+                            <div class="numbers__sprite number1"></div>
+                            <div class="numbers__sprite number1"></div>
+                            <div class="numbers__sprite number1"></div>
                         </div>
                     </div>
                     <div class="stats__numbers__second">
-                        <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
                         <div class="numbers__scroller">
-                            <div class="numbers__sprite number0">
-                                <img class="number__spacer" src="{{ asset('img/numbers/number-spacer.png') }}">
-                            </div>
+                            <div class="numbers__sprite number0"></div>
                             <img class="number__spacer" src="{{ asset('img/numbers/numbers-sprite.jpg') }}">
                             <img class="number__spacer" src="{{ asset('img/numbers/numbers-sprite.jpg') }}">
                             <img class="number__spacer" src="{{ asset('img/numbers/numbers-sprite.jpg') }}">
@@ -242,12 +135,12 @@
                         </div>
                     </div>
                     <div class="stats__comment__minutes">
-                        min.
+                        {{ 'min.'|trans }}
                     </div>
                     <div class="stats__comment">
-                        Average delivery time <br/>per order.
+                        {{ 'Average delivery time per order.'|trans }}
                     </div>
-                    <img id="stats__dish" class="b-lazy" data-src="/img/dish.png" alt="" src="{{ blazy_placeholder }}" />
+                    <img class="b-lazy stats__dish" data-src="/img/dish.png" alt="" src="" />
                 </div>
             </div>
         </div>
@@ -255,77 +148,89 @@
 
     <div class="titles">
         <div class="titles__title">
-            Straight to your dining table.
+            {{ 'We’re in your city!'|trans }}
         </div>
         <div class="titles__subtitle">
-            tell us where you are.
+            {{ 'Find your local favourites'|trans }}
         </div>
     </div>
-    <section class="cities">
+    <section class="home-section cities">
         <div class="cities__container">
-            <a href="{{ path('city', {id: 2}) }}" class="city">
-                <div class="city__title">
-                    Berlin
+            <div class="city">
+                <div class="city__container">
+                    <div class="city__name">
+                        <div>{{ 'Berlin'|trans }}</div>
+                        <a href="{{ path('city', {'id': 2}) }}" class="button city__called-action">{{ 'Browse restaurants'|trans }}</a>
+                    </div>
+                    <div class="flipper city__flipper">
+                        <figure class="flipper__front b-lazy" data-src="{{ asset('img/cities/berlin.jpg') }}"></figure>
+                        <figure class="flipper__back b-lazy" data-src="{{ asset('img/cities/berlin_food.jpg') }}"></figure>
+                    </div>
                 </div>
-                <img src="{{ asset('img/cities/cities-spacer.png') }}" />
-                <div class="flipper">
-                    <figure class="front b-lazy" data-src="/img/cities/berlin.jpg"></figure>
-                    <figure class="back b-lazy" data-src="/img/cities/berlin_food.jpg"></figure>
+            </div>
+            <div class="city">
+                <div class="city__container">
+                    <div class="city__name">
+                        <div>{{ 'Frankfurt'|trans }}</div>
+                        <a href="{{ path('city', {'id': 2}) }}" class="button city__called-action">{{ 'Browse restaurants'|trans }}</a>
+                    </div>
+
+                    <div class="flipper city__flipper">
+                        <figure class="flipper__front b-lazy" data-src="{{ asset('img/cities/frankfurt.jpg') }}"></figure>
+                        <figure class="flipper__back b-lazy" data-src="{{ asset('img/cities/frankfurt_food.jpg') }}"></figure>
+                    </div>
                 </div>
-            </a>
-            <a href="{{ path('city', {id: 2}) }}" class="city">
-                <div class="city__title">
-                    Frankfurt
+            </div>
+            <div class="city">
+                <div class="city__container">
+                    <div class="city__name">
+                        <div>{{ 'Hamburg'|trans }}</div>
+                        <a href="{{ path('city', {'id': 2}) }}" class="button city__called-action">{{ 'Browse restaurants'|trans }}</a>
+                    </div>
+                    <div class="flipper city__flipper">
+                        <figure class="flipper__front b-lazy" data-src="{{ asset('img/cities/hamburg.jpg') }}"></figure>
+                        <figure class="flipper__back b-lazy" data-src="{{ asset('img/cities/hamburg_food.jpg') }}"></figure>
+                    </div>
                 </div>
-                <img src="{{ asset('img/cities/cities-spacer.png') }}" />
-                <div class="flipper">
-                    <figure class="front b-lazy" data-src="/img/cities/frankfurt.jpg"></figure>
-                    <figure class="back b-lazy" data-src="/img/cities/frankfurt_food.jpg"></figure>
+            </div>
+            <div class="city">
+                <div class="city__container">
+                    <div class="city__name">
+                        <div>{{ 'München'|trans }}</div>
+                        <a href="{{ path('city', {'id': 2}) }}" class="button city__called-action">{{ 'Browse restaurants'|trans }}</a>
+                    </div>
+                    <div class="flipper city__flipper">
+                        <figure class="flipper__front b-lazy" data-src="{{ asset('img/cities/munchen.jpg') }}"></figure>
+                        <figure class="flipper__back b-lazy" data-src="{{ asset('img/cities/munchen_food.jpg') }}"></figure>
+                    </div>
                 </div>
-            </a>
-            <a href="{{ path('city', {id: 2}) }}" class="city">
-                <div class="city__title">
-                    Köln
+            </div>
+            <div class="city">
+                <div class="city__container">
+                    <div class="city__name">
+                        <div>{{ 'Düsseldorf'|trans }}</div>
+                        <a href="{{ path('city', {'id': 2}) }}" class="button city__called-action">{{ 'Browse restaurants'|trans }}</a>
+                    </div>
+                    <div class="flipper city__flipper">
+                        <figure class="flipper__front b-lazy" data-src="{{ asset('img/cities/dusseldorf.jpg') }}"></figure>
+                        <figure class="flipper__back b-lazy" data-src="{{ asset('img/cities/dusseldorf_food.jpg') }}"></figure>
+                    </div>
                 </div>
-                <img src="{{ asset('img/cities/cities-spacer.png') }}" />
-                <div class="flipper">
-                    <figure class="front b-lazy" data-src="/img/cities/hamburg.jpg"></figure>
-                    <figure class="back b-lazy" data-src="/img/cities/hamburg_food.jpg"></figure>
+            </div>
+            <div class="city">
+                <div class="city__container">
+                    <div class="city__name">
+                        <div>{{ 'Köln'|trans }}</div>
+                        <a href="{{ path('city', {'id': 2}) }}" class="button city__called-action">{{ 'Browse restaurants'|trans }}</a>
+                    </div>
+                    <div class="flipper city__flipper">
+                        <figure class="flipper__front b-lazy" data-src="{{ asset('img/cities/koln.jpg') }}"></figure>
+                        <figure class="flipper__back b-lazy" data-src="{{ asset('img/cities/koln_food.jpg') }}"></figure>
+                    </div>
                 </div>
-            </a>
-            <a href="{{ path('city', {id: 2}) }}" class="city">
-                <div class="city__title">
-                    München
-                </div>
-                <img src="{{ asset('img/cities/cities-spacer.png') }}" />
-                <div class="flipper">
-                    <figure class="front b-lazy" data-src="/img/cities/munchen.jpg"></figure>
-                    <figure class="back b-lazy" data-src="/img/cities/munchen_food.jpg"></figure>
-                </div>
-            </a>
-            <a href="{{ path('city', {id: 2}) }}" class="city">
-                <div class="city__title">
-                    Düsseldorf
-                </div>
-                <img src="{{ asset('img/cities/cities-spacer.png') }}" />
-                <div class="flipper">
-                    <figure class="front b-lazy" data-src="/img/cities/dusseldorf.jpg"></figure>
-                    <figure class="back b-lazy" data-src="/img/cities/dusseldorf_food.jpg"></figure>
-                </div>
-            </a>
-            <a href="#" class="city">
-                <div class="city__title">
-                    Köln
-                </div>
-                <img src="{{ asset('img/cities/cities-spacer.png') }}" />
-                <div class="flipper">
-                    <figure class="front b-lazy" data-src="/img/cities/koln.jpg"></figure>
-                    <figure class="back b-lazy" data-src="/img/cities/koln_food.jpg"></figure>
-                </div>
-            </a>
+            </div>
         </div>
     </section>
-
 
     <div style="text-align: center">
         {% for city in cities %}

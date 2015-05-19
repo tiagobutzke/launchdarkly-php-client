@@ -1,29 +1,27 @@
 $(document).on('ready page:load', function() {
-    var stats = $("#stats__dish");
+    var $stats = $(".stats__dish"),
+        $statsCommentCache;
 
-    if(stats.length) {
-        new RevealOnScroll(stats, $('.stats'), 0.3, 0.18, 65);
-
-        var statsCommentCache = $(".stats__comment");
+    new FullWindowHeight();
+    if ($stats.length) {
+        new RevealOnScroll($stats, $('.stats'), 0.3, 0.07, 85);
+        $statsCommentCache = $(".stats__comment");
         new NumberScroller(
             $(".numbers__scroller"),
-            function() { return statsCommentCache.offset().top; },
-            21
+            function() { return $statsCommentCache.offset().top; },
+            29
         );
-
         $('.city').each(function() {
-            var city = $(this),
-                cityTitle = city.find('.city__title'),
-                cityName = cityTitle.html();
+            var $city = $(this),
+                $cityNameHover = $city.find('.city__called-action');
 
-            city.mouseover(function() {
-                    cityTitle.html('Browse restaurants');
-                })
+            $city.mouseover(function() {
+                $cityNameHover.css({display: 'inline-block'});
+            })
                 .mouseout(function() {
-                    cityTitle.html(cityName);
+                    $cityNameHover.hide();
                 });
-
-            new Flipper(city);
+            new Flipper($city);
         });
     }
 });

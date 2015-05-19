@@ -1,5 +1,6 @@
 
 var StickOnTop  = function(target, container, stickToTopValueGetter, startingPointGetter, endPointGetter) {
+    'use strict';
     var windowCache = $(window),
         endpoint,
         targetHeight,
@@ -46,7 +47,6 @@ var StickOnTop  = function(target, container, stickToTopValueGetter, startingPoi
             }
         }
     }
-
     function onResize() {
         onScroll();
         if (sticking) {
@@ -57,7 +57,6 @@ var StickOnTop  = function(target, container, stickToTopValueGetter, startingPoi
             });
         }
     }
-
     windowCache.scroll(onScroll);
     windowCache.resize(onResize);
 };

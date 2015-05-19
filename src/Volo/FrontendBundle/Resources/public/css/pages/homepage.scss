@@ -2,46 +2,64 @@
 * homepage declarations
 */
 
-section {
-  margin-bottom: 4vw;
+.home-section {
+  margin-bottom: 70px;
+  @include respond-from('screen-sm') {
+    margin-bottom: 90px;
+  }
+  @include respond-from('screen-md') {
+    margin-bottom: 110px;
+  }
+  @include respond-from('screen-lg') {
+    margin-bottom: 130px;
+  }
 }
 
 // -------------------------- TITLES START --------------------------
 
 .titles {
   @include make-row();
-  margin-bottom: 1vw;
+  margin-bottom: 10px;
 }
 
 .titles__title {
   @include make-xs-column(12);
-  font-size: 1em;
+  font-size: 1.2em;
   line-height: 1em;
-  padding: 30px 0 10px;
+  padding-bottom: 5px;
+  padding-left: 10%;
+  padding-right: 10%;
   text-align: center;
-  font-family: $cta-font-family;
+  font-family: $satisfy-font-family;
   color: $color-text-highlight;
-  @include respond-from('screen-sm'){
-    font-size: 1.2em;
+  @include respond-from('screen-sm') {
+    font-size: 1.5em;
   }
-  @include respond-from('screen-lg'){
-    font-size: 1.4em;
+  @include respond-from('screen-md') {
+    font-size: 1.8em;
+  }
+  @include respond-from('screen-lg') {
+    font-size: 2.1em;
   }
 }
 
 .titles__subtitle {
   @include make-xs-column(12);
-  font-size: 1.3em;
+  font-size: 1.4em;
   line-height: 1em;
   text-align: center;
-  font-family: $base-font-family;
   color: $color-text-primary;
   text-transform: uppercase;
-  @include respond-from('screen-sm'){
-    font-size: 1.8em;
+  padding-left: 10%;
+  padding-right: 10%;
+  @include respond-from('screen-sm') {
+    font-size: 2em;
   }
-  @include respond-from('screen-lg'){
+  @include respond-from('screen-md') {
     font-size: 2.3em;
+  }
+  @include respond-from('screen-lg') {
+    font-size: 2.6em;
   }
 }
 
@@ -49,98 +67,155 @@ section {
 
 // -------------------------- TEASER START --------------------------
 
+.teaser__home-section {
+  margin-bottom: 10px;
+  @include respond-from('screen-sm') {
+    margin-bottom: 20px;
+  }
+  @include respond-from('screen-md') {
+    margin-bottom: 30px;
+  }
+  @include respond-from('screen-lg') {
+    margin-bottom: 40px;
+  }
+}
+
 .teaser {
   @include make-row();
-  padding-top: 130px;
-  background-color: #000;
-  background-position: center bottom;
+  background-color: $color-text-primary;
+  background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 720px;
   position: relative;
-  margin-bottom: 10px;
-  @include respond-from('screen-md'){
-    padding-top: 130px;
-  }
 }
 
 .teaser__slogan {
-  @include make-xs-column(12);
-  color:#fff;
+  @include make-xs-column(12, 0);
+  color: #fff;
   text-align: center;
-  padding: 0 5vw;
-}
-
-.teaser__slogan h2 {
-  font-family: $base-font-family;
-  line-height: 1.4em;
-  font-size: 6vw;
-  margin-bottom: $space-lg;
-  @include respond-from('screen-sm'){
-    font-size: 2em;
+  padding-bottom: 10px;
+  padding-top: 90px;
+  padding-left: 5%;
+  padding-right: 5%;
+  @include respond-from('screen-sm') {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+  @include respond-from('screen-md') {
+    padding-left: 17%;
+    padding-right: 17%;
+  }
+  @include respond-from('screen-lg') {
+    padding-left: 25%;
+    padding-right: 25%;
   }
 }
 
+.teaser__slogan__h2 {
+  font-family: $base-font-family;
+  line-height: 1.2em;
+  font-size: 1.2em;
+  margin-bottom: 0.5em;
+  text-transform: uppercase;
+  padding-left: 10%;
+  padding-right: 10%;
+  @include respond-from('screen-sm') {
+    font-size: 1.8em;
+  }
+  @include respond-from('screen-md') {
+    font-size: 2.3em;
+  }
+  @include respond-from('screen-lg') {
+    font-size: 2.6em;
+  }
+}
+
+.teaser__white-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 20%;
+  background-repeat: repeat-x;
+  background-position: left bottom;
+  background-size: auto 100%;
+}
+
 .teaser__form {
-  @include make-xs-column(12);
+  @include make-xs-column(12, 0);
   text-align: center;
 }
 
-.teaser__form input {
-  width: 250px;
-  margin-right: $space-xs;
-  margin-bottom: $space-md;
+.teaser__form__input {
+  width: 70%;
+  margin-bottom: $space-sm;
+  @include respond-from('screen-sm') {
+    margin-right: $space-xs;
+    width: 280px;
+    bottom: 8%;
+  }
 }
 
-.teaser__gradient {
-  @include make-xs-column(12);
-  background: url('#{$imagepath}white-gradient.png') bottom left repeat-x;
+.teaser__button {
+  width: 70%;
+  @include respond-from('screen-sm') {
+    width: auto;
+  }
+}
+
+.teaser__arrow {
+  width: 100%;
   position: absolute;
-  bottom:-1px;
-  width:100%;
-  height: 115px;
+  left: 0;
+  text-align: center;
+  color: white;
+  bottom: 5%;
+  font-size: 1.5em;
+  @include respond-from('screen-sm') {
+    bottom: 8%;
+    font-size: 1.8em;
+  }
 }
 
 // -------------------------- TEASER END --------------------------
 
-
 // -------------------------- LOGOS START --------------------------
 
-.restaurants-logos {
+.restaurants-home {
   @include make-row();
   @include fluid-container();
+  padding-top: 40px;
 }
 
-.logos-container {
+.restaurants-home__logos {
   @include make-xs-column(12);
   @include make-sm-column(10);
-  @extend .col-sm-offset-1;
+  @include make-sm-column-offset(1);
   @include make-lg-column(12);
-  @extend .col-lg-offset-0;
+  @include make-lg-column-offset(0);
 }
 
-.restaurants-logos__logo {
+.restaurants-home__logos__logo {
   @include make-xs-column(6);
   @include make-md-column(4);
   @include make-lg-column(2);
 }
 
-.restaurants-logos__logo img {
+.restaurants-home__logos__logo img {
   @extend .img-responsive;
   @extend .center-block;
 }
 
 // -------------------------- LOGOS END --------------------------
 
-
 // -------------------------- STATS START --------------------------
 
 .stats {
-  background-color: #f7f7f7;
+  background-color: $color-bg-secondary;
   overflow: visible;
-  margin-top:10vw;
+  margin-top: 50px;
   @include respond-from('screen-md') {
-    margin-top:75px;
+    margin-top: 75px;
   }
 }
 
@@ -151,104 +226,48 @@ section {
 
 .stats__content {
   @include make-xs-column(10);
-  @extend .col-xs-offset-1;
+  @include make-xs-column-offset(1);
   @include make-md-column(8);
-  @extend .col-md-offset-2;
+  @include make-md-column-offset(2);
   overflow: visible;
 }
 
 .stats__numbers {
   position: absolute;
-  top:-12%;
-  padding-top:17%;
-  bottom:0;
-  left:0;
-  right:0;
+  top: -12%;
+  padding-top: 17%;
+  bottom: 0;
+  left: 0;
+  right: 0;
   overflow: hidden;
   @include respond-from('screen-md') {
-    top:-10%;
-    padding-top:15%;
+    top: -10%;
+    padding-top: 15%;
   }
 }
 
 .stats__numbers__first {
   @include make-xs-column(2, 0);
-  @extend .col-xs-offset-4;
+  @include make-xs-column-offset(4);
+  @include aspect-ratio(260, 358);
   overflow: hidden;
 }
 
 .stats__numbers__second {
   @include make-xs-column(2, 0);
+  @include aspect-ratio(260, 358);
   overflow: hidden;
-}
-
-.numbers__scroller {
-  position: absolute;
-  top:0;
-  left:0;
-  width:100%;
-}
-
-.number__spacer {
-  @extend .img-responsive;
-  @extend .center-block;
-}
-
-.numbers__sprite {
-  width:100%;
-  background: url('#{$imagepath}/numbers/numbers-sprite.jpg') top left no-repeat scroll;
-  background-size: 100%;
-  overflow: auto;
-}
-
-.number1 {
-  background-position: 0 88.888%;
-}
-
-.number2 {
-  background-position: 0 77.777%;
-}
-
-.number3 {
-  background-position: 0 66.666%;
-}
-
-.number4 {
-  background-position: 0 55.555%;
-}
-
-.number5 {
-  background-position: 0 44.444%;
-}
-
-.number6 {
-  background-position: 0 33.333%;
-}
-
-.number7 {
-  background-position: 0 22.222%;
-}
-
-.number8 {
-  background-position: 0 11.111%;
-}
-
-.number9 {
-  background-position: 0 0;
-}
-
-.number0 {
-  background-position: 0 99.999%;
 }
 
 .stats__comment {
   @include make-xs-column(12);
   @extend .text-center;
   @extend .h2;
-  padding:0 8vw;
-  line-height: 4vw;
-  font-size: 3.5vw;
+  padding-left:12%;
+  padding-right:12%;
   font-family: $base-font-family;
+  line-height: 1em;
+  font-size: 1em;
   @include respond-from('screen-md') {
     line-height: 1.3em;
     font-size: 2em;
@@ -257,27 +276,27 @@ section {
 
 .stats__comment__minutes {
   @include make-xs-column(2, 0);
-  @extend .col-xs-offset-6;
+  @include make-xs-column-offset(6);
   @extend .text-right;
   padding: $space-xs 2px 0;
-  line-height: 2.2vw;
-  font-size: 2.5vw;
+  line-height: 0.6em;
+  font-size: 0.6em;
   @include respond-from('screen-md') {
     line-height: 1em;
     font-size: 1em;
   }
 }
 
-#stats__fork-knife {
+.stats__fork-knife {
   @extend .img-responsive;
   @extend .center-block;
   position: relative;
-  top:-4vw;
+  top: -30px;
 }
 
-#stats__dish {
+.stats__dish {
   position: absolute;
-  left:0;
+  left: 0;
   width: 80%;
   margin-right: 10%;
   margin-left: 10%;
@@ -285,51 +304,61 @@ section {
 
 // -------------------------- STATS END --------------------------
 
-
 // -------------------------- CITIES START --------------------------
 
 .cities {
   @include make-row();
   @include fluid-container();
+  padding-top: 20px;
+  @include respond-from('screen-sm') {
+    padding-top: 60px;
+  }
 }
 
-.cities__container{
+.cities__container {
   @include make-sm-column(10);
-  @extend .col-sm-offset-1;
+  @include make-sm-column-offset(1);
 }
 
-.city__title {
-  position: absolute;
-  top: 50%;
-  left:0;
+.city {
+  @include make-xs-column(12);
+  @include make-md-column(6);
+  padding-bottom: $grid-gutter-width;
+}
+
+.city__container {
+  @include aspect-ratio(112, 46);
+  display: block;
+  perspective: 800px;
+  font-family: $cta-font-family;
+}
+
+.city__name {
+  @include vertical-center-element-absolute;
   z-index: 2;
-  overflow: auto;
-  width:100%;
-  color:#fff;
+  width: 100%;
+  color: #fff;
   text-align: center;
   text-transform: uppercase;
-  font-size: 1.2em;
-  line-height: 1.2em;
+  font-size: 0.9em;
+  line-height: 0.9em;
   @include respond-from('screen-sm') {
     font-size: 1.4em;
     line-height: 1.4em;
   }
 }
 
-.city {
-  display: block;
-  @include make-xs-column(12);
-  @include make-md-column(6);
-  perspective: 800px;
-  padding-top: $grid-gutter-width;
-  font-family: $cta-font-family;
-
-  & img {
-    @extend .img-responsive;
-    @extend .center-block;
+.city__called-action {
+  margin-top: $space-xs;
+  display: none;
+  font-size: 0.8em;
+  line-height: 0.8em;
+  font-family: $base-font-family;
+  @include respond-from('screen-sm') {
+    font-size: 0.6em;
+    line-height: 0.6em;
   }
-
-
 }
+
 
 // -------------------------- CITIES END --------------------------
