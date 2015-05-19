@@ -8,7 +8,6 @@
     },
     "require": {
         "php": ">=5.5",
-        "ext-redis": "*",
         "symfony/symfony": "2.6.*",
         "twig/extensions": "~1.0",
         "symfony/assetic-bundle": "~2.3",
