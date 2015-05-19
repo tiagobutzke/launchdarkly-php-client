@@ -129,8 +129,6 @@
   }
 }
 
-// main content
-
 .menu-wrapper {
   @include respond-from("screen-md") {
     @include fluid-container();
@@ -159,22 +157,23 @@
   }
 }
 
-//category
-
 .menu__categories  {
   @include appear-from("screen-lg");
   @include make-lg-column(3);
 
   nav {
-    padding-top: 37px;
+    padding-top: 10px;
   }
+
   a {
      color: $color-text-primary;
      font-size: 0.875em;
    }
 }
 
-//menu items
+.menu__categories__vertical-spacer {
+  height: 27px;
+}
 
 .menu__items  {
   @include respond-from("screen-md") {
