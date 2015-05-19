@@ -6,6 +6,7 @@
 
     <imports>
         <import resource="api.xml"/>
+        <import resource="converters.xml"/>
     </imports>
 
     <parameters>

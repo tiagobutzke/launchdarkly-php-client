@@ -3,7 +3,7 @@
 namespace Volo\FrontendBundle\Service;
 
 use Doctrine\Common\Cache\Cache;
-use Volo\FrontendBundle\Exception\Location\MissingKeys as MissingKeysException;
+use Volo\FrontendBundle\Exception\Location\MissingKeysException;
 
 class CustomerLocationService
 {
@@ -17,6 +17,7 @@ class CustomerLocationService
     const KEY_LAT = 'lat';
     const KEY_LNG = 'lng';
     const KEY_FORMATTED_ADDRESS = 'formatted_address';
+    const KEY_POSTAL_INDEX = 'post_code';
 
     /**
      * @param Cache $cache
@@ -32,6 +33,7 @@ class CustomerLocationService
      */
     public function set($sessionId, array $location)
     {
+        $this->validate($location);
         $this->cache->save($this->createSessionKey($sessionId), $location);
     }
 
@@ -44,24 +46,36 @@ class CustomerLocationService
     {
         $value = $this->cache->fetch($this->createSessionKey($sessionId));
 
-        if (!$value) {
-            $value = [
-                static::KEY_FORMATTED_ADDRESS => null,
-                static::KEY_LAT => null,
-                static::KEY_LNG=> null,
-            ];
-        }
-
         return $value;
     }
 
     /**
-     * @param array $location
+     * @param string $address
+     * @param float $lat
+     * @param float $lng
+     * @param string $postalIndex
+     *
+     * @return array
      */
-    public function validate(array $location)
+    public function create($address, $lat, $lng, $postalIndex)
+    {
+        return [
+            static::KEY_FORMATTED_ADDRESS => $address,
+            static::KEY_LAT => $lat,
+            static::KEY_LNG => $lng,
+            static::KEY_POSTAL_INDEX => $postalIndex,
+        ];
+    }
+
+    /**
+     * @param array $location
+     *
+     * @throws MissingKeysException
+     */
+    protected function validate(array $location)
     {
         $missingKeys = array_diff(
-            [static::KEY_LAT, static::KEY_LNG, static::KEY_FORMATTED_ADDRESS],
+            [static::KEY_LAT, static::KEY_LNG, static::KEY_FORMATTED_ADDRESS, static::KEY_POSTAL_INDEX],
             array_keys(array_filter($location))
         );
 
