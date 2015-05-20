@@ -42,15 +42,32 @@ var VendorCartModel = Backbone.Model.extend({
         "discount_text": null
     },
     idAttribute: 'vendor_id',
+
     initialize: function() {
         this.products = new CartProductCollection();
+        this._xhr = null;
+        this._lastClick = Date.now();
     },
 
     addItem: function(newProduct, quantity) {
-        var products = this._getProductsWithNewItem(newProduct, quantity);
+        this.trigger('cart:dirty');
+        this._updateProducts(newProduct, quantity);
+        this._lastClick = Date.now();
 
-        this.collection.cart.dataProvider.calculateCart({
-            products: products,
+        if (this._xhr) {
+            this._xhr.abort();
+        }
+
+        setTimeout(function() {
+            if (Date.now() - this._lastClick > 490) {
+                this._updateCart();
+            }
+        }.bind(this), 500);
+    },
+
+    _updateCart: function() {
+        this._xhr = this.collection.cart.dataProvider.calculateCart({
+            products: this.products.toJSON(),
             vendor_id: this.id,
             location: {
                 "location_type": "polygon",
@@ -60,38 +77,37 @@ var VendorCartModel = Backbone.Model.extend({
         }).done(function(calculatedData) {
             var vendorCart = _.cloneDeep(calculatedData.vendorCart[0]);
             delete calculatedData.vendorCart;
-            this.collection.cart.set(calculatedData);
 
+            this.collection.cart.set(calculatedData);
             this.products.set(vendorCart.products);
+            this.trigger('cart:ready');
         }.bind(this));
     },
 
-    _getProductsWithNewItem: function(newProduct, quantity) {
+    _updateProducts: function(newProduct, quantity) {
         var foundProduct = this.findSimilarProduct(newProduct);
         if (_.isObject(foundProduct)) {
-            foundProduct.set('quantity', parseInt(foundProduct.get('quantity') + quantity));
+            foundProduct.set('quantity', parseInt(foundProduct.get('quantity') + quantity), 10);
         }
-
-        var products = this.products.toJSON();
 
         if (_.isUndefined(foundProduct)) {
-            products.push((new CartItemModel({
-                "product_variation_id": newProduct.product_variations[0].id,
-                "quantity": quantity,
-                "toppings": _.cloneDeep(newProduct.product_variations[0].toppings),
-                "choices": _.cloneDeep(newProduct.product_variations[0].choices)
+            var productVariation = newProduct.product_variations[0];
+            this.products.add((new CartItemModel({
+                product_variation_id: productVariation.id,
+                quantity: quantity,
+                toppings: _.cloneDeep(productVariation.toppings),
+                choices: _.cloneDeep(productVariation.choices),
+                name: newProduct.name
             })).toJSON());
         }
-
-        return products;
     },
 
     findSimilarProduct: function(productToSearch) {
         return this.products.find(function(product) {
             return _.isMatch(product.toJSON(), {
                 product_variation_id: productToSearch.product_variations[0].id,
-                toppings: _.cloneDeep(productToSearch.product_variations[0].toppings),
-                choices: _.cloneDeep(productToSearch.product_variations[0].choices)
+                toppings: productToSearch.product_variations[0].toppings,
+                choices: productToSearch.product_variations[0].choices
             });
         });
     }

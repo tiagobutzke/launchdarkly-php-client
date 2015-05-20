@@ -1,18 +1,12 @@
 var CartDataProvider = function() {
     var calculateCart = function(data) {
-        var deferred = $.Deferred();
-
         var requestSettings = {
             url: Routing.generate('cart_calculate'),
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(_prepareCalculateRequest(data))
         };
-        $.ajax(requestSettings).done(function(res) {
-            deferred.resolve(res);
-        });
-
-        return deferred;
+        return $.ajax(requestSettings);
     };
 
     var _prepareCalculateRequest = function(data) {

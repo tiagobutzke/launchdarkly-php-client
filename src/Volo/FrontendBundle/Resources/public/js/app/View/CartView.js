@@ -1,6 +1,7 @@
 var CartItemView = Backbone.View.extend({
     initialize: function() {
         this.template = _.template($('#template-cart-item').html());
+        this.listenTo(this.model, "change", this.render);
     },
     render: function() {
         this.$el.html(this.template(this.model.toJSON()));
@@ -16,9 +17,22 @@ var CartView = Backbone.View.extend({
         _.bindAll(this, 'renderNewItem');
 
         this.vendor_id = options.vendor_id;
-        this.model.vendorCart.get(this.vendor_id).products.on('add', this.render, this);
 
-        this.listenTo(this.model, "change", this.render);
+        var cart = this.model.vendorCart.get(this.vendor_id);
+
+        cart.products.on('add', this.render, this);
+
+        this.listenTo(cart, 'cart:dirty', this.disableCart, this);
+        this.listenTo(cart, 'cart:ready', this.enableCart, this);
+        this.listenTo(this.model, 'change', this.render);
+    },
+
+    disableCart: function() {
+        this.$el.css({ opacity: 0.5 });
+    },
+
+    enableCart: function() {
+        this.$el.css({ opacity: 1 });
     },
 
     render: function() {
@@ -26,7 +40,6 @@ var CartView = Backbone.View.extend({
         this.model.vendorCart.get(this.vendor_id).products.each(this.renderNewItem);
 
         this._makeCartAndMenuSticky();
-
         return this;
     },
 
