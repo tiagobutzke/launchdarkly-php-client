@@ -1,6 +1,4 @@
-<h3 class="checkout__title">1. {% trans %}Delivery details{% endtrans %}</h3>
-<h4 class="checkout__subtitle">{% trans %}Delivery Address{% endtrans %}</h4>
-<form action="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}" id="checkout_form" method="post" role="form">
+<form action="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}" id="delivery_information_form" method="post" role="form">
     <div class="checkout__item">
         <div class="form-group">
             <input type="text" class="form-control" id="address_line1" name="customer_address[address_line1]"
@@ -14,6 +12,7 @@
             <input type="text" class="form-control" id="city" name="customer_address[city]"
                    value="{{ customer.city|default('') }}" required="true" placeholder="{% trans %}City{% endtrans %}">
         </div>
-        <button class="button pull-right">{% trans %}Continue{% endtrans %}</button>
+        <input type="hidden" name="customer_address[city_id]" value="{{ vendor.city.id }}">
+        <button id="delivery_information_form_button" class="button pull-right">{% trans %}Continue{% endtrans %}</button>
     </div>
 </form>

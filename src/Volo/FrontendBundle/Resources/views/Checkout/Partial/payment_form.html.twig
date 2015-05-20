@@ -1,6 +1,6 @@
 <h4 class="checkout__subtitle">{% trans %}Credit card details{% endtrans %}</h4>
 <form action="{{ path('checkout_payment', {vendorCode: vendor.code}) }}"
-      id="checkout_form" method="post" role="form">
+      id="payment_form" method="post" role="form">
     <div class="checkout__item">
         <div class="form-group">
             <input type="text" class="form-control" id="adyen-encrypted-form-number" value="5136333333333335" size="20"
@@ -25,14 +25,5 @@
         </div>
         <div class="hide"><input type="hidden" id="adyen-encrypted-form-expiry-generationtime" value="{{ "now"|date('c') }}"
                                  data-encrypted-name="generationtime"/></div>
-        <button class="button pull-right">{% trans %}Continue{% endtrans %}</button>
     </div>
 </form>
-
-<script>
-    adyen.encrypt.createEncryptedForm(
-            document.getElementById('checkout_form'),
-            '{{ adyen_public_key }}',
-            {cardTypeElement: document.getElementById('cardType')}
-    );
-</script>

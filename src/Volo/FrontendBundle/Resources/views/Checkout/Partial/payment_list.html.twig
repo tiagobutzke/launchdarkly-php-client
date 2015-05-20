@@ -1,0 +1,6 @@
+{% for card in customer_cards %}
+    <label>
+        <input type="radio" name="selected_address" value="{{ card.id }}"/>
+        {{ card.card_number }} {{ card.holder_name }}, {{ card.expiration_date }}
+    </label>
+{% endfor %}

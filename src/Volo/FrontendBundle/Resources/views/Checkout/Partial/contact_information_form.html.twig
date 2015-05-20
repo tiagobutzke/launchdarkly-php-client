@@ -1,5 +1,4 @@
-<h3 class="checkout__title">2. {% trans %}Contact info{% endtrans %}</h3>
-<form action="{{ path('checkout_contact_information', {vendorCode: vendor.code}) }}" id="checkout_form" method="post" role="form">
+<form action="{{ path('checkout_contact_information', {vendorCode: vendor.code}) }}" id="contact_information_form" method="post" role="form">
     <div class="checkout__item">
         <div class="form-group">
             <input type="text" class="form-control" id="first_name" name="customer[first_name]"
@@ -14,7 +13,7 @@
                    required="true" placeholder="{% trans %}Email Address{% endtrans %}">
         </div>
         <div class="form-group">
-            <input type="tel" class="form-control" id="mobile_country_code" name="customer[mobile_country_code]" placeholder="{% trans %}Telephone Country Code{% endtrans %}">
+            <input type="tel" class="form-control" id="mobile_country_code" name="customer[mobile_country_code]" value="{{ customer.mobile_country_code|default('') }}" placeholder="{% trans %}Telephone Country Code{% endtrans %}">
         </div>
         <div class="form-group">
             <input type="tel" class="form-control" id="mobile_number" name="customer[mobile_number]" value="{{ customer.mobile_number|default('') }}" required="true" placeholder="{% trans %}Mobile Number{% endtrans %}">
