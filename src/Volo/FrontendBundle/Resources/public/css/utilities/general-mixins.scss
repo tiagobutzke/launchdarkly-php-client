@@ -73,3 +73,11 @@
   transform: translateY(-50%);
 }
 // ----------- CENTERS RELATIVE POSITIONED ELEMENT VERTICALLY END ----------
+
+// ----------- CENTERS ABSOLUTE POSITIONED ELEMENT VERTICALLY START ----------
+@mixin vertical-center-absolute {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+// ----------- CENTERS ABSOLUTE POSITIONED ELEMENT VERTICALLY END ----------

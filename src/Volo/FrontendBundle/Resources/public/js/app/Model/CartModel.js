@@ -131,6 +131,10 @@ var CartModel = Backbone.Model.extend({
         this.vendorCart = new VendorCartCollection([], {
             cart: this
         });
+        if (_.isObject(data) && _.isArray(data.vendorCart)) {
+            this.set(data);
+            this.getCartVendor(options.vendor_id).products.set(data.vendorCart[0].products);
+        }
     },
 
     getCartVendor: function(vendor_id) {

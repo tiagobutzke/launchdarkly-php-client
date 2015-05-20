@@ -1,6 +1,5 @@
 var MenuView = Backbone.View.extend({
     initialize : function (options) {
-        if (!this.$el.length) { return; }
         this.cartModel = options.cartModel;
         this.subViews = [];
         this.vendor_id = this.$el.data().vendor_id;

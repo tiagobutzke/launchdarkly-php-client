@@ -3,8 +3,7 @@
 */
 
 // ----------------------- BUTTONS START -----------------------
-
-button {
+.button {
   font-family: $cta-font-family;
   font-size: $cta-font-size;
   text-align: $cta-text-align;
@@ -13,24 +12,46 @@ button {
   padding-right: $cta-padding-right;
   border-radius: $cta-border-radius;
   height: $cta-height;
-  border:0;
-}
-
-button.primary {
+  display: block;
+  border: 0;
   color: $cta-color-text-primary;
   background-color: $cta-color-bg-primary;
+
+  &:hover, &:focus {
+    background-color: $cta-color-bg-primary-hover;
+    color: $cta-color-text-primary;
+    text-decoration: none;
+    outline: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -moz-transition: none;
+    -webkit-transition: none;
+  }
 }
 
-button.primary:hover {
-  background-color: $cta-color-bg-primary-hover;
+a.button {
+  line-height: $cta-height;
 }
 
-button.disabled {
+.button--disabled {
   background-color: $cta-color-bg-disabled;
 }
 
-button.pressed {
+.button--pressed {
   background-color: $cta-pressed-box-shadow;
+}
+
+.button--inline {
+  display: inline-block;
+}
+
+.button--add {
+  height: 18px;
+  width: 18px;
+  padding: 0;
+  display: inline-block;
+  margin-left: $space-sm;
 }
 
 // ----------------------- BUTTONS END -----------------------
@@ -39,7 +60,7 @@ button.pressed {
 
 // ----------------------- INPUT FIELDS START ------------------
 
-input {
+input, .form-control {
   font-family: $input-font-family;
   font-size: $input-font-size;
   text-align: $input-text-align;
@@ -47,11 +68,24 @@ input {
   padding-right: $input-padding-right;
   border-radius: $input-border-radius;
   height: $input-height;
-  border:0;
+  line-height: $input-height;
+  border: $input-border;
   color: $input-color-text;
+
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -moz-transition: none;
+  -webkit-transition: none;
 
   &:focus {
     outline: none;
+    border: $input-border-active;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -moz-transition: none;
+    -webkit-transition: none;
   }
 }
 

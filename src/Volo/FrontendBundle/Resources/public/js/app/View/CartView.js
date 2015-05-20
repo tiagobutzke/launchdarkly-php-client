@@ -16,13 +16,14 @@ var CartView = Backbone.View.extend({
         _.bindAll(this, 'renderNewItem');
 
         this.vendor_id = options.vendor_id;
-        this.model.vendorCart.get(this.vendor_id).products.on('add', this.renderNewItem, this);
+        this.model.vendorCart.get(this.vendor_id).products.on('add', this.render, this);
 
         this.listenTo(this.model, "change", this.render);
     },
 
     render: function() {
-        this.$el.html(this.template(this.model.toJSON()));
+        this.$el.html(this.template(this.model.attributes));
+        this.model.vendorCart.get(this.vendor_id).products.each(this.renderNewItem);
 
         this._makeCartAndMenuSticky();
 

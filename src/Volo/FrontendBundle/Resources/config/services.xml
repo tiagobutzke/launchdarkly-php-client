@@ -15,6 +15,7 @@
         <parameter key="volo_frontend.service.configuration.class">Volo\FrontendBundle\Service\ConfigurationService</parameter>
         <parameter key="volo_frontend.service.customer.class">Volo\FrontendBundle\Service\CustomerService</parameter>
         <parameter key="volo_frontend.service.cart_manager.class">Volo\FrontendBundle\Service\CartManagerService</parameter>
+        <parameter key="volo_frontend.service.order_manager.class">Volo\FrontendBundle\Service\OrderManagerService</parameter>
         <parameter key="volo_frontend.cache_warmer.class">Volo\FrontendBundle\CacheWarmer\VoloCacheWarmer</parameter>
         <parameter key="volo_frontend.twig.serializer_extension.class">Volo\FrontendBundle\Twig\SerializerExtension</parameter>
         <parameter key="volo_frontend.service.customer_location.class">Volo\FrontendBundle\Service\CustomerLocationService</parameter>
@@ -26,7 +27,6 @@
             <argument type="service" id="volo_frontend.api.authenticator" />
         </service>
 
-        <service id="volo_frontend.service.cart_manager" alias="volo_frontend.provider.cart" />
         <service id="volo_frontend.service.customer_manager" alias="volo_frontend.provider.customer" />
         <service id="volo_frontend.twig.cms_extension" class="%volo_frontend.twig.cms_extension.class%">
             <argument type="service" id="volo_frontend.provider.cms" />
@@ -36,6 +36,13 @@
         <service id="volo_frontend.service.cart_manager" class="%volo_frontend.service.cart_manager.class%">
             <argument type="service" id="doctrine_cache.providers.configuration_cache" />
             <argument type="service" id="volo_frontend.provider.cart" />
+        </service>
+
+        <service id="volo_frontend.service.order_manager" class="%volo_frontend.service.order_manager.class%">
+            <argument type="service" id="volo_frontend.provider.order" />
+            <argument type="service" id="volo_frontend.provider.customer" />
+            <argument type="service" id="volo_frontend.provider.cart" />
+            <argument>%foodpanda.api.client_id%</argument>
         </service>
 
         <service id="volo_frontend.service.configuration" class="%volo_frontend.service.configuration.class%">
