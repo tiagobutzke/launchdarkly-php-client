@@ -32,9 +32,9 @@ class LocationController extends Controller
     }
 
     /**
-     * @Route("/search", name="search_vendors")
+     * @Route("/search", name="search_vendors", options={"expose"=true})
      * @Template("VoloFrontendBundle:Location:vendors_list.html.twig")
-     * @Method({"POST"})
+     * @Method({"GET"})
      *
      * @param Request $request
      *

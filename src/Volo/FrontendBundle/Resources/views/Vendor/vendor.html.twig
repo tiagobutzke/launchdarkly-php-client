@@ -3,41 +3,40 @@
 {% block content_wrapper_class %}menu-bg{% endblock content_wrapper_class %}
 {% block bodyClass %}menu-page{% endblock %}
 
-{% block head_scripts %}
+{% block footer_scripts %}
     {{ parent() }}
-    <script type="text/javascript">
+
+    <script data-turbolinks-eval=always>
         var VOLO = VOLO || {};
-        VOLO.jsonCart={{ cart|json_encode|raw }};
+        VOLO.jsonCart = {{ cart|json_encode|raw }};
 
-        var foo = function () {
-            var VOLO = VOLO || {};
-            VOLO.jsonCart={{ cart|json_encode|raw }};
+        function removeView() {
+            if (_.isObject(VOLO.menu)) {
+                VOLO.menu.remove();
+            }
+            if (_.isObject(VOLO.cartView)) {
+                VOLO.cartView.remove();
+            }
+        }
 
-            VOLO.cartModel = new CartModel(VOLO.jsonCart, {
-                dataProvider: new CartDataProvider(),
-                vendor_id: {{ vendor.id }}
-            });
+        $(document).one('page:load', function() {
+            // @TODO workaround to init the cart view using Turbolinks
+            if ($('.menu__main').length > 0) {
+                VOLO.initCartViews({{ vendor.id }}, VOLO.jsonCart);
+                VOLO.cartView.render();
+            }
+        });
 
-            VOLO.menu = new MenuView({
-                el: '.menu__main',
-                cartModel: VOLO.cartModel
-            });
+        $(document).one('page:before-unload', removeView);
+    </script>
 
-            VOLO.cartView = new CartView({
-                el: '.desktop-cart',
-                model: VOLO.cartModel,
-                vendor_id: {{ vendor.id }}
-            });
-
+    <script data-turbolinks-eval=false>
+        $(document).one('ready', function() {
+            VOLO.initCartViews({{ vendor.id }}, VOLO.jsonCart);
             VOLO.cartView.render();
-        };
-
-        $(document).on('ready page:load', foo);
-        $(document).on('after-remove', function () {
-            $(document).off(foo);
         });
     </script>
-{% endblock head_scripts %}
+{% endblock %}
 
 {% block content %}
 <div class="top-cart">

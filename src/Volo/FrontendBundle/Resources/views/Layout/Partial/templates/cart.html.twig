@@ -1,19 +1,17 @@
 {# cart item #}
 <script type="text/template" id="template-cart-item">
-    <tr>
-        <td class="summary__item__quantity"><%- quantity %></td>
-        <td class="summary__item__sign">x</td>
-        <td class="summary__item__name">
-            <%- name %>
-            <span class="summary__item__extra">
-                + White wine butter sauce
-            </span>
-            <span class="summary__item__extra">
-               + Angel Hair pasta
-            </span>
-        </td>
-        <td class="summary__item__price"><%- total_price %> &euro;</td>
-    </tr>
+    <td class="summary__item__quantity"><%- quantity %></td>
+    <td class="summary__item__sign">x</td>
+    <td class="summary__item__name">
+        <%- name %>
+        <span class="summary__item__extra">
+            + White wine butter sauce
+        </span>
+        <span class="summary__item__extra">
+           + Angel Hair pasta
+        </span>
+    </td>
+    <td class="summary__item__price"><%- total_price %> &euro;</td>
 </script>
 {# cart #}
 <script type="text/template" id="template-cart">
