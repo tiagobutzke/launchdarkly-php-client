@@ -5,7 +5,7 @@
 </div>
 
 <div class="form-group">
-    <label for="username">Last name:</label>
+    <label for="last_name">Last name:</label>
     <input type="text" id="last_name" name="customer[last_name]"
            value="{{ customer.last_name|default('') }}" required="true" />
 </div>
@@ -16,9 +16,7 @@
 </div>
 
 <div class="form-group">
-    <label>Mobile</label>
-    <input type="tel" id="mobile_country_code" name="customer[mobile_country_code]" placeholder="+49"
-           value="{{ customer.mobile_country_code|default('') }}" required="true" />
+    <label for="mobile_number">Mobile Number</label>
     <input type="tel" id="mobile_number" name="customer[mobile_number]"
            value="{{ customer.mobile_number|default('') }}" required="true" />
 </div>

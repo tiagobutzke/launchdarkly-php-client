@@ -25,8 +25,7 @@ class CustomerControllerTest extends VoloTestCase
                 'last_name' => 'last',
                 'password' => 'password',
                 'email' => 'test@domain.com',
-                'mobile_country_code' => '+49',
-                'mobile_number' => '12345678',
+                'mobile_number' => '017673412345',
             ]
         ];
         $client->request('POST', '/customer', $params);
