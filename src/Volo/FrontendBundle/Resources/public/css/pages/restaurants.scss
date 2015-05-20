@@ -37,14 +37,18 @@
 .restaurants__item__wrapper {
   overflow: hidden;
   margin-bottom: $grid-gutter-width;
+  position: relative;
+  @include transition(all 0.1s ease-out);
   @include respond-from("screen-sm") {
     padding-bottom: 12px;
     border-radius: $border-radius-default;
     background-color: $restaurant-bg-color;
     box-shadow: $restaurant-box-shadow;
+    top: 0;
 
     &:hover {
       box-shadow: $restaurant-box-shadow-hover;
+      top: -5px;
       cursor: pointer;
     }
   }
@@ -79,6 +83,7 @@
   width: 57%;
   float: left;
   height: 20px;
+  color: $color-text-secondary;
   @include text-overflow();
   @include set-default-gutter();
   @include respond-from("screen-sm") {
