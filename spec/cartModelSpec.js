@@ -87,7 +87,7 @@ describe("A cart", function() {
         });
     });
 
-    it("adds a new product to the cart", function() {
+    it("adds a new product to the cart", function(done) {
         var object = {
             "is_half_type_available": false,
             "id": 854,
@@ -111,13 +111,16 @@ describe("A cart", function() {
 
         cart.getCartVendor(vendor_id).addItem(selectedProduct.toJSON(), 3);
 
-        expect(cart.getCartVendor(vendor_id).products.length).toBe(1);
+        setTimeout(function() {
+            expect(cart.getCartVendor(vendor_id).products.length).toBe(1);
 
-        var expected = _.cloneDeep(response.vendorCart[0].products[0]);
-        expect(cart.vendorCart.get(vendor_id).products.toJSON()).toContain(expected);
+            var expected = _.cloneDeep(response.vendorCart[0].products[0]);
+            expect(cart.vendorCart.get(vendor_id).products.toJSON()).toContain(expected);
+            done();
+        }.bind(this), 800);
     });
 
-    it("adds the same product with different quantity", function() {
+    it("adds the same product with different quantity", function(done) {
         var product = {
             "is_half_type_available": false,
             "id": 854,
@@ -154,16 +157,22 @@ describe("A cart", function() {
 
         cart.getCartVendor(vendor_id).addItem(firstSelectedProduct.toJSON(), 3);
 
-        expect(cart.vendorCart.get(vendor_id).products.length).toBe(1);
-        expectedFirst = _.cloneDeep(response.vendorCart[0].products[0]);
-        expect(cart.vendorCart.get(vendor_id).products.toJSON()).toContain(expectedFirst);
+        setTimeout(function() {
+            expect(cart.vendorCart.get(vendor_id).products.length).toBe(1);
+            expectedFirst = _.cloneDeep(response.vendorCart[0].products[0]);
+            expect(cart.vendorCart.get(vendor_id).products.toJSON()).toContain(expectedFirst);
 
-        cart.getCartVendor(vendor_id).addItem(secondProductToAdd.toJSON(), 5);
+            cart.getCartVendor(vendor_id).addItem(secondProductToAdd.toJSON(), 5);
 
-        expect(cart.vendorCart.get(vendor_id).products.length).toBe(1);
-        expect(cart.vendorCart.get(vendor_id).products.first().get('quantity')).toEqual(8);
-        var expectedSecond = _.cloneDeep(response.vendorCart[0].products[0]);
-        expect(cart.vendorCart.get(vendor_id).products.first().toJSON()).toEqual(expectedSecond);
+            setTimeout(function() {
+                expect(cart.vendorCart.get(vendor_id).products.length).toBe(1);
+                expect(cart.vendorCart.get(vendor_id).products.first().get('quantity')).toEqual(8);
+                var expectedSecond = _.cloneDeep(response.vendorCart[0].products[0]);
+                expect(cart.vendorCart.get(vendor_id).products.first().toJSON()).toEqual(expectedSecond);
+                done();
+            }.bind(this), 500)
+
+        }.bind(this), 500);
     });
 
     it('finds similar product in cart', function() {
@@ -196,19 +205,17 @@ describe("A cart", function() {
                 ]
             }]
         };
-        var productInCart = new Backbone.Model(product);
-        var productForFind = new Backbone.Model(product);
 
-        cart.getCartVendor(vendor_id).addItem(productInCart.toJSON(), 3);
-        expect(cart.vendorCart.get(vendor_id).findSimilarProduct(productForFind.toJSON()).toJSON()).toEqual({
+        cart.getCartVendor(vendor_id).addItem(product, 3);
+        expect(cart.vendorCart.get(vendor_id).findSimilarProduct(product).toJSON()).toEqual({
             product_variation_id: 859,
-            name: 'Quick Chicken',
-            variation_name: '',
-            total_price_before_discount: 7.9,
-            total_price: 7.9,
             quantity: 3,
             toppings: [{id: 10, name: 'topping 1'}],
             choices: [{id: 1, name: 'choice 1'}],
+            name: 'Quick Chicken',
+            variation_name: '',
+            total_price_before_discount: 0,
+            total_price: 0,
             group_order_user_name: null,
             group_order_user_code: null
         });
