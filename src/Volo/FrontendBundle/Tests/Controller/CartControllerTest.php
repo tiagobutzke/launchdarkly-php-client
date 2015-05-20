@@ -14,12 +14,31 @@ class CartControllerTest extends VoloTestCase
         $body = [
             'expeditionType' => 'delivery',
             'vouchers' => [],
-            'products' => [],
-            'location' => [
-                'location_type' => 'area',
-                'area_id' => 127
+            'products' => [
+                [
+                    'vendor_id' => 9,
+                    'variation_id' => 2179465,
+                    'quantity' => 2,
+                    'groupOrderUserName' => '',
+                    'toppings' => [
+                        [
+                            'id' => 206892,
+                            'type' => 'full',
+                        ],
+                        [
+                            'id' => 206896,
+                            'type' => 'full',
+                        ],
+                    ],
+                    'choices' => [],
+                ]
             ],
-            'orderTime' => '',
+            'location' => [
+                'location_type' => 'polygon',
+                'latitude' => 52.5237282,
+                'longitude"' => 13.3908286
+            ],
+            'orderTime' => '2015-05-12T07:31:20.795Z',
             'paymentTypeId' => 0,
             'activeLanguage' => 1,
             'groupCode' => '',
@@ -38,7 +57,7 @@ class CartControllerTest extends VoloTestCase
         $client = static::createClient();
 
         $body = '';
-        $client->request('POST', '/cart/calculate', [], [], [], json_encode($body));
+        $client->request('POST', '/cart/calculate', [], [], [], $body);
 
         $this->isSuccessful($client->getResponse(), false);
     }
@@ -48,7 +67,7 @@ class CartControllerTest extends VoloTestCase
         $client = static::createClient();
 
         $body = 'foo bar';
-        $client->request('POST', '/cart/calculate', [], [], [], json_encode($body));
+        $client->request('POST', '/cart/calculate', [], [], [], $body);
 
         $this->isSuccessful($client->getResponse(), false);
     }
