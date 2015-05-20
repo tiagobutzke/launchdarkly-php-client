@@ -1,0 +1,29 @@
+{# choices and toppings modal #}
+<script type="text/template" id="template-choices-toppings">
+    <div class="modal fade topping-modal" id="choices-toppings-modal" tabindex="-1" role="dialog" aria-labelledby="choicesToppings" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="toppings-product__name"><%- name %></div>
+                    <div class="toppings-product__price"><%- product_variations[0].price %>&euro;</div>
+                    <div class="toppings-product__description"><%- description %></div>
+                    <div class="toppings"></div>
+                </div>
+                <div class="modal-footer">
+                    <a class="toppings-add__to__cart button">add to cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+{# topping fragment #}
+<script type="text/template" id="template-topping">
+    <div class="topping__header"><%- name %></div>
+    <div class="topping__options"></div>
+</script>
+
+{#topping option fragment #}
+<script type="text/template" id="template-topping-option">
+    <%- name %>
+</script>
