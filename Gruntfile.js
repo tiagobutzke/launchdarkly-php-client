@@ -45,7 +45,6 @@ module.exports = function (grunt) {
 
     jsSources.head = [
         'bower_components/jquery/dist/jquery.js',
-        'web/bundles/heltheturbolinks/js/jquery.turbolinks.js',
         'web/bundles/heltheturbolinks/js/turbolinks.js',
         'web/js/lib/andr3pt-blazy.js',
         'web/bundles/fosjsrouting/js/router.js',

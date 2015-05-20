@@ -1,8 +1,10 @@
 var CartItemView = Backbone.View.extend({
+    tagName: 'tr',
     initialize: function() {
         this.template = _.template($('#template-cart-item').html());
         this.listenTo(this.model, "change", this.render);
     },
+
     render: function() {
         this.$el.html(this.template(this.model.toJSON()));
 
@@ -12,9 +14,11 @@ var CartItemView = Backbone.View.extend({
 
 var CartView = Backbone.View.extend({
     initialize: function (options) {
-        this.template = _.template($('#template-cart').html());
-
         _.bindAll(this, 'renderNewItem');
+
+        this.subViews = [];
+
+        this.template = _.template($('#template-cart').html());
 
         this.vendor_id = options.vendor_id;
 
@@ -43,10 +47,16 @@ var CartView = Backbone.View.extend({
         return this;
     },
 
+    remove: function() {
+        _.invoke(this.subViews, 'remove');
+        Backbone.View.prototype.remove.apply(this, arguments);
+    },
+
     renderNewItem: function(item) {
         var view = new CartItemView({
             model: item
         });
+        this.subViews.push(view);
 
         this.$('.desktop-cart__products').append(view.render().el);
         this._toggleContainerVisibility();
