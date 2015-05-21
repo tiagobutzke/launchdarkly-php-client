@@ -1,7 +1,7 @@
 <img class="b-lazy {{ type }}-banner"
-     src="/img/placeholder_15x15.png"
+     src="{{ blazy_placeholder }}"
         {% for transformer in get_thumbor_configuration() %}
-            {% set imageName = vendor.code ~ '-' ~ type ~ '.jpg' %}
+            {% set imageName = vendorCode ~ '-' ~ type ~ '.jpg' %}
             {% set normalImage = thumbor(asset(imageName, 'cdn_s3'), transformer.normal.key) %}
             {# @TODO: check if the retina key exists #}
             {% set retinaImage = thumbor(asset(imageName, 'cdn_s3'), transformer.retina.key) %}

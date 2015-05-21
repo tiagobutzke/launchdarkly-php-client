@@ -1,7 +1,7 @@
 var VOLO = VOLO || {};
 $(document).on('ready', function () {
     window.blazy = new Blazy({
-        breakpoints: thumbor.breakpoints
+        breakpoints: volo_thumbor_transformations.breakpoints
     });
     $(window).bind('scroll', function() {
         var distanceY = window.pageYOffset || document.documentElement.scrollTop,

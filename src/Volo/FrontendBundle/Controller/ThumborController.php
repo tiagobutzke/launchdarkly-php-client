@@ -13,22 +13,7 @@ class ThumborController extends Controller
      */
     public function configurationAction()
     {
-        $this->container->getParameter('phumbor.transformations');
-        $content = [
-            'breakpoints' => [],
-        ];
-
-        // @TODO provide just the thumbor config and generate the bLazy conf using JS
-        foreach ($this->container->getParameter('phumbor.transformations') as $key => $transformer) {
-            if (false === strrpos($key, '_retina')) {
-                $content['breakpoints'][] = [
-                    'width' => $transformer['resize']['width'],
-                    'src' => 'data-src-' . $key,
-                    'mode' => 'viewport',
-                ];
-            }
-        }
-        $content = sprintf('var thumbor = JSON.parse(\'%s\')', json_encode($content));
+        $content = $this->container->get('volo_frontend.thumbor_dumper')->dump();
 
         $maxAge = 604800;
         $response = new Response($content, Response::HTTP_OK, array('Content-Type' => 'application/javascript'));
@@ -48,7 +33,7 @@ class ThumborController extends Controller
             throw $this->createNotFoundException();
         }
 
-        $data = file_get_contents($this->get('kernel')->getRootDir() . '/../web/img/hero_banners/hero_banner_menu_600.jpg');
+        $data = file_get_contents($this->get('kernel')->getRootDir() . '/../web/img/hero_banners/hero_banner_menu_4000.jpg');
 
         $response = new Response($data, Response::HTTP_OK, ['Content-Type' => 'image/jpeg']);
         $response->setPublic();
