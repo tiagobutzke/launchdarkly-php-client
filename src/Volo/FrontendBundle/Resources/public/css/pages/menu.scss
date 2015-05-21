@@ -12,7 +12,9 @@
   width: 100%;
   position: relative;
   max-height: 400px;
-  @media(min-width: 1400px) {
+  text-align: center;
+  position: relative;
+  @media (min-width: 1400px) {
     overflow: hidden;
   }
 
@@ -22,62 +24,106 @@
 }
 
 .hero-menu__info {
-  width: 48%;
-  height: 80%;
-  background-color: $color-bg-primary;
+  width: 405px;
+  height: 130px;
+  padding: 0;
+  text-align: center;
   border-radius: $border-radius-default;
   box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.3);
-  font-size:0.75em;
   overflow: hidden;
-  @include opacity(0.90);
   @include absolute-center-box();
   @include appear-from("screen-md");
-    @media(min-width: 960px) {
-      width: 40%;
-      height: 65%;
-    }
-  @include respond-from("screen-lg") {
-    width: 32%;
-    height: 60%;
+
+  @media (max-width: 1000px) {
+    display: none;
   }
-}
-
-.hero-menu__info__img {
-  @include make-md-column(4);
-  padding: 0 0 0 $grid-gutter-width;
-  height: 100%;
-
-  img {
-    @include vertical-center-element();
-  }
-}
-
-.hero-menu__info__txt {
-  @include make-md-column(8);
-  @include vertical-center-element();
-  padding-left: $grid-gutter-width;
 
   h3 {
-    font-size: 1.2em;
+    font-family: $bold-font-family;
+    font-size: 1.375em;
     text-transform: uppercase;
     line-height: normal;
+    height: 94px;
+    margin: 0;
+    padding: $grid-gutter-width;
+    background-color: $color-bg-primary;
+    @include opacity(0.90);
     @include text-overflow();
-    @include respond-from("screen-lg") {
-      font-size: 1.375em;
-    }
 
     span {
+      font-family: $base-font-family;
       display: block;
       @include text-overflow();
       font-size: 0.75em;
     }
   }
+
   p {
-   margin: 0;
+    font-size: 0.835em;
+    margin: 0;
+    background-color: $color-bg-primary;
+    @include opacity(0.80);
+    @include centerTextVerticallyByHeight(36px);
+    color: $color-text-highlight;
 
     span {
-      display: block;
-      margin-top: -5px;
+      display: inline-block;
+      margin-left: 22px;
+      color: $color-text-primary;
+    }
+  }
+}
+
+.hero-menu__info-extra {
+  font-size: 0.835em;
+  width: 100%;
+  @include centerTextVerticallyByHeight(40px);
+  padding: 0;
+  text-align: center;
+  background-color: $color-bg-primary;
+  @include opacity(0.90);
+  box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  @include appear-from("screen-md");
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
+
+  i.icon-call-phone {
+    display: inline-block;
+    margin-left: 22px;
+  }
+}
+
+.hero-menu__title {
+  width: 90%;
+  height: 30px;
+  text-align: center;
+  @include absolute-center-box();
+
+  @media (max-width: 500px) {
+    top: 50px;
+  }
+
+  @media (min-width: 1001px) {
+    display: none;
+  }
+
+  h3 {
+    color: $color-text-selection;
+    font-size: 1em;
+    text-transform: uppercase;
+    line-height: normal;
+    margin: 0;
+    padding: 0;
+    @include text-overflow();
+
+    @include respond-from("screen-sm") {
+      font-size: 1.6em;
     }
   }
 }
@@ -159,9 +205,24 @@
   }
 }
 
+.menu__vendor-logo {
+  padding-top: $grid-gutter-width;
+  margin: 0;
+  text-align: center;
+  height: 140px;
+
+  img {
+    display: block;
+    width: auto;
+    height: 100%;
+    margin: 0 auto;
+  }
+}
+
 .menu__categories  {
   @include appear-from("screen-lg");
   @include make-lg-column(3);
+  text-align: right;
 
   nav {
     padding-top: 10px;
@@ -171,10 +232,6 @@
      color: $color-text-primary;
      font-size: 0.875em;
    }
-}
-
-.menu__categories__vertical-spacer {
-  height: 27px;
 }
 
 .menu__items  {
@@ -210,7 +267,7 @@
 }
 
 .menu__item__name {
-  @include make-xs-column(8);
+  @include make-xs-column(12);
 
   i {
     color: $color-text-light;
@@ -218,19 +275,30 @@
   }
 }
 
+.menu__item__description {
+  @include make-xs-column(8);
+  color: $color-text-secondary;
+}
+
+
+
 .menu__item__price {
   @include make-xs-column(4);
-  @extend .text-right;
+  @extend .pull-right;
+  text-align: right;
 
   button {
     height: 20px;
     padding: 0 5px;
-  }
-}
+    background: none;
 
-.menu__item__description {
-  @include make-xs-column(8);
-  color: $color-text-secondary;
+    i {
+      font-size: 1.7em;
+      display: inline-block;
+      vertical-align: middle;
+      color: $color-text-highlight;
+    }
+  }
 }
 
 .menu__icon-legend {

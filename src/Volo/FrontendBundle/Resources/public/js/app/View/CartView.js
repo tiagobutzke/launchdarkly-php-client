@@ -78,7 +78,7 @@ var CartView = Backbone.View.extend({
             $('.menu__categories nav'),
             $('.menu__categories'),
             function(){ return $headerCache.height(); },
-            function(){ return $menuCache.offset().top + 27; },
+            function(){ return $menuCache.offset().top + 140; },
             function(){ return $menuCache.offset().top + $menuCache.height(); }
         );
     },

@@ -48,17 +48,14 @@
     </div>
 </div>
 <div class="hero-menu">
+    <div class="hero-menu__title"><h3>{{ vendor.name }}</h3></div>
     <div class="hero-menu__info">
-        <div class="hero-menu__info__img">
-            <img src="{{ asset('img/restaurant_logos/test.png') }}" alt=""/>
-        </div>
-        <div class="hero-menu__info__txt">
-            <h3>{{ vendor.name }} <span>{{ vendor.description|lower }}</span></h3>
-            <p>Closing in 10 min. <span>8:00 AM – 5:00 PM</span>
-            </p>
-           <p> <i class="icon-pin-map"></i> Alte Schönhauser Str. 46<br/>
-            <i class="icon-call-phone"></i> 030 9929 6924</p>
-        </div>
+        <h3>{{ vendor.name }} <span>{{ vendor.description|lower }}</span></h3>
+        <p>Closing in 10 min. <span>8:00 AM – 5:00 PM</span></p>
+    </div>
+    <div class="hero-menu__info-extra">
+        <i class="icon-pin-map"></i> Alte Schönhauser Str. 46
+        <i class="icon-call-phone"></i> 030 9929 6924
     </div>
     {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image.html.twig' with {type: 'hero', 'vendorCode' : vendor.code} %}
 </div>
@@ -67,7 +64,9 @@
         <div class="menu__main" data-vendor_id="{{ vendor.id }}" >
             <div class="menu__main__list">
                 <div class="menu__categories">
-                    <div class="menu__categories__vertical-spacer"></div>
+                    <div class="menu__vendor-logo">
+                        <img src="{{ asset('img/restaurant_logos/test.png') }}" alt=""/>
+                    </div>
                     <nav>
                         <ul>
                             {% for menuCategory in vendor.menus.first.getMenuCategories() %}
@@ -88,12 +87,12 @@
                                 <div class="menu__item__name">
                                     {{ product.getName() }}<i class="icon-vegetarian"></i>
                                 </div>
-                                <div class="menu__item__price">
-                                    {{ product.getProductVariations().first().getPrice()|number_format }} &euro;
-                                    <button class="button button--add menu__item__add">+</button>
-                                </div>
                                 <div class="menu__item__description">
                                     {{ product.getDescription() }}
+                                </div>
+                                <div class="menu__item__price">
+                                    {{ product.getProductVariations().first().getPrice()|number_format }} &euro;
+                                    <button class="menu__item__add"><i class="icon-plus"></i></button>
                                 </div>
                             </div>
                         {% endfor %}
