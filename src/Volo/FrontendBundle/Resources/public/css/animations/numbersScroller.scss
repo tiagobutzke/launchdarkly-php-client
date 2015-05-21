@@ -2,14 +2,13 @@
 * animations
 */
 
-
 // -------------------------- NUMBERS SCROLLER START --------------------------
 
 .numbers__scroller {
   position: absolute;
-  top:0;
-  left:0;
-  width:100%;
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 
 .number__spacer {
@@ -18,10 +17,11 @@
 }
 
 .numbers__sprite {
-  width:100%;
+  width: 100%;
   background: url('#{$imagepath}/numbers/numbers-sprite.jpg') top left no-repeat scroll;
   background-size: 100%;
   overflow: auto;
+  @include aspect-ratio(260, 358);
 }
 
 .number1 {

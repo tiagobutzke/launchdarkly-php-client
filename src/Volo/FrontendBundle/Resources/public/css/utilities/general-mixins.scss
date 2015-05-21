@@ -59,7 +59,13 @@
   top: 50%;
   transform: translateY(-50%);
 }
+@mixin vertical-center-element-absolute {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
 // ----------- CENTERS RELATIVE POSITIONED ELEMENT VERTICALLY END ----------
+
 
 // ----------- CENTERS ABSOLUTE POSITIONED ELEMENT VERTICALLY START ----------
 @mixin vertical-center-absolute {
@@ -68,3 +74,23 @@
   transform: translateY(-50%);
 }
 // ----------- CENTERS ABSOLUTE POSITIONED ELEMENT VERTICALLY END ----------
+
+
+// ----------- ASPECT RATIO START ----------
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+  > .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+// ----------- ASPECT RATIO START END ----------

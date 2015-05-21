@@ -1,17 +1,17 @@
+var Flipper = function(container) {
+    'use strict';
+    var flipper = container.find('.flipper');
 
-var Flipper  = function(contanier) {
-    var flipper = contanier.find('.flipper');
-    if(flipper.length) {
-        $(contanier).mouseover(function() {
-                if(!flipper.hasClass('flipped')) {
-                    flipper.addClass('flipped');
-                }
-            })
+    if (flipper.length) {
+        $(container).mouseover(function() {
+            if (!flipper.hasClass('flipper--flipped')) {
+                flipper.addClass('flipper--flipped');
+            }
+        })
             .mouseout(function() {
-                if(flipper.hasClass('flipped')) {
-                    flipper.removeClass('flipped');
+                if (flipper.hasClass('flipper--flipped')) {
+                    flipper.removeClass('flipper--flipped');
                 }
             });
     }
 };
-

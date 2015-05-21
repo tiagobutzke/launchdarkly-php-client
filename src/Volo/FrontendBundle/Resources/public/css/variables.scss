@@ -36,6 +36,16 @@ $fontspath: "../../fonts/";
   url('#{$fontspath}AvenirHeavy.svg#AvenirHeavy') format('svg');
 }
 
+@font-face {
+  font-family: 'Satisfy Regular';
+  src: url('#{$fontspath}SatisfyRegular.eot');
+  src: url('#{$fontspath}SatisfyRegular.eot') format('embedded-opentype'),
+  url('#{$fontspath}SatisfyRegular.woff2') format('woff2'),
+  url('#{$fontspath}SatisfyRegular.woff') format('woff'),
+  url('#{$fontspath}SatisfyRegular.ttf') format('truetype'),
+  url('#{$fontspath}SatisfyRegular.svg#SatisfyRegular') format('svg');
+}
+
 $base-font-size: 16px;
 $base-font-family: 'Avenir Book', Arial, sans-serif;
 $base-font-weight: 400;
@@ -50,6 +60,7 @@ $color-text-link: #d70f64;
 $color-text-link-hover: #ac0c50;
 
 $bold-font-family: 'Avenir Heavy', Arial, sans-serif;
+$satisfy-font-family: 'Satisfy Regular', Arial, sans-serif;
 // ----------------------- FONTS END --------------------------
 
 // ----------------------- IMAGES START -----------------------
@@ -145,6 +156,7 @@ $dropdown-padding-right: 12px;
 // ----------------------- DROP DOWNS END ----------------------
 
 // ----------------------- HOMEPAGE START ----------------------
+
 // ----------------------- HOMEPAGE END ------------------------
 
 // ----------------------- RESTAURANT LIST START ------------------------
