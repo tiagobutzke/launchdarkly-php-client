@@ -46,7 +46,7 @@ class CustomerController extends Controller
             $newCustomer = $customerService->createCustomer($request->request->get('customer'));
 
             // @TODO: Do something here, redirect or auto-login the user or anything similar (not sure about it yet)
-            return dump($newCustomer);
+//            return dump($newCustomer);
         } catch (PhoneNumberValidationException $e) {
             $this->addFlash('error', sprintf('%s: %s', 'Phone number', $e->getMessage()));
         } catch (ValidationEntityException $e) {

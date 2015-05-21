@@ -37,6 +37,7 @@ class AppKernel extends Kernel
             new Volo\FrontendBundle\VoloFrontendBundle(),
             new Helthe\Bundle\TurbolinksBundle\HeltheTurbolinksBundle(),
             new Misd\PhoneNumberBundle\MisdPhoneNumberBundle(),
+            new Jb\Bundle\PhumborBundle\JbPhumborBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
