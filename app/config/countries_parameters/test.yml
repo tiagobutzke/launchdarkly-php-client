@@ -1,6 +1,6 @@
 # This file is a "template" of what your parameters.yml file should look like
 parameters:
-    country_code: in
+    country_code: de
     country_domain: localhost
 
     environment: test
@@ -12,7 +12,7 @@ parameters:
 
     # 'guzzle.ring.client.curl_handler' or 'guzzle.ring.client.mock_handler'
     foodpanda.api.handler: guzzle.ring.client.mock_handler
-    foodpanda.api.base_url: http://localhost/api/v4/
+    foodpanda.api.base_url: http://localhost/api/v4
     foodpanda.api.client_id: HTML5
     foodpanda.api.client_secret: ThisTokenIsNotSoSecretChangeIt
 

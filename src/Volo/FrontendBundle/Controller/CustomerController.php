@@ -2,6 +2,7 @@
 
 namespace Volo\FrontendBundle\Controller;
 
+use Foodpanda\ApiSdk\Api\Auth\Credentials;
 use Foodpanda\ApiSdk\Exception\ValidationEntityException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,58 +19,54 @@ class CustomerController extends Controller
      * @Method({"GET", "POST"})
      *
      * @param Request $request
-     * @param array $customer
      *
      * @return array
-     * @internal param Request $request
      */
-    public function createAction(Request $request, array $customer = [])
+    public function createAction(Request $request)
     {
+        $errorMessages = [];
+        $customer = [];
         if ($request->isMethod(Request::METHOD_POST)) {
-            $this->handleCustomerCreation($request);
-            $customer = $request->request->get('customer');
+            $customerService = $this->get('volo_frontend.service.customer');
+
+            try {
+                $customerData = $request->request->get('customer');
+                $newCustomer = $customerService->createCustomer($customerData);
+
+                $credentials = new Credentials($newCustomer->getEmail(), $customerData['password']);
+                $token = $this->container->get('volo_frontend.security.authenticator')->login($credentials);
+
+                $this->get('security.token_storage')->setToken($token);
+
+                return $this->redirectToRoute('home');
+            } catch (PhoneNumberValidationException $e) {
+                $errorMessages[] = sprintf('%s: %s', 'Phone number', $e->getMessage());
+            } catch (ValidationEntityException $e) {
+                $errors = json_decode($e->getMessage(), true)['data']['items'];
+                $errorMessages = $this->createErrors($errors);
+            } catch (\Exception $e) {
+                // @TODO: ask PMs about the appropriate message and use the translation
+                $errorMessages[] = 'An error occurred, please try again';
+            }
+
+            $customer = $request->request->get('customer', []);
         }
 
         return [
             'customer' => $customer,
+            'errors'   => $errorMessages,
         ];
     }
 
-    /**
-     * @param Request $request
-     */
-    public function handleCustomerCreation(Request $request)
-    {
-        $customerService = $this->get('volo_frontend.service.customer');
-
-        try {
-            $newCustomer = $customerService->createCustomer($request->request->get('customer'));
-
-            // @TODO: Do something here, redirect or auto-login the user or anything similar (not sure about it yet)
-//            return dump($newCustomer);
-        } catch (PhoneNumberValidationException $e) {
-            $this->addFlash('error', sprintf('%s: %s', 'Phone number', $e->getMessage()));
-        } catch (ValidationEntityException $e) {
-            $errors = json_decode($e->getMessage(), true)['data']['items'];
-            $this->createErrors($errors);
-        } catch (\Exception $e) {
-            // @TODO: ask PMs about the appropriate message and use the translation
-            $this->addFlash('error', 'An error occurred, please try again');
-        }
-    }
-
-    /**
-     * @param array $errors
-     */
     protected function createErrors(array $errors)
     {
+        $errorMessages = [];
         foreach ($errors as $error) {
             foreach ($error['violation_messages'] as $violationMessage) {
-                $this->addFlash(
-                    'error',
-                    sprintf('%s: %s', $error['field_name'], $violationMessage)
-                );
+                $errorMessages[] = sprintf('%s: %s', $error['field_name'], $violationMessage);
             }
         }
+
+        return $errorMessages;
     }
 }

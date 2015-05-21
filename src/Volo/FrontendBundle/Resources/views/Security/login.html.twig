@@ -1,6 +1,9 @@
-{% extends 'core.html.twig' %}
+{% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
 
-{% block title %}Title page{% endblock %}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block title %}Login{% endblock %}
 
 {% block content %}
     {% if error %}
@@ -27,6 +30,7 @@
                 <button type="submit">login</button>
             </form>
 
+            <a href="{{ path('customer.create') }}">Register</a>
         </div>
 
     </div>
