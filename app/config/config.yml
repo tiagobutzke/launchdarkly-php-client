@@ -1,5 +1,4 @@
 imports:
-    - { resource: services/session.xml }
     - { resource: security.yml }
     - { resource: services.yml }
 

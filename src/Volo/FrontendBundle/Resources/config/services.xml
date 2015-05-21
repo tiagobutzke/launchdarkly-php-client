@@ -22,9 +22,14 @@
         <parameter key="volo_frontend.service.customer_location.class">Volo\FrontendBundle\Service\CustomerLocationService</parameter>
         <parameter key="volo_frontend.twig.vendor_image_extension.class">Volo\FrontendBundle\Twig\ThumborImageExtension</parameter>
         <parameter key="volo_frontend.thumbor_builder_factory.class">Thumbor\Url\BuilderFactory</parameter>
+        <parameter key="framework.service.session_handler.class">Drak\NativeSession\NativeRedisSessionHandler</parameter>
     </parameters>
 
     <services>
+        <service id="session.handler.redis" class="%framework.service.session_handler.class%">
+            <argument type="string">%session_handler_redis_save_path%</argument>
+        </service>
+
         <service id="volo_frontend.security.authenticator" class="%volo_frontend.security.authenticator.class%">
             <argument type="service" id="volo_frontend.provider.customer" />
             <argument type="service" id="volo_frontend.api.authenticator" />
