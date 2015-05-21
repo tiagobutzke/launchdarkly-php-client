@@ -3,6 +3,7 @@
     <script src="{{ asset('js/dist/head.js') }}"></script>
     {% if app.debug == true %}
         <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+        <script src="{{ path('thumbor_configuration') }}"></script>
     {% endif %}
     <script type="text/javascript">
         var VOLO = VOLO || {};
@@ -14,6 +15,5 @@
         VOLO.Configuration = VOLO.Configuration || {};
         VOLO.Configuration.countryCode = '{{ country_code }}';
     </script>
-    <script src="{{ path('thumbor_configuration') }}"></script>
 
 {% endblock %}

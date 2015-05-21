@@ -28,3 +28,4 @@ bower_components/*
 /src/Volo/FrontendBundle/Resources/public/dist/*
 /.sass-cache/*
 /.grunt/*
+/web/thumbor/configuration.js

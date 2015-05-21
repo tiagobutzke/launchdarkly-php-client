@@ -21,6 +21,7 @@ install:
     - cd $TRAVIS_BUILD_DIR && composer install --no-interaction --optimize-autoloader
     - php app/console assets:install web --env=test
     - php app/console fos:js-routing:dump --env=test
+    - php app/console volo:thumbor:dump --env=test
     - npm install
     - grunt deploy --env=prod
 

@@ -49,6 +49,7 @@ module.exports = function (grunt) {
         'web/js/lib/andr3pt-blazy.js',
         'web/bundles/fosjsrouting/js/router.js',
         'web/js/fos_js_routes.js',
+        'web/thumbor/configuration.js',
         'bower_components/lodash/lodash.js',
         'bower_components/backbone/backbone.js',
         'bower_components/geocomplete/jquery.geocomplete.js',
@@ -129,7 +130,7 @@ module.exports = function (grunt) {
                 'bower_components/backbone/backbone.js',
                 'web/bundles/fosjsrouting/js/router.js',
                 'bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/modal.js',
-                'bower_components/adyen-cse-js/js/adyen.encrypt.js',
+                'bower_components/adyen-cse-js/js/adyen.encrypt.js'
             ]
         },
         gruntfile: {
