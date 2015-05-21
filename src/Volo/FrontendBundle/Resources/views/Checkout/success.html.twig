@@ -1,5 +1,10 @@
 {% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
 
 {% block content %}
-    {{ dump(order) }}
+    {{ order.status|trans }}<br>
+    {{ order.amount|number_format }}<br>
+    {{ order.currency_code }}<br>
+    {{ order.reference }}<br>
+    {{ order.description }}<br>
+    {{ order.vendor_code }}
 {% endblock %}
