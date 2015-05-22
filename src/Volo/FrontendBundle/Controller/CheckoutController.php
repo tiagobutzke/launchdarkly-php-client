@@ -174,9 +174,16 @@ class CheckoutController extends Controller
      */
     protected function getCart(Vendor $vendor)
     {
-        return $this->get('volo_frontend.service.cart_manager')->getCart(
-            $this->get('session')->getId(),
-            $vendor->getId()
-        );
+        $cartManager = $this->get('volo_frontend.service.cart_manager');
+
+        $session = $this->get('session')->getId();
+        
+        $cart = $cartManager->getCart($session, $vendor->getId());
+
+        if ($cart === null) {
+            throw new HttpException(Response::HTTP_BAD_REQUEST, 'No cart found for this vendor');
+        }
+
+        return $cartManager->calculateCart($cart);
     }
 }

@@ -10,8 +10,14 @@ class CheckoutControllerTest extends VoloTestCase
     {
         $client = static::createClient();
 
-        $guestCode = 'm0zt';
-        $client->request('GET', sprintf('/checkout/%s/delivery', $guestCode));
+        $vendorId = '684';
+        $vendorCode = 'm2hc';
+        $cart = ['products' => [], 'expeditionType' => 'delivery'];
+        
+        $sessionId = $client->getContainer()->get('session')->getId();
+        $client->getContainer()->get('volo_frontend.service.cart_manager')->saveCart($sessionId, $vendorId, $cart);
+        
+        $client->request('GET', sprintf('/checkout/%s/delivery', $vendorCode));
 
         $this->isSuccessful($client->getResponse());
     }
@@ -21,7 +27,9 @@ class CheckoutControllerTest extends VoloTestCase
         $this->markTestIncomplete('TBD');
         $client = static::createClient();
 
-        $guestCode = 'm0zt';
+        $guestCode = 'm2hc';
+        $client->getContainer()->get('volo_frontend.service.cart_manager')->saveCart('test', 'm0zt', array());
+
         $client->request('POST', sprintf('/checkout/%s/delivery', $guestCode));
 
         $this->isSuccessful($client->getResponse());

@@ -109,10 +109,10 @@ describe("A cart", function() {
         };
         var selectedProduct = new Backbone.Model(object);
 
-        cart.getCartVendor(vendor_id).addItem(selectedProduct.toJSON(), 3);
+        cart.getCart(vendor_id).addItem(selectedProduct.toJSON(), 3);
 
         setTimeout(function() {
-            expect(cart.getCartVendor(vendor_id).products.length).toBe(1);
+            expect(cart.getCart(vendor_id).products.length).toBe(1);
 
             var expected = _.cloneDeep(response.vendorCart[0].products[0]);
             expect(cart.vendorCart.get(vendor_id).products.toJSON()).toContain(expected);
@@ -155,14 +155,14 @@ describe("A cart", function() {
         var secondProductToAdd = new Backbone.Model(product);
         secondProductToAdd.set('quantity', 5);
 
-        cart.getCartVendor(vendor_id).addItem(firstSelectedProduct.toJSON(), 3);
+        cart.getCart(vendor_id).addItem(firstSelectedProduct.toJSON(), 3);
 
         setTimeout(function() {
             expect(cart.vendorCart.get(vendor_id).products.length).toBe(1);
             expectedFirst = _.cloneDeep(response.vendorCart[0].products[0]);
             expect(cart.vendorCart.get(vendor_id).products.toJSON()).toContain(expectedFirst);
 
-            cart.getCartVendor(vendor_id).addItem(secondProductToAdd.toJSON(), 5);
+            cart.getCart(vendor_id).addItem(secondProductToAdd.toJSON(), 5);
 
             setTimeout(function() {
                 expect(cart.vendorCart.get(vendor_id).products.length).toBe(1);
@@ -206,7 +206,7 @@ describe("A cart", function() {
             }]
         };
 
-        cart.getCartVendor(vendor_id).addItem(product, 3);
+        cart.getCart(vendor_id).addItem(product, 3);
         expect(cart.vendorCart.get(vendor_id).findSimilarProduct(product).toJSON()).toEqual({
             product_variation_id: 859,
             quantity: 3,
@@ -252,7 +252,7 @@ describe("A cart", function() {
             }]
         };
         var productInCart = new Backbone.Model(product);
-        cart.getCartVendor(vendor_id).addItem(productInCart.toJSON(), 3);
+        cart.getCart(vendor_id).addItem(productInCart.toJSON(), 3);
 
         var productForFind = new Backbone.Model({
             "is_half_type_available": false,

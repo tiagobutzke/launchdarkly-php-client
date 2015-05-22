@@ -53,7 +53,7 @@ class CartManagerService
      * @param string $sessionId
      * @param string $vendorIdentifier
      *
-     * @return array
+     * @return array|null
      */
     public function getCart($sessionId, $vendorIdentifier)
     {

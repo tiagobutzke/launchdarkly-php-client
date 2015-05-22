@@ -35,6 +35,18 @@ VOLO.initCartViews = function (vendor_id, jsonCart) {
     });
 };
 
+VOLO.initCheckoutViews = function (vendorId, jsonCart) {
+    VOLO.cartModel = VOLO.cartModel || new CartModel(jsonCart, {
+        dataProvider: new CartDataProvider(),
+        vendor_id: vendorId
+    });
+
+    VOLO.checkoutView = new CheckoutView({
+        el: '.desktop-cart',
+        model: VOLO.cartModel,
+        vendor_id: vendorId
+    });
+};
 
 $(document).on('page:load', function () {
     window.blazy.revalidate();
