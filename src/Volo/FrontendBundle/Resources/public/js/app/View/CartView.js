@@ -123,6 +123,7 @@ var CartView = Backbone.View.extend({
         _.bindAll(this);
 
         this.subViews = [];
+        this.timePickerView = null;
 
         this.template = _.template($('#template-cart').html());
         this.templateSubTotal = _.template($('#template-cart-subtotal').html());
@@ -160,8 +161,6 @@ var CartView = Backbone.View.extend({
     // when scrolling page from summary list
 
     events: {
-        'change #order-delivery-time': 'updateDeliveryTime',
-        'change #order-delivery-date': 'updateDeliveryTime',
         'scroll .checkout__summary' : '_updateCartHeight'
     },
 
@@ -170,6 +169,11 @@ var CartView = Backbone.View.extend({
         this.stickOnTopCart.remove();
         // unbinding cart height resize behaviour
         this.$window.off('resize', this._updateCartHeight).off('scroll', this._updateCartHeight);
+
+        if (_.isObject(this.timePickerView)) {
+            this.timePickerView.unbind();
+            this.timePickerView.remove();
+        }
 
         _.invoke(this.subViews, 'unbind');
         _.invoke(this.subViews, 'remove');
@@ -189,6 +193,7 @@ var CartView = Backbone.View.extend({
         this.listenTo(vendorCart.products, 'update', this._updateCartIcon, this);
         this.listenTo(vendorCart.products, 'change', this._updateCartIcon, this);
         this.listenTo(vendorCart, 'cart:ready', this.renderSubTotal, this);
+        this.listenTo(vendorCart, 'update', this.render, this);
 
         // initializing cart height resize behaviour
         this.$window.on('resize', this._updateCartHeight).on('scroll', this._updateCartHeight);
@@ -213,6 +218,7 @@ var CartView = Backbone.View.extend({
     },
 
     render: function() {
+        console.log('CartView:render');
         this.$el.html(this.template(this.model.getCart(this.vendor_id).attributes));
         this.renderSubTotal();
         this.renderProducts();
@@ -296,20 +302,16 @@ var CartView = Backbone.View.extend({
         $productsContainer.toggle(!cartEmpty);
     },
 
-    updateDeliveryTime: function() {
-        var time = this.$('#order-delivery-time').val().split(':'),
-            date = this.$('#order-delivery-date').val().split('-'),
-            datetime = new Date(date[0], date[1] - 1, date[2], time[0], time[1]);
-
-        this.model.getCart(this.vendor_id).set('orderTime', datetime);
-    },
-
     renderTimePicker: function() {
-        var date = this.model.getCart(this.vendor_id).get('orderTime');
-
-        if (_.isDate(date)) {
-            this.$('#order-delivery-date').val(date.toISOString().split('T')[0]);
-            this.$('#order-delivery-time').val(date.toTimeString().substring(0, 5));
+        if (_.isObject(this.timePickerView)) {
+            this.timePickerView.unbind();
         }
+
+        this.timePickerView = new TimePickerView({
+            el: '.desktop-cart__time',
+            model: this.model
+        });
+
+        this.timePickerView.render();
     }
 });

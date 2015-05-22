@@ -27,7 +27,7 @@ class PhoneNumberService
     public function __construct(PhoneNumberUtil $phoneNumberUtil, $twoLetterCountryCode)
     {
         $this->phoneNumberUtil = $phoneNumberUtil;
-        $this->twoLetterCountryCode = strtoupper($twoLetterCountryCode);
+        $this->twoLetterCountryCode = strtoupper(substr($twoLetterCountryCode, 0, 2));
     }
 
     /**

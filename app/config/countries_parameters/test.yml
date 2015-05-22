@@ -5,7 +5,7 @@ parameters:
     country_code: de
     country_domain: localhost
     environment: test
-    locale: en
+    locale: de
 
     # 'guzzle.ring.client.curl_handler' or 'guzzle.ring.client.mock_handler'
     foodpanda.api.handler: guzzle.ring.client.mock_handler

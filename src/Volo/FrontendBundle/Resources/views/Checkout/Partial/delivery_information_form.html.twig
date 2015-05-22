@@ -1,18 +1,26 @@
 <form action="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}" id="delivery_information_form" method="post" role="form">
-    <div class="checkout__item">
+    <div class="checkout__item checkout__item--step">
         <div class="form-group">
             <input type="text" class="form-control" id="address_line1" name="customer_address[address_line1]"
                    value="{{ customer_address.address_line1|default('') }}" required="true" placeholder="{% trans %}Address including number{% endtrans %}">
         </div>
-        <div class="form-group">
+        <div class="form-group form-group--two_col1">
             <input type="text" class="form-control"  id="postcode" name="customer_address[postcode]"
                    value="{{ customer_address.postcode|default('') }}" required="true" placeholder="{% trans %}Post Code{% endtrans %}">
         </div>
-        <div class="form-group">
+        <div class="form-group form-group--two_col2">
             <input type="text" class="form-control" id="city" name="customer_address[city]"
                    value="{{ customer_address.city|default('') }}" required="true" placeholder="{% trans %}City{% endtrans %}">
         </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="company" name="customer_address[company]"
+                   value="{{ customer_address.company|default('') }}" placeholder="{% trans %}Company name &quot;Optional&quot;{% endtrans %}">
+        </div>
+        <div class="form-group">
+            <textarea cols="30" rows="10" class="form-control" id="delivery_instructions" name="customer_address[delivery_instructions]"
+                      value="{{ customer_address.delivery_instructions|default('') }}" placeholder="{% trans %}Delivery Instructions &quot;Optional&quot; &#10; i.e. 2nd building buzzer Bloom{% endtrans %}"></textarea>
+        </div>
         <input type="hidden" name="customer_address[city_id]" value="{{ vendor.city.id }}">
-        <button id="delivery_information_form_button" class="button pull-right">{% trans %}Continue{% endtrans %}</button>
+        <button id="delivery_information_form_button" class="button">{% trans %}Continue{% endtrans %}</button>
     </div>
 </form>

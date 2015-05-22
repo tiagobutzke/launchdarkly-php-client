@@ -93,7 +93,13 @@ class CartManagerService
      */
     public function calculateCart(array $jsonCart)
     {
-        return $this->cartProvider->calculate($jsonCart);
+        $response = $this->cartProvider->calculate($jsonCart);
+
+        if (array_key_exists('vendorCart', $response)) {
+            $response['orderTime'] = $jsonCart['orderTime'];
+        }
+
+        return $response;
     }
 
     /**

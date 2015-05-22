@@ -1,29 +1,38 @@
-<h4 class="checkout__subtitle">{% trans %}Credit card details{% endtrans %}</h4>
+{% set showForm = is_granted('IS_AUTHENTICATED_FULLY') and customer_cards is defined and customer_cards|length > 0 %}
 <form action="{{ path('checkout_payment', {vendorCode: vendor.code}) }}"
+      class="{% if showForm %}hide{% endif %}"
       id="payment_form" method="post" role="form">
+    <h4 class="checkout__subtitle">{% trans %}Credit card details{% endtrans %}</h4>
     <div class="checkout__item">
-        <div class="form-group">
-            <input type="text" class="form-control" id="adyen-encrypted-form-number" value="5136333333333335" size="20"
-                   autocomplete="off" data-encrypted-name="number" placeholder="{% trans %}Card number{% endtrans %}">
-            <span id="cardType"></span>
+        <div class="checkout__item__card">
+            <div class="form-group">
+                <input type="text" class="form-control" id="adyen-encrypted-form-holder-name" size="20"
+                       autocomplete="off" data-encrypted-name="holderName" placeholder="{% trans %}Card holder name{% endtrans %}">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="adyen-encrypted-form-number" size="20"
+                       autocomplete="off" data-encrypted-name="number" placeholder="{% trans %}Card number{% endtrans %}">
+                <span id="cardType"></span>
+            </div>
+            <div class="form-group form-group--3col">
+                <input type="text" class="form-control" id="adyen-encrypted-form-expiry-month" maxlength="2" size="2"
+                       autocomplete="off" data-encrypted-name="expiryMonth" placeholder="{% trans %}MM{% endtrans %}">
+            </div>
+            <div class="form-group form-group--3col">
+                <input type="text" class="form-control" id="adyen-encrypted-form-expiry-year" maxlength="4" size="4"
+                       autocomplete="off" data-encrypted-name="expiryYear" placeholder="{% trans %}YY{% endtrans %}">
+            </div>
+            <div class="form-group form-group--3col-last">
+                <input type="text" class="form-control" id="adyen-encrypted-form-cvc" size="4" maxlength="4"
+                       autocomplete="off" data-encrypted-name="cvc" placeholder="{% trans %}CVC{% endtrans %}">
+                <i class="icon-help-circled"></i>
+            </div>
+            <div class="hide"><input type="hidden" id="adyen-encrypted-form-expiry-generationtime" value="{{ "now"|date('c') }}"
+                                     data-encrypted-name="generationtime"/></div>
         </div>
-        <div class="form-group">
-            <input type="text" class="form-control" id="adyen-encrypted-form-cvc" value="737" size="4" maxlength="4"
-                   autocomplete="off" data-encrypted-name="cvc" placeholder="{% trans %}CVC{% endtrans %}">
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-control" id="adyen-encrypted-form-holder-name" value="John Doe" size="20"
-                   autocomplete="off" data-encrypted-name="holderName" placeholder="{% trans %}Card holder name{% endtrans %}">
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-control" id="adyen-encrypted-form-expiry-month" value="06" maxlength="2" size="2"
-                   autocomplete="off" data-encrypted-name="expiryMonth" placeholder="{% trans %}Expiration month{% endtrans %}">
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-control" id="adyen-encrypted-form-expiry-year" value="2016" maxlength="4" size="4"
-                   autocomplete="off" data-encrypted-name="expiryYear" placeholder="{% trans %}Expiration year{% endtrans %}">
-        </div>
-        <div class="hide"><input type="hidden" id="adyen-encrypted-form-expiry-generationtime" value="{{ "now"|date('c') }}"
-                                 data-encrypted-name="generationtime"/></div>
+
+        <div class="checkout__item__card__help"><img class="b-lazy" alt="" data-src="{{ asset('img/checkout/cvc_help.png') }}|{{ asset('img/checkout/cvc_help-2x.png') }}"  src="{{ blazy_placeholder }}" /></div>
+
+
     </div>
 </form>

@@ -80,6 +80,7 @@
         </service>
 
         <service id="volo_frontend.service.customer" class="%volo_frontend.service.customer.class%">
+            <argument type="service" id="security.token_storage" />
             <argument type="service" id="volo_frontend.provider.customer" />
             <argument type="service" id="volo_frontend.api.serializer"/>
             <argument type="service" id="volo_frontend.service.phone_number" />
@@ -117,7 +118,7 @@
 
         <service id="volo_frontend.service.phone_number" class="%volo_frontend.service.phone_number.class%">
             <argument type="service" id="libphonenumber.phone_number_util" />
-            <argument>%country_code%</argument>
+            <argument>%locale%</argument>
         </service>
     </services>
 </container>

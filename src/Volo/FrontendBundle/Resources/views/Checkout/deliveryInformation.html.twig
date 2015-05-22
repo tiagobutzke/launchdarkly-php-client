@@ -2,11 +2,20 @@
 
 {% block delivery_information %}
     <h3 class="checkout__title">1. {% trans %}Delivery details{% endtrans %}</h3>
+
+    <h4 class="checkout__subtitle">{% trans %}Delivery Time{% endtrans %}</h4>
+    <div class="time-picker" data-vendor_id="{{ vendor.id }}">
+        {% include('VoloFrontendBundle:Layout/Partial/templates:timepicker.html.twig') %}
+    </div>
+
     <h4 class="checkout__subtitle">{% trans %}Delivery Address{% endtrans %}</h4>
     {% include('VoloFrontendBundle:Checkout/Partial:delivery_information_form.html.twig') %}
 {% endblock %}
 
 {% block contact_information %}
-    <h3 class="checkout__title">2. {% trans %}Contact info{% endtrans %}</h3>
-    <div class="checkout__item checkout__item--no-subtitle" ></div>
+    <h3 class="checkout__title checkout__title--step">2. {% trans %}Contact info{% endtrans %}</h3>
+{% endblock %}
+
+{% block payment %}
+    <h3 class="checkout__title checkout__title--step">3. {% trans %}Payment{% endtrans %}</h3>
 {% endblock %}

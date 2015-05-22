@@ -92,6 +92,95 @@ input, .form-control {
     -moz-transition: none;
     -webkit-transition: none;
   }
+
+  &[type="radio"], &[type="checkbox"] {
+    height: auto;
+  }
+}
+
+.form-group {
+  clear: both;
+  position: relative;
+}
+
+
+.form-group--two_col1 {
+  width: 50%;
+  float: left;
+  padding-right: $space-xs;
+  clear: none;
+}
+
+.form-group--two_col2 {
+  width: 50%;
+  float: left;
+  padding-left: $space-xs;
+  clear: none;
+}
+
+.form-group--two_col1--xs-full {
+  width: 100%;
+  float: none;
+  padding-right: 0;
+  @include respond-from("screen-md") {
+    width: 50%;
+    float: left;
+    padding-right: $space-xs;
+  }
+}
+
+.form-group--two_col2--xs-full {
+  width: 100%;
+  float: none;
+  padding-left:0;
+  @include respond-from("screen-md") {
+    width: 50%;
+    float: left;
+    padding-left: $space-xs;
+    clear: none;
+  }
+}
+
+.form-group--3col {
+  width: 33%;
+  float: left;
+  padding-right: $space-sm;
+  clear: none;
+}
+
+.form-group--3col-last {
+  width: 34%;
+  float: left;
+  clear: none;
+  padding-right: 0;
+
+  i {
+    display: block;
+    color: $color-text-highlight;
+    position: absolute;
+    right: $input-padding-right;
+    top: 15px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 // ----------------------- INPUT FIELDS END ------------------
+
+// ----------------------- ERROR -----------------------------
+
+.error {
+  color: $input-color-text-error;
+  background-color: $input-color-bg-error;
+  border: $input-border-error;
+}
+
+.error_msg {
+  display: block;
+  color: $error-msg-color-text;
+  background-color: $error-msg-color-bg;
+  font-size: $error-msg-font-size;
+  padding: 0 $input-padding-left;
+}

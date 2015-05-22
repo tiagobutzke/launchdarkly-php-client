@@ -25,24 +25,8 @@
     <div class="desktop-cart-container">
         <div class="desktop-cart__header">
             <h3 class="desktop-cart__title">{{ 'Delivery Time'|trans }}</h3>
-            <div class="desktop-cart__time">
-                <div class="desktop-cart__time__field-date">
-                    <select id="order-delivery-date">
-                        {% set nextThreeOpeningDays = getDeliveryDays(vendor.schedules, 3) %}
-                        {% for openingDay in nextThreeOpeningDays %}
-                            <option value="{{ openingDay.format("Y-m-d") }}"
-                                data-delivery-hours='{{ getClosingHoursRange(vendor.schedules, openingDay)|json_encode|raw }}'>
-                                    {{ openingDay|formatOpeningDay }}
-                            </option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="desktop-cart__time__field-time">
-                    {# @TODO: generate the following select based on the selection above #}
-                    <select id="order-delivery-time">
-                    </select>
-                </div>
-            </div>
+            {% include('VoloFrontendBundle:Layout/Partial/templates:timepicker.html.twig') %}
+
             <p class="desktop-cart_order__message">
                 {{ 'You haven’t added anything to the cart yet! Add items by clicking on a menu item.'|trans }}
             </p>

@@ -12,7 +12,7 @@ var CartDataProvider = function() {
     var _prepareCalculateRequest = function(data) {
         return {
             "expedition_type": "delivery",
-            "vouchers": [],
+            "vouchers": data.voucher,
             vendor_id: data.vendor_id,
             "products": data.products.map(function(item) {
                 return {

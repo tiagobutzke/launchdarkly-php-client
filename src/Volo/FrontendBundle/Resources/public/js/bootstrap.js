@@ -27,16 +27,10 @@ VOLO.initCartModel = function (jsonCart) {
     return VOLO.cartModel;
 };
 
-VOLO.initView = function(callback, jsonCart) {
-    callback(VOLO.initCartModel(jsonCart));
-    if (_.isObject(window.Intl)) {
-        try {
-            new Intl.NumberFormat(VOLO.configuration.locale.replace('_', '-'));
-            //VOLO.checkoutView.render();
-        } catch (err) {
-            console.log(err);
-        }
-    }
+VOLO.initCheckoutModel = function (cartModel) {
+    VOLO.checkoutModel = new CheckoutModel({}, {cartModel: cartModel});
+
+    return VOLO.checkoutModel;
 };
 
 VOLO.initCartViews = function (cartModel) {
@@ -63,17 +57,51 @@ VOLO.initCartViews = function (cartModel) {
     });
 };
 
-VOLO.initCheckoutViews = function (cartModel) {
-    if (_.isObject(VOLO.checkoutView)) {
-        VOLO.checkoutView.unbind();
+VOLO.initCheckoutViews = function (cartModel, checkoutModel) {
+    if (_.isObject(VOLO.CheckoutCartView)) {
+        VOLO.CheckoutCartView.unbind();
     }
-    VOLO.checkoutView = new CheckoutView({
+    if (_.isObject(VOLO.timePickerView)) {
+        VOLO.timePickerView.unbind();
+    }
+    if (_.isObject(VOLO.voucherView)) {
+        VOLO.voucherView.unbind();
+    }
+    if (_.isObject(VOLO.checkoutDeliveryInformationView)) {
+        VOLO.checkoutDeliveryInformationView.unbind();
+    }
+    VOLO.CheckoutCartView = new CheckoutCartView({
         el: '.desktop-cart',
         model: cartModel,
         $header: $('.header'),
         $menuMain: $('.checkout__main'),
         $window: $(window)
     });
+
+    if ($('.time-picker').length > 0) {
+        VOLO.timePickerView = new TimePickerView({
+            el: '.time-picker',
+            model: cartModel
+        });
+    }
+    if ($('.voucher-component').length > 0) {
+        VOLO.voucherView = new VoucherView({
+            el: '.voucher-component',
+            model: cartModel
+        });
+    }
+    if ($('#finish-and-pay').length > 0) {
+        VOLO.checkoutButtonView = new CheckoutButtonView({
+            el: '.checkout-button',
+            model: checkoutModel
+        });
+    }
+    if ($('.checkout-delivery-component').length > 0) {
+        VOLO.checkoutDeliveryInformationView = new CheckoutDeliveryInformationView({
+            el: '.checkout-delivery-component',
+            model: checkoutModel
+        });
+    }
 };
 
 VOLO.initIntl = function (locale, currency_symbol) {
@@ -87,6 +115,7 @@ VOLO.initIntl = function (locale, currency_symbol) {
             }).done(function (data) {
                 IntlPolyfill.__addLocaleData(data);
                 VOLO.initCurrencyFormat(locale, currency_symbol);
+                console.log('INTL polyfill loaded');
                 $(document).trigger('page:load');
             });
         });
@@ -129,23 +158,46 @@ $(document).on('page:load page:restore', function () {
     console.log('page:load');
     window.blazy.revalidate();
 
+    if (!_.isFunction(VOLO.formatCurrency)) {
+        // Browser doesn't have INTL support, stop the rendering here.
+        // The polyfill is loaded asynchronously and will trigger page:load again
+        return;
+    }
+
     if ($('.menu__main').length > 0) {
-        VOLO.initView(VOLO.initCartViews, VOLO.jsonCart);
+        VOLO.initCartModel(VOLO.jsonCart);
+        VOLO.initCartViews(VOLO.cartModel);
         VOLO.cartView.render();
     }
 
     if ($('.checkout__main').length > 0) {
-        VOLO.initView(VOLO.initCheckoutViews, VOLO.jsonCart);
-        VOLO.checkoutView.render();
+        VOLO.initCartModel(VOLO.jsonCart);
+        VOLO.initCheckoutModel(VOLO.cartModel);
+        VOLO.initCheckoutViews(VOLO.cartModel, VOLO.checkoutModel);
+        VOLO.CheckoutCartView.render();
+
+        if (_.isObject(VOLO.timePickerView)) {
+            VOLO.timePickerView.render();
+        }
+        if (_.isObject(VOLO.voucherView)) {
+            VOLO.voucherView.render();
+        }
+        if (_.isObject(VOLO.checkoutButtonView)) {
+            VOLO.checkoutButtonView.render();
+        }
+        if (_.isObject(VOLO.checkoutDeliveryInformationView)) {
+            VOLO.checkoutDeliveryInformationView.render();
+        }
     }
 
     if ($('.teaser__form').length > 0) {
-        VOLO.initView(VOLO.initHomeSearch, VOLO.jsonCart);
+        VOLO.initHomeSearch();
         VOLO.homeSearchView.render();
     }
 
     if($('.restaurants__tool-box').length > 0) {
-        VOLO.initView(VOLO.initVendorsListSearch, VOLO.jsonCart);
+        VOLO.initVendorsListSearch();
+        VOLO.vendorSearchView.render();
     }
 });
 
@@ -157,14 +209,26 @@ $(document).on('page:before-unload', function () {
     if (_.isObject(VOLO.cartView)) {
         VOLO.cartView.unbind();
     }
-    if (_.isObject(VOLO.checkoutView)) {
-        VOLO.checkoutView.unbind();
+    if (_.isObject(VOLO.CheckoutCartView)) {
+        VOLO.CheckoutCartView.unbind();
     }
     if (_.isObject(VOLO.homeSearchView)) {
         VOLO.homeSearchView.unbind();
     }
+    if (_.isObject(VOLO.timePickerView)) {
+        VOLO.timePickerView.unbind();
+    }
+    if (_.isObject(VOLO.voucherView)) {
+        VOLO.voucherView.unbind();
+    }
     if (_.isObject(VOLO.vendorSearchView)) {
         VOLO.vendorSearchView.unbind();
+    }
+    if (_.isObject(VOLO.checkoutButtonView)) {
+        VOLO.checkoutButtonView.unbind();
+    }
+    if (_.isObject(VOLO.checkoutDeliveryInformationView)) {
+        VOLO.checkoutDeliveryInformationView.unbind();
     }
 });
 

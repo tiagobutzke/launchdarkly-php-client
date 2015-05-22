@@ -40,7 +40,7 @@ class CustomerController extends Controller
 
                 return $this->redirectToRoute('home');
             } catch (PhoneNumberValidationException $e) {
-                $errorMessages[] = sprintf('%s: %s', 'Phone number', $e->getMessage());
+                $errorMessages[] = $this->get('translator')->trans(sprintf('%s: %s', 'Phone number', $e->getMessage()));
             } catch (ValidationEntityException $e) {
                 $errors = json_decode($e->getMessage(), true)['data']['items'];
                 $errorMessages = $this->createErrors($errors);
