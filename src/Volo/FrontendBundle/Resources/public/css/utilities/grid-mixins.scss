@@ -25,6 +25,18 @@
   }
 }
 
+@mixin respond-from-custom($breakpoint) {
+    @media (max-width: $breakpoint - 1) {
+      @content;
+    }
+}
+
+@mixin respond-to-custom($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
 @mixin appear-from($breakpoint) {
   @if $breakpoint == "screen-sm" {
     @media (max-width: $screen-sm-min - 1) {

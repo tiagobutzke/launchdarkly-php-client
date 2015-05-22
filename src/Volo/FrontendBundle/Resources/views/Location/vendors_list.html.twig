@@ -2,11 +2,19 @@
 {% use 'VoloFrontendBundle:Location:Partial/vendor_description.html.twig' %}
 
 {% block content %}
-    <h1 class="hero-restaurant">{{ 'The Best of Berlin. Brought to your doorstep.'|trans }}</h1>
+    <div class="hero-banner-wrapper">
+        <h1>{{ 'The Best of Berlin. Brought to your doorstep.'|trans }}</h1>
+        {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image.html.twig' with {type: 'hero', 'vendorCode' : 's7zm'} %}
+    </div>
     <div class="wrapper-fluid">
-        <h1>{{ location.name|e }}</h1>
         <h2 class="hide">Available now</h2>
         <div class="restaurants">
+            <div class="restaurants__tool-box">
+                <div class="restaurants__location">
+                    <input type="text" class="form-control"  name="location_set" value="" required="true" placeholder="{% trans %}Enter your postal code{% endtrans %}">
+                    <div class="hide"><span>10117, Berlin Mitte</span><a href="">{% trans %}Change{% endtrans %}</a></div>
+                </div>
+            </div>
             {% for vendor in openVendors %}
                 {{ block('vendor_description') }}
             {% endfor %}

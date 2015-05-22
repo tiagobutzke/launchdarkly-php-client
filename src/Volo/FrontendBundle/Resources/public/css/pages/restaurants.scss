@@ -2,23 +2,38 @@
 * vendor-listing-page declarations
 */
 
-.hero-restaurant {
-  width: 100%;
-  @include centerTextVerticallyByHeight(220px);
-  text-align: center;
-  margin: 0 0 $grid-gutter-width 0;
-  background-image: url($hero-restaurant-img);
-  background-position: center top;
-  background-size: cover;
-  color: $color-text-selection;
-  font-size: 2em;
-  @include set-default-gutter();
-  @include appear-from("screen-md");
-}
-
 .restaurants {
   @include make-row();
   margin: 0;
+}
+
+.restaurants__tool-box {
+  @include make-row();
+  height: 84px;
+  @include appear-from("screen-sm")
+}
+.restaurants__location {
+  @include make-sm-column(6);
+  @include make-md-column(4);
+  @include make-lg-column(3);
+  @extend .pull-right;
+  text-align: right;
+  height: 84px;
+  line-height: 44px;
+  padding: $grid-gutter-width;
+  padding-left: $space-xs;
+
+  a {
+    font-size: $restaurant-font-size;
+    display: inline-block;
+    margin-left: $space-md;
+  }
+
+  span {
+    font-size: $restaurant-font-size;
+    display: inline-block;
+    margin-left: $space-md;
+  }
 }
 
 .restaurants__item {
@@ -36,7 +51,7 @@
 
 .restaurants__item__wrapper {
   overflow: hidden;
-  margin-bottom: $grid-gutter-width;
+  margin-bottom: $space-sm;
   position: relative;
   @include transition(all 0.1s ease-out);
   @include respond-from("screen-sm") {
@@ -45,6 +60,7 @@
     background-color: $restaurant-bg-color;
     box-shadow: $restaurant-box-shadow;
     top: 0;
+    margin-bottom: $grid-gutter-width;
 
     &:hover {
       box-shadow: $restaurant-box-shadow-hover;
@@ -68,13 +84,19 @@
 
 .restaurants__item__wrapper__name {
   font-size: $restaurant-font-size;
+  font-weight: bold;
   color: $color-text-highlight;
   text-transform: uppercase;
-  margin: 10px 0 0 0;
+  margin: $space-sm 0 0;
   @include set-default-gutter();
-  height: 20px;
-  line-height: 20px;
+  height: 15px;
+  line-height: 15px;
   @include text-overflow();
+
+  @include respond-from("screen-sm") {
+    height: 20px;
+    line-height: 20px;
+  }
 }
 
 .restaurants__item__wrapper__desc {
