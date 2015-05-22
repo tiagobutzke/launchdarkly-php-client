@@ -6,12 +6,12 @@
 $fontspath: "../../fonts/";
 
 @font-face {
-  font-family: 'volo';
-  src:url('#{$fontspath}volo.eot');
-  src:url('#{$fontspath}volo.eot?#iefix') format('embedded-opentype'),
-  url('#{$fontspath}volo.woff') format('woff'),
-  url('#{$fontspath}volo.ttf') format('truetype'),
-  url('#{$fontspath}volo.svg#volo') format('svg');
+  font-family: 'foodora';
+  src:url('#{$fontspath}foodora.eot');
+  src:url('#{$fontspath}foodora.eot?#iefix') format('embedded-opentype'),
+  url('#{$fontspath}foodora.woff') format('woff'),
+  url('#{$fontspath}foodora.ttf') format('truetype'),
+  url('#{$fontspath}foodora.svg#volo') format('svg');
   font-weight: normal;
   font-style: normal;
 }

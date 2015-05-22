@@ -1,7 +1,19 @@
 @charset "UTF-8";
 
+@font-face {
+  font-family: "foodora";
+  src:url("fonts/foodora.eot");
+  src:url("fonts/foodora.eot?#iefix") format("embedded-opentype"),
+  url("fonts/foodora.woff") format("woff"),
+  url("fonts/foodora.ttf") format("truetype"),
+  url("fonts/foodora.svg#foodora") format("svg");
+  font-weight: normal;
+  font-style: normal;
+
+}
+
 [data-icon]:before {
-  font-family: "volo" !important;
+  font-family: "foodora" !important;
   content: attr(data-icon);
   font-style: normal !important;
   font-weight: normal !important;
@@ -15,7 +27,7 @@
 
 [class^="icon-"]:before,
 [class*=" icon-"]:before {
-  font-family: "volo" !important;
+  font-family: "foodora" !important;
   font-style: normal !important;
   font-weight: normal !important;
   font-variant: normal !important;
@@ -112,4 +124,10 @@
 }
 .icon-search:before {
   content: "z";
+}
+.icon-logo-icon:before {
+  content: "A";
+}
+.icon-logo:before {
+  content: "B";
 }
