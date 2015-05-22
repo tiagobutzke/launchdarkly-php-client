@@ -1,0 +1,34 @@
+.hero-banner-wrapper {
+  width: 100%;
+  position: relative;
+  max-height: 400px;
+  @include respond-to-custom(1400px) {
+    overflow: hidden;
+  }
+  @include appear-from("screen-sm");
+
+  h1 {
+    font-family: $base-font-family;
+    color: $color-text-selection;
+    text-transform: uppercase;
+    width: 96%;
+    text-align: center;
+    height: 5px;
+    line-height: 28px;
+    @include absolute-center-box();
+
+    @include respond-from("screen-sm") {
+      font-size: 1.4em;
+    }
+    @include respond-from("screen-md") {
+      font-size: 1.6em;
+    }
+    @include respond-from("screen-lg") {
+      font-size: 2.3em;
+    }
+  }
+
+  img {
+    @include responsive-img();
+  }
+}

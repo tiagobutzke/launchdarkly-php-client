@@ -6,23 +6,6 @@
   background: $color-bg-secondary;
 }
 
-// hero banner
-
-.hero-menu {
-  width: 100%;
-  position: relative;
-  max-height: 400px;
-  text-align: center;
-  position: relative;
-  @media (min-width: 1400px) {
-    overflow: hidden;
-  }
-
-  img {
-    @include responsive-img();
-  }
-}
-
 .hero-menu__info {
   width: 405px;
   height: 130px;
