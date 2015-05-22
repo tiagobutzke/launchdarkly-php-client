@@ -9,9 +9,9 @@
 
 {% block content %}
     <section class="home-section teaser__home-section fullWindowHeight teaser b-lazy"
-         data-src="{{ asset("img/homepage/teaser_2400.jpg") }}"
-         data-src-1400="{{ asset("img/homepage/teaser_2800.jpg") }}"
-         data-src-biggest="{{ asset("img/homepage/teaser_4000.jpg") }}">
+         data-src="{{ asset('img/homepage/teaser_2400.jpg') }}"
+         data-src-1400="{{ asset('img/homepage/teaser_2800.jpg') }}"
+         data-src-biggest="{{ asset('img/homepage/teaser_4000.jpg') }}">
         <div class="teaser__slogan">
             <h2 class="teaser__slogan__h2">{{ 'The restaurants you love brought to you'|trans }}</h2>
         </div>
@@ -36,22 +36,22 @@
     <section class="home-section restaurants-home">
         <div class="restaurants-home__logos">
             <div class="restaurants-home__logos__logo">
-                <img src="{{ asset('img/logos/logo01.png') }}">
+                <img alt="" class="b-lazy" data-src="{{ asset('img/logos/logo01.png') }}" src="{{ blazy_placeholder }}">
             </div>
             <div class="restaurants-home__logos__logo">
-                <img src="{{ asset('img/logos/logo02.png') }}">
+                <img alt="" class="b-lazy" data-src="{{ asset('img/logos/logo02.png') }}" src="{{ blazy_placeholder }}">
             </div>
             <div class="restaurants-home__logos__logo">
-                <img src="{{ asset('img/logos/logo03.png') }}">
+                <img alt="" class="b-lazy" data-src="{{ asset('img/logos/logo03.png') }}" src="{{ blazy_placeholder }}">
             </div>
             <div class="restaurants-home__logos__logo">
-                <img src="{{ asset('img/logos/logo04.png') }}">
+                <img alt="" class="b-lazy" data-src="{{ asset('img/logos/logo04.png') }}" src="{{ blazy_placeholder }}">
             </div>
             <div class="restaurants-home__logos__logo">
-                <img src="{{ asset('img/logos/logo05.png') }}">
+                <img alt="" class="b-lazy" data-src="{{ asset('img/logos/logo05.png') }}" src="{{ blazy_placeholder }}">
             </div>
             <div class="restaurants-home__logos__logo">
-                <img src="{{ asset('img/logos/logo01.png') }}">
+                <img alt="" class="b-lazy" data-src="{{ asset('img/logos/logo01.png') }}" src="{{ blazy_placeholder }}">
             </div>
         </div>
     </section>
@@ -67,7 +67,7 @@
     <section class="home-section stats">
         <div class="stats__container">
             <div class="stats__content" >
-                <img class="stats__fork-knife" alt="" src="{{ asset('img/fork-knife.png') }}" />
+                <img class="stats__fork-knife b-lazy" alt="" data-src="{{ asset('img/fork-knife.png') }}"  src="{{ blazy_placeholder }}" />
                 <div class="stats__numbers">
                     <div class="stats__numbers__first">
                         <div class="numbers__scroller">
@@ -127,11 +127,10 @@
                     <div class="stats__numbers__second">
                         <div class="numbers__scroller">
                             <div class="numbers__sprite number0"></div>
-                            <img class="number__spacer" src="{{ asset('img/numbers/numbers-sprite.jpg') }}">
-                            <img class="number__spacer" src="{{ asset('img/numbers/numbers-sprite.jpg') }}">
-                            <img class="number__spacer" src="{{ asset('img/numbers/numbers-sprite.jpg') }}">
-                            <img class="number__spacer" src="{{ asset('img/numbers/numbers-sprite.jpg') }}">
-                            <img class="number__spacer" src="{{ asset('img/numbers/numbers-sprite.jpg') }}">
+                            <img class="number__spacer b-lazy" alt="" data-src="{{ asset('img/numbers/numbers-sprite.jpg') }}" src="{{ blazy_placeholder }}">
+                            <img class="number__spacer b-lazy" alt="" data-src="{{ asset('img/numbers/numbers-sprite.jpg') }}" src="{{ blazy_placeholder }}">
+                            <img class="number__spacer b-lazy" alt="" data-src="{{ asset('img/numbers/numbers-sprite.jpg') }}" src="{{ blazy_placeholder }}">
+                            <img class="number__spacer b-lazy" alt="" data-src="{{ asset('img/numbers/numbers-sprite.jpg') }}" src="{{ blazy_placeholder }}">
                         </div>
                     </div>
                     <div class="stats__comment__minutes">
@@ -140,7 +139,7 @@
                     <div class="stats__comment">
                         {{ 'Average delivery time per order.'|trans }}
                     </div>
-                    <img class="b-lazy stats__dish" data-src="/img/dish.png" alt="" src="" />
+                    <img class="stats__dish b-lazy" alt="" data-src="{{ asset('img/dish.png') }}"  src="{{ blazy_placeholder }}" />
                 </div>
             </div>
         </div>
@@ -156,23 +155,23 @@
     </div>
     <section class="home-section cities">
         <div class="cities__container">
-            <div class="city">
+            <a href="{{ path('city', {'id': 2}) }}" class="city">
                 <div class="city__container">
                     <div class="city__name">
                         <div>{{ 'Berlin'|trans }}</div>
-                        <a href="{{ path('city', {'id': 2}) }}" class="button city__called-action">{{ 'Browse restaurants'|trans }}</a>
+                        <div class="button city__called-action">{{ 'Browse restaurants'|trans }}</div>
                     </div>
                     <div class="flipper city__flipper">
                         <figure class="flipper__front b-lazy" data-src="{{ asset('img/cities/berlin.jpg') }}"></figure>
                         <figure class="flipper__back b-lazy" data-src="{{ asset('img/cities/berlin_food.jpg') }}"></figure>
                     </div>
                 </div>
-            </div>
-            <div class="city">
+            </a>
+            <a href="{{ path('city', {'id': 2}) }}" class="city">
                 <div class="city__container">
                     <div class="city__name">
                         <div>{{ 'Frankfurt'|trans }}</div>
-                        <a href="{{ path('city', {'id': 2}) }}" class="button city__called-action">{{ 'Browse restaurants'|trans }}</a>
+                        <div class="button city__called-action">{{ 'Browse restaurants'|trans }}</div>
                     </div>
 
                     <div class="flipper city__flipper">
@@ -180,53 +179,90 @@
                         <figure class="flipper__back b-lazy" data-src="{{ asset('img/cities/frankfurt_food.jpg') }}"></figure>
                     </div>
                 </div>
-            </div>
-            <div class="city">
+            </a>
+            <a href="{{ path('city', {'id': 2}) }}" class="city">
                 <div class="city__container">
                     <div class="city__name">
                         <div>{{ 'Hamburg'|trans }}</div>
-                        <a href="{{ path('city', {'id': 2}) }}" class="button city__called-action">{{ 'Browse restaurants'|trans }}</a>
+                        <div class="button city__called-action">{{ 'Browse restaurants'|trans }}</div>
                     </div>
                     <div class="flipper city__flipper">
                         <figure class="flipper__front b-lazy" data-src="{{ asset('img/cities/hamburg.jpg') }}"></figure>
                         <figure class="flipper__back b-lazy" data-src="{{ asset('img/cities/hamburg_food.jpg') }}"></figure>
                     </div>
                 </div>
-            </div>
-            <div class="city">
+            </a>
+            <a href="{{ path('city', {'id': 2}) }}" class="city">
                 <div class="city__container">
                     <div class="city__name">
                         <div>{{ 'München'|trans }}</div>
-                        <a href="{{ path('city', {'id': 2}) }}" class="button city__called-action">{{ 'Browse restaurants'|trans }}</a>
+                        <div class="button city__called-action">{{ 'Browse restaurants'|trans }}</div>
                     </div>
                     <div class="flipper city__flipper">
                         <figure class="flipper__front b-lazy" data-src="{{ asset('img/cities/munchen.jpg') }}"></figure>
                         <figure class="flipper__back b-lazy" data-src="{{ asset('img/cities/munchen_food.jpg') }}"></figure>
                     </div>
                 </div>
-            </div>
-            <div class="city">
+            </a>
+            <a href="{{ path('city', {'id': 2}) }}" class="city">
                 <div class="city__container">
                     <div class="city__name">
                         <div>{{ 'Düsseldorf'|trans }}</div>
-                        <a href="{{ path('city', {'id': 2}) }}" class="button city__called-action">{{ 'Browse restaurants'|trans }}</a>
+                        <div class="button city__called-action">{{ 'Browse restaurants'|trans }}</div>
                     </div>
                     <div class="flipper city__flipper">
                         <figure class="flipper__front b-lazy" data-src="{{ asset('img/cities/dusseldorf.jpg') }}"></figure>
                         <figure class="flipper__back b-lazy" data-src="{{ asset('img/cities/dusseldorf_food.jpg') }}"></figure>
                     </div>
                 </div>
-            </div>
-            <div class="city">
+            </a>
+            <a href="{{ path('city', {'id': 2}) }}" class="city">
                 <div class="city__container">
                     <div class="city__name">
                         <div>{{ 'Köln'|trans }}</div>
-                        <a href="{{ path('city', {'id': 2}) }}" class="button city__called-action">{{ 'Browse restaurants'|trans }}</a>
+                        <div class="button city__called-action">{{ 'Browse restaurants'|trans }}</div>
                     </div>
                     <div class="flipper city__flipper">
                         <figure class="flipper__front b-lazy" data-src="{{ asset('img/cities/koln.jpg') }}"></figure>
                         <figure class="flipper__back b-lazy" data-src="{{ asset('img/cities/koln_food.jpg') }}"></figure>
                     </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <div class="titles">
+        <div class="titles__title">
+            {{ 'Take Volo where you go!'|trans }}
+        </div>
+        <div class="titles__subtitle">
+            {{ 'Download our free app'|trans }}
+        </div>
+    </div>
+    <section class="home-section app">
+        <div class="app__fluid-container">
+            <div class="app__container">
+                <div class="app__phone-left">
+                    <img class="app__phone-left__img b-lazy" alt="" data-src="{{ asset('img/homepage/phone-left.png') }}" src="{{ blazy_placeholder }}">
+                </div>
+                <div class="app__message">
+                    <a href="#" class="app__message__logo">
+                        <img class="app__message__img b-lazy" alt="" data-src="{{ asset('img/homepage/apple-store.jpg') }}" src="{{ blazy_placeholder }}">
+                    </a>
+                    <div class="app__message__logo">
+                        {{ 'Coming soon:'|trans }}
+                        <img class="app__message__img b-lazy" alt="" data-src="{{ asset('img/homepage/google-play-gray.jpg') }}" src="{{ blazy_placeholder }}">
+                    </div>
+                    <form class="app__message__form" action="" method="GET">
+                        <label class="app__message__label" >{{ 'Send the dowload link to your mobile phone'|trans }}</label>
+                        <div class="app__message__input-container">
+                            <input type="text" class="app__message__input" name="" autofocus="" placeholder="{{ 'Phone number'|trans }}">
+                        </div>
+                        <button class="app__message__button button button--inline" type="submit">{{ 'Send'|trans }}</button>
+                    </form>
+                </div>
+                <div class="app__phone-right">
+                    <img class="app__phone-right__img b-lazy" alt="" data-src="{{ asset('img/homepage/phone-right.png') }}" src="{{ blazy_placeholder }}">
                 </div>
             </div>
         </div>

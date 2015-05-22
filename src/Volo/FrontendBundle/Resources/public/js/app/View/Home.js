@@ -15,9 +15,10 @@ $(document).on('ready page:load', function() {
             var $city = $(this),
                 $cityNameHover = $city.find('.city__called-action');
 
+            $cityNameHover.hide();
             $city.mouseover(function() {
-                $cityNameHover.css({display: 'inline-block'});
-            })
+                    $cityNameHover.show();
+                })
                 .mouseout(function() {
                     $cityNameHover.hide();
                 });
