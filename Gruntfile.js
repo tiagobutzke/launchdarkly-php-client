@@ -123,7 +123,6 @@ module.exports = function (grunt) {
             force: true,
             ignores: [
                 'bower_components/jquery/dist/jquery.js',
-                'web/bundles/heltheturbolinks/js/jquery.turbolinks.js',
                 'web/bundles/heltheturbolinks/js/turbolinks.js',
                 'web/js/lib/andr3pt-blazy.js',
                 'bower_components/lodash/lodash.js',
@@ -187,7 +186,6 @@ module.exports = function (grunt) {
                 'web/bundles/fosjsrouting/js/router.js',
                 'web/js/fos_js_routes.js',
                 'build/bower/blazy/blazy.js',
-                'vendor/helthe/turbolinks/Resources/public/js/jquery.turbolinks.js',
                 'vendor/helthe/turbolinks/Resources/public/js/turbolinks.js'
             ]
         }

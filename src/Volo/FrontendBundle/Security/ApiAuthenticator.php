@@ -46,6 +46,16 @@ class ApiAuthenticator implements SimpleFormAuthenticatorInterface
     {
         $credentials = new Credentials($token->getUsername(), $token->getCredentials());
 
+        return $this->login($credentials);
+    }
+
+    /**
+     * @param Credentials $credentials
+     *
+     * @return Token
+     */
+    public function login(Credentials $credentials)
+    {
         try {
             $accessToken = $this->authenticator->authenticate($credentials);
             $customer = $this->customerProvider->getCustomer($accessToken);

@@ -1,11 +1,14 @@
-{% extends 'core.html.twig' %}
+{% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
 
-{% block title %}Title page{% endblock %}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block title %}Register{% endblock %}
 
 {% block content %}
-    {% for flashMessage in app.session.flashbag.get('error') %}
-        <div class="flash-error">
-            {{ flashMessage }}
+    {% for message in errors %}
+        <div class="error">
+            {{ message }}
         </div>
     {% endfor %}
 
@@ -13,7 +16,7 @@
         <div class="row">
             <form action="{{ path('customer.create') }}" method="post" role="form">
                 {% include 'VoloFrontendBundle:Customer/Partial:customer_registration_form.html.twig' with {'customer' : customer} %}
-                <input type="submit" value="Register"/>
+                <input type="submit" value="Register" class="btn-submit"/>
             </form>
         </div>
     </div>

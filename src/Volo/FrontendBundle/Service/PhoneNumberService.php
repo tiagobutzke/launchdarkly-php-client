@@ -42,7 +42,7 @@ class PhoneNumberService
         $isValidNumberType = $phoneType === $this->phoneNumberUtil->getNumberType($parsedPhone);
 
         if (!$isValidPhoneNumber || !$isValidNumberType) {
-            throw new PhoneNumberValidationException("Invalid Phone Number");
+            throw new PhoneNumberValidationException('Invalid Phone Number');
         }
     }
 
