@@ -2,23 +2,19 @@ var CartItemView = Backbone.View.extend({
     tagName: 'tr',
     initialize: function() {
         this.template = _.template($('#template-cart-item').html());
-        this.listenTo(this.model, "change", this.render);
+        this.listenTo(this.model, 'change', this.render);
     },
 
     render: function() {
         this.$el.html(this.template(this.model.attributes));
-
+        
         return this;
     }
 });
 
 var CartView = Backbone.View.extend({
-    events: {
-        'change #order-delivery-time': 'updateDeliveryTime',
-        'change #order-delivery-date': 'updateDeliveryTime'
-    },
-    initialize: function () {
-        _.bindAll(this, 'renderNewItem', 'renderSubTotal', 'disableCart', 'enableCart', 'initListener');
+    initialize: function (options) {
+        _.bindAll(this, 'renderNewItem', 'renderSubTotal', 'disableCart', 'enableCart', 'initListener', '_updateCartHeight');
 
         this.subViews = [];
 
@@ -26,13 +22,52 @@ var CartView = Backbone.View.extend({
         this.templateSubTotal = _.template($('#template-cart-subtotal').html());
 
         this.vendor_id = this.$el.data().vendor_id;
+        
+        this.domObjects = {};
+        this.domObjects.$header = options.$header;
+        this.domObjects.$menuMain = options.$menuMain;
+        this.$window = options.$window;
+        
+        // margin of the menu height from the bottom edge of the window
+        this.cartBottomMargin = VOLO.configuration.cartBottomMargin;
+        this.itemsOverflowingClassName = VOLO.configuration.itemsOverflowingClassName;
+        this.fixedCartElementsHeight = null;
 
         this.initListener();
+
+        // initializing cart sticking behaviour
+        this.stickOnTopCart = new StickOnTop({
+            $container: this.$el,
+            stickOnTopValueGetter: function() {
+                    return this.domObjects.$header.outerHeight();
+            }.bind(this),
+            startingPointGetter: function() {
+                return this.$el.offset().top;
+            }.bind(this),
+            endPointGetter: function() {
+                return this.domObjects.$menuMain.offset().top + this.domObjects.$menuMain.outerHeight();
+            }.bind(this)
+        });
+    },
+
+    // attaching cart resize also to items scroll to avoid a bug not triggering resize
+    // when scrolling page from summary list
+
+    events: {
+        'change #order-delivery-time': 'updateDeliveryTime',
+        'change #order-delivery-date': 'updateDeliveryTime',
+        'scroll .checkout__summary' : '_updateCartHeight'
     },
 
     remove: function() {
+        // unbinding cart sticking behaviour
+        this.stickOnTopCart.remove();
+        // unbinding cart height resize behaviour
+        this.$window.off('resize', this._updateCartHeight).off('scroll', this._updateCartHeight);
+
         _.invoke(this.subViews, 'remove');
         Backbone.View.prototype.remove.apply(this, arguments);
+        this.domObjects = {};
     },
 
     initListener: function () {
@@ -44,7 +79,8 @@ var CartView = Backbone.View.extend({
         this.listenTo(vendorCart, 'change:orderTime', this.renderTimePicker, this);
         this.listenTo(vendorCart.products, 'change', this.renderProducts, this);
         this.listenTo(vendorCart.products, 'add', this.renderNewItem, this);
-
+        // initializing cart height resize behaviour
+        this.$window.on('resize', this._updateCartHeight).on('scroll', this._updateCartHeight);
     },
 
     disableCart: function() {
@@ -58,10 +94,14 @@ var CartView = Backbone.View.extend({
     render: function() {
         this.$el.html(this.template(this.model.getCart(this.vendor_id).attributes));
         this.renderSubTotal();
-
         this.renderProducts();
         this.renderTimePicker();
-        this._makeCartAndMenuSticky();
+
+        this._calculateFixedCartElementsHeight();
+        // recalculating cart scrolling position
+        this.stickOnTopCart.init(this.$('.desktop-cart-container'));
+        this._updateCartHeight();
+
         return this;
     },
 
@@ -87,27 +127,38 @@ var CartView = Backbone.View.extend({
 
         this.$('.desktop-cart__products').append(view.render().el);
         this._toggleContainerVisibility();
+
+        // recalculating cart scrolling position
+        this.stickOnTopCart.updateCoordinates();
+        this._calculateFixedCartElementsHeight();
+        this._updateCartHeight();
     },
 
-    _makeCartAndMenuSticky: function() {
-        var $menuCache = $('.menu'),
-            $headerCache = $('.header');
+    _calculateFixedCartElementsHeight: function () {
+        this.fixedCartElementsHeight = this.$('.desktop-cart__header').outerHeight() + this.$('.desktop-cart__footer').outerHeight();
+    },
 
-        new StickOnTop(
-            $('.desktop-cart-container'),
-            $('.desktop-cart'),
-            function(){ return $headerCache.height(); },
-            function(){ return $menuCache.position().top; },
-            function(){ return $menuCache.offset().top + $menuCache.height(); }
-        );
+    _updateCartHeight: function () {
+        var $checkoutSummary = this.$('.checkout__summary');
 
-        new StickOnTop(
-            $('.menu__categories nav'),
-            $('.menu__categories'),
-            function(){ return $headerCache.height(); },
-            function(){ return $menuCache.offset().top + 140; },
-            function(){ return $menuCache.offset().top + $menuCache.height(); }
-        );
+        // if cart is sticking then adjust the product list max height
+        if (this.$el.hasClass(this.stickOnTopCart.stickingOnTopClass)) {
+            $checkoutSummary.css({
+                'max-height': (this.$window.outerHeight() - this.domObjects.$header.outerHeight() - this.fixedCartElementsHeight - this.cartBottomMargin) + 'px'
+            });
+        // if not remove all adjusting
+        } else {
+            $checkoutSummary.css({
+                'max-height': (this.$window.outerHeight() - (this.$el.offset().top - this.$window.scrollTop()) - this.fixedCartElementsHeight - this.cartBottomMargin) + 'px'
+            });
+        }
+
+        // adding css styling in case of scrolling of summary list
+        if ($checkoutSummary.find('.summary__items').outerHeight() > $checkoutSummary.outerHeight()) {
+            $checkoutSummary.addClass(this.itemsOverflowingClassName);
+        } else {
+            $checkoutSummary.removeClass(this.itemsOverflowingClassName);
+        }
     },
 
     _toggleContainerVisibility: function() {

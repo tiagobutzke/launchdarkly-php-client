@@ -1,0 +1,17 @@
+%aspect-ratio-base {
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  box-sizing: content-box;
+  background-position: center;
+}
+
+.aspect-ratio-40-11 {
+  @include aspect-ratio(40, 11);
+  @extend %aspect-ratio-base;
+}
+
+.aspect-ratio-117-45 {
+  @include aspect-ratio(117, 45);
+  @extend %aspect-ratio-base;
+}

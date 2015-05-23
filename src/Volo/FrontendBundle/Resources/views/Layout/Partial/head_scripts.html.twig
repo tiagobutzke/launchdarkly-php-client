@@ -17,6 +17,10 @@
         VOLO.configuration.countryCode = '{{ country_code }}';
         VOLO.configuration.locale = '{{ locale }}';
 
+        // cart layout and animation
+        VOLO.configuration.cartBottomMargin = 50;
+        VOLO.configuration.itemsOverflowingClassName = 'checkout__summary-overflowing';
+
         {% set config = get_configuration() %}
         {% set userLocale = app.request.locale %}
         $(document).ready(function () {
