@@ -32,6 +32,6 @@ var MenuItemView = Backbone.View.extend({
         this.vendor_id = options.vendor_id;
     },
     addProduct: function() {
-        this.cartModel.getCartVendor(this.vendor_id).addItem(this.model.toJSON(), 1);
+        this.cartModel.getCart(this.vendor_id).addItem(this.model.toJSON(), 1);
     }
 });

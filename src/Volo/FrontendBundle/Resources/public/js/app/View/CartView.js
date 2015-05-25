@@ -22,7 +22,7 @@ var CartView = Backbone.View.extend({
 
         this.vendor_id = options.vendor_id;
 
-        var cart = this.model.vendorCart.get(this.vendor_id);
+        var cart = this.model.getCart(this.vendor_id);
 
         cart.products.on('add', this.render, this);
 
@@ -41,7 +41,7 @@ var CartView = Backbone.View.extend({
 
     render: function() {
         this.$el.html(this.template(this.model.attributes));
-        this.model.vendorCart.get(this.vendor_id).products.each(this.renderNewItem);
+        this.model.getCart(this.vendor_id).products.each(this.renderNewItem);
 
         this._makeCartAndMenuSticky();
         return this;

@@ -58,6 +58,6 @@
                 {{ 'Total'|trans }} <span class="desktop-cart__order__total__price"><%- total_value %> &euro;</span>
             </div>
         </div>
-        <a class="button" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">{% trans %}Checkout{% endtrans %}</a>
+        <a class="button btn-checkout" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">{% trans %}Checkout{% endtrans %}</a>
     </div>
  </script>
