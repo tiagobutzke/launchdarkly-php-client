@@ -93,7 +93,7 @@ module.exports = function (grunt) {
     config.sass = {
         options: {
             style: 'compressed',
-            sourcemap: (env === 'dev') ? 'auto' : 'none'
+            sourcemap: (env === 'dev') ? 'inline' : 'none'
         },
         siteBundleStyle: {
             files: [{
@@ -107,14 +107,31 @@ module.exports = function (grunt) {
         options: {
             sourceMap: (env === 'dev'),
             sourceMapIncludeSources: (env === 'dev'),
-            compress: (env !== 'dev'),
+            compress: true,
             beautify: (env === 'dev'),
-            sourceMapName: frontendWebPath('/js/dist/head.js.map')
+            mangle: (env !== 'dev')
         },
         head: {
             src: jsSources.head,
             dest: frontendWebPath('/js/dist/head.js'),
-            sourceMapRoot: frontendWebPath('/js/dist/head.js.map')
+            sourceMapRoot: frontendWebPath('/js/dist/head.js.map'),
+            sourceMapName: frontendWebPath('/js/dist/head.js.map')
+        },
+        intl: {
+            src: 'bower_components/intl/Intl.js',
+            dest: frontendWebPath('/js/dist/intl.js'),
+            sourceMapRoot: frontendWebPath('/js/dist/intl.js.map'),
+            sourceMapName: frontendWebPath('/js/dist/intl.js.map')
+        }
+    };
+
+    config.copy = {
+        main: {
+            src: 'bower_components/intl/locale-data/json/*',
+            dest: frontendWebPath('/js/dist/intl/locale/'),
+            expand: true,
+            flatten: true,
+            filter: 'isFile'
         }
     };
 
@@ -129,7 +146,8 @@ module.exports = function (grunt) {
                 'bower_components/backbone/backbone.js',
                 'web/bundles/fosjsrouting/js/router.js',
                 'bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/modal.js',
-                'bower_components/adyen-cse-js/js/adyen.encrypt.js'
+                'bower_components/adyen-cse-js/js/adyen.encrypt.js',
+                'bower_components/intl/Intl.js'
             ]
         },
         gruntfile: {
@@ -156,9 +174,10 @@ module.exports = function (grunt) {
         },
         js: {
             files: [
+                'Gruntfile.js',
                 '<%= uglify.head.src %>'
             ],
-            tasks: ['uglify', 'jshint']
+            tasks: ['copy', 'uglify', 'jshint']
         }
     };
 
@@ -166,7 +185,8 @@ module.exports = function (grunt) {
         install: {
             options: {
                 targetDir: './build/bower',
-                cleanTargetDir: true
+                cleanTargetDir: true,
+                copy: false
             }
         }
     };
@@ -180,12 +200,12 @@ module.exports = function (grunt) {
         options: {
             specs: "spec/**/*Spec.js",
             vendor: [
-                'build/bower/lodash/lodash.js',
-                'build/bower/jquery/jquery.js',
-                'build/bower/backbone/backbone.js',
+                'bower_components/jquery/dist/jquery.js',
+                'bower_components/lodash/lodash.js',
+                'bower_components/backbone/backbone.js',
                 'web/bundles/fosjsrouting/js/router.js',
                 'web/js/fos_js_routes.js',
-                'build/bower/blazy/blazy.js',
+                'bower_components/blazy/blazy.js',
                 'vendor/helthe/turbolinks/Resources/public/js/turbolinks.js'
             ]
         }
@@ -197,12 +217,13 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-spritesmith');
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
 
     // grunt additional tasks
-    grunt.registerTask('default', ['bower:install', 'sprite', 'sass', 'uglify', 'jshint']);
-    grunt.registerTask('deploy', ['bower:install', 'sprite', 'sass', 'uglify']);
+    grunt.registerTask('default', ['bower:install', 'sprite', 'sass', 'copy', 'uglify', 'jshint']);
+    grunt.registerTask('deploy', ['bower:install', 'sprite', 'sass', 'copy', 'uglify']);
     grunt.registerTask('test', ['jshint', 'jasmine']);
 };

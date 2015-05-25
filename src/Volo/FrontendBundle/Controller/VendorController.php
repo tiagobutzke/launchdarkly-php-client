@@ -29,7 +29,6 @@ class VendorController extends Controller
      */
     public function vendorAction(Request $request, $code)
     {
-        $vendor = null;
         try {
             $vendor = $this->get('volo_frontend.provider.vendor')->find($code);
         } catch (EntityNotFoundException $exception) {

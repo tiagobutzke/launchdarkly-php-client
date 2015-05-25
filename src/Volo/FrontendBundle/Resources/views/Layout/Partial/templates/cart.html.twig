@@ -1,6 +1,6 @@
 {# cart item #}
 <script type="text/template" id="template-cart-item">
-    <td class="summary__item__quantity"><%- quantity %></td>
+    <td class="summary__item__quantity"><%= VOLO.formatNumber(quantity) %></td>
     <td class="summary__item__sign">x</td>
     <td class="summary__item__name">
         <%- name %>
@@ -11,7 +11,7 @@
            + Angel Hair pasta
         </span>
     </td>
-    <td class="summary__item__price"><%- total_price %> &euro;</td>
+    <td class="summary__item__price"><%= VOLO.formatCurrency(total_price) %></td>
 </script>
 {# cart #}
 <script type="text/template" id="template-cart">
@@ -48,16 +48,22 @@
                     </tr>
                 </table>
             </div>
-            <div class="desktop-cart__order__subtotal">
-                {{ 'Subtotal'|trans }} <span class="desktop-cart__order__total__price"><%- subtotal_after_discount %> &euro;</span>
-            </div>
-            <div class="desktop-cart__order__delivery">
-                {{ 'Delivery'|trans }} <span><%- delivery_fee %> &euro;</span>
-            </div>
-            <div class="desktop-cart__order__total">
-                {{ 'Total'|trans }} <span class="desktop-cart__order__total__price"><%- total_value %> &euro;</span>
+            <div class="desktop-cart__order__subtotal__container">
+
             </div>
         </div>
         <a class="button btn-checkout" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">{% trans %}Checkout{% endtrans %}</a>
+    </div>
+ </script>
+
+<script type="text/template" id="template-cart-subtotal">
+    <div class="desktop-cart__order__subtotal">
+        {{ 'Subtotal'|trans }} <span class="desktop-cart__order__total__price"><%= VOLO.formatCurrency(subtotal_after_discount) %></span>
+    </div>
+    <div class="desktop-cart__order__delivery">
+        {{ 'Delivery'|trans }} <span><%= VOLO.formatCurrency(delivery_fee) %></span>
+    </div>
+    <div class="desktop-cart__order__total">
+        {{ 'Total'|trans }} <span class="desktop-cart__order__total__price"><%= VOLO.formatCurrency(total_value) %></span>
     </div>
  </script>

@@ -6,7 +6,7 @@ VOLO.GeocodingService = {
         input
             .geocomplete({
                 types: ["geocode", "establishment"],
-                country: VOLO.Configuration.countryCode
+                country: VOLO.configuration.countryCode
             })
             .bind("geocode:result", function(event, result){
                 callbackResult(result.geometry);

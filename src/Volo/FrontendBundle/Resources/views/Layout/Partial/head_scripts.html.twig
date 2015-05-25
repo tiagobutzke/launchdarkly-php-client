@@ -5,6 +5,7 @@
         <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
         <script src="{{ path('thumbor_configuration') }}"></script>
     {% endif %}
+
     <script type="text/javascript">
         var VOLO = VOLO || {};
         VOLO.Translations = {
@@ -12,8 +13,15 @@
                 postal_index_form_please_select_option: '{{ 'home.postal_index_form_please_select_option'|trans|e }}'
             }
         };
-        VOLO.Configuration = VOLO.Configuration || {};
-        VOLO.Configuration.countryCode = '{{ country_code }}';
+        VOLO.configuration = VOLO.configuration || {};
+        VOLO.configuration.countryCode = '{{ country_code }}';
+        VOLO.configuration.locale = '{{ app.request.locale|replace({'_': '-'}) }}';
+
+        {% set config = get_configuration() %}
+        {% set userLocale = app.request.locale|replace({'_': '-'}) %}
+        $(document).ready(function () {
+            VOLO.initIntl('{{ userLocale }}', VOLO.configuration.locale, '{{ config.currency.currency_symbol_iso }}');
+        });
     </script>
 
 {% endblock %}

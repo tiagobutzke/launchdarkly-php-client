@@ -75,12 +75,9 @@ var VendorCartModel = Backbone.Model.extend({
                 "longitude": 13.3908286
             }
         }).done(function(calculatedData) {
-            var vendorCart = _.cloneDeep(calculatedData.vendorCart[0]);
-            delete calculatedData.vendorCart;
-
-            this.collection.cart.set(calculatedData);
-            this.products.set(vendorCart.products);
+            this.collection.cart.parse(calculatedData);
             this.trigger('cart:ready');
+            this._xhr = null;
         }.bind(this));
     },
 
@@ -144,12 +141,28 @@ var CartModel = Backbone.Model.extend({
 
     initialize: function(data, options) {
         this.dataProvider = options.dataProvider;
-        this.vendorCart = new VendorCartCollection([], {
+        this.vendorCart = this.vendorCart || new VendorCartCollection([], {
             cart: this
         });
-        if (_.isObject(data) && _.isArray(data.vendorCart)) {
-            this.set(data);
-            this.getCart(options.vendor_id).products.set(data.vendorCart[0].products);
+    },
+
+    parse: function (cart) {
+        if (_.isUndefined(this.vendorCart)) {
+            this.vendorCart = new VendorCartCollection([], {
+                cart: this
+            });
+        }
+        if (_.isObject(cart) && _.isArray(cart.vendorCart)) {
+            cart = _.cloneDeep(cart);
+            var vendorCart = cart.vendorCart;
+            delete cart.vendorCart;
+            this.set(cart);
+
+            _.each(vendorCart, function (vendorCart) {
+                this.getCart(vendorCart.vendor_id).products.set(vendorCart.products);
+                delete vendorCart.products;
+                this.getCart(vendorCart.vendor_id).set(vendorCart);
+            }, this);
         }
     },
 

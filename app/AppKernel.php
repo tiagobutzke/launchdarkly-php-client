@@ -133,6 +133,7 @@ class AppKernel extends Kernel
             ->files()
             ->name('*.yml')
             ->notName('test.yml')
+            ->notName('common.yml')
             ->in(__DIR__ . '/config/countries_parameters');
 
         foreach ($files as $filename) {
