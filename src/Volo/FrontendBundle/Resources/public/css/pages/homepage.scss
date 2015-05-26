@@ -27,8 +27,8 @@
   font-size: 1.2em;
   line-height: 1em;
   padding-bottom: 5px;
-  padding-left: 10%;
-  padding-right: 10%;
+  padding-left: $space-percent-lg;
+  padding-right: $space-percent-lg;
   text-align: center;
   font-family: $satisfy-font-family;
   color: $color-text-highlight;
@@ -50,8 +50,8 @@
   text-align: center;
   color: $color-text-primary;
   text-transform: uppercase;
-  padding-left: 10%;
-  padding-right: 10%;
+  padding-left: $space-percent-lg;
+  padding-right: $space-percent-lg;
   @include respond-from('screen-sm') {
     font-size: 2em;
   }
@@ -106,6 +106,7 @@
     padding-right: 17%;
   }
   @include respond-from('screen-lg') {
+    padding-top: 160px;
     padding-left: 25%;
     padding-right: 25%;
   }
@@ -160,6 +161,7 @@
   width: 70%;
   @include respond-from('screen-sm') {
     width: auto;
+    vertical-align: top;
   }
 }
 
@@ -334,7 +336,7 @@
 }
 
 .city__name {
-  @include vertical-center-element-absolute;
+  @include vertical-center-absolute;
   z-index: 2;
   width: 100%;
   color: #fff;
@@ -350,15 +352,154 @@
 
 .city__called-action {
   margin-top: $space-xs;
-  display: none;
+  display: inline-block;
   font-size: 0.8em;
   line-height: 0.8em;
   font-family: $base-font-family;
+  padding: 5% 10% 4.5%;
+  height: auto;
   @include respond-from('screen-sm') {
     font-size: 0.6em;
     line-height: 0.6em;
   }
 }
+// -------------------------- CITIES END --------------------------
 
+// -------------------------- APP START --------------------------
 
+.app {
+  @include make-row();
+
+  background: #ffffff;
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjkwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjkwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjkwJSIgc3RvcC1jb2xvcj0iI2Y3ZjdmNyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+  background: -moz-linear-gradient(top,  #ffffff 0%, #ffffff 90%, #ffffff 90%, #f7f7f7 90%, #ffffff 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(90%,#ffffff), color-stop(90%,#ffffff), color-stop(90%,#f7f7f7), color-stop(100%,#ffffff));
+  background: -webkit-linear-gradient(top,  #ffffff 0%,#ffffff 90%,#ffffff 90%,#f7f7f7 90%,#ffffff 100%);
+  background: -o-linear-gradient(top,  #ffffff 0%,#ffffff 90%,#ffffff 90%,#f7f7f7 90%,#ffffff 100%);
+  background: -ms-linear-gradient(top,  #ffffff 0%,#ffffff 90%,#ffffff 90%,#f7f7f7 90%,#ffffff 100%);
+  background: linear-gradient(to bottom,  #ffffff 0%,#ffffff 90%,#ffffff 90%,#f7f7f7 90%,#ffffff 100%);
+
+}
+
+.app__fluid-container {
+  padding-top: $space-percent-md;
+  @include respond-from('screen-md') {
+    @include fluid-container();
+  }
+}
+
+.app__container {
+  @include make-xs-column(12, 0);
+  @include make-md-column(10, 10%);
+  @include make-md-column-offset(1);
+}
+
+.app__phone-left {
+  @include make-xs-column(3);
+  @include make-md-column(3, 0);
+}
+
+.app__phone-left__img,
+.app__phone-right__img,
+.app__message__img {
+  @extend .img-responsive;
+  @extend .center-block;
+}
+
+.app__message {
+  @include make-xs-column(6);
+  @include make-md-column(6, 0);
+  padding-top: 0;
+  @include respond-from('screen-sm') {
+    padding-top: 0;
+  }
+  @include respond-from('screen-md') {
+    padding-top: 10%;
+  }
+}
+
+.app__message__logo {
+  @include make-xs-column(10);
+  @include make-xs-column-offset(1);
+  @include make-sm-column(8);
+  @include make-sm-column-offset(2);
+  @include make-md-column(6);
+  @include make-md-column-offset(3);
+  text-align: center;
+  padding-bottom: $space-percent-xs;
+  font-size: 0.7em;
+  line-height: 1.4em;
+  @include respond-from('screen-md') {
+    font-size: 0.8em;
+    line-height: $base-line-height;
+    padding-bottom: $space-percent-sm;
+  }
+}
+
+.app__message__form {
+  @include make-xs-column(12);
+  @include make-sm-column(10);
+  @include make-sm-column-offset(1);
+  padding-top: 10%;
+  @include respond-from('screen-sm') {
+    padding-top: $space-percent-sm;
+  }
+  @include respond-from('screen-md') {
+    padding-top: $space-percent-lg;
+  }
+}
+
+.app__message__label {
+  font-weight: normal;
+  font-size: 0.8em;
+  line-height: 1.2em;
+  text-align: center;
+  padding-top: $space-percent-md;
+  padding-bottom: $space-percent-sm;
+  @include respond-from('screen-sm') {
+    padding-top: $space-percent-lg;
+    padding-bottom: 0;
+    font-size: 1em;
+  }
+  @include respond-from('screen-md') {
+    padding-top: $space-percent-md;
+    padding-bottom: $space-percent-sm;
+    line-height: $base-line-height;
+    font-size: 1.2em;
+  }
+}
+
+.app__message__input-container {
+  @include make-xs-column(12);
+  @include make-md-column(9);
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: $space-percent-md;
+  @include respond-from('screen-md') {
+    padding-left: 0;
+    padding-right: $space-percent-sm;
+    padding-bottom: 0;
+  }
+}
+
+.app__message__input {
+  @include make-xs-column(12, 0);
+  @include make-md-column(12);
+  font-size: 0.8em;
+  @include respond-from('screen-md') {
+    font-size: $input-font-size;
+  }
+}
+
+.app__message__button {
+  @include make-xs-column(12);
+  @include make-md-column(3);
+  padding-left: $space-percent-sm;
+  padding-right: $space-percent-sm;
+}
+
+.app__phone-right {
+  @include make-xs-column(3);
+  @include make-md-column(3, 0);
+}
 // -------------------------- CITIES END --------------------------

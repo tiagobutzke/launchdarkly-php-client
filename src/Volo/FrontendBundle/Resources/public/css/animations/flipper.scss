@@ -12,7 +12,7 @@
   position: absolute;
   transform-style: preserve-3d;
   background-origin: content-box;
-  transition: transform 0.3s cubic-bezier(0, .79, .63, 1.31);
+  transition: transform 0.12s ease-out;
 }
 
 .flipper--flipped {
@@ -37,6 +37,7 @@
   background-color: $color-bg-primary;
   background-repeat: no-repeat;
   background-size: 100%;
+  transition: opacify 0.5s;
 }
 
 .flipper__front {
