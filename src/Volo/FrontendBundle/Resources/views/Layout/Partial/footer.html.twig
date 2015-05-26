@@ -1,5 +1,61 @@
 {% block footer %}
-    <footer class="footer wrapper-fluid">
-
+    <footer class="footer">
+        <div class="footer__wrapper">
+            <div class="footer__subscribe">
+                <div class="footer__subscribe__txt">
+                    <p>{% trans %}Want coupons, love notes, deep thoughts about bacon?{% endtrans %}  <b>{% trans %}Get our weekly email{% endtrans %}</b></p>
+                </div>
+                <div class="footer__subscribe__city">
+                    <input type="text" class="form-control" id="subscribe_city" name="subscribe_city" value="" required="true" placeholder="{% trans %}City{% endtrans %}">
+                </div>
+                <div class="footer__subscribe__email">
+                    <input type="text" class="form-control" id="subscribe_email" name="subscribe_email" value="" required="true" placeholder="{% trans %}Email Address{% endtrans %}">
+                </div>
+                <div class="footer__subscribe__button">
+                    <button class="button">{% trans %}Signup now{% endtrans %}</button>
+                </div>
+            </div>
+            <div class="footer__logo">
+                <i class="icon-logo"></i>
+            </div>
+            <div class="footer__social">
+                <a href="#"><i class="icon-cancel-circled"></i></a>
+                <a href="#"><i class="icon-cancel-circled"></i></a>
+                <a href="#"><i class="icon-cancel-circled"></i></a>
+            </div>
+        </div>
+        <div class="footer__wrapper">
+            <nav class="footer__nav">
+                <ul>
+                    <li><a href="#">{% trans %}Terms &amp; Conditions{% endtrans %}</a></li>
+                    <li><a href="#">{% trans %}Privacy Policy{% endtrans %}</a></li>
+                    <li><a href="#">{% trans %}Imprint{% endtrans %}</a></li>
+                    <li><a href="#">{% trans %}FAQ{% endtrans %}</a></li>
+                    <li><a href="#">{% trans %}For Restaurants &amp; Drivers{% endtrans %}</a></li>
+                </ul>
+            </nav>
+            <div class="footer__disclaimer">{% trans %}&copy; 2015 – foodora GmbH{% endtrans %}</div>
+        </div>
+        <div class="footer__wrapper">
+            <div class="footer__popular">
+                <h4>{% trans %}Popular cuisines{% endtrans %}</h4>
+                <p>
+                    Cake delivery Taipei, Japanese Food Taipei, Afternoon Tea Taipei, Vegetarian Food Taipei, Pizza Taipei, Business Lunch Taipei, Pasta, Steak, Brunch, Sushi
+                </p>
+            </div>
+            <div class="footer__popular">
+                <h4>{% trans %}Popular Restaurants{% endtrans %}</h4>
+                <p>
+                    Popular Restaurants Chili's Grill& Bar, T.G.I. Friday's, Macho Tacos, Second Floor, Сalifornia Pizza Kitchen, A-plus, Mister Donut, Toasteria Cafe, VAPIANO, TKK, 1Bite2Go, Alleycat's,
+                BELLINI Pasta Pasta, Hi!Sushi, Cold Stone, Outback, Sweet Dynasty
+                </p>
+            </div>
+            <div class="footer__popular">
+                <h4>{% trans %}Foodora Countries{% endtrans %}</h4>
+                <p>
+                    Taipei City, New Taipei City, Keelung City, Taoyuan County, Hsinchu County, Hsinchu City, Miaoli County, Taichung City, Changhua County, Yunlin County, Nantou County, Chiayi City
+                </p>
+            </div>
+        </div>
     </footer>
 {% endblock footer %}

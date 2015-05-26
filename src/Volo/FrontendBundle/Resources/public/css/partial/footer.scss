@@ -3,6 +3,238 @@
 */
 
 .footer {
-  background-color: $color-bg-footer;
+  margin-top: $space-lg * 2;
   height: 200px;
+  font-size: 0.875em;
+  line-height: 1.5em;
+  @include respond-from("screen-md") {
+    @include fluid-container();
+  }
+}
+
+.footer__wrapper {
+  @include make-row();
+  padding-top: $space-lg;
+  padding-bottom: $space-lg;
+  margin: 0;
+  border-top: $dropdown-border;
+
+  @include respond-from("screen-sm") {
+    &:first-child {
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+  }
+
+  &:last-child {
+    padding-bottom: $top-cart-height / 2 + $space-lg;
+    @include respond-from("screen-sm") {
+      padding-top: 30px;
+    }
+  }
+}
+
+.footer__subscribe {
+  @include make-xs-column(12);
+  @include make-md-column(6);
+  @extend .col-md-push-3;
+}
+
+.footer__subscribe__txt {
+  @include make-xs-column(12);
+  text-align: center;
+  padding-bottom: $space-md;
+
+  p {
+    width: 55%;
+    margin: 0 auto;
+    @include respond-from("screen-sm") {
+      width: 100%;
+    }
+
+    b {
+      display: block;
+      font-family: $bold-font-family;
+      text-transform: uppercase;
+      font-weight: normal;
+    }
+  }
+}
+
+.footer__subscribe__city {
+  @include make-xs-column(4);
+  @include make-sm-column(3);
+  padding-right: $space-xs;
+  @include respond-from("screen-sm") {
+    padding-right: $space-sm;
+  }
+}
+
+.footer__subscribe__email {
+  @include make-xs-column(8);
+  @include make-sm-column(5);
+  @include make-md-column(4);
+  @include make-lg-column(5);
+  padding-left: 0;
+  @include respond-from("screen-sm") {
+    padding-right: 0;
+  }
+}
+
+.footer__subscribe__button {
+  @include make-xs-column(12);
+  @include make-sm-column(4);
+  @include make-md-column(5);
+  @include make-lg-column(4);
+  padding-top: $space-xs;
+  @include respond-from("screen-sm") {
+    padding-top: 0;
+    padding-left: $space-sm;
+  }
+
+  .button {
+    width: 100%;
+    @include respond-from("screen-sm") {
+      margin: 0;
+    }
+  }
+}
+
+.footer__logo {
+  @include make-xs-column(6);
+  @include make-md-column(3);
+  @extend .col-md-pull-6;
+  overflow: hidden;
+  height: 45px;
+
+  i {
+    font-size: 9em;
+    color: $color-icons-separator;
+    display: block;
+    margin-top: -35px;
+    height: 30px;
+    margin-left: $space-sm;
+    @include respond-from("screen-md") {
+      margin-top: -49px;
+      margin-left: - $space-sm;
+    }
+  }
+}
+
+.footer__social {
+  @include make-xs-column(6);
+  @include make-md-column(3);
+  text-align: right;
+  overflow: hidden;
+  height: 45px;
+
+  a {
+    display: inline-block;
+    margin-top: 12px;
+    margin-right: $space-sm;
+    width: 24px;
+    @include respond-from("screen-md") {
+      margin-top: 1px;
+    }
+
+    i {
+      font-size: 2.6em;
+      color: $color-icons-separator;
+
+      &:hover {
+        color: $color-text-highlight;
+      }
+    }
+  }
+
+  a:last-child {
+    margin-right: $space-lg;
+    @include respond-from("screen-md") {
+      margin-right: 0;
+    }
+  }
+}
+
+.footer__nav {
+  @include make-xs-column(12);
+  @include make-md-column(9);
+  @extend .col-md-push-3;
+  text-align: center;
+  @include respond-from("screen-md") {
+    text-align: right;
+    padding-right: 0;
+    ul {
+      width: 100%;
+    }
+  }
+
+  ul {
+    width: 90%;
+    display: inline-block;
+  }
+
+  li {
+    display: inline-block;
+    margin: 0 $space-sm;
+    @include respond-from("screen-md") {
+      margin-right: 0;
+    }
+
+    a {
+      color: $color-text-primary;
+
+      &:hover {
+       color: $color-text-highlight;
+      }
+    }
+  }
+}
+
+.footer__disclaimer {
+  @include make-xs-column(12);
+  @include make-md-column(3);
+  @extend .col-md-pull-9;
+  margin-top: $space-md;
+  text-align: center;
+  @include respond-from("screen-md") {
+    text-align: left;
+    margin-top: 0;
+    padding-left: 0;
+  }
+}
+
+.footer__popular {
+  @include make-xs-column(12);
+  @include make-md-column(4);
+  text-align: center;
+  @include respond-from("screen-md") {
+    text-align: left;
+    padding-right: $grid-gutter-width;
+  }
+
+  h4 {
+    margin: 0;
+    font-family: $bold-font-family;
+    text-transform: uppercase;
+    font-size: 1em;
+  }
+
+  p {
+    color: $color-text-secondary;
+    width: 90%;
+    margin: 0 auto $space-md;
+    @include respond-from("screen-md") {
+      width: 100%;
+      margin: 0 0 $space-md;
+      line-height: 1.6em;
+    }
+  }
+
+  a {
+    color: $color-text-secondary;
+
+    &:hover {
+      color: $color-text-highlight;
+    }
+  }
 }
