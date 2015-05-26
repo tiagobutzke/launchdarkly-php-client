@@ -13,6 +13,10 @@ var CartItemView = Backbone.View.extend({
 });
 
 var CartView = Backbone.View.extend({
+    events: {
+        'change #order-delivery-time': 'updateDeliveryTime',
+        'change #order-delivery-date': 'updateDeliveryTime'
+    },
     initialize: function () {
         _.bindAll(this, 'renderNewItem', 'renderSubTotal', 'disableCart', 'enableCart', 'initListener');
 
@@ -37,6 +41,7 @@ var CartView = Backbone.View.extend({
         this.listenTo(vendorCart, 'cart:ready', this.enableCart, this);
         this.listenTo(vendorCart, 'change', this.renderSubTotal);
         this.listenTo(vendorCart, 'change', this.renderProducts, this);
+        this.listenTo(vendorCart, 'change:orderTime', this.renderTimePicker, this);
         this.listenTo(vendorCart.products, 'change', this.renderProducts, this);
         this.listenTo(vendorCart.products, 'add', this.renderNewItem, this);
 
@@ -55,7 +60,7 @@ var CartView = Backbone.View.extend({
         this.renderSubTotal();
 
         this.renderProducts();
-
+        this.renderTimePicker();
         this._makeCartAndMenuSticky();
         return this;
     },
@@ -112,5 +117,22 @@ var CartView = Backbone.View.extend({
 
         $cartMsg.toggle(cartEmpty);
         $productsContainer.toggle(!cartEmpty);
+    },
+
+    updateDeliveryTime: function() {
+        var time = this.$('#order-delivery-time').val().split(':'),
+            date = this.$('#order-delivery-date').val().split('-'),
+            datetime = new Date(date[0], date[1] - 1, date[2], time[0], time[1]);
+
+        this.model.getCart(this.vendor_id).set('orderTime', datetime);
+    },
+
+    renderTimePicker: function() {
+        var date = this.model.getCart(this.vendor_id).get('orderTime');
+
+        if (_.isDate(date)) {
+            this.$('#order-delivery-date').val(date.toISOString().split('T')[0]);
+            this.$('#order-delivery-time').val(date.toTimeString().substring(0, 5));
+        }
     }
 });
