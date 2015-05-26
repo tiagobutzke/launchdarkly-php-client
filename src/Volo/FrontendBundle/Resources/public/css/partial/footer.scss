@@ -108,14 +108,12 @@
   height: 45px;
 
   i {
-    font-size: 9em;
+    font-size: 1.938em;
     color: $color-icons-separator;
     display: block;
-    margin-top: -35px;
     height: 30px;
     margin-left: $space-sm;
     @include respond-from("screen-md") {
-      margin-top: -49px;
       margin-left: - $space-sm;
     }
   }
@@ -138,7 +136,7 @@
     }
 
     i {
-      font-size: 2.6em;
+      font-size: 1.7em;
       color: $color-icons-separator;
 
       &:hover {
