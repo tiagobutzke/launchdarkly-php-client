@@ -1,62 +1,155 @@
-var VOLO = VOLO || {};
-VOLO.GeocodingService = {
-    attach: function (input, callbackResult) {
-        callbackResult = callbackResult || function () {
-            };
+var GeocodingService = function() {
+    var autocomplete = null;
 
-        input
-            .geocomplete({
-                types: ["(regions)"],
-                country: VOLO.Configuration.countryCode
-            })
-            .bind("geocode:result", function (event, result) {
-                google.maps.event.clearListeners(input[0], 'blur');
+    var init = function($input) {
+        autocomplete = new google.maps.places.Autocomplete(
+            $input[0],
+            {
+                types: ['(regions)'],
+                componentRestrictions: {
+                    country: 'de'
+                }
+            }
+        );
 
-                var locationMeta = {
-                    formattedAddress: result.formatted_address,
-                    postalCode: {
-                        value: VOLO.GeocodingService.findPostalCodeInAddressComponents(result.address_components),
-                        isReversed: false
-                    },
-                    lat: result.geometry.location.A,
-                    lng: result.geometry.location.F
+        _initListeners($input);
+    };
+
+    var _initListeners = function($input) {
+        google.maps.event.addDomListener($input[0], 'keydown', function(e) {
+            if (e.keyCode === 13) { //enter
+                $input.trigger('autocomplete:submit_pressed');
+            } else if (e.keyCode === 9) { //tab
+                $input.trigger('autocomplete:tab_pressed');
+            }
+        });
+
+        google.maps.event.addListener(autocomplete, 'place_changed', function() {
+            $input.trigger('autocomplete:place_changed');
+        });
+
+        google.maps.event.addDomListener($input[0], 'blur', function() {
+            $input.trigger('autocomplete:place_changed');
+
+            google.maps.event.trigger(this, 'keydown', {
+                keyCode: 9
+            });
+        });
+    };
+
+    /**
+     * @returns $.Deferred
+     */
+    var getLocation = function($input) {
+        var deferred = $.Deferred();
+
+        _getSearchPlace($input, autocomplete)
+            .fail(deferred.reject)
+            .then(_getLocationMeta)
+            .done(deferred.resolve);
+
+        return deferred;
+    };
+
+    var _getSearchPlace = function($input, autocomplete) {
+        var deferred = $.Deferred(),
+            place = autocomplete.getPlace();
+
+        if (!place || !place.place_id) {
+            _selectFirstResult($input).done(deferred.resolve).fail(deferred.reject);
+        } else {
+            deferred.resolve(place);
+        }
+
+        return deferred;
+    };
+
+    var _selectFirstResult = function($input) {
+        var deferred = $.Deferred(),
+            firstResult = $(".pac-container .pac-item:first").text();
+
+        var geocoder = new google.maps.Geocoder();
+
+        geocoder.geocode({"address":firstResult }, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                $(".pac-container .pac-item:first").addClass("pac-selected");
+                $(".pac-container").css("display","none");
+                $input.val(results[0].formatted_address);
+
+                results[0].place = {
+                    geometry: results[0].geometry
                 };
 
-                if (locationMeta.postalCode.value === null) {
-                    var geocoder = new google.maps.Geocoder();
+                deferred.resolve(results[0]);
+            } else {
+                deferred.reject();
+            }
+        });
 
-                    geocoder.geocode(
-                        {
-                            'latLng': new google.maps.LatLng(locationMeta.lat, locationMeta.lng)
-                        },
-                        function (results, status) {
-                            if (status == google.maps.GeocoderStatus.OK) {
-                                locationMeta.postalCode.value =
-                                    VOLO.GeocodingService.findPostalCodeInGeocodeResults(results);
-                                locationMeta.postalCode.isReversed = true;
-                            }
+        return deferred;
+    };
 
-                            if (locationMeta.postalCode.value === null) {
-                                // TODO: sexy notification
-                                console.log("Unfortunately we do not deliver to that area. Please select another one");
-                                return;
-                            }
+    var _getLocationMeta = function(place) {
+        var meta = _getLocationMetaFromGeocode(place),
+            deferred = $.Deferred();
 
-                            callbackResult(locationMeta);
-                        }
-                    );
+        if (!_hasPostalCode(meta)) {
+            _enhanceLocationWithGeocode(meta).done(deferred.resolve);
+        } else {
+            deferred.resolve(meta);
+        }
 
-                    return true;
+        return deferred;
+    };
+
+    var _getLocationMetaFromGeocode = function(place) {
+        var result = {
+            formattedAddress: place.formatted_address,
+            postalCode: {
+                value: _findPostalCodeInAddressComponents(place.address_components),
+                isReversed: false
+            },
+            lat: place.geometry.location.A,
+            lng: place.geometry.location.F
+        };
+
+        return result;
+    };
+
+    var _hasPostalCode = function(meta) {
+        return meta.postalCode.value !== null;
+    };
+
+    var _enhanceLocationWithGeocode = function(meta) {
+        var geocoder = new google.maps.Geocoder(),
+            deferred = $.Deferred();
+
+        geocoder.geocode({'latLng': new google.maps.LatLng(meta.lat, meta.lng)},
+            function (results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    meta.postalCode.value = _findPostalCodeInGeocodeResults(results);
+                    meta.postalCode.isReversed = true;
                 }
 
-                callbackResult(locationMeta);
-            })
-            .bind("geocode:error", function (event, result) {
-                callbackResult(result);
-            });
-    },
+                deferred.resolve(meta);
+            }
+        );
 
-    findPostalCodeInAddressComponents: function (addressComponents) {
+        return deferred;
+    };
+
+    var _findPostalCodeInGeocodeResults = function(results) {
+        var postalCode = null;
+        $.each(results, function (i, result) {
+            if (postalCode === null) {
+                postalCode = _findPostalCodeInAddressComponents(result.address_components);
+            }
+        });
+
+        return postalCode;
+    };
+
+    var _findPostalCodeInAddressComponents = function (addressComponents) {
         var postalCode = null;
         $.each(addressComponents, function (index, value) {
             if (value.types[0] !== undefined && value.types[0] === 'postal_code') {
@@ -65,105 +158,10 @@ VOLO.GeocodingService = {
         });
 
         return postalCode;
-    },
+    };
 
-    findPostalCodeInGeocodeResults: function (results) {
-        var postalCode = null;
-        $.each(results, function (i, result) {
-            if (postalCode === null) {
-                postalCode = VOLO.GeocodingService.findPostalCodeInAddressComponents(result.address_components);
-            }
-        });
-
-        return postalCode;
-    }
-};
-
-VOLO.GeocodingHandlersHome = {
-    suggestionsWereShown: false,
-    suggestionsAreShown: false,
-    handle: function () {
-        var form = $('#postal_index_form');
-        var geocodingInputField = form.find('#postal_index_form_input');
-
-        VOLO.GeocodingService.attach(geocodingInputField, function (locationMeta) {
-            if (locationMeta === 'ZERO_RESULTS') {
-                // TODO: sexy notification
-                console.log("Unfortunately no results for your query");
-
-                locationMeta = {
-                    formattedAddress: '',
-                    postalCode: {
-                        value: '',
-                        isReversed: false
-                    },
-                    lat: '',
-                    lng: ''
-                };
-            }
-
-            VOLO.GeocodingHandlersHome.populateFormFields(geocodingInputField, locationMeta);
-
-            if (locationMeta.postalCode.isReversed) {
-                console.log("Hey, we guess you wanted to use '" + locationMeta.postalCode.value + "' as your postal code");
-            }
-        });
-
-        setInterval(function () {
-            var isVisible = $('.pac-container').is(':visible');
-
-            VOLO.GeocodingHandlersHome.suggestionsWereShown =
-                VOLO.GeocodingHandlersHome.suggestionsWereShown || isVisible;
-            VOLO.GeocodingHandlersHome.suggestionsAreShown = isVisible;
-        }, 1000);
-
-        geocodingInputField.unbind('keypress.geocomplete');
-        geocodingInputField.on('keypress.volo', function (event) {
-            if (event.keyCode === 13) {
-                if (
-                    VOLO.GeocodingHandlersHome.suggestionsWereShown ||
-                    form.find('input[name="formatted_address"]').val() === ''
-                ) {
-               search_vendorggestionsWereShown = false;
-                    return false;
-                }
-
-                Turbolinks.visit(Routing.generate('volo_location_search_vendors_by_gps') + '?' + form.serialize());
-            }
-        });
-
-        form.find('#postal_index_form_submit').click(function () {
-            geocodingInputField.geocomplete('selectFirstResult')
-                .geocomplete('find')
-                .bind("volo:fieldsPopulated", function (locationMeta) {
-                    Turbolinks.visit(Routing.generate('volo_location_search_vendors_by_gps') + '?' + form.serialize());
-                });
-        });
-    },
-
-    populateFormFields: function (geocodingInputField, locationMeta) {
-        var form = $('#postal_index_form');
-        var formattedGeocodingInputFieldValue = locationMeta.formattedAddress;
-        if (!formattedGeocodingInputFieldValue.match(locationMeta.postalCode.value)) {
-            formattedGeocodingInputFieldValue = locationMeta.postalCode.value + " " + formattedGeocodingInputFieldValue;
-        }
-
-        geocodingInputField.val(formattedGeocodingInputFieldValue);
-        form.find('input[name="formatted_address"]').val(formattedGeocodingInputFieldValue);
-        form.find('input[name="post_code"]').val(locationMeta.postalCode.value);
-        form.find('input[name="lat"]').val(locationMeta.lat);
-        form.find('input[name="lng"]').val(locationMeta.lng);
-
-        geocodingInputField.trigger('volo:fieldsPopulated', locationMeta);
-    }
-};
-
-VOLO.GeocodingHandlersCheckout = {
-    handle: function () {
-        var form = $('#checkout_form');
-        VOLO.GeocodingService.attach(form.find('input[name="shipping_address_formatted"]'), function (locationMeta) {
-            form.find('input[name="lat"]').val(locationMeta.lat);
-            form.find('input[name="lng"]').val(locationMeta.lng);
-        });
-    }
+    return {
+        getLocation: getLocation,
+        init: init
+    };
 };

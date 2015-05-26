@@ -44,8 +44,8 @@ class UserLocationConverter implements ParamConverterInterface
 
         $cityId = $request->attributes->get('city_id', false);
         $areaId = $request->attributes->get('area_id', false);
-        $lat = $request->attributes->get('latitude', false);
-        $lng = $request->attributes->get('longitude', false);
+        $lat = $request->attributes->get('lat', false);
+        $lng = $request->attributes->get('lng', false);
 
         switch(true) {
             case $cityId:

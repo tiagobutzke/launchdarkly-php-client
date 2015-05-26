@@ -82,6 +82,15 @@ VOLO.initCurrencyFormat = function (locale, currency_symbol) {
     VOLO.formatNumber = new Intl.NumberFormat(locale).format;
 };
 
+VOLO.initHomeSearch = function() {
+    VOLO.homeSearchView = new HomeSearchView({
+        el: '.teaser__search',
+        geocodingService: new GeocodingService()
+    });
+
+    VOLO.homeSearchView.render();
+};
+
 $(document).on('page:load', function () {
     window.blazy.revalidate();
 
