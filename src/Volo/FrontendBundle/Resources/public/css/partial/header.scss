@@ -52,8 +52,9 @@
 }
 
 .header__logo {
-  width: 56px;
-  height: 35px;
+  width: 118px;
+  height: 36px;
+  overflow: hidden;
   margin:  10px auto;
   position: absolute;
   top: 0;
@@ -61,8 +62,8 @@
   bottom: 0;
   right: 0;
   @include respond-from("screen-sm") {
-    width: 80px;
-    height: 50px;
+    width: 160px;
+    height: 36px;
     position: static;
     padding-left: 10px;
     display: inline-block;
@@ -70,12 +71,24 @@
 }
 
 .header__logo__a {
-  @include retina-sprite($logo_white_mobile-group);
   display: block;
-  text-indent: -9999px;
-  @include transition(opacity .5s linear);
-  @include respond-from("screen-md") {
-    @include retina-sprite($logo_white-group);
+//  text-indent: -9999px;
+
+  i {
+    font-size: 3.3em;
+    color: $color-text-selection;
+    display: block;
+    width: 118px;
+    height: 36px;
+    margin-top: -40px;
+    @include transition(opacity .5s linear);
+    @include respond-from("screen-md") {
+      font-size: 4.4em;
+      width: 160px;
+      height: 36px;
+      margin-top: -62px;
+      margin-left: -10px;
+    }
   }
 }
 
@@ -116,9 +129,6 @@
 }
 
 .header--white {
-  .header__logo__a {
-    @include retina-sprite($logo_small-group);
-  }
 
   &.header  {
     background: none;
@@ -132,6 +142,21 @@
 
   .header__logo {
     margin-top: 10px;
+    @include respond-from("screen-sm") {
+      width: 118px;
+      height: 36px;
+    }
+  }
+
+  .header__logo__a {
+
+    i {
+      width: 118px;
+      height: 36px;
+      font-size: 3.3em;
+      margin-top: -40px;
+      color: $color-text-highlight;
+    }
   }
 
   .header__login {
