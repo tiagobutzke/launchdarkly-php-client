@@ -10,8 +10,9 @@
 /vendor/
 /bin/
 /composer.phar
-/app/config/countries_parameters/*
+/app/config/countries_parameters/*.yml
 !/app/config/countries_parameters/test.yml
+!/app/config/countries_parameters/dist/*
 
 /app/Resources/translations/*
 /.idea
@@ -29,3 +30,5 @@ bower_components/*
 /.sass-cache/*
 /.grunt/*
 /web/thumbor/configuration.js
+/web/js/fos_js_routes.js
+

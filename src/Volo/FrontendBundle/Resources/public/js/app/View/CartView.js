@@ -6,29 +6,40 @@ var CartItemView = Backbone.View.extend({
     },
 
     render: function() {
-        this.$el.html(this.template(this.model.toJSON()));
+        this.$el.html(this.template(this.model.attributes));
 
         return this;
     }
 });
 
 var CartView = Backbone.View.extend({
-    initialize: function (options) {
-        _.bindAll(this, 'renderNewItem');
+    initialize: function () {
+        _.bindAll(this, 'renderNewItem', 'renderSubTotal', 'disableCart', 'enableCart', 'initListener');
 
         this.subViews = [];
 
         this.template = _.template($('#template-cart').html());
+        this.templateSubTotal = _.template($('#template-cart-subtotal').html());
 
-        this.vendor_id = options.vendor_id;
+        this.vendor_id = this.$el.data().vendor_id;
 
-        var cart = this.model.getCart(this.vendor_id);
+        this.initListener();
+    },
 
-        cart.products.on('add', this.render, this);
+    remove: function() {
+        _.invoke(this.subViews, 'remove');
+        Backbone.View.prototype.remove.apply(this, arguments);
+    },
 
-        this.listenTo(cart, 'cart:dirty', this.disableCart, this);
-        this.listenTo(cart, 'cart:ready', this.enableCart, this);
-        this.listenTo(this.model, 'change', this.render);
+    initListener: function () {
+        var vendorCart = this.model.getCart(this.vendor_id);
+        this.listenTo(vendorCart, 'cart:dirty', this.disableCart, this);
+        this.listenTo(vendorCart, 'cart:ready', this.enableCart, this);
+        this.listenTo(vendorCart, 'change', this.renderSubTotal);
+        this.listenTo(vendorCart, 'change', this.renderProducts, this);
+        this.listenTo(vendorCart.products, 'change', this.renderProducts, this);
+        this.listenTo(vendorCart.products, 'add', this.renderNewItem, this);
+
     },
 
     disableCart: function() {
@@ -40,16 +51,27 @@ var CartView = Backbone.View.extend({
     },
 
     render: function() {
-        this.$el.html(this.template(this.model.attributes));
-        this.model.getCart(this.vendor_id).products.each(this.renderNewItem);
+        this.$el.html(this.template(this.model.getCart(this.vendor_id).attributes));
+        this.renderSubTotal();
+
+        this.renderProducts();
 
         this._makeCartAndMenuSticky();
         return this;
     },
 
-    remove: function() {
+    renderSubTotal: function () {
+        this.$('.desktop-cart__order__subtotal__container').html(
+            this.templateSubTotal(this.model.getCart(this.vendor_id).attributes)
+        );
+
+        return this;
+    },
+
+    renderProducts: function () {
         _.invoke(this.subViews, 'remove');
-        Backbone.View.prototype.remove.apply(this, arguments);
+        this.subViews.length = 0;
+        this.model.getCart(this.vendor_id).products.each(this.renderNewItem);
     },
 
     renderNewItem: function(item) {

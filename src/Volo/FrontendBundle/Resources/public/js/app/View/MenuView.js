@@ -4,12 +4,13 @@ var MenuView = Backbone.View.extend({
         this.$header = options.$header;
         this.subViews = [];
         this.vendor_id = this.$el.data().vendor_id;
-        // @TODO: move this check in the model
-        if (_.isUndefined(this.cartModel.vendorCart.get(this.vendor_id))) {
-            this.cartModel.vendorCart.add({vendor_id: this.vendor_id});
-        }
 
         _.each(this.$('.menu__item'), this.initSubViews, this);
+    },
+
+    remove: function() {
+        _.invoke(this.subViews, 'remove');
+        Backbone.View.prototype.remove.apply(this, arguments);
     },
 
     events: {

@@ -1,0 +1,7 @@
+imports:
+    - { resource: dist/common.yml }
+
+parameters:
+    country_code: fi
+    environment: development
+    locale: fi_FI

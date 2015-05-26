@@ -1,30 +1,12 @@
-# This file is a "template" of what your parameters.yml file should look like
+imports:
+    - { resource: dist/common.yml }
+
 parameters:
     country_code: de
     country_domain: localhost
-
     environment: test
-
-    locale:            en
-
-    # A secret key that's used to generate certain security-related tokens
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    locale: en
 
     # 'guzzle.ring.client.curl_handler' or 'guzzle.ring.client.mock_handler'
     foodpanda.api.handler: guzzle.ring.client.mock_handler
     foodpanda.api.base_url: http://localhost/api/v4
-    foodpanda.api.client_id: HTML5
-    foodpanda.api.client_secret: ThisTokenIsNotSoSecretChangeIt
-
-    foodpanda_web_translate_it_base_url: 'https://webtranslateit.com'
-    foodpanda_web_translate_it_public_api_key: 3K--aY26LoDVtJGL1mk-1Q
-    foodpanda_web_translate_it_private_api_key: q0fqpiQyalsumAPeA5zEvw
-    foodpanda_web_translate_it_main_translation_label: ~
-
-    volo_frontend_configuration_cache_life_time: 300
-
-    session_handler_redis_save_path: "tcp://127.0.0.1:6379?prefix=test"
-
-    volo_frontend.thumbor_base_url: '/app_%kernel.environment%.php/thumbor/fake'
-    volo_frontend.thumbor_secret: ~
-    volo_frontend.image_server_base_url: https://s3.eu-central-1.amazonaws.com/test-volo-bucket
