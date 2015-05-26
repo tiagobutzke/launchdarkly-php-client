@@ -71,7 +71,7 @@
                         <ul>
                             {% for menuCategory in vendor.menus.first.getMenuCategories() %}
                                 <li>
-                                    <a data-id="{{ menuCategory.getId() }}" href="#menu__category-id-{{ menuCategory.getId() }}">
+                                    <a class="anchorNavigation" data-id="{{ menuCategory.getId() }}" href="#menu__category-id-{{ menuCategory.getId() }}">
                                         {{ menuCategory.getName() }}
                                     </a>
                                 </li>

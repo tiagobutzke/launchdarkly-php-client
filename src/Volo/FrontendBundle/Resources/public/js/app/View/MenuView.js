@@ -1,6 +1,7 @@
 var MenuView = Backbone.View.extend({
     initialize : function (options) {
         this.cartModel = options.cartModel;
+        this.$header = options.$header;
         this.subViews = [];
         this.vendor_id = this.$el.data().vendor_id;
         // @TODO: move this check in the model
@@ -9,6 +10,10 @@ var MenuView = Backbone.View.extend({
         }
 
         _.each(this.$('.menu__item'), this.initSubViews, this);
+    },
+
+    events: {
+        'click .anchorNavigation': '_navigateToAnchor'
     },
 
     initSubViews: function(item) {
@@ -20,7 +25,15 @@ var MenuView = Backbone.View.extend({
             cartModel: this.cartModel,
             vendor_id: this.vendor_id
         }));
-    }
+    },
+
+    _navigateToAnchor: function(event) {
+        $('html, body').animate({
+            scrollTop: this.$($.attr(event.target, 'href')).offset().top - this.$header.outerHeight()
+        }, 500);
+
+        return false;
+    },
 });
 
 var MenuItemView = Backbone.View.extend({
