@@ -25,7 +25,8 @@ VOLO.initCartViews = function (vendor_id, jsonCart) {
 
     VOLO.menu = new MenuView({
         el: '.menu__main',
-        cartModel: VOLO.cartModel
+        cartModel: VOLO.cartModel,
+        $header: $('.header')
     });
 
     VOLO.cartView = new CartView({
