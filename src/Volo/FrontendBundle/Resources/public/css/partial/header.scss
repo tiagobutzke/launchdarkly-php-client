@@ -7,7 +7,7 @@
   left: 0;
   right: 0;
   width: 100%;
-  height: $header-height-small;
+  height: $header-height-extra-small;
   z-index: 1;
   background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjY1Ii8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMCIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
   background: -moz-linear-gradient(top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 100%); /* FF3.6+ */
@@ -16,15 +16,22 @@
   background: -o-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* Opera 11.10+ */
   background: -ms-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* IE10+ */
   background: linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* W3C */
+  @include respond-from("screen-sm") {
+    height: $header-height-small;
+  }
 }
 
 .header__wrapper {
   z-index: 1000;
   position: relative;
   text-align: center;
-  @extend .wrapper-fluid;
+  height: $header-height-extra-small;
+  @include fluid-container();
+  padding-left: $grid-gutter-width / 2;
+  padding-right: $grid-gutter-width / 2;
   @include respond-from("screen-sm") {
     text-align: left;
+    height: $header-height-small;
   }
 }
 
@@ -33,16 +40,20 @@
   background-color: $header-background;
   width: 100%;
   position: absolute;
-  height: $header-height-small;
-  top: - $header-height-small;
+  height: $header-height-extra-small;
+  top: - $header-height-extra-small;
   left: 0;
   @include transition(all .1s linear);
+  @include respond-from("screen-sm") {
+    height: $header-height-small;
+    top: - $header-height-small;
+  }
 }
 
 .header__profile {
   position: absolute;
-  font-size: 1.8em;
-  left: 15px;
+  font-size: 1.35em;
+  left: $grid-gutter-width / 2;
   display: block;
   margin-top: 10px;
   @include make-link($link-color-bg-dark, $link-color-bg-dark);
@@ -52,30 +63,39 @@
 }
 
 .header__logo {
-  width: 56px;
-  height: 35px;
-  margin:  10px auto;
+  width: 118px;
+  height: 23px;
+  overflow: hidden;
+  margin: 12px auto;
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
   @include respond-from("screen-sm") {
-    width: 80px;
-    height: 50px;
+    width: auto;
+    height: 36px;
     position: static;
-    padding-left: 10px;
     display: inline-block;
   }
 }
 
 .header__logo__a {
-  @include retina-sprite($logo_white_mobile-group);
   display: block;
-  text-indent: -9999px;
-  @include transition(opacity .5s linear);
-  @include respond-from("screen-md") {
-    @include retina-sprite($logo_white-group);
+
+  i {
+    font-size: 0.55em;
+    color: $color-text-selection;
+    display: block;
+    @include transition(opacity .5s linear);
+    @include respond-from("screen-sm") {
+      font-size: 0.8em;
+    }
+  }
+
+  span {
+    text-indent: -9999px;
+    display: block;
   }
 }
 
@@ -84,21 +104,18 @@
   font-size: 1.3em;
   display: inline-block;
   float: right;
-  margin: 13px 20px 0;
-  @include respond-from("screen-md") {
-    margin-top: 20px;
+  margin: 11px 0;
+  @include respond-from("screen-sm") {
+    margin-top: 18px;
+    margin-right: $space-lg;
   }
 }
 
 .header__login {
   @include make-link($link-color-bg-dark, $link-color-bg-dark);
   float: right;
-  margin-right: $grid-gutter-width / 2;
-  margin-top: 13px;
+  margin-top: 14px;
   @include appear-from("screen-sm");
-  @include respond-from("screen-md") {
-    margin-top: 20px;
-  }
 
   a, b {
     @include make-link($link-color-bg-dark, $link-color-bg-dark);
@@ -116,9 +133,6 @@
 }
 
 .header--white {
-  .header__logo__a {
-    @include retina-sprite($logo_small-group);
-  }
 
   &.header  {
     background: none;
@@ -131,18 +145,33 @@
   }
 
   .header__logo {
-    margin-top: 10px;
+    width: 118px;
+    height: 23px;
+    @include respond-from("screen-sm") {
+      height: 25px;
+      margin: 15px auto;
+    }
+  }
+
+  .header__logo__a {
+
+    i {
+      font-size: 0.55em;
+      color: $color-text-highlight;
+    }
   }
 
   .header__login {
-    margin-top: 13px;
+    margin-top: 12px;
     a {
       @include make-link();
     }
   }
 
   .header__cart {
-    margin-top: 13px;
+    @include respond-from("screen-sm") {
+      margin-top: 16px;
+    }
   }
 
   .header__profile,
