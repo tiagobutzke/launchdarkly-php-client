@@ -3,6 +3,12 @@
 */
 
 // ----------------------- BUTTONS START -----------------------
+.button, button {
+  &:hover, &:focus {
+    outline: none;
+  }
+}
+
 .button {
   font-family: $cta-font-family;
   font-size: $cta-font-size;
@@ -21,7 +27,6 @@
     background-color: $cta-color-bg-primary-hover;
     color: $cta-color-text-primary;
     text-decoration: none;
-    outline: none;
     box-shadow: none;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
