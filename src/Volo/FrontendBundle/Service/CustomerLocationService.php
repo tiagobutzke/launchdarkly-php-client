@@ -14,9 +14,8 @@ class CustomerLocationService
 
     const SESSION_KEY_PREFIX = 'customer_locations:';
 
-    const KEY_LAT = 'lat';
-    const KEY_LNG = 'lng';
-    const KEY_FORMATTED_ADDRESS = 'formatted_address';
+    const KEY_LAT = 'latitude';
+    const KEY_LNG = 'longitude';
     const KEY_POSTAL_INDEX = 'post_code';
 
     /**
@@ -50,17 +49,15 @@ class CustomerLocationService
     }
 
     /**
-     * @param string $address
      * @param float $lat
      * @param float $lng
      * @param string $postalIndex
      *
      * @return array
      */
-    public function create($address, $lat, $lng, $postalIndex)
+    public function create($lat, $lng, $postalIndex)
     {
         return [
-            static::KEY_FORMATTED_ADDRESS => $address,
             static::KEY_LAT => $lat,
             static::KEY_LNG => $lng,
             static::KEY_POSTAL_INDEX => $postalIndex,
@@ -75,7 +72,7 @@ class CustomerLocationService
     protected function validate(array $location)
     {
         $missingKeys = array_diff(
-            [static::KEY_LAT, static::KEY_LNG, static::KEY_FORMATTED_ADDRESS, static::KEY_POSTAL_INDEX],
+            [static::KEY_LAT, static::KEY_LNG, static::KEY_POSTAL_INDEX],
             array_keys(array_filter($location))
         );
 

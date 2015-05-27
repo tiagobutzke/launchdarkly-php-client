@@ -44,8 +44,8 @@ class UserLocationConverter implements ParamConverterInterface
 
         $cityId = $request->attributes->get('city_id', false);
         $areaId = $request->attributes->get('area_id', false);
-        $lat = $request->attributes->get('lat', false);
-        $lng = $request->attributes->get('lng', false);
+        $lat = $request->attributes->get('latitude', false);
+        $lng = $request->attributes->get('longitude', false);
 
         switch(true) {
             case $cityId:
@@ -60,7 +60,6 @@ class UserLocationConverter implements ParamConverterInterface
                 $sessionId = $request->getSession()->getId();
 
                 $location = $this->customerLocationService->create(
-                    $request->get(CustomerLocationService::KEY_FORMATTED_ADDRESS),
                     $request->get(CustomerLocationService::KEY_LAT),
                     $request->get(CustomerLocationService::KEY_LNG),
                     $request->get(CustomerLocationService::KEY_POSTAL_INDEX)

@@ -18,7 +18,7 @@ class LocationController extends Controller
     /**
      * @Route("/city/{city_id}", name="volo_location_search_vendors_by_city", requirements={"city_id"="\d+"})
      * @Route(
-     *      "/search/lat/{lat}/lng/{lng}/plz/{plz}",
+     *      "/search/lat/{latitude}/lng/{longitude}/plz/{post_code}",
      *      name="volo_location_search_vendors_by_gps",
      *      options={"expose"=true},
      *      requirements={
