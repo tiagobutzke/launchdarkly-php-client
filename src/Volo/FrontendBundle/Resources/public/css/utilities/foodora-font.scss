@@ -12,46 +12,52 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-chevron-small-down:before {
+.icon-down-open-mini:before {
   content: "\44";
 }
-.icon-chevron-small-left:before {
+.icon-left-open-mini:before {
   content: "\63";
 }
-.icon-chevron-small-right:before {
+.icon-right-open-mini:before {
   content: "\68";
 }
-.icon-chevron-small-up:before {
+.icon-up-open-mini:before {
   content: "\6b";
 }
-.icon-chevron-thin-down:before {
+.icon-down-open-big:before {
   content: "\45";
 }
-.icon-chevron-thin-left:before {
+.icon-left-open-big:before {
   content: "\43";
 }
-.icon-chevron-thin-right:before {
+.icon-right-open-big:before {
   content: "\61";
 }
-.icon-chevron-thin-up:before {
+.icon-up-open-big:before {
   content: "\42";
 }
-.icon-circle-with-cross:before {
+.icon-cancel-circled:before {
   content: "\78";
 }
 .icon-circle-with-minus:before {
   content: "\69";
 }
-.icon-circle-with-plus:before {
+.icon-plus-circled:before {
   content: "\75";
 }
-.icon-help-with-circle:before {
+.icon-cancel:before {
+  content: "\e600";
+}
+.icon-pencil:before {
+  content: "\e601";
+}
+.icon-help-circled:before {
   content: "\48";
 }
-.icon-info-with-circle:before {
+.icon-info-circled:before {
   content: "\66";
 }
-.icon-location-pin:before {
+.icon-pin-map:before {
   content: "\6f";
 }
 .icon-minus:before {
@@ -59,6 +65,15 @@
 }
 .icon-plus:before {
   content: "\2b";
+}
+.icon-facebook-circled:before {
+  content: "\e602";
+}
+.icon-instagram-circled:before {
+  content: "\e603";
+}
+.icon-twitter-circled:before {
+  content: "\e604";
 }
 .icon-logo:before {
   content: "\51";
@@ -78,9 +93,6 @@
 .icon-hot:before {
   content: "\73";
 }
-.icon-logo-icon2:before {
-  content: "\e616";
-}
 .icon-preorder:before {
   content: "\74";
 }
@@ -96,25 +108,22 @@
 .icon-eye:before {
   content: "\6c";
 }
-.icon-eye-slash:before {
+.icon-eye:before {
+  content: "\6c";
+}
+.icon-eye-slash-close:before {
   content: "\6d";
 }
-.icon-exclamation-triangle:before {
+.icon-attention:before {
   content: "\67";
 }
-.icon-warning:before {
-  content: "\67";
-}
-.icon-phone:before {
+.icon-call-phone:before {
   content: "\64";
 }
 .icon-twitter:before {
   content: "\54";
 }
 .icon-facebook:before {
-  content: "\46";
-}
-.icon-facebook-f:before {
   content: "\46";
 }
 .icon-location-arrow:before {
