@@ -34,6 +34,7 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         country_code: "%country_code%"
+        locale: "%locale%"
         blazy_placeholder: 'data:image/gif;base64,R0lGODdhAQABAIAAAMzMzJaWliwAAAAAAQABAAACAkQBADs='
 
 # Assetic Configuration

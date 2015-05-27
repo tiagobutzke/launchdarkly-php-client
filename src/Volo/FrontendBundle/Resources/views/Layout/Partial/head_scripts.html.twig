@@ -1,5 +1,5 @@
 {% block head_scripts %}
-    <script src="https://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false&amp;libraries=places"></script>
     <script src="{{ asset('js/dist/head.js') }}"></script>
     {% if app.debug == true %}
         <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
@@ -15,12 +15,12 @@
         };
         VOLO.configuration = VOLO.configuration || {};
         VOLO.configuration.countryCode = '{{ country_code }}';
-        VOLO.configuration.locale = '{{ app.request.locale|replace({'_': '-'}) }}';
+        VOLO.configuration.locale = '{{ locale }}';
 
         {% set config = get_configuration() %}
-        {% set userLocale = app.request.locale|replace({'_': '-'}) %}
+        {% set userLocale = app.request.locale %}
         $(document).ready(function () {
-            VOLO.initIntl('{{ userLocale }}', VOLO.configuration.locale, '{{ config.currency.currency_symbol_iso }}');
+            VOLO.initIntl('{{ userLocale }}'.replace('_', '-'), VOLO.configuration.locale.replace('_', '-'), '{{ config.currency.currency_symbol_iso }}');
         });
     </script>
 

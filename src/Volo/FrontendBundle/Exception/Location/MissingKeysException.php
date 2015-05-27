@@ -2,9 +2,7 @@
 
 namespace Volo\FrontendBundle\Exception\Location;
 
-use RuntimeException;
-
-class MissingKeys extends RuntimeException
+class MissingKeysException extends \Exception
 {
     /**
      * @param array $keys

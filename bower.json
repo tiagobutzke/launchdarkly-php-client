@@ -21,7 +21,6 @@
     "blazy": "*",
     "lodash": "~3.7.0",
     "backbone": "~1.1.2",
-    "geocomplete": "~1.6.5",
     "adyen-cse-js": "~0.1",
     "intl": "~0.1.4"
   }

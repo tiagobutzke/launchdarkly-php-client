@@ -82,6 +82,15 @@ VOLO.initCurrencyFormat = function (locale, currency_symbol) {
     VOLO.formatNumber = new Intl.NumberFormat(locale).format;
 };
 
+VOLO.initHomeSearch = function() {
+    VOLO.homeSearchView = new HomeSearchView({
+        el: '.teaser__search',
+        geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1])
+    });
+
+    VOLO.homeSearchView.render();
+};
+
 $(document).on('page:load', function () {
     window.blazy.revalidate();
 
@@ -89,7 +98,7 @@ $(document).on('page:load', function () {
         VOLO.initCartViews(VOLO.initCartModel(VOLO.jsonCart));
         if (_.isObject(window.Intl)) {
             try {
-                new Intl.NumberFormat(VOLO.configuration.locale);
+                new Intl.NumberFormat(VOLO.configuration.locale.replace('_', '-'));
                 VOLO.cartView.render();
             } catch (err) {
             }
@@ -100,7 +109,7 @@ $(document).on('page:load', function () {
         VOLO.initCheckoutViews(VOLO.initCartModel(VOLO.jsonCart));
         if (_.isObject(window.Intl)) {
             try {
-                new Intl.NumberFormat(VOLO.configuration.locale);
+                new Intl.NumberFormat(VOLO.configuration.locale.replace('_', '-'));
                 VOLO.checkoutView.render();
             } catch (err) {
             }

@@ -3,7 +3,7 @@
 {% block footer_scripts %}
     {{ parent() }}
     <script data-turbolinks-eval=always>
-        $(document).one('ready page:load', VOLO.GeocodingHandlersHome.handle);
+        VOLO.initHomeSearch();
     </script>
 {% endblock %}
 
@@ -15,11 +15,9 @@
         <div class="teaser__slogan">
             <h2 class="teaser__slogan__h2">{{ 'The restaurants you love brought to you'|trans }}</h2>
         </div>
-        <form class="teaser__form" id="postal_index_form" action="{{ path('search_vendors') }}" method="GET">
-            <input type="text" class="teaser__form__input" name="formatted_address" autofocus="" placeholder="{{ 'home.postal_code'|trans }}">
-            <input type="hidden" name="lat">
-            <input type="hidden" name="lng">
-            <button class="teaser__button button button--inline" type="submit">{{ 'home.buttons_find_food'|trans }}</button>
+        <form class="teaser__form" id="postal_index_form" action="#" method="GET">
+            <input type="text" class="teaser__form_ _input" id="postal_index_form_input" value="" autofocus="" placeholder="{{ 'home.postal_code'|trans }}">
+            <button class="teaser__button button button--inline" type="button" id="postal_index_form_submit">{{ 'home.buttons_find_food'|trans }}</button>
         </form>
         <div class="teaser__white-gradient b-lazy" data-src="{{ asset('img/white-gradient.png') }}"></div>
         <div class="teaser__arrow data-icon icon-down-open-big"></div>
@@ -155,7 +153,7 @@
     </div>
     <section class="home-section cities">
         <div class="cities__container">
-            <a href="{{ path('city', {'id': 2}) }}" class="city">
+            <a href="{{ path('volo_location_search_vendors_by_city', {'city_id': 2}) }}" class="city">
                 <div class="city__container">
                     <div class="city__name">
                         <div>{{ 'Berlin'|trans }}</div>
@@ -167,7 +165,7 @@
                     </div>
                 </div>
             </a>
-            <a href="{{ path('city', {'id': 2}) }}" class="city">
+            <a href="{{ path('volo_location_search_vendors_by_city', {'city_id': 2}) }}" class="city">
                 <div class="city__container">
                     <div class="city__name">
                         <div>{{ 'Frankfurt'|trans }}</div>
@@ -180,7 +178,7 @@
                     </div>
                 </div>
             </a>
-            <a href="{{ path('city', {'id': 2}) }}" class="city">
+            <a href="{{ path('volo_location_search_vendors_by_city', {'city_id': 2}) }}" class="city">
                 <div class="city__container">
                     <div class="city__name">
                         <div>{{ 'Hamburg'|trans }}</div>
@@ -192,7 +190,7 @@
                     </div>
                 </div>
             </a>
-            <a href="{{ path('city', {'id': 2}) }}" class="city">
+            <a href="{{ path('volo_location_search_vendors_by_city', {'city_id': 2}) }}" class="city">
                 <div class="city__container">
                     <div class="city__name">
                         <div>{{ 'München'|trans }}</div>
@@ -204,7 +202,7 @@
                     </div>
                 </div>
             </a>
-            <a href="{{ path('city', {'id': 2}) }}" class="city">
+            <a href="{{ path('volo_location_search_vendors_by_city', {'city_id': 2}) }}" class="city">
                 <div class="city__container">
                     <div class="city__name">
                         <div>{{ 'Düsseldorf'|trans }}</div>
@@ -216,7 +214,7 @@
                     </div>
                 </div>
             </a>
-            <a href="{{ path('city', {'id': 2}) }}" class="city">
+            <a href="{{ path('volo_location_search_vendors_by_city', {'city_id': 2}) }}" class="city">
                 <div class="city__container">
                     <div class="city__name">
                         <div>{{ 'Köln'|trans }}</div>
@@ -270,7 +268,7 @@
 
     <div style="text-align: center">
         {% for city in cities %}
-            <a href="{{ path('city', {'id': city.id}) }}">{{ city.name|e }}</a>
+            <a href="{{ path('volo_location_search_vendors_by_city', {'city_id': city.id}) }}">{{ city.name|e }}</a>
         {% endfor %}
     </div>
 {% endblock %}

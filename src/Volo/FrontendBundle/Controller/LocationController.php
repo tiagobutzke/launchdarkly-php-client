@@ -2,8 +2,10 @@
 
 namespace Volo\FrontendBundle\Controller;
 
+use Foodpanda\ApiSdk\Entity\Cart\AbstractLocation;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -14,67 +16,34 @@ use Foodpanda\ApiSdk\Entity\Vendor\VendorsCollection;
 class LocationController extends Controller
 {
     /**
-     * @Route("/city/{id}", name="city")
-     * @Template("VoloFrontendBundle:Location:vendors_list.html.twig")
-     */
-    public function cityAction($id)
-    {
-        $city    = $this->get('volo_frontend.provider.city')->find($id);
-        $vendors = $this->get('volo_frontend.provider.vendor')->findVendorsByCity($city);
-
-        list($openVendors, $closedVendorsWithPreorder) = $this->filterOpenClosedVendors($vendors->getItems());
-
-        return [
-            'location'      => $city,
-            'openVendors'   => $openVendors,
-            'closedVendors' => $closedVendorsWithPreorder
-        ];
-    }
-
-    /**
-     * @Route("/search", name="search_vendors", options={"expose"=true})
-     * @Template("VoloFrontendBundle:Location:vendors_list.html.twig")
+     * @Route("/city/{city_id}", name="volo_location_search_vendors_by_city", requirements={"city_id"="\d+"})
+     * @Route(
+     *      "/search/lat/{latitude}/lng/{longitude}/plz/{post_code}",
+     *      name="volo_location_search_vendors_by_gps",
+     *      options={"expose"=true},
+     *      requirements={
+     *          "lat"="-?(\d*[.])?\d+",
+     *          "lng"="-?(\d*[.])?\d+",
+     *          "plz"="\d+"
+     *      }
+     * )
      * @Method({"GET"})
+     * @Template("VoloFrontendBundle:Location:vendors_list.html.twig")
+     * @ParamConverter("location", converter="user_location_converter")
      *
-     * @param Request $request
+     * @param AbstractLocation $location
      *
      * @return array
      */
-    public function searchAction(Request $request)
+    public function locationAction(AbstractLocation $location)
     {
-        $customerLocationService = $this->get('volo_frontend.service.customer_location');
-        $vendorProvider = $this->get('volo_frontend.provider.vendor');
+        $vendors = $this->get('volo_frontend.provider.vendor')->findVendorsByLocation($location);
 
-        $sessionId = $request->getSession()->getId();
-
-        $location = [];
-        $locationKeys = [
-            CustomerLocationService::KEY_LAT,
-            CustomerLocationService::KEY_LNG,
-            CustomerLocationService::KEY_FORMATTED_ADDRESS,
-        ];
-
-        foreach ($locationKeys as $key) {
-            $location[$key] = $request->get($key);
-        }
-
-        $customerLocationService->validate($location);
-        $customerLocationService->set($sessionId, $location);
-
-        $persistedLocation = $customerLocationService->get($sessionId);
-
-        $vendors = $vendorProvider->findVendorsByLatLng(
-            $persistedLocation[CustomerLocationService::KEY_LAT],
-            $persistedLocation[CustomerLocationService::KEY_LNG]
-        );
         list($openVendors, $closedVendorsWithPreorder) = $this->filterOpenClosedVendors($vendors->getItems());
 
         return [
-            'openVendors' => $openVendors,
-            'closedVendors' => $closedVendorsWithPreorder,
-            'location' => [
-                'name' => $persistedLocation[CustomerLocationService::KEY_FORMATTED_ADDRESS]
-            ]
+            'openVendors'   => $openVendors,
+            'closedVendors' => $closedVendorsWithPreorder
         ];
     }
 
