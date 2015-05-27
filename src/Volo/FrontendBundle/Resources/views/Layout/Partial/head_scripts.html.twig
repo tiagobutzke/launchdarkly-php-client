@@ -15,12 +15,12 @@
         };
         VOLO.configuration = VOLO.configuration || {};
         VOLO.configuration.countryCode = '{{ country_code }}';
-        VOLO.configuration.locale = '{{ app.request.locale|replace({'_': '-'}) }}';
+        VOLO.configuration.locale = '{{ locale }}';
 
         {% set config = get_configuration() %}
-        {% set userLocale = app.request.locale|replace({'_': '-'}) %}
+        {% set userLocale = app.request.locale %}
         $(document).ready(function () {
-            VOLO.initIntl('{{ userLocale }}', VOLO.configuration.locale, '{{ config.currency.currency_symbol_iso }}');
+            VOLO.initIntl('{{ userLocale }}'.replace('_', '-'), VOLO.configuration.locale.replace('_', '-'), '{{ config.currency.currency_symbol_iso }}');
         });
     </script>
 

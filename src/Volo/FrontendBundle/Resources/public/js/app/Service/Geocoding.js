@@ -1,4 +1,4 @@
-var GeocodingService = function() {
+var GeocodingService = function(locale) {
     var autocomplete = null;
 
     var init = function($input) {
@@ -7,7 +7,7 @@ var GeocodingService = function() {
             {
                 types: ['(regions)'],
                 componentRestrictions: {
-                    country: 'de'
+                    country: locale
                 }
             }
         );

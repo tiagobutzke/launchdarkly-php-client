@@ -17,7 +17,7 @@
             VOLO.initCartViews(cartModel);
             if (_.isObject(window.Intl)) {
                 try {
-                    new Intl.NumberFormat(VOLO.configuration.locale);
+                    new Intl.NumberFormat(VOLO.configuration.locale.replace('_', '-'));
                     VOLO.cartView.render();
                 } catch (err) {
                 }
