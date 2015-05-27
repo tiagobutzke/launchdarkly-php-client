@@ -41,6 +41,8 @@ class CheckoutController extends Controller
             return $this->redirectToRoute('checkout_payment', ['vendorCode' => $vendorCode]);
         }
 
+        $sessionDeliveryKey = sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendorCode);
+
         try {
             $vendor = $this->get('volo_frontend.provider.vendor')->find($vendorCode);
         } catch (ApiErrorException $exception) {
@@ -50,14 +52,16 @@ class CheckoutController extends Controller
         if ($request->getMethod() === Request::METHOD_POST) {
             $address = $request->request->get('customer_address');
 
-            $this->get('session')->set(sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendorCode), $address);
+            $this->get('session')->set($sessionDeliveryKey, $address);
             
             return $this->redirect($this->generateUrl('checkout_contact_information', ['vendorCode' => $vendorCode]));
         }
 
+        $cartManager = $this->get('volo_frontend.service.cart_manager');
         return [
-            'cart'   => $this->get('volo_frontend.service.cart_manager')->calculateCart($this->getCart($vendor)),
-            'vendor' => $vendor,
+            'cart'             => $cartManager->calculateCart($this->getCart($vendor)),
+            'customer_address' => $this->get('session')->get($sessionDeliveryKey),
+            'vendor'           => $vendor,
         ];
     }
 
@@ -103,6 +107,7 @@ class CheckoutController extends Controller
             'customer_address' => $this->get('session')->get(
                 sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendorCode)
             ),
+            'customer' => $this->get('session')->get(sprintf(static::SESSION_CONTACT_KEY_TEMPLATE, $vendorCode)),
         ];
     }
 
@@ -140,7 +145,7 @@ class CheckoutController extends Controller
         }
 
         if ($request->getMethod() === Request::METHOD_POST) {
-            return $this->handleOrder($cart, $vendorCode, $request);
+            return $this->handleOrder($cart, $vendor, $request);
         }
 
         $configuration = $this->get('volo_frontend.service.configuration')->getConfiguration();
@@ -262,11 +267,12 @@ class CheckoutController extends Controller
 
     /**
      * @param         $cart
+     * @param Vendor  $vendor
      * @param Request $request
      *
      * @return RedirectResponse
      */
-    protected function handleOrder($cart, $vendorCode, Request $request)
+    protected function handleOrder($cart, Vendor $vendor, Request $request)
     {
         $orderManager = $this->get('volo_frontend.service.order_manager');
 
@@ -281,14 +287,16 @@ class CheckoutController extends Controller
         } else {
             $session = $this->get('session');
             $guestCustomer = $this->get('volo_frontend.service.customer')->createGuestCustomer(
-                $session->get(sprintf(static::SESSION_CONTACT_KEY_TEMPLATE, $vendorCode)),
-                $session->get(sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendorCode))
+                $session->get(sprintf(static::SESSION_CONTACT_KEY_TEMPLATE, $vendor->getCode())),
+                $session->get(sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendor->getCode()))
             );
             $order         = $orderManager->placeGuestOrder($guestCustomer, $cart);
 
             $encryptedData = $request->request->get('adyen-encrypted-data');
             $orderManager->guestPayment($order, $encryptedData);
         }
+
+        $this->get('volo_frontend.service.cart_manager')->deleteCart($this->get('session')->getId(), $vendor->getId());
 
         return $this->redirect($this->generateUrl('checkout_success', ['orderCode' => $order['code']]));
     }

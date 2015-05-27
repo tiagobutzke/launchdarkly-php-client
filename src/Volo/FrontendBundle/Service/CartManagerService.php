@@ -52,6 +52,22 @@ class CartManagerService
     /**
      * @param string $sessionId
      * @param string $vendorIdentifier
+     */
+    public function deleteCart($sessionId, $vendorIdentifier)
+    {
+        $cartCollection = $this->getCartCollection($sessionId);
+        $vendorCartKey = $this->createCartKey($sessionId, $vendorIdentifier);
+
+        if (array_key_exists($vendorCartKey, $cartCollection)) {
+            unset($cartCollection[$vendorCartKey]);
+        }
+
+        $this->cache->save($this->createCartCollectionKey($sessionId), $cartCollection);
+    }
+
+    /**
+     * @param string $sessionId
+     * @param string $vendorIdentifier
      *
      * @return array|null
      */

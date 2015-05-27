@@ -10,7 +10,7 @@
         </div>
         <div class="form-group">
             <input type="text" class="form-control" id="city" name="customer_address[city]"
-                   value="{{ customer.city|default('') }}" required="true" placeholder="{% trans %}City{% endtrans %}">
+                   value="{{ customer_address.city|default('') }}" required="true" placeholder="{% trans %}City{% endtrans %}">
         </div>
         <input type="hidden" name="customer_address[city_id]" value="{{ vendor.city.id }}">
         <button id="delivery_information_form_button" class="button pull-right">{% trans %}Continue{% endtrans %}</button>
