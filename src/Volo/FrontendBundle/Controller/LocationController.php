@@ -16,15 +16,19 @@ use Foodpanda\ApiSdk\Entity\Vendor\VendorsCollection;
 class LocationController extends Controller
 {
     /**
-     * @Route("/city/{city_id}", name="volo_location_search_vendors_by_city", requirements={"city_id"="\d+"})
      * @Route(
-     *      "/search/lat/{latitude}/lng/{longitude}/plz/{post_code}",
+     *      "/city/{cityUrlKey}",
+     *      name="volo_location_search_vendors_by_city",
+     *      requirements={"cityUrlKey"="[a-z-]+"}
+     * )
+     * @Route(
+     *      "/search/lat/{latitude}/lng/{longitude}/plz/{postcode}",
      *      name="volo_location_search_vendors_by_gps",
      *      options={"expose"=true},
      *      requirements={
-     *          "lat"="-?(\d*[.])?\d+",
-     *          "lng"="-?(\d*[.])?\d+",
-     *          "plz"="\d+"
+     *          "latitude"="-?(\d*[.])?\d+",
+     *          "longitude"="-?(\d*[.])?\d+",
+     *          "postcode"="\d+"
      *      }
      * )
      * @Method({"GET"})

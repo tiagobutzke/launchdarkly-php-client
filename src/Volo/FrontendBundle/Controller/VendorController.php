@@ -13,10 +13,11 @@ class VendorController extends Controller
 {
     /**
      * @Route(
-     *      "/restaurant/{code}/{slug}",
+     *      "/restaurant/{code}/{urlKey}",
      *      name="vendor",
      *      requirements={
-     *          "code": "([A-Za-z][A-Za-z0-9]{3})"
+     *          "code": "([A-Za-z][A-Za-z0-9]{3})",
+     *          "urlKey": "[a-z-]+"
      *      }
      * )
      * @Template()
@@ -24,13 +25,20 @@ class VendorController extends Controller
      *
      * @param Request $request
      * @param string $code
+     * @param string $urlKey
      *
      * @return array
      */
-    public function vendorAction(Request $request, $code)
+    public function vendorAction(Request $request, $code, $urlKey)
     {
         try {
             $vendor = $this->get('volo_frontend.provider.vendor')->find($code);
+            if ($vendor->getUrlKey() !== $urlKey) {
+                return $this->redirectToRoute('vendor', [
+                    'code' => $vendor->getCode(),
+                    'urlKey' => $vendor->getUrlKey()
+                ]);
+            }
         } catch (EntityNotFoundException $exception) {
             throw $this->createNotFoundException('Vendor not found!', $exception);
         }
