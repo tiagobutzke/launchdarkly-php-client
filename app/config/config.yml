@@ -18,7 +18,7 @@ framework:
         packages:
             cdn_s3:
                 base_urls:
-                    [ "%volo_frontend.image_server_base_url%/%kernel.environment%/%country_code%" ]
+                    [ "%volo_frontend.image_server_base_url%/%country_code%" ]
     default_locale:  "%locale%"
     trusted_hosts:   ~
     trusted_proxies: ~
