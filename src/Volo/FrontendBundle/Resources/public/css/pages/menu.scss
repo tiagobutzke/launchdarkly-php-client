@@ -21,9 +21,9 @@
     display: none;
   }
 
-  h3 {
+  h2 {
     font-family: $bold-font-family;
-    font-size: 1.375em;
+    font-size: 1em;
     text-transform: uppercase;
     line-height: normal;
     height: 94px;
@@ -32,12 +32,25 @@
     background-color: $color-bg-primary;
     @include opacity(0.90);
     @include text-overflow();
+    @include respond-from("screen-sm") {
+      font-size: 1.4em;
+    }
+    @include respond-from("screen-md") {
+      font-size: 1.6em;
+    }
+    @include respond-from("screen-lg") {
+      font-size: 2em;
+      padding: $space-sm;
+    }
 
     span {
       font-family: $base-font-family;
       display: block;
       @include text-overflow();
       font-size: 0.75em;
+      @include respond-from("screen-lg") {
+        font-size: 0.65em;
+      }
     }
   }
 
@@ -96,17 +109,23 @@
     display: none;
   }
 
-  h3 {
+  h2 {
     color: $color-text-selection;
-    font-size: 1em;
     text-transform: uppercase;
     line-height: normal;
     margin: 0;
     padding: 0;
     @include text-overflow();
+    font-size: 1em;
 
     @include respond-from("screen-sm") {
+      font-size: 1.4em;
+    }
+    @include respond-from("screen-md") {
       font-size: 1.6em;
+    }
+    @include respond-from("screen-lg") {
+      font-size: 2em;
     }
   }
 }

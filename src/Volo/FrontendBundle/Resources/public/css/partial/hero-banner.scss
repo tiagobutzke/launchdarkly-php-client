@@ -8,13 +8,13 @@
   @include appear-from("screen-sm");
 
   h1 {
-    font-family: $base-font-family;
     color: $color-text-selection;
     text-transform: uppercase;
     width: 96%;
     text-align: center;
-    height: 5px;
+    height: 25px;
     line-height: 28px;
+    font-size: 1em;
     @include absolute-center-box();
 
     @include respond-from("screen-sm") {
@@ -24,7 +24,7 @@
       font-size: 1.6em;
     }
     @include respond-from("screen-lg") {
-      font-size: 2.3em;
+      font-size: 2em;
     }
   }
 
