@@ -16,7 +16,7 @@
   background: -o-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* Opera 11.10+ */
   background: -ms-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* IE10+ */
   background: linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* W3C */
-  @include respond-from("screen-sm") {
+  @include respond-from("screen-md") {
     height: $header-height-small;
   }
 }
@@ -24,13 +24,13 @@
 .header__wrapper {
   z-index: 1000;
   position: relative;
-  text-align: center;
   height: $header-height-extra-small;
-  @include fluid-container();
   padding-left: $grid-gutter-width / 2;
   padding-right: $grid-gutter-width / 2;
-  @include respond-from("screen-sm") {
-    text-align: left;
+  @include respond-from("screen-md") {
+    @include fluid-container();
+  }
+  @include respond-from("screen-md") {
     height: $header-height-small;
   }
 }
@@ -44,37 +44,26 @@
   top: - $header-height-extra-small;
   left: 0;
   @include transition(all .1s linear);
-  @include respond-from("screen-sm") {
+  @include respond-from("screen-md") {
     height: $header-height-small;
     top: - $header-height-small;
   }
 }
 
-.header__profile {
-  position: absolute;
-  font-size: 1.35em;
-  left: $grid-gutter-width / 2;
-  display: block;
-  margin-top: 10px;
-  @include make-link($link-color-bg-dark, $link-color-bg-dark);
-  @include respond-from("screen-sm") {
-    display: none;
-  }
-}
-
 .header__logo {
-  width: 118px;
-  height: 23px;
+  width: 137px;
+  height: 27px;
   overflow: hidden;
-  margin: 12px auto;
+  margin: 9px auto;
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  @include respond-from("screen-sm") {
+  @include respond-from("screen-md") {
     width: auto;
-    height: 36px;
+    height: 30px;
+    margin-top: 12px;
     position: static;
     display: inline-block;
   }
@@ -84,11 +73,11 @@
   display: block;
 
   i {
-    font-size: 0.55em;
+    font-size: 0.75em;
     color: $color-text-selection;
     display: block;
     @include transition(opacity .5s linear);
-    @include respond-from("screen-sm") {
+    @include respond-from("screen-md") {
       font-size: 0.8em;
     }
   }
@@ -101,42 +90,80 @@
 
 .header__cart {
   @include make-link($link-color-bg-dark, $link-color-bg-dark);
-  font-size: 1.3em;
+  font-size: 1.5em;
   display: inline-block;
   float: right;
   margin: 11px 0;
-  @include respond-from("screen-sm") {
-    margin-top: 18px;
-    margin-right: $space-lg;
+  @include respond-from("screen-md") {
+    margin-top: 16px;
   }
 }
 
-.header__login {
+.header__account {
   @include make-link($link-color-bg-dark, $link-color-bg-dark);
-  float: right;
-  margin-top: 14px;
-  @include appear-from("screen-sm");
+  float: left;
+  margin-top: 9px;
 
-  a, b {
-    @include make-link($link-color-bg-dark, $link-color-bg-dark);
-    font-size: 0.8em;
-  }
-
-  .icon-down-open-big {
-    @include make-link($link-color-bg-dark, $link-color-bg-dark);
-    display: inline-block;
-    vertical-align: middle;
-    font-size: 0.8em;
-    margin-top: 3px;
-    margin-left: 5px;
+  @include respond-from("screen-md") {
+    float: right;
+    margin-left: $space-lg;
+    margin-top: 15px;
   }
 }
 
-.header--white {
+.header__account__login-icon {
+  position: absolute;
+  font-size: 1.4em;
+  display: block;
+  margin-top: 2px;
+  @include make-link($link-color-bg-dark, $link-color-bg-dark);
+  @include respond-from("screen-md") {
+    display: none;
+  }
+}
 
+.header__account__login-text {
+  border: 1px solid $color-bg-primary;
+  padding: 3px;
+  @include appear-from("screen-md");
+  @include make-link($link-color-bg-dark, $link-color-bg-dark);
+  @include respond-from("screen-md") {
+    padding: 4px 5px;
+  }
+}
+
+.header__account__open {
+  @include make-link($link-color-bg-dark, $link-color-bg-dark);
+  font-size: 0.85em;
+  @include appear-from("screen-md");
+
+  i {
+    font-size: 1.3em;
+    vertical-align: sub;
+  }
+}
+
+
+//adding different styles for the header on the homepage
+.home-page {
+  .header__cart {
+    display: none;
+  }
+
+  .header__logo {
+    position: static;
+    display: inline-block;
+  }
+
+  .header__account__login-icon {
+    right: $grid-gutter-width / 2
+  }
+}
+
+// adding different styles for the header with white background
+.header--white {
   &.header  {
     background: none;
-    height: $header-height-small;
   }
 
   .header__wrapper__bg {
@@ -144,38 +171,24 @@
     border-bottom: 1px solid $base-border-color;
   }
 
-  .header__logo {
-    width: 118px;
-    height: 23px;
-    @include respond-from("screen-sm") {
-      height: 25px;
-      margin: 15px auto;
-    }
-  }
-
   .header__logo__a {
-
     i {
-      font-size: 0.55em;
       color: $color-text-highlight;
     }
   }
 
-  .header__login {
-    margin-top: 12px;
+  .header__account {
     a {
       @include make-link();
     }
   }
 
-  .header__cart {
-    @include respond-from("screen-sm") {
-      margin-top: 16px;
-    }
+  .header__account__login-text {
+    border: none;
+    padding: 0;
   }
 
-  .header__profile,
-  .icon-down-open-big,
+  .header__account__login-icon,
   .header__cart {
       @include make-link();
   }

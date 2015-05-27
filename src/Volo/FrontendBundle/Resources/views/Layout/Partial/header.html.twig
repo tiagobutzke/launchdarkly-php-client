@@ -1,19 +1,20 @@
 {% block header %}
     <header class="header {% block headerClass %}{% endblock headerClass %}">
         <div class="header__wrapper">
-            <a class="header__profile" href="#1"><i class="icon-profile"></i></a>
+            <div class="header__account">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <a href="#" class="header__account__open">{{ app.security.token.attributes.customer.firstName }}<i class="icon-down-open-mini"></i></a>
+                    <a href="#" class="header__account__login-icon"><i class="icon-profile"></i></a>
+                    {#<a href="{{ path('logout') }}">Logout </a>#}
+                {% else %}
+                    <a href="{{ path('login') }}" class="header__account__login-text">Login</a>
+                    <a href="{{ path('login') }}" class="header__account__login-icon"><i class="icon-profile"></i></a>
+                {% endif %}
+            </div>
             <h1 class="header__logo">
                 <a class="header__logo__a" href="{{ path('home') }}"><i class="icon-logo"></i></a>
                 <span>{% trans %}foodora{% endtrans %}</span>
             </h1>
-            <div class="header__login">
-                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <b>Username: {{ app.security.token.attributes.customer.firstName }}<i class="icon-down-open-big"></i></b>
-                    <a href="{{ path('logout') }}">Logout </a>
-                {% else %}
-                    <a href="{{ path('login') }}">Login<i class="icon-down-open-big"></i></a>
-                {% endif %}
-            </div>
             <a class="header__cart" href="#"><i class="icon-cart"></i></a>
         </div>
         <div class="header__wrapper__bg"></div>
