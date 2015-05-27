@@ -2,6 +2,7 @@
 
 namespace Volo\FrontendBundle\Service;
 
+use CommerceGuys\Guzzle\Oauth2\AccessToken;
 use Foodpanda\ApiSdk\Provider\CartProvider;
 use Foodpanda\ApiSdk\Provider\OrderProvider;
 use Foodpanda\ApiSdk\Provider\CustomerProvider;
@@ -57,7 +58,7 @@ class OrderManagerService
      *
      * @return array
      */
-    public function placeOrder(GuestCustomer $guestCustomer, array $cart)
+    public function placeGuestOrder(GuestCustomer $guestCustomer, array $cart)
     {
         $recalculatedCart = $this->cartProvider->calculate($cart);
 
@@ -78,12 +79,41 @@ class OrderManagerService
     }
 
     /**
+     * TODO: payment_type_id is hardcoded
+     * TODO: Order comment isn't handled
+     * TODO: Handle vendor closed
+     *
+     * @param AccessToken $accessToken
+     * @param int         $addressId
+     * @param array       $cart
+     *
+     * @return array
+     */
+    public function placeOrder(AccessToken $accessToken, $addressId, array $cart)
+    {
+        $recalculatedCart = $this->cartProvider->calculate($cart);
+
+        $order = [
+            'location'              => $cart['location'],
+            'products'              => $cart['products'],
+            'expedition_type'       => 'delivery',
+            'payment_type_id'       => 5,
+            'customer_address_id'   => $addressId,
+            'customer_comment'      => '',
+            'expected_total_amount' => $recalculatedCart['total_value'],
+            'source'                => $this->apiClientId,
+        ];
+
+        return $this->orderProvider->order($accessToken, $order);
+    }
+
+    /**
      * @param string $adyenEncryptedData
      * @param array  $order
      *
      * @return array
      */
-    public function pay(array $order, $adyenEncryptedData)
+    public function guestPayment(array $order, $adyenEncryptedData)
     {
         $paymentRequest = [
             'order_code'             => $order['code'],
@@ -94,5 +124,22 @@ class OrderManagerService
         ];
 
         return $this->orderProvider->guestPayment($paymentRequest);
+    }
+    
+    /**
+     * @param string $adyenEncryptedData
+     * @param array  $order
+     *
+     * @return array
+     */
+    public function payment(AccessToken $accessToken, array $order, $adyenEncryptedData)
+    {
+        $paymentRequest = [
+            'order_code'             => $order['code'],
+            'amount'                 => $order['total_value'],
+            'encrypted_payment_data' => $adyenEncryptedData,
+        ];
+
+        return $this->orderProvider->payment($accessToken, $paymentRequest);
     }
 }

@@ -1,15 +1,4 @@
-{# <p>{% trans %}delivery_time{% endtrans %}: Not done...</p> #}
-<h3 class="checkout__title">1. {% trans %}Delivery details{% endtrans %}
-    <span class="checkout__subtitle__edit">
-        <i class="icon-pencil"></i>
-        <a href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">{% trans %}Edit{% endtrans %}</a>
-    </span>
-</h3>
-<h4 class="checkout__subtitle">
-    Delivery address
-
-</h4>
-<div class="checkout__item">
+<div id="selected_delivery_address" class="checkout__item">
     <span>{{ customer_address.address_line1 }}</span>
     <span>{{ customer_address.postcode }}, {{ customer_address.city }}</span>
 </div>

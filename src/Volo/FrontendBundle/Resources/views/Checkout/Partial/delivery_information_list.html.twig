@@ -1,0 +1,13 @@
+{% for address in customer_addresses %}
+    <p>
+        <label>
+            <input type="radio" name="selected_address" value="{{ address.id }}"
+                   {% if (selected_address.id == address.id) %}checked="checked"{% endif %}/>
+
+            <div class="delivery_address" data-address-id="{{ address.id }}">
+                <span>{{ address.address_line1 }}</span>
+                <span>{{ address.postcode }}, {{ address.city }}</span>
+            </div>
+        </label>
+    </p>
+{% endfor %}

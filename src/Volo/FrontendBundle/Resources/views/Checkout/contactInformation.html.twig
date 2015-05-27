@@ -1,9 +1,16 @@
 {% extends 'VoloFrontendBundle:Checkout:base.html.twig' %}
 
 {% block delivery_information %}
+    <h3 class="checkout__title">1. {% trans %}Delivery details{% endtrans %}
+        <span class="checkout__subtitle__edit">
+        <i class="icon-pencil"></i>
+        <a href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">{% trans %}Edit{% endtrans %}</a>
+    </span>
+    </h3>
     {% include('VoloFrontendBundle:Checkout/Partial:delivery_information_edit.html.twig') %}
 {% endblock %}
 
 {% block contact_information %}
+    <h3 class="checkout__title">2. {% trans %}Contact info{% endtrans %}</h3>
     {% include('VoloFrontendBundle:Checkout/Partial:contact_information_form.html.twig') %}
 {% endblock %}

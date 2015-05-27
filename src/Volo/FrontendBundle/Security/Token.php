@@ -30,9 +30,7 @@ class Token extends AbstractToken
      */
     public function getAccessToken()
     {
-        $tokens = $this->getAttribute('tokens');
-
-        return new AccessToken($tokens['access_token'], $tokens['refresh_token']);
+        return $this->getAttribute('tokens');
     }
 
     /**
