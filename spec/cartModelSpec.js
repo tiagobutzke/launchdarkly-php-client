@@ -76,7 +76,8 @@ describe("A cart", function() {
                     "toppings": _.cloneDeep(product.toppings),
                     "choices": _.cloneDeep(product.choices),
                     "group_order_user_name": null,
-                    "group_order_user_code": null
+                    "group_order_user_code": null,
+                    description: ""
                 };
             });
 
@@ -112,7 +113,7 @@ describe("A cart", function() {
                 "toppings": []
             }]
         };
-        var selectedProduct = new Backbone.Model(object);
+        var selectedProduct = new CartItemModel.createFromMenuItem(object);
 
         cart.getCart(vendor_id).addItem(selectedProduct.toJSON(), 3);
 
@@ -157,8 +158,8 @@ describe("A cart", function() {
             }]
         };
         var expectedFirst;
-        var firstSelectedProduct = new Backbone.Model(product);
-        var secondProductToAdd = new Backbone.Model(product);
+        var firstSelectedProduct = CartItemModel.createFromMenuItem(product);
+        var secondProductToAdd = CartItemModel.createFromMenuItem(product);
         secondProductToAdd.set('quantity', 5);
 
         cart.getCart(vendor_id).addItem(firstSelectedProduct.toJSON(), 3);
@@ -179,7 +180,7 @@ describe("A cart", function() {
     });
 
     it('finds similar product in cart', function() {
-        var product = {
+        var product = CartItemModel.createFromMenuItem({
             "is_half_type_available": false,
             "id": 854,
             "name": "Quick Chicken",
@@ -208,20 +209,30 @@ describe("A cart", function() {
                     }
                 ]
             }]
-        };
+        });
 
-        cart.getCart(vendor_id).addItem(product, 3);
-        expect(cart.vendorCart.get(vendor_id).findSimilarProduct(product).toJSON()).toEqual({
+        cart.getCart(vendor_id).addItem(product.toJSON(), 3);
+
+        expect(cart.getCart(vendor_id).findSimilarProduct(product.toJSON()).toJSON()).toEqual({
             product_variation_id: 859,
-            quantity: 3,
-            toppings: [{id: 1, type: 'full', name: 'option 1'}],
-            choices: [{id: 1, name: 'choice 1'}],
             name: 'Quick Chicken',
-            variation_name: '',
-            total_price_before_discount: 0,
-            total_price: 0,
+            variation_name: null,
+            total_price_before_discount: null,
+            total_price: 7.9,
+            quantity: 3,
+            toppings: [{
+                id: 1,
+                type: 'full',
+                name: 'option 1',
+                optionsVisible: false,
+                quantity_minimum: null,
+                quantity_maximum: null,
+                options: []
+            }],
+            choices: [{id: 1, name: 'choice 1'}],
             group_order_user_name: null,
-            group_order_user_code: null
+            group_order_user_code: null,
+            description: 'Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter'
         });
     });
 
@@ -264,7 +275,7 @@ describe("A cart", function() {
             options: [{id: 1, selected: true, name: 'option 1'}]
         }];
 
-        cart.getCart(vendor_id).addItem(product, 3);
+        cart.getCart(vendor_id).addItem(CartItemModel.createFromMenuItem(product).toJSON(), 3);
 
         expect(cart.vendorCart.get(vendor_id).findSimilarProduct(differentProduct)).toEqual(undefined);
     });
@@ -304,7 +315,7 @@ describe("A cart", function() {
         var differentProduct = _.cloneDeep(product);
         differentProduct.product_variations[0].toppings = [];
 
-        cart.getCart(vendor_id).addItem(product, 3);
+        cart.getCart(vendor_id).addItem(CartItemModel.createFromMenuItem(product).toJSON(), 3);
 
         expect(cart.vendorCart.get(vendor_id).findSimilarProduct(differentProduct)).toEqual(undefined);
     });
@@ -355,7 +366,7 @@ describe("A cart", function() {
             }
         ];
 
-        cart.getCart(vendor_id).addItem(product, 3);
+        cart.getCart(vendor_id).addItem(CartItemModel.createFromMenuItem(product).toJSON(), 3);
 
         expect(cart.vendorCart.get(vendor_id).findSimilarProduct(differentProduct)).toEqual(undefined);
     });
@@ -391,10 +402,10 @@ describe("A cart", function() {
                 ]
             }]
         };
-        var productInCart = new Backbone.Model(product);
+        var productInCart = CartItemModel.createFromMenuItem(product);
         cart.getCart(vendor_id).addItem(productInCart.toJSON(), 3);
 
-        var productForFind = new Backbone.Model({
+        var productForFind = CartItemModel.createFromMenuItem({
             "is_half_type_available": false,
             "id": 853,
             "name": "Quick Chicken",
