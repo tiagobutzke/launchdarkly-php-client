@@ -4,7 +4,7 @@
 {% block content %}
     <div class="hero-banner-wrapper">
         <h1>{{ 'The Best of Berlin. Brought to your doorstep.'|trans }}</h1>
-        {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image.html.twig' with {type: 'hero', 'vendorCode' : 's7zm'} %}
+        {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image.html.twig' with {vendorCode : 'list', type: 'hero'} %}
     </div>
     <div class="wrapper-fluid">
         <h2 class="hide">Available now</h2>
