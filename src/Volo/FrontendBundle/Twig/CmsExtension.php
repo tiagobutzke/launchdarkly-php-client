@@ -26,7 +26,7 @@ class CmsExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('cms', array($this, 'getCmsContent')),
+            new \Twig_SimpleFunction('cms', [$this, 'getCmsContent'], ['is_safe' => ['html']]),
         );
     }
 
