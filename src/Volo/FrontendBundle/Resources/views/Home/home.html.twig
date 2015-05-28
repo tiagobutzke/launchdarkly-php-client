@@ -155,7 +155,7 @@
     </div>
     <section class="home-section cities">
         <div class="cities__container">
-            <a href="{{ path('volo_location_search_vendors_by_city', {'city_id': 2}) }}" class="city">
+            <a href="{{ path('volo_location_search_vendors_by_city', {'cityUrlKey': 'berlin'}) }}" class="city">
                 <div class="city__container">
                     <div class="city__name">
                         <div>{{ 'Berlin'|trans }}</div>
@@ -167,7 +167,7 @@
                     </div>
                 </div>
             </a>
-            <a href="{{ path('volo_location_search_vendors_by_city', {'city_id': 2}) }}" class="city">
+            <a href="{{ path('volo_location_search_vendors_by_city', {'cityUrlKey': 'berlin'}) }}" class="city">
                 <div class="city__container">
                     <div class="city__name">
                         <div>{{ 'Frankfurt'|trans }}</div>
@@ -180,7 +180,7 @@
                     </div>
                 </div>
             </a>
-            <a href="{{ path('volo_location_search_vendors_by_city', {'city_id': 2}) }}" class="city">
+            <a href="{{ path('volo_location_search_vendors_by_city', {'cityUrlKey': 'berlin'}) }}" class="city">
                 <div class="city__container">
                     <div class="city__name">
                         <div>{{ 'Hamburg'|trans }}</div>
@@ -192,7 +192,7 @@
                     </div>
                 </div>
             </a>
-            <a href="{{ path('volo_location_search_vendors_by_city', {'city_id': 2}) }}" class="city">
+            <a href="{{ path('volo_location_search_vendors_by_city', {'cityUrlKey': 'berlin'}) }}" class="city">
                 <div class="city__container">
                     <div class="city__name">
                         <div>{{ 'München'|trans }}</div>
@@ -204,7 +204,7 @@
                     </div>
                 </div>
             </a>
-            <a href="{{ path('volo_location_search_vendors_by_city', {'city_id': 2}) }}" class="city">
+            <a href="{{ path('volo_location_search_vendors_by_city', {'cityUrlKey': 'berlin'}) }}" class="city">
                 <div class="city__container">
                     <div class="city__name">
                         <div>{{ 'Düsseldorf'|trans }}</div>
@@ -216,7 +216,7 @@
                     </div>
                 </div>
             </a>
-            <a href="{{ path('volo_location_search_vendors_by_city', {'city_id': 2}) }}" class="city">
+            <a href="{{ path('volo_location_search_vendors_by_city', {'cityUrlKey': 'berlin'}) }}" class="city">
                 <div class="city__container">
                     <div class="city__name">
                         <div>{{ 'Köln'|trans }}</div>
@@ -270,7 +270,7 @@
 
     <div style="text-align: center">
         {% for city in cities %}
-            <a href="{{ path('volo_location_search_vendors_by_city', {'city_id': city.id}) }}">{{ city.name|e }}</a>
+            <a href="{{ path('volo_location_search_vendors_by_city', {'cityUrlKey': city.urlKey}) }}">{{ city.name|e }}</a>
         {% endfor %}
     </div>
 {% endblock %}

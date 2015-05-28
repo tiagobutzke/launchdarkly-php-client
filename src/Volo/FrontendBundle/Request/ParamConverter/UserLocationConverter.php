@@ -42,30 +42,22 @@ class UserLocationConverter implements ParamConverterInterface
     {
         $object = null;
 
-        $cityId = $request->attributes->get('city_id', false);
+        $cityCode = $request->attributes->get('cityUrlKey', false);
         $areaId = $request->attributes->get('area_id', false);
         $lat = $request->attributes->get('latitude', false);
         $lng = $request->attributes->get('longitude', false);
 
         switch(true) {
-            case $cityId:
-                $object = new CityLocation($cityId);
+            case $cityCode:
+                $object = $this->createParameterByCityCode($cityCode);
                 break;
             case $areaId:
-                $object = new AreaLocation($cityId);
+                $object = new AreaLocation($areaId);
                 break;
             case $lat && $lng:
                 $object = new GpsLocation($lat, $lng);
 
-                $sessionId = $request->getSession()->getId();
-
-                $location = $this->customerLocationService->create(
-                    $request->get(CustomerLocationService::KEY_LAT),
-                    $request->get(CustomerLocationService::KEY_LNG),
-                    $request->get(CustomerLocationService::KEY_POSTAL_INDEX)
-                );
-
-                $this->customerLocationService->set($sessionId, $location);
+                $this->saveLocationToCache($request);
                 break;
             default:
                 $message = 'Please supply keys `city_id` or `area_id` or `latitude` and `longitude`.';
@@ -83,5 +75,41 @@ class UserLocationConverter implements ParamConverterInterface
     public function supports(ParamConverter $configuration)
     {
         return $configuration->getClass() === AbstractLocation::class;
+    }
+
+    /**
+     * @param string $cityCode
+     *
+     * @return CityLocation
+     */
+    public function createParameterByCityCode($cityCode)
+    {
+        $object = null;
+
+        $items = $this->cityProvider->findAll()->getItems();
+        foreach ($items as $item) {
+            if ($item->getUrlKey() === $cityCode) {
+                $object = new CityLocation($item->getId());
+                break;
+            }
+        }
+
+        return $object;
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function saveLocationToCache(Request $request)
+    {
+        $sessionId = $request->getSession()->getId();
+
+        $location = $this->customerLocationService->create(
+            $request->get(CustomerLocationService::KEY_LAT),
+            $request->get(CustomerLocationService::KEY_LNG),
+            $request->get(CustomerLocationService::KEY_PLZ)
+        );
+
+        $this->customerLocationService->set($sessionId, $location);
     }
 }
