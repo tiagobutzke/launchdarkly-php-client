@@ -19,4 +19,4 @@ parameters:
 
     volo_frontend.thumbor_base_url: '/app_%kernel.environment%.php/thumbor/fake'
     volo_frontend.thumbor_secret: ~
-    volo_frontend.image_server_base_url: https://s3.eu-central-1.amazonaws.com/test-volo-bucket
+    volo_frontend.image_server_base_url: https://volo-image.s3.amazonaws.com
