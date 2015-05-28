@@ -28,8 +28,8 @@
         <p>Closing in 10 min. <span>8:00 AM – 5:00 PM</span></p>
     </div>
     <div class="hero-menu__info-extra">
-        <i class="icon-pin-map"></i> Alte Schönhauser Str. 46
-        <i class="icon-call-phone"></i> 030 9929 6924
+        <i class="icon-pin-map"></i> {{ vendor.address }}
+        <i class="icon-call-phone"></i> {{ vendor.customerPhone }}
     </div>
 </div>
 <div class="menu-wrapper">
@@ -56,30 +56,30 @@
                     {% for menuCategory in vendor.menus.first.menuCategories %}
                         <h3 class="menu__items__title" id="menu__category-id-{{ menuCategory.id }}">{{ menuCategory.name }}</h3>
                         {% for product in menuCategory.products %}
+                            {# ------ Please toggle "menu__item--selected" class on click to style selected item  #}
                             <div class="menu__item" data-object='{{ serialize(product)|raw }}'>
-                                <div class="menu__item__name">
-                                    {{ product.name }}
-                                    {% if product.productVariations.first.name %}
-                                        <a href="#" class="btn-allergy">
-                                            <sup>{{ product.productVariations.first.name }}</sup>
-                                        </a>
-                                    {% endif %}
-                                </div>
-                                <div class="menu__item__description">
-                                    {{ product.description }}
+                                <div class="menu__item__wrapper">
+                                    <div class="menu__item__name">
+                                        {{ product.name }}
+                                        {% if product.productVariations.first.name %}
+                                            <a href="#" class="btn-allergy">
+                                                <sup>{{ product.productVariations.first.name }}</sup>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                    <div class="menu__item__description">
+                                        {{ product.description }}
+                                    </div>
                                 </div>
                                 <div class="menu__item__price">
                                     {{ product.productVariations.first.price|price }}
                                     <button class="menu__item__add"><i class="icon-plus"></i></button>
                                 </div>
                             </div>
+                            <div class="clearfix"></div>
                         {% endfor %}
                     {% endfor %}
-                    <div class="menu__icon-legend">
-                        <span><i class="icon-hot"></i>{{ 'Hot'|trans }}</span>
-                        <span><i class="icon-very-hot"></i>{{ 'Very hot'|trans }}</span>
-                        <span><i class="icon-vegetarian"></i>{{ 'Vegan'|trans }}</span>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -102,7 +102,6 @@
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium alias aut dolorem earum fugit ipsa maxime modi nam officia optio, pariatur perferendis porro quae quaerat reiciendis, saepe sed totam, voluptates.  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium alias aut dolorem earum fugit ipsa maxime modi nam officia optio, pariatur perferendis porro quae quaerat reiciendis, saepe sed totam, voluptates.
         </div>
     </div>
-    <div class="clearfix"></div>
 </div>
 <div class="bottom-cart">
     <div class="bottom-cart__wrapper">

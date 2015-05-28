@@ -151,6 +151,7 @@
 // main content
 
 .menu-wrapper {
+  @include clearfix;
   @include respond-from("screen-md") {
     @include fluid-container();
   }
@@ -169,6 +170,7 @@
   @include respond-from("screen-md") {
     @include make-md-column(8);
     @include make-lg-column(9);
+    padding-bottom: 40px;
   }
 }
 
@@ -202,15 +204,17 @@
   }
 
   a {
-     color: $color-text-primary;
+     @include make-link($color-text-primary, $color-text-highlight);
      font-size: 0.875em;
    }
 }
 
 .menu__items  {
+  padding-top: $header-height-extra-small;
   @include respond-from("screen-md") {
     @include make-md-column(12);
     @include make-lg-column(9);
+    padding-top: 0;
   }
 }
 
@@ -219,28 +223,68 @@
   font-size: 0.750em;
   @extend .text-center;
   border-bottom: $base-border;
-  padding: $space-sm 0;
+  padding: 35px 0 15px;
   margin: 0;
   text-transform: uppercase;
+  line-height: normal;
+  &:first-child {
+    padding-top: 15px;
+  }
   @include respond-from("screen-md") {
     font-size: 0.875em;
+    padding: 55px 0 25px;
+    &:first-child {
+      padding-top: 30px;
+    }
   }
 }
 
 .menu__item {
-  @include clearfix;
   border-bottom: $base-border;
-  line-height: 1.3em;
+  line-height: normal;
   font-size: 0.813em;
-  padding: $space-sm 0;
+  padding: 0 $space-sm;
+  float: left;
+  width: 100%;
+  display: table;
+  min-height: 60px;
+
   @include respond-from("screen-md") {
-    line-height: 1.4em;
     font-size: 0.875em;
+    min-height: 96px;
+    padding: 0 $space-xs 0 $space-lg ;
+  }
+
+  &:last-child {
+    border: none;
+  }
+
+  &:hover {
+    background-color: $color-bg-secondary;
+    cursor: pointer;
+  }
+}
+
+.menu__item--selected {
+  background-color: $color-bg-secondary;
+
+  &:hover {
+    cursor: default;
+  }
+}
+
+.menu__item__wrapper {
+  width: 75%;
+  padding: $space-sm 0;
+  display: table-cell;
+  vertical-align: middle;
+  @include respond-from("screen-md") {
+    padding: $space-lg 0;
   }
 }
 
 .menu__item__name {
-  @include make-xs-column(12);
+  font-weight: bold;
 
   i {
     color: $color-text-light;
@@ -249,16 +293,16 @@
 }
 
 .menu__item__description {
-  @include make-xs-column(8);
   color: $color-text-secondary;
 }
 
 
 
 .menu__item__price {
-  @include make-xs-column(4);
-  @extend .pull-right;
+  width: 25%;
   text-align: right;
+  display: table-cell;
+  vertical-align: middle;
 
   button {
     height: 20px;
