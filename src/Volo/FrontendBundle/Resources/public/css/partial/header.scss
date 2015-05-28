@@ -52,7 +52,6 @@
 
 .header__logo {
   width: 137px;
-  height: 27px;
   overflow: hidden;
   margin: 9px auto;
   position: absolute;
@@ -62,10 +61,12 @@
   right: 0;
   @include respond-from("screen-md") {
     width: auto;
-    height: 30px;
     margin-top: 12px;
     position: static;
     display: inline-block;
+  }
+  @include respond-from("screen-lg") {
+    margin-top: $space-lg;
   }
 }
 
@@ -79,6 +80,9 @@
     @include transition(opacity .5s linear);
     @include respond-from("screen-md") {
       font-size: 0.8em;
+    }
+    @include respond-from("screen-lg") {
+      font-size: 1em;
     }
   }
 
@@ -97,6 +101,9 @@
   @include respond-from("screen-md") {
     margin-top: 16px;
   }
+  @include respond-from("screen-lg") {
+    margin-top: $space-lg;
+  }
 }
 
 .header__account {
@@ -108,6 +115,9 @@
     float: right;
     margin-left: $space-lg;
     margin-top: 15px;
+  }
+  @include respond-from("screen-lg") {
+    margin-top: 25px;
   }
 }
 
@@ -171,15 +181,33 @@
     border-bottom: 1px solid $base-border-color;
   }
 
+  .header__logo {
+    @include respond-from("screen-lg") {
+      margin-top: 12px;
+    }
+  }
+
   .header__logo__a {
     i {
       color: $color-text-highlight;
+    }
+    @include respond-from("screen-lg") {
+      font-size: 0.8em;
+    }
+  }
+
+  .header__cart {
+    @include respond-from("screen-lg") {
+      margin-top: 16px;
     }
   }
 
   .header__account {
     a {
       @include make-link();
+    }
+    @include respond-from("screen-lg") {
+      margin-top: 15px;
     }
   }
 
