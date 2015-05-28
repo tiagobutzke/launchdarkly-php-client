@@ -12,9 +12,13 @@ Installation
 
 You'll need **PHP ~5.5.14**, **node.js**, **NPM**, **Bower**, **SASS ~3.4.13** & **Grunt** (cli) installed
 
-**One time installation:**
+**One time installation (Linux users: YMMV :-)):**
 
 ```
+$ brew install php55 --with-fpm
+$ brew install php55-xdebug
+$ brew install nginx
+$ # TODO: install node/npm instructions go here
 $ npm install -g grunt-cli
 $ npm install -g bower
 $ gem install sass -v '~> 3.4.13'
@@ -77,6 +81,26 @@ Please add in your ```.bashrc``` or ```.zshrc```
 ```
 export COUNTRY_CODE=de
 ```
+
+Add a local alias:
+
+```
+echo "127.0.0.1 de.volo.dev" >> /etc/hosts
+```
+
+Run composer install:
+
+```
+$ cd /path/to/volo-frontend && composer install
+```
+
+Build your assets:
+
+```
+$ cd /path/to/volo-frontend && grunt
+```
+
+Go to http://de.volo.dev/ in your browser.
 
 Parameters
 ---
