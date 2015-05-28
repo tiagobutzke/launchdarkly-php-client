@@ -1,0 +1,64 @@
+.static-pages-wrapper {
+  @include respond-from("screen-md") {
+    @include fluid-container();
+  }
+}
+.static-pages-wrapper {
+  @include respond-from("screen-md") {
+    @include fluid-container();
+  }
+}
+
+.static-pages {
+  margin-top: $header-height-small;
+  @include respond-from("screen-md") {
+    @include make-row();
+    margin-top: $space-md * 2;
+  }
+}
+
+.static-pages__main {
+  background-color: $color-bg-primary;
+  @include make-md-column(10);
+  @extend .col-md-push-1;
+  font-size: 0.875em;
+  line-height: 1.4em;
+  @include respond-from("screen-md") {
+    padding: $grid-gutter-width;
+    margin-bottom: $space-md * 2;
+  }
+
+  h2 {
+    font-family: $bold-font-family;
+    font-size: 0.875em;
+    margin: 0;
+    padding: 0;
+    line-height: normal;
+    text-transform: uppercase;
+  }
+
+  p {
+    margin-bottom: $space-md;
+  }
+
+  ul {
+    padding-left: $space-lg;
+  }
+
+  li {
+    list-style-type: disc;
+    margin-bottom: $space-md;
+
+    li {
+      list-style-type: circle;
+      &:first-child {
+        margin-top: $space-md;
+      }
+    }
+  }
+
+  strong {
+    font-weight: normal;
+    font-family: $bold-font-family;
+  }
+}
