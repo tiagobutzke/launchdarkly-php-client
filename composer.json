@@ -70,63 +70,78 @@
         "incenteev-parameters": [
             {
               "file": "app/config/countries_parameters/at.yml",
-              "dist-file": "app/config/countries_parameters/dist/at.yml.dist"
+              "dist-file": "app/config/countries_parameters/dist/at.yml.dist",
+              "keep-outdated": true
             },
             {
                 "file": "app/config/countries_parameters/au.yml",
-                "dist-file": "app/config/countries_parameters/dist/au.yml.dist"
+                "dist-file": "app/config/countries_parameters/dist/au.yml.dist",
+                "keep-outdated": true
             },
             {
                 "file": "app/config/countries_parameters/ca.yml",
-                "dist-file": "app/config/countries_parameters/dist/ca.yml.dist"
+                "dist-file": "app/config/countries_parameters/dist/ca.yml.dist",
+                "keep-outdated": true
             },
             {
                 "file": "app/config/countries_parameters/ch.yml",
-                "dist-file": "app/config/countries_parameters/dist/ch.yml.dist"
+                "dist-file": "app/config/countries_parameters/dist/ch.yml.dist",
+                "keep-outdated": true
             },
             {
-              "file": "app/config/countries_parameters/de.yml",
-              "dist-file": "app/config/countries_parameters/dist/de.yml.dist"
+                "file": "app/config/countries_parameters/de.yml",
+                "dist-file": "app/config/countries_parameters/dist/de.yml.dist",
+                "keep-outdated": true
             },
             {
                 "file": "app/config/countries_parameters/dk.yml",
-                "dist-file": "app/config/countries_parameters/dist/dk.yml.dist"
+                "dist-file": "app/config/countries_parameters/dist/dk.yml.dist",
+                "keep-outdated": true
             },
             {
                 "file": "app/config/countries_parameters/es.yml",
-                "dist-file": "app/config/countries_parameters/dist/es.yml.dist"
+                "dist-file": "app/config/countries_parameters/dist/es.yml.dist",
+                "keep-outdated": true
             },
             {
                 "file": "app/config/countries_parameters/fi.yml",
-                "dist-file": "app/config/countries_parameters/dist/fi.yml.dist"
+                "dist-file": "app/config/countries_parameters/dist/fi.yml.dist",
+                "keep-outdated": true
             },
             {
                 "file": "app/config/countries_parameters/fr.yml",
-                "dist-file": "app/config/countries_parameters/dist/fr.yml.dist"
+                "dist-file": "app/config/countries_parameters/dist/fr.yml.dist",
+                "keep-outdated": true
             },
             {
                 "file": "app/config/countries_parameters/ie.yml",
-                "dist-file": "app/config/countries_parameters/dist/ie.yml.dist"
+                "dist-file": "app/config/countries_parameters/dist/ie.yml.dist",
+                "keep-outdated": true
             },
             {
                 "file": "app/config/countries_parameters/it.yml",
-                "dist-file": "app/config/countries_parameters/dist/it.yml.dist"
+                "dist-file": "app/config/countries_parameters/dist/it.yml.dist",
+                "keep-outdated": true
             },
             {
                 "file": "app/config/countries_parameters/nl.yml",
-                "dist-file": "app/config/countries_parameters/dist/nl.yml.dist"
+                "dist-file": "app/config/countries_parameters/dist/nl.yml.dist",
+                "keep-outdated": true
             },
             {
                 "file": "app/config/countries_parameters/no.yml",
-                "dist-file": "app/config/countries_parameters/dist/no.yml.dist"
+                "dist-file": "app/config/countries_parameters/dist/no.yml.dist",
+                "keep-outdated": true
             },
             {
                 "file": "app/config/countries_parameters/se.yml",
-                "dist-file": "app/config/countries_parameters/dist/se.yml.dist"
+                "dist-file": "app/config/countries_parameters/dist/se.yml.dist",
+                "keep-outdated": true
             },
             {
                 "file": "app/config/countries_parameters/uk.yml",
-                "dist-file": "app/config/countries_parameters/dist/uk.yml.dist"
+                "dist-file": "app/config/countries_parameters/dist/uk.yml.dist",
+                "keep-outdated": true
             }
         ],
         "branch-alias": {

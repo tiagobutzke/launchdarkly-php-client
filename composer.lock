@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "dc5215799e4b4835cd6c0d44c24472bd",
+    "hash": "113fa706525a4161d92c40e881c058a2",
     "packages": [
         {
             "name": "99designs/phumbor",
