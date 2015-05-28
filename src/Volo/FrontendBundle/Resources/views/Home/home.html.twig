@@ -34,26 +34,7 @@
         </div>
     </div>
     <section class="home-section restaurants-home">
-        <div class="restaurants-home__logos">
-            <div class="restaurants-home__logos__logo">
-                <img alt="" class="b-lazy" data-src="{{ asset('img/logos/logo01.png') }}" src="{{ blazy_placeholder }}">
-            </div>
-            <div class="restaurants-home__logos__logo">
-                <img alt="" class="b-lazy" data-src="{{ asset('img/logos/logo02.png') }}" src="{{ blazy_placeholder }}">
-            </div>
-            <div class="restaurants-home__logos__logo">
-                <img alt="" class="b-lazy" data-src="{{ asset('img/logos/logo03.png') }}" src="{{ blazy_placeholder }}">
-            </div>
-            <div class="restaurants-home__logos__logo">
-                <img alt="" class="b-lazy" data-src="{{ asset('img/logos/logo04.png') }}" src="{{ blazy_placeholder }}">
-            </div>
-            <div class="restaurants-home__logos__logo">
-                <img alt="" class="b-lazy" data-src="{{ asset('img/logos/logo05.png') }}" src="{{ blazy_placeholder }}">
-            </div>
-            <div class="restaurants-home__logos__logo">
-                <img alt="" class="b-lazy" data-src="{{ asset('img/logos/logo01.png') }}" src="{{ blazy_placeholder }}">
-            </div>
-        </div>
+        {{ cms('homepage-restaurants') }}
     </section>
 
     <div class="titles">
@@ -155,79 +136,7 @@
     </div>
     <section class="home-section cities">
         <div class="cities__container">
-            <a href="{{ path('volo_location_search_vendors_by_city', {'cityUrlKey': 'berlin'}) }}" class="city">
-                <div class="city__container">
-                    <div class="city__name">
-                        <div>{{ 'Berlin'|trans }}</div>
-                        <div class="button city__called-action">{{ 'Browse restaurants'|trans }}</div>
-                    </div>
-                    <div class="flipper city__flipper">
-                        <figure class="flipper__front b-lazy" data-src="{{ asset('img/cities/berlin.jpg') }}"></figure>
-                        <figure class="flipper__back b-lazy" data-src="{{ asset('img/cities/berlin_food.jpg') }}"></figure>
-                    </div>
-                </div>
-            </a>
-            <a href="{{ path('volo_location_search_vendors_by_city', {'cityUrlKey': 'berlin'}) }}" class="city">
-                <div class="city__container">
-                    <div class="city__name">
-                        <div>{{ 'Frankfurt'|trans }}</div>
-                        <div class="button city__called-action">{{ 'Browse restaurants'|trans }}</div>
-                    </div>
-
-                    <div class="flipper city__flipper">
-                        <figure class="flipper__front b-lazy" data-src="{{ asset('img/cities/frankfurt.jpg') }}"></figure>
-                        <figure class="flipper__back b-lazy" data-src="{{ asset('img/cities/frankfurt_food.jpg') }}"></figure>
-                    </div>
-                </div>
-            </a>
-            <a href="{{ path('volo_location_search_vendors_by_city', {'cityUrlKey': 'berlin'}) }}" class="city">
-                <div class="city__container">
-                    <div class="city__name">
-                        <div>{{ 'Hamburg'|trans }}</div>
-                        <div class="button city__called-action">{{ 'Browse restaurants'|trans }}</div>
-                    </div>
-                    <div class="flipper city__flipper">
-                        <figure class="flipper__front b-lazy" data-src="{{ asset('img/cities/hamburg.jpg') }}"></figure>
-                        <figure class="flipper__back b-lazy" data-src="{{ asset('img/cities/hamburg_food.jpg') }}"></figure>
-                    </div>
-                </div>
-            </a>
-            <a href="{{ path('volo_location_search_vendors_by_city', {'cityUrlKey': 'berlin'}) }}" class="city">
-                <div class="city__container">
-                    <div class="city__name">
-                        <div>{{ 'München'|trans }}</div>
-                        <div class="button city__called-action">{{ 'Browse restaurants'|trans }}</div>
-                    </div>
-                    <div class="flipper city__flipper">
-                        <figure class="flipper__front b-lazy" data-src="{{ asset('img/cities/munchen.jpg') }}"></figure>
-                        <figure class="flipper__back b-lazy" data-src="{{ asset('img/cities/munchen_food.jpg') }}"></figure>
-                    </div>
-                </div>
-            </a>
-            <a href="{{ path('volo_location_search_vendors_by_city', {'cityUrlKey': 'berlin'}) }}" class="city">
-                <div class="city__container">
-                    <div class="city__name">
-                        <div>{{ 'Düsseldorf'|trans }}</div>
-                        <div class="button city__called-action">{{ 'Browse restaurants'|trans }}</div>
-                    </div>
-                    <div class="flipper city__flipper">
-                        <figure class="flipper__front b-lazy" data-src="{{ asset('img/cities/dusseldorf.jpg') }}"></figure>
-                        <figure class="flipper__back b-lazy" data-src="{{ asset('img/cities/dusseldorf_food.jpg') }}"></figure>
-                    </div>
-                </div>
-            </a>
-            <a href="{{ path('volo_location_search_vendors_by_city', {'cityUrlKey': 'berlin'}) }}" class="city">
-                <div class="city__container">
-                    <div class="city__name">
-                        <div>{{ 'Köln'|trans }}</div>
-                        <div class="button city__called-action">{{ 'Browse restaurants'|trans }}</div>
-                    </div>
-                    <div class="flipper city__flipper">
-                        <figure class="flipper__front b-lazy" data-src="{{ asset('img/cities/koln.jpg') }}"></figure>
-                        <figure class="flipper__back b-lazy" data-src="{{ asset('img/cities/koln_food.jpg') }}"></figure>
-                    </div>
-                </div>
-            </a>
+            {{ cms('homepage-cities') }}
         </div>
     </section>
 
@@ -267,10 +176,4 @@
             </div>
         </div>
     </section>
-
-    <div style="text-align: center">
-        {% for city in cities %}
-            <a href="{{ path('volo_location_search_vendors_by_city', {'cityUrlKey': city.urlKey}) }}">{{ city.name|e }}</a>
-        {% endfor %}
-    </div>
 {% endblock %}
