@@ -88,18 +88,6 @@ Add a local alias:
 echo "127.0.0.1 de.volo.dev" >> /etc/hosts
 ```
 
-Run composer install:
-
-```
-$ cd /path/to/volo-frontend && composer install
-```
-
-Build your assets:
-
-```
-$ cd /path/to/volo-frontend && grunt
-```
-
 Go to http://de.volo.dev/ in your browser.
 
 Parameters
