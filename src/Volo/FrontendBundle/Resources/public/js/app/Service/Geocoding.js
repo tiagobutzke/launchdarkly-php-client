@@ -29,11 +29,11 @@ var GeocodingService = function(locale) {
         });
 
         google.maps.event.addDomListener($input[0], 'blur', function() {
-            $input.trigger('autocomplete:place_changed');
-
             google.maps.event.trigger(this, 'keydown', {
                 keyCode: 9
             });
+
+            $input.trigger('autocomplete:place_changed');
         });
     };
 
@@ -44,8 +44,7 @@ var GeocodingService = function(locale) {
         var deferred = $.Deferred();
 
         _getSearchPlace($input, autocomplete)
-            .fail(deferred.reject)
-            .then(_getLocationMeta)
+            .then(_getLocationMeta, deferred.reject)
             .done(deferred.resolve);
 
         return deferred;
@@ -74,7 +73,6 @@ var GeocodingService = function(locale) {
             if (status == google.maps.GeocoderStatus.OK) {
                 $(".pac-container .pac-item:first").addClass("pac-selected");
                 $(".pac-container").css("display","none");
-                $input.val(results[0].formatted_address);
 
                 results[0].place = {
                     geometry: results[0].geometry
@@ -116,7 +114,7 @@ var GeocodingService = function(locale) {
     };
 
     var _hasPostalCode = function(meta) {
-        return meta.postalCode.value !== null;
+        return !!meta.postalCode.value;
     };
 
     var _enhanceLocationWithGeocode = function(meta) {

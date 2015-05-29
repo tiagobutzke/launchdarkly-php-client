@@ -22,11 +22,11 @@ var HomeSearchView = Backbone.View.extend({
 
     _initEvents: function($input) {
         $input.on('autocomplete:place_changed autocomplete:tab_pressed', function() {
-            this._getNewLocation($input).fail(this._notFound, this);
+            this._getNewLocation($input).fail(this._notFound);
         }.bind(this));
 
         $input.on('autocomplete:submit_pressed', function() {
-            this._getNewLocation($input).done(this._search, this);
+            this._getNewLocation($input).done(_.bind(this._search, this));
         }.bind(this));
     },
 
@@ -35,7 +35,7 @@ var HomeSearchView = Backbone.View.extend({
     },
 
     _search: function(data) {
-        if (!!data.postcode) {
+        if (!!data && data.postcode) {
             Turbolinks.visit(Routing.generate('volo_location_search_vendors_by_gps', {
                 city: data.city,
                 longitude: data.lng,
@@ -49,7 +49,7 @@ var HomeSearchView = Backbone.View.extend({
 
     _initSubmitButton: function($input) {
         $('#postal_index_form_submit').click(function() {
-            this._getNewLocation($input).then(this._search, this);
+            this._getNewLocation($input).done(_.bind(this._search, this));
         }.bind(this));
     },
 
@@ -60,6 +60,7 @@ var HomeSearchView = Backbone.View.extend({
             .fail(deferred.reject, this)
             .done(function(locationMeta) {
                 var data = this._getDataFromMeta(locationMeta);
+                $input.val(data.formattedAddress);
 
                 deferred.resolve(data);
             }.bind(this));
@@ -79,7 +80,7 @@ var HomeSearchView = Backbone.View.extend({
             postcode: locationMeta.postalCode.value,
             lat: locationMeta.lat,
             lng: locationMeta.lng,
-            city: locationMeta.city,
+            city: locationMeta.city
         };
     }
 });
