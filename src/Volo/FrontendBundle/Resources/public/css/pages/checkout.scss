@@ -184,6 +184,7 @@
 .checkout__summary {
   @extend .checkout__item;
   padding: 0;
+  overflow:auto;
 }
 
 .summary__restaurant-name {

@@ -28,13 +28,15 @@ VOLO.initCartModel = function (jsonCart) {
 };
 
 VOLO.initCartViews = function (cartModel) {
+    var $header = $('.header');
+    
     if (_.isObject(VOLO.menu)) {
         VOLO.menu.remove();
     }
     VOLO.menu = new MenuView({
         el: '.menu__main',
         cartModel: cartModel,
-        $header: $('.header')
+        $header: $header
     });
 
     if (_.isObject(VOLO.cartView)) {
@@ -42,7 +44,10 @@ VOLO.initCartViews = function (cartModel) {
     }
     VOLO.cartView = new CartView({
         el: '.desktop-cart',
-        model: cartModel
+        model: cartModel,
+        $header: $header,
+        $menuMain: $('.menu__main'),
+        $window: $(window)
     });
 };
 

@@ -1,0 +1,10 @@
+<div class="b-lazy {{ type }}-banner {{ aspectRatioClass }}"
+    {% for transformer in get_thumbor_configuration() %}
+        {% set imageName = vendorCode ~ '-' ~ type ~ '.jpg' %}
+        {% set normalImage = thumbor(asset(imageName, 'cdn_s3'), transformer.normal.key) %}
+        {# @TODO: check if the retina key exists #}
+        {% set retinaImage = thumbor(asset(imageName, 'cdn_s3'), transformer.retina.key) %}
+
+        data-src-{{ transformer.normal.key }}="{{ normalImage }}|{{ retinaImage }}"
+    {% endfor %}>
+</div>
