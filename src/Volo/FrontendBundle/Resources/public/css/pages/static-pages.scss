@@ -1,11 +1,7 @@
 .static-pages-wrapper {
   @include respond-from("screen-md") {
     @include fluid-container();
-  }
-}
-.static-pages-wrapper {
-  @include respond-from("screen-md") {
-    @include fluid-container();
+    @include clearfix();
   }
 }
 
@@ -13,7 +9,6 @@
   margin-top: $header-height-small;
   @include respond-from("screen-md") {
     @include make-row();
-    margin-top: $space-md * 2;
   }
 }
 
@@ -29,7 +24,6 @@
   }
 
   h2 {
-    font-family: $bold-font-family;
     font-size: 0.875em;
     margin: 0;
     padding: 0;
