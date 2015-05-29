@@ -1,3 +1,18 @@
+var CartToppingView = Backbone.View.extend({
+    tagName: 'span',
+    className: 'summary__item__extra',
+
+    initialize: function() {
+        this.template = _.template($('#template-cart-summary-extra-item').html());
+    },
+
+    render: function() {
+        this.$el.html(this.template(this.model.toJSON()));
+
+        return this;
+    }
+});
+
 var CartItemView = Backbone.View.extend({
     tagName: 'tr',
     initialize: function() {
@@ -6,9 +21,22 @@ var CartItemView = Backbone.View.extend({
     },
 
     render: function() {
-        this.$el.html(this.template(this.model.attributes));
-        
+        this.$el.html(this.template(this.model.toJSON()));
+        this._renderToppingViews(this.model.get('toppings'));
+
         return this;
+    },
+
+    _renderToppingViews: function(toppings) {
+        _.each(toppings, this._renderToppingView, this);
+    },
+
+    _renderToppingView: function(topping) {
+        var view = new CartToppingView({
+            model: new ToppingModel(topping)
+        });
+
+        this.$('.summary__extra__items').append(view.render().el);
     }
 });
 

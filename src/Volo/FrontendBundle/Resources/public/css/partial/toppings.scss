@@ -1,0 +1,36 @@
+.topping-modal {
+  .modal-content {
+    border-radius: 0;
+  }
+
+  .topping {
+    border-top: 1px solid $base-border-color;
+    border-bottom: 1px solid $base-border-color;
+
+    .topping__header {
+      cursor: pointer;
+      &.valid {
+        background-color: $brand-success;
+      }
+      &.invalid {
+        background-color: $error-msg-color-bg;
+      }
+    }
+  }
+
+  .topping__options {
+    display: none;
+    cursor: pointer;
+
+    .selected {
+      background-color: $brand-success;
+    }
+  }
+
+  .toppings-add__to__cart {
+    &.disabled {
+      opacity: 0.5;
+      cursor: no-drop;
+    }
+  }
+}

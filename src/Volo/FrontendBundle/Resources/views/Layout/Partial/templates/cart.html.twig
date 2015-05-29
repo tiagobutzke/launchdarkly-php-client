@@ -1,15 +1,15 @@
+{# cart summary extra item #}
+<script type="text/template" id="template-cart-summary-extra-item">
++ <%- name %>
+</script>
+
 {# cart item #}
 <script type="text/template" id="template-cart-item">
     <td class="summary__item__quantity"><%= VOLO.formatNumber(quantity) %></td>
     <td class="summary__item__sign">x</td>
     <td class="summary__item__name">
         <%- name %>
-        <span class="summary__item__extra">
-            + White wine butter sauce
-        </span>
-        <span class="summary__item__extra">
-           + Angel Hair pasta
-        </span>
+        <span class="summary__extra__items"></span>
     </td>
     <td class="summary__item__price"><%= VOLO.formatCurrency(total_price) %></td>
 </script>

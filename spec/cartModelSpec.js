@@ -145,7 +145,8 @@ describe("A cart", function() {
                 "toppings": [
                     {
                         "id": 10,
-                        "name": "topping 1"
+                        "name": "topping 1",
+                        options: []
                     }
                 ]
             }]
@@ -156,6 +157,7 @@ describe("A cart", function() {
         secondProductToAdd.set('quantity', 5);
 
         cart.getCart(vendor_id).addItem(firstSelectedProduct.toJSON(), 3);
+
 
         setTimeout(function() {
             expect(cart.vendorCart.get(vendor_id).products.length).toBe(1);
@@ -200,7 +202,8 @@ describe("A cart", function() {
                 "toppings": [
                     {
                         "id": 10,
-                        "name": "topping 1"
+                        "name": "topping 1",
+                        options: [{id: 1, selected: true, name: 'option 1'}]
                     }
                 ]
             }]
@@ -210,7 +213,7 @@ describe("A cart", function() {
         expect(cart.vendorCart.get(vendor_id).findSimilarProduct(product).toJSON()).toEqual({
             product_variation_id: 859,
             quantity: 3,
-            toppings: [{id: 10, name: 'topping 1'}],
+            toppings: [{id: 1, type: 'full', name: 'option 1'}],
             choices: [{id: 1, name: 'choice 1'}],
             name: 'Quick Chicken',
             variation_name: '',
@@ -220,6 +223,143 @@ describe("A cart", function() {
             group_order_user_code: null
         });
     });
+
+    it('does not find same product with different topping', function() {
+        var product = {
+            "is_half_type_available": false,
+            "id": 854,
+            "name": "Quick Chicken",
+            "code": null,
+            "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
+            "file_path": null,
+            "half_type": null,
+            "product_variations": [{
+                "id": 859,
+                "code": null,
+                "name": null,
+                "price": 7.9,
+                "price_before_discount": null,
+                "container_price": 0,
+                "choices": [
+                    {
+                        "id": 1,
+                        "name": "choice 1"
+                    }
+                ],
+                "toppings": [
+                    {
+                        "id": 10,
+                        "name": "topping 1",
+                        options: [{id: 1, selected: true, name: 'option 1'}]
+                    }
+                ]
+            }]
+        };
+
+        var differentProduct = _.cloneDeep(product);
+        differentProduct.product_variations[0].toppings = [{
+            "id": 12,
+            "name": "topping 2",
+            options: [{id: 1, selected: true, name: 'option 1'}]
+        }];
+
+        cart.getCart(vendor_id).addItem(product, 3);
+
+        expect(cart.vendorCart.get(vendor_id).findSimilarProduct(differentProduct)).toEqual(undefined);
+    });
+
+    it('does not find same product without topping', function() {
+        var product = {
+            "is_half_type_available": false,
+            "id": 854,
+            "name": "Quick Chicken",
+            "code": null,
+            "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
+            "file_path": null,
+            "half_type": null,
+            "product_variations": [{
+                "id": 859,
+                "code": null,
+                "name": null,
+                "price": 7.9,
+                "price_before_discount": null,
+                "container_price": 0,
+                "choices": [
+                    {
+                        "id": 1,
+                        "name": "choice 1"
+                    }
+                ],
+                "toppings": [
+                    {
+                        "id": 10,
+                        "name": "topping 1",
+                        options: [{id: 1, selected: true, name: 'option 1'}]
+                    }
+                ]
+            }]
+        };
+
+        var differentProduct = _.cloneDeep(product);
+        differentProduct.product_variations[0].toppings = [];
+
+        cart.getCart(vendor_id).addItem(product, 3);
+
+        expect(cart.vendorCart.get(vendor_id).findSimilarProduct(differentProduct)).toEqual(undefined);
+    });
+
+    it('does not find same product with some additionaltopping', function() {
+        var product = {
+            "is_half_type_available": false,
+            "id": 854,
+            "name": "Quick Chicken",
+            "code": null,
+            "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
+            "file_path": null,
+            "half_type": null,
+            "product_variations": [{
+                "id": 859,
+                "code": null,
+                "name": null,
+                "price": 7.9,
+                "price_before_discount": null,
+                "container_price": 0,
+                "choices": [
+                    {
+                        "id": 1,
+                        "name": "choice 1"
+                    }
+                ],
+                "toppings": [
+                    {
+                        "id": 10,
+                        "name": "topping 1",
+                        options: [{id: 1, selected: true, name: 'option 1'}]
+                    },
+                    {
+                        "id": 11,
+                        "name": "topping 1",
+                        options: [{id: 1, selected: true, name: 'option 1'}]
+                    }
+                ]
+            }]
+        };
+
+        var differentProduct = _.cloneDeep(product);
+        differentProduct.product_variations[0].toppings = [
+            {
+                "id": 10,
+                "name": "topping 1",
+                options: [{id: 1, selected: true, name: 'option 1'}]
+            }
+        ];
+
+        cart.getCart(vendor_id).addItem(product, 3);
+
+        expect(cart.vendorCart.get(vendor_id).findSimilarProduct(differentProduct)).toEqual(undefined);
+    });
+
+
 
     it('does not find different product', function() {
         var product = {
@@ -246,7 +386,8 @@ describe("A cart", function() {
                 "toppings": [
                     {
                         "id": 10,
-                        "name": "topping 1"
+                        "name": "topping 1",
+                        options: []
                     }
                 ]
             }]
