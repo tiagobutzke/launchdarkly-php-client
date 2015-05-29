@@ -12,6 +12,10 @@
                 <div class="modal-footer">
                     <a class="toppings-add__to__cart button">add to cart</a>
                 </div>
+                <div class="modal-error-message">
+                    <span class="icon-attention"></span> {{ 'Please make the requested selections.'|trans }}
+                </div>
+                <div class="modal-close-button"></div>
             </div>
         </div>
     </div>
@@ -19,11 +23,49 @@
 
 {# topping fragment #}
 <script type="text/template" id="template-topping">
-    <div class="topping__header"><%- name %></div>
+    <div class="topping__header">
+        <div class="topping__header__name">
+            <%- name %>
+        </div>
+        <div class="topping__header__info">
+            {#header comment#}
+            <div class="topping__header__arrow icon-down-open-big"></div>
+        </div>
+    </div>
     <div class="topping__options"></div>
 </script>
 
 {#topping option fragment #}
 <script type="text/template" id="template-topping-option">
-    <%- name %>
+    <div class="topping-option__button"></div>
+    <div class="topping-option__name"><%- name %></div>
+</script>
+
+{#topping option header comment fragment #}
+<script type="text/template" id="template-topping-comment">
+    <div class="topping__comment__help-text">
+        <% if (quantity_minimum === 0 ) { %>
+            <% if (quantity_maximum > 1 ) { %>
+                {{ 'Select up to'|trans }} <%- quantity_maximum %> ({{ 'optional'|trans }})
+            <% } else { %>
+                {{ 'optional'|trans|capitalize }}
+            <% } %>
+        <% } else { %>
+            <% if (quantity_maximum === 1 ) { %>
+                {{ 'select'|trans|capitalize }} 1
+            <% } else { %>
+                {{ 'Select up to'|trans }} <%- quantity_maximum %>
+            <% } %>
+        <% } %>
+    </div>
+    <ul class="topping__comment__selected_items_list">
+        <% _.each(selectedOptions, function(option) { %>
+        <li>
+            <%= option.name %>
+            <% if (option.price != 0 ) { %>
+            (<%= VOLO.formatCurrency(option.price) %>)
+            <% } %>
+        </li>
+        <% }); %>
+    </ul>
 </script>
