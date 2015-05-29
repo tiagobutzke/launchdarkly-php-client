@@ -6,9 +6,9 @@
 }
 
 .static-pages {
-  margin-top: $header-height-small;
   @include respond-from("screen-md") {
     @include make-row();
+    margin-top: $space-md * 2;
   }
 }
 
