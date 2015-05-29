@@ -16,8 +16,7 @@ class VendorController extends Controller
      *      "/restaurant/{code}/{urlKey}",
      *      name="vendor",
      *      requirements={
-     *          "code": "([A-Za-z][A-Za-z0-9]{3})",
-     *          "urlKey": "[a-z-]+"
+     *          "code": "([A-Za-z][A-Za-z0-9]{3})"
      *      }
      * )
      * @Template()
