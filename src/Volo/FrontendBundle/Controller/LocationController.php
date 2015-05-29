@@ -20,7 +20,7 @@ class LocationController extends Controller
      *      requirements={"cityUrlKey"="[a-z-]+"}
      * )
      * @Route(
-     *      "/search/lat/{latitude}/lng/{longitude}/plz/{postcode}/city/{city}",
+     *      "/restaurants/lat/{latitude}/lng/{longitude}/plz/{postcode}/city/{city}",
      *      name="volo_location_search_vendors_by_gps",
      *      options={"expose"=true},
      *      requirements={
