@@ -1,5 +1,17 @@
 {% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
 
+{% block content_wrapper_class %}menu-bg{% endblock content_wrapper_class %}
+
 {% block content %}
-    {{ element.content|raw }}
+    <div class="hero-banner-wrapper">
+        <h1>{{ 'Static page title'|trans }}</h1>
+        {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image.html.twig' with {type: 'hero', 'vendorCode' : 's7zm'} %}
+    </div>
+    <div class="static-pages-wrapper">
+        <div class="static-pages">
+            <div class="static-pages__main">
+                {{ element.content|raw }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
