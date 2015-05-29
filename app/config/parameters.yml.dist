@@ -29,7 +29,7 @@ parameters:
 
     volo_frontend_configuration_cache_life_time: 1200
 
-    session_handler_redis_save_path: "tcp://127.0.0.1:6379?prefix=%kernel.environment%_%country_code%"
+    session_handler_redis_save_path: "tcp://%redis_sessions_host%:%redis_sessions_port%?prefix=%kernel.environment%_%country_code%"
 
     volo_frontend.thumbor_base_url: '/app_%kernel.environment%.php/thumbor/fake'
     volo_frontend.thumbor_secret: ~
