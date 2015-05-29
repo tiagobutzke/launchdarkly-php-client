@@ -13,9 +13,9 @@
   @include appear-from("screen-sm")
 }
 .restaurants__location {
-  @include make-sm-column(6);
-  @include make-md-column(4);
-  @include make-lg-column(3);
+  @include make-sm-column(10);
+  @include make-md-column(6);
+  @include make-lg-column(5);
   @extend .pull-right;
   text-align: right;
   height: 84px;

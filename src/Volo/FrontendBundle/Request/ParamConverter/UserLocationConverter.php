@@ -10,7 +10,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Foodpanda\ApiSdk\Entity\Cart\CityLocation;
 use Foodpanda\ApiSdk\Entity\Cart\GpsLocation;
 use Foodpanda\ApiSdk\Entity\Cart\AreaLocation;
+use Foodpanda\ApiSdk\Entity\City\City;
 use Foodpanda\ApiSdk\Provider\CityProvider;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Volo\FrontendBundle\Service\CustomerLocationService;
 
 class UserLocationConverter implements ParamConverterInterface
@@ -40,31 +42,58 @@ class UserLocationConverter implements ParamConverterInterface
      */
     public function apply(Request $request, ParamConverter $configuration)
     {
-        $object = null;
+        $convertedParameter = null;
+        $formattedLocation = [];
 
-        $cityCode = $request->attributes->get('cityUrlKey', false);
+        $cityUrlKey = $request->attributes->get('cityUrlKey', false);
         $areaId = $request->attributes->get('area_id', false);
         $lat = $request->attributes->get('latitude', false);
         $lng = $request->attributes->get('longitude', false);
 
         switch(true) {
-            case $cityCode:
-                $object = $this->createParameterByCityCode($cityCode);
+            case $cityUrlKey:
+                $city = $this->findCityByCode($cityUrlKey);
+                if ($city === false) {
+                    throw new NotFoundHttpException(sprintf('City with the url key "%s" is not found', $cityUrlKey));
+                }
+
+                $convertedParameter = new CityLocation($city->getId());
+                $formattedLocation = $this->createFormattedLocation(
+                    $convertedParameter->getLocationType(),
+                    $city->getName(),
+                    null,
+                    null
+                );
                 break;
             case $areaId:
-                $object = new AreaLocation($areaId);
+                $convertedParameter = new AreaLocation($areaId);
                 break;
             case $lat && $lng:
-                $object = new GpsLocation($lat, $lng);
+                $convertedParameter = new GpsLocation($lat, $lng);
 
-                $this->saveLocationToCache($request);
+                $gpsLocation = $this->customerLocationService->create(
+                    $request->get(CustomerLocationService::KEY_LAT),
+                    $request->get(CustomerLocationService::KEY_LNG),
+                    $request->get(CustomerLocationService::KEY_PLZ),
+                    $request->get(CustomerLocationService::KEY_CITY),
+                    $request->get(CustomerLocationService::KEY_ADDRESS)
+                );
+
+                $this->customerLocationService->set($request->getSession()->getId(), $gpsLocation);
+                $formattedLocation = $this->createFormattedLocation(
+                    $convertedParameter->getLocationType(),
+                    $gpsLocation[CustomerLocationService::KEY_CITY],
+                    $gpsLocation[CustomerLocationService::KEY_PLZ],
+                    $gpsLocation[CustomerLocationService::KEY_ADDRESS]
+                );
                 break;
             default:
                 $message = 'Please supply keys `city_id` or `area_id` or `latitude` and `longitude`.';
                 throw new BadRequestHttpException($message);
         }
 
-        $request->attributes->set('location', $object);
+        $request->attributes->set('location', $convertedParameter);
+        $request->attributes->set('formattedLocation', $formattedLocation);
 
         return true;
     }
@@ -78,38 +107,35 @@ class UserLocationConverter implements ParamConverterInterface
     }
 
     /**
-     * @param string $cityCode
+     * @param string $cityUrlKey
      *
-     * @return CityLocation
+     * @return City
      */
-    public function createParameterByCityCode($cityCode)
+    protected function findCityByCode($cityUrlKey)
     {
-        $object = null;
+         $filtered = $this->cityProvider->findAll()->getItems()->filter(function($element) use ($cityUrlKey) {
+            /** @var City $element */
+            return $element->getUrlKey() === $cityUrlKey;
+        });
 
-        $items = $this->cityProvider->findAll()->getItems();
-        foreach ($items as $item) {
-            if ($item->getUrlKey() === $cityCode) {
-                $object = new CityLocation($item->getId());
-                break;
-            }
-        }
-
-        return $object;
+        return $filtered->first();
     }
 
     /**
-     * @param Request $request
+     * @param string $type
+     * @param string $city
+     * @param string $postcode
+     * @param string $address
+     *
+     * @return array
      */
-    public function saveLocationToCache(Request $request)
+    protected function createFormattedLocation($type, $city, $postcode, $address)
     {
-        $sessionId = $request->getSession()->getId();
-
-        $location = $this->customerLocationService->create(
-            $request->get(CustomerLocationService::KEY_LAT),
-            $request->get(CustomerLocationService::KEY_LNG),
-            $request->get(CustomerLocationService::KEY_PLZ)
-        );
-
-        $this->customerLocationService->set($sessionId, $location);
+        return [
+            'type' => $type,
+            'city' => $city,
+            'postcode' => $postcode,
+            'address' => $address,
+        ];
     }
 }

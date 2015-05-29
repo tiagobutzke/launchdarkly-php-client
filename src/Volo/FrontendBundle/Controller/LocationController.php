@@ -20,7 +20,7 @@ class LocationController extends Controller
      *      requirements={"cityUrlKey"="[a-z-]+"}
      * )
      * @Route(
-     *      "/restaurants/lat/{latitude}/lng/{longitude}/plz/{postcode}/city/{city}",
+     *      "/restaurants/lat/{latitude}/lng/{longitude}/plz/{postcode}/city/{city}/address/{address}",
      *      name="volo_location_search_vendors_by_gps",
      *      options={"expose"=true},
      *      requirements={
@@ -34,18 +34,21 @@ class LocationController extends Controller
      * @ParamConverter("location", converter="user_location_converter")
      *
      * @param AbstractLocation $location
+     * @param array $formattedLocation
      *
      * @return array
      */
-    public function locationAction(AbstractLocation $location)
+    public function locationAction(AbstractLocation $location, array $formattedLocation)
     {
         $vendors = $this->get('volo_frontend.provider.vendor')->findVendorsByLocation($location);
 
         list($openVendors, $closedVendorsWithPreorder) = $this->filterOpenClosedVendors($vendors->getItems());
 
         return [
-            'openVendors'   => $openVendors,
-            'closedVendors' => $closedVendorsWithPreorder
+            'gpsSearch' => $location->getLocationType() === 'polygon',
+            'formattedLocation' => $formattedLocation,
+            'openVendors' => $openVendors,
+            'closedVendors' => $closedVendorsWithPreorder,
         ];
     }
 
