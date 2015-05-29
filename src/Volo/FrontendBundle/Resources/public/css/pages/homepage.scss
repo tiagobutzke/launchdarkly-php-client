@@ -67,19 +67,6 @@
 
 // -------------------------- TEASER START --------------------------
 
-.teaser__home-section {
-  margin-bottom: 10px;
-  @include respond-from('screen-sm') {
-    margin-bottom: 20px;
-  }
-  @include respond-from('screen-md') {
-    margin-bottom: 30px;
-  }
-  @include respond-from('screen-lg') {
-    margin-bottom: 40px;
-  }
-}
-
 .teaser {
   @include make-row();
   background-color: $color-text-primary;
@@ -131,17 +118,6 @@
   }
 }
 
-.teaser__white-gradient {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 20%;
-  background-repeat: repeat-x;
-  background-position: left bottom;
-  background-size: auto 100%;
-}
-
 .teaser__form {
   @include make-xs-column(12, 0);
   text-align: center;
@@ -171,10 +147,9 @@
   left: 0;
   text-align: center;
   color: white;
-  bottom: 5%;
+  bottom: 3%;
   font-size: 1.5em;
   @include respond-from('screen-sm') {
-    bottom: 8%;
     font-size: 1.8em;
   }
 }
@@ -331,6 +306,7 @@
 .city__container {
   @include aspect-ratio(112, 46);
   display: block;
+  -webkit-perspective: 800px;
   perspective: 800px;
   font-family: $cta-font-family;
 }
@@ -359,8 +335,8 @@
   padding: 5% 10% 4.5%;
   height: auto;
   @include respond-from('screen-sm') {
-    font-size: 0.6em;
-    line-height: 0.6em;
+    font-size: 0.7em;
+    line-height: 0.7em;
   }
 }
 // -------------------------- CITIES END --------------------------
