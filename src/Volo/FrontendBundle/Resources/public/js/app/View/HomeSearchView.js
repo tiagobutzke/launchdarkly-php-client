@@ -37,6 +37,7 @@ var HomeSearchView = Backbone.View.extend({
     _search: function(data) {
         if (!!data.postcode) {
             Turbolinks.visit(Routing.generate('volo_location_search_vendors_by_gps', {
+                city: data.city,
                 longitude: data.lng,
                 latitude: data.lat,
                 postcode: data.postcode
@@ -77,7 +78,8 @@ var HomeSearchView = Backbone.View.extend({
             formattedAddress: formattedAddress,
             postcode: locationMeta.postalCode.value,
             lat: locationMeta.lat,
-            lng: locationMeta.lng
+            lng: locationMeta.lng,
+            city: locationMeta.city,
         };
     }
 });

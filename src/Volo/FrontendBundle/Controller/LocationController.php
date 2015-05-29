@@ -9,8 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Request;
-use Volo\FrontendBundle\Service\CustomerLocationService;
 use Foodpanda\ApiSdk\Entity\Vendor\VendorsCollection;
 
 class LocationController extends Controller
@@ -22,7 +20,7 @@ class LocationController extends Controller
      *      requirements={"cityUrlKey"="[a-z-]+"}
      * )
      * @Route(
-     *      "/search/lat/{latitude}/lng/{longitude}/plz/{postcode}",
+     *      "/search/lat/{latitude}/lng/{longitude}/plz/{postcode}/city/{city}",
      *      name="volo_location_search_vendors_by_gps",
      *      options={"expose"=true},
      *      requirements={

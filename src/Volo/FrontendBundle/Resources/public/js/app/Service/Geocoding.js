@@ -103,8 +103,9 @@ var GeocodingService = function(locale) {
     };
 
     var _getLocationMetaFromGeocode = function(place) {
-        var result = {
+        return {
             formattedAddress: place.formatted_address,
+            city: _findLocalityInAddressComponents(place.address_components),
             postalCode: {
                 value: _findPostalCodeInAddressComponents(place.address_components),
                 isReversed: false
@@ -112,8 +113,6 @@ var GeocodingService = function(locale) {
             lat: place.geometry.location.A,
             lng: place.geometry.location.F
         };
-
-        return result;
     };
 
     var _hasPostalCode = function(meta) {
@@ -150,14 +149,11 @@ var GeocodingService = function(locale) {
     };
 
     var _findPostalCodeInAddressComponents = function (addressComponents) {
-        var postalCode = null;
-        $.each(addressComponents, function (index, value) {
-            if (value.types[0] !== undefined && value.types[0] === 'postal_code') {
-                postalCode = value.short_name;
-            }
-        });
+        return _.pluck(_.where(addressComponents, {'types': ['postal_code']}), 'short_name')[0];
+    };
 
-        return postalCode;
+    var _findLocalityInAddressComponents = function (addressComponents) {
+        return _.pluck(_.where(addressComponents, {'types': ['locality']}), 'long_name')[0];
     };
 
     return {
