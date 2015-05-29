@@ -21,16 +21,18 @@
             <div class="desktop-cart__time">
                 <div class="desktop-cart__time__field-date">
                     <select id="order-delivery-date">
-                        <option selected="selected" value="2015-05-14">Today, May 14</option>
-                        <option value="2015-05-15">Tomorrow, May 15</option>
-                        <option value="2015-05-16">Friday, May 16</option>
+                        {% set nextThreeOpeningDays = getDeliveryDays(vendor.schedules, 3) %}
+                        {% for openingDay in nextThreeOpeningDays %}
+                            <option value="{{ openingDay.format("Y-m-d") }}"
+                                data-delivery-hours='{{ getClosingHoursRange(vendor.schedules, openingDay)|json_encode|raw }}'>
+                                    {{ openingDay|formatOpeningDay }}
+                            </option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="desktop-cart__time__field-time">
+                    {# @TODO: generate the following select based on the selection above #}
                     <select id="order-delivery-time">
-                        <option selected="selected" value="17:00">17:00 - 18:00</option>
-                        <option value="18:00">18:00 - 19:00</option>
-                        <option value="19:00">19:00 - 20:00</option>
                     </select>
                 </div>
             </div>
@@ -49,6 +51,9 @@
                         <td colspan="4" class="summary__item__empty"></td>
                     </tr>
                 </table>
+            </div>
+            <div class="desktop-cart__order__subtotal__container">
+
             </div>
         </div>
         <div class="desktop-cart__footer">
