@@ -3,10 +3,6 @@ parameters:
     country_code: de
     environment: development
 
-    # to be removed once region-wide cluster are in use
-    redis_host: 127.0.0.1
-    redis_port: 6379
-
     redis_cache_host: 127.0.0.1
     redis_cache_port: 6379
 
