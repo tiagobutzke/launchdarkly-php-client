@@ -23,9 +23,7 @@
 
         {% set config = get_configuration() %}
         {% set userLocale = app.request.locale %}
-        $(document).ready(function () {
-            VOLO.initIntl('{{ userLocale }}'.replace('_', '-'), VOLO.configuration.locale.replace('_', '-'), '{{ config.currency.currency_symbol_iso }}');
-        });
+        VOLO.initIntl('{{ userLocale }}'.replace('_', '-'), VOLO.configuration.locale.replace('_', '-'), '{{ config.currency.currency_symbol_iso }}');
     </script>
 
 {% endblock %}

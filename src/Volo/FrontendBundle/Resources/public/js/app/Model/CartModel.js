@@ -48,13 +48,10 @@ var VendorCartModel = Backbone.Model.extend({
         this.products = new CartProductCollection();
         this._xhr = null;
         this._lastUpdate = Date.now();
-
-        this.listenTo(this, 'change:orderTime', this._updateCart, this);
-        this.listenTo(this.products, 'change', this._updateCart, this);
-        this.listenTo(this.products, 'products:add', this._updateCart, this);
     },
 
     _updateCart: function() {
+        console.log('CartModel._updateCart ', this.cid);
         this.trigger('cart:dirty');
         this._lastUpdate = Date.now();
 
@@ -86,6 +83,7 @@ var VendorCartModel = Backbone.Model.extend({
 
     addItem: function(newProduct, quantity) {
         newProduct.product_variations[0].toppings = this.getSelectedToppingsFromProduct(newProduct);
+        console.log('CartModel.addItem ', this.cid);
         var foundProduct = this.findSimilarProduct(newProduct);
         if (_.isObject(foundProduct)) {
             foundProduct.set('quantity', parseInt(foundProduct.get('quantity') + quantity), 10);
@@ -100,8 +98,8 @@ var VendorCartModel = Backbone.Model.extend({
                 choices: _.cloneDeep(productVariation.choices),
                 name: newProduct.name
             })).toJSON());
-            this.products.trigger('products:add');
         }
+        this._updateCart();
     },
 
     getSelectedToppingsFromProduct: function(product) {

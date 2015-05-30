@@ -10,20 +10,6 @@
         var VOLO = VOLO || {};
         VOLO.jsonCart = {{ cart|json_encode|raw }};
     </script>
-
-    <script data-turbolinks-eval=false>
-        $(document).ready(function () {
-            var cartModel = VOLO.initCartModel(VOLO.jsonCart);
-            VOLO.initCheckoutViews(cartModel);
-            if (_.isObject(window.Intl)) {
-                try {
-                    new Intl.NumberFormat(VOLO.configuration.locale);
-                    VOLO.checkoutView.render();
-                } catch (err) {
-                }
-            }
-        });
-    </script>
 {% endblock footer_scripts %}
 
 {% block content %}

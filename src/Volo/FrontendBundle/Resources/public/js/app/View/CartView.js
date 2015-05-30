@@ -42,6 +42,7 @@ var CartItemView = Backbone.View.extend({
 
 var CartView = Backbone.View.extend({
     initialize: function (options) {
+        console.log('CartView.initialize ', this.cid);
         _.bindAll(this, 'renderNewItem', 'renderSubTotal', 'disableCart', 'enableCart', 'initListener', '_updateCartHeight');
 
         this.subViews = [];
@@ -87,14 +88,16 @@ var CartView = Backbone.View.extend({
         'scroll .checkout__summary' : '_updateCartHeight'
     },
 
-    remove: function() {
+    unbind: function() {
         // unbinding cart sticking behaviour
         this.stickOnTopCart.remove();
         // unbinding cart height resize behaviour
         this.$window.off('resize', this._updateCartHeight).off('scroll', this._updateCartHeight);
 
+        _.invoke(this.subViews, 'unbind');
         _.invoke(this.subViews, 'remove');
-        Backbone.View.prototype.remove.apply(this, arguments);
+        this.stopListening();
+        this.undelegateEvents();
         this.domObjects = {};
     },
 
@@ -103,10 +106,10 @@ var CartView = Backbone.View.extend({
         this.listenTo(vendorCart, 'cart:dirty', this.disableCart, this);
         this.listenTo(vendorCart, 'cart:ready', this.enableCart, this);
         this.listenTo(vendorCart, 'change', this.renderSubTotal);
-        this.listenTo(vendorCart, 'change', this.renderProducts, this);
         this.listenTo(vendorCart, 'change:orderTime', this.renderTimePicker, this);
-        this.listenTo(vendorCart.products, 'change', this.renderProducts, this);
-        this.listenTo(vendorCart.products, 'add', this.renderNewItem, this);
+        this.listenTo(vendorCart.products, 'update', this.renderProducts, this);
+        this.listenTo(this.model, 'change:orderTime', this.model._updateCart);
+
         // initializing cart height resize behaviour
         this.$window.on('resize', this._updateCartHeight).on('scroll', this._updateCartHeight);
     },
@@ -142,6 +145,8 @@ var CartView = Backbone.View.extend({
     },
 
     renderProducts: function () {
+        console.log('CartView renderProducts ', this.cid);
+        _.invoke(this.subViews, 'unbind');
         _.invoke(this.subViews, 'remove');
         this.subViews.length = 0;
         this.model.getCart(this.vendor_id).products.each(this.renderNewItem);

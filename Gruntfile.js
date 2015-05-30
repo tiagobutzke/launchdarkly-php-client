@@ -108,7 +108,7 @@ module.exports = function (grunt) {
             sourceMap: (env === 'dev'),
             sourceMapIncludeSources: (env === 'dev'),
             compress: (env !== 'dev'),
-            beautify: (env === 'dev'),
+            beautify: false,
             mangle: (env !== 'dev')
         },
         head: {
@@ -195,7 +195,7 @@ module.exports = function (grunt) {
     config.jasmine = {
         src: [
             "src/Volo/FrontendBundle/Resources/public/js/**/*.js",
-            "!src/Volo/FrontendBundle/Resources/public/js/main.js"
+            "!src/Volo/FrontendBundle/Resources/public/js/bootstrap.js"
         ],
         options: {
             specs: "spec/**/*Spec.js",
