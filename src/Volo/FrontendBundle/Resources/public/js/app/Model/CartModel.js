@@ -45,9 +45,10 @@ var VendorCartModel = Backbone.Model.extend({
     idAttribute: 'vendor_id',
 
     initialize: function() {
+        _.bindAll(this);
         this.products = new CartProductCollection();
         this._xhr = null;
-        this._lastUpdate = Date.now();
+        this.timeoutReference = null;
 
         this.listenTo(this, 'change:orderTime', this._updateCart, this);
     },
@@ -55,32 +56,35 @@ var VendorCartModel = Backbone.Model.extend({
     _updateCart: function() {
         console.log('CartModel._updateCart ', this.cid);
         this.trigger('cart:dirty');
-        this._lastUpdate = Date.now();
 
         if (this._xhr) {
             this._xhr.abort();
         }
 
-        setTimeout(function() {
-            if (Date.now() - this._lastUpdate > 490) {
-                var date = _.isDate(this.get('orderTime')) ? this.get('orderTime') : new Date();
+        if (this.timeoutReference) {
+            clearTimeout(this.timeoutReference);
+        }
+        this.timeoutReference = setTimeout(this._sendRequest, 500);
+    },
 
-                this._xhr = this.collection.cart.dataProvider.calculateCart({
-                    products: this.products.toJSON(),
-                    vendor_id: this.id,
-                    orderTime: date.toISOString(),
-                    location: {
-                        "location_type": "polygon",
-                        "latitude": 52.5237282,
-                        "longitude": 13.3908286
-                    }
-                }).done(function(calculatedData) {
-                    this.collection.cart.parse(calculatedData);
-                    this.trigger('cart:ready');
-                    this._xhr = null;
-                }.bind(this));
+    _sendRequest: function() {
+        var date = _.isDate(this.get('orderTime')) ? this.get('orderTime') : new Date();
+
+        this._xhr = this.collection.cart.dataProvider.calculateCart({
+            products: this.products.toJSON(),
+            vendor_id: this.id,
+            orderTime: date.toISOString(),
+            location: {
+                "location_type": "polygon",
+                "latitude": 52.5237282,
+                "longitude": 13.3908286
             }
-        }.bind(this), 500);
+        }).done(function(calculatedData) {
+            this.collection.cart.parse(calculatedData);
+            this.trigger('cart:ready');
+            this._xhr = null;
+            this.timeoutReference = null;
+        }.bind(this));
     },
 
     addItem: function(newProduct, quantity) {
