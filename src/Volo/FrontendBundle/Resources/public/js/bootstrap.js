@@ -76,13 +76,14 @@ VOLO.initCheckoutViews = function (cartModel) {
     });
 };
 
-VOLO.initIntl = function (userLocale, locale, currency_symbol) {
+VOLO.initIntl = function (locale, currency_symbol) {
     if (_.isUndefined(window.Intl)) {
         $.ajax({
            url: '/js/dist/intl.js'
         }).done(function () {
             $.ajax({
-                url: '/js/dist/intl/locale/' + userLocale + '.json'
+                url: '/js/dist/intl/locale/' + locale + '.json',
+                dataType: 'json'
             }).done(function (data) {
                 IntlPolyfill.__addLocaleData(data);
                 VOLO.initCurrencyFormat(locale, currency_symbol);
