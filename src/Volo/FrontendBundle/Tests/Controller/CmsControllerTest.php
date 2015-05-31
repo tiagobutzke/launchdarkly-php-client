@@ -4,22 +4,22 @@ namespace Volo\FrontendBundle\Tests\Controller;
 
 use Volo\FrontendBundle\Tests\VoloTestCase;
 
-class HomeControllerTest extends VoloTestCase
+class CmsControllerTest extends VoloTestCase
 {
-    public function testHome()
+    public function testCmsAction()
     {
         $client = static::createClient();
 
-        $client->request('GET', '/');
+        $client->request('GET', '/contents/privacy.htm');
 
         $this->isSuccessful($client->getResponse());
     }
 
-    public function testFilterPostalCode()
+    public function testPrivacyPath()
     {
         $client = static::createClient();
 
-        $client->request('GET', '/');
+        $client->request('GET', '/privacy');
 
         $this->isSuccessful($client->getResponse());
     }

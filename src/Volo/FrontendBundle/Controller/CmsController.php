@@ -11,6 +11,7 @@ class CmsController extends Controller
 {
     /**
      * @Route("/contents/{code}", name="cms")
+     * @Route("/privacy", name="privacy", defaults={"code": "privacy.htm"})
      * @Template()
      */
     public function indexAction($code)
