@@ -103,21 +103,21 @@ VOLO.initCurrencyFormat = function (locale, currency_symbol) {
 };
 
 VOLO.initHomeSearch = function() {
+    if (VOLO.homeSearchView) {
+        VOLO.homeSearchView.unbind();
+    }
     VOLO.homeSearchView = new HomeSearchView({
-        el: '.teaser__search',
+        el: '.teaser__form',
         geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1])
     });
-
-    VOLO.homeSearchView.render();
 };
-
 
 $(document).ready(function () {
     // On document.ready we trigger Turbolinks page:load event
     $(document).trigger('page:load');
 });
 
-$(document).on('page:load', function () {
+$(document).on('page:load page:restore', function () {
     console.log('page:load');
     window.blazy.revalidate();
 
@@ -130,19 +130,10 @@ $(document).on('page:load', function () {
         VOLO.initView(VOLO.initCheckoutViews, VOLO.jsonCart);
         VOLO.checkoutView.render();
     }
-});
-$(document).on('page:restore', function () {
-    console.log('page:restore');
-    window.blazy.revalidate();
 
-    if ($('.menu__main').length > 0) {
-        VOLO.initView(VOLO.initCartViews, VOLO.jsonCart);
-        VOLO.cartView.render();
-    }
-
-    if ($('.checkout__main').length > 0) {
-        VOLO.initView(VOLO.initCheckoutViews, VOLO.jsonCart);
-        VOLO.checkoutView.render();
+    if ($('.teaser__form').length > 0) {
+        VOLO.initView(VOLO.initHomeSearch, VOLO.jsonCart);
+        VOLO.homeSearchView.render();
     }
 });
 
@@ -156,6 +147,9 @@ $(document).on('page:before-unload', function () {
     }
     if (_.isObject(VOLO.checkoutView)) {
         VOLO.checkoutView.unbind();
+    }
+    if (_.isObject(VOLO.homeSearchView)) {
+        VOLO.homeSearchView.unbind();
     }
 });
 
