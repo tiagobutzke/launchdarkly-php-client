@@ -16,6 +16,7 @@ var CartToppingView = Backbone.View.extend({
 var CartItemView = Backbone.View.extend({
     tagName: 'tr',
     initialize: function() {
+        _.bindAll(this);
         this.template = _.template($('#template-cart-item').html());
         this.listenTo(this.model, 'change', this.render);
     },
@@ -43,7 +44,7 @@ var CartItemView = Backbone.View.extend({
 var CartView = Backbone.View.extend({
     initialize: function (options) {
         console.log('CartView.initialize ', this.cid);
-        _.bindAll(this, 'renderNewItem', 'renderSubTotal', 'disableCart', 'enableCart', 'initListener', '_updateCartHeight');
+        _.bindAll(this);
 
         this.subViews = [];
 
@@ -108,7 +109,6 @@ var CartView = Backbone.View.extend({
         this.listenTo(vendorCart, 'change', this.renderSubTotal);
         this.listenTo(vendorCart, 'change:orderTime', this.renderTimePicker, this);
         this.listenTo(vendorCart.products, 'update', this.renderProducts, this);
-        this.listenTo(this.model, 'change:orderTime', this.model._updateCart);
 
         // initializing cart height resize behaviour
         this.$window.on('resize', this._updateCartHeight).on('scroll', this._updateCartHeight);

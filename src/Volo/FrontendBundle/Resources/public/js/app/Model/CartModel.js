@@ -48,6 +48,8 @@ var VendorCartModel = Backbone.Model.extend({
         this.products = new CartProductCollection();
         this._xhr = null;
         this._lastUpdate = Date.now();
+
+        this.listenTo(this, 'change:orderTime', this._updateCart, this);
     },
 
     _updateCart: function() {
@@ -99,6 +101,7 @@ var VendorCartModel = Backbone.Model.extend({
                 name: newProduct.name
             })).toJSON());
         }
+
         this._updateCart();
     },
 
