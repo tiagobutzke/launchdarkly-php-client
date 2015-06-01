@@ -22,7 +22,7 @@
         "helthe/turbolinks-bundle": "~1.1",
         "foodpanda/translation-library": "~1.1",
         "foodpanda/translation-bundle": "~1.0",
-        "foodpanda/api-sdk": "dev-master#26e1138",
+        "foodpanda/api-sdk": "dev-master#b56039990b13ad7d728cf5d980ecc81f27a7635c",
         "drak/native-session": "^1.0",
         "misd/phone-number-bundle": "~1.0",
         "jbouzekri/phumbor-bundle": "~1.1"
