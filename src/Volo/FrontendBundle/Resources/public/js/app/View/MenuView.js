@@ -32,7 +32,8 @@ var MenuView = Backbone.View.extend({
 
     // attaching navigation behaviour to menu links
     events: {
-        'click .anchorNavigation': '_navigateToAnchor'
+        'click .anchorNavigation': '_navigateToAnchor',
+        'click .btn-allergy': 'showAllergyModal'
     },
 
     remove: function() {
@@ -60,6 +61,10 @@ var MenuView = Backbone.View.extend({
         }, 500);
 
         return false;
+    },
+
+    showAllergyModal: function() {
+        this.$('#allergyModal').modal();
     }
 });
 

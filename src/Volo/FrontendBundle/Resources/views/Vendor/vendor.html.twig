@@ -51,6 +51,7 @@
     <div class="menu">
         <div class="menu__main" data-vendor_id="{{ vendor.id }}" >
             <div class="menu__main__list">
+                {{ include('VoloFrontendBundle:Vendor:allergyLegend.html.twig') }}
                 <div class="menu__categories">
                     <div class="b-lazy aspect-ratio-117-45 menu__vendor-logo" data-src="{{ asset('img/restaurant_logos/test.png') }}">
                     </div>
@@ -72,7 +73,12 @@
                         {% for product in menuCategory.products %}
                             <div class="menu__item" data-object='{{ serialize(product)|raw }}'>
                                 <div class="menu__item__name">
-                                    {{ product.name }}<i class="icon-vegetarian"></i>
+                                    {{ product.name }}
+                                    {% if product.productVariations.first.name %}
+                                        <a href="#" class="btn-allergy">
+                                            <sup>{{ product.productVariations.first.name }}</sup>
+                                        </a>
+                                    {% endif %}
                                 </div>
                                 <div class="menu__item__description">
                                     {{ product.description }}
