@@ -1,6 +1,25 @@
 /*
 * header declarations
 */
+
+//Header menu styles change when the user scrolls down - START
+.header--logo-change {
+  .header__logo__a {
+    display: none;
+  }
+  .header__logo__restaurant-name {
+    line-height: normal;
+    font-size: 0.622em;
+    color: $color-text-highlight;
+    text-transform: uppercase;
+    display: block;
+  }
+}
+.header__logo__restaurant-name {
+  display: none;
+}
+//Header menu styles change when the user scrolls down - END
+
 .header {
   position: fixed;
   top: 0;
@@ -50,8 +69,13 @@
   }
 }
 
+.header--mobile + main {
+  margin-top: $header-height-extra-small;
+}
+
 .header__logo {
-  width: 137px;
+  width: 70%;
+  text-align: center;
   overflow: hidden;
   margin: 9px auto;
   position: absolute;
@@ -61,17 +85,24 @@
   right: 0;
   @include respond-from("screen-md") {
     width: auto;
-    margin-top: 12px;
+    margin-top: 15px;
     position: static;
     display: inline-block;
   }
   @include respond-from("screen-lg") {
-    margin-top: $space-lg;
+    margin-top: 25px;
   }
 }
 
 .header__logo__a {
   display: block;
+  height: 28px;
+  @include respond-from("screen-md") {
+    height: 30px;
+  }
+  @include respond-from("screen-lg") {
+    height: 37px;
+  }
 
   i {
     font-size: 0.75em;
@@ -93,17 +124,31 @@
 }
 
 .header__cart {
+  position: relative;
   @include make-link($link-color-bg-dark, $link-color-bg-dark);
   font-size: 1.5em;
-  display: inline-block;
   float: right;
-  margin: 11px 0;
+  margin: 11px 5px;
   @include respond-from("screen-md") {
-    margin-top: 16px;
+    margin: 20px 0 11px;
   }
   @include respond-from("screen-lg") {
-    margin-top: 24px;
+    margin-top: 31px;
   }
+}
+.header__cart__products__count {
+  display: block;
+  border-radius: 15px;
+  background-color: $color-text-highlight;
+  width: 23px;
+  height: 23px;
+  font-size: 14px;
+  line-height: 23px;
+  position: absolute;
+  top: -7px;
+  left: 17px;
+  text-align: center;
+  color: #fff;
 }
 
 .header__account {
@@ -114,10 +159,10 @@
   @include respond-from("screen-md") {
     float: right;
     margin-left: $space-lg;
-    margin-top: 15px;
+    margin-top: 20px;
   }
   @include respond-from("screen-lg") {
-    margin-top: 25px;
+    margin-top: 32px;
   }
 }
 
@@ -138,32 +183,21 @@
   @include appear-from("screen-md");
   @include make-link($link-color-bg-dark, $link-color-bg-dark);
   @include respond-from("screen-md") {
-    padding: 4px 5px;
+    padding: 7px;
+  }
+  @include respond-from("screen-lg") {
+    padding: 10px;
   }
 }
 
 .header__account__open {
   @include make-link($link-color-bg-dark, $link-color-bg-dark);
-  font-size: 0.85em;
+  font-size: 1em;
   @include appear-from("screen-md");
 
   i {
     font-size: 1.3em;
     vertical-align: sub;
-  }
-}
-
-
-//adding different styles for the header on the homepage
-.home-page {
-
-  .header__logo {
-    position: static;
-    display: inline-block;
-  }
-
-  .header__account__login-icon {
-    right: $grid-gutter-width / 2
   }
 }
 
@@ -179,7 +213,7 @@
   }
 
   .header__logo {
-    @include respond-from("screen-lg") {
+    @include respond-from("screen-md") {
       margin-top: 12px;
     }
   }
@@ -194,8 +228,8 @@
   }
 
   .header__cart {
-    @include respond-from("screen-lg") {
-      margin-top: 16px;
+    @include respond-from("screen-md") {
+      margin-top: 15px;
     }
   }
 
@@ -203,7 +237,7 @@
     a {
       @include make-link();
     }
-    @include respond-from("screen-lg") {
+    @include respond-from("screen-md") {
       margin-top: 15px;
     }
   }

@@ -24,7 +24,8 @@
 <div class="hero-banner-wrapper">
     {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {type: 'hero', 'vendorCode' : vendor.code, 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
     <div class="hero-menu__info">
-        <h2>{{ vendor.name }} <span>{{ vendor.description|lower }}</span></h2>
+        <h2 class="hero-menu__info__headline">{{ vendor.name }}</h2>
+        <h4 class="hero-menu__info__description">{{ vendor.description|lower }}</h4>
         {% set closingInMinutes = getClosingIn(vendor.schedules) %}
         <p>
             {% if (closingInMinutes <= 0) %}

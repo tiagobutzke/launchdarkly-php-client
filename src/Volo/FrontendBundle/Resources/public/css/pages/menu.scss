@@ -27,45 +27,15 @@
   overflow: hidden;
   height: 40px;
   @include absolute-center-box();
+  margin-top: 10%;
 
   @include respond-from("screen-md") {
+    margin-top: auto;
     height: 107px;
   }
   @include respond-from("screen-lg") {
     width: 600px;
     height: 129px;
-  }
-
-  h2 {
-    font-family: $bold-font-family;
-    font-size: 1em;
-    text-transform: uppercase;
-    line-height: normal;
-    margin: 10px 0 0 0;
-    padding: $space-xs;
-    @include text-overflow();
-    @include respond-from("screen-sm") {
-      font-size: 1.4em;
-    }
-    @include respond-from("screen-md") {
-      margin: 0;
-      font-size: 1.6em;
-    }
-    @include respond-from("screen-lg") {
-      font-size: 2em;
-      padding: $space-sm;
-    }
-
-    span {
-      font-family: $base-font-family;
-      display: block;
-      @include text-overflow();
-      font-size: 0.75em;
-      @include appear-from("screen-md");
-      @include respond-from("screen-lg") {
-        font-size: 0.65em;
-      }
-    }
   }
 
   p {
@@ -77,6 +47,39 @@
       display: inline-block;
       margin-left: 22px;
     }
+  }
+}
+
+.hero-menu__info__headline {
+  font-family: $bold-font-family;
+  font-size: 1em;
+  text-transform: uppercase;
+  line-height: normal;
+  margin: 0;
+  padding: $space-xs;
+  @include text-overflow();
+  @include respond-from("screen-sm") {
+    font-size: 1.4em;
+  }
+  @include respond-from("screen-md") {
+    font-size: 1.6em;
+  }
+  @include respond-from("screen-lg") {
+    font-size: 2em;
+    padding: $space-sm;
+  }
+}
+
+.hero-menu__info__description {
+  font-family: $base-font-family;
+  display: block;
+  @include text-overflow();
+  font-size: 1.4em;
+  line-height: normal;
+  margin: 0;
+  @include appear-from("screen-md");
+  @include respond-from("screen-lg") {
+    font-size: 1.3em;
   }
 }
 

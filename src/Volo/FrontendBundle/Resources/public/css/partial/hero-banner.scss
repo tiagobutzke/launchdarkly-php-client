@@ -5,7 +5,6 @@
   @include respond-to-custom(1400px) {
     overflow: hidden;
   }
-  @include appear-from("screen-sm");
 
   h1 {
     color: $color-text-selection;
