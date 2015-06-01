@@ -17,6 +17,8 @@ class CustomerLocationService
     const KEY_LAT = 'latitude';
     const KEY_LNG = 'longitude';
     const KEY_PLZ = 'postcode';
+    const KEY_CITY = 'city';
+    const KEY_ADDRESS = 'address';
 
     /**
      * @param Cache $cache
@@ -52,15 +54,19 @@ class CustomerLocationService
      * @param float $lat
      * @param float $lng
      * @param string $postCode
+     * @param string $city
+     * @param string $address
      *
      * @return array
      */
-    public function create($lat, $lng, $postCode)
+    public function create($lat, $lng, $postCode, $city, $address)
     {
         return [
             static::KEY_LAT => $lat,
             static::KEY_LNG => $lng,
             static::KEY_PLZ => $postCode,
+            static::KEY_CITY => $city,
+            static::KEY_ADDRESS => $address,
         ];
     }
 
@@ -72,7 +78,7 @@ class CustomerLocationService
     protected function validate(array $location)
     {
         $missingKeys = array_diff(
-            [static::KEY_LAT, static::KEY_LNG, static::KEY_PLZ],
+            [static::KEY_LAT, static::KEY_LNG, static::KEY_PLZ, static::KEY_CITY],
             array_keys(array_filter($location))
         );
 

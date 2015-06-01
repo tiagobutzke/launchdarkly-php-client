@@ -3,16 +3,39 @@
 
 {% block content %}
     <div class="hero-banner-wrapper">
-        <h1>{{ 'The Best of Berlin. Brought to your doorstep.'|trans }}</h1>
+        <h1>{{ 'address.promo'|trans({'%city%': formattedLocation['city']})|nl2br }}</h1>
         {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image.html.twig' with {vendorCode : 'list', type: 'hero'} %}
     </div>
     <div class="wrapper-fluid">
         <h2 class="hide">Available now</h2>
+
         <div class="restaurants">
             <div class="restaurants__tool-box">
                 <div class="restaurants__location">
-                    <input type="text" class="form-control"  name="location_set" value="" required="true" placeholder="{% trans %}Enter your postal code{% endtrans %}">
-                    <div class="hide"><span>10117, Berlin Mitte</span><a href="">{% trans %}Change{% endtrans %}</a></div>
+                    <input
+                            id="postal_index_form_input"
+                            type="text"
+                            class="form-control hide"
+                            name="location_set"
+                            value=""
+                            required="true"
+                            placeholder="{{ 'postal_code.your_postal_code'|trans }}"
+                    >
+
+                    <div class="restaurants__location__title">
+                        <span>
+                            {% if gpsSearch %}
+                                {{ 'address.delivery_by_gps'|trans({
+                                    '%address%': formattedLocation['address']
+                                }) }}
+                            {% else %}
+                                {{ 'address.delivery_by_city'|trans({
+                                    '%city%': formattedLocation['city']
+                                }) }}
+                            {% endif %}
+                        </span>
+                        <a href="#" id="change_user_location_box_button">{{ 'buttons.change'|trans }}</a>
+                    </div>
                 </div>
             </div>
             {% for vendor in openVendors %}

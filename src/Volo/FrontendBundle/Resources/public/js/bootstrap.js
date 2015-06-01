@@ -113,6 +113,13 @@ VOLO.initHomeSearch = function() {
     });
 };
 
+VOLO.initVendorsListSearch = function() {
+    VOLO.vendorSearchView = new VendorsSearchView({
+        el: '.restaurants__tool-box',
+        geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1])
+    });
+};
+
 $(document).ready(function () {
     // On document.ready we trigger Turbolinks page:load event
     $(document).trigger('page:load');
@@ -136,6 +143,10 @@ $(document).on('page:load page:restore', function () {
         VOLO.initView(VOLO.initHomeSearch, VOLO.jsonCart);
         VOLO.homeSearchView.render();
     }
+
+    if($('.restaurants__tool-box').length > 0) {
+        VOLO.initView(VOLO.initVendorsListSearch, VOLO.jsonCart);
+    }
 });
 
 $(document).on('page:before-unload', function () {
@@ -151,6 +162,9 @@ $(document).on('page:before-unload', function () {
     }
     if (_.isObject(VOLO.homeSearchView)) {
         VOLO.homeSearchView.unbind();
+    }
+    if (_.isObject(VOLO.vendorSearchView)) {
+        VOLO.vendorSearchView.unbind();
     }
 });
 
