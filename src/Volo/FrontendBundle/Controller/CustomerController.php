@@ -9,6 +9,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Volo\FrontendBundle\Exception\Location\MissingKeysException;
+use Volo\FrontendBundle\Service\CustomerLocationService;
 use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
 
 class CustomerController extends Controller
@@ -62,6 +66,46 @@ class CustomerController extends Controller
         ]);
 
         return new Response($view, $statusCode);
+    }
+
+    /**
+     * @Route(
+     *      "/customer/location",
+     *      name="volo_customer_set_location",
+     *      options={"expose"=true},
+     *      requirements={
+     *          "latitude"="-?(\d*[.])?\d+",
+     *          "longitude"="-?(\d*[.])?\d+",
+     *          "postcode"="\d+"
+     *      }
+     * )
+     * @Method({"PUT"})
+     *
+     * @param Request $request
+     *
+     * @throws BadRequestHttpException
+     *
+     * @return array
+     */
+    public function userLocationAction(Request $request)
+    {
+        $customerLocationService = $this->get('volo_frontend.service.customer_location');
+
+        $gpsLocation = $customerLocationService->create(
+            $request->request->get(CustomerLocationService::KEY_LAT),
+            $request->request->get(CustomerLocationService::KEY_LNG),
+            $request->request->get(CustomerLocationService::KEY_PLZ),
+            $request->request->get(CustomerLocationService::KEY_CITY),
+            $request->request->get(CustomerLocationService::KEY_ADDRESS)
+        );
+
+        try {
+            $customerLocationService->set($request->getSession()->getId(), $gpsLocation);
+        } catch (MissingKeysException $e) {
+            throw new BadRequestHttpException($e->getMessage(), $e);
+        }
+
+        return new JsonResponse();
     }
 
     protected function createErrors(array $errors)

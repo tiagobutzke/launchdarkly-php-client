@@ -135,13 +135,13 @@ var CartView = Backbone.View.extend({
         this.domObjects = {};
         this.domObjects.$header = options.$header;
         this.domObjects.$menuMain = options.$menuMain;
+        this.domObjects.$body = options.$body;
         this.$window = options.$window;
 
         // margin of the menu height from the bottom edge of the window
         this.cartBottomMargin = VOLO.configuration.cartBottomMargin;
         this.itemsOverflowingClassName = VOLO.configuration.itemsOverflowingClassName;
         this.fixedCartElementsHeight = null;
-
         this.initListener();
 
         // initializing cart sticking behaviour
@@ -183,6 +183,10 @@ var CartView = Backbone.View.extend({
         this.stopListening();
         this.undelegateEvents();
         this.domObjects = {};
+
+        if (_.isObject(this.vendorGeocodingSubView)) {
+            this.vendorGeocodingSubView.unbind();
+        }
     },
 
     initListener: function () {
@@ -233,6 +237,18 @@ var CartView = Backbone.View.extend({
         this._updateCartHeight();
         this._toggleContainerVisibility();
         this._updateCartIcon();
+
+        if (_.isObject(this.vendorGeocodingSubView)) {
+            this.vendorGeocodingSubView.unbind();
+        }
+        this.vendorGeocodingSubView = new VendorGeocodingView({
+            el: this.$('.vendor__geocoding__tool-box'),
+            geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1]),
+            cartModel: this.model,
+            vendorId: this.vendor_id,
+            $header: this.domObjects.$header,
+            $body: this.domObjects.$body
+        });
 
         return this;
     },

@@ -65,10 +65,15 @@ class CheckoutController extends Controller
             'city' => $vendor->getCity()->getName()
         ];
         $cartManager = $this->get('volo_frontend.service.cart_manager');
+        $location = $this->get('volo_frontend.service.customer_location')
+            ->get($request->getSession()->getId());
+
         return [
             'cart'             => $cartManager->calculateCart($this->getCart($vendor)),
             'customer_address' => $defaultAddress + $address,
             'vendor'           => $vendor,
+            'location'         => $location,
+            'isDeliverable'    => (bool) $location
         ];
     }
 

@@ -85,11 +85,14 @@ var MenuItemView = Backbone.View.extend({
 
     addProduct: function() {
         console.log('MenuItemView.addProduct ', this.cid);
-        if (this.model.showOrderDialog()) {
-            this.createViewDialog();
-        } else {
-            var model = CartItemModel.createFromMenuItem(this.model.toJSON());
-            this.cartModel.getCart(this.vendor_id).addItem(model.toJSON(), 1);
+
+        if (this.cartModel.getCart(this.vendor_id).isValid()) {
+            if (this.model.showOrderDialog()) {
+                this.createViewDialog();
+            } else {
+                var model = CartItemModel.createFromMenuItem(this.model.toJSON());
+                this.cartModel.getCart(this.vendor_id).addItem(model.toJSON(), 1);
+            }
         }
     },
 

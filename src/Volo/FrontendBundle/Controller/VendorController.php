@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Volo\FrontendBundle\Http\JsonErrorResponse;
+use Volo\FrontendBundle\Service\CustomerLocationService;
 
 /**
  * @Route("/restaurant")
@@ -63,9 +64,25 @@ class VendorController extends Controller
             }
         }
 
+        $location = $this->get('volo_frontend.service.customer_location')->get($request->getSession()->getId());
+        if ($location) {
+            $isDeliverable = $this->get('volo_frontend.service.deliverability')
+                ->isDeliverableLocation(
+                    $vendor->getId(),
+                    $location[CustomerLocationService::KEY_LAT],
+                    $location[CustomerLocationService::KEY_LNG]
+                );
+
+            if (!$isDeliverable) {
+                $location = false;
+            }
+        }
+
         return [
             'vendor' => $vendor,
-            'cart' => $cart
+            'cart' => $cart,
+            'location' => $location,
+            'isDeliverable' => (bool) $location
         ];
     }
 

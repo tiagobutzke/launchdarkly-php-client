@@ -23,6 +23,12 @@
 {# cart #}
 <script type="text/template" id="template-cart">
     <div class="desktop-cart-container">
+        <div class="vendor__geocoding__tool-box">
+            <input id="postal_index_form_input" type="text" class="input__postcode{{ isDeliverable ? ' hide' }}" autofocus="">
+            <div class="vendor__geocoding__tool-box__title{{ isDeliverable ? '' : ' hide' }}">
+                {{ 'cart.delivering_to' }} <span class="location__address">{{ isDeliverable ? location.address }}</span>
+            </div>
+        </div>
         <div class="desktop-cart__header">
             <h3 class="desktop-cart__title">{{ 'title.delivery_time'|trans }}</h3>
             {% include('VoloFrontendBundle:Layout/Partial/templates:timepicker.html.twig') %}
