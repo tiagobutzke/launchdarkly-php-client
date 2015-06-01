@@ -673,3 +673,17 @@ td.summary__item__empty {
 .delivery__notes {
   color: $color-text-secondary;
 }
+
+.delivery-modal {
+  .modal-close-button {
+    cursor: pointer;
+    position: absolute;
+    right: 4px;
+    top: 2px;
+    @include retina-sprite($modal-close-group);
+    @include respond-from("screen-md") {
+      right: 15px;
+      top: -15px;
+    }
+  }
+}
