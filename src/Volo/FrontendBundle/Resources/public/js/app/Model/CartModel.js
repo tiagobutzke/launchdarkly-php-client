@@ -1,17 +1,56 @@
 var CartItemModel = Backbone.Model.extend({
     defaults: {
-        "product_variation_id": null,
-        "name": "",
-        "variation_name": "",
-        "total_price_before_discount": 0,
-        "total_price": 0,
-        "quantity": 0,
-        "toppings": [],
-        "choices": [],
-        "group_order_user_name": null,
-        "group_order_user_code": null
+        product_variation_id: null,
+        name: "",
+        variation_name: "",
+        total_price_before_discount: 0,
+        total_price: 0,
+        quantity: 0,
+        toppings: [],
+        choices: [],
+        group_order_user_name: null,
+        group_order_user_code: null,
+        description: ""
+    },
+
+    initialize: function() {
+        this.toppings = new ToppingCollection(_.cloneDeep(this.get('toppings')));
+    },
+
+    isValid: function() {
+        var notValidTopping = this.toppings.find(function(topping) {
+            return !topping.isValid();
+        });
+
+        return !notValidTopping;
+    },
+
+    toJSON: function() {
+        var json = Backbone.Model.prototype.toJSON.call(this);
+
+        json.toppings = this.toppings.toJSON();
+
+        return json;
     }
 });
+
+CartItemModel.createFromMenuItem = function(cartItemJSON) {
+    var productVariation = cartItemJSON.product_variations[0];
+
+    return new CartItemModel({
+        product_variation_id: productVariation.id,
+        name: cartItemJSON.name,
+        variation_name: productVariation.name,
+        total_price_before_discount: productVariation.price_before_discount,
+        total_price: productVariation.price,
+        quantity: 0,
+        toppings: productVariation.toppings,
+        choices: productVariation.choices,
+        group_order_user_name: null,
+        group_order_user_code: null,
+        description: cartItemJSON.description
+    });
+};
 
 var CartProductCollection = Backbone.Collection.extend({
     model: CartItemModel
@@ -88,29 +127,25 @@ var VendorCartModel = Backbone.Model.extend({
     },
 
     addItem: function(newProduct, quantity) {
-        newProduct.product_variations[0].toppings = this.getSelectedToppingsFromProduct(newProduct);
-        console.log('CartModel.addItem ', this.cid);
-        var foundProduct = this.findSimilarProduct(newProduct);
+        var clone = _.cloneDeep(newProduct);
+
+        var foundProduct = this.findSimilarProduct(clone);
         if (_.isObject(foundProduct)) {
             foundProduct.set('quantity', parseInt(foundProduct.get('quantity') + quantity), 10);
         }
 
         if (_.isUndefined(foundProduct)) {
-            var productVariation = newProduct.product_variations[0];
-            this.products.add((new CartItemModel({
-                product_variation_id: productVariation.id,
-                quantity: quantity,
-                toppings: _.cloneDeep(productVariation.toppings),
-                choices: _.cloneDeep(productVariation.choices),
-                name: newProduct.name
-            })).toJSON());
+            clone.toppings = this.getSelectedToppingsFromProduct(clone);
+            clone.quantity = quantity;
+
+            this.products.add(clone);
         }
 
         this._updateCart();
     },
 
     getSelectedToppingsFromProduct: function(product) {
-        return _.chain(product.product_variations[0].toppings)
+        return _.chain(product.toppings)
             .map(function (item) {
                 return item.options || [];
             })
@@ -129,17 +164,19 @@ var VendorCartModel = Backbone.Model.extend({
     },
 
     findSimilarProduct: function(productToSearch) {
-        var compareArrays = function(arr1, arr2) {
+        var clone = _.cloneDeep(productToSearch),
+            compareArrays = function(arr1, arr2) {
             return _.isMatch(arr1, arr2) && _.isMatch(arr2, arr1);
         };
+
+        clone.toppings = new ToppingCollection(this.getSelectedToppingsFromProduct(productToSearch)).toJSON();
 
         return this.products.find(function(product) {
             product = product.toJSON();
 
-            var productVariation = productToSearch.product_variations[0],
-                sameVariation = product.product_variation_id === productVariation.id,
-                sameToppings = compareArrays(product.toppings, productVariation.toppings),
-                sameChoices = compareArrays(product.choices, productVariation.choices);
+            var sameVariation = product.product_variation_id === clone.product_variation_id,
+                sameToppings = compareArrays(product.toppings, clone.toppings),
+                sameChoices = compareArrays(product.choices, clone.choices);
 
             return sameVariation && sameChoices && sameToppings;
         });

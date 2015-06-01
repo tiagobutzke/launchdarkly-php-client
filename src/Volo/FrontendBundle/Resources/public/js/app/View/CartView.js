@@ -52,12 +52,12 @@ var CartView = Backbone.View.extend({
         this.templateSubTotal = _.template($('#template-cart-subtotal').html());
 
         this.vendor_id = this.$el.data().vendor_id;
-        
+
         this.domObjects = {};
         this.domObjects.$header = options.$header;
         this.domObjects.$menuMain = options.$menuMain;
         this.$window = options.$window;
-        
+
         // margin of the menu height from the bottom edge of the window
         this.cartBottomMargin = VOLO.configuration.cartBottomMargin;
         this.itemsOverflowingClassName = VOLO.configuration.itemsOverflowingClassName;

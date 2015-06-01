@@ -77,25 +77,28 @@ var MenuItemView = Backbone.View.extend({
     events: {
         'click .menu__item__add': 'addProduct'
     },
+
     initialize : function (options) {
         this.cartModel = options.cartModel;
         this.vendor_id = options.vendor_id;
     },
+
     addProduct: function() {
         console.log('MenuItemView.addProduct ', this.cid);
         if (this.model.showOrderDialog()) {
             this.createViewDialog();
         } else {
-            this.cartModel.getCart(this.vendor_id).addItem(this.model.toJSON(), 1);
+            var model = CartItemModel.createFromMenuItem(this.model.toJSON());
+            this.cartModel.getCart(this.vendor_id).addItem(model.toJSON(), 1);
         }
     },
 
     createViewDialog: function() {
-        var choicesToppingsModel = new ChoicesToppingsModel(_.cloneDeep(this.model.toJSON()));
+        var cartItemModel = CartItemModel.createFromMenuItem(this.model.toJSON());
 
         var view = new ToppingsView({
             el: '.modal-dialogs',
-            model: choicesToppingsModel,
+            model: cartItemModel,
             cartModel: this.cartModel,
             vendorId: this.vendor_id
         });

@@ -54,29 +54,3 @@ var ToppingModel = Backbone.Model.extend({
 var ToppingCollection = Backbone.Collection.extend({
     model: ToppingModel
 });
-
-var ChoicesToppingsModel = Backbone.Model.extend({
-    defaults: {
-        product_variations: [{}]
-    },
-
-    initialize: function() {
-        this.toppings = new ToppingCollection(_.cloneDeep(this.get('product_variations')[0].toppings));
-    },
-
-    isValid: function() {
-        var notValidTopping = this.toppings.find(function(topping) {
-            return !topping.isValid();
-        });
-
-        return !notValidTopping;
-    },
-
-    toJSON: function() {
-        var json = Backbone.Model.prototype.toJSON.apply(this, arguments);
-
-        json.product_variations[0].toppings = this.toppings.toJSON();
-
-        return json;
-    }
-});

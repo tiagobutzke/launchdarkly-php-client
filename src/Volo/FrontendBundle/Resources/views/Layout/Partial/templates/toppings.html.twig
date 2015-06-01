@@ -5,7 +5,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="toppings-product__name"><%- name %></div>
-                    <div class="toppings-product__price"><%- product_variations[0].price %>&euro;</div>
+                    <div class="toppings-product__price"><%= VOLO.formatCurrency(total_price) %></div>
                     <div class="toppings-product__description"><%- description %></div>
                     <div class="toppings"></div>
                 </div>

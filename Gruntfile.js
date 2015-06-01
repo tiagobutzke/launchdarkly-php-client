@@ -108,8 +108,8 @@ module.exports = function (grunt) {
         options: {
             sourceMap: debug,
             sourceMapIncludeSources: debug,
-            compress: {
-                drop_console: !debug
+            compress: debug ? false : {
+                drop_console: true
             },
             beautify: false,
             mangle: !debug
