@@ -16,16 +16,14 @@
         VOLO.configuration = VOLO.configuration || {};
         VOLO.configuration.countryCode = '{{ country_code }}';
         VOLO.configuration.locale = '{{ locale }}';
+        VOLO.configuration.userLocale = '{{ app.request.locale }}';
 
         // cart layout and animation
         VOLO.configuration.cartBottomMargin = 50;
         VOLO.configuration.itemsOverflowingClassName = 'checkout__summary-overflowing';
 
         {% set config = get_configuration() %}
-        {% set userLocale = app.request.locale %}
-        $(document).ready(function () {
-            VOLO.initIntl('{{ userLocale }}'.replace('_', '-'), VOLO.configuration.locale.replace('_', '-'), '{{ config.currency.currency_symbol_iso }}');
-        });
+        VOLO.initIntl(VOLO.configuration.locale.replace('_', '-'), '{{ config.currency.currency_symbol_iso }}');
     </script>
 
 {% endblock %}

@@ -1,5 +1,6 @@
 var MenuView = Backbone.View.extend({
     initialize : function (options) {
+        console.log('MenuView.initialize ', this.cid);
         this.cartModel = options.cartModel;
 
         this.domObjects = {};
@@ -36,12 +37,16 @@ var MenuView = Backbone.View.extend({
         'click .btn-allergy': 'showAllergyModal'
     },
 
-    remove: function() {
+    unbind: function() {
+        console.log('MenuView.unbind', this.cid);
         // unbinding cart sticking behaviour
         this.stickOnTopMenu.remove();
 
-        _.invoke(this.subViews, 'remove');
-        Backbone.View.prototype.remove.apply(this, arguments);
+        _.invoke(this.subViews, 'unbind');
+        this.subViews.length = 0;
+
+        this.stopListening();
+        this.undelegateEvents();
         this.domObjects = {};
     },
 
@@ -77,6 +82,7 @@ var MenuItemView = Backbone.View.extend({
         this.vendor_id = options.vendor_id;
     },
     addProduct: function() {
+        console.log('MenuItemView.addProduct ', this.cid);
         if (this.model.showOrderDialog()) {
             this.createViewDialog();
         } else {
@@ -96,5 +102,11 @@ var MenuItemView = Backbone.View.extend({
 
         view.render(); //render dialog
         $('#choices-toppings-modal').modal(); //show dialog
+    },
+
+    unbind: function() {
+        console.log('MenuItemView.unbind', this.cid);
+        this.stopListening();
+        this.undelegateEvents();
     }
 });

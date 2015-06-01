@@ -27,11 +27,23 @@ VOLO.initCartModel = function (jsonCart) {
     return VOLO.cartModel;
 };
 
+VOLO.initView = function(callback, jsonCart) {
+    callback(VOLO.initCartModel(jsonCart));
+    if (_.isObject(window.Intl)) {
+        try {
+            new Intl.NumberFormat(VOLO.configuration.locale.replace('_', '-'));
+            //VOLO.checkoutView.render();
+        } catch (err) {
+            console.log(err);
+        }
+    }
+};
+
 VOLO.initCartViews = function (cartModel) {
     var $header = $('.header');
     
     if (_.isObject(VOLO.menu)) {
-        VOLO.menu.remove();
+        VOLO.menu.unbind();
     }
     VOLO.menu = new MenuView({
         el: '.menu__main',
@@ -40,7 +52,7 @@ VOLO.initCartViews = function (cartModel) {
     });
 
     if (_.isObject(VOLO.cartView)) {
-        VOLO.cartView.remove();
+        VOLO.cartView.unbind();
     }
     VOLO.cartView = new CartView({
         el: '.desktop-cart',
@@ -53,25 +65,29 @@ VOLO.initCartViews = function (cartModel) {
 
 VOLO.initCheckoutViews = function (cartModel) {
     if (_.isObject(VOLO.checkoutView)) {
-        VOLO.checkoutView.remove();
+        VOLO.checkoutView.unbind();
     }
     VOLO.checkoutView = new CheckoutView({
         el: '.desktop-cart',
-        model: cartModel
+        model: cartModel,
+        $header: $('.header'),
+        $menuMain: $('.checkout__main'),
+        $window: $(window)
     });
 };
 
-VOLO.initIntl = function (userLocale, locale, currency_symbol) {
+VOLO.initIntl = function (locale, currency_symbol) {
     if (_.isUndefined(window.Intl)) {
         $.ajax({
            url: '/js/dist/intl.js'
         }).done(function () {
             $.ajax({
-                url: '/js/dist/intl/locale/' + userLocale + '.json'
+                url: '/js/dist/intl/locale/' + locale + '.json',
+                dataType: 'json'
             }).done(function (data) {
                 IntlPolyfill.__addLocaleData(data);
                 VOLO.initCurrencyFormat(locale, currency_symbol);
-                $(document).trigger('intl:ready');
+                $(document).trigger('page:load');
             });
         });
     } else {
@@ -88,58 +104,56 @@ VOLO.initCurrencyFormat = function (locale, currency_symbol) {
 };
 
 VOLO.initHomeSearch = function() {
+    if (VOLO.homeSearchView) {
+        VOLO.homeSearchView.unbind();
+    }
     VOLO.homeSearchView = new HomeSearchView({
-        el: '.teaser__search',
+        el: '.teaser__form',
         geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1])
     });
-
-    VOLO.homeSearchView.render();
 };
 
-$(document).on('page:load', function () {
+$(document).ready(function () {
+    // On document.ready we trigger Turbolinks page:load event
+    $(document).trigger('page:load');
+});
+
+$(document).on('page:load page:restore', function () {
+    console.log('page:load');
     window.blazy.revalidate();
 
     if ($('.menu__main').length > 0) {
-        VOLO.initCartViews(VOLO.initCartModel(VOLO.jsonCart));
-        if (_.isObject(window.Intl)) {
-            try {
-                new Intl.NumberFormat(VOLO.configuration.locale.replace('_', '-'));
-                VOLO.cartView.render();
-            } catch (err) {
-            }
-        }
+        VOLO.initView(VOLO.initCartViews, VOLO.jsonCart);
+        VOLO.cartView.render();
     }
 
     if ($('.checkout__main').length > 0) {
-        VOLO.initCheckoutViews(VOLO.initCartModel(VOLO.jsonCart));
-        if (_.isObject(window.Intl)) {
-            try {
-                new Intl.NumberFormat(VOLO.configuration.locale.replace('_', '-'));
-                VOLO.checkoutView.render();
-            } catch (err) {
-            }
-        }
+        VOLO.initView(VOLO.initCheckoutViews, VOLO.jsonCart);
+        VOLO.checkoutView.render();
+    }
+
+    if ($('.teaser__form').length > 0) {
+        VOLO.initView(VOLO.initHomeSearch, VOLO.jsonCart);
+        VOLO.homeSearchView.render();
     }
 });
 
 $(document).on('page:before-unload', function () {
+    console.log('page:before-unload');
     if (_.isObject(VOLO.menu)) {
-        VOLO.menu.remove();
+        VOLO.menu.unbind();
     }
     if (_.isObject(VOLO.cartView)) {
-        VOLO.cartView.remove();
+        VOLO.cartView.unbind();
     }
     if (_.isObject(VOLO.checkoutView)) {
-        VOLO.checkoutView.remove();
+        VOLO.checkoutView.unbind();
+    }
+    if (_.isObject(VOLO.homeSearchView)) {
+        VOLO.homeSearchView.unbind();
     }
 });
 
-$(document).on('intl:ready', function () {
-    if ($('.menu__main').length > 0 && _.isObject(VOLO.cartView)) {
-        VOLO.cartView.render();
-    }
-});
-
-Turbolinks.pagesCached(0);
+Turbolinks.pagesCached(10);
 
 Turbolinks.enableProgressBar();

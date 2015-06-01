@@ -56,6 +56,7 @@ describe("A cart", function() {
             ],
             "voucher": []
         };
+        jasmine.clock().install();
 
         dataProvider = new CartDataProvider();
         cart = new CartModel({}, {
@@ -87,7 +88,11 @@ describe("A cart", function() {
         });
     });
 
-    it("adds a new product to the cart", function(done) {
+    afterEach(function() {
+        jasmine.clock().uninstall();
+    });
+
+    it("adds a new product to the cart", function() {
         var object = {
             "is_half_type_available": false,
             "id": 854,
@@ -111,16 +116,16 @@ describe("A cart", function() {
 
         cart.getCart(vendor_id).addItem(selectedProduct.toJSON(), 3);
 
-        setTimeout(function() {
-            expect(cart.getCart(vendor_id).products.length).toBe(1);
+        jasmine.clock().tick(800);
 
-            var expected = _.cloneDeep(response.vendorCart[0].products[0]);
-            expect(cart.vendorCart.get(vendor_id).products.toJSON()).toContain(expected);
-            done();
-        }.bind(this), 800);
+        //setTimeout(function() {
+        expect(cart.getCart(vendor_id).products.length).toBe(1);
+
+        var expected = _.cloneDeep(response.vendorCart[0].products[0]);
+        expect(cart.getCart(vendor_id).products.toJSON()).toContain(expected);
     });
 
-    it("adds the same product with different quantity", function(done) {
+    it("adds the same product with different quantity", function() {
         var product = {
             "is_half_type_available": false,
             "id": 854,
@@ -159,22 +164,18 @@ describe("A cart", function() {
         cart.getCart(vendor_id).addItem(firstSelectedProduct.toJSON(), 3);
 
 
-        setTimeout(function() {
-            expect(cart.vendorCart.get(vendor_id).products.length).toBe(1);
-            expectedFirst = _.cloneDeep(response.vendorCart[0].products[0]);
-            expect(cart.vendorCart.get(vendor_id).products.toJSON()).toContain(expectedFirst);
+        jasmine.clock().tick(800);
+        expect(cart.vendorCart.get(vendor_id).products.length).toBe(1);
+        expectedFirst = _.cloneDeep(response.vendorCart[0].products[0]);
+        expect(cart.vendorCart.get(vendor_id).products.toJSON()).toContain(expectedFirst);
 
-            cart.getCart(vendor_id).addItem(secondProductToAdd.toJSON(), 5);
+        cart.getCart(vendor_id).addItem(secondProductToAdd.toJSON(), 5);
 
-            setTimeout(function() {
-                expect(cart.vendorCart.get(vendor_id).products.length).toBe(1);
-                expect(cart.vendorCart.get(vendor_id).products.first().get('quantity')).toEqual(8);
-                var expectedSecond = _.cloneDeep(response.vendorCart[0].products[0]);
-                expect(cart.vendorCart.get(vendor_id).products.first().toJSON()).toEqual(expectedSecond);
-                done();
-            }.bind(this), 500)
-
-        }.bind(this), 500);
+        jasmine.clock().tick(800);
+        expect(cart.vendorCart.get(vendor_id).products.length).toBe(1);
+        expect(cart.vendorCart.get(vendor_id).products.first().get('quantity')).toEqual(8);
+        var expectedSecond = _.cloneDeep(response.vendorCart[0].products[0]);
+        expect(cart.vendorCart.get(vendor_id).products.first().toJSON()).toEqual(expectedSecond);
     });
 
     it('finds similar product in cart', function() {
@@ -358,8 +359,6 @@ describe("A cart", function() {
 
         expect(cart.vendorCart.get(vendor_id).findSimilarProduct(differentProduct)).toEqual(undefined);
     });
-
-
 
     it('does not find different product', function() {
         var product = {

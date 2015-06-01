@@ -1,33 +1,37 @@
 var HomeSearchView = Backbone.View.extend({
     initialize: function (options) {
+        console.log('HomeSearchView.initialize ', this.cid);
+        _.bindAll(this);
         this.geocodingService = options.geocodingService;
-    },
 
-    render: function() {
-        var $input = $('#postal_index_form_input');
+        var $input = this.$('#postal_index_form_input');
 
         this.geocodingService.init($input);
-        this._preventSubmitOnEnter($input);
-        this._initSubmitButton($input);
-        this._initEvents($input);
+
+        this.listenTo(this.geocodingService, 'autocomplete:submit_pressed', this._submitPressed);
+        this.listenTo(this.geocodingService, 'autocomplete:tab_pressed', this._tabPressed);
+        this.listenTo(this.geocodingService, 'autocomplete:place_changed', this._tabPressed);
     },
 
-     _preventSubmitOnEnter: function($input) {
-        google.maps.event.addDomListener($input[0], 'keydown', function(e) {
-            if (e.keyCode === 13) {
-                e.preventDefault();
-            }
-        });
+    events: {
+        'click .teaser__button': '_submit',
+        'autocomplete:submit_pressed .teaser__button': '_submitPressed'
     },
 
-    _initEvents: function($input) {
-        $input.on('autocomplete:place_changed autocomplete:tab_pressed', function() {
-            this._getNewLocation($input).fail(this._notFound);
-        }.bind(this));
+    unbind: function() {
+        this.geocodingService.removeListeners(this.$('#postal_index_form_input'));
+        this.stopListening();
+        this.undelegateEvents();
+    },
 
-        $input.on('autocomplete:submit_pressed', function() {
-            this._getNewLocation($input).done(_.bind(this._search, this));
-        }.bind(this));
+    _tabPressed: function() {
+        console.log('_tabPressed ', this.cid);
+        this._getNewLocation(this.$('#postal_index_form_input')).fail(this._notFound);
+    },
+
+    _submitPressed: function() {
+        console.log('_submitPressed ', this.cid);
+        this._getNewLocation(this.$('#postal_index_form_input')).done(this._search);
     },
 
     _notFound: function() {
@@ -35,6 +39,7 @@ var HomeSearchView = Backbone.View.extend({
     },
 
     _search: function(data) {
+        console.log('_search ', this.cid);
         if (!!data && data.postcode) {
             Turbolinks.visit(Routing.generate('volo_location_search_vendors_by_gps', {
                 city: data.city,
@@ -47,18 +52,20 @@ var HomeSearchView = Backbone.View.extend({
         }
     },
 
-    _initSubmitButton: function($input) {
-        $('#postal_index_form_submit').click(function() {
-            this._getNewLocation($input).done(_.bind(this._search, this));
-        }.bind(this));
+    _submit: function() {
+        console.log('_submit ', this.cid);
+        this._getNewLocation(this.$('#postal_index_form_input')).done(this._search);
     },
 
     _getNewLocation: function($input) {
+        console.log('_getNewLocation ', this.cid);
         var deferred = $.Deferred();
 
         this.geocodingService.getLocation($input)
             .fail(deferred.reject, this)
             .done(function(locationMeta) {
+                console.log('_getNewLocation.done ', this.cid);
+
                 var data = this._getDataFromMeta(locationMeta);
                 $input.val(data.formattedAddress);
 

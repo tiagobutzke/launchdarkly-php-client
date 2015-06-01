@@ -40,6 +40,7 @@ module.exports = function (grunt) {
     }
 
     var env = grunt.option('env') || 'dev';
+    var debug = (env === 'dev');
 
     var jsSources = {};
 
@@ -105,11 +106,13 @@ module.exports = function (grunt) {
 
     config.uglify = {
         options: {
-            sourceMap: (env === 'dev'),
-            sourceMapIncludeSources: (env === 'dev'),
-            compress: (env !== 'dev'),
-            beautify: (env === 'dev'),
-            mangle: (env !== 'dev')
+            sourceMap: debug,
+            sourceMapIncludeSources: debug,
+            compress: {
+                drop_console: !debug
+            },
+            beautify: false,
+            mangle: !debug
         },
         head: {
             src: jsSources.head,
@@ -195,7 +198,7 @@ module.exports = function (grunt) {
     config.jasmine = {
         src: [
             "src/Volo/FrontendBundle/Resources/public/js/**/*.js",
-            "!src/Volo/FrontendBundle/Resources/public/js/main.js"
+            "!src/Volo/FrontendBundle/Resources/public/js/bootstrap.js"
         ],
         options: {
             specs: "spec/**/*Spec.js",
