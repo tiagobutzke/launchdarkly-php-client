@@ -107,7 +107,7 @@ module.exports = function (grunt) {
         options: {
             sourceMap: (env === 'dev'),
             sourceMapIncludeSources: (env === 'dev'),
-            compress: true,
+            compress: (env !== 'dev'),
             beautify: (env === 'dev'),
             mangle: (env !== 'dev')
         },
