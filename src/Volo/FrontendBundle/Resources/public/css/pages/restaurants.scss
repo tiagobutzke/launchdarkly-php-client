@@ -66,6 +66,7 @@
       box-shadow: $restaurant-box-shadow-hover;
       top: -5px;
       cursor: pointer;
+      border-top: none;
     }
   }
 }
@@ -76,10 +77,10 @@
   @include respond-from("screen-sm") {
     height: auto;
   }
+}
 
-  img {
+.restaurant__image {
     @include responsive-img();
-  }
 }
 
 .restaurants__item__wrapper__name {

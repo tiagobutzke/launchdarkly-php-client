@@ -77,6 +77,11 @@ jb_phumbor:
         600_retina:
             resize: { width: 1200, height: 0 }
 
+        500:
+            resize: { width: 500, height: 0 }
+        500_retina:
+            resize: { width: 1000, height: 0 }
+
         800:
             resize: { width: 800, height: 0 }
         800_retina:
