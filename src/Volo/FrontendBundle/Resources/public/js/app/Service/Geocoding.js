@@ -34,6 +34,7 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
     _keyDown: function (e) {
         if (e.keyCode === 13) { //enter
             this.trigger('autocomplete:submit_pressed');
+            e.preventDefault();
         } else if (e.keyCode === 9) { //tab
             this.trigger('autocomplete:tab_pressed');
         }
