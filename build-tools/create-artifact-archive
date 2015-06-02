@@ -43,4 +43,5 @@ tar -pchzf "${OUTPUT_FILE}" "$ROOT_DIR" \
     --exclude "$ROOT_DIR/app/cache/*" \
     --exclude "$ROOT_DIR/app/logs/*" \
     --exclude "$ROOT_DIR/web/app_dev.php" \
+    --exclude "$ROOT_DIR/web/bower_components" \
     --exclude "$ROOT_DIR/web/config.php" \
