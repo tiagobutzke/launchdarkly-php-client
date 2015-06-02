@@ -144,6 +144,13 @@ var VendorCartModel = Backbone.Model.extend({
         this._updateCart();
     },
 
+    updateItem: function(oldProduct, newProduct) {
+        var newToppings = this.getSelectedToppingsFromProduct(newProduct);
+        oldProduct.toppings = new ToppingCollection(newToppings);
+
+        this._updateCart();
+    },
+
     getSelectedToppingsFromProduct: function(product) {
         return _.chain(product.toppings)
             .map(function (item) {

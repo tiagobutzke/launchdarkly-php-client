@@ -15,9 +15,16 @@ var CartToppingView = Backbone.View.extend({
 
 var CartItemView = Backbone.View.extend({
     tagName: 'tr',
-    initialize: function() {
+    className: 'cart__item',
+    events: {
+        'click': '_editItem'
+    },
+
+    initialize: function(options) {
         _.bindAll(this);
         this.template = _.template($('#template-cart-item').html());
+        this.cartModel = options.cartModel;
+        this.vendorId = options.vendorId;
         this.listenTo(this.model, 'change', this.render);
     },
 
@@ -38,6 +45,57 @@ var CartItemView = Backbone.View.extend({
         });
 
         this.$('.summary__extra__items').append(view.render().el);
+    },
+
+    _editItem: function() {
+        var menuItemData = this._getMenuItemData(),
+            menuToppings = this._getMenuItemToppings(menuItemData),
+            allToppingsWithSelection = this._getAllToppingsWithSelection(this.model.toppings.toJSON(), menuToppings);
+
+        this.model.toppings = new ToppingCollection(allToppingsWithSelection);
+
+        var view = new ToppingsView({
+            el: '.modal-dialogs',
+            model: this.model,
+            cartModel: this.cartModel,
+            vendorId: this.vendorId,
+            productToUpdate: this.model
+        });
+
+        view.render(); //render dialog
+        $('#choices-toppings-modal').modal(); //show dialog
+    },
+
+    _getAllToppingsWithSelection: function(cartToppings, menuToppings) {
+        var menuToppingsClone = _.cloneDeep(menuToppings);
+        return _.each(menuToppingsClone, function(menuTopping) {
+            _.each(menuTopping.options, function(option) {
+                if (_.findWhere(cartToppings, {id: option.id})) {
+                    option.selected = true;
+                }
+            });
+
+            return menuTopping;
+        });
+    },
+
+    _getMenuItemToppings: function(menuItemData) {
+        return menuItemData.product_variations[0].toppings;
+    },
+
+    _getMenuItemData: function() {
+        var $menuItems = $('.menu__item'),
+            variationId = this.model.get('product_variation_id'),
+            menuItem;
+
+        menuItem = _.find($menuItems, function(menuItem) {
+            var productVariations = $(menuItem).data().object.product_variations,
+                productVariation = productVariations ? productVariations[0] : {};
+
+            return productVariation.id === variationId;
+        }, this);
+
+        return menuItem ? $(menuItem).data().object : null;
     }
 });
 
@@ -154,7 +212,9 @@ var CartView = Backbone.View.extend({
 
     renderNewItem: function(item) {
         var view = new CartItemView({
-            model: item
+            model: item,
+            cartModel: this.model,
+            vendorId: this.vendor_id
         });
         this.subViews.push(view);
 

@@ -117,6 +117,10 @@
   font-size: 0.875em;
   padding-left: $grid-gutter-width;
 
+  .cart__item {
+    cursor: pointer;
+  }
+
   // overriding needed styles from checkout.scss (order summary mobile section)
 
   .checkout__summary {
