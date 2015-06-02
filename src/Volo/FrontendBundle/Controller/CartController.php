@@ -38,10 +38,7 @@ class CartController extends Controller
         $cartManager = $this->get('volo_frontend.service.cart_manager');
         try {
             $apiResult = $cartManager->calculateCart($data);
-            if (array_key_exists('products', $data) && array_key_exists(0, $data['products'])) {
-                $vendorId = $data['products'][0]['vendor_id'];
-                $cartManager->saveCart($request->getSession()->getId(), $vendorId, $data);
-            }
+            $cartManager->saveCart($request->getSession()->getId(), $data['vendor_id'], $data);
         } catch (ApiErrorException $e) {
             return new JsonErrorResponse($e);
         }
