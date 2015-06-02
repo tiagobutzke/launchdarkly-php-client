@@ -21,7 +21,9 @@ var CartItemView = Backbone.View.extend({
         'click .summary__item__price': '_editItem',
         'click .summary__item__sign': '_editItem',
         'click .summary__item__quantity': '_editItem',
-        'click .summary__item__remove': '_removeItem'
+        'click .summary__item__remove': '_removeItem',
+        'click .summary__item__minus': '_decreaseQuantity',
+        'click .summary__item__plus': '_increaseQuantity'
     },
 
     initialize: function(options) {
@@ -72,6 +74,14 @@ var CartItemView = Backbone.View.extend({
 
     _removeItem: function() {
         this.cartModel.getCart(this.vendorId).removeItem(this.model.toJSON());
+    },
+
+    _decreaseQuantity: function() {
+        this.cartModel.getCart(this.vendorId).increaseQuantity(this.model.toJSON(), -1);
+    },
+
+    _increaseQuantity: function() {
+        this.cartModel.getCart(this.vendorId).increaseQuantity(this.model.toJSON(), 1);
     },
 
     _getAllToppingsWithSelection: function(cartToppings, menuToppings) {
@@ -175,6 +185,8 @@ var CartView = Backbone.View.extend({
         this.listenTo(vendorCart, 'change', this.renderSubTotal);
         this.listenTo(vendorCart, 'change:orderTime', this.renderTimePicker, this);
         this.listenTo(vendorCart.products, 'update', this.renderProducts, this);
+        this.listenTo(vendorCart.products, 'update', this._toggleContainerVisibility, this);
+        this.listenTo(vendorCart, 'cart:ready', this.renderSubTotal, this);
 
         // initializing cart height resize behaviour
         this.$window.on('resize', this._updateCartHeight).on('scroll', this._updateCartHeight);
@@ -198,6 +210,7 @@ var CartView = Backbone.View.extend({
         // recalculating cart scrolling position
         this.stickOnTopCart.init(this.$('.desktop-cart-container'));
         this._updateCartHeight();
+        this._toggleContainerVisibility();
 
         return this;
     },
@@ -227,7 +240,6 @@ var CartView = Backbone.View.extend({
         this.subViews.push(view);
 
         this.$('.desktop-cart__products').append(view.render().el);
-        this._toggleContainerVisibility();
 
         // recalculating cart scrolling position
         this.stickOnTopCart.updateCoordinates();
@@ -265,7 +277,7 @@ var CartView = Backbone.View.extend({
     _toggleContainerVisibility: function() {
         var $productsContainer = this.$('.desktop-cart__products'),
             $cartMsg = this.$('.desktop-cart_order__message'),
-            cartEmpty = this.model.vendorCart.get(this.vendor_id).products.length === 0;
+            cartEmpty = this.model.getCart(this.vendor_id).products.length === 0;
 
         $cartMsg.toggle(cartEmpty);
         $productsContainer.toggle(!cartEmpty);

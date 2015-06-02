@@ -130,6 +130,7 @@ var VendorCartModel = Backbone.Model.extend({
         var clone = _.cloneDeep(newProduct);
 
         clone.toppings = new ToppingCollection(this.getSelectedToppingsFromProduct(clone)).toJSON();
+
         var foundProduct = this.findSimilarProduct(clone);
         if (_.isObject(foundProduct)) {
             foundProduct.set('quantity', parseInt(foundProduct.get('quantity') + quantity), 10);
@@ -156,6 +157,23 @@ var VendorCartModel = Backbone.Model.extend({
 
         if (productInCart) {
             this.products.remove(productInCart);
+            this._updateCart();
+        }
+    },
+
+    increaseQuantity: function(product, quantityDifference) {
+        var productInCart = this.findSimilarProduct(product);
+
+        if (productInCart) {
+            var oldQuantity = productInCart.get('quantity'),
+                newQuantity = parseInt(oldQuantity + quantityDifference, 10);
+
+            if (newQuantity <= 0) {
+                this.products.remove(productInCart);
+            } else {
+                productInCart.set('quantity', parseInt(oldQuantity + quantityDifference, 10));
+            }
+
             this._updateCart();
         }
     },
@@ -227,24 +245,24 @@ var CartModel = Backbone.Model.extend({
 
     initialize: function(data, options) {
         this.dataProvider = options.dataProvider;
-        this.vendorCart = this.vendorCart || new VendorCartCollection([], {
+        this.vendorCarts = this.vendorCarts || new VendorCartCollection([], {
             cart: this
         });
     },
 
     parse: function (cart) {
-        if (_.isUndefined(this.vendorCart)) {
-            this.vendorCart = new VendorCartCollection([], {
+        if (_.isUndefined(this.vendorCarts)) {
+            this.vendorCarts = new VendorCartCollection([], {
                 cart: this
             });
         }
         if (_.isObject(cart) && _.isArray(cart.vendorCart)) {
             cart = _.cloneDeep(cart);
-            var vendorCart = cart.vendorCart;
+            var vendorCarts = cart.vendorCart;
             delete cart.vendorCart;
             this.set(cart);
 
-            _.each(vendorCart, function (vendorCart) {
+            _.each(vendorCarts, function (vendorCart) {
                 vendorCart.products = vendorCart.products.map(function(product) {
                     product.toppings = product.toppings.map(function(topping) {
                         return {
@@ -261,14 +279,22 @@ var CartModel = Backbone.Model.extend({
                 delete vendorCart.products;
                 this.getCart(vendorCart.vendor_id).set(vendorCart);
             }, this);
+
+            //clear all carts
+            if (vendorCarts.length === 0) {
+                this.vendorCarts.each(function(vendorCart) {
+                    vendorCart.set(cart);
+                    vendorCart.products.reset();
+                });
+            }
         }
     },
 
     getCart: function(vendorId) {
-        if (_.isUndefined(this.vendorCart.get(vendorId))) {
-            this.vendorCart.add({vendor_id: vendorId}, {cart: this});
+        if (_.isUndefined(this.vendorCarts.get(vendorId))) {
+            this.vendorCarts.add({vendor_id: vendorId}, {cart: this});
         }
 
-        return this.vendorCart.get(vendorId);
+        return this.vendorCarts.get(vendorId);
     }
 });

@@ -166,17 +166,17 @@ describe("A cart", function() {
 
 
         jasmine.clock().tick(800);
-        expect(cart.vendorCart.get(vendor_id).products.length).toBe(1);
+        expect(cart.getCart(vendor_id).products.length).toBe(1);
         expectedFirst = _.cloneDeep(response.vendorCart[0].products[0]);
-        expect(cart.vendorCart.get(vendor_id).products.toJSON()).toContain(expectedFirst);
+        expect(cart.getCart(vendor_id).products.toJSON()).toContain(expectedFirst);
 
         cart.getCart(vendor_id).addItem(secondProductToAdd.toJSON(), 5);
 
         jasmine.clock().tick(800);
-        expect(cart.vendorCart.get(vendor_id).products.length).toBe(1);
-        expect(cart.vendorCart.get(vendor_id).products.first().get('quantity')).toEqual(8);
+        expect(cart.getCart(vendor_id).products.length).toBe(1);
+        expect(cart.getCart(vendor_id).products.first().get('quantity')).toEqual(8);
         var expectedSecond = _.cloneDeep(response.vendorCart[0].products[0]);
-        expect(cart.vendorCart.get(vendor_id).products.first().toJSON()).toEqual(expectedSecond);
+        expect(cart.getCart(vendor_id).products.first().toJSON()).toEqual(expectedSecond);
     });
 
     it('finds similar product in cart', function() {
@@ -216,7 +216,7 @@ describe("A cart", function() {
             toppings = cart.getCart(vendor_id).getSelectedToppingsFromProduct(productToFind);
 
         productToFind.toppings = new ToppingCollection(toppings).toJSON();
-        
+
         expect(cart.getCart(vendor_id).findSimilarProduct(productToFind).toJSON()).toEqual({
             product_variation_id: 859,
             name: 'Quick Chicken',
@@ -281,7 +281,7 @@ describe("A cart", function() {
 
         cart.getCart(vendor_id).addItem(CartItemModel.createFromMenuItem(product).toJSON(), 3);
 
-        expect(cart.vendorCart.get(vendor_id).findSimilarProduct(differentProduct)).toEqual(undefined);
+        expect(cart.getCart(vendor_id).findSimilarProduct(differentProduct)).toEqual(undefined);
     });
 
     it('does not find same product without topping', function() {
@@ -321,7 +321,7 @@ describe("A cart", function() {
 
         cart.getCart(vendor_id).addItem(CartItemModel.createFromMenuItem(product).toJSON(), 3);
 
-        expect(cart.vendorCart.get(vendor_id).findSimilarProduct(differentProduct)).toEqual(undefined);
+        expect(cart.getCart(vendor_id).findSimilarProduct(differentProduct)).toEqual(undefined);
     });
 
     it('does not find same product with some additionaltopping', function() {
@@ -372,7 +372,7 @@ describe("A cart", function() {
 
         cart.getCart(vendor_id).addItem(CartItemModel.createFromMenuItem(product).toJSON(), 3);
 
-        expect(cart.vendorCart.get(vendor_id).findSimilarProduct(differentProduct)).toEqual(undefined);
+        expect(cart.getCart(vendor_id).findSimilarProduct(differentProduct)).toEqual(undefined);
     });
 
     it('does not find different product', function() {
@@ -428,6 +428,153 @@ describe("A cart", function() {
                 "toppings": []
             }]
         });
-        expect(cart.vendorCart.get(vendor_id).findSimilarProduct(productForFind.toJSON())).toEqual(undefined);
+        expect(cart.getCart(vendor_id).findSimilarProduct(productForFind.toJSON())).toEqual(undefined);
+    });
+
+    it('should remove product from cart', function() {
+        var product = {
+            "is_half_type_available": false,
+            "id": 854,
+            "name": "Quick Chicken",
+            "code": null,
+            "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
+            "file_path": null,
+            "half_type": null,
+            "product_variations": [{
+                "id": 859,
+                "code": null,
+                "name": null,
+                "price": 7.9,
+                "price_before_discount": null,
+                "container_price": 0,
+                "choices": [],
+                "toppings": []
+            }]
+        };
+        var cartItem = CartItemModel.createFromMenuItem(product);
+
+        cart.getCart(vendor_id).addItem(cartItem.toJSON(), 1);
+        expect(cart.getCart(vendor_id).products.length).toBe(1);
+
+        cart.getCart(vendor_id).removeItem(cartItem.toJSON());
+        expect(cart.getCart(vendor_id).products.length).toBe(0);
+    });
+
+    it('should increase quantity of product', function() {
+        var product = {
+            "is_half_type_available": false,
+            "id": 854,
+            "name": "Quick Chicken",
+            "code": null,
+            "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
+            "file_path": null,
+            "half_type": null,
+            "product_variations": [{
+                "id": 859,
+                "code": null,
+                "name": null,
+                "price": 7.9,
+                "price_before_discount": null,
+                "container_price": 0,
+                "choices": [],
+                "toppings": []
+            }]
+        };
+        var cartItem = CartItemModel.createFromMenuItem(product);
+
+        cart.getCart(vendor_id).addItem(cartItem.toJSON(), 1);
+        expect(cart.getCart(vendor_id).products.at(0).get('quantity')).toBe(1);
+
+
+        cart.getCart(vendor_id).increaseQuantity(cartItem.toJSON(), 2);
+        expect(cart.getCart(vendor_id).products.at(0).get('quantity')).toBe(3);
+
+        cart.getCart(vendor_id).increaseQuantity(cartItem.toJSON(), -2);
+        expect(cart.getCart(vendor_id).products.at(0).get('quantity')).toBe(1);
+    });
+
+    it('should remove object with 0 or less quantity', function() {
+        var product = {
+            "is_half_type_available": false,
+            "id": 854,
+            "name": "Quick Chicken",
+            "code": null,
+            "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
+            "file_path": null,
+            "half_type": null,
+            "product_variations": [{
+                "id": 859,
+                "code": null,
+                "name": null,
+                "price": 7.9,
+                "price_before_discount": null,
+                "container_price": 0,
+                "choices": [],
+                "toppings": []
+            }]
+        };
+        var cartItem = CartItemModel.createFromMenuItem(product);
+
+        cart.getCart(vendor_id).addItem(cartItem.toJSON(), 1);
+        expect(cart.getCart(vendor_id).products.length).toBe(1);
+
+        cart.getCart(vendor_id).increaseQuantity(cartItem.toJSON(), -1);
+        expect(cart.getCart(vendor_id).products.length).toBe(0);
+
+        cart.getCart(vendor_id).addItem(cartItem.toJSON(), 1);
+        expect(cart.getCart(vendor_id).products.length).toBe(1);
+
+        cart.getCart(vendor_id).increaseQuantity(cartItem.toJSON(), -2);
+        expect(cart.getCart(vendor_id).products.length).toBe(0);
+    });
+
+    it('should update item toppings', function() {
+        var product = {
+            "is_half_type_available": false,
+            "id": 854,
+            "name": "Quick Chicken",
+            "code": null,
+            "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
+            "file_path": null,
+            "half_type": null,
+            "product_variations": [{
+                "id": 859,
+                "code": null,
+                "name": null,
+                "price": 7.9,
+                "price_before_discount": null,
+                "container_price": 0,
+                "choices": [
+                    {
+                        "id": 1,
+                        "name": "choice 1"
+                    }
+                ],
+                "toppings": [
+                    {
+                        "id": 10,
+                        "name": "topping 1",
+                        options: [{id: 1, selected: true, name: 'option 1'}]
+                    }
+                ]
+            }]
+        };
+
+        var updatedProduct = _.cloneDeep(product);
+        updatedProduct.product_variations[0].toppings = [
+            {
+                "id": 10,
+                "name": "topping 1",
+                options: [{id: 2, selected: true, name: 'option 2'}]
+            }
+        ];
+
+        var cartItem = CartItemModel.createFromMenuItem(product);
+        var updatedItem = CartItemModel.createFromMenuItem(updatedProduct);
+
+        cart.getCart(vendor_id).addItem(cartItem.toJSON(), 1);
+        expect(cart.getCart(vendor_id).products.at(0).toppings.at(0).get('name')).toEqual('option 1');
+        cart.getCart(vendor_id).updateItem(cart.getCart(vendor_id).products.at(0), updatedItem.toJSON());
+        expect(cart.getCart(vendor_id).products.at(0).toppings.at(0).get('name')).toEqual('option 2');
     });
 });
