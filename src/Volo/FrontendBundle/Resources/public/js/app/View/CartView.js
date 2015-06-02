@@ -17,7 +17,11 @@ var CartItemView = Backbone.View.extend({
     tagName: 'tr',
     className: 'cart__item',
     events: {
-        'click': '_editItem'
+        'click .summary__item__name': '_editItem',
+        'click .summary__item__price': '_editItem',
+        'click .summary__item__sign': '_editItem',
+        'click .summary__item__quantity': '_editItem',
+        'click .summary__item__remove': '_removeItem'
     },
 
     initialize: function(options) {
@@ -64,6 +68,10 @@ var CartItemView = Backbone.View.extend({
 
         view.render(); //render dialog
         $('#choices-toppings-modal').modal(); //show dialog
+    },
+
+    _removeItem: function() {
+        this.cartModel.getCart(this.vendorId).removeItem(this.model.toJSON());
     },
 
     _getAllToppingsWithSelection: function(cartToppings, menuToppings) {

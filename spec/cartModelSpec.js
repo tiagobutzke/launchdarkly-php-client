@@ -212,8 +212,12 @@ describe("A cart", function() {
         });
 
         cart.getCart(vendor_id).addItem(product.toJSON(), 3);
+        var productToFind = product.toJSON(),
+            toppings = cart.getCart(vendor_id).getSelectedToppingsFromProduct(productToFind);
 
-        expect(cart.getCart(vendor_id).findSimilarProduct(product.toJSON()).toJSON()).toEqual({
+        productToFind.toppings = new ToppingCollection(toppings).toJSON();
+        
+        expect(cart.getCart(vendor_id).findSimilarProduct(productToFind).toJSON()).toEqual({
             product_variation_id: 859,
             name: 'Quick Chicken',
             variation_name: null,

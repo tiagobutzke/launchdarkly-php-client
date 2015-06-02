@@ -11,7 +11,10 @@
         <%- name %>
         <span class="summary__extra__items"></span>
     </td>
-    <td class="summary__item__price"><%= VOLO.formatCurrency(total_price) %></td>
+    <td class="summary__item__price">
+        <span><%= VOLO.formatCurrency(total_price) %></span>
+    </td>
+    <td class="summary__item__remove icon-cancel-circled"></td>
 </script>
 {# cart #}
 <script type="text/template" id="template-cart">

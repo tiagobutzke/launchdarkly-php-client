@@ -129,13 +129,13 @@ var VendorCartModel = Backbone.Model.extend({
     addItem: function(newProduct, quantity) {
         var clone = _.cloneDeep(newProduct);
 
+        clone.toppings = new ToppingCollection(this.getSelectedToppingsFromProduct(clone)).toJSON();
         var foundProduct = this.findSimilarProduct(clone);
         if (_.isObject(foundProduct)) {
             foundProduct.set('quantity', parseInt(foundProduct.get('quantity') + quantity), 10);
         }
 
         if (_.isUndefined(foundProduct)) {
-            clone.toppings = this.getSelectedToppingsFromProduct(clone);
             clone.quantity = quantity;
 
             this.products.add(clone);
@@ -149,6 +149,15 @@ var VendorCartModel = Backbone.Model.extend({
         oldProduct.toppings = new ToppingCollection(newToppings);
 
         this._updateCart();
+    },
+
+    removeItem: function(productToRemove) {
+        var productInCart = this.findSimilarProduct(productToRemove);
+
+        if (productInCart) {
+            this.products.remove(productInCart);
+            this._updateCart();
+        }
     },
 
     getSelectedToppingsFromProduct: function(product) {
@@ -171,19 +180,16 @@ var VendorCartModel = Backbone.Model.extend({
     },
 
     findSimilarProduct: function(productToSearch) {
-        var clone = _.cloneDeep(productToSearch),
-            compareArrays = function(arr1, arr2) {
+        var compareArrays = function(arr1, arr2) {
             return _.isMatch(arr1, arr2) && _.isMatch(arr2, arr1);
         };
-
-        clone.toppings = new ToppingCollection(this.getSelectedToppingsFromProduct(productToSearch)).toJSON();
 
         return this.products.find(function(product) {
             product = product.toJSON();
 
-            var sameVariation = product.product_variation_id === clone.product_variation_id,
-                sameToppings = compareArrays(product.toppings, clone.toppings),
-                sameChoices = compareArrays(product.choices, clone.choices);
+            var sameVariation = product.product_variation_id === productToSearch.product_variation_id,
+                sameToppings = compareArrays(product.toppings, productToSearch.toppings),
+                sameChoices = compareArrays(product.choices, productToSearch.choices);
 
             return sameVariation && sameChoices && sameToppings;
         });
