@@ -25,11 +25,25 @@
     {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {type: 'hero', 'vendorCode' : vendor.code, 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
     <div class="hero-menu__info">
         <h2>{{ vendor.name }} <span>{{ vendor.description|lower }}</span></h2>
-        <p>Closing in 10 min. <span>8:00 AM – 5:00 PM</span></p>
+        {% set closingInMinutes = getClosingIn(vendor.schedules) %}
+        <p>
+            {% if (closingInMinutes <= 0) %}
+                <span class="line-wrapper">{{ 'Closed. Preorder available.'|trans }}</span>
+                <span>{{ getNextOpeningWeekDayNumber(vendor.schedules)|dayOfTheWeek }}
+                {{ getNextOpeningHours(vendor.schedules)|formatTime }} - {{ getNextClosingHours(vendor.schedules)|formatTime }}</span>
+            {% elseif (closingInMinutes < 60) %}
+                <span class="line-wrapper">Closing in {{ closingInMinutes }} min.</span>
+                <span>{{ getNextOpeningWeekDayNumber(vendor.schedules)|dayOfTheWeek }}
+                {{ getNextOpeningHours(vendor.schedules)|formatTime }} - {{ getNextClosingHours(vendor.schedules)|formatTime }}</span>
+            {% else %}
+                <span class="green-class">Open</span>
+                <span>{{ getOpeningTime(vendor.schedules)|formatTime }} – {{ getClosingTime(vendor.schedules)|formatTime }}</span>
+            {% endif %}
+        </p>
     </div>
     <div class="hero-menu__info-extra">
-        <i class="icon-pin-map"></i> Alte Schönhauser Str. 46
-        <i class="icon-call-phone"></i> 030 9929 6924
+        <i class="icon-pin-map"></i> {{ vendor.address }}
+        <i class="icon-call-phone"></i> {{ vendor.customerPhone }}
     </div>
 </div>
 <div class="menu-wrapper">
@@ -56,30 +70,30 @@
                     {% for menuCategory in vendor.menus.first.menuCategories %}
                         <h3 class="menu__items__title" id="menu__category-id-{{ menuCategory.id }}">{{ menuCategory.name }}</h3>
                         {% for product in menuCategory.products %}
+                            {# ------ Please toggle "menu__item--selected" class on click to style selected item  #}
                             <div class="menu__item" data-object='{{ serialize(product)|raw }}'>
-                                <div class="menu__item__name">
-                                    {{ product.name }}
-                                    {% if product.productVariations.first.name %}
-                                        <a href="#" class="btn-allergy">
-                                            <sup>{{ product.productVariations.first.name }}</sup>
-                                        </a>
-                                    {% endif %}
-                                </div>
-                                <div class="menu__item__description">
-                                    {{ product.description }}
+                                <div class="menu__item__wrapper">
+                                    <div class="menu__item__name">
+                                        {{ product.name }}
+                                        {% if product.productVariations.first.name %}
+                                            <a href="#" class="btn-allergy">
+                                                <sup>{{ product.productVariations.first.name }}</sup>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                    <div class="menu__item__description">
+                                        {{ product.description }}
+                                    </div>
                                 </div>
                                 <div class="menu__item__price">
                                     {{ product.productVariations.first.price|price }}
                                     <button class="menu__item__add"><i class="icon-plus"></i></button>
                                 </div>
                             </div>
+                            <div class="clearfix"></div>
                         {% endfor %}
                     {% endfor %}
-                    <div class="menu__icon-legend">
-                        <span><i class="icon-hot"></i>{{ 'Hot'|trans }}</span>
-                        <span><i class="icon-very-hot"></i>{{ 'Very hot'|trans }}</span>
-                        <span><i class="icon-vegetarian"></i>{{ 'Vegan'|trans }}</span>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -89,20 +103,20 @@
         <div class="menu__bottom-info__openings">
             <h3 class="menu__bottom-info__title">Opening hours</h3>
             <ul>
-                <li>Mon <span>10:00 AM - 8:00 PM</span></li>
-                <li>Tue <span>10:00 AM - 8:00 PM</span></li>
-                <li>Wed <span>10:00 AM - 8:00 PM</span></li>
-                <li>Thu <span>10:00 AM - 8:00 PM</span></li>
-                <li>Fri <span>10:00 AM - 8:00 PM</span></li>
-                <li>Sat <span>10:00 AM - 8:00 PM</span></li>
-                <li>Sun <span>10:00 AM - 8:00 PM</span></li>
+                {% for i in 1..7 %}
+                    {% set openingTime = getOpeningTime(vendor.schedules) %}
+                    {% if (null != openingTime) %}
+                        <li>
+                            {{ i|dayOfTheWeek }} <span>{{ openingTime|formatTime }} - {{ getClosingTime(vendor.schedules)|formatTime }}</span>
+                        </li>
+                    {% endif %}
+                {% endfor %}
             </ul>
         </div>
         <div class="menu__bottom-info__seo">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium alias aut dolorem earum fugit ipsa maxime modi nam officia optio, pariatur perferendis porro quae quaerat reiciendis, saepe sed totam, voluptates.  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium alias aut dolorem earum fugit ipsa maxime modi nam officia optio, pariatur perferendis porro quae quaerat reiciendis, saepe sed totam, voluptates.
         </div>
     </div>
-    <div class="clearfix"></div>
 </div>
 <div class="bottom-cart">
     <div class="bottom-cart__wrapper">
@@ -112,7 +126,7 @@
     </div>
 </div>
 
-{{ include('VoloFrontendBundle:Layout/Partial/templates:cart.html.twig') }}
-{{ include('VoloFrontendBundle:Layout/Partial/templates:toppings.html.twig') }}
+    {{ include('VoloFrontendBundle:Layout/Partial/templates:cart.html.twig') }}
+    {{ include('VoloFrontendBundle:Layout/Partial/templates:toppings.html.twig') }}
 
 {% endblock %}
