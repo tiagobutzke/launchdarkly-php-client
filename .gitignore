@@ -19,7 +19,7 @@
 
 # nodejs
 node_modules/*
-bower_components/*
+/web/bower_components/*
 
 # generated assets
 /src/Volo/FrontendBundle/Resources/public/js/dist/*

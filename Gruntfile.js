@@ -7,7 +7,7 @@ var _ = require('lodash');
 module.exports = function (grunt) {
 
     function frontendAssetPath(path) {
-        var assetsPath = 'src/Volo/FrontendBundle/Resources/public';
+        var assetsPath = 'web/bundles/volofrontend';
         return getPath(path, assetsPath);
     }
 
@@ -45,17 +45,17 @@ module.exports = function (grunt) {
     var jsSources = {};
 
     jsSources.head = [
-        'bower_components/jquery/dist/jquery.js',
+        'web/bower_components/jquery/dist/jquery.js',
         'web/bundles/heltheturbolinks/js/turbolinks.js',
         'web/js/lib/andr3pt-blazy.js',
         'web/bundles/fosjsrouting/js/router.js',
         'web/js/fos_js_routes.js',
         'web/thumbor/configuration.js',
-        'bower_components/lodash/lodash.js',
-        'bower_components/backbone/backbone.js',
-        'bower_components/geocomplete/jquery.geocomplete.js',
-        'bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/modal.js',
-        'bower_components/adyen-cse-js/js/adyen.encrypt.js',
+        'web/bower_components/lodash/lodash.js',
+        'web/bower_components/backbone/backbone-min.js',
+        'web/bower_components/geocomplete/jquery.geocomplete.js',
+        'web/bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/modal.js',
+        'web/bower_components/adyen-cse-js/js/adyen.encrypt.js',
         frontendAssetPath('/js/**/*.js')
     ];
 
@@ -93,8 +93,9 @@ module.exports = function (grunt) {
 
     config.sass = {
         options: {
+            loadPath: process.cwd(),
             style: 'compressed',
-            sourcemap: (env === 'dev') ? 'inline' : 'none'
+            sourcemap: (env === 'dev') ? 'file' : 'none'
         },
         siteBundleStyle: {
             files: [{
@@ -107,30 +108,25 @@ module.exports = function (grunt) {
     config.uglify = {
         options: {
             sourceMap: debug,
-            sourceMapIncludeSources: debug,
             compress: debug ? false : {
                 drop_console: true
             },
-            beautify: false,
+            beautify: debug,
             mangle: !debug
         },
         head: {
             src: jsSources.head,
-            dest: frontendWebPath('/js/dist/head.js'),
-            sourceMapRoot: frontendWebPath('/js/dist/head.js.map'),
-            sourceMapName: frontendWebPath('/js/dist/head.js.map')
+            dest: frontendWebPath('/js/dist/head.js')
         },
         intl: {
-            src: 'bower_components/intl/Intl.js',
-            dest: frontendWebPath('/js/dist/intl.js'),
-            sourceMapRoot: frontendWebPath('/js/dist/intl.js.map'),
-            sourceMapName: frontendWebPath('/js/dist/intl.js.map')
+            src: 'web/bower_components/intl/Intl.js',
+            dest: frontendWebPath('/js/dist/intl.js')
         }
     };
 
     config.copy = {
         main: {
-            src: 'bower_components/intl/locale-data/json/*',
+            src: 'web/bower_components/intl/locale-data/json/*',
             dest: frontendWebPath('/js/dist/intl/locale/'),
             expand: true,
             flatten: true,
@@ -142,15 +138,15 @@ module.exports = function (grunt) {
         options: {
             force: true,
             ignores: [
-                'bower_components/jquery/dist/jquery.js',
+                'web/bower_components/jquery/dist/jquery.js',
                 'web/bundles/heltheturbolinks/js/turbolinks.js',
                 'web/js/lib/andr3pt-blazy.js',
-                'bower_components/lodash/lodash.js',
-                'bower_components/backbone/backbone.js',
+                'web/bower_components/lodash/lodash.js',
+                'web/bower_components/backbone/backbone-min.js',
                 'web/bundles/fosjsrouting/js/router.js',
-                'bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/modal.js',
-                'bower_components/adyen-cse-js/js/adyen.encrypt.js',
-                'bower_components/intl/Intl.js'
+                'web/bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/modal.js',
+                'web/bower_components/adyen-cse-js/js/adyen.encrypt.js',
+                'web/bower_components/intl/Intl.js'
             ]
         },
         gruntfile: {
@@ -180,7 +176,7 @@ module.exports = function (grunt) {
                 'Gruntfile.js',
                 '<%= uglify.head.src %>'
             ],
-            tasks: ['copy', 'uglify', 'jshint']
+            tasks: ['uglify', 'jshint']
         }
     };
 
@@ -203,12 +199,12 @@ module.exports = function (grunt) {
         options: {
             specs: "spec/**/*Spec.js",
             vendor: [
-                'bower_components/jquery/dist/jquery.js',
-                'bower_components/lodash/lodash.js',
-                'bower_components/backbone/backbone.js',
+                'web/bower_components/jquery/dist/jquery.js',
+                'web/bower_components/lodash/lodash.js',
+                'web/bower_components/backbone/backbone.js',
                 'web/bundles/fosjsrouting/js/router.js',
                 'web/js/fos_js_routes.js',
-                'bower_components/blazy/blazy.js',
+                'web/bower_components/blazy/blazy.js',
                 'vendor/helthe/turbolinks/Resources/public/js/turbolinks.js'
             ]
         }
