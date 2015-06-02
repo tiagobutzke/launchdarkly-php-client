@@ -456,7 +456,7 @@ describe("A cart", function() {
         cart.getCart(vendor_id).addItem(cartItem.toJSON(), 1);
         expect(cart.getCart(vendor_id).products.length).toBe(1);
 
-        cart.getCart(vendor_id).removeItem(cartItem.toJSON());
+        cart.getCart(vendor_id).removeItem(cart.getCart(vendor_id).products.at(0));
         expect(cart.getCart(vendor_id).products.length).toBe(0);
     });
 
@@ -486,10 +486,10 @@ describe("A cart", function() {
         expect(cart.getCart(vendor_id).products.at(0).get('quantity')).toBe(1);
 
 
-        cart.getCart(vendor_id).increaseQuantity(cartItem.toJSON(), 2);
+        cart.getCart(vendor_id).increaseQuantity(cart.getCart(vendor_id).products.at(0), 2);
         expect(cart.getCart(vendor_id).products.at(0).get('quantity')).toBe(3);
 
-        cart.getCart(vendor_id).increaseQuantity(cartItem.toJSON(), -2);
+        cart.getCart(vendor_id).increaseQuantity(cart.getCart(vendor_id).products.at(0), -2);
         expect(cart.getCart(vendor_id).products.at(0).get('quantity')).toBe(1);
     });
 
@@ -518,13 +518,13 @@ describe("A cart", function() {
         cart.getCart(vendor_id).addItem(cartItem.toJSON(), 1);
         expect(cart.getCart(vendor_id).products.length).toBe(1);
 
-        cart.getCart(vendor_id).increaseQuantity(cartItem.toJSON(), -1);
+        cart.getCart(vendor_id).increaseQuantity(cart.getCart(vendor_id).products.at(0), -1);
         expect(cart.getCart(vendor_id).products.length).toBe(0);
 
         cart.getCart(vendor_id).addItem(cartItem.toJSON(), 1);
         expect(cart.getCart(vendor_id).products.length).toBe(1);
 
-        cart.getCart(vendor_id).increaseQuantity(cartItem.toJSON(), -2);
+        cart.getCart(vendor_id).increaseQuantity(cart.getCart(vendor_id).products.at(0), -2);
         expect(cart.getCart(vendor_id).products.length).toBe(0);
     });
 

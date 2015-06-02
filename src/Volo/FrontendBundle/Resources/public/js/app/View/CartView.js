@@ -73,15 +73,15 @@ var CartItemView = Backbone.View.extend({
     },
 
     _removeItem: function() {
-        this.cartModel.getCart(this.vendorId).removeItem(this.model.toJSON());
+        this.cartModel.getCart(this.vendorId).removeItem(this.model);
     },
 
     _decreaseQuantity: function() {
-        this.cartModel.getCart(this.vendorId).increaseQuantity(this.model.toJSON(), -1);
+        this.cartModel.getCart(this.vendorId).increaseQuantity(this.model, -1);
     },
 
     _increaseQuantity: function() {
-        this.cartModel.getCart(this.vendorId).increaseQuantity(this.model.toJSON(), 1);
+        this.cartModel.getCart(this.vendorId).increaseQuantity(this.model, 1);
     },
 
     _getAllToppingsWithSelection: function(cartToppings, menuToppings) {
