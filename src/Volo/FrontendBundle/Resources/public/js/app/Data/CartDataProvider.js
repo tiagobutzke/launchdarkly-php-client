@@ -13,6 +13,7 @@ var CartDataProvider = function() {
         return {
             "expedition_type": "delivery",
             "vouchers": [],
+            vendor_id: data.vendor_id,
             "products": data.products.map(function(item) {
                 return {
                     "vendor_id": data.vendor_id,

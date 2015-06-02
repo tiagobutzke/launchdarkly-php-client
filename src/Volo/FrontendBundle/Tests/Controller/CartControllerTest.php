@@ -14,6 +14,7 @@ class CartControllerTest extends VoloTestCase
         $body = [
             'expeditionType' => 'delivery',
             'vouchers' => [],
+            'vendor_id' => 9,
             'products' => [
                 [
                     'vendor_id' => 9,

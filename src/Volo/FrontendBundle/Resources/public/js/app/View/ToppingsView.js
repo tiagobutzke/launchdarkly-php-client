@@ -11,6 +11,7 @@ var ToppingOptionView = Backbone.View.extend({
 
     render: function() {
         this.$el.html(this.template(this.model.toJSON()));
+        this.$el.toggleClass('selected', this.model.get('selected'));
 
         return this;
     },
@@ -84,6 +85,7 @@ var ToppingsView = Backbone.View.extend({
         this.cartModel = options.cartModel;
         this.vendorId = options.vendorId;
         this.subViews = [];
+        this.productToUpdate = options.productToUpdate || null;
     },
 
     events: {
@@ -123,7 +125,13 @@ var ToppingsView = Backbone.View.extend({
 
         this.undelegateEvents(); //stop listening on events, very important!
         _.invoke(this.subViews, 'remove');
-        this.cartModel.getCart(this.vendorId).addItem(this.model.toJSON(), 1); //add product
+
+        if (this.productToUpdate) {
+            this.cartModel.getCart(this.vendorId).updateItem(this.productToUpdate, this.model.toJSON()); //modify product
+        } else {
+            this.cartModel.getCart(this.vendorId).addItem(this.model.toJSON(), 1); //add product
+        }
+
         $('#choices-toppings-modal').modal('hide'); //hide
     }
 });

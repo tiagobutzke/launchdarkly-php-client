@@ -5,13 +5,20 @@
 
 {# cart item #}
 <script type="text/template" id="template-cart-item">
+    <td class="summary__item__quantity_buttons">
+        <span class="icon-minus summary__item__minus"></span>
+        <span class="icon-plus summary__item__plus"></span>
+    </td>
     <td class="summary__item__quantity"><%= VOLO.formatNumber(quantity) %></td>
     <td class="summary__item__sign">x</td>
     <td class="summary__item__name">
         <%- name %>
         <span class="summary__extra__items"></span>
     </td>
-    <td class="summary__item__price"><%= VOLO.formatCurrency(total_price) %></td>
+    <td class="summary__item__price">
+        <span><%= VOLO.formatCurrency(total_price) %></span>
+    </td>
+    <td class="summary__item__remove icon-cancel-circled"></td>
 </script>
 {# cart #}
 <script type="text/template" id="template-cart">
