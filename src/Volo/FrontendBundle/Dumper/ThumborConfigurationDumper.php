@@ -27,12 +27,14 @@ class ThumborConfigurationDumper
         ];
 
         foreach ($this->transformations as $key => $transformer) {
-            if (false === strrpos($key, '_retina')) {
-                $content['breakpoints'][] = [
-                    'width' => $transformer['resize']['width'],
-                    'src' => 'data-src-' . $key,
-                    'mode' => 'viewport',
-                ];
+            if (false !== strpos($key, 'bp_')) {
+                if (false === strrpos($key, '_retina')) {
+                    $content['breakpoints'][] = [
+                        'width' => $transformer['resize']['width'],
+                        'src' => 'data-src-' . $key,
+                        'mode' => 'viewport',
+                    ];
+                }
             }
         }
         return sprintf('var volo_thumbor_transformations = %s;', json_encode($content));

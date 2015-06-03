@@ -36,16 +36,18 @@ class ThumborImageExtension extends \Twig_Extension
     {
         $output = [];
         foreach ($this->transformers as $key => $transformer) {
-            if (false === strrpos($key, '_retina')) {
-                $output[$key]['normal'] = [
-                    'key' => $key,
-                    'transformer' => $transformer,
-                ];
-            } else {
-                $output[substr($key, 0, strrpos($key, '_retina'))]['retina'] = [
-                    'key' => $key,
-                    'transformer' => $transformer,
-                ];
+            if (false !== strpos($key, 'bp_')) {
+                if (false === strrpos($key, '_retina')) {
+                    $output[$key]['normal'] = [
+                        'key' => $key,
+                        'transformer' => $transformer,
+                    ];
+                } else {
+                    $output[substr($key, 0, strrpos($key, '_retina'))]['retina'] = [
+                        'key' => $key,
+                        'transformer' => $transformer,
+                    ];
+                }
             }
         }
 
