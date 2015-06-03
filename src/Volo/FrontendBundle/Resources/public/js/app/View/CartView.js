@@ -58,11 +58,12 @@ var CartItemView = Backbone.View.extend({
             menuToppings = this._getMenuItemToppings(menuItemData),
             allToppingsWithSelection = this._getAllToppingsWithSelection(this.model.toppings.toJSON(), menuToppings);
 
-        this.model.toppings = new ToppingCollection(allToppingsWithSelection);
+        var clone = new CartItemModel(this.model.toJSON());
+        clone.toppings = new ToppingCollection(allToppingsWithSelection);
 
         var view = new ToppingsView({
             el: '.modal-dialogs',
-            model: new CartItemModel(this.model.toJSON()),
+            model: clone,
             cartModel: this.cartModel,
             vendorId: this.vendorId,
             productToUpdate: this.model
