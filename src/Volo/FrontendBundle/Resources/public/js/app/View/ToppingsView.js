@@ -1,34 +1,78 @@
+var ToppingOptionCommentView = Backbone.View.extend({
+    className: 'topping__header__comment',
+
+    initialize: function() {
+        this.template = _.template($('#template-topping-comment').html());
+    },
+
+    render: function() {
+        var optionsVisible = this.model.areOptionsVisible();
+
+        this.$el.html(this.template(this.model.toJSON()));
+        this.$('.topping__comment__help-text').toggle(optionsVisible || this.model._getSelectedItems().length === 0);
+        this.$('.topping__comment__selected_items_list').toggle(!optionsVisible);
+
+        return this;
+    }
+});
+
 var ToppingOptionView = Backbone.View.extend({
     className: 'topping-option',
 
     initialize: function() {
         this.template = _.template($('#template-topping-option').html());
+        this.$el.toggleClass('selected', this.model.isSelected());
     },
 
     events: {
-        click: 'toggleSelection'
+        'click': 'toggleSelection'
     },
 
     render: function() {
         this.$el.html(this.template(this.model.toJSON()));
-        this.$el.toggleClass('selected', this.model.get('selected'));
 
         return this;
     },
 
+    select: function(force) {
+        if (this.model.select(force)) {
+            this.$el.addClass('selected', true);
+            this.trigger('topping:validate');
+        }
+    },
+
+    unselect: function(force) {
+        if (this.model.unselect(force)) {
+            this.$el.removeClass('selected');
+            this.trigger('topping:validate');
+        }
+    },
+
     toggleSelection: function() {
-        this.model.toggleSelection();
-        this.$el.toggleClass('selected');
-        this.trigger('topping:validate');
+        if (this.model.isSelected()) {
+            this.unselect();
+        } else {
+            this.select();
+        }
+    },
+
+    remove: function() {
+        this.undelegateEvents();
+        Backbone.View.prototype.remove.apply(this, arguments);
     }
+
 });
 
 var ToppingView = Backbone.View.extend({
     className: 'topping',
 
     initialize: function() {
+        _.bindAll(this, '_unselectAllToppingOptions');
+
         this.template = _.template($('#template-topping').html());
+        this.subModels = [];
         this.subViews = [];
+        this.headerCommentSubView = null;
     },
 
     events: {
@@ -39,6 +83,8 @@ var ToppingView = Backbone.View.extend({
         this.$el.html(this.template(this.model.toJSON()));
         this._initToppingOptions();
         this._validate();
+        this._showOptions(this.model.areOptionsVisible());
+        this._renderToppingHeaderCommentView();
 
         return this;
     },
@@ -49,32 +95,72 @@ var ToppingView = Backbone.View.extend({
         toppingOptions.map(this._renderToppingOptionView, this);
     },
 
-    _renderToppingOptionView: function(toppingOption) {
+    _renderToppingOptionView: function(toppingOptionModel) {
         var view = new ToppingOptionView({
-            model: toppingOption
+            model: toppingOptionModel
         });
-        this.listenTo(view, 'topping:validate', this._validate, this);
-        this.subViews.push(toppingOption);
 
+        if(!this.model.isCheckBoxList()) {
+            this.listenTo(toppingOptionModel, 'toppingOption:beforeSelection', this._unselectAllToppingOptions);
+        }
+        this.listenTo(view, 'topping:validate', this._validate, this);
+        this.subModels.push(toppingOptionModel);
+        this.subViews.push(view);
         this.$('.topping__options').append(view.render().el);
     },
 
+    _renderToppingHeaderCommentView: function() {
+        this._removeHeaderCommentSubView();
+        this.headerCommentSubView = new ToppingOptionCommentView({
+            model: this.model
+        });
+        this.$('.topping__header__info').append(this.headerCommentSubView.render().el);
+    },
+
     _toggleOptions: function() {
-        this.model.set({optionsVisible: !this.model.get('optionsVisible')});
-        this.$('.topping__options').toggle(this.model.get('optionsVisible'));
+        this.setOptionsVisibility(!this.model.areOptionsVisible());
+    },
+
+    setOptionsVisibility: function(areVisible) {
+        if(areVisible !== this.model.areOptionsVisible()) {
+            if (areVisible) {
+                this.trigger('topping:openingOptions');
+            }
+            this.model.setOptionsVisibility(areVisible, true);
+            this._showOptions(areVisible);
+            this._renderToppingHeaderCommentView();
+            this.$('.topping__header__arrow').toggleClass('icon-down-open-big icon-up-open-big');
+        }
+    },
+
+    _showOptions: function(boolean) {
+        this.$el.toggleClass('optionsVisible', boolean);
+        this.$('.topping__options').toggle(boolean);
+        $(".portlet-header").toggleClass("ui-icon-plus ui-icon-minus");
+    },
+
+    _unselectAllToppingOptions: function() {
+        _.invoke(this.subViews, 'unselect', true);
     },
 
     _validate: function() {
-        var valid = this.model.isValid();
-
-        this.$('.topping__header').toggleClass('valid', valid);
-        this.$('.topping__header').toggleClass('invalid', !valid);
-
+        this.$('.topping__header').toggleClass('valid invalid', this.model.isValid());
+        this.$el.toggleClass('topicOptionCheckbox', this.model.isCheckBoxList());
+        this.$el.toggleClass('selection-required', this.model.isSelectionRequired());
         this.trigger('toppings:validate');
     },
 
+    _removeHeaderCommentSubView: function() {
+        if (this.headerCommentSubView && _.isFunction(this.headerCommentSubView.remove)) {
+            this.headerCommentSubView.remove();
+        }
+    },
+
     remove: function() {
+        _.invoke(this.subModels, 'remove');
         _.invoke(this.subViews, 'remove');
+        this._removeHeaderCommentSubView();
+        this.undelegateEvents();
         Backbone.View.prototype.remove.apply(this, arguments);
     }
 });
@@ -89,11 +175,13 @@ var ToppingsView = Backbone.View.extend({
     },
 
     events: {
-        'click .toppings-add__to__cart': '_addToCart'
+        'click .toppings-add__to__cart': '_addToCart',
+        'click .modal-close-button': '_closeModal'
     },
 
     render: function() {
         this.$el.html(this.template(this.model.toJSON()));
+        this.$('.modal-error-message').hide();
         this._initToppings();
         this._validate();
 
@@ -108,8 +196,9 @@ var ToppingsView = Backbone.View.extend({
         var view = new ToppingView({
             model: topping
         });
-        this.listenTo(view, 'toppings:validate', this._validate, this);
 
+        this.listenTo(view, 'toppings:validate', this._validate, this);
+        this.listenTo(view, 'topping:openingOptions', this._closeAllTopicOptions, this);
         this.subViews.push(view);
         this.$('.toppings').append(view.render().el);
     },
@@ -118,20 +207,33 @@ var ToppingsView = Backbone.View.extend({
         var valid = this.model.isValid();
 
         this.$('.toppings-add__to__cart').toggleClass('disabled', !valid);
+        if(valid) {
+            this.$('.modal-error-message').slideUp('fast');
+        }
+    },
+
+    _closeAllTopicOptions: function() {
+        _.invoke(this.subViews, 'setOptionsVisibility', false);
     },
 
     _addToCart: function() {
-        if (!this.model.isValid()) { return; }
+        if (!this.model.isValid()) {
+            this.$('.modal-error-message').slideDown('fast');
 
-        this.undelegateEvents(); //stop listening on events, very important!
-        _.invoke(this.subViews, 'remove');
+            return;
+        }
 
         if (this.productToUpdate) {
             this.cartModel.getCart(this.vendorId).updateItem(this.productToUpdate, this.model.toJSON()); //modify product
         } else {
             this.cartModel.getCart(this.vendorId).addItem(this.model.toJSON(), 1); //add product
         }
-
-        $('#choices-toppings-modal').modal('hide'); //hide
+        this._closeModal();
+    },
+    
+    _closeModal: function() {
+        this.undelegateEvents(); //stop listening on events, very important!
+        _.invoke(this.subViews, 'remove');
+        this.$('#choices-toppings-modal').modal('hide');
     }
 });

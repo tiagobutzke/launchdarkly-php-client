@@ -145,7 +145,7 @@ var CartView = Backbone.View.extend({
         this.stickOnTopCart = new StickOnTop({
             $container: this.$el,
             stickOnTopValueGetter: function() {
-                    return this.domObjects.$header.outerHeight();
+                return this.domObjects.$header.outerHeight();
             }.bind(this),
             startingPointGetter: function() {
                 return this.$el.offset().top;

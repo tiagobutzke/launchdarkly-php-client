@@ -231,6 +231,7 @@ describe("A cart", function() {
                 optionsVisible: false,
                 quantity_minimum: null,
                 quantity_maximum: null,
+                selectedOptions: [],
                 options: []
             }],
             choices: [{id: 1, name: 'choice 1'}],
