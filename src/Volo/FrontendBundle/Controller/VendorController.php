@@ -8,12 +8,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @Route("/restaurant")
+ */
 class VendorController extends Controller
 {
     /**
      * @Route(
-     *      "/restaurant/{code}/{urlKey}",
+     *      "/{code}/{urlKey}",
      *      name="vendor",
      *      requirements={
      *          "code": "([A-Za-z][A-Za-z0-9]{3})"
@@ -57,5 +61,28 @@ class VendorController extends Controller
             'cart' => $cart
         ];
 
+    }
+
+    /**
+     * @Route("/{code}", name="vendor_by_code")
+     * @Method({"GET"})
+     *
+     * @param string $code
+     *
+     * @return array
+     */
+    public function vendorByCodeAction($code)
+    {
+        try {
+            $vendor = $this->get('volo_frontend.provider.vendor')->find($code);
+        } catch (EntityNotFoundException $exception) {
+            throw $this->createNotFoundException('Vendor not found!', $exception);
+        }
+
+        return $this->redirectToRoute(
+            'vendor',
+            ['code' => $code, 'urlKey' => $vendor->getUrlKey()],
+            Response::HTTP_MOVED_PERMANENTLY
+        );
     }
 }
