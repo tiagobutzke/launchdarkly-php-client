@@ -74,11 +74,14 @@ var CheckoutDeliveryInformationView = Backbone.View.extend({
             this.$('#delivery_information_form').serialize()
         ).done(function (data) {
                 this.addresses = data;
+                this.addresses.sort(function(a, b) {
+                    return a.id - b.id;
+                });
 
                 this.showForm = false;
                 this.showList = false;
                 
-                this.render();
+                this.model.set('address_id', _.last(this.addresses).id);
             }.bind(this));
 
         event.preventDefault();
