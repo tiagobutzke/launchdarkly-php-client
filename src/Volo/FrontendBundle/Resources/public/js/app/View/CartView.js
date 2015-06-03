@@ -62,7 +62,7 @@ var CartItemView = Backbone.View.extend({
 
         var view = new ToppingsView({
             el: '.modal-dialogs',
-            model: this.model,
+            model: new CartItemModel(this.model.toJSON()),
             cartModel: this.cartModel,
             vendorId: this.vendorId,
             productToUpdate: this.model

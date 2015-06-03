@@ -11,6 +11,7 @@
                 </div>
                 <div class="modal-footer">
                     <a class="toppings-add__to__cart button">add to cart</a>
+                    {# quantity selector from toppings-product-quantity #}
                 </div>
                 <div class="modal-error-message">
                     <span class="icon-attention"></span> {{ 'Please make the requested selections.'|trans }}
@@ -19,6 +20,13 @@
             </div>
         </div>
     </div>
+</script>
+
+{# product quantity in modal #}
+<script type="text/template" id="toppings-product-quantity">
+    <span class="icon-minus product__quantity__decrease"></span>
+    <span class="product__quantity"><%- quantity %></span>
+    <span class="icon-plus product__quantity__increase"></span>
 </script>
 
 {# topping fragment #}

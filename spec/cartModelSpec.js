@@ -579,6 +579,90 @@ describe("A cart", function() {
         expect(cart.getCart(vendor_id).products.at(0).toppings.at(0).get('name')).toEqual('option 2');
     });
 
+    it('should update item quantity', function() {
+        var product = {
+            "is_half_type_available": false,
+            "id": 854,
+            "name": "Quick Chicken",
+            "code": null,
+            "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
+            "file_path": null,
+            "half_type": null,
+            "product_variations": [{
+                "id": 859,
+                "code": null,
+                "name": null,
+                "price": 7.9,
+                "price_before_discount": null,
+                "container_price": 0,
+                "choices": [
+                    {
+                        "id": 1,
+                        "name": "choice 1"
+                    }
+                ],
+                "toppings": [
+                    {
+                        "id": 10,
+                        "name": "topping 1",
+                        options: [{id: 1, selected: true, name: 'option 1'}]
+                    }
+                ]
+            }]
+        };
+
+        var cartItem = CartItemModel.createFromMenuItem(product);
+        var updatedItem = CartItemModel.createFromMenuItem(product);
+        updatedItem.set('quantity', 5);
+
+        cart.getCart(vendor_id).addItem(cartItem.toJSON(), 1);
+        expect(cart.getCart(vendor_id).products.at(0).get('quantity')).toEqual(1);
+        cart.getCart(vendor_id).updateItem(cart.getCart(vendor_id).products.at(0), updatedItem.toJSON());
+        expect(cart.getCart(vendor_id).products.at(0).get('quantity')).toEqual(5);
+    });
+
+    it('should remove item, if it is updated with 0 quantity', function() {
+        var product = {
+            "is_half_type_available": false,
+            "id": 854,
+            "name": "Quick Chicken",
+            "code": null,
+            "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
+            "file_path": null,
+            "half_type": null,
+            "product_variations": [{
+                "id": 859,
+                "code": null,
+                "name": null,
+                "price": 7.9,
+                "price_before_discount": null,
+                "container_price": 0,
+                "choices": [
+                    {
+                        "id": 1,
+                        "name": "choice 1"
+                    }
+                ],
+                "toppings": [
+                    {
+                        "id": 10,
+                        "name": "topping 1",
+                        options: [{id: 1, selected: true, name: 'option 1'}]
+                    }
+                ]
+            }]
+        };
+
+        var cartItem = CartItemModel.createFromMenuItem(product);
+        var updatedItem = CartItemModel.createFromMenuItem(product);
+        updatedItem.set('quantity', 0);
+
+        cart.getCart(vendor_id).addItem(cartItem.toJSON(), 1);
+        expect(cart.getCart(vendor_id).products.at(0).get('quantity')).toEqual(1);
+        cart.getCart(vendor_id).updateItem(cart.getCart(vendor_id).products.at(0), updatedItem.toJSON());
+        expect(cart.getCart(vendor_id).products.length).toBe(0);
+    });
+
     it('should return correct quantity of products', function() {
         var product = {
             "is_half_type_available": false,
