@@ -577,4 +577,51 @@ describe("A cart", function() {
         cart.getCart(vendor_id).updateItem(cart.getCart(vendor_id).products.at(0), updatedItem.toJSON());
         expect(cart.getCart(vendor_id).products.at(0).toppings.at(0).get('name')).toEqual('option 2');
     });
+
+    it('should return correct quantity of products', function() {
+        var product = {
+            "is_half_type_available": false,
+            "id": 854,
+            "name": "Quick Chicken",
+            "code": null,
+            "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
+            "file_path": null,
+            "half_type": null,
+            "product_variations": [{
+                "id": 859,
+                "code": null,
+                "name": null,
+                "price": 7.9,
+                "price_before_discount": null,
+                "container_price": 0,
+                "choices": [
+                    {
+                        "id": 1,
+                        "name": "choice 1"
+                    }
+                ],
+                "toppings": [
+                    {
+                        "id": 10,
+                        "name": "topping 1",
+                        options: [{id: 1, selected: true, name: 'option 1'}]
+                    }
+                ]
+            }]
+        };
+
+        var differentProduct = _.cloneDeep(product);
+        differentProduct.product_variations[0].id = 860;
+
+        var cartItem = CartItemModel.createFromMenuItem(product);
+        cart.getCart(vendor_id).addItem(cartItem.toJSON(), 1);
+
+        expect(cart.getCart(vendor_id).getProductsCount()).toBe(1);
+        cart.getCart(vendor_id).addItem(cartItem.toJSON(), 5);
+        expect(cart.getCart(vendor_id).getProductsCount()).toBe(6);
+
+        var differentCartItem = CartItemModel.createFromMenuItem(differentProduct);
+        cart.getCart(vendor_id).addItem(differentCartItem.toJSON(), 3);
+        expect(cart.getCart(vendor_id).getProductsCount()).toBe(9);
+    });
 });

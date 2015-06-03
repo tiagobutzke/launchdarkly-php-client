@@ -92,6 +92,15 @@ var VendorCartModel = Backbone.Model.extend({
         this.listenTo(this, 'change:orderTime', this._updateCart, this);
     },
 
+    getProductsCount: function() {
+        var count = 0;
+        this.products.each(function(product) {
+            count += product.get('quantity');
+        });
+
+        return parseInt(count, 10);
+    },
+
     _updateCart: function() {
         console.log('CartModel._updateCart ', this.cid);
         this.trigger('cart:dirty');

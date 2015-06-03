@@ -186,10 +186,22 @@ var CartView = Backbone.View.extend({
         this.listenTo(vendorCart, 'change:orderTime', this.renderTimePicker, this);
         this.listenTo(vendorCart.products, 'update', this.renderProducts, this);
         this.listenTo(vendorCart.products, 'update', this._toggleContainerVisibility, this);
+        this.listenTo(vendorCart.products, 'update', this._updateCartIcon, this);
+        this.listenTo(vendorCart.products, 'change', this._updateCartIcon, this);
         this.listenTo(vendorCart, 'cart:ready', this.renderSubTotal, this);
 
         // initializing cart height resize behaviour
         this.$window.on('resize', this._updateCartHeight).on('scroll', this._updateCartHeight);
+    },
+
+    _updateCartIcon: function() {
+        var productsCount = this.model.getCart(this.vendor_id).getProductsCount(),
+            $header = this.domObjects.$header,
+            productCounter = $header ? $header.find('.header__cart__products__count') : null;
+
+        if (productCounter) {
+            productCounter.text(productsCount);
+        }
     },
 
     disableCart: function() {
@@ -211,6 +223,7 @@ var CartView = Backbone.View.extend({
         this.stickOnTopCart.init(this.$('.desktop-cart-container'));
         this._updateCartHeight();
         this._toggleContainerVisibility();
+        this._updateCartIcon();
 
         return this;
     },
