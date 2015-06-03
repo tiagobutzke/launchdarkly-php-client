@@ -79,7 +79,8 @@ var VendorCartModel = Backbone.Model.extend({
         "minimum_order_amount": 0,
         "minimum_order_amount_difference": 0,
         "discount_text": null,
-        "orderTime": null
+        "orderTime": null,
+        "voucher": null
     },
     idAttribute: 'vendor_id',
 
@@ -88,8 +89,6 @@ var VendorCartModel = Backbone.Model.extend({
         this.products = new CartProductCollection();
         this._xhr = null;
         this.timeoutReference = null;
-
-        this.listenTo(this, 'change:orderTime', this._updateCart, this);
     },
 
     getProductsCount: function() {
@@ -101,8 +100,8 @@ var VendorCartModel = Backbone.Model.extend({
         return parseInt(count, 10);
     },
 
-    _updateCart: function() {
-        console.log('CartModel._updateCart ', this.cid);
+    updateCart: function() {
+        console.log('CartModel.updateCart ', this.cid);
         this.trigger('cart:dirty');
 
         if (this._xhr) {
@@ -116,22 +115,29 @@ var VendorCartModel = Backbone.Model.extend({
     },
 
     _sendRequest: function() {
-        var date = _.isDate(this.get('orderTime')) ? this.get('orderTime') : new Date();
-
-        this._xhr = this.collection.cart.dataProvider.calculateCart({
+        var data = {
             products: this.products.toJSON(),
             vendor_id: this.id,
-            orderTime: date.toISOString(),
             location: {
                 "location_type": "polygon",
                 "latitude": 52.5237282,
                 "longitude": 13.3908286
             }
-        }).done(function(calculatedData) {
+        };
+
+        data.orderTime = _.isDate(this.get('orderTime')) ? this.get('orderTime').toISOString() : new Date().toISOString();
+        data.voucher = _.isString(this.get('voucher')) ? [this.get('voucher')] : [];
+
+        this._xhr = this.collection.cart.dataProvider.calculateCart(data).done(function(calculatedData) {
             this.collection.cart.parse(calculatedData);
             this.trigger('cart:ready');
+            console.log('cart:ready fired');
             this._xhr = null;
             this.timeoutReference = null;
+        }.bind(this)).error(function(jqXHR) {
+            this.trigger('cart:error', jqXHR.responseJSON);
+            console.log('cart:error fired');
+            this.trigger('cart:ready');
         }.bind(this));
     },
 
@@ -151,19 +157,19 @@ var VendorCartModel = Backbone.Model.extend({
             this.products.add(clone);
         }
 
-        this._updateCart();
+        this.updateCart();
     },
 
     updateItem: function(oldProduct, newProduct) {
         var newToppings = this.getSelectedToppingsFromProduct(newProduct);
         oldProduct.toppings.set(newToppings);
 
-        this._updateCart();
+        this.updateCart();
     },
 
     removeItem: function(productToRemove) {
         this.products.remove(productToRemove);
-        this._updateCart();
+        this.updateCart();
     },
 
     increaseQuantity: function(product, quantityDifference) {
@@ -176,7 +182,7 @@ var VendorCartModel = Backbone.Model.extend({
             product.set('quantity', newQuantity);
         }
 
-        this._updateCart();
+        this.updateCart();
     },
 
     getSelectedToppingsFromProduct: function(product) {
@@ -279,6 +285,11 @@ var CartModel = Backbone.Model.extend({
                 this.getCart(vendorCart.vendor_id).products.set(vendorCart.products);
                 delete vendorCart.products;
                 this.getCart(vendorCart.vendor_id).set(vendorCart);
+                this.getCart(vendorCart.vendor_id).set(
+                    'voucher',
+                    cart.voucher.length > 0 ? cart.voucher[0].code : null
+                );
+                this.getCart(vendorCart.vendor_id).set('orderTime', new Date(cart.orderTime));
             }, this);
 
             //clear all carts

@@ -1,10 +1,16 @@
 {% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
 
-{% block content %}
-    {{ order.status|trans }}<br>
-    {{ order.amount|number_format }}<br>
-    {{ order.currency_code }}<br>
-    {{ order.reference }}<br>
-    {{ order.description }}<br>
-    {{ order.vendor_code }}
-{% endblock %}
+{% block content %}<div class="checkout-wrapper">
+    <div class="checkout">
+        <div class="checkout__main">
+            <div class="checkout__main">
+                <span>{{ order.status|trans }}</span>
+                <span>{{ order.amount|number_format }}</span>
+                <span>{{ order.currency_code }}</span>
+                <span>{{ order.reference }}</span>
+                <span>{{ order.description }}</span>
+                <span>{{ order.vendor_code }}</span>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

@@ -11,11 +11,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Volo\FrontendBundle\Security\Token;
+use Volo\FrontendBundle\Service\CustomerLocationService;
+use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
 
 /**
  * @Route("/checkout")
@@ -52,15 +55,21 @@ class CheckoutController extends Controller
         if ($request->getMethod() === Request::METHOD_POST) {
             $address = $request->request->get('customer_address');
 
-            $this->get('session')->set($sessionDeliveryKey, $address);
+            $request->getSession()->set($sessionDeliveryKey, $address);
             
             return $this->redirect($this->generateUrl('checkout_contact_information', ['vendorCode' => $vendorCode]));
         }
 
+        $address = $request->getSession()->get($sessionDeliveryKey, []);
+        $customerLocationService = $this->get('volo_frontend.service.customer_location');
+        $defaultAddress = [
+            'postcode' => $customerLocationService->get($request->getSession()->getId())[CustomerLocationService::KEY_PLZ],
+            'city' => $vendor->getCity()->getName()
+        ];
         $cartManager = $this->get('volo_frontend.service.cart_manager');
         return [
             'cart'             => $cartManager->calculateCart($this->getCart($vendor)),
-            'customer_address' => $this->get('session')->get($sessionDeliveryKey),
+            'customer_address' => $defaultAddress + $address,
             'vendor'           => $vendor,
         ];
     }
@@ -77,6 +86,8 @@ class CheckoutController extends Controller
      */
     public function contactInformationAction(Request $request, $vendorCode)
     {
+        $errorMessages = [];
+
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirectToRoute('checkout_payment', ['vendorCode' => $vendorCode]);
         }
@@ -92,16 +103,30 @@ class CheckoutController extends Controller
         }
 
         if ($request->getMethod() === Request::METHOD_POST) {
-            $this->get('session')->set(
-                sprintf(static::SESSION_CONTACT_KEY_TEMPLATE, $vendorCode),
-                $request->request->get('customer')
-            );
+            $customerData = $request->request->get('customer');
+            try {
+                $parsedNumber = $this->get('volo_frontend.service.phone_number')
+                    ->parsePhoneNumber($customerData['mobile_number']);
 
-            return $this->redirect($this->generateUrl('checkout_payment', ['vendorCode' => $vendorCode]));
+                $customerData['mobile_number'] = $parsedNumber->getNationalNumber();
+                $customerData['mobile_country_code'] = '+' . $parsedNumber->getCountryCode();
+            } catch (PhoneNumberValidationException $e) {
+                $errorMessages[] = $this->get('translator')->trans(sprintf('%s: %s', 'Phone number', $e->getMessage()));
+            }
+
+            if (count($errorMessages) === 0) {
+                $this->get('session')->set(
+                    sprintf(static::SESSION_CONTACT_KEY_TEMPLATE, $vendorCode),
+                    $customerData
+                );
+
+                return $this->redirect($this->generateUrl('checkout_payment', ['vendorCode' => $vendorCode]));
+            }
         }
 
         $cart = $this->getCart($vendor);
         return [
+            'errorMessages'    => $errorMessages,
             'cart'             => $this->get('volo_frontend.service.cart_manager')->calculateCart($cart),
             'vendor'           => $vendor,
             'customer_address' => $this->get('session')->get(
@@ -164,6 +189,11 @@ class CheckoutController extends Controller
 
             $addresses = $customerProvider->getAddresses($token->getAccessToken());
 
+            $customerLocationService = $this->get('volo_frontend.service.customer_location');
+            $viewData['default_address'] = [
+                'postcode' => $customerLocationService->get($session->getId())[CustomerLocationService::KEY_PLZ],
+                'city' => $vendor->getCity()->getName()
+            ];
             $viewData['customer_addresses'] = $serializer->normalize($addresses)['items'];
             $viewData['customer']           = $serializer->normalize($token->getAttributes()['customer']);
             $viewData['customer_cards']     = $customerProvider->getAdyenCards($token->getAccessToken())['items'];
@@ -212,13 +242,10 @@ class CheckoutController extends Controller
         $accessToken = $this->get('security.token_storage')->getToken()->getAccessToken();
         $address     = $serializer->denormalize($request->request->get('customer_address'), Address::class);
 
-        $address   = $this->get('volo_frontend.provider.customer')->createAddress($accessToken, $address);
+        $this->get('volo_frontend.provider.customer')->createAddress($accessToken, $address);
         $addresses = $this->get('volo_frontend.provider.customer')->getAddresses($accessToken);
 
-        return [
-            'customer_addresses' => $serializer->normalize($addresses)['items'],
-            'selected_address'   => $serializer->normalize($address)
-        ];
+        return new JsonResponse($serializer->normalize($addresses)['items']);
     }
 
     /**
@@ -232,19 +259,10 @@ class CheckoutController extends Controller
      */
     public function editContactInformationAction(Request $request)
     {
-        $serializer  = $this->get('volo_frontend.api.serializer');
-        $accessToken = $this->get('security.token_storage')->getToken()->getAccessToken();
-        $customer    = $serializer->denormalize($request->request->get('customer'), Customer::class);
-
-        $customer = $this->get('volo_frontend.provider.customer')->updateCustomer($accessToken, $customer);
-
-        $username = sprintf('%s %s', $customer->getFirstName(), $customer->getLastName());
-        $token = new Token($username, ['customer' => $customer], ['ROLE_CUSTOMER']);
-        $token->setAttribute('tokens', new AccessToken($customer->getToken(), 'bearer'));
-        $this->get('security.token_storage')->setToken($token);
+        $customer = $this->get('volo_frontend.service.customer')->updateCustomer($request->request->get('customer'));
 
         return [
-            'customer' => $serializer->normalize($customer),
+            'customer' => $this->get('volo_frontend.api.serializer')->normalize($customer),
         ];
     }
 
@@ -281,9 +299,24 @@ class CheckoutController extends Controller
             $token       = $this->get('security.token_storage')->getToken();
             $customerAddressId = $request->request->get('customer_address_id');
             $order             = $orderManager->placeOrder($token->getAccessToken(), $customerAddressId, $cart);
-            $encryptedData     = $request->request->get('adyen-encrypted-data');
 
-            $orderManager->payment($token->getAccessToken(), $order, $encryptedData);
+            switch (true) {
+                case $request->request->has('adyen_encrypted_data'):
+                    $order['encrypted_payment_data'] = $request->request->get('adyen_encrypted_data');
+                    break;
+
+                case $request->request->has('credit_card_id'):
+                    $order['credit_card_id'] = $request->request->get('credit_card_id');
+                    break;
+
+                default:
+                    throw new HttpException(
+                        Response::HTTP_BAD_REQUEST,
+                        'No recurring or CSE payment information provided'
+                    );
+            }
+
+            $orderManager->payment($token->getAccessToken(), $order);
         } else {
             $session = $this->get('session');
             $guestCustomer = $this->get('volo_frontend.service.customer')->createGuestCustomer(
@@ -292,7 +325,7 @@ class CheckoutController extends Controller
             );
             $order         = $orderManager->placeGuestOrder($guestCustomer, $cart);
 
-            $encryptedData = $request->request->get('adyen-encrypted-data');
+            $encryptedData = $request->request->get('adyen_encrypted_data');
             $orderManager->guestPayment($order, $encryptedData);
         }
 

@@ -125,20 +125,33 @@ class OrderManagerService
 
         return $this->orderProvider->guestPayment($paymentRequest);
     }
-    
+
     /**
-     * @param string $adyenEncryptedData
-     * @param array  $order
+     * @param AccessToken $accessToken
+     * @param array       $order
      *
      * @return array
      */
-    public function payment(AccessToken $accessToken, array $order, $adyenEncryptedData)
+    public function payment(AccessToken $accessToken, array $order)
     {
         $paymentRequest = [
             'order_code'             => $order['code'],
             'amount'                 => $order['total_value'],
-            'encrypted_payment_data' => $adyenEncryptedData,
         ];
+
+        switch (true) {
+            case array_key_exists('credit_card_id', $order):
+                $paymentRequest['credit_card_id'] = $order['credit_card_id'];
+                break;
+
+            case array_key_exists('encrypted_payment_data', $order):
+                $paymentRequest['encrypted_payment_data']      = $order['encrypted_payment_data'];
+                $paymentRequest['is_credit_card_store_active'] = 'true';
+                break;
+
+            default:
+                throw new \RuntimeException('No recurring or CSE payment information provided');
+        }
 
         return $this->orderProvider->payment($accessToken, $paymentRequest);
     }

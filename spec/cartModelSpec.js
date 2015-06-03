@@ -27,6 +27,8 @@ describe("A cart", function() {
             "delivery_fee_discount": 0,
             "service_tax_total": 0,
             "service_fee_total": 0,
+            "voucher": [],
+            "orderTime": "2015-06-01T05:26:57-07:00",
             "vendorCart": [
                 {
                     "subtotal": 7.9,
@@ -53,8 +55,7 @@ describe("A cart", function() {
                     "minimum_order_amount_difference": 2.1,
                     "discount_text": null
                 }
-            ],
-            "voucher": []
+            ]
         };
         jasmine.clock().install();
 
@@ -83,8 +84,10 @@ describe("A cart", function() {
 
             return {
                 done: function (callback) {
-                    return callback(_.cloneDeep(response));
-                }
+                    callback(_.cloneDeep(response));
+
+                    return {error: function() {}};
+                }.bind(this)
             }
         });
     });

@@ -1,36 +1,47 @@
 {% extends 'VoloFrontendBundle:Checkout:base.html.twig' %}
 
 {% block delivery_information %}
-    <h3 class="checkout__title">1. {% trans %}Delivery details{% endtrans %}
-        <span class="checkout__subtitle__edit">
-            <i class="icon-pencil"></i>
-            <a id="add_new_address_link" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">
-                {% trans %}Addnew{% endtrans %}
-            </a>
-        </span>
-    </h3>
+    <div class="{% if is_granted('IS_AUTHENTICATED_FULLY') %}checkout-delivery-component{% endif %}">
+        <h3 class="checkout__title">1. {% trans %}Delivery details{% endtrans %}
+            <span class="checkout__subtitle__edit">
+                {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <i class="icon-pencil"></i>
+                    <a id="add_new_address_link" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">
+                        {% trans %}Edit{% endtrans %}
+                    </a>
+                {% endif %}
+            </span>
+        </h3>
 
-    <h4 class="checkout__subtitle">{% trans %}Delivery Address{% endtrans %}</h4>
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        {% if customer_addresses|length > 0 %}
-            {% if customer_addresses|length > 1 %}
-                <a id="select_other_address_link" href="#">select other</a>
-                <div id="delivery-information-list" class="hide">
-                    {% set selected_address = customer_addresses|last %}
-                    {% include('VoloFrontendBundle:Checkout/Partial:delivery_information_list.html.twig') %}
-                </div>
-            {% endif %}
-
-            {% set customer_address = customer_addresses|first %}
-            {% include('VoloFrontendBundle:Checkout/Partial:delivery_information_edit.html.twig') %}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <h4 class="checkout__subtitle">{% trans %}Delivery Time{% endtrans %}
+                <a id="add_new_address_link" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">
+                    {% trans %}link.add_new_address{% endtrans %}
+                </a>
+            </h4>
+            <div class="time-picker" data-vendor_id="{{ vendor.id }}">
+                {% include('VoloFrontendBundle:Layout/Partial/templates:timepicker.html.twig') %}
+            </div>
         {% endif %}
 
-        <div id="add_new_address_form" class="hide">
-            {% include 'VoloFrontendBundle:Checkout/Partial:delivery_information_form.html.twig' with {'vendor' : vendor} only %}
-        </div>
-    {% else %}
-        {% include('VoloFrontendBundle:Checkout/Partial:delivery_information_edit.html.twig') %}
-    {% endif %}
+        <h4 class="checkout__subtitle">{% trans %}Delivery Address{% endtrans %}</h4>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div class="checkout__item">
+                <div id="delivery-information-list-wrapper">
+                    <a id="select_other_address_link" href="#">Select other</a>
+                    <div class="selected-address"></div>
+                    <div id="delivery-information-list" class="checkout__item" data-addresses='{{ customer_addresses|json_encode|raw }}'></div>
+                    {% include('VoloFrontendBundle:Layout/Partial/templates:checkout_address.html.twig') %}
+                </div>
+
+                <div id="add_new_address_form" class="hide">
+                    {% include 'VoloFrontendBundle:Checkout/Partial:delivery_information_form.html.twig' with {'vendor' : vendor, 'customer_address': default_address} only %}
+                </div></div>
+            
+        {% else %}
+            {% include('VoloFrontendBundle:Checkout/Partial:delivery_information_edit.html.twig') %}
+        {% endif %}
+    </div>
 {% endblock %}
 
 {% block contact_information %}
@@ -50,103 +61,117 @@
 
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <div id="edit_contact_information_form" class="hide">
-            {% include('VoloFrontendBundle:Checkout/Partial:contact_information_form.html.twig') %}
+            {% include('VoloFrontendBundle:Checkout/Partial:contact_information_form.html.twig') with {action: '#'} %}
         </div>
     {% endif %}
 {% endblock %}
 
 {% block payment %}
+    <h3 class="checkout__title">3. {% trans %}Payment{% endtrans %}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <span class="checkout__subtitle__edit">
+                        <i class="icon-pencil"></i>
+                        <a id="add_new_credit_card_link" href="#">{% trans %}Addnew{% endtrans %}</a>
+                    </span>
+        {% endif %}
+    </h3>
+
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        {% include('VoloFrontendBundle:Checkout/Partial:payment_list.html.twig') %}
+    <div class="checkout__item">{% include('VoloFrontendBundle:Checkout/Partial:payment_list.html.twig') %}</div>
     {% endif %}
 
     {% include('VoloFrontendBundle:Checkout/Partial:payment_form.html.twig') %}
     
-    <button id="finish-and-pay" class="button pull-right">{% trans %}finish_and_pay{% endtrans %}</button>
+    <div class="voucher-component" data-vendor_id="{{ vendor.id }}">
+       <div class="checkout__item"><a href="#" id="add_voucher_link">{% trans %}Have a voucher?{% endtrans %}</a></div>
 
+        <form action="#" id="voucher_form" role="form" class="hide">
+            <div class="checkout__item">
+                <div class="form-group form-group--two_col1--xs-full">
+                    <input type="text" class="form-control" id="voucher" name="voucher"
+                           required="true" placeholder="{% trans %}Please enter voucher code{% endtrans %}">
+                    <span class="error_msg error_invalid_voucher"><i class="icon-attention"></i> {% trans %}Error! Invalid voucher{% endtrans %}</span>
+                </div>
+                <div class="form-group form-group--two_col2--xs-full"> <button class="button pull-left">{% trans %}Continue{% endtrans %}</button></div>
+            </div>
+        </form>
+        <div id="voucher-wrapper" class="checkout__item hide">{% trans %}Voucher: {% endtrans %}
+            <b id="voucher-text"></b>
+            <a href="#" id="remove_voucher_link">{% trans %}Remove{% endtrans %}</a>
+        </div>
+    </div>
+
+    <div class="checkout-button checkout__submit" data-is_guest_user="{{ is_granted('IS_AUTHENTICATED_FULLY') ? 'false' : 'true'}}">
+        <button id="finish-and-pay" class="button">{% trans %}finish_and_pay{% endtrans %}</button>
+    </div>
+    <div class="checkout__disclaimer"> By completing this order, I accept the <a href="#1">Terms & Conditions</a> and our <a href="#1">Privacy Policy</a></div>
+    <div class="clearfix"></div>
+{% endblock %}
+
+{% block footer_scripts %}
+    {{ parent() }}
+    
     <script data-turbolinks-eval=false>
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        $('#add_new_address_link').click(function (event) {
-            $('#add_new_address_form').toggleClass('hide');
-            event.preventDefault();
-        });
-
-        $('#delivery_information_form').on('submit', function (event) {
-            $.post(
-                    Routing.generate('checkout_create_address'),
-                    $('#delivery_information_form').serialize()
-            ).done(function (data) {
-                        $('#delivery-information-list').html(data);
-                        $('#delivery_information_form').toggleClass('hide');
-                        $('#delivery-information-list').toggleClass('hide');
-                        $("input:radio[name='selected_address']:checked").click();
-                    });
-
-            // replace the list with the new list from the POST request
-            event.preventDefault();
-        });
-
-        $('#edit_contact_information_form_link').click(function () {
-            $('#edit_contact_information_form').toggleClass('hide');
-            event.preventDefault();
-        });
-
-        $('#contact_information_form').on('submit', function (event) {
-            $.post(
-                    Routing.generate('checkout_edit_contact_information'),
-                    $('#contact_information_form').serialize()
-            ).done(function (data) {
-                        $('#contact_information').html(data);
-                        $('#contact_information_form').toggleClass('hide');
-                    });
-
-            // replace the list with the new list from the POST request
-            event.preventDefault();
-        });
+            $('#edit_contact_information_form_link').click(function () {
+                $('#edit_contact_information_form').toggleClass('hide');
+                event.preventDefault();
+            });
+    
+            $('#contact_information_form').on('submit', function (event) {
+                $.post(
+                        Routing.generate('checkout_edit_contact_information'),
+                        $('#contact_information_form').serialize()
+                ).done(function (data) {
+                            $('#contact_information').html(data);
+                            $('#contact_information_form').toggleClass('hide');
+                        });
+    
+                // replace the list with the new list from the POST request
+                event.preventDefault();
+            });
+    
+            $('#add_new_credit_card_link').click(function () {
+                    $('#payment_form').toggleClass('hide');
+                    if (!$('#payment_form').hasClass('hide')) {
+                        $('input[name="credit_card"]').attr("checked", false);
+                        VOLO.checkoutModel.set('credit_card_id', null);
+                    }
+                });
+    
+            $('input[name="credit_card"]').click(function(){
+                $('#payment_form').addClass('hide');
+                VOLO.checkoutModel.set('credit_card_id', $("input:radio[name='credit_card']:checked").val());
+            });
         {% endif %}
 
-        $('#select_other_address_link').click(function () {
-            $('#delivery-information-list').toggleClass('hide');
-        });
-
-        $("#delivery-information-list").on('click', "input:radio[name='selected_address']", function () {
-            if ($(this).is(':checked')) {
-                $('#selected_delivery_address').html($('.delivery_address[data-address-id="' + $(this).val() + '"]').html());
-                $('#delivery-information-list').toggleClass('hide');
-            }
-        });
-
-        $('#finish-and-pay').click(function () {
+        $('#payment_form input').on('keyup', function () {
             var encryptedForm = adyen.encrypt.createEncryptedForm(
                     document.getElementById('payment_form'),
                     '{{ adyen_public_key }}',
                     {cardTypeElement: document.getElementById('cardType')}
             );
 
-            var newCreditCardFormIsOpen = true;
+            var isComplete = !$("#payment_form input").filter(function() { return $(this).val() == ""; }).length;
+            VOLO.checkoutModel.set('adyen_encrypted_data', isComplete ? encryptedForm.encrypt() : null);
+        });
 
-            if (newCreditCardFormIsOpen) {
-                var checkoutForm = $('#payment_form'),
-                        selectedAddress = $("input:radio[name='selected_address']:checked").val();
-
-
-                if (!_.isUndefined(selectedAddress)) {
-                    checkoutForm.append($('<input/>', {
-                        type: 'hidden',
-                        name: "customer_address_id",
-                        value: selectedAddress
-                    }));
-                }
-                checkoutForm.append($('<input/>', {
-                    type: 'hidden',
-                    name: "adyen-encrypted-data",
-                    value: encryptedForm.encrypt()
-                }));
-
-                checkoutForm.submit();
-            } else {
-
+        $('#finish-and-pay').click(function (event) {
+            if(!VOLO.checkoutModel.isValid()) {
+                return event.preventDefault();
             }
+
+            var checkoutForm = $('#payment_form');
+            var paymentData = checkoutForm.hasClass('hide') ? "credit_card_id" : "adyen_encrypted_data" ;
+            checkoutForm.append(
+                $('<input/>', {type: 'hidden', name: paymentData, value: VOLO.checkoutModel.get(paymentData)})
+            );
+            if (!VOLO.checkoutModel.get('is_guest_user')) {
+                checkoutForm.append(
+                    $('<input/>', {type: 'hidden', name: "customer_address_id", value: VOLO.checkoutModel.get('address_id')})
+                );
+            }
+            checkoutForm.submit();
         });
     </script>
 {% endblock %}

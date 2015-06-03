@@ -1,6 +1,8 @@
 {% for card in customer_cards %}
-    <label>
-        <input type="radio" name="selected_address" value="{{ card.id }}"/>
-        {{ card.card_number }} {{ card.holder_name }}, {{ card.expiration_date }}
-    </label>
+    <div class="checkout__list">
+        <label>
+            <input type="radio" name="credit_card" value="{{ card.id }}"/>
+            <div class="checkout__list__items">{{ card.number }} {{ card.holder_name }}, {{ card.expiry_month }}/{{ card.expiry_year }}</div>
+        </label>
+    </div>
 {% endfor %}

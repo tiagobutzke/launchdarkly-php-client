@@ -24,7 +24,6 @@
             {{ block('contact_information') }}
 
             {# Payment #}
-            <h3 class="checkout__title">3. {% trans %}Payment{% endtrans %}</h3>
             {{ block('payment') }}
 
             {# Order summary mobile #}
@@ -94,9 +93,6 @@
             <div class="summary__foot__delivery__price">+ 5,00 &euro;</div>
             <div class="summary__foot__total__label">Total (inkl. VAT)</div>
             <div class="summary__foot__total__price">15,12 &euro;</div>
-            <div class="summary__foot__disclaimer">
-                By completing this order, I accept the <a href="#1">Terms & Conditions</a> and our <a href="#1">Privacy Policy</a>
-            </div>
         </div>
         {# Order summary desktop #}
         <div class="desktop-cart" data-vendor_id="{{ vendor.id }}">{# cart from template #}</div>

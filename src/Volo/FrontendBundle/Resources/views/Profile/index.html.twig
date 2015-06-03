@@ -1,0 +1,53 @@
+{% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
+
+{% block content_wrapper_class %}menu-bg{% endblock content_wrapper_class %}
+
+{% block headerClass %}header--white header-small{% endblock headerClass %}
+
+{% block content %}
+    <div class="profile-wrapper">
+        <div class="profile">
+            <div class="profile__main">
+                <h3 class="profile__title">{% trans %}title.my_profile{% endtrans %}</h3>
+                {% for message in errorMessages %}
+                    <div class="error_msg"><i class="icon-attention"></i> {{ message }}</div>
+                {% endfor %}
+                {% include 'VoloFrontendBundle:Checkout/Partial:contact_information_form.html.twig' with {action: path('profile_index')} %}
+            </div>
+            <div class="profile__main">
+                <h3 class="profile__title">{% trans %}title.my_password{% endtrans %}</h3>
+                <div class="checkout__item">
+                    <form action="{{ path('profile_update_password') }}" id="contact_information_form" method="post" role="form">
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="old_password" name="password_form[old_password]" value="" required="true" placeholder="{% trans %}form.label.current_password{% endtrans %}">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="new_password" name="password_form[new_password]" value="" required="true" placeholder="{% trans %}form.label.newpassword{% endtrans %}">
+                        </div>
+                        <button class="button pull-right">{% trans %}button.label.continue{% endtrans %}</button>
+                    </form>
+                </div>
+            </div>
+            <div class="profile__main profile__main--list">
+                <h3 class="profile__title">{% trans %}title.my_addresses{% endtrans %}
+                    <span class="checkout__subtitle__edit">
+                     <i class="icon-pencil"></i>
+                        <a href="#">Addnew</a>
+                    </span>
+                </h3>
+                    {% include 'VoloFrontendBundle:Checkout/Partial:delivery_information_list.html.twig' %}
+            </div>
+            <div class="profile__main  profile__main--list">
+                <h3 class="profile__title">{% trans %}title.payment_list{% endtrans %}</h3>
+
+
+                    {% include 'VoloFrontendBundle:Checkout/Partial:payment_list.html.twig' %}
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+{% endblock %}

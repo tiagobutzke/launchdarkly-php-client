@@ -1,9 +1,13 @@
 .checkout-wrapper {
-  margin-top:  $header-height-small;
   padding-bottom: $top-cart-height / 2;
   @include respond-from("screen-md") {
     @include fluid-container();
     padding-bottom: 0;
+  }
+
+  .desktop-cart {
+    @include make-md-column(3);
+    @extend .col-md-push-1;
   }
 }
 
@@ -16,12 +20,13 @@
 
 .checkout__main {
   background-color: $color-bg-primary;
+  margin-top:  $header-height-extra-small;
   @include respond-from("screen-md") {
-    @include make-md-column(8);
-    @include make-lg-column(9);
-    margin-top: $grid-gutter-width;
+    @include make-md-column(7);
+    @extend .col-md-push-1;
+    margin-top: $header-height-small + $grid-gutter-width;
     margin-bottom: $grid-gutter-width;
-    padding: $grid-gutter-width;
+    padding: 0;
   }
 }
 
@@ -29,8 +34,7 @@
   @include clearfix;
   padding: 0 $grid-gutter-width / 2 $grid-gutter-width / 2;
   @include respond-from("screen-md") {
-    padding: 0 0 $grid-gutter-width;
-    border-bottom: $dropdown-border;
+    padding: 0 $grid-gutter-width $grid-gutter-width;
   }
 }
 
@@ -38,33 +42,54 @@
 
 .checkout__title {
   font-family: $bold-font-family;
-  font-size: 0.750em;
-  padding: $grid-gutter-width / 2;
+  font-size: 0.875em;
+  padding: $space-sm $grid-gutter-width / 2;
   line-height: normal;
   background-color: $color-bg-secondary;
+  border-top: $dropdown-border;
   border-bottom: $dropdown-border;
   margin: 0;
   text-transform: uppercase;
   position: relative;
   @include respond-from("screen-md") {
-    padding: $grid-gutter-width / 2 0;
-    font-size: 0.875em;
+    padding: $grid-gutter-width;
+    font-size: 0.93em;
     background-color: transparent;
-    border: none;
+    border-bottom: none;
+    margin-bottom: 0;
   }
+
+  &:first-child {
+    border-top: none;
+  }
+}
+
+.checkout__title--step {
+  color: $color-text-light;
+  margin-bottom: 0;
+  border-top: none;
+  @include respond-from("screen-md") {
+    border-top: $dropdown-border;
+    padding: $grid-gutter-width;
+  }
+}
+
+.checkout__title--stacked {
+  margin-bottom: 0;
 }
 
 .checkout__subtitle {
   font-family: $bold-font-family;
-  font-size: 0.750em;
-  padding:  $space-sm;
+  font-size: 0.875em;
+  padding: $space-md $grid-gutter-width / 2;
   line-height: normal;
   margin: 0;
+  text-align: center;
   text-transform: uppercase;
   position: relative;
   @include respond-from("screen-md") {
-    font-size: 0.875em;
-    padding: $space-xs 0;
+    padding: 0 $grid-gutter-width $space-md;
+    text-align: left;
   }
 }
 
@@ -81,6 +106,7 @@
     vertical-align: middle;
     color: $color-text-highlight;
   }
+
   i.icon-cancel {
     font-size: 1.2em;
   }
@@ -105,22 +131,42 @@
   @include clearfix;
   line-height: 1.4em;
   font-size: 0.813em;
-  padding: 0 $space-sm $space-sm;
-  border-bottom: $dropdown-border;
+  padding: $space-sm;
+  padding-top: 0;
+
+  .button {
+    width: 100%;
+  }
+
   @include respond-from("screen-md") {
     font-size: 0.875em;
-    margin-bottom: $space-md;
-    padding: 0 0 $space-sm;
+    border: 0;
+    padding: 0 $grid-gutter-width $space-lg;
+
+    .button {
+      float: right;
+      width: auto;
+    }
+  }
+
+  textarea {
+    height: $input-height * 2;
+    line-height: 1.4em;
   }
 
   span {
     display: block;
-  }
 
-  .visa-card {
-    @include retina-sprite($visa-group);
-    display: inline-block;
-    vertical-align: middle;
+    &.notes {
+      color: $color-text-secondary;
+    }
+
+    &:first-child {
+      margin-top: $space-sm;
+      @include respond-from("screen-md") {
+        margin-top: 0;
+      }
+    }
   }
 }
 
@@ -128,6 +174,28 @@
   padding-top: $space-sm;
   @include respond-from("screen-md") {
     padding-top: 0;
+  }
+}
+
+.checkout__item--step {
+  padding-top: $space-sm;
+  border-bottom: $dropdown-border;
+  @include respond-from("screen-md") {
+    border-bottom: none;
+    padding-top: 0;
+  }
+}
+
+.checkout__item--stacked {
+  @include appear-from("screen-md");
+}
+
+.checkout__item__info {
+  @include make-xs-column(12);
+
+  .checkout__subtitle {
+    font-size: 1em;
+    padding-bottom: 0;
   }
 }
 
@@ -153,22 +221,22 @@
       font-size: 1.2em;
     }
   }
-
 }
 
-.checkout__item__has-voucher, .checkout__item__no-voucher {
-  margin-bottom: $grid-gutter-width / 2;
-}
+// time picker
 
-.checkout__item__disclaimer {
-  width: 50%;
-  float: left;
-  margin-bottom: $grid-gutter-width / 2;
-}
+.time-picker {
+  .desktop-cart__title {
+    @extend .checkout__subtitle;
+  }
 
-.checkout__item__cta {
-  float: right;
-  margin-bottom: $grid-gutter-width / 2;
+  .desktop-cart__time {
+    @extend .checkout__time;
+  }
+
+  .desktop-cart__time__field-date, .desktop-cart__time__field-time {
+    @extend .checkout__time-field;
+  }
 }
 
 // order summary mobile
@@ -322,79 +390,286 @@ td.summary__item__empty {
   color: $color-text-secondary;
 }
 
-// address box desktop
+// address box
 
 .checkout__address {
-  border-bottom: $dropdown-border;
-  @include respond-from("screen-md") {
-    display: none;
-  }
-}
-
-.checkout__address-desktop {
-  @include appear-from("screen-md");
-  border-bottom: $dropdown-border;
+//  border-bottom: $dropdown-border;
 }
 
 .checkout__address-boxes {
-  @include make-row();
-  padding-bottom:  $grid-gutter-width / 2;
-  padding-left:  $grid-gutter-width / 2;
+
+  @include respond-from("screen-md") {
+    @include make-row();
+    padding-bottom:  $grid-gutter-width / 2;
+    padding-left:  $grid-gutter-width / 2;
+  }
 }
 
 .checkout__address-box {
-  @include make-md-column(4);
-  padding-left: 0;
+
+  @include clearfix;
+  line-height: 1.4em;
+  font-size: 0.813em;
+  padding: $space-sm;
+  border-bottom: $dropdown-border;
+
+  @include respond-from("screen-md") {
+    @include make-md-column(4);
+    padding-left: 0;
+  }
 }
 
 .checkout__address-box__wrapper {
-  border: $dropdown-border;
-  padding: $grid-gutter-width / 2;
-  margin-bottom: $grid-gutter-width / 2;
-  height: 110px;
-  overflow: hidden;
-  line-height: 1.4em;
-  font-size: 0.875em;
-  position: relative;
 
-  &:hover {
-    cursor: pointer;
-    border: $input-border-active;
+  @include respond-from("screen-md") {
+    border: $dropdown-border;
+    padding: $grid-gutter-width / 2;
+    margin-bottom: $grid-gutter-width / 2;
+    height: 110px;
+    overflow: hidden;
+    line-height: 1.4em;
+    font-size: 0.875em;
+    position: relative;
+
+    &:hover {
+      cursor: pointer;
+      border: $input-border-active;
+    }
   }
 }
 
 .checkout__address-box__wrapper--active {
-  @extend .checkout__address-box__wrapper;
-  border: $input-border-active;
+  @include respond-from("screen-md") {
+    @extend .checkout__address-box__wrapper;
+    border: $input-border-active;
+  }
 }
 
 .checkout__address-box__notes {
-  @include text-overflow();
   color: $color-text-secondary;
+  @include respond-from("screen-md") {
+    @include text-overflow();
+  }
 }
 
 .checkout__address-box__new {
-  margin: auto;
-  text-align: center;
-  @include vertical-center-element();
+  @include respond-from("screen-md") {
+    margin: auto;
+    text-align: center;
+    @include vertical-center-element();
 
-  i {
+    i {
       display: block;
       color: $color-icons-separator;
       font-size: 1.4em;
     }
+  }
 }
 
-.checkout__address__cta {
-  @extend .pull-right;
-  padding-bottom: $grid-gutter-width;
+// payment type selection
+
+.checkout__payments {
+  @include respond-from("screen-md") {
+    @include make-row();
+    padding-bottom:  $grid-gutter-width / 2;
+    padding-left:  $grid-gutter-width / 2;
+    border: none;
+    margin: 0 $grid-gutter-width / 2;
+  }
 }
 
-// general form class
-
-.form-row {
-  @include make-row();
+.checkout__payment {
+  @include make-md-column(4);
+  @include make-lg-column(3);
+  @include clearfix;
+  padding: 0;
+  line-height: 1.4em;
+  font-size: 0.813em;
+  @include respond-from("screen-md") {
+    padding: $space-sm;
+    padding-left: 0;
+  }
 }
-.form-row__full-col {
-   @include make-xs-column(12);
- }
+
+.checkout__payment__wrapper {
+  border-bottom: $dropdown-border;
+  padding: $space-sm;
+  &:hover {
+    cursor: pointer;
+  }
+
+  i {
+    display: none;
+  }
+
+  @include respond-from("screen-md") {
+    border: $dropdown-border;
+    padding: $space-sm 0;
+    margin-bottom: $grid-gutter-width / 2;
+    overflow: hidden;
+    line-height: 1.4em;
+    font-size: 1em;
+    position: relative;
+
+    &:hover {
+      cursor: pointer;
+      border: $input-border-active;
+      color: $color-text-highlight;
+    }
+  }
+}
+
+.checkout__payment__wrapper--active {
+  color: $color-text-highlight;
+
+  i {
+    display: inline-block;
+    margin-right: $space-xs;
+  }
+
+  @include respond-from("screen-md") {
+    border: $input-border-active;
+
+    i {
+      display: none;
+    }
+  }
+}
+
+.checkout__payment_img {
+  float: right;
+  width: 30%;
+  height: 30px;
+  text-align: right;
+  margin-top: -5px;
+
+  img {
+    display: inline;
+    height: 30px;
+  }
+
+  @include respond-from("screen-md") {
+    white-space: nowrap;
+    height: 40px;
+    float: none;
+    width: auto;
+    text-align: center;
+    margin-top: 0;
+
+    img {
+      height: 40px;
+    }
+  }
+}
+
+.checkout__payment_label {
+  width: 70%;
+  @include respond-from("screen-md") {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+// credit card form
+
+.checkout__item__card {
+
+  .form-group {
+    margin: 0 0 $space-sm;
+  }
+
+  @include respond-from("screen-md") {
+    width: 50%;
+    float: left;
+  }
+}
+
+.checkout__item__card__help {
+  text-align: right;
+  @include respond-from("screen-md") {
+    width: 45%;
+    float: left;
+    padding-left: 28px;
+    text-align: left;
+
+    img {
+      @include responsive-img();
+    }
+  }
+}
+
+.voucher-component {
+  width: 100%;
+  float: left;
+  clear: both;
+
+  .checkout__item {
+    border: none;
+  }
+}
+
+.checkout__disclaimer {
+  @include make-xs-column(12);
+  @include make-md-column(6);
+  @extend .col-md-pull-6;
+  padding: $space-sm;
+  font-size: 0.875em;
+  color: $color-text-secondary;
+  text-align: center;
+  line-height: 1.4em;
+  border-bottom: $dropdown-border;
+  @include respond-from("screen-md") {
+    text-align: left;
+    padding: $grid-gutter-width;
+    border: none;
+  }
+}
+
+.checkout__submit {
+  @include make-xs-column(12);
+  @include make-md-column(6);
+  @extend .col-md-push-6;
+  padding: 0 $space-sm;
+
+  .button {
+    width: 100%;
+  }
+
+  @include respond-from("screen-md") {
+    padding: $grid-gutter-width;
+
+    .button {
+      float: right;
+      width: auto;
+    }
+  }
+}
+
+.checkout__list {
+  @extend .radio;
+  line-height: 1.4em;
+  font-size: 0.875em;
+  padding: $space-sm;
+  margin: 0;
+  border-bottom: $dropdown-border;
+
+  @include respond-from("screen-md") {
+    padding: $grid-gutter-width;
+  }
+
+  &:first-child {
+    border-top: $dropdown-border;
+  }
+
+  label {
+    display: block;
+  }
+}
+
+.checkout__list__items {
+  padding-left: $space-xs;
+}
+
+.delivery__notes {
+  color: $color-text-secondary;
+}
