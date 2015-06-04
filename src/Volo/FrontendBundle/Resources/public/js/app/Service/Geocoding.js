@@ -2,15 +2,16 @@ var GeocodingService = function(locale) {
     this.autocomplete = null;
     this._listeners = [];
     this.locale = locale;
+    this.defaultTypes = ['(regions)'];
 };
 
 _.extend(GeocodingService.prototype, Backbone.Events, {
-    init: function ($input) {
+    init: function ($input, types) {
         _.bindAll(this);
         this.autocomplete = new google.maps.places.Autocomplete(
             $input[0],
             {
-                types: ['(regions)'],
+                types: types || this.defaultTypes,
                 componentRestrictions: {
                     country: this.locale
                 }
@@ -128,6 +129,8 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
                 value: this._findPostalCodeInAddressComponents(place.address_components),
                 isReversed: false
             },
+            street: this._findStreetNameInAddressComponents(place.address_components),
+            building: this._findBuildingNumberInAddressComponents(place.address_components),
             lat: place.geometry.location.A,
             lng: place.geometry.location.F
         };
@@ -173,5 +176,17 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
 
     _findLocalityInAddressComponents: function (addressComponents) {
         return _.pluck(_.where(addressComponents, {'types': ['locality']}), 'long_name')[0];
+    },
+
+    _findStreetNameInAddressComponents: function (addressComponents) {
+        var streetNames = _.pluck(_.where(addressComponents, {'types': ['route']}), 'long_name');
+
+        return (streetNames && streetNames[0]) ? streetNames[0] : '';
+    },
+
+    _findBuildingNumberInAddressComponents: function (addressComponents) {
+        var component = _.pluck(_.where(addressComponents, {'types': ['street_number']}), 'long_name');
+
+        return (component && component[0]) ? component[0] : '';
     }
 });
