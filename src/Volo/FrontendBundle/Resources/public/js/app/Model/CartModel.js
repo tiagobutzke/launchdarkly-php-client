@@ -154,14 +154,24 @@ var VendorCartModel = Backbone.Model.extend({
         this._updateCart();
     },
 
-    updateItem: function(oldProduct, newProduct) {
-        if (newProduct.quantity === 0) {
-            this.removeItem(oldProduct);
+    updateItem: function(cartItemToUpdate, newSelection) {
+        if (newSelection.quantity === 0) {
+            this.removeItem(cartItemToUpdate);
         } else {
-            var newToppings = this.getSelectedToppingsFromProduct(newProduct);
+            var newToppings = this.getSelectedToppingsFromProduct(newSelection),
+                clone = cartItemToUpdate.toJSON(),
+                productFromCart;
 
-            oldProduct.toppings.set(newToppings);
-            oldProduct.set('quantity', newProduct.quantity);
+            clone.toppings = new ToppingCollection(newToppings).toJSON();
+            productFromCart = this.findSimilarProduct(clone);
+
+            if (productFromCart && productFromCart.cid !== cartItemToUpdate.cid) {
+                this.removeItem(cartItemToUpdate);
+                productFromCart.set('quantity', productFromCart.get('quantity') + newSelection.quantity);
+            } else {
+                cartItemToUpdate.toppings.set(newToppings);
+                cartItemToUpdate.set('quantity', newSelection.quantity);
+            }
         }
 
         this._updateCart();

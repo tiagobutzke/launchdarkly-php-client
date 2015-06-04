@@ -193,7 +193,7 @@ var ToppingsProductQuantityView = Backbone.View.extend({
         var quantity = this.model.get('quantity');
 
         if (quantity > 1) {
-            this.model.set('quantity', quantity);
+            this.model.set('quantity', quantity - 1);
         }
     }
 });
