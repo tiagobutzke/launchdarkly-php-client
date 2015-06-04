@@ -1,11 +1,12 @@
 var CheckoutButtonView = Backbone.View.extend({
     events: {
-        "click .checkout-button": this.placeOrder
+        "click #finish-and-pay": "placeOrder"
     },
 
     initialize: function () {
-        _.bindAll();
+        _.bindAll(this);
 
+        this.vendorCode = this.$el.data().vendor_code;
         console.log('is guest user', this.$el.data().is_guest_user);
 
         this.model.set('is_guest_user', this.$el.data().is_guest_user);
@@ -14,17 +15,21 @@ var CheckoutButtonView = Backbone.View.extend({
         this.listenTo(this.model, 'change:credit_card_id', this.render, this);
         this.listenTo(this.model, 'change:adyen_encrypted_data', this.render, this);
         this.listenTo(this.model, 'change:cart_dirty', this.render, this);
+        this.listenTo(this.model, 'change:placing_order', this.render, this);
+
+        this.listenTo(this.model, 'payment:success', this.handlePaymentSuccess, this);
+        this.listenTo(this.model, 'payment:error', this.handlePaymentError, this);
     },
 
     render: function () {
         console.log('CheckoutButtonView:render', this.model.isValid());
 
-        if (this.model.isValid() && !this.model.get('cart_dirty')) {
+        if (this.model.isValid() && !this.model.get('cart_dirty') && !this.model.get('placing_order')) {
             this.$(".button").prop('disabled', '');
-            this.$el.css({opacity: 1});
+            this.$(".button").css({opacity: 1});
         } else {
             this.$(".button").prop('disabled', 'disabled');
-            this.$el.css({opacity: 0.5});
+            this.$(".button").css({opacity: 0.5});
         }
     },
 
@@ -33,9 +38,17 @@ var CheckoutButtonView = Backbone.View.extend({
         this.undelegateEvents();
     },
 
-    placeOrder: function (event) {
-        if (!this.model.isValid()) {
-            event.preventDefault();
-        }
+    placeOrder: function () {
+        this.model.placeOrder(this.vendorCode);
+        this.$('.error_msg').addClass('hide');
+    },
+
+    handlePaymentSuccess: function (data) {
+        Turbolinks.visit(Routing.generate('checkout_success', {orderCode: data.code}));
+    },
+
+    handlePaymentError: function (data) {
+        this.$('.error_msg').removeClass('hide');
+        this.$('.error_msg').html(data.error.errors.developer_message);
     }
 });

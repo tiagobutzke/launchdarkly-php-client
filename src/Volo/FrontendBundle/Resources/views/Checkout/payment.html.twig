@@ -101,11 +101,15 @@
         </div>
     </div>
 
-    <div class="checkout-button checkout__submit" data-is_guest_user="{{ is_granted('IS_AUTHENTICATED_FULLY') ? 'false' : 'true'}}">
-        <button id="finish-and-pay" class="button">{% trans %}finish_and_pay{% endtrans %}</button>
-    </div>
-    <div class="checkout__disclaimer"> By completing this order, I accept the <a href="#1">Terms & Conditions</a> and our <a href="#1">Privacy Policy</a></div>
     <div class="clearfix"></div>
+    <div class="checkout-button" data-vendor_code="{{ vendor.code }}" data-is_guest_user="{{ is_granted('IS_AUTHENTICATED_FULLY') ? 'false' : 'true'}}">
+        <span class="error_msg hide"></span>
+        <div class="checkout__submit">
+            <button id="finish-and-pay" class="button">{% trans %}finish_and_pay{% endtrans %}</button>
+        </div>
+        <div class="checkout__disclaimer"> By completing this order, I accept the <a href="#1">Terms & Conditions</a> and our <a href="#1">Privacy Policy</a></div>
+        <div class="clearfix"></div>
+    </div>
 {% endblock %}
 
 {% block footer_scripts %}
@@ -142,6 +146,7 @@
             $('input[name="credit_card"]').click(function(){
                 $('#payment_form').addClass('hide');
                 VOLO.checkoutModel.set('credit_card_id', $("input:radio[name='credit_card']:checked").val());
+                VOLO.checkoutModel.set('adyen_encrypted_data', null);
             });
         {% endif %}
 
@@ -154,24 +159,6 @@
 
             var isComplete = !$("#payment_form input").filter(function() { return $(this).val() == ""; }).length;
             VOLO.checkoutModel.set('adyen_encrypted_data', isComplete ? encryptedForm.encrypt() : null);
-        });
-
-        $('#finish-and-pay').click(function (event) {
-            if(!VOLO.checkoutModel.isValid()) {
-                return event.preventDefault();
-            }
-
-            var checkoutForm = $('#payment_form');
-            var paymentData = checkoutForm.hasClass('hide') ? "credit_card_id" : "adyen_encrypted_data" ;
-            checkoutForm.append(
-                $('<input/>', {type: 'hidden', name: paymentData, value: VOLO.checkoutModel.get(paymentData)})
-            );
-            if (!VOLO.checkoutModel.get('is_guest_user')) {
-                checkoutForm.append(
-                    $('<input/>', {type: 'hidden', name: "customer_address_id", value: VOLO.checkoutModel.get('address_id')})
-                );
-            }
-            checkoutForm.submit();
         });
     </script>
 {% endblock %}
