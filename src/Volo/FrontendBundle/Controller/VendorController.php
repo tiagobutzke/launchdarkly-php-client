@@ -2,13 +2,16 @@
 
 namespace Volo\FrontendBundle\Controller;
 
+use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Foodpanda\ApiSdk\Exception\EntityNotFoundException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Volo\FrontendBundle\Http\JsonErrorResponse;
 
 /**
  * @Route("/restaurant")
@@ -60,7 +63,35 @@ class VendorController extends Controller
             'vendor' => $vendor,
             'cart' => $cart
         ];
+    }
 
+    /**
+     * @Route(
+     *      "/restaurant/{vendorId}/delivery-check/lat/{latitude}/lng/{longitude}",
+     *      name="vendor_delivery_validation_by_gps",
+     *      options={"expose"=true},
+     *      condition="request.isXmlHttpRequest()"
+     *
+     * )
+     * @Method({"GET"})
+     *
+     * @param int $vendorId
+     * @param double $latitude
+     * @param double $longitude
+     *
+     * @return JsonResponse
+     */
+
+    public function isDeliverableAction($vendorId, $latitude, $longitude)
+    {
+        try {
+            $result = $this->get('volo_frontend.service.deliverability')
+                ->isDeliverableLocation($vendorId, $latitude, $longitude);
+
+            return new JsonResponse(['result' => $result]);
+        } catch (ApiErrorException $e) {
+            return new JsonErrorResponse($e);
+        }
     }
 
     /**
