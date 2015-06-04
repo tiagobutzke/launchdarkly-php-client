@@ -14,8 +14,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Volo\FrontendBundle\Http\JsonErrorResponse;
 use Volo\FrontendBundle\Security\Token;
 use Volo\FrontendBundle\Service\CustomerLocationService;
 use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
@@ -137,10 +139,6 @@ class CheckoutController extends Controller
     }
 
     /**
-     * TODO: Js is hardcoded in the view, extract it
-     * TODO: Error handling would be nice
-     * TODO: Create success page and redirect to it
-     *
      * @Route("/{vendorCode}/payment", name="checkout_payment")
      * @Method({"GET", "POST"})
      * @Template()
@@ -167,10 +165,6 @@ class CheckoutController extends Controller
             && !$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')
         ) {
             throw new HttpException(Response::HTTP_BAD_REQUEST, 'No contact information found');
-        }
-
-        if ($request->getMethod() === Request::METHOD_POST) {
-            return $this->handleOrder($cart, $vendor, $request);
         }
 
         $configuration = $this->get('volo_frontend.service.configuration')->getConfiguration();
@@ -206,7 +200,55 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @Route("/success/{orderCode}", name="checkout_success")
+     * @Route("/{vendorCode}/pay", name="checkout_place_order", options={"expose"=true})
+     * @Method({"POST"})
+     * @Template()
+     *
+     * @param Request $request
+     * @param string  $vendorCode
+     *
+     * @return JsonResponse
+     */
+    public function placeOrderAction(Request $request, $vendorCode)
+    {
+        $content = $request->getContent();
+
+        if ('' === $content) {
+            $text = $this->get('translator')->trans('json_error.invalid_request');
+            return new JsonResponse(
+                ['data' => ['error' => ['errors' => ['developer_message' => $text]]]],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
+        $data = json_decode($content, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            $text = $this->get('translator')->trans('json_error.invalid_request');
+            return new JsonResponse(
+                ['data' => ['error' => ['errors' => ['developer_message' => $text]]]],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
+        try {
+            $vendor = $this->get('volo_frontend.provider.vendor')->find($vendorCode);
+        } catch (ApiErrorException $exception) {
+            return new JsonErrorResponse($exception);
+        }
+        $cart = $this->getCart($vendor);
+
+        try {
+            $apiResult = $this->handleOrder($cart, $vendor, $data);
+        } catch (ApiErrorException $e) {
+            return new JsonErrorResponse($e);
+        }
+
+        return new JsonResponse($apiResult);
+    }
+
+    /**
+     * @Route("/success/{orderCode}", name="checkout_success", options={"expose"=true})
      * @Method({"GET"})
      * @Template()
      *
@@ -284,53 +326,36 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @param         $cart
-     * @param Vendor  $vendor
-     * @param Request $request
+     * @param array  $cart
+     * @param Vendor $vendor
+     * @param array  $data
      *
-     * @return RedirectResponse
+     * @return array
      */
-    protected function handleOrder($cart, Vendor $vendor, Request $request)
+    protected function handleOrder(array $cart, Vendor $vendor, array $data)
     {
         $orderManager = $this->get('volo_frontend.service.order_manager');
 
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             /** @var \Volo\FrontendBundle\Security\Token $token */
-            $token       = $this->get('security.token_storage')->getToken();
-            $customerAddressId = $request->request->get('customer_address_id');
-            $order             = $orderManager->placeOrder($token->getAccessToken(), $customerAddressId, $cart);
+            $token = $this->get('security.token_storage')->getToken();
+            $order = $orderManager->placeOrder($token->getAccessToken(), $data['customer_address_id'], $cart);
 
-            switch (true) {
-                case $request->request->has('adyen_encrypted_data'):
-                    $order['encrypted_payment_data'] = $request->request->get('adyen_encrypted_data');
-                    break;
-
-                case $request->request->has('credit_card_id'):
-                    $order['credit_card_id'] = $request->request->get('credit_card_id');
-                    break;
-
-                default:
-                    throw new HttpException(
-                        Response::HTTP_BAD_REQUEST,
-                        'No recurring or CSE payment information provided'
-                    );
-            }
-
-            $orderManager->payment($token->getAccessToken(), $order);
+            $orderManager->payment($token->getAccessToken(), $data + $order);
         } else {
             $session = $this->get('session');
             $guestCustomer = $this->get('volo_frontend.service.customer')->createGuestCustomer(
                 $session->get(sprintf(static::SESSION_CONTACT_KEY_TEMPLATE, $vendor->getCode())),
                 $session->get(sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendor->getCode()))
             );
-            $order         = $orderManager->placeGuestOrder($guestCustomer, $cart);
 
-            $encryptedData = $request->request->get('adyen_encrypted_data');
-            $orderManager->guestPayment($order, $encryptedData);
+            $order = $orderManager->placeGuestOrder($guestCustomer, $cart);
+
+            $orderManager->guestPayment($order, $data['encrypted_payment_data']);
         }
 
         $this->get('volo_frontend.service.cart_manager')->deleteCart($this->get('session')->getId(), $vendor->getId());
 
-        return $this->redirect($this->generateUrl('checkout_success', ['orderCode' => $order['code']]));
+        return $order;
     }
 }
