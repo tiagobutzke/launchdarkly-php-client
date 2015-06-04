@@ -87,6 +87,24 @@ class CartManagerService
     }
 
     /**
+     * @param string $sessionId
+     * @param string $vendorIdentifier
+     *
+     * @return array|null
+     */
+    public function getCartIfDefault($sessionId, $vendorIdentifier)
+    {
+        $cartKey = $this->createCartKey($sessionId, $vendorIdentifier);
+        $cartCollection = $this->getCartCollection($sessionId);
+
+        if (array_key_exists($cartKey, $cartCollection) && $cartCollection[$cartKey][static::DEFAULT_CART_FLAG]) {
+            return $cartCollection[$cartKey][static::CART_KEY];
+        }
+
+        return null;
+    }
+
+    /**
      * @param array $jsonCart
      *
      * @return array
