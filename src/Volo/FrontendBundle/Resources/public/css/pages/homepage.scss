@@ -74,6 +74,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
+  height: 100vh; //not working on old Android browsers, use js fix
 }
 
 .teaser__slogan {

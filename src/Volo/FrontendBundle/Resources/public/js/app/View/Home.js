@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    VOLO.FullWindowHeight.init();
     var $stats = $(".stats__dish"),
         $statsCommentCache;
 
@@ -25,8 +24,4 @@ $(document).ready(function() {
             new Flipper($city);
         });
     }
-});
-
-$(document).on('page:load page:restore', function() {
-    VOLO.FullWindowHeight.onResize();
 });

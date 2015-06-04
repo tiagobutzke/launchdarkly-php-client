@@ -1,3 +1,6 @@
+// fix for resizing the home teaser image to viewport height
+// for browsers not supporting vh (old android)
+// TODO browser detection and initialization yet to be implemented
 var VOLO = VOLO || {};
 VOLO.FullWindowHeight = {
     $windowCached: null,
