@@ -103,10 +103,10 @@ VOLO.initCheckoutViews = function (cartModel, checkoutModel, deliveryCheck) {
         });
     }
     if ($('#delivery_information_form').length > 0) {
-        if (VOLO.checkoutDeliveryInformationView) {
-            VOLO.checkoutDeliveryInformationView.unbind();
+        if (VOLO.checkoutDeliveryValidationView ) {
+            VOLO.checkoutDeliveryValidationView .unbind();
         }
-        VOLO.checkoutDeliveryInformationView = new CheckoutDeliveryValidationView({
+        VOLO.checkoutDeliveryValidationView = new CheckoutDeliveryValidationView({
             el: '#delivery_information_form',
             deliveryCheck: deliveryCheck,
             geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1])
@@ -239,6 +239,9 @@ $(document).on('page:before-unload', function () {
     }
     if (_.isObject(VOLO.checkoutDeliveryInformationView)) {
         VOLO.checkoutDeliveryInformationView.unbind();
+    }
+    if (_.isObject(VOLO.checkoutDeliveryValidationView )) {
+        VOLO.checkoutDeliveryValidationView .unbind();
     }
 });
 
