@@ -102,7 +102,7 @@
     </div>
 
     <div class="clearfix"></div>
-    <div class="checkout-button" data-vendor_code="{{ vendor.code }}" data-is_guest_user="{{ is_granted('IS_AUTHENTICATED_FULLY') ? 'false' : 'true'}}">
+    <div class="checkout-button" data-vendor_code="{{ vendor.code }}" data-vendor_id="{{ vendor.id}}" data-is_guest_user="{{ is_granted('IS_AUTHENTICATED_FULLY') ? 'false' : 'true'}}">
         <span class="error_msg hide"></span>
         <div class="checkout__submit">
             <button id="finish-and-pay" class="button">{% trans %}finish_and_pay{% endtrans %}</button>

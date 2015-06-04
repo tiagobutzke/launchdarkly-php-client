@@ -7,6 +7,7 @@ var CheckoutButtonView = Backbone.View.extend({
         _.bindAll(this);
 
         this.vendorCode = this.$el.data().vendor_code;
+        this.vendorId = this.$el.data().vendor_id;
         console.log('is guest user', this.$el.data().is_guest_user);
 
         this.model.set('is_guest_user', this.$el.data().is_guest_user);
@@ -39,7 +40,7 @@ var CheckoutButtonView = Backbone.View.extend({
     },
 
     placeOrder: function () {
-        this.model.placeOrder(this.vendorCode);
+        this.model.placeOrder(this.vendorCode, this.vendorId);
         this.$('.error_msg').addClass('hide');
     },
 

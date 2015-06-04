@@ -10,10 +10,10 @@ var CheckoutModel = Backbone.Model.extend({
     },
 
     initialize: function (data, options) {
-        this.carts = options.cartModel.vendorCarts.models;
         _.bindAll(this);
+        this.cartModel = options.cartModel;
 
-        _.each(this.carts, function (model) {
+        _.each(this.cartModel.vendorCarts.models, function (model) {
             this.listenTo(model, 'cart:dirty', function() {this.set('cart_dirty', true);}.bind(this));
             this.listenTo(model, 'cart:ready', function() {this.set('cart_dirty', false);}.bind(this));
             this.listenTo(model, 'cart:error', function() {this.set('cart_dirty', false);}.bind(this));
@@ -40,8 +40,11 @@ var CheckoutModel = Backbone.Model.extend({
         return true;
     },
 
-    placeOrder: function (vendorCode) {
-        var data = {};
+    placeOrder: function (vendorCode, vendorId) {
+        var data = {
+            expected_total_amount: this.cartModel.getCart(vendorId).get('total_value')
+        };
+
         if (_.isNull(this.get('adyen_encrypted_data'))) {
             data.credit_card_id = this.get('credit_card_id');
         } else {

@@ -338,8 +338,11 @@ class CheckoutController extends Controller
 
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             /** @var \Volo\FrontendBundle\Security\Token $token */
-            $token = $this->get('security.token_storage')->getToken();
-            $order = $orderManager->placeOrder($token->getAccessToken(), $data['customer_address_id'], $cart);
+            $token          = $this->get('security.token_storage')->getToken();
+            $addressId      = $data['customer_address_id'];
+            $expectedAmount = $data['expected_total_amount'];
+
+            $order = $orderManager->placeOrder($token->getAccessToken(), $addressId, $expectedAmount, $cart);
 
             $orderManager->payment($token->getAccessToken(), $data + $order);
         } else {
@@ -349,7 +352,7 @@ class CheckoutController extends Controller
                 $session->get(sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendor->getCode()))
             );
 
-            $order = $orderManager->placeGuestOrder($guestCustomer, $cart);
+            $order = $orderManager->placeGuestOrder($guestCustomer, $data['expected_total_amount'], $cart);
 
             $orderManager->guestPayment($order, $data['encrypted_payment_data']);
         }

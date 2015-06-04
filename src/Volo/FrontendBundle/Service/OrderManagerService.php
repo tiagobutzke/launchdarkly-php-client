@@ -51,17 +51,15 @@ class OrderManagerService
     /**
      * TODO: payment_type_id is hardcoded
      * TODO: Order comment isn't handled
-     * TODO: Handle vendor closed
      *
      * @param GuestCustomer $guestCustomer
+     * @param float         $expectedAmount
      * @param array         $cart
      *
      * @return array
      */
-    public function placeGuestOrder(GuestCustomer $guestCustomer, array $cart)
+    public function placeGuestOrder(GuestCustomer $guestCustomer, $expectedAmount, array $cart)
     {
-        $recalculatedCart = $this->cartProvider->calculate($cart);
-
         $order = [
             'location'              => $cart['location'],
             'products'              => $cart['products'],
@@ -71,7 +69,7 @@ class OrderManagerService
             'customer_id'           => $guestCustomer->getCustomer()->getId(),
             'customer_mail'         => $guestCustomer->getCustomer()->getEmail(),
             'customer_comment'      => '',
-            'expected_total_amount' => $recalculatedCart['total_value'],
+            'expected_total_amount' => $expectedAmount,
             'source'                => $this->apiClientId,
         ];
 
@@ -81,18 +79,16 @@ class OrderManagerService
     /**
      * TODO: payment_type_id is hardcoded
      * TODO: Order comment isn't handled
-     * TODO: Handle vendor closed
      *
      * @param AccessToken $accessToken
      * @param int         $addressId
+     * @param float       $expectedAmount
      * @param array       $cart
      *
      * @return array
      */
-    public function placeOrder(AccessToken $accessToken, $addressId, array $cart)
+    public function placeOrder(AccessToken $accessToken, $addressId, $expectedAmount, array $cart)
     {
-        $recalculatedCart = $this->cartProvider->calculate($cart);
-
         $order = [
             'location'              => $cart['location'],
             'products'              => $cart['products'],
@@ -100,7 +96,7 @@ class OrderManagerService
             'payment_type_id'       => 5,
             'customer_address_id'   => $addressId,
             'customer_comment'      => '',
-            'expected_total_amount' => $recalculatedCart['total_value'],
+            'expected_total_amount' => $expectedAmount,
             'source'                => $this->apiClientId,
         ];
 
