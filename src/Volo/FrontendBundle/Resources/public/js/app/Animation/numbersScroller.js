@@ -1,20 +1,59 @@
-
-var NumberScroller = function(scrollers, startingPointGetter, toNumber) {
+var VOLO = VOLO || {};
+VOLO.NumberScroller = (function() {
     'use strict';
-    var windowCache = $(window),
-        speedFactor = (110 - toNumber) / 100;
 
-    function onScroll() {
-        var speedValue = 3 * speedFactor;
-        if ((windowCache.scrollTop() + windowCache.height()) > startingPointGetter()) {
-            scrollers.css({
-                top: '-' + (60 - toNumber) + '00%',
-                '-webkit-transition': 'top ' + speedValue + 's cubic-bezier(0.270, 1.170, 1.000, 1.000)',
-                transition: 'top ' + speedValue + 's cubic-bezier(0.270, 1.170, 1.000, 1.000)'
+    function NumberScroller(options) {
+        this.$window = options.$window;
+        this.$document = options.$document;
+        this.scrollersSelector = options.scrollersSelector;
+        this._startingPointGetter = options.startingPointGetter;
+        this.toNumber = options.toNumber;
+        this.fromNumber = options.fromNumber;
+        this.transition = options.transition;
+        this.boundOnScroll = this._onScroll.bind(this);
+        this.speedFactor = (110 - this.toNumber) / 100;
+        this.areEventsRegistered = false;
+        this.$scrollers = null;
+        this.startingPoint = null;
+    }
+
+    NumberScroller.prototype.init = function() {
+        this.getDomElements();
+        this.$document.on('page:load page:restore', this.getDomElements.bind(this));
+        this.$document.on('page:before-unload', this.removeEvents.bind(this));
+    };
+
+    NumberScroller.prototype.getDomElements = function() {
+        this.$scrollers = $(this.scrollersSelector);
+        if (this.$scrollers.length) {
+            this.startingPoint = this._startingPointGetter();
+            if (!this.areEventsRegistered) {
+                this.areEventsRegistered = true;
+                this.$window.on('scroll', this.boundOnScroll);
+            }
+        }
+    };
+
+    NumberScroller.prototype.removeEvents = function() {
+        if (this.areEventsRegistered) {
+            this.areEventsRegistered = false;
+            this.$window.off('scroll', this.boundOnScroll);
+        }
+    };
+
+    NumberScroller.prototype._onScroll = function() {
+        var speedValue = 3 * this.speedFactor;
+
+        if ((this.$window.scrollTop() + this.$window.height()) > this.startingPoint) {
+            this.$scrollers.css({
+                top: '-' + (this.fromNumber - this.toNumber) + '00%',
+                '-webkit-transition': 'top ' + speedValue + 's ' + this.transition,
+                transition: 'top ' + speedValue + 's ' + this.transition
             });
 
-            windowCache.off('scroll', onScroll);
+            this.$window.off('scroll', this.boundOnScroll);
         }
-    }
-    windowCache.on('scroll', onScroll);
-};
+    };
+
+    return NumberScroller;
+}());
