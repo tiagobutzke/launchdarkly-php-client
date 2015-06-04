@@ -103,11 +103,11 @@
         <div class="menu__bottom-info__openings">
             <h3 class="menu__bottom-info__title">Opening hours</h3>
             <ul>
-                {% for i in 1..7 %}
-                    {% set openingTime = getOpeningTime(vendor.schedules) %}
+                {% for weekdayIndex in 1..7 %}
+                    {% set openingTime = getOpeningTime(vendor.schedules, weekdayIndex) %}
                     {% if (null != openingTime) %}
                         <li>
-                            {{ i|dayOfTheWeek }} <span>{{ openingTime|formatTime }} - {{ getClosingTime(vendor.schedules)|formatTime }}</span>
+                            {{ weekdayIndex|dayOfTheWeek }} <span>{{ openingTime|formatTime }} - {{ getClosingTime(vendor.schedules, weekdayIndex)|formatTime }}</span>
                         </li>
                     {% endif %}
                 {% endfor %}
