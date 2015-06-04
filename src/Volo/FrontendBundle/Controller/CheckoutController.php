@@ -318,7 +318,7 @@ class CheckoutController extends Controller
         $session = $this->get('session')->getId();
         $cart = $this->get('volo_frontend.service.cart_manager')->getCart($session, $vendor->getId());
 
-        if ($cart === null) {
+        if ($cart === null || count($cart['products']) === 0) {
             throw new HttpException(Response::HTTP_BAD_REQUEST, 'No cart found for this vendor');
         }
 
