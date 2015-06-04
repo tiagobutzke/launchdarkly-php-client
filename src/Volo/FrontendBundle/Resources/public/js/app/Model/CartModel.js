@@ -43,7 +43,7 @@ CartItemModel.createFromMenuItem = function(cartItemJSON) {
         variation_name: productVariation.name,
         total_price_before_discount: productVariation.price_before_discount,
         total_price: productVariation.price,
-        quantity: 0,
+        quantity: 1,
         toppings: productVariation.toppings,
         choices: productVariation.choices,
         group_order_user_name: null,
@@ -160,9 +160,25 @@ var VendorCartModel = Backbone.Model.extend({
         this.updateCart();
     },
 
-    updateItem: function(oldProduct, newProduct) {
-        var newToppings = this.getSelectedToppingsFromProduct(newProduct);
-        oldProduct.toppings.set(newToppings);
+    updateItem: function(cartItemToUpdate, newSelection) {
+        if (newSelection.quantity === 0) {
+            this.removeItem(cartItemToUpdate);
+        } else {
+            var newToppings = this.getSelectedToppingsFromProduct(newSelection),
+                clone = cartItemToUpdate.toJSON(),
+                productFromCart;
+
+            clone.toppings = new ToppingCollection(newToppings).toJSON();
+            productFromCart = this.findSimilarProduct(clone);
+
+            if (productFromCart && productFromCart.cid !== cartItemToUpdate.cid) {
+                this.removeItem(cartItemToUpdate);
+                productFromCart.set('quantity', productFromCart.get('quantity') + newSelection.quantity);
+            } else {
+                cartItemToUpdate.toppings.set(newToppings);
+                cartItemToUpdate.set('quantity', newSelection.quantity);
+            }
+        }
 
         this.updateCart();
     },

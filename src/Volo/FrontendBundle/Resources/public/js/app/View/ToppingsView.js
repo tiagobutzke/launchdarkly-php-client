@@ -165,6 +165,39 @@ var ToppingView = Backbone.View.extend({
     }
 });
 
+var ToppingsProductQuantityView = Backbone.View.extend({
+    tagName: 'span',
+    className: 'topping-option',
+
+    events: {
+        'click .product__quantity__decrease': '_decreaseQuantity',
+        'click .product__quantity__increase': '_increaseQuantity'
+    },
+
+    initialize: function() {
+        this.template = _.template($('#toppings-product-quantity').html());
+        this.listenTo(this.model, 'change:quantity', this.render);
+    },
+
+    render: function() {
+        this.$el.html(this.template(this.model.toJSON()));
+
+        return this;
+    },
+
+    _increaseQuantity: function() {
+        this.model.set('quantity', this.model.get('quantity') + 1);
+    },
+
+    _decreaseQuantity: function() {
+        var quantity = this.model.get('quantity');
+
+        if (quantity > 1) {
+            this.model.set('quantity', quantity - 1);
+        }
+    }
+});
+
 var ToppingsView = Backbone.View.extend({
     initialize: function(options) {
         this.template = _.template($('#template-choices-toppings').html());
@@ -183,6 +216,7 @@ var ToppingsView = Backbone.View.extend({
         this.$el.html(this.template(this.model.toJSON()));
         this.$('.modal-error-message').hide();
         this._initToppings();
+        this._renderQuantitySelector();
         this._validate();
 
         return this;
@@ -192,6 +226,16 @@ var ToppingsView = Backbone.View.extend({
         this.model.toppings.map(this._initToppingView, this);
     },
 
+    _renderQuantitySelector: function() {
+        var view = new ToppingsProductQuantityView({
+            model: this.model
+        });
+
+        this.listenTo(this.model, 'change:quantity', this._validate, this);
+        this.subViews.push(view);
+        this.$('.modal-footer').append(view.render().el);
+    },
+
     _initToppingView: function(topping) {
         var view = new ToppingView({
             model: topping
@@ -199,6 +243,7 @@ var ToppingsView = Backbone.View.extend({
 
         this.listenTo(view, 'toppings:validate', this._validate, this);
         this.listenTo(view, 'topping:openingOptions', this._closeAllTopicOptions, this);
+
         this.subViews.push(view);
         this.$('.toppings').append(view.render().el);
     },
@@ -226,7 +271,7 @@ var ToppingsView = Backbone.View.extend({
         if (this.productToUpdate) {
             this.cartModel.getCart(this.vendorId).updateItem(this.productToUpdate, this.model.toJSON()); //modify product
         } else {
-            this.cartModel.getCart(this.vendorId).addItem(this.model.toJSON(), 1); //add product
+            this.cartModel.getCart(this.vendorId).addItem(this.model.toJSON(), this.model.get('quantity')); //add product
         }
         this._closeModal();
     },
