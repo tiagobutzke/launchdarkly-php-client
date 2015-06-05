@@ -56,7 +56,12 @@ class VendorController extends Controller
 
         if ($cart) {
             $cartManager = $this->get('volo_frontend.service.cart_manager');
-            $cart = $cartManager->calculateCart($cart);
+
+            try {
+                $cart = $cartManager->calculateCart($cart);
+            } catch (ApiErrorException $exception) {
+                $cart = null;
+            }
         }
 
         return [
