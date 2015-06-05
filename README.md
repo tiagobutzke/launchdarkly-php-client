@@ -1,5 +1,12 @@
-#Volo Frontend [![build Status](https://magnum.travis-ci.com/foodpanda/volo-frontend.svg?token=9eHFdnBaxCRVqqTYivpW&branch=develop)](https://magnum.travis-ci.com/foodpanda/volo-frontend) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/foodpanda/volo-frontend/badges/quality-score.png?b=develop&s=fe3b7820a25ed19b25e9e9a98e300497928310f7)](https://scrutinizer-ci.com/g/foodpanda/volo-frontend/?branch=develop) [![Code Coverage](https://scrutinizer-ci.com/g/foodpanda/volo-frontend/badges/coverage.png?b=develop&s=b5c39cd699602731616d7b2838bb994235c57317)](https://scrutinizer-ci.com/g/foodpanda/volo-frontend/?branch=develop) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/df9c2144-acd0-4df1-90e1-86d4408fe520/mini.png)](https://insight.sensiolabs.com/projects/df9c2144-acd0-4df1-90e1-86d4408fe520)
----
+#Volo Frontend
+
+[![build Status](https://magnum.travis-ci.com/foodpanda/volo-frontend.svg?token=9eHFdnBaxCRVqqTYivpW&branch=develop)](https://magnum.travis-ci.com/foodpanda/volo-frontend)
+
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/foodpanda/volo-frontend/badges/quality-score.png?b=develop&s=fe3b7820a25ed19b25e9e9a98e300497928310f7)](https://scrutinizer-ci.com/g/foodpanda/volo-frontend/?branch=develop) [![Code Coverage](https://scrutinizer-ci.com/g/foodpanda/volo-frontend/badges/coverage.png?b=develop&s=b5c39cd699602731616d7b2838bb994235c57317)](https://scrutinizer-ci.com/g/foodpanda/volo-frontend/?branch=develop)
+
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/df9c2144-acd0-4df1-90e1-86d4408fe520/mini.png)](https://insight.sensiolabs.com/projects/df9c2144-acd0-4df1-90e1-86d4408fe520)
+(to get access, create https://insight.sensiolabs.com/ account and ask @mathias-work to be added)
+
 
 Brief description
 ---
