@@ -26,12 +26,13 @@
 
         <h4 class="checkout__subtitle">{% trans %}Delivery Address{% endtrans %}</h4>
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <div class="checkout__item">
+            <div class="checkout__item checkout__item--delivery-list">
                 <div id="delivery-information-list-wrapper">
-                    <a id="select_other_address_link" href="#">Select other</a>
                     <div class="selected-address"></div>
-                    <div id="delivery-information-list" class="checkout__item" data-addresses='{{ customer_addresses|json_encode|raw }}'></div>
+                    <div id="delivery-information-list" data-addresses='{{ customer_addresses|json_encode|raw }}'></div>
                     {% include('VoloFrontendBundle:Layout/Partial/templates:checkout_address.html.twig') %}
+                    <div class="checkout__item"><a id="select_other_address_link" href="#" class="checkout__more-feature-link">Select other</a></div>
+
                 </div>
 
                 <div id="add_new_address_form" class="hide">
@@ -70,20 +71,21 @@
     <h3 class="checkout__title">3. {% trans %}Payment{% endtrans %}
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <span class="checkout__subtitle__edit">
-                        <i class="icon-pencil"></i>
+                        <i class="icon-plus"></i>
                         <a id="add_new_credit_card_link" href="#">{% trans %}Addnew{% endtrans %}</a>
                     </span>
         {% endif %}
     </h3>
 
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-    <div class="checkout__item">{% include('VoloFrontendBundle:Checkout/Partial:payment_list.html.twig') %}</div>
+    {% include('VoloFrontendBundle:Checkout/Partial:payment_list.html.twig') %}
     {% endif %}
-
+    <div class="checkout__add-new-wrap">
     {% include('VoloFrontendBundle:Checkout/Partial:payment_form.html.twig') %}
+    </div>
     
     <div class="voucher-component" data-vendor_id="{{ vendor.id }}">
-       <div class="checkout__item"><a href="#" id="add_voucher_link">{% trans %}Have a voucher?{% endtrans %}</a></div>
+       <div class="checkout__item"><a href="#" id="add_voucher_link" class="checkout__more-feature-link">{% trans %}Have a voucher?{% endtrans %}</a></div>
 
         <form action="#" id="voucher_form" role="form" class="hide">
             <div class="checkout__item">
