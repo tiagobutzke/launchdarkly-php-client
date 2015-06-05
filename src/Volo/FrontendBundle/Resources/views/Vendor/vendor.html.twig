@@ -42,8 +42,12 @@
         </p>
     </div>
     <div class="hero-menu__info-extra">
-        <i class="icon-pin-map"></i> {{ vendor.address }}
+        {% if ('' != vendor.address) %}
+            <i class="icon-pin-map"></i> {{ vendor.address }}
+        {% endif %}
+        {% if ('' != vendor.customerPhone) %}
         <i class="icon-call-phone"></i> {{ vendor.customerPhone }}
+        {% endif %}
     </div>
 </div>
 <div class="menu-wrapper">
@@ -52,7 +56,7 @@
             <div class="menu__main__list">
                 {{ include('VoloFrontendBundle:Vendor:allergyLegend.html.twig') }}
                 <div class="menu__categories">
-                    <div class="b-lazy aspect-ratio-117-45 menu__vendor-logo" data-src="{{ asset('img/restaurant_logos/test.png') }}">
+                    <div class="b-lazy aspect-ratio-117-45 menu__vendor-logo" data-src="{{ vendor.logo|prepareLogoUrl(logo_image_dimensions) }}">
                     </div>
                     <nav>
                         <ul>
