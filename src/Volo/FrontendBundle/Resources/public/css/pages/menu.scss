@@ -252,7 +252,7 @@
   @include respond-from("screen-md") {
     font-size: 0.875em;
     min-height: 96px;
-    padding: 0 $space-xs 0 $space-lg ;
+    padding: 0 $space-xs 0 $space-lg;
   }
 
   &:last-child {
@@ -295,8 +295,6 @@
 .menu__item__description {
   color: $color-text-secondary;
 }
-
-
 
 .menu__item__price {
   width: 25%;
@@ -350,15 +348,15 @@
 .menu__bottom-info__title {
   @extend .menu__items__title;
   border: none;
+  @include respond-from("screen-lg") {
+    margin: 0 $space-md;
+    width: 67%;
+  }
 }
 
 .menu__bottom-info__openings {
+  @include make-lg-column(3);
   text-align: center;
-  @include respond-from("screen-lg") {
-    @include make-lg-column(3);
-    text-align: left;
-    padding: 0;
-  }
 
   ul {
     margin: 0 auto;
@@ -375,6 +373,16 @@
       display: inline-block;
       margin-left: 25px;
       float: right;
+    }
+  }
+  @include respond-from("screen-lg") {
+    text-align: left;
+    padding: 0;
+
+    ul {
+      display: block;
+      margin: 0 $space-md;
+      width: 67%;
     }
   }
 
