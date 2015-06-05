@@ -29,7 +29,7 @@
             <div class="checkout__item checkout__item--delivery-list">
                 <div id="delivery-information-list-wrapper">
                     <div class="selected-address"></div>
-                    <div id="delivery-information-list" data-addresses='{{ customer_addresses|json_encode|raw }}'></div>
+                    <div id="delivery-information-list" data-addresses='{{ customer_addresses|to_escaped_json }}'></div>
                     {% include('VoloFrontendBundle:Layout/Partial/templates:checkout_address.html.twig') %}
                     <div class="checkout__item"><a id="select_other_address_link" href="#" class="checkout__more-feature-link">Select other</a></div>
 
