@@ -13,7 +13,7 @@
     </head>
     <body class="{% block bodyClass %}{% endblock %}">
         {{ block('modals') }}
-        <div class="page-wrapper">
+        <div class="page-wrapper {% block page_wrapper_class %}{% endblock page_wrapper_class %}">
             <div class="content-wrapper {% block content_wrapper_class %}{% endblock content_wrapper_class %}">
             {{ block('header') }}
             {{ block('breadcrumbs') }}
@@ -22,7 +22,9 @@
                 {{ block('content') }}
             </main>
             </div>
-            {{ block('footer') }}
+            <footer class="footer {% block footer_size_class %}footer-full{% endblock footer_size_class %}">
+                {{ block('footer') }}
+            </footer>
         </div>
         {{ block('footer_scripts') }}
     </body>
