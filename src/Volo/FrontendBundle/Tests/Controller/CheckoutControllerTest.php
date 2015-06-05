@@ -12,7 +12,7 @@ class CheckoutControllerTest extends VoloTestCase
 
         $vendorId = '684';
         $vendorCode = 'm2hc';
-        $cart = ['products' => [], 'expeditionType' => 'delivery', 'orderTime' => date('c')];
+        $cart = ['products' => ['fake'], 'expeditionType' => 'delivery', 'orderTime' => date('c')];
         
         $sessionId = 'test_session_id';
         $client->getContainer()->get('session')->setId($sessionId);
