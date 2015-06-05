@@ -8,7 +8,7 @@
 
     <script data-turbolinks-eval=always>
         var VOLO = VOLO || {};
-        VOLO.jsonCart = {{ cart|json_encode|raw }};
+        VOLO.jsonCart = {{ cart|to_escaped_json}};
     </script>
 {% endblock %}
 
@@ -71,7 +71,7 @@
                         <h3 class="menu__items__title" id="menu__category-id-{{ menuCategory.id }}">{{ menuCategory.name }}</h3>
                         {% for product in menuCategory.products %}
                             {# ------ Please toggle "menu__item--selected" class on click to style selected item  #}
-                            <div class="menu__item" data-object='{{ serialize(product)|raw }}'>
+                            <div class="menu__item" data-object='{{ serialize(product) }}'>
                                 <div class="menu__item__wrapper">
                                     <div class="menu__item__name">
                                         {{ product.name }}

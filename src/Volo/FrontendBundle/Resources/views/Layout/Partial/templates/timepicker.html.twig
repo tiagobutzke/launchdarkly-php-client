@@ -4,7 +4,7 @@
             {% set nextThreeOpeningDays = getDeliveryDays(vendor.schedules, 3) %}
             {% for openingDay in nextThreeOpeningDays %}
                 <option value="{{ openingDay.format("Y-m-d") }}"
-                        data-delivery-hours='{{ getClosingHoursRange(vendor.schedules, openingDay)|json_encode|raw }}'>
+                        data-delivery-hours='{{ getClosingHoursRange(vendor.schedules, openingDay)|to_escaped_json }}'>
                     {{ openingDay|formatOpeningDay }}
                 </option>
             {% endfor %}

@@ -8,7 +8,7 @@
 
     <script data-turbolinks-eval=always>
         var VOLO = VOLO || {};
-        VOLO.jsonCart = {{ cart|json_encode|raw }};
+        VOLO.jsonCart = {{ cart|to_escaped_json }};
     </script>
 {% endblock footer_scripts %}
 
