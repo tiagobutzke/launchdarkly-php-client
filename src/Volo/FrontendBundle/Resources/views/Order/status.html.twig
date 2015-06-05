@@ -1,0 +1,20 @@
+{% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
+
+{% block content %}
+    <div class="checkout-wrapper">
+        <div class="checkout">
+            <div class="checkout__main">
+                <div class="checkout__main">
+                    <h3>Order</h3>
+                    <pre style="font-size: 13px; background-color: #eee; width: 800px;">
+{{ order|json_encode(constant('JSON_PRETTY_PRINT'))|raw }}
+                    </pre>
+                    <h3>Order Status</h3>
+                    <pre style="font-size: 13px; background-color: #eee; width: 800px;">
+{{ status|json_encode(constant('JSON_PRETTY_PRINT'))|raw }}
+                    </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
