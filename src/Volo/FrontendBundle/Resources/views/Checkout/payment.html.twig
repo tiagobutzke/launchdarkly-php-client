@@ -2,19 +2,19 @@
 
 {% block delivery_information %}
     <div class="{% if is_granted('IS_AUTHENTICATED_FULLY') %}checkout-delivery-component{% endif %}">
-        <h3 class="checkout__title">1. {% trans %}Delivery details{% endtrans %}
+        <h3 class="checkout__title">1. {% trans %}title.delivery_details{% endtrans %}
             <span class="checkout__subtitle__edit">
                 {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
                     <i class="icon-pencil"></i>
                     <a id="add_new_address_link" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">
-                        {% trans %}Edit{% endtrans %}
+                        {% trans %}link.add_new_address{% endtrans %}
                     </a>
                 {% endif %}
             </span>
         </h3>
 
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <h4 class="checkout__subtitle">{% trans %}Delivery Time{% endtrans %}
+            <h4 class="checkout__subtitle">{% trans %}title.delivery_time{% endtrans %}
                 <a id="add_new_address_link" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">
                     {% trans %}link.add_new_address{% endtrans %}
                 </a>
@@ -24,7 +24,7 @@
             </div>
         {% endif %}
 
-        <h4 class="checkout__subtitle">{% trans %}Delivery Address{% endtrans %}</h4>
+        <h4 class="checkout__subtitle">{% trans %}title.delivery_address{% endtrans %}</h4>
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <div class="checkout__item checkout__item--delivery-list">
                 <div id="delivery-information-list-wrapper">
@@ -47,12 +47,12 @@
 
 {% block contact_information %}
     <h3 class="checkout__title">
-        2. {% trans %}Contact info{% endtrans %}
+        2. {% trans %}title.contact_information{% endtrans %}
         <span class="checkout__subtitle__edit">
         <i class="icon-pencil"></i>
         <a id="edit_contact_information_form_link"
            href="{{ path('checkout_contact_information', {vendorCode: vendor.code}) }}">{% trans %}
-            Edit{% endtrans %}</a>
+            link.edit_contact_information{% endtrans %}</a>
     </span>
     </h3>
 
@@ -68,11 +68,11 @@
 {% endblock %}
 
 {% block payment %}
-    <h3 class="checkout__title">3. {% trans %}Payment{% endtrans %}
+    <h3 class="checkout__title">3. {% trans %}title.payment{% endtrans %}
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <span class="checkout__subtitle__edit">
                         <i class="icon-plus"></i>
-                        <a id="add_new_credit_card_link" href="#">{% trans %}Addnew{% endtrans %}</a>
+                        <a id="add_new_credit_card_link" href="#">{% trans %}link.add_new_credit_card{% endtrans %}</a>
                     </span>
         {% endif %}
     </h3>
@@ -85,21 +85,21 @@
     </div>
     
     <div class="voucher-component" data-vendor_id="{{ vendor.id }}">
-       <div class="checkout__item"><a href="#" id="add_voucher_link" class="checkout__more-feature-link">{% trans %}Have a voucher?{% endtrans %}</a></div>
+       <div class="checkout__item"><a href="#" id="add_voucher_link" class="checkout__more-feature-link">{% trans %}link.have_voucher{% endtrans %}</a></div>
 
         <form action="#" id="voucher_form" role="form" class="hide">
             <div class="checkout__item">
                 <div class="form-group form-group--two_col1--xs-full">
                     <input type="text" class="form-control" id="voucher" name="voucher"
-                           required="true" placeholder="{% trans %}Please enter voucher code{% endtrans %}">
-                    <span class="error_msg error_invalid_voucher"><i class="icon-attention"></i> {% trans %}Error! Invalid voucher{% endtrans %}</span>
+                           required="true" placeholder="{% trans %}form.label.enter_voucher{% endtrans %}">
+                    <span class="error_msg error_invalid_voucher"><i class="icon-attention"></i> {% trans %}voucher.error_invalid{% endtrans %}</span>
                 </div>
-                <div class="form-group form-group--two_col2--xs-full"> <button class="button pull-left">{% trans %}Continue{% endtrans %}</button></div>
+                <div class="form-group form-group--two_col2--xs-full"> <button class="button pull-left">{% trans %}button.continue{% endtrans %}</button></div>
             </div>
         </form>
-        <div id="voucher-wrapper" class="checkout__item hide">{% trans %}Voucher: {% endtrans %}
+        <div id="voucher-wrapper" class="checkout__item hide">{% trans %}voucher{% endtrans %}
             <b id="voucher-text"></b>
-            <a href="#" id="remove_voucher_link">{% trans %}Remove{% endtrans %}</a>
+            <a href="#" id="remove_voucher_link">{% trans %}link.remove_voucher{% endtrans %}</a>
         </div>
     </div>
 
@@ -107,7 +107,7 @@
     <div class="checkout-button" data-vendor_code="{{ vendor.code }}" data-vendor_id="{{ vendor.id}}" data-is_guest_user="{{ is_granted('IS_AUTHENTICATED_FULLY') ? 'false' : 'true'}}">
         <span class="error_msg hide"></span>
         <div class="checkout__submit">
-            <button id="finish-and-pay" class="button">{% trans %}finish_and_pay{% endtrans %}</button>
+            <button id="finish-and-pay" class="button">{% trans %}button.finish_and_pay{% endtrans %}</button>
         </div>
         <div class="checkout__disclaimer"> By completing this order, I accept the <a href="#1">Terms & Conditions</a> and our <a href="#1">Privacy Policy</a></div>
         <div class="clearfix"></div>

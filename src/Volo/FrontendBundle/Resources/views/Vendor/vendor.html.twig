@@ -28,7 +28,7 @@
         {% set closingInMinutes = getClosingIn(vendor.schedules) %}
         <p>
             {% if (closingInMinutes <= 0) %}
-                <span class="line-wrapper">{{ 'Closed. Preorder available.'|trans }}</span>
+                <span class="line-wrapper">{{ 'vendor_closed_preorder_available'|trans }}</span>
                 <span>{{ getNextOpeningWeekDayNumber(vendor.schedules)|dayOfTheWeek }}
                 {{ getNextOpeningHours(vendor.schedules)|formatTime }} - {{ getNextClosingHours(vendor.schedules)|formatTime }}</span>
             {% elseif (closingInMinutes < 60) %}
@@ -121,7 +121,7 @@
 <div class="bottom-cart">
     <div class="bottom-cart__wrapper">
         <div class="bottom-cart__quantity"><span>23</span></div>
-        <div class="bottom-cart__cta">{{ 'View this cart'|trans }}</div>
+        <div class="bottom-cart__cta">{{ 'view_this_cart'|trans }}</div>
         <div class="bottom-cart__price">{{ "131.50"|price }}</div>
     </div>
 </div>

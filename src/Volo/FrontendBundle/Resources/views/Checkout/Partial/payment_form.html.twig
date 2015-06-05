@@ -2,29 +2,29 @@
 <form action="{{ path('checkout_payment', {vendorCode: vendor.code}) }}"
       class="{% if showForm %}hide{% endif %}"
       id="payment_form" method="post" role="form">
-    <h4 class="checkout__subtitle">{% trans %}Credit card details{% endtrans %}</h4>
+    <h4 class="checkout__subtitle">{% trans %}title.credit_card_details{% endtrans %}</h4>
     <div class="checkout__item">
         <div class="checkout__item__card">
             <div class="form-group">
                 <input type="text" class="form-control" id="adyen-encrypted-form-holder-name" size="20"
-                       autocomplete="off" data-encrypted-name="holderName" placeholder="{% trans %}Card holder name{% endtrans %}">
+                       autocomplete="off" data-encrypted-name="holderName" placeholder="{% trans %}form.placeholder.card_holder_name{% endtrans %}">
             </div>
             <div class="form-group">
                 <input type="text" class="form-control" id="adyen-encrypted-form-number" size="20"
-                       autocomplete="off" data-encrypted-name="number" placeholder="{% trans %}Card number{% endtrans %}">
+                       autocomplete="off" data-encrypted-name="number" placeholder="{% trans %}form.placeholder.card_number{% endtrans %}">
                 <span id="cardType"></span>
             </div>
             <div class="form-group form-group--3col">
                 <input type="text" class="form-control" id="adyen-encrypted-form-expiry-month" maxlength="2" size="2"
-                       autocomplete="off" data-encrypted-name="expiryMonth" placeholder="{% trans %}MM{% endtrans %}">
+                       autocomplete="off" data-encrypted-name="expiryMonth" placeholder="{% trans %}form.placeholder.mm{% endtrans %}">
             </div>
             <div class="form-group form-group--3col">
                 <input type="text" class="form-control" id="adyen-encrypted-form-expiry-year" maxlength="4" size="4"
-                       autocomplete="off" data-encrypted-name="expiryYear" placeholder="{% trans %}YYYY{% endtrans %}">
+                       autocomplete="off" data-encrypted-name="expiryYear" placeholder="{% trans %}form.placeholder.yyyy{% endtrans %}">
             </div>
             <div class="form-group form-group--3col-last">
                 <input type="text" class="form-control" id="adyen-encrypted-form-cvc" size="4" maxlength="4"
-                       autocomplete="off" data-encrypted-name="cvc" placeholder="{% trans %}CVC{% endtrans %}">
+                       autocomplete="off" data-encrypted-name="cvc" placeholder="{% trans %}form.placeholder.cvc{% endtrans %}">
                 <i class="icon-help-circled"></i>
             </div>
             <div class="hide"><input type="hidden" id="adyen-encrypted-form-expiry-generationtime" value="{{ "now"|date('c') }}"

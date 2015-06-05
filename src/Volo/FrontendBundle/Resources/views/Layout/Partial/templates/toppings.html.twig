@@ -10,11 +10,11 @@
                     <div class="toppings"></div>
                 </div>
                 <div class="modal-footer">
-                    <a class="toppings-add__to__cart button">add to cart</a>
+                    <a class="toppings-add__to__cart button">{{ 'topping.add_to_cart'|trans }}</a>
                     {# quantity selector from toppings-product-quantity #}
                 </div>
                 <div class="modal-error-message">
-                    <span class="icon-attention"></span> {{ 'Please make the requested selections.'|trans }}
+                    <span class="icon-attention"></span> {{ 'topping.make_requested_selection'|trans }}
                 </div>
                 <div class="modal-close-button"></div>
             </div>
@@ -54,15 +54,15 @@
     <div class="topping__comment__help-text">
         <% if (quantity_minimum === 0 ) { %>
             <% if (quantity_maximum > 1 ) { %>
-                {{ 'Select up to'|trans }} <%- quantity_maximum %> ({{ 'optional'|trans }})
+                {{ 'topping.select_up_to'|trans }} <%- quantity_maximum %> ({{ 'topping.optional'|trans }})
             <% } else { %>
-                {{ 'optional'|trans|capitalize }}
+                {{ 'topping.optional'|trans|capitalize }}
             <% } %>
         <% } else { %>
             <% if (quantity_maximum === 1 ) { %>
-                {{ 'select'|trans|capitalize }} 1
+                {{ 'topping.select'|trans|capitalize }} 1
             <% } else { %>
-                {{ 'Select up to'|trans }} <%- quantity_maximum %>
+                {{ 'topping.select_up_to'|trans }} <%- quantity_maximum %>
             <% } %>
         <% } %>
     </div>

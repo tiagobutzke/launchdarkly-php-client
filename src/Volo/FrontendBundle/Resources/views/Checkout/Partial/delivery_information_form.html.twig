@@ -2,27 +2,27 @@
     <div class="checkout__item checkout__item--step">
         <div class="form-group">
             <input type="text" class="form-control" id="address_line1" name="customer_address[address_line1]"
-                   value="{{ customer_address.address_line1|default('') }}" required="true" placeholder="{% trans %}Address including number{% endtrans %}">
+                   value="{{ customer_address.address_line1|default('') }}" required="true" placeholder="{% trans %}form.placeholder.address{% endtrans %}">
         </div>
         <div class="form-group form-group--two_col1">
             <input type="text" class="form-control"  id="postal_index_form_input" name="customer_address[postcode]"
                    data-vendor_id="{{ vendor.id }}"
-                   value="{{ customer_address.postcode|default('') }}" required="true" placeholder="{% trans %}Post Code{% endtrans %}">
+                   value="{{ customer_address.postcode|default('') }}" required="true" placeholder="{% trans %}form.placeholder.postcode{% endtrans %}">
         </div>
         <div class="form-group form-group--two_col2">
             <input type="text" class="form-control" id="city" name="customer_address[city]"
-                   value="{{ customer_address.city|default('') }}" required="true" placeholder="{% trans %}City{% endtrans %}">
+                   value="{{ customer_address.city|default('') }}" required="true" placeholder="{% trans %}form.placeholder.city{% endtrans %}">
         </div>
         <div class="form-group">
             <input type="text" class="form-control" id="company" name="customer_address[company]"
-                   value="{{ customer_address.company|default('') }}" placeholder="{% trans %}Company name &quot;Optional&quot;{% endtrans %}">
+                   value="{{ customer_address.company|default('') }}" placeholder="{% trans %}form.placeholder.company_name{% endtrans %}">
         </div>
         <div class="form-group">
             <textarea cols="30" rows="10" class="form-control" id="delivery_instructions" name="customer_address[delivery_instructions]"
-                      value="{{ customer_address.delivery_instructions|default('') }}" placeholder="{% trans %}Delivery Instructions &quot;Optional&quot; &#10; i.e. 2nd building buzzer Bloom{% endtrans %}"></textarea>
+                      value="{{ customer_address.delivery_instructions|default('') }}" placeholder="{% trans %}form.placeholder.delivery_instructions{% endtrans %}"></textarea>
         </div>
         <input type="hidden" name="customer_address[city_id]" value="{{ vendor.city.id }}">
-        <button id="delivery_information_form_button" class="button">{% trans %}Continue{% endtrans %}</button>
+        <button id="delivery_information_form_button" class="button">{% trans %}button.continue{% endtrans %}</button>
     </div>
 </form>
 <script type="text/template" id="template-delivery-modal">
@@ -30,10 +30,10 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="delivery-error__message">{{ "The restaurant doesn't deliver to this postal code"|trans }}</div>
+                    <div class="delivery-error__message">{{ "error.restaurant_does_not_deliver_this_postal_code"|trans }}</div>
                 </div>
                 <div class="modal-footer">
-                    <a class="delivery-error__find-restaurants button">{{ 'Show restaurants in my area'|trans }}</a>
+                    <a class="delivery-error__find-restaurants button">{{ 'link.show_restaurants_in_my_area'|trans }}</a>
                 </div>
                 <div class="modal-close-button"></div>
             </div>
