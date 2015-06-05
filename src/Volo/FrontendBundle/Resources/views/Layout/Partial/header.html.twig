@@ -3,9 +3,20 @@
         <div class="header__wrapper">
             <div class="header__account">
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <a href="#" class="header__account__open">{{ app.security.token.attributes.customer.firstName }}<i class="icon-down-open-mini"></i></a>
+                    <div class="header__account__dropdown dropdown">
+                        <a class="header__account__open" id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ app.security.token.attributes.customer.firstName }}<i class="icon-down-open-mini"></i>
+                        </a>
+                        <ul class="dropdown-menu pull-right arrow header__acount__dropdown_rows" role="menu" aria-labelledby="dLabel">
+                            <li>
+                                <a href="{{ path('profile_index')}}" class="header_account__dropdown__link">{% trans %}profile{% endtrans %}</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('logout') }}" class="header_account__dropdown__link">{% trans %}logout{% endtrans %}</a>
+                            </li>
+                        </ul>
+                    </div>
                     <a href="#" class="header__account__login-icon"><i class="icon-profile"></i></a>
-                    {#<a href="{{ path('logout') }}">Logout </a>#}
                 {% else %}
                     <a class="show-login-modal header__account__login-text">{% trans %}Login{% endtrans %}</a>
                     <a class="show-login-modal header__account__login-icon"><i class="icon-profile"></i></a>
