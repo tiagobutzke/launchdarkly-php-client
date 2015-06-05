@@ -19,6 +19,7 @@ use Volo\FrontendBundle\Http\JsonErrorResponse;
 class VendorController extends Controller
 {
     /**
+     * @Route("/{code}", name="vendor_by_code")
      * @Route(
      *      "/{code}/{urlKey}",
      *      name="vendor",
@@ -35,7 +36,7 @@ class VendorController extends Controller
      *
      * @return array
      */
-    public function vendorAction(Request $request, $code, $urlKey)
+    public function vendorAction(Request $request, $code, $urlKey = null)
     {
         try {
             $vendor = $this->get('volo_frontend.provider.vendor')->find($code);
@@ -72,7 +73,7 @@ class VendorController extends Controller
 
     /**
      * @Route(
-     *      "/restaurant/{vendorId}/delivery-check/lat/{latitude}/lng/{longitude}",
+     *      "/{vendorId}/delivery-check/lat/{latitude}/lng/{longitude}",
      *      name="vendor_delivery_validation_by_gps",
      *      options={"expose"=true},
      *      condition="request.isXmlHttpRequest()"
@@ -97,28 +98,5 @@ class VendorController extends Controller
         } catch (ApiErrorException $e) {
             return new JsonErrorResponse($e);
         }
-    }
-
-    /**
-     * @Route("/{code}", name="vendor_by_code")
-     * @Method({"GET"})
-     *
-     * @param string $code
-     *
-     * @return array
-     */
-    public function vendorByCodeAction($code)
-    {
-        try {
-            $vendor = $this->get('volo_frontend.provider.vendor')->find($code);
-        } catch (EntityNotFoundException $exception) {
-            throw $this->createNotFoundException('Vendor not found!', $exception);
-        }
-
-        return $this->redirectToRoute(
-            'vendor',
-            ['code' => $code, 'urlKey' => $vendor->getUrlKey()],
-            Response::HTTP_MOVED_PERMANENTLY
-        );
     }
 }
