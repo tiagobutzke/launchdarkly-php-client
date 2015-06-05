@@ -4,34 +4,41 @@
 
 .footer {
   margin-top: $space-lg * 2;
-  height: 200px;
+  overflow: auto;
   font-size: 0.875em;
   line-height: 1.5em;
+  padding-bottom: $top-cart-height / 2 + $space-lg;
   @include respond-from("screen-md") {
     @include fluid-container();
   }
 }
 
-.footer__wrapper {
+%footer__wrapper {
   @include make-row();
+  padding-top: $space-lg * 2;
+  padding-bottom: $space-lg * 2;
+  margin: 0;
+}
+
+.footer__wrapper__top {
+  @extend %footer__wrapper;
+  border-top: $dropdown-border;
+}
+
+.footer__wrapper__middle {
+  @extend %footer__wrapper;
+  border-top: $dropdown-border;
   padding-top: $space-lg;
   padding-bottom: $space-lg;
-  margin: 0;
+}
+
+.footer-reduced .footer__wrapper__middle {
+  border-bottom: $dropdown-border;
+}
+
+.footer__wrapper__bottom {
+  @extend %footer__wrapper;
   border-top: $dropdown-border;
-
-  @include respond-from("screen-sm") {
-    &:first-child {
-      padding-top: 40px;
-      padding-bottom: 40px;
-    }
-  }
-
-  &:last-child {
-    padding-bottom: $top-cart-height / 2 + $space-lg;
-    @include respond-from("screen-sm") {
-      padding-top: 30px;
-    }
-  }
 }
 
 .footer__subscribe {

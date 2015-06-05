@@ -1,6 +1,6 @@
 {% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
 
-{% block content_wrapper_class %}menu-bg{% endblock content_wrapper_class %}
+{% block page_wrapper_class %}menu-bg{% endblock page_wrapper_class %}
 
 {% block headerClass %}header--white header-small{% endblock headerClass %}
 
@@ -107,3 +107,9 @@
 
 {{ include('VoloFrontendBundle:Layout/Partial/templates:cart.html.twig') }}
 {% endblock %}
+
+{# overriding for reduced footer in checkout page #}
+{% block footer_size_class %}footer-reduced{% endblock footer_size_class %}
+{% block footer %}
+    {{ include('VoloFrontendBundle:Layout/Partial/:reduced_footer.html.twig') }}
+{% endblock footer %}
