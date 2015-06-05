@@ -12,6 +12,9 @@ body {
 
 a, .link {
   @include make-link();
+  &:focus {
+    outline: none;
+  }
 }
 
 h1, .h1,

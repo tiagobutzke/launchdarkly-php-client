@@ -5,21 +5,30 @@ namespace Volo\FrontendBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 
 class SecurityController extends Controller
 {
     /**
      * @Route("/login", name="login")
-     * @Template()
      */
     public function loginAction()
     {
         $authenticationUtils = $this->get('security.authentication_utils');
 
-        return [
+        $statusCode = Response::HTTP_OK;
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        if ($error) {
+            $statusCode = Response::HTTP_BAD_REQUEST;
+        }
+
+        $view = $this->renderView('VoloFrontendBundle:Security:login.html.twig', [
             'last_username' => $authenticationUtils->getLastUsername(),
-            'error'         => $authenticationUtils->getLastAuthenticationError(),
-        ];
+            'error'         => $error,
+        ]);
+
+        return new Response($view, $statusCode);
     }
 
     /**

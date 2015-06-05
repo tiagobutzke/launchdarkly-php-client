@@ -59,6 +59,14 @@ a.button {
   margin-left: $space-sm;
 }
 
+.button--full-width {
+  width: 100%;
+}
+
+.button:disabled, button:disabled {
+  background-color: $cta-color-bg-disabled;
+}
+
 // ----------------------- BUTTONS END -----------------------
 
 
