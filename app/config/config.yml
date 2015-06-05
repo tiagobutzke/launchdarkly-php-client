@@ -33,6 +33,8 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     globals:
+        # logo image [width, height]
+        logo_image_dimensions: [196, 140]
         country_code: "%country_code%"
         locale: "%locale%"
         blazy_placeholder: 'data:image/gif;base64,R0lGODdhAQABAIAAAMzMzJaWliwAAAAAAQABAAACAkQBADs='

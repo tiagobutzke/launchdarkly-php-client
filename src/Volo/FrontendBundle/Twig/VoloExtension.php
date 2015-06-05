@@ -31,6 +31,7 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
             new \Twig_SimpleFilter('formatTime', array($this, 'formatTime')),
             new \Twig_SimpleFilter('dayOfTheWeek', array($this, 'formatDayOfTheWeek')),
             new \Twig_SimpleFilter('formatOpeningDay', array($this, 'formatOpeningDay')),
+            new \Twig_SimpleFilter('prepareLogoUrl', array($this, 'prepareLogoUrl')),
         ]);
     }
 
@@ -125,5 +126,16 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
         // @see http://userguide.icu-project.org/formatparse/datetime for formats
         $formatter->setPattern('eee MMM d');
         return $formatter->format($day);
+    }
+
+    /**
+     * @param string $logoUrl
+     * @param array $dimensions [w, h]
+     *
+     * @return string
+     */
+    public function prepareLogoUrl($logoUrl, $dimensions)
+    {
+        return sprintf($logoUrl, $dimensions[0], $dimensions[1]);
     }
 }
