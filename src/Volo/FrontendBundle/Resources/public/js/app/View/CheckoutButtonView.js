@@ -50,6 +50,9 @@ var CheckoutButtonView = Backbone.View.extend({
 
     handlePaymentError: function (data) {
         this.$('.error_msg').removeClass('hide');
-        this.$('.error_msg').html(data.error.errors.developer_message);
+
+        if (_.isObject(data) && _.isString(data.error.errors.message)) {
+            this.$('.error_msg').html(data.error.errors.message);
+        }
     }
 });

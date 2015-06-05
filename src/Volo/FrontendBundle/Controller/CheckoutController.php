@@ -255,15 +255,15 @@ class CheckoutController extends Controller
 
         try {
             $vendor = $this->get('volo_frontend.provider.vendor')->find($vendorCode);
-        } catch (ApiErrorException $exception) {
-            return new JsonErrorResponse($exception);
+        } catch (ApiErrorException $e) {
+            return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
         }
         $cart = $this->getCart($vendor);
 
         try {
             $apiResult = $this->handleOrder($cart, $vendor, $data);
         } catch (ApiErrorException $e) {
-            return new JsonErrorResponse($e);
+            return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
         }
 
         return new JsonResponse($apiResult);
