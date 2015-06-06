@@ -46,7 +46,14 @@
         </div>
         <div class="desktop-cart__footer">
             <div class="desktop-cart__order__subtotal__container"></div>
-            <a class="button btn-checkout" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">{% trans %}cart.checkout_link{% endtrans %}</a>
+            <% if (total_value > minimum_order_amount) { %>
+                <a class="button btn-checkout" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">
+                    {% trans %}cart.checkout_link{% endtrans %}
+                </a>
+            <% } else { %>
+                <a class="button btn-below-minimum-amount btn-checkout">{% trans with {'%min%': vendor.minimumOrderAmount|price} %}cart.cart_below_mininum_total_amount %min%{% endtrans %}</a>
+                <span class="error-below-minimum-amount error_msg hide">{% trans %}cart.need_add_more_products_to_place_order{% endtrans %}</span>
+            <% }; %>
         </div>
     </div>
  </script>

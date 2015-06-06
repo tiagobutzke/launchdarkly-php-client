@@ -130,6 +130,7 @@ var CartView = Backbone.View.extend({
         this.templateSubTotal = _.template($('#template-cart-subtotal').html());
 
         this.vendor_id = this.$el.data().vendor_id;
+        this.model.getCart(this.vendor_id).set('minimum_order_amount', this.$el.data().minimum_order_amount);
 
         this.domObjects = {};
         this.domObjects.$header = options.$header;
@@ -162,7 +163,8 @@ var CartView = Backbone.View.extend({
     // when scrolling page from summary list
 
     events: {
-        'scroll .checkout__summary' : '_updateCartHeight'
+        'scroll .checkout__summary' : '_updateCartHeight',
+        'click .btn-below-minimum-amount': '_showBelowMinimumAmountMsg'
     },
 
     unbind: function() {
@@ -193,7 +195,7 @@ var CartView = Backbone.View.extend({
         this.listenTo(vendorCart.products, 'update', this._toggleContainerVisibility, this);
         this.listenTo(vendorCart.products, 'update', this._updateCartIcon, this);
         this.listenTo(vendorCart.products, 'change', this._updateCartIcon, this);
-        this.listenTo(vendorCart, 'cart:ready', this.renderSubTotal, this);
+        this.listenTo(vendorCart, 'cart:ready', this.render, this);
         this.listenTo(vendorCart, 'update', this.render, this);
 
         // initializing cart height resize behaviour
@@ -314,5 +316,9 @@ var CartView = Backbone.View.extend({
         });
 
         this.timePickerView.render();
+    },
+
+    _showBelowMinimumAmountMsg: function () {
+        this.$('.error-below-minimum-amount').removeClass('hide');
     }
 });
