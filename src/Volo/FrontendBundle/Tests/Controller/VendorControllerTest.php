@@ -38,4 +38,14 @@ class VendorControllerTest extends VoloTestCase
 
         $this->isSuccessful($client->getResponse());
     }
+
+    public function testVendorByCodeWithWrongVendorCode()
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/restaurant/a1bc');
+
+        $this->isSuccessful($client->getResponse(), false);
+        $this->assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
+    }
 }

@@ -3,7 +3,6 @@
 namespace Volo\FrontendBundle\Controller;
 
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
-use Foodpanda\ApiSdk\Exception\EntityNotFoundException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -45,7 +44,7 @@ class VendorController extends Controller
                     'urlKey' => $vendor->getUrlKey()
                 ]);
             }
-        } catch (EntityNotFoundException $exception) {
+        } catch (ApiErrorException $exception) {
             throw $this->createNotFoundException('Vendor not found!', $exception);
         }
 
@@ -111,7 +110,7 @@ class VendorController extends Controller
     {
         try {
             $vendor = $this->get('volo_frontend.provider.vendor')->find($code);
-        } catch (EntityNotFoundException $exception) {
+        } catch (ApiErrorException $exception) {
             throw $this->createNotFoundException('Vendor not found!', $exception);
         }
 
