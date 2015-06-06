@@ -2,9 +2,7 @@
 
 namespace Volo\FrontendBundle\Controller;
 
-use CommerceGuys\Guzzle\Oauth2\AccessToken;
 use Foodpanda\ApiSdk\Entity\Address\Address;
-use Foodpanda\ApiSdk\Entity\Customer\Customer;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,11 +12,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Volo\FrontendBundle\Http\JsonErrorResponse;
-use Volo\FrontendBundle\Security\Token;
 use Volo\FrontendBundle\Service\CustomerLocationService;
 use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
 
@@ -29,7 +25,7 @@ class CheckoutController extends Controller
 {
     const SESSION_DELIVERY_KEY_TEMPLATE = 'checkout-%s-delivery';
     const SESSION_CONTACT_KEY_TEMPLATE  = 'checkout-%s-contact';
-    
+
     /**
      * @Route("/{vendorCode}/delivery", name="checkout_delivery_information")
      * @Method({"GET", "POST"})
@@ -248,28 +244,6 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @Route("/success/{orderCode}", name="checkout_success", options={"expose"=true})
-     * @Method({"GET"})
-     * @Template()
-     *
-     * @param string $orderCode
-     *
-     * @return array
-     */
-    public function successAction($orderCode)
-    {
-        $accessToken = $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')
-            ? $this->get('security.token_storage')->getToken()->getAccessToken()
-            : null;
-
-        $order = $this->get('volo_frontend.provider.order')->orderPaymentInformation($orderCode, $accessToken);
-
-        return [
-            'order' => $order
-        ];
-    }
-
-    /**
      * @Route("/checkout/create_address", name="checkout_create_address", options={"expose"=true})
      * @Method({"POST"})
      * @Template("VoloFrontendBundle:Checkout/Partial:delivery_information_list.html.twig")
@@ -351,6 +325,7 @@ class CheckoutController extends Controller
                 $session->get(sprintf(static::SESSION_CONTACT_KEY_TEMPLATE, $vendor->getCode())),
                 $session->get(sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendor->getCode()))
             );
+            $session->set(OrderController::SESSION_GUEST_ORDER_ACCESS_TOKEN, $guestCustomer->getAccessToken());
 
             $order = $orderManager->placeGuestOrder($guestCustomer, $data['expected_total_amount'], $cart);
 
