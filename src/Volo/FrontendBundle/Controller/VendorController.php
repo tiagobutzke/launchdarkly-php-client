@@ -19,7 +19,6 @@ use Volo\FrontendBundle\Http\JsonErrorResponse;
 class VendorController extends Controller
 {
     /**
-     * @Route("/{code}", name="vendor_by_code")
      * @Route(
      *      "/{code}/{urlKey}",
      *      name="vendor",
@@ -36,7 +35,7 @@ class VendorController extends Controller
      *
      * @return array
      */
-    public function vendorAction(Request $request, $code, $urlKey = null)
+    public function vendorAction(Request $request, $code, $urlKey)
     {
         try {
             $vendor = $this->get('volo_frontend.provider.vendor')->find($code);
@@ -98,5 +97,28 @@ class VendorController extends Controller
         } catch (ApiErrorException $e) {
             return new JsonErrorResponse($e);
         }
+    }
+
+    /**
+     * @Route("/{code}", name="vendor_by_code")
+     * @Method({"GET"})
+     *
+     * @param string $code
+     *
+     * @return array
+     */
+    public function vendorByCodeAction($code)
+    {
+        try {
+            $vendor = $this->get('volo_frontend.provider.vendor')->find($code);
+        } catch (EntityNotFoundException $exception) {
+            throw $this->createNotFoundException('Vendor not found!', $exception);
+        }
+
+        return $this->redirectToRoute(
+            'vendor',
+            ['code' => $code, 'urlKey' => $vendor->getUrlKey()],
+            Response::HTTP_FOUND
+        );
     }
 }
