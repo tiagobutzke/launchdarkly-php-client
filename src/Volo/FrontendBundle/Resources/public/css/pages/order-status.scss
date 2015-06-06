@@ -1,0 +1,301 @@
+.hero-traking__info {
+  width: 480px;
+  padding: 0;
+  text-align: center;
+  color: $color-text-selection;
+  overflow: hidden;
+  @include absolute-center-box();
+  @include respond-from("screen-md") {
+    width: 600px;
+  }
+  top:40%;
+}
+
+.tracking-header__title {
+  font-size: 1.3em;
+  line-height: 1.2em;
+  margin: 0;
+  @include respond-from("screen-md") {
+    font-size: 1.8em;
+    line-height: 1.2em;
+  }
+  @include respond-from("screen-lg") {
+    font-size: 2.2em;
+  }
+}
+
+.tracking-header__app {
+  margin: auto;
+  overflow: auto;
+  width: 380px;
+  padding-top: $space-xs;
+  @include respond-from("screen-md") {
+    padding-top: $space-lg;
+  }
+  @include respond-from("screen-lg") {
+    width: 450px;
+  }
+}
+
+.tracking-header__app__message {
+  @extend .pull-left;
+  text-align: left;
+  line-height: 1.2em;
+  padding-left: $space-sm;
+  padding-top: $space-xs;
+  width: 50%;
+  font-size: 0.9em;
+}
+
+.tracking-header__app__button {
+  @extend .button;
+  @extend .pull-left;
+  width: 50%;
+}
+
+.order-status-wrapper {
+  @include fluid-container();
+}
+
+.order-status-row {
+  @include make-row();
+  margin-top: 30px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.order-status-row__app {
+  padding-top: $space-lg * 6;
+}
+
+@mixin tracking-step-padding-left-right-xs {
+  padding-left: $space-sm;
+  padding-right: $space-sm;
+}
+
+@mixin tracking-step-padding-left-right-sm {
+  padding-left: $space-sm * 3;
+  padding-right: $space-sm * 3;
+}
+
+.tracking-steps {
+  @include make-xs-column(12);
+  @include make-md-column(8);
+  @include make-md-column-offset(2);
+  background-color: $color-bg-primary;
+  padding-bottom: $space-lg * 3;
+  @include tracking-step-padding-left-right-xs;
+  @include respond-from("screen-sm") {
+    @include tracking-step-padding-left-right-sm;
+  }
+}
+
+.tracking-step {
+  position: relative;
+  padding-left: 40px;
+  min-height: 110px;
+}
+
+.tracking-step__image {
+  @include absolute-center-box();
+  @include retina-sprite($tracking-off-group);
+  margin-left: 0;
+}
+
+.tracking-step-active .tracking-step__image {
+  @include retina-sprite($tracking-on-group);
+}
+
+.tracking-step-last .tracking-step__image {
+  padding-top: 1px;
+  font-size: 0.8em;
+}
+
+.tracking-step-active.tracking-step-last .tracking-step__image {
+  @include retina-sprite($tracking-last-on-group);
+}
+
+.tracking-step__line {
+  @include absolute-center-box();
+  width: 2px;
+  margin-left: 19px;
+  background-color: $color-text-inactive;
+}
+
+.tracking-step-active .tracking-step__line {
+  background-color: $cta-color-bg-primary;
+}
+
+.tracking-step-first .tracking-step__line {
+  height: 60%;
+  margin-bottom: 0;
+}
+
+.tracking-step-last .tracking-step__line {
+  height: 60%;
+  margin-top: 0;
+}
+
+.tracking-step__image-first {
+  @include retina-sprite($tracking-on-group);
+}
+
+.tracking-step__image__number {
+  font-family: $bold-font-family;
+  position: relative;
+  top: 9px;
+  text-align: center;
+  font-size: 1em;
+  color: white;
+}
+
+.tracking-step__message {
+  @extend .pull-left;
+  width: 70%;
+  @include tracking-step-padding-left-right-xs;
+  @include respond-from("screen-sm") {
+    @include tracking-step-padding-left-right-sm;
+  }
+  padding-right: 0;
+}
+
+@mixin tracking-step-title-text-xs {
+  padding-top: 43px;
+  font-size: 0.8em;
+  line-height: 1.4em;
+}
+
+@mixin tracking-step-title-text-sm {
+  font-size: 1em;
+}
+
+@mixin tracking-step-title-text-md {
+  font-size: 1.1em;
+}
+
+.tracking-step__message__title {
+  @include tracking-step-title-text-xs;
+  width: 100%;
+  margin: 0;
+  text-transform: uppercase;
+  @include respond-from("screen-sm") {
+    @include tracking-step-title-text-sm;
+  }
+  @include respond-from("screen-md") {
+    @include tracking-step-title-text-md;
+  }
+}
+
+.tracking-step__message__text {
+  display: none;
+  font-size: 0.8em;
+  line-height: 1.2em;
+  color: $color-text-secondary;
+  @include respond-from("screen-sm") {
+    font-size: 0.9em;
+    line-height: 1.3em;
+  }
+  @include respond-from("screen-md") {
+    font-size: 1em;
+    line-height: 1.4em;
+  }
+  @include respond-from("screen-lg") {
+    font-size: 1.1em;
+    line-height: 1.5em;
+    width: 75%;
+  }
+}
+
+.tracking-step-active .tracking-step__message__text {
+  display: block;
+}
+
+.tracking-step__time {
+  @extend .pull-left;
+  @include tracking-step-title-text-xs;
+  width: 25%;
+  text-align: right;
+  @include respond-from("screen-sm") {
+    @include tracking-step-title-text-sm;
+  }
+  @include respond-from("screen-md") {
+    @include tracking-step-title-text-md;
+  }
+}
+
+.create_account {
+  @include make-xs-column(12);
+  @include make-md-column(8);
+  @include make-md-column-offset(2);
+  background-color: $color-bg-primary;
+  padding: 0 $space-md $space-md $space-md;
+  border-top: $base-border;
+  @include respond-from("screen-sm") {
+    display: table;
+  }
+}
+
+.create_account__message {
+  @include make-xs-column(12, 0);
+  @include make-sm-column(7, 0);
+  padding-bottom: $space-sm;
+  @include respond-from("screen-sm") {
+    display: table-cell;
+    float: none;
+    padding-bottom: 0;
+  }
+}
+
+.create_account__message__title {
+  font-size: 0.8em;
+  line-height: 1.4em;
+  text-transform: uppercase;
+  margin-bottom: $space-xs;
+  @include respond-from("screen-sm") {
+    font-size: 1em;
+  }
+  @include respond-from("screen-md") {
+    font-size: 1.2em;
+  }
+}
+
+.create_account__message__text {
+  font-size: 0.8em;
+  line-height: 1.2em;
+  @include respond-from("screen-sm") {
+    font-size: 0.9em;
+    line-height: 1.3em;
+  }
+  @include respond-from("screen-md") {
+    font-size: 1em;
+    line-height: 1.4em;
+  }
+  @include respond-from("screen-lg") {
+    font-size: 1.1em;
+    line-height: 1.5em;
+  }
+}
+
+.create_account__login {
+  @include make-xs-column(12);
+  @include make-sm-column(5);
+  @include respond-from("screen-sm") {
+    display: table-cell;
+    float: none;
+  }
+  padding-right: $space-md;
+  padding-left: $space-md;
+  overflow: auto;
+  min-height: $form-element-height-default;
+}
+
+.create_account__login__button {
+  @include make-xs-column(12);
+  @include make-md-column(10);
+  @include make-md-column-offset(1);
+  @extend .button-secondary;
+  @include absolute-center-box();
+  @include respond-from("screen-sm") {
+    top: $space-sm;
+  }
+}
