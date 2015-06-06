@@ -72,7 +72,7 @@ class VendorController extends Controller
 
     /**
      * @Route(
-     *      "/restaurant/{vendorId}/delivery-check/lat/{latitude}/lng/{longitude}",
+     *      "/{vendorId}/delivery-check/lat/{latitude}/lng/{longitude}",
      *      name="vendor_delivery_validation_by_gps",
      *      options={"expose"=true},
      *      condition="request.isXmlHttpRequest()"
@@ -118,7 +118,7 @@ class VendorController extends Controller
         return $this->redirectToRoute(
             'vendor',
             ['code' => $code, 'urlKey' => $vendor->getUrlKey()],
-            Response::HTTP_MOVED_PERMANENTLY
+            Response::HTTP_FOUND
         );
     }
 }
