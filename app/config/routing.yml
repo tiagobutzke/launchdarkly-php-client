@@ -57,10 +57,10 @@ redirect_city:
         permanent: true
 
 redirect_location:
-    path: /location/{code}
+    path: /location/{urlKey}
     defaults:
         _controller: FrameworkBundle:Redirect:redirect
-        route: vendor_by_code
+        route: vendor_by_url_key
         permanent: true
 
 redirect_signup:

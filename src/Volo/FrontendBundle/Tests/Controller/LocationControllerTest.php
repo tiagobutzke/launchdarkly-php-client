@@ -10,7 +10,7 @@ class LocationControllerTest extends VoloTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/city/kigali');
+        $client->request('GET', '/city/berlin');
 
         $this->isSuccessful($client->getResponse());
     }
