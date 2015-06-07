@@ -18,8 +18,10 @@
                             class="form-control hide"
                             name="location_set"
                             value=""
+                            placeholder="{% trans %}postal_code.your_postal_code{% endtrans %}"
+                            data-msg_error_not_found="{% trans %}postal_code.not_found{% endtrans %}"
+                            data-msg_you_probably_mean="{% trans %}postal_code.you_probably_mean{% endtrans %}"
                             required="true"
-                            placeholder="{{ 'postal_code.your_postal_code'|trans }}"
                     >
 
                     <div class="restaurants__location__title">
