@@ -1,6 +1,6 @@
 # This file is a "template" of what your parameters.yml file should look like
 parameters:
-    secret: ThisTokenIsNotSoSecretChangeIt
+    secret: c39878808623cd9b2d2377ea76236ba6902ad792
 
     # 'guzzle.ring.client.curl_handler' or 'guzzle.ring.client.mock_handler'
     foodpanda.api.handler: guzzle.ring.client.curl_handler
@@ -16,6 +16,12 @@ parameters:
     volo_frontend_configuration_cache_life_time: 1200
 
     session_handler_redis_save_path: "tcp://127.0.0.1:6379?prefix=%kernel.environment%_%country_code%"
+
+    redis_cache_host: 127.0.0.1
+    redis_cache_port: 6379
+
+    redis_sessions_host: 127.0.0.1
+    redis_sessions_port: 6379
 
     volo_frontend.thumbor_base_url: '/app_%kernel.environment%.php/thumbor/fake'
     volo_frontend.thumbor_secret: ~
