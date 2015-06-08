@@ -7,15 +7,14 @@ use Foodpanda\ApiSdk\Exception\ValidationEntityException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
 
 class CustomerController extends Controller
 {
     /**
-     * @Route("/customer", name="customer.create")
-     * @Template()
+     * @Route("/customer", name="customer.create", options={"expose"=true}, condition="request.isXmlHttpRequest()")
      * @Method({"GET", "POST"})
      *
      * @param Request $request
@@ -26,6 +25,8 @@ class CustomerController extends Controller
     {
         $errorMessages = [];
         $customer = [];
+        $statusCode = Response::HTTP_OK;
+
         if ($request->isMethod(Request::METHOD_POST)) {
             $customerService = $this->get('volo_frontend.service.customer');
 
@@ -41,21 +42,26 @@ class CustomerController extends Controller
                 return $this->redirectToRoute('home');
             } catch (PhoneNumberValidationException $e) {
                 $errorMessages[] = $this->get('translator')->trans(sprintf('%s: %s', 'Phone number', $e->getMessage()));
+                $statusCode = Response::HTTP_BAD_REQUEST;
             } catch (ValidationEntityException $e) {
                 $errors = json_decode($e->getMessage(), true)['data']['items'];
                 $errorMessages = $this->createErrors($errors);
+                $statusCode = Response::HTTP_BAD_REQUEST;
             } catch (\Exception $e) {
                 // @TODO: ask PMs about the appropriate message and use the translation
                 $errorMessages[] = 'An error occurred, please try again';
+                $statusCode = Response::HTTP_BAD_REQUEST;
             }
 
             $customer = $request->request->get('customer', []);
         }
 
-        return [
+        $view = $this->renderView('VoloFrontendBundle:Customer:create.html.twig', [
             'customer' => $customer,
             'errors'   => $errorMessages,
-        ];
+        ]);
+
+        return new Response($view, $statusCode);
     }
 
     protected function createErrors(array $errors)

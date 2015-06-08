@@ -2,6 +2,7 @@
 
 namespace Volo\FrontendBundle\Tests\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use Volo\FrontendBundle\Tests\VoloTestCase;
 
 class SecurityControllerTestCase extends VoloTestCase
@@ -11,14 +12,14 @@ class SecurityControllerTestCase extends VoloTestCase
         $client = static::createClient();
         $client->followRedirects();
 
-        $crawler = $client->request('GET', '/login');
+        $client->request('GET', '/login', [], [], ['HTTP_X-Requested-With' => 'XMLHttpRequest']);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $form              = $crawler->selectButton('login')->form();
-        $form['_username'] = 'john.doe@rocket-internet.de';
-        $form['_password'] = 'good';
-        $client->submit($form);
+        $client->request('POST', '/login_check', [
+            '_username' => 'john.doe@rocket-internet.de',
+            '_password' => 'good',
+        ]);
 
         $this->isSuccessful($client->getResponse());
         $this->assertInstanceOf(
@@ -30,18 +31,27 @@ class SecurityControllerTestCase extends VoloTestCase
     public function testFailedLogin()
     {
         $client = static::createClient();
-        $client->followRedirects();
 
-        $crawler = $client->request('GET', '/login');
+        $client->request('POST', '/login_check', [
+            '_username' => 'john.doe@rocket-internet.de',
+            '_password' => 'bad',
+        ], [], ['HTTP_X-Requested-With' => 'XMLHttpRequest']);
 
-        $this->isSuccessful($client->getResponse());
+        $this->assertEquals(Response::HTTP_FOUND,
+            $client->getResponse()->getStatusCode(),
+            sprintf('status code should be "%s", got "%s" for "%s"', Response::HTTP_FOUND, $client->getResponse()->getStatusCode(), 'http://localhost/login_check')
+        );
 
-        $form              = $crawler->selectButton('login')->form();
-        $form['_username'] = 'john.doe@rocket-internet.de';
-        $form['_password'] = 'bad';
-        $client->submit($form);
+        $this->assertTrue(
+            $client->getResponse()->isRedirect('http://localhost/login'),
+            sprintf('Location should be "%s", got "%s" for "%s"', 'http://localhost/login', $client->getRequest()->headers->get('Location'), 'http://localhost/login_check')
+        );
 
-        $this->isSuccessful($client->getResponse());
+        $client->followRedirect();
+
+        $this->isSuccessful($client->getResponse(), false);
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
+
         $this->assertInstanceOf(
             'Symfony\Component\Security\Core\Authentication\Token\AnonymousToken',
             $client->getContainer()->get('security.token_storage')->getToken()

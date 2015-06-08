@@ -1,0 +1,14 @@
+#login-registration-modal {
+  button {
+    margin-top: 25px;
+  }
+
+  .login-registration-link {
+    margin-top: $space-sm;
+    font-size: 0.875em;
+  }
+
+  .modal-error-message {
+    margin-bottom: $space-md;
+  }
+}

@@ -15,7 +15,7 @@ class CustomerControllerTest extends VoloTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/customer');
+        $client->request('GET', '/customer', [], [], ['HTTP_X-Requested-With' => 'XMLHttpRequest']);
 
         $this->isSuccessful($client->getResponse());
     }
@@ -33,7 +33,7 @@ class CustomerControllerTest extends VoloTestCase
                 'mobile_number' => '017673412345',
             ]
         ];
-        $client->request('POST', '/customer', $params);
+        $client->request('POST', '/customer', $params, [], ['HTTP_X-Requested-With' => 'XMLHttpRequest']);
 
         $this->assertTrue($client->getResponse()->isRedirect());
 

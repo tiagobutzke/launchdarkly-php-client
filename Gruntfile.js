@@ -57,6 +57,7 @@ module.exports = function (grunt) {
         'web/bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/modal.js',
         'web/bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/tooltip.js',
         'web/bower_components/adyen-cse-js/js/adyen.encrypt.js',
+        'web/bower_components/spin.js/spin.js',
         frontendAssetPath('/js/**/*.js')
     ];
 
@@ -148,7 +149,8 @@ module.exports = function (grunt) {
                 'web/bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/modal.js',
                 'web/bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/tooltip.js',
                 'web/bower_components/adyen-cse-js/js/adyen.encrypt.js',
-                'web/bower_components/intl/Intl.js'
+                'web/bower_components/intl/Intl.js',
+                'web/bower_components/spin.js/spin.js'
             ]
         },
         gruntfile: {

@@ -152,6 +152,15 @@ VOLO.initHomeSearch = function() {
     });
 };
 
+VOLO.initLoginButtonView = function() {
+    if (VOLO.loginButtonView) {
+        VOLO.loginButtonView.unbind();
+    }
+    VOLO.loginButtonView = new LoginButtonView({
+        el: '.header__account'
+    });
+};
+
 VOLO.initVendorsListSearch = function() {
     VOLO.vendorSearchView = new VendorsSearchView({
         el: '.restaurants__tool-box',
@@ -205,6 +214,10 @@ $(document).on('page:load page:restore', function () {
         VOLO.homeSearchView.render();
     }
 
+    if ($('.header__account').length > 0) {
+        VOLO.initLoginButtonView();
+    }
+
     if($('.restaurants__tool-box').length > 0) {
         VOLO.initVendorsListSearch();
         VOLO.vendorSearchView.render();
@@ -224,6 +237,9 @@ $(document).on('page:before-unload', function () {
     }
     if (_.isObject(VOLO.homeSearchView)) {
         VOLO.homeSearchView.unbind();
+    }
+    if (_.isObject(VOLO.loginButtonView)) {
+        VOLO.loginButtonView.unbind();
     }
     if (_.isObject(VOLO.timePickerView)) {
         VOLO.timePickerView.unbind();

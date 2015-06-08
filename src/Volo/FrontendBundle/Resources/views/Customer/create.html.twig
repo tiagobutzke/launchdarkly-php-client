@@ -1,23 +1,76 @@
-{% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
-
-{% block header %}{% endblock %}
-{% block footer %}{% endblock %}
-
-{% block title %}Register{% endblock %}
-
 {% block content %}
-    {% for message in errors %}
-        <div class="error">
-            {{ message }}
-        </div>
-    {% endfor %}
+    <form class="registration-form" action="{{ path('customer.create') }}" method="post" role="form">
+        <h4 class="modal__h4 text-center">{% trans %}Register{% endtrans %}</h4>
+        <div class="modal__padding-left-right">
 
-    <div class="container">
-        <div class="row">
-            <form action="{{ path('customer.create') }}" method="post" role="form">
-                {% include 'VoloFrontendBundle:Customer/Partial:customer_registration_form.html.twig' with {'customer' : customer} %}
-                <input type="submit" value="Register" class="btn-submit"/>
-            </form>
+            {% if errors %}
+                    <div class="modal-error-message">
+                {% for message in errors %}
+                        <div><span class="icon-attention"></span> {{ message }}</div>
+                {% endfor %}
+                    </div>
+            {% endif %}
+
+            <div class="form-group">
+                <input type="text"
+                       id="first_name"
+                       name="customer[first_name]"
+                       class="form-control"
+                       value="{{ customer.first_name|default('') }}"
+                       required="true"
+                       placeholder="{% trans %}First name{% endtrans %}"
+                />
+            </div>
+            <div class="form-group">
+                <input type="text"
+                       id="last_name"
+                       name="customer[last_name]"
+                       class="form-control"
+                       value="{{ customer.last_name|default('') }}"
+                       required="true"
+                       placeholder="{% trans %}Last name{% endtrans %}"
+                />
+            </div>
+            <div class="form-group">
+                <input type="email"
+                       id="email"
+                       name="customer[email]"
+                       class="form-control"
+                       value="{{ customer.email|default('') }}"
+                       required="true"
+                       placeholder="{% trans %}Email{% endtrans %}"
+                />
+            </div>
+            <div class="form-group">
+                <input type="tel"
+                       id="mobile_number"
+                       name="customer[mobile_number]"
+                       class="form-control"
+                       value="{{ customer.mobile_number|default('') }}"
+                       required="true"
+                       placeholder="{% trans %}Mobile Number{% endtrans %}"
+                />
+            </div>
+            <div class="form-group">
+                <input type="password"
+                       id="password"
+                       name="customer[password]"
+                       class="form-control"
+                       required="true"
+                       placeholder="{% trans %}Password{% endtrans %}"
+                />
+            </div>
+            <!-- TODO: JS validate that password is equivalent to repeat_password -->
+            <div class="form-group">
+                <input type="password"
+                       id="repeat_password"
+                       class="form-control"
+                       required="true"
+                       placeholder="{% trans %}Retype password{% endtrans %}"
+                />
+            </div>
+            <button type="submit" class="button button--full-width">{% trans %}Register{% endtrans %}</button>
         </div>
-    </div>
+    </form>
+    <div class="text-center login-registration-link">{% trans %}You have an account?{% endtrans %} <a class="login-link">{% trans %}Login here{% endtrans %}</a></div>
 {% endblock %}
