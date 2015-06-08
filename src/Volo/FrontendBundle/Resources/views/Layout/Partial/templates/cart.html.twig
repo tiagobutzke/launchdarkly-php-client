@@ -5,6 +5,28 @@
 
 {# cart item #}
 <script type="text/template" id="template-cart-item">
+    {# mobile #}
+    <tr class="summary__item__row_mobile">
+        <td class="summary__item__icon">
+            {# please add class "summary__item__icon__disabled" to the icon when quantity reaches 0 #}
+            <i class="icon-minus summary__item__minus"></i>
+        </td>
+        <td class="summary__item__quantity">
+            <span class="summary__item__quantity-wrap"><%= VOLO.formatNumber(quantity) %></span>
+        </td>
+        <td class="summary__item__icon"><i class="icon-plus summary__item__plus"></i></td>
+        <td class="summary__item__name">
+            <%- name %>
+            <span class="summary__extra__items"></span>
+        </td>
+        <td class="summary__item__price">
+            <span class="summary__item__price-wrap"><%= VOLO.formatCurrency(total_price) %></span>
+            {# please remove class "hide" from the icon when quantity reaches 0 #}
+            <i class="icon-cancel-circled icon-cancel hide"></i>
+        </td>
+    </tr>
+    {# desktop #}
+    <tr class="summary__item__row_desktop">
     <td class="summary__item__quantity">
         <span class="summary__item__quantity-wrap"><%= VOLO.formatNumber(quantity) %></span>
         <div class="summary__item__quantity-icons">
@@ -23,6 +45,8 @@
     <td class="summary__item__price">
         <span class="summary__item__price-wrap"><%= VOLO.formatCurrency(total_price) %></span>
     </td>
+    </tr>
+
 </script>
 {# cart #}
 <script type="text/template" id="template-cart">
@@ -34,11 +58,9 @@
             </div>
         </div>
         <div class="desktop-cart__header">
-            <div class="hero-banner-wrapper">
+            <div class="desktop-cart__hero">
                 {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {type: 'hero', 'vendorCode' : vendor.code, 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
                 </div>
-
-
             <h3 class="desktop-cart__title cart__title--time">{{ 'Delivery Time'|trans }}</h3>
             {% include('VoloFrontendBundle:Layout/Partial/templates:timepicker.html.twig') %}
 
@@ -60,6 +82,9 @@
             </div>
         </div>
         <div class="desktop-cart__footer">
+            <p class="desktop-cart__footer__message">
+                {{ 'You can redeem your voucher in the checkout.'|trans }}
+            </p>
             <div class="desktop-cart__order__subtotal__container"></div>
             <% if (total_value > minimum_order_amount) { %>
                 <a class="button btn-checkout" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">
