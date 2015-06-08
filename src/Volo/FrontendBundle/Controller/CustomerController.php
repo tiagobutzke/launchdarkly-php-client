@@ -4,11 +4,9 @@ namespace Volo\FrontendBundle\Controller;
 
 use Foodpanda\ApiSdk\Api\Auth\Credentials;
 use Foodpanda\ApiSdk\Exception\ValidationEntityException;
-use GuzzleHttp\Ring\Exception\RingException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
@@ -16,7 +14,7 @@ use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
 class CustomerController extends Controller
 {
     /**
-     * @Route("/customer", name="customer.create")
+     * @Route("/customer", name="customer.create", options={"expose"=true}, condition="request.isXmlHttpRequest()")
      * @Method({"GET", "POST"})
      *
      * @param Request $request
@@ -27,7 +25,8 @@ class CustomerController extends Controller
     {
         $errorMessages = [];
         $customer = [];
-        $isError = false;
+        $statusCode = Response::HTTP_OK;
+
         if ($request->isMethod(Request::METHOD_POST)) {
             $customerService = $this->get('volo_frontend.service.customer');
 
@@ -43,23 +42,18 @@ class CustomerController extends Controller
                 return $this->redirectToRoute('home');
             } catch (PhoneNumberValidationException $e) {
                 $errorMessages[] = $this->get('translator')->trans(sprintf('%s: %s', 'Phone number', $e->getMessage()));
-                $isError = true;
+                $statusCode = Response::HTTP_BAD_REQUEST;
             } catch (ValidationEntityException $e) {
                 $errors = json_decode($e->getMessage(), true)['data']['items'];
                 $errorMessages = $this->createErrors($errors);
-                $isError = true;
+                $statusCode = Response::HTTP_BAD_REQUEST;
             } catch (\Exception $e) {
                 // @TODO: ask PMs about the appropriate message and use the translation
                 $errorMessages[] = 'An error occurred, please try again';
-                $isError = true;
+                $statusCode = Response::HTTP_BAD_REQUEST;
             }
 
             $customer = $request->request->get('customer', []);
-        }
-
-        $statusCode = Response::HTTP_OK;
-        if ($isError) {
-            $statusCode = Response::HTTP_BAD_REQUEST;
         }
 
         $view = $this->renderView('VoloFrontendBundle:Customer:create.html.twig', [

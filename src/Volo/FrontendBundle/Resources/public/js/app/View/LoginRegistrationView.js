@@ -5,7 +5,7 @@ var LoginRegistrationView = Backbone.View.extend({
     },
 
     render: function() {
-        this.$('.modal-content').load('/login', function(){
+        this.$('.modal-content').load(Routing.generate('login'), function(){
             this.$el.modal();
         }.bind(this));
 
@@ -26,11 +26,11 @@ var LoginRegistrationView = Backbone.View.extend({
     },
 
     _loadRegistrationFormIntoLoginModal: function() {
-        this.$('.modal-content').load('/customer');
+        this.$('.modal-content').load(Routing.generate('customer.create'));
     },
 
     _loadLoginFormIntoModal: function() {
-        this.$('.modal-content').load('/login');
+        this.$('.modal-content').load(Routing.generate('login'));
     },
 
     _handingSubmitOfLoginForm: function(event) {

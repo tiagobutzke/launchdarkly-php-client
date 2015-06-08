@@ -2,6 +2,10 @@ var LoginButtonView = Backbone.View.extend({
     initialize: function () {
         console.log('LoginButtonView.initialize ', this.cid);
         _.bindAll(this);
+
+        this.loginRegistrationView = new LoginRegistrationView({
+            el:'#login-registration-modal'
+        });
     },
 
     events: {
@@ -9,14 +13,6 @@ var LoginButtonView = Backbone.View.extend({
     },
 
     _showLoginModal: function () {
-        if (this.loginRegistrationView) {
-            this.loginRegistrationView.unbind();
-        }
-
-        this.loginRegistrationView = new LoginRegistrationView({
-            el:'#login-registration-modal'
-        });
-
         this.loginRegistrationView.render();
     },
 
