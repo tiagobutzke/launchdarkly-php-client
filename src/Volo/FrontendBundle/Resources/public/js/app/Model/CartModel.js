@@ -80,7 +80,12 @@ var VendorCartModel = Backbone.Model.extend({
         "minimum_order_amount_difference": 0,
         "discount_text": null,
         "orderTime": null,
-        "voucher": null
+        "voucher": null,
+        location: {
+            "location_type": "polygon",
+            "latitude": null,
+            "longitude": null
+        }
     },
     idAttribute: 'vendor_id',
 
@@ -98,6 +103,12 @@ var VendorCartModel = Backbone.Model.extend({
         });
 
         return parseInt(count, 10);
+    },
+
+    validate: function(attrs) {
+        if (attrs.location.latitude === null || attrs.location.longitude === null) {
+            return 'location_not_set';
+        }
     },
 
     updateCart: function() {
@@ -118,11 +129,7 @@ var VendorCartModel = Backbone.Model.extend({
         var data = {
             products: this.products.toJSON(),
             vendor_id: this.id,
-            location: {
-                "location_type": "polygon",
-                "latitude": 52.5237282,
-                "longitude": 13.3908286
-            }
+            location: this.get('location')
         };
 
         data.orderTime = _.isDate(this.get('orderTime')) ? this.get('orderTime').toISOString() : new Date().toISOString();

@@ -3,14 +3,23 @@ var HomeSearchView = Backbone.View.extend({
         console.log('HomeSearchView.initialize ', this.cid);
         _.bindAll(this);
         this.geocodingService = options.geocodingService;
+        this.domObjects = this.domObjects || {};
+        this.domObjects.$body = options.$body;
+        this.inputNode = this.$('#postal_index_form_input');
 
-        var $input = this.$('#postal_index_form_input');
-
-        this.geocodingService.init($input);
+        this.geocodingService.init(this.inputNode);
 
         this.listenTo(this.geocodingService, 'autocomplete:submit_pressed', this._submitPressed);
         this.listenTo(this.geocodingService, 'autocomplete:tab_pressed', this._tabPressed);
         this.listenTo(this.geocodingService, 'autocomplete:place_changed', this._tabPressed);
+
+        this.inputNode.tooltip({
+            title: '',
+            placement: 'bottom',
+            html: true,
+            trigger: 'manual'
+        });
+        this.domObjects.$body.on('click', $.proxy(this._bodyClickHandler, this));
     },
 
     events: {
@@ -19,10 +28,13 @@ var HomeSearchView = Backbone.View.extend({
     },
 
     unbind: function() {
-        this.$('#postal_index_form_input').tooltip('destroy');
-        this.geocodingService.removeListeners(this.$('#postal_index_form_input'));
+        this.geocodingService.removeListeners(this.inputNode);
         this.stopListening();
         this.undelegateEvents();
+        this.inputNode.tooltip('destroy');
+        this.domObjects.$body.unbind($.proxy(this._bodyClickHandler, this));
+        delete this.domObjects.$body;
+        delete this.inputNode;
     },
 
     _tabPressed: function() {
@@ -37,7 +49,7 @@ var HomeSearchView = Backbone.View.extend({
 
     _notFound: function() {
         console.log('not found');
-        this._showTooltip(this.$('#postal_index_form_input').data('msg_error_not_found'));
+        this._showInputPopup(this.$('#postal_index_form_input').data('msg_error_not_found'));
     },
 
     _search: function(data) {
@@ -68,15 +80,18 @@ var HomeSearchView = Backbone.View.extend({
             .fail(deferred.reject, this)
             .done(function(locationMeta) {
                 console.log('_getNewLocation.done ', this.cid);
-
-                var data = this._getDataFromMeta(locationMeta);
-                $input.val(data.formattedAddress);
-                this._showTooltip(this.$('#postal_index_form_input').data('msg_you_probably_mean'));
-
-                deferred.resolve(data);
+                deferred.resolve(this._applyNewLocationData(locationMeta, $input));
             }.bind(this));
 
         return deferred;
+    },
+
+    _applyNewLocationData: function (locationMeta, $input) {
+        var data = this._getDataFromMeta(locationMeta);
+        $input.val(data.formattedAddress);
+        this._showInputPopup(this.$('#postal_index_form_input').data('msg_you_probably_mean'));
+
+        return data;
     },
 
     _getDataFromMeta: function (locationMeta) {
@@ -95,8 +110,20 @@ var HomeSearchView = Backbone.View.extend({
         };
     },
 
-    _showTooltip: function (title) {
-        this.$('#postal_index_form_input').tooltip({trigger: 'manual', title: title});
-        this.$('#postal_index_form_input').tooltip('show');
+    _hideBalloon: function () {
+        this.inputNode.tooltip('hide');
+    },
+
+    _showInputPopup: function (text) {
+        this.inputNode.attr('title', text).tooltip('fixTitle');
+        setTimeout($.proxy(function () {
+            this.inputNode.tooltip('show');
+        }, this), 10);
+    },
+
+    _bodyClickHandler: function (e) {
+        if (!$(e.target).hasClass('tooltip-inner')) {
+            this.inputNode.tooltip('hide');
+        }
     }
 });

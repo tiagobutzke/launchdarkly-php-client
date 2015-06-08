@@ -35,7 +35,7 @@ VOLO.initCheckoutModel = function (cartModel) {
 
 VOLO.initCartViews = function (cartModel) {
     var $header = $('.header');
-    
+
     if (_.isObject(VOLO.menu)) {
         VOLO.menu.unbind();
     }
@@ -53,7 +53,8 @@ VOLO.initCartViews = function (cartModel) {
         model: cartModel,
         $header: $header,
         $menuMain: $('.menu__main'),
-        $window: $(window)
+        $window: $(window),
+        $body: $('body')
     });
 };
 
@@ -148,7 +149,8 @@ VOLO.initHomeSearch = function() {
     }
     VOLO.homeSearchView = new HomeSearchView({
         el: '.teaser__form',
-        geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1])
+        geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1]),
+        $body: $('body')
     });
 };
 
@@ -164,7 +166,8 @@ VOLO.initLoginButtonView = function() {
 VOLO.initVendorsListSearch = function() {
     VOLO.vendorSearchView = new VendorsSearchView({
         el: '.restaurants__tool-box',
-        geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1])
+        geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1]),
+        $body: $('body')
     });
 };
 
