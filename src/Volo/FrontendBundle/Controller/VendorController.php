@@ -48,7 +48,7 @@ class VendorController extends Controller
             throw $this->createNotFoundException('Vendor not found!', $exception);
         }
 
-        $cart = $this->get('volo_frontend.service.cart_manager')->getCart(
+        $cart = $this->get('volo_frontend.service.cart_manager')->getCartIfDefault(
             $request->getSession()->getId(),
             $vendor->getId()
         );

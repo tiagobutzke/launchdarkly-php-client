@@ -3,6 +3,8 @@
 namespace Volo\FrontendBundle\Twig;
 
 use Twig_Extensions_Extension_Intl;
+use Volo\FrontendBundle\Service\CartManagerService;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class VoloExtension extends Twig_Extensions_Extension_Intl
 {
@@ -12,13 +14,27 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
     private $locale;
 
     /**
-     * @param string $locale
+     * @var CartManagerService
      */
-    public function __construct($locale)
+    private $cartManager;
+    
+    /**
+     * @var Session
+     */
+    private $session;
+
+    /**
+     * @param string             $locale
+     * @param CartManagerService $cartManager
+     * @param Session            $session
+     */
+    public function __construct($locale, CartManagerService $cartManager, Session $session)
     {
         parent::__construct();
 
         $this->locale = $locale;
+        $this->session = $session;
+        $this->cartManager = $cartManager;
     }
 
     /**
@@ -42,6 +58,7 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
     {
         return [
             new \Twig_SimpleFunction('get_configuration', array($this, 'getConfiguration')),
+            new \Twig_SimpleFunction('get_default_cart_count', array($this, 'getDefaultCartCount')),
         ];
     }
 
@@ -72,6 +89,16 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
                 'currency_symbol_iso' => $currencyIso,
             ]
         ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getDefaultCartCount()
+    {
+        $cart = $this->cartManager->getDefaultCart($this->session->getId());
+        
+        return $cart === null ? 0 : array_sum(array_column($cart['products'], 'quantity'));
     }
 
     /**
