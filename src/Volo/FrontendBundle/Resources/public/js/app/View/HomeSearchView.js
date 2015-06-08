@@ -96,9 +96,7 @@ var HomeSearchView = Backbone.View.extend({
     },
 
     _showTooltip: function (title) {
-        var options = {trigger: 'manual', title: title};
-        
-        this.$('#postal_index_form_input').tooltip(options);
+        this.$('#postal_index_form_input').tooltip({trigger: 'manual', title: title});
         this.$('#postal_index_form_input').tooltip('show');
     }
 });
