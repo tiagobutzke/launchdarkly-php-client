@@ -65,15 +65,14 @@ class CheckoutController extends Controller
             'city' => $vendor->getCity()->getName()
         ];
         $cartManager = $this->get('volo_frontend.service.cart_manager');
-        $location = $this->get('volo_frontend.service.customer_location')
-            ->get($request->getSession()->getId());
+        $location = $this->get('volo_frontend.service.customer_location')->get($request->getSession()->getId());
 
         return [
             'cart'             => $cartManager->calculateCart($this->getCart($vendor)),
             'customer_address' => $defaultAddress + $address,
             'vendor'           => $vendor,
             'location'         => $location,
-            'isDeliverable'    => (bool) $location
+            'isDeliverable'    => is_array($location),
         ];
     }
 
@@ -128,6 +127,8 @@ class CheckoutController extends Controller
         }
 
         $cart = $this->getCart($vendor);
+        $location = $this->get('volo_frontend.service.customer_location')->get($request->getSession()->getId());
+
         return [
             'errorMessages'    => $errorMessages,
             'cart'             => $this->get('volo_frontend.service.cart_manager')->calculateCart($cart),
@@ -136,6 +137,8 @@ class CheckoutController extends Controller
                 sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendorCode)
             ),
             'customer' => $this->get('session')->get(sprintf(static::SESSION_CONTACT_KEY_TEMPLATE, $vendorCode)),
+            'location'         => $location,
+            'isDeliverable'    => is_array($location),
         ];
     }
 
@@ -169,11 +172,14 @@ class CheckoutController extends Controller
         }
 
         $configuration = $this->get('volo_frontend.service.configuration')->getConfiguration();
+        $location = $this->get('volo_frontend.service.customer_location')->get($request->getSession()->getId());
 
         $viewData = [
             'cart'             => $this->get('volo_frontend.service.cart_manager')->calculateCart($cart),
             'vendor'           => $vendor,
             'adyen_public_key' => $configuration->getAdyenEncryptionPublicKey(),
+            'location'         => $location,
+            'isDeliverable'    => is_array($location),
         ];
 
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -203,7 +209,6 @@ class CheckoutController extends Controller
     /**
      * @Route("/{vendorCode}/pay", name="checkout_place_order", options={"expose"=true})
      * @Method({"POST"})
-     * @Template()
      *
      * @param Request $request
      * @param string  $vendorCode
