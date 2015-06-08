@@ -23,6 +23,7 @@
         <parameter key="volo_frontend.service.order_manager.class">Volo\FrontendBundle\Service\OrderManagerService</parameter>
         <parameter key="volo_frontend.service.deliverability.class">Volo\FrontendBundle\Service\DeliverabilityService</parameter>
         <parameter key="volo_frontend.cache_warmer.class">Volo\FrontendBundle\CacheWarmer\VoloCacheWarmer</parameter>
+        <parameter key="volo_frontend.translation_cache_warmer.class">Volo\FrontendBundle\CacheWarmer\TranslationCacheWarmer</parameter>
         <parameter key="volo_frontend.cache_migration.class">Volo\FrontendBundle\CacheWarmer\MigrationCacheWarmer</parameter>
         <parameter key="volo_frontend.twig.serializer_extension.class">Volo\FrontendBundle\Twig\SerializerExtension</parameter>
         <parameter key="volo_frontend.service.customer_location.class">Volo\FrontendBundle\Service\CustomerLocationService</parameter>
@@ -81,6 +82,12 @@
 
         <service id="volo_frontend.cache_warmer" class="%volo_frontend.cache_warmer.class%">
             <argument type="service" id="volo_frontend.service.configuration" />
+            <tag name="kernel.cache_warmer" priority="90" />
+        </service>
+
+        <service id="volo_frontend.translation_cache_warmer" class="%volo_frontend.translation_cache_warmer.class%">
+            <argument type="service" id="foodpanda.core.web_translate_it.translation_sync_service" />
+            <argument>%foodpanda_web_translate_it.main_translation_label%</argument>
             <tag name="kernel.cache_warmer" priority="90" />
         </service>
 
