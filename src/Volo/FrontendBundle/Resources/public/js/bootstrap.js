@@ -46,6 +46,14 @@ VOLO.initCartViews = function (cartModel) {
         $window: $(window),
         $body: $('body')
     });
+
+    if (_.isObject(VOLO.cartErrorModalView )) {
+        VOLO.cartErrorModalView.unbind();
+    }
+    VOLO.cartErrorModalView = new CartErrorModalView({
+        el: '#cartCalculationErrorModal',
+        model: cartModel
+    });
 };
 
 VOLO.initCheckoutViews = function (cartModel, checkoutModel, deliveryCheck) {
@@ -103,6 +111,14 @@ VOLO.initCheckoutViews = function (cartModel, checkoutModel, deliveryCheck) {
             geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1])
         });
     }
+
+    if (_.isObject(VOLO.cartErrorModalView )) {
+        VOLO.cartErrorModalView.unbind();
+    }
+    VOLO.cartErrorModalView = new CartErrorModalView({
+        el: '#cartCalculationErrorModal',
+        model: cartModel
+    });
 };
 
 VOLO.initIntl = function (locale, currency_symbol) {
@@ -249,6 +265,9 @@ $(document).on('page:before-unload', function () {
     }
     if (_.isObject(VOLO.checkoutDeliveryValidationView )) {
         VOLO.checkoutDeliveryValidationView .unbind();
+    }
+    if (_.isObject(VOLO.cartErrorModalView )) {
+        VOLO.cartErrorModalView.unbind();
     }
 });
 
