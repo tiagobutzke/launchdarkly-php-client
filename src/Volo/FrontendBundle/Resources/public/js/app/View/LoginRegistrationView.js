@@ -1,4 +1,40 @@
 var LoginRegistrationView = Backbone.View.extend({
+    _loginValidationView: null,
+    _registerValidationView: null,
+
+    _loginConstraints: {
+        _username: {
+            presence: true
+        },
+        _password: {
+            presence: true
+        }
+    },
+
+    _registrationConstraints: {
+        'customer[first_name]': {
+            presence: true
+        },
+        'customer[last_name]': {
+            presence: true
+        },
+        'customer[email]': {
+            presence: true,
+            email: true
+        },
+        'customer[mobile_number]': {
+            presence: true
+        },
+        'customer[password]': {
+            presence: true
+        },
+        'customer[confirm_password]': {
+            presence: true,
+            equality: "customer[password]"
+        }
+    },
+
+
     initialize: function () {
         console.log('LoginRegistrationView.initialize ', this.cid);
         _.bindAll(this);
@@ -7,6 +43,10 @@ var LoginRegistrationView = Backbone.View.extend({
     render: function() {
         this.$('.modal-content').load(Routing.generate('login'), function(){
             this.$el.modal();
+            this._loginValidationView = new ValidationView({
+                el: this.$('.login-form'),
+                constraints: this._loginConstraints
+            });
         }.bind(this));
 
         return this;
@@ -14,23 +54,31 @@ var LoginRegistrationView = Backbone.View.extend({
 
     events: {
         'click .register-link': '_loadRegistrationFormIntoLoginModal',
-        'click .login-link': '_loadLoginFormIntoModal',
+        'click .login-link': 'render',
         'submit .login-form': '_handingSubmitOfLoginForm',
         'submit .registration-form': '_handingSubmitOfRegistrationForm',
         'click .modal-close-button': '_closeLoginRegistrationOverlay'
     },
 
     unbind: function() {
+        if (this._loginValidationView) {
+            this._loginValidationView.remove();
+        }
+        if (this._registerValidationView) {
+            this._registerValidationView.remove();
+        }
+
         this.stopListening();
         this.undelegateEvents();
     },
 
     _loadRegistrationFormIntoLoginModal: function() {
-        this.$('.modal-content').load(Routing.generate('customer.create'));
-    },
-
-    _loadLoginFormIntoModal: function() {
-        this.$('.modal-content').load(Routing.generate('login'));
+        this.$('.modal-content').load(Routing.generate('customer.create'), function() {
+            this._registerValidationView = new ValidationView({
+                el: this.$('.registration-form'),
+                constraints: this._registrationConstraints
+            });
+        }.bind(this));
     },
 
     _handingSubmitOfLoginForm: function(event) {
