@@ -63,6 +63,7 @@ class OrderManagerService
         $order = [
             'location'              => $cart['location'],
             'products'              => $cart['products'],
+            'vouchers'              => $cart['vouchers'],
             'expedition_type'       => 'delivery',
             'payment_type_id'       => 5,
             'customer_address_id'   => $guestCustomer->getCustomerAddress()->getId(),
@@ -92,6 +93,7 @@ class OrderManagerService
         $order = [
             'location'              => $cart['location'],
             'products'              => $cart['products'],
+            'vouchers'              => $cart['vouchers'],
             'expedition_type'       => 'delivery',
             'payment_type_id'       => 5,
             'customer_address_id'   => $addressId,
