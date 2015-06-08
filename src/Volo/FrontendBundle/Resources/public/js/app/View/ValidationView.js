@@ -1,7 +1,8 @@
 var ValidationView = Backbone.View.extend({
-    _defaultConstraints: {},
     constraints: {},
     inputErrorClass: null, //error class for input
+    _errorMessages: null,
+    _defaultConstraints: {},
 
     events: {
         'blur input[name]': '_validateField',
@@ -14,7 +15,7 @@ var ValidationView = Backbone.View.extend({
     },
 
     initialize: function(options) {
-        _.bindAll(this, '_validateField', '_displayMessage', '_validateForm', '_hideMessage');
+        _.bindAll(this);
 
         this.constraints = _.assign(_.cloneDeep(this._defaultConstraints), options.constraints);
         this.inputErrorClass = options.errorClass || 'validation__error';
@@ -55,26 +56,21 @@ var ValidationView = Backbone.View.extend({
         return true;
     },
 
-    _errorMessages: null,
     _displayMessage: function(target) {
         var view = this._errorMessages[target.name];
         if (view) {
-            view.$el.show();
+            view.show();
         } else {
-            view = new ValidationMessageView({
-                model: new Backbone.Model({
-                    message: target.title
-                })
-            });
+            var msg = $('<span class="error_msg">'+target.title+'</span>');
+            this._errorMessages[target.name] = msg;
 
-            this._errorMessages[target.name] = view;
-            view.render().$el.insertAfter(target);
+            msg.insertAfter(target);
         }
     },
 
     _hideMessage: function(e) {
         if (e.keyCode !== 13 && this._errorMessages[e.target.name]) {
-            this._errorMessages[e.target.name].$el.hide();
+            this._errorMessages[e.target.name].hide();
         }
     },
 
