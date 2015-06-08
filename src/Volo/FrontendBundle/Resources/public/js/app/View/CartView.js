@@ -244,10 +244,7 @@ var CartView = Backbone.View.extend({
         this.vendorGeocodingSubView = new VendorGeocodingView({
             el: this.$('.vendor__geocoding__tool-box'),
             geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1]),
-            cartModel: this.model,
-            vendorId: this.vendor_id,
-            $header: this.domObjects.$header,
-            $body: this.domObjects.$body
+            model: this.model.getCart(this.vendor_id)
         });
 
         return this;

@@ -149,8 +149,7 @@ VOLO.initHomeSearch = function() {
     }
     VOLO.homeSearchView = new HomeSearchView({
         el: '.teaser__form',
-        geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1]),
-        $body: $('body')
+        geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1])
     });
 };
 
@@ -166,8 +165,7 @@ VOLO.initLoginButtonView = function() {
 VOLO.initVendorsListSearch = function() {
     VOLO.vendorSearchView = new VendorsSearchView({
         el: '.restaurants__tool-box',
-        geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1]),
-        $body: $('body')
+        geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1])
     });
 };
 

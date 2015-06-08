@@ -3,8 +3,6 @@ var HomeSearchView = Backbone.View.extend({
         console.log('HomeSearchView.initialize ', this.cid);
         _.bindAll(this);
         this.geocodingService = options.geocodingService;
-        this.domObjects = this.domObjects || {};
-        this.domObjects.$body = options.$body;
         this.inputNode = this.$('#postal_index_form_input');
 
         this.geocodingService.init(this.inputNode);
@@ -14,27 +12,24 @@ var HomeSearchView = Backbone.View.extend({
         this.listenTo(this.geocodingService, 'autocomplete:place_changed', this._tabPressed);
 
         this.inputNode.tooltip({
-            title: '',
             placement: 'bottom',
             html: true,
             trigger: 'manual'
         });
-        this.domObjects.$body.on('click', $.proxy(this._bodyClickHandler, this));
     },
 
     events: {
         'click .teaser__button': '_submit',
-        'autocomplete:submit_pressed .teaser__button': '_submitPressed'
+        'autocomplete:submit_pressed .teaser__button': '_submitPressed',
+        'focus #postal_index_form_input': '_hideTooltip',
+        'blur #postal_index_form_input': '_hideTooltip'
     },
 
     unbind: function() {
+        this.inputNode.tooltip('destroy');
         this.geocodingService.removeListeners(this.inputNode);
         this.stopListening();
         this.undelegateEvents();
-        this.inputNode.tooltip('destroy');
-        this.domObjects.$body.unbind($.proxy(this._bodyClickHandler, this));
-        delete this.domObjects.$body;
-        delete this.inputNode;
     },
 
     _tabPressed: function() {
@@ -110,20 +105,12 @@ var HomeSearchView = Backbone.View.extend({
         };
     },
 
-    _hideBalloon: function () {
-        this.inputNode.tooltip('hide');
-    },
-
     _showInputPopup: function (text) {
         this.inputNode.attr('title', text).tooltip('fixTitle');
-        setTimeout($.proxy(function () {
-            this.inputNode.tooltip('show');
-        }, this), 10);
+        this.inputNode.tooltip('show');
     },
 
-    _bodyClickHandler: function (e) {
-        if (!$(e.target).hasClass('tooltip-inner')) {
-            this.inputNode.tooltip('hide');
-        }
+    _hideTooltip: function () {
+        this.inputNode.tooltip('hide');
     }
 });
