@@ -89,7 +89,10 @@ var HomeSearchView = Backbone.View.extend({
     _applyNewLocationData: function (locationMeta, $input) {
         var data = this._getDataFromMeta(locationMeta);
         $input.val(data.formattedAddress);
-        this._showInputPopup(this.$('#postal_index_form_input').data('msg_you_probably_mean'));
+
+        if (locationMeta.postcodeGuessed) {
+            this._showInputPopup(this.$('#postal_index_form_input').data('msg_you_probably_mean'));
+        }
 
         return data;
     },
