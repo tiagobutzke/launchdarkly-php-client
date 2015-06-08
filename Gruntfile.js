@@ -55,6 +55,7 @@ module.exports = function (grunt) {
         'web/bower_components/backbone/backbone-min.js',
         'web/bower_components/geocomplete/jquery.geocomplete.js',
         'web/bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/modal.js',
+        'web/bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/tooltip.js',
         'web/bower_components/adyen-cse-js/js/adyen.encrypt.js',
         frontendAssetPath('/js/**/*.js')
     ];
@@ -145,6 +146,7 @@ module.exports = function (grunt) {
                 'web/bower_components/backbone/backbone-min.js',
                 'web/bundles/fosjsrouting/js/router.js',
                 'web/bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/modal.js',
+                'web/bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/tooltip.js',
                 'web/bower_components/adyen-cse-js/js/adyen.encrypt.js',
                 'web/bower_components/intl/Intl.js'
             ]

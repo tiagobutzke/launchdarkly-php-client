@@ -19,6 +19,7 @@ var HomeSearchView = Backbone.View.extend({
     },
 
     unbind: function() {
+        this.$('#postal_index_form_input').tooltip('destroy');
         this.geocodingService.removeListeners(this.$('#postal_index_form_input'));
         this.stopListening();
         this.undelegateEvents();
@@ -36,6 +37,7 @@ var HomeSearchView = Backbone.View.extend({
 
     _notFound: function() {
         console.log('not found');
+        this._showTooltip(this.$('#postal_index_form_input').data('msg_error_not_found'));
     },
 
     _search: function(data) {
@@ -69,6 +71,7 @@ var HomeSearchView = Backbone.View.extend({
 
                 var data = this._getDataFromMeta(locationMeta);
                 $input.val(data.formattedAddress);
+                this._showTooltip(this.$('#postal_index_form_input').data('msg_you_probably_mean'));
 
                 deferred.resolve(data);
             }.bind(this));
@@ -90,5 +93,12 @@ var HomeSearchView = Backbone.View.extend({
             lng: locationMeta.lng,
             city: locationMeta.city
         };
+    },
+
+    _showTooltip: function (title) {
+        var options = {trigger: 'manual', title: title};
+        
+        this.$('#postal_index_form_input').tooltip(options);
+        this.$('#postal_index_form_input').tooltip('show');
     }
 });
