@@ -6,12 +6,12 @@ var GeocodingService = function(locale) {
 };
 
 _.extend(GeocodingService.prototype, Backbone.Events, {
-    init: function ($input, types) {
+    init: function ($input, config) {
         _.bindAll(this);
         this.autocomplete = new google.maps.places.Autocomplete(
             $input[0],
             {
-                types: types || this.defaultTypes,
+                types: config || this.defaultTypes,
                 componentRestrictions: {
                     country: this.locale
                 }
@@ -76,7 +76,7 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
             place = autocomplete.getPlace();
 
         if (!place || !place.place_id) {
-            this._selectFirstResult($input).done(deferred.resolve).fail(deferred.reject);
+            this._selectFirstResult().done(deferred.resolve).fail(deferred.reject);
         } else {
             deferred.resolve(place);
         }
@@ -84,7 +84,7 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
         return deferred;
     },
 
-    _selectFirstResult: function ($input) {
+    _selectFirstResult: function () {
         var deferred = $.Deferred(),
             firstResult = $(".pac-container .pac-item:first").text();
 
@@ -179,14 +179,24 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
     },
 
     _findStreetNameInAddressComponents: function (addressComponents) {
-        var streetNames = _.pluck(_.where(addressComponents, {'types': ['route']}), 'long_name');
-
-        return (streetNames && streetNames[0]) ? streetNames[0] : '';
+        return _.chain(addressComponents)
+            .where({'types': ['route']})
+            .pluck('long_name')
+            .first()
+            .thru(function(first) {
+                return first || '';
+            })
+            .value();
     },
 
     _findBuildingNumberInAddressComponents: function (addressComponents) {
-        var component = _.pluck(_.where(addressComponents, {'types': ['street_number']}), 'long_name');
-
-        return (component && component[0]) ? component[0] : '';
+        return _.chain(addressComponents)
+            .where({'types': ['street_number']})
+            .pluck('long_name')
+            .first()
+            .thru(function(first) {
+                return first || '';
+            })
+            .value();
     }
 });

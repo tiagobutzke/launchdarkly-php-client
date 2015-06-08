@@ -1,37 +1,25 @@
 var CheckoutDeliveryValidationView = Backbone.View.extend({
     events: {},
 
-    _initFormElements : function() {
-        this.addressLine1 = this.$('#address_line1');
-        this.addressLine2 = this.$('#address_line2');
-        this.latitude = this.$('#address_latitude');
-        this.longitude = this.$('#address_longitude');
-        this.postalCode = this.$('#postal_index_form_input');
-        this.city = this.$("#city");
-        this.continueButton = this.$("#delivery_information_form_button");
-    },
-
     initialize: function (options) {
         _.bindAll(this);
         this.geocodingService = options.geocodingService;
-        this._initFormElements();
-        this.vendorId = this.postalCode.data('vendor_id');
-        this.geocodingService.init(this.addressLine1, []);
+        this.vendorId = this.$('#postal_index_form_input').data('vendor_id');
+        this.geocodingService.init(this.$('#address_line1'), []);
         this.deliveryCheck = options.deliveryCheck;
-        this.isModalOpen = false;
         this.listenTo(this.geocodingService, 'autocomplete:submit_pressed', this._submitPressed);
         this.listenTo(this.geocodingService, 'autocomplete:place_changed', this._tabPressed);
         this.listenTo(this.geocodingService, 'autocomplete:tab_pressed', this._tabPressed);
     },
 
     unbind: function () {
-        this.geocodingService.removeListeners(this.postalCode);
+        this.geocodingService.removeListeners(this.$('#postal_index_form_input'));
         this.stopListening();
         this.undelegateEvents();
     },
 
     _tabPressed: function () {
-        this._getNewLocation(this.postalCode).fail(this._notFound);
+        this._getNewLocation(this.$('#postal_index_form_input')).fail(this._notFound);
     },
 
     _notFound: function () {
@@ -40,22 +28,23 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
 
     _getNewLocation: function ($input) {
         var deferred = $.Deferred();
-        var continueButton = this.continueButton;
+        var continueButton = this.$("#delivery_information_form_button");
         this.geocodingService.getLocation($input)
             .fail(deferred.reject, this)
             .done(function (locationMeta) {
                 var data = this._getDataFromMeta(locationMeta, $input);
                 var addressLine1 = data.street + ' ' + data.building;
-                this.city.val(data.city);
-                this.postalCode.val(data.postcode);
+
+                this.$("#city").val(data.city);
+                this.$('#postal_index_form_input').val(data.postcode);
                 this._validateDelivery(
                     data,
                     continueButton
                 );
-                this.addressLine1.val($.trim(addressLine1));
-                this.addressLine2.val(data.building);
-                this.latitude.val(data.lat);
-                this.longitude.val(data.lng);
+                this.$('#address_line1').val($.trim(addressLine1));
+                this.$('#address_line2').val(data.building);
+                this.$('#address_latitude').val(data.lat);
+                this.$('#address_longitude').val(data.lng);
                 deferred.resolve(data);
             }.bind(this));
 
@@ -80,18 +69,17 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
     },
 
     _validateDelivery: function (locationData, continueButton) {
-        if (this.isModalOpen) {
+        if ($('#delivery-modal').hasClass('in')) {
             return;
         }
 
         continueButton.attr('disabled', true);
 
         var deliveryCheckData = {
-            "vendorId": this.vendorId,
-            "latitude": locationData.lat,
-            "longitude": locationData.lng
+            vendorId: this.vendorId,
+            latitude: locationData.lat,
+            longitude: locationData.lng
         };
-        var self = this;
         this.deliveryCheck.isValid(deliveryCheckData)
             .done(function (resultData) {
                 if (resultData.result === true) {
@@ -102,11 +90,7 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
                         locationData: locationData
                     });
                     view.render(); //render dialog
-                    self.isModalOpen = true;
-                    var modal = $('#delivery-modal').modal();
-                    modal.on('hidden.bs.modal', function () {
-                        self.isModalOpen = false;
-                    });
+                    $('#delivery-modal').modal();
                 }
             });
     }
@@ -129,6 +113,11 @@ var CheckoutNoDeliveryView = Backbone.View.extend({
         return this;
     },
 
+    unbind: function() {
+        this.stopListening();
+        this.undelegateEvents();
+    },
+
     _findRestaurants: function () {
         var data = this.locationData;
         this.undelegateEvents();
@@ -142,7 +131,8 @@ var CheckoutNoDeliveryView = Backbone.View.extend({
     },
 
     _closeModal: function () {
-        this.undelegateEvents();
+        this.unbind();
+        delete this.locationData;
         this.$('#delivery-modal').modal('hide');
     }
 });
