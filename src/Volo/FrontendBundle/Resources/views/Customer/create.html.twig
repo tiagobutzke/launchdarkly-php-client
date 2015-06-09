@@ -18,7 +18,7 @@
                        class="form-control"
                        value="{{ customer.first_name|default('') }}"
                        required="true"
-                       placeholder="{% trans %}form.placeholder.firstname{% endtrans %}"
+                       placeholder="{% trans %}form.placeholder.first_name{% endtrans %}"
                        data-toggle="tooltip"
                        title="{% trans %}validations.error.register.first_name{% endtrans %}"
                 />
@@ -30,7 +30,7 @@
                        class="form-control"
                        value="{{ customer.last_name|default('') }}"
                        required="true"
-                       placeholder="{% trans %}form.placeholder.lastname{% endtrans %}"
+                       placeholder="{% trans %}form.placeholder.last_name{% endtrans %}"
                        data-toggle="tooltip"
                        title="{% trans %}validations.error.register.last_name{% endtrans %}"
                 />
