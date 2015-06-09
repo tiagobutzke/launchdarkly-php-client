@@ -12,8 +12,11 @@
   }
 
   .desktop-cart {
-    @include make-md-column(3);
-    @extend .col-md-push-1;
+    @include respond-from("screen-md") {
+      @include make-md-column(3);
+      @extend .col-md-push-1;
+      position: relative;
+    }
   }
 }
 

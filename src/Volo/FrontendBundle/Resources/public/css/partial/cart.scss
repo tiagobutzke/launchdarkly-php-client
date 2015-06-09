@@ -61,6 +61,7 @@
   @include respond-from("screen-md") {
     display: none;
   }
+
   &:hover {
     cursor: pointer;
   }
@@ -105,7 +106,7 @@
   text-align: right;
 }
 
-// cart
+//desktop cart
 
 .desktop-cart {
   @include make-md-column(4);
@@ -126,6 +127,7 @@
     background-color: transparent;
     height: auto;
   }
+
   .cart__item {
     cursor: pointer;
   }
@@ -139,6 +141,34 @@
 
     img {
       @include responsive-img();
+    }
+
+    .desktop-cart__hero__title {
+      background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjY1Ii8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMCIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+      background: -moz-linear-gradient(top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 100%); /* FF3.6+ */
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.65)), color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
+      background: -webkit-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* Chrome10+,Safari5.1+ */
+      background: -o-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* Opera 11.10+ */
+      background: -ms-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* IE10+ */
+      background: linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* W3C */
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      color: $color-text-selection;
+      text-align: center;
+      font-size: 1.1em;
+      text-transform: uppercase;
+      padding-top: $space-sm;
+    }
+
+    i {
+      display: inline-block;
+      position: absolute;
+      top: $space-xs;
+      right: $space-xs;
+      color: $color-text-selection;
+      font-size: 2em;
     }
   }
 
@@ -182,13 +212,27 @@
     }
   }
 
+  tr.summary__item__row_desktop {
+    display: none;
+    @include respond-from("screen-md") {
+      display: table-row;
+      width: 100%;
+
+      &:hover {
+        .summary__item__quantity-icons, .summary__item__remove-icon {
+          display: block;
+        }
+      }
+    }
+  }
+
   td.summary__item__empty {
     display: none;
     @include respond-from("screen-md") {
       display: table-cell;
       width: 100%;
       padding: 0;
-      height: $grid-gutter-width / 2;
+      height: $grid-gutter-width;
     }
   }
 
@@ -205,6 +249,7 @@
     td.summary__item__name {
       padding-top: 8px;
       color: $color-text-highlight;
+      font-weight: bold;
     }
 
     td.summary__item__price {
@@ -220,17 +265,18 @@
         color: $error-msg-color-text;
         text-align: center;
         border-radius: 50%;
-        width: 20px;
-        @include centerTextVerticallyByHeight(20px);
+        width: 14px;
+        @include centerTextVerticallyByHeight(14px);
         display: inline-block;
         margin-left: $space-xs;
       }
     }
 
-    .summary__item__icon  {
+    .summary__item__icon {
 
       i {
         width: 28px;
+        border-radius: $border-radius-default;
         @include centerTextVerticallyByHeight(28px);
         background-color: $color-bg-secondary;
         display: inline-block;
@@ -240,7 +286,7 @@
       }
 
       i.summary__item__icon__disabled {
-        color: $color-text-highlight;
+        color: $cta-color-text-primary;
         background-color: $cta-color-bg-disabled;
 
         &:hover {
@@ -248,11 +294,7 @@
         }
       }
     }
-
   }
-
-
-
 }
 
 .checkout__summary-overflowing {
@@ -262,82 +304,41 @@
   margin-bottom:  $space-md;
 }
 
-.menu-page {
-  .checkout__summary {
-    .summary__items {
-      tr.summary__item__row_desktop {
-        display: none;
-        @include respond-from("screen-md") {
-          display: table-row;
-          width: 100%;
-
-          &:hover {
-            .summary__item__quantity-icons, .summary__item__remove-icon {
-              display: block;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
 .summary__item__quantity-icons {
   display: none;
   position: absolute;
-  width: 71px;
-  height: 34px;
+  width: 51px;
+  height: 33px;
   top: -25px;
-  //  left: -18px;
-  left: 1px;
-  white-space: nowrap;
+  left: -2px;
   text-align: center;
   @include transition(all .1s linear);
 
   .icons_box {
     position: relative;
-    width: 45x;
-    height: 24px;
-    background: rgb(255, 255, 255);
-    border: 2px solid $color-bg-primary;
-    border-radius: $border-radius-default;
-    box-shadow: 0px 1px 2px 0px rgba(1, 1, 1, 0.25);
-  }
-
-  .icons_box:after, .icons_box:before {
-    top: 100%;
-    left: 50%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-  }
-
-  .icons_box:after {
-    border-color: rgba(255, 255, 255, 0);
-    border-top-color: $color-bg-secondary;
-    border-width: 5px;
-    margin-left: -5px;
-  }
-
-  .icons_box:before {
-    border-color: rgba(255, 255, 255, 0);
-    border-top-color: $color-bg-primary;
-    border-width: 8px;
-    margin-left: -8px;
+    width: 51px;
+    height: 33px;
+    line-height: 29px;
+    background-image: url("#{$imagepath}cart/bg_add-toggle-2x.png");
+    background-size: 51px 33px;
   }
 
   i {
     display: inline-block;
     width: 20px;
-    height: 20px;
-    padding-top: 4px;
+    @include centerTextVerticallyByHeight(20px);
     text-align: center;
     background-color: $color-bg-secondary;
+    @include transition(all .1s linear);
+
+    &:first-child {
+      margin-left: 1px;
+      margin-right: 1px;
+      width: 20px;
+    }
+
     &:last-child {
-      //      margin-left: -2px;
+       margin-right: 2px;
     }
   }
 }
@@ -346,25 +347,56 @@
   min-height: 50px;
   box-shadow:  inset 0 8px 8px -8px rgba(1,1,1,0.2), inset 0 -8px 8px -8px rgba(1,1,1,0.2);
   padding-top: $space-md;
-  @include respond-from("screen-md") {
+}
 
+.summary__item__remove-icon {
+  display: none;
+  position: absolute;
+  width: 28px;
+  height: 32px;
+  top: -25px;
+  right: -2px;
+  background-image: url("#{$imagepath}cart/bg_delete-toggle-2x.png");
+  background-size: 28px 32px;
+  @include transition(all .1s linear);
+  i {
+    display: block;
+    width: 20px;
+    @include centerTextVerticallyByHeight(20px);
+    text-align: center;
+    background-color: $color-bg-secondary;
+    margin-top: 3px;
+    margin-left: 4px;
   }
 }
 
-//.summary__item__remove-icon {
-//  position: absolute;
-//  width: 21px;
-//  height: 16px;
-//  top: 6px;
-//  right: -33px;
-//  display: none;
-//  @include transition(all .1s linear);
-//  i {
-//    display: block;
-//    font-size: 1.3em;
-//    color: $color-text-light;
-//  }
-//}
+// elements not showing in checkout page
+
+.checkout-wrapper {
+
+  tr.summary__item__row_desktop {
+
+    &:hover {
+      .summary__item__quantity-icons, .summary__item__remove-icon {
+        display: none;
+      }
+    }
+  }
+
+  .summary__item__icon, .cart__title--time {
+    display: none;
+  }
+
+  tr.summary__item__row_mobile {
+
+    td.summary__item__price {
+
+      i {
+        display: none;
+      }
+    }
+  }
+}
 
 .desktop-cart__title {
   font-family: $bold-font-family;
@@ -428,10 +460,6 @@
   }
 }
 
-.summary__extra__items {
-  color: $color-text-secondary;
-}
-
 .desktop-cart_order__message {
   @extend .text-center;
   color: $color-text-secondary;
@@ -463,6 +491,7 @@
 }
 
 .desktop-cart__order__delivery {
+  color: $color-text-secondary;
   span {
     @extend .desktop-cart__order__total__price;
   }
@@ -470,8 +499,11 @@
 
 .desktop-cart__order__total {
   padding: $space-sm 0;
-  font-family: $bold-font-family;
   font-size: 1.2em;
+  font-family: $base-font-family;
+  @include respond-from("screen-md") {
+    font-family: $bold-font-family;
+  }
 }
 
 .desktop-cart__order__total__price {
