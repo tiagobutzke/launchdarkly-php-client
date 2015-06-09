@@ -32,7 +32,7 @@ class PhoneNumberService
 
     /**
      * @param PhoneNumber $parsedPhone
-     * @param string $phoneType
+     * @param int $phoneType
      *
      * @throws PhoneNumberValidationException
      */

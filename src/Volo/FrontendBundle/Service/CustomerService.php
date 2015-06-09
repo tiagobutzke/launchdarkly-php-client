@@ -32,6 +32,11 @@ class CustomerService
     protected $phoneService;
 
     /**
+     * @var TokenStorage
+     */
+    protected $tokenStorage;
+
+    /**
      * @param TokenStorage       $tokenStorage
      * @param CustomerProvider   $provider
      * @param Serializer         $serializer

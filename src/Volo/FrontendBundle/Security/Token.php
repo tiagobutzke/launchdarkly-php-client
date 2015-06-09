@@ -22,7 +22,7 @@ class Token extends AbstractToken
         $this->setUser($user);
         $this->setAttributes($attributes);
 
-        parent::setAuthenticated(count($roles) > 0);
+        $this->setAuthenticated(count($roles) > 0);
     }
 
     /**
@@ -36,7 +36,7 @@ class Token extends AbstractToken
     /**
      * Returns the user credentials.
      *
-     * @return mixed The user credentials
+     * @return string The user credentials
      */
     public function getCredentials()
     {

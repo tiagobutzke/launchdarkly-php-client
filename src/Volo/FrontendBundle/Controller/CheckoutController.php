@@ -260,7 +260,7 @@ class CheckoutController extends Controller
      *
      * @param Request $request
      *
-     * @return array
+     * @return JsonResponse
      */
     public function createAddressAction(Request $request)
     {
