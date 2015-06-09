@@ -32,8 +32,9 @@ class RedirectTest extends VoloTestCase
 
     public function testLocation()
     {
-        $path = '/location/m0zt';
-        $target = '/restaurant/m0zt/royal-garden-restaurant';
+        $path = '/location/la-piccola';
+        $target = '/restaurant/s9iz/la-piccola';
+
         $client = static::createClient();
 
         $client->request('GET', $path);
@@ -60,7 +61,7 @@ class RedirectTest extends VoloTestCase
             ['/drivers', 'http://localhost/contents/drivers-and-restaurants.htm'],
             ['/restaurants', 'http://localhost/contents/drivers-and-restaurants.htm'],
             ['/imprint', 'http://localhost/contents/imprint.htm'],
-            ['/r/kigali', 'http://localhost/city/kigali'],
+            ['/r/berlin', 'http://localhost/city/berlin'],
             ['/signup', 'http://localhost/login'],
         ];
     }

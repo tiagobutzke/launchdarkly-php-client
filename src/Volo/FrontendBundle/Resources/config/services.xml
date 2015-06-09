@@ -23,8 +23,10 @@
         <parameter key="volo_frontend.service.order_manager.class">Volo\FrontendBundle\Service\OrderManagerService</parameter>
         <parameter key="volo_frontend.service.deliverability.class">Volo\FrontendBundle\Service\DeliverabilityService</parameter>
         <parameter key="volo_frontend.cache_warmer.class">Volo\FrontendBundle\CacheWarmer\VoloCacheWarmer</parameter>
+        <parameter key="volo_frontend.cache_migration.class">Volo\FrontendBundle\CacheWarmer\MigrationCacheWarmer</parameter>
         <parameter key="volo_frontend.twig.serializer_extension.class">Volo\FrontendBundle\Twig\SerializerExtension</parameter>
         <parameter key="volo_frontend.service.customer_location.class">Volo\FrontendBundle\Service\CustomerLocationService</parameter>
+        <parameter key="volo_frontend.service.vendor.class">Volo\FrontendBundle\Service\VendorService</parameter>
         <parameter key="volo_frontend.twig.vendor_image_extension.class">Volo\FrontendBundle\Twig\ThumborImageExtension</parameter>
         <parameter key="volo_frontend.twig.volo_extension.class">Volo\FrontendBundle\Twig\VoloExtension</parameter>
         <parameter key="volo_frontend.thumbor_builder_factory.class">Thumbor\Url\BuilderFactory</parameter>
@@ -82,11 +84,22 @@
             <tag name="kernel.cache_warmer" priority="90" />
         </service>
 
+        <service id="volo_frontend.cache_migration" class="%volo_frontend.cache_migration.class%">
+            <argument type="service" id="volo_frontend.service.vendor" />
+            <tag name="kernel.cache_warmer" priority="90" />
+        </service>
+
         <service id="volo_frontend.service.customer" class="%volo_frontend.service.customer.class%">
             <argument type="service" id="security.token_storage" />
             <argument type="service" id="volo_frontend.provider.customer" />
             <argument type="service" id="volo_frontend.api.serializer"/>
             <argument type="service" id="volo_frontend.service.phone_number" />
+        </service>
+
+        <service id="volo_frontend.service.vendor" class="%volo_frontend.service.vendor.class%">
+            <argument type="service" id="volo_frontend.provider.city" />
+            <argument type="service" id="volo_frontend.provider.vendor" />
+            <argument type="service" id="doctrine_cache.providers.vendor_cache" />
         </service>
 
         <service id="volo_frontend.twig.serializer_extension" class="%volo_frontend.twig.serializer_extension.class%">

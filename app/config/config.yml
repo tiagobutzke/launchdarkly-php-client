@@ -52,6 +52,9 @@ doctrine_cache:
         configuration_cache:
             namespace: %country_code%_%kernel.environment%_configuration_cache
             type: file_system
+        vendor_cache:
+            namespace: %country_code%_%kernel.environment%_vendor_cache
+            type: file_system
 
 foodpanda_web_translate_it:
     base_url: %foodpanda_web_translate_it_base_url%

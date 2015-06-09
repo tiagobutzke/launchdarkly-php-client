@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Volo\FrontendBundle\Http\JsonErrorResponse;
@@ -116,7 +117,7 @@ class VendorController extends Controller
     }
 
     /**
-     * @Route("/{code}", name="vendor_by_code")
+     * @Route("/{code}", name="vendor_by_code", requirements={"code": "([A-Za-z][A-Za-z0-9]{3})"})
      * @Method({"GET"})
      *
      * @param string $code
@@ -131,9 +132,40 @@ class VendorController extends Controller
             throw $this->createNotFoundException('Vendor not found!', $exception);
         }
 
+        return $this->redirectToVendorPage($code, $vendor->getUrlKey());
+    }
+
+    /**
+     * @Route("/{urlKey}", name="vendor_by_url_key")
+     * @Method({"GET"})
+     *
+     * @param string $urlKey
+     *
+     * @return array
+     */
+    public function vendorByUrlKeyAction($urlKey)
+    {
+        try {
+            $code = $this->get('volo_frontend.service.vendor')->getVendorCodeByUrlKey($urlKey);
+        } catch (\RuntimeException $e) {
+            throw $this->createNotFoundException('Vendor not found!', $e);
+        }
+
+        return $this->redirectToVendorPage($code, $urlKey);
+    }
+
+    /**
+     * @param string $code
+     * @param string $urlKey
+     *
+     * @return RedirectResponse
+     */
+    protected function redirectToVendorPage($code, $urlKey)
+    {
+
         return $this->redirectToRoute(
             'vendor',
-            ['code' => $code, 'urlKey' => $vendor->getUrlKey()],
+            ['code' => $code, 'urlKey' => $urlKey],
             Response::HTTP_FOUND
         );
     }
