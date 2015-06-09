@@ -601,6 +601,8 @@ td.summary__item__empty {
 
 .checkout__item__card__help {
   text-align: right;
+  display: none;
+
   @include respond-from("screen-md") {
     width: 45%;
     float: left;

@@ -25,14 +25,12 @@
             <div class="form-group form-group--3col-last">
                 <input type="text" class="form-control" id="adyen-encrypted-form-cvc" size="4" maxlength="4"
                        autocomplete="off" data-encrypted-name="cvc" placeholder="{% trans %}form.placeholder.cvc{% endtrans %}">
-                <i class="icon-help-circled"></i>
+                <i class="icon-help-circled checkout__item__card__help-toggle"></i>
             </div>
             <div class="hide"><input type="hidden" id="adyen-encrypted-form-expiry-generationtime" value="{{ "now"|date('c') }}"
                                      data-encrypted-name="generationtime"/></div>
         </div>
 
-        <div class="checkout__item__card__help"><img class="b-lazy" alt="" data-src="{{ asset('img/checkout/cvc_help.png') }}|{{ asset('img/checkout/cvc_help-2x.png') }}"  src="{{ blazy_placeholder }}" /></div>
-
-
+        <div class="checkout__item__card__help"><img alt="" src="{{ asset('img/checkout/cvc_help-2x.png') }}" /></div>
     </div>
 </form>
