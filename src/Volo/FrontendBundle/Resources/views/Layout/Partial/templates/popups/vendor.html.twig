@@ -1,12 +1,11 @@
 <script type="text/template" id="template-vendor-supply-postcode">
-    Enter your postal code to find restaurants near you
+    {% trans %}tooltip.enter_postcode_to_find_restaurants{% endtrans %}
 </script>
 
 <script type="text/template" id="template-vendor-menu-nothing-found">
-    Unfortunately, restaurant will not deliver to your area.
-    <a href="<%- url %>">Click here</a> to find restaurants in your area
+    {% trans with {'%url%': '<%- url %>'}%}tooltip.no_restaurant_delivery_click_search_in_your_area <a href="%url%">link</a>{% endtrans %}
 </script>
 
 <script type="text/template" id="template-vendor-is-deliverable-server-error">
-    We could not validate if vendor delivers to your area
+    {% trans %}tooltip.is_vendor_deliverable_check_error{% endtrans %}
 </script>

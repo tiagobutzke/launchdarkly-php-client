@@ -111,6 +111,28 @@ var VendorCartModel = Backbone.Model.extend({
         }
     },
 
+    updateLocationIfDeliverable: function (data) {
+        var xhr = $.get(
+            Routing.generate('vendor_delivery_validation_by_gps', {
+                vendorId: this.get('vendor_id'),
+                latitude: data.lat,
+                longitude: data.lng
+            })
+        );
+
+        xhr.done(function (response) {
+            if (response.result) {
+                this.set('location', {
+                    location_type: "polygon",
+                    latitude: data.lat,
+                    longitude: data.lng
+                });
+            }
+        }.bind(this));
+
+        return xhr;
+    },
+
     updateCart: function() {
         console.log('CartModel.updateCart ', this.cid);
         this.trigger('cart:dirty');

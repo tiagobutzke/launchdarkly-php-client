@@ -55,6 +55,14 @@ class VendorController extends Controller
             $vendor->getId()
         );
 
+        $location = $this->get('volo_frontend.service.customer_location')->get($request->getSession()->getId());
+        $isDeliverable = is_array($location) ? $this->get('volo_frontend.service.deliverability')
+            ->isDeliverableLocation(
+                $vendor->getId(),
+                $location[CustomerLocationService::KEY_LAT],
+                $location[CustomerLocationService::KEY_LNG]
+            ) : false;
+
         if ($cart) {
             $cartManager = $this->get('volo_frontend.service.cart_manager');
 
@@ -63,27 +71,22 @@ class VendorController extends Controller
             } catch (ApiErrorException $exception) {
                 $cart = null;
             }
-        }
 
-        $location = $this->get('volo_frontend.service.customer_location')->get($request->getSession()->getId());
-        if ($location) {
-            $isDeliverable = $this->get('volo_frontend.service.deliverability')
-                ->isDeliverableLocation(
-                    $vendor->getId(),
-                    $location[CustomerLocationService::KEY_LAT],
-                    $location[CustomerLocationService::KEY_LNG]
-                );
-
-            if (!$isDeliverable) {
-                $location = false;
+            if ($cart && !$isDeliverable) {
+                $cart = null;
             }
         }
 
         return [
-            'vendor' => $vendor,
-            'cart' => $cart,
-            'location' => $location,
-            'isDeliverable' => (bool) $location
+            'vendor'        => $vendor,
+            'cart'          => $cart,
+            'address'       => is_array($location) ? $location[CustomerLocationService::KEY_ADDRESS] : '',
+            'location'      => [
+                'type'      => 'polygon',
+                'latitude'  => $isDeliverable ? $location[CustomerLocationService::KEY_LAT] : null,
+                'longitude' => $isDeliverable ? $location[CustomerLocationService::KEY_LNG] : null
+            ],
+            'isDeliverable' => $isDeliverable
         ];
     }
 

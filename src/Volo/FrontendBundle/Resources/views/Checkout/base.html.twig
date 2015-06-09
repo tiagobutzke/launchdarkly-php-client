@@ -10,6 +10,7 @@
     <script data-turbolinks-eval=always>
         var VOLO = VOLO || {};
         VOLO.jsonCart = {{ cart|to_escaped_json }};
+        VOLO.jsonLocation = {{ location|to_escaped_json }};
     </script>
 {% endblock footer_scripts %}
 

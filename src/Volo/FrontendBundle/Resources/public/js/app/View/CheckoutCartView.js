@@ -5,6 +5,7 @@ var CheckoutCartView = CartView.extend({
         this.$('.desktop-cart__time').hide();
         this.$('.btn-checkout').hide();
         this.$('.desktop-cart_order__message').hide();
+        this.$('.vendor__geocoding__tool-box').hide();
         return this;
     },
 
@@ -16,3 +17,4 @@ var CheckoutCartView = CartView.extend({
 
     }
 });
+
