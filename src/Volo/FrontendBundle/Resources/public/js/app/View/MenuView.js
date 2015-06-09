@@ -4,6 +4,7 @@ var MenuView = Backbone.View.extend({
         this.cartModel = options.cartModel;
 
         this.domObjects = {};
+        this.navigateToAnchorBuffer = 30;
         this.domObjects.$header = options.$header;
 
         this.subViews = [];
@@ -62,7 +63,10 @@ var MenuView = Backbone.View.extend({
 
     _navigateToAnchor: function(event) {
         $('html, body').animate({
-            scrollTop: this.$($.attr(event.target, 'href')).offset().top - this.domObjects.$header.outerHeight()
+            scrollTop:
+                this.$($.attr(event.target, 'href')).offset().top +
+                this.navigateToAnchorBuffer -
+                this.domObjects.$header.outerHeight()
         }, 500);
 
         return false;
