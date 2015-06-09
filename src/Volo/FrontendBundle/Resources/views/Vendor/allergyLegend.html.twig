@@ -1,36 +1,34 @@
-<div class="modal" id="allergyModal" tabindex="-1" role="dialog" aria-labelledby="allergyModalLabel" aria-hidden="true">
+<div class="modal fade allergy-modal" id="allergyModal" tabindex="-1" role="dialog" aria-labelledby="allergyModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="allergyModalLabel">{% trans %}title.allergy_table{% endtrans %}</h4>
-            </div>
-            <div class="modal-body">
+        <div class="modal-content allergy-legend">
+            <h4 class="modal__h4 text-center">{% trans %}allergy.headline{% endtrans %}</h4>
+            <div class="modal-body clearfix">
                 <ul>
-                    <li>4 {% trans %}allergy.eggs{% endtrans %}</li>
-                    <li>5 {% trans %}allergy.milk{% endtrans %}</li>
-                    <li>6 {% trans %}allergy.celery{% endtrans %}</li>
-                    <li>7 {% trans %}allergy.sesame{% endtrans %}</li>
-                    <li>8 {% trans %}allergy.fish{% endtrans %}</li>
-                    <li>9 {% trans %}allergy.peanuts{% endtrans %}</li>
-                    <li>10 {% trans %}allergy.nuts{% endtrans %}</li>
-                    <li>11 {% trans %}allergy.mustard{% endtrans %}</li>
-                    <li>12 {% trans %}allergy.hot1{% endtrans %}</li>
-                    <li>13 {% trans %}allergy.hot2{% endtrans %}</li>
-                    <li>14 {% trans %}allergy.hot3{% endtrans %}</li>
-                    <li>15 {% trans %}allergy.vegetarian{% endtrans %}</li>
-                    <li>16 {% trans %}allergy.crustaceans{% endtrans %}</li>
-                    <li>17 {% trans %}allergy.cereals_containing_gluten{% endtrans %}</li>
-                    <li>18 {% trans %}allergy.lupin{% endtrans %}</li>
-                    <li>19 {% trans %}allergy.sulphur_dioxide_and_sulphites{% endtrans %}</li>
-                    <li>20 {% trans %}allergy.soy{% endtrans %}</li>
-                    <li>21 {% trans %}allergy.molluscs{% endtrans %}</li>
-                    <li>22 {% trans %}allergy.vegan{% endtrans %}</li>
+                    <li><i class="icon-foodinfo-eggs"></i> <b>4</b> {% trans %}allergy.eggs{% endtrans %}</li>
+                    <li><i class="icon-foodinfo-milk"></i> <b>5</b> {% trans %}allergy.milk{% endtrans %}</li>
+                    <li><i class="icon-foodinfo-celery"></i> <b>6</b> {% trans %}allergy.celery{% endtrans %}</li>
+                    <li><i class="icon-foodinfo-sesame"></i> <b>7</b> {% trans %}allergy.sesame{% endtrans %}</li>
+                    <li><i class="icon-foodinfo-fish"></i> <b>9</b> {% trans %}allergy.peanuts{% endtrans %}</li>
+                    <li><i class="icon-foodinfo-nuts"></i> <b>10</b> {% trans %}allergy.nuts{% endtrans %}</li>
+                    <li><i class="icon-foodinfo-mustard"></i> <b>11</b> {% trans %}allergy.mustard{% endtrans %}</li>
+                    <li><i class="icon-foodinfo-hot1"></i> <b>12</b> {% trans %}allergy.hot1{% endtrans %}</li>
+                    <li><i class="icon-foodinfo-hot2"></i> <b>13</b> {% trans %}allergy.hot2{% endtrans %}</li>
+                </ul>
+                <ul>
+                    <li><i class="icon-foodinfo-hot3"></i> <b>14</b> {% trans %}allergy.hot3{% endtrans %}</li>
+                    <li><i class="icon-foodinfo-vegetarian"></i> <b>15</b> {% trans %}allergy.vegetarian{% endtrans %}</li>
+                    <li><i class="icon-foodinfo-crustaceans"></i> <b>16</b> {% trans %}allergy.crustaceans{% endtrans %}</li>
+                    <li><i class="icon-foodinfo-gluten"></i> <b>17</b>{% trans %}allergy.cereals_containing_gluten{% endtrans %}</li>
+                    <li><i class="icon-foodinfo-lupin"></i> <b>18</b> {% trans %}allergy.lupin{% endtrans %}</li>
+                    <li><i class="icon-foodinfo-so2"></i> <b>19</b> {% trans %}allergy.sulphur_dioxide_and_sulphites{% endtrans %}</li>
+                    <li><i class="icon-foodinfo-soy"></i> <b>20</b> {% trans %}allergy.soy{% endtrans %}</li>
+                    <li><i class="icon-foodinfo-molluscs"></i> <b>21</b> {% trans %}allergy.molluscs{% endtrans %}</li>
+                    <li><i class="icon-foodinfo-vegan"></i> <b>22</b> {% trans %}allergy.vegan{% endtrans %}</li>
                 </ul>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
+            <div class="modal-close-button" data-dismiss="modal"></div>
         </div>
     </div>
 </div>
+
+
