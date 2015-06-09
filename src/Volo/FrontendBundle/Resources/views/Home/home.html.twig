@@ -148,31 +148,6 @@
         </div>
     </div>
     <section class="home-section app">
-        <div class="app__fluid-container">
-            <div class="app__container">
-                <div class="app__phone-left">
-                    <img class="app__phone-left__img b-lazy" alt="" data-src="{{ asset('img/homepage/phone-left.png') }}" src="{{ blazy_placeholder }}">
-                </div>
-                <div class="app__message">
-                    <a href="#" class="app__message__logo">
-                        <img class="app__message__img b-lazy" alt="" data-src="{{ asset('img/homepage/apple-store.jpg') }}" src="{{ blazy_placeholder }}">
-                    </a>
-                    <div class="app__message__logo">
-                        {{ 'app.coming_soon'|trans }}
-                        <img class="app__message__img b-lazy" alt="" data-src="{{ asset('img/homepage/google-play-gray.jpg') }}" src="{{ blazy_placeholder }}">
-                    </div>
-                    <form class="app__message__form" action="" method="GET">
-                        <label class="app__message__label" >{{ 'form.label.send_download_link_to_mobile_phone'|trans }}</label>
-                        <div class="app__message__input-container">
-                            <input type="text" class="app__message__input" name="" autofocus="" placeholder="{{ 'form.placeholder.phone_number'|trans }}">
-                        </div>
-                        <button class="app__message__button button button--inline" type="submit">{{ 'button.send'|trans }}</button>
-                    </form>
-                </div>
-                <div class="app__phone-right">
-                    <img class="app__phone-right__img b-lazy" alt="" data-src="{{ asset('img/homepage/phone-right.png') }}" src="{{ blazy_placeholder }}">
-                </div>
-            </div>
-        </div>
+        {% include('VoloFrontendBundle:Home/Partial:app-section.html.twig') %}
     </section>
 {% endblock %}

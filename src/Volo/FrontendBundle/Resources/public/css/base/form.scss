@@ -35,6 +35,18 @@
   }
 }
 
+.button-secondary {
+  @extend .button;
+  border: $cta-secondary-border;
+  color: $cta-color-text-secondary;
+  background-color: $cta-color-bg-secondary;
+
+  &:hover, &:focus {
+    background-color: $cta-color-bg-secondary-hover;
+    color: $cta-color-text-primary;
+  }
+}
+
 a.button {
   line-height: $cta-height;
 }
