@@ -135,7 +135,7 @@ $input-color-bg: #fff;
 $input-border: 1px solid #c8c8c8;
 // Focus state
 $input-color-text-active: #292929;
-$input-border-active: 1px solid #d70f64;
+$input-border-active: 1px solid #292929;
 // Error state
 $input-color-text-error: #f0502d;
 $input-color-bg-error: #ffefef;
@@ -143,6 +143,7 @@ $input-border-error: 1px solid #f0502d;
 // Error contextual message
 $error-msg-font-family: 'Avenir Book', Arial, sans-serif;
 $error-msg-font-size: 0.750em;
+$error-msg-line-height: 1.45em;
 $error-msg-color-bg: #f0502d;
 $error-msg-color-text: #fff;
 $error-msg-height: 20px;

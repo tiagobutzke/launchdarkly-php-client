@@ -202,5 +202,7 @@ input, .form-control, select {
   color: $error-msg-color-text;
   background-color: $error-msg-color-bg;
   font-size: $error-msg-font-size;
-  padding: 0 $input-padding-left;
+  line-height: $error-msg-line-height;
+  padding: $space-xs $input-padding-left;
+  margin-top: -1px;
 }
