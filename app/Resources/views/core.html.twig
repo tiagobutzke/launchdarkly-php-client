@@ -8,24 +8,24 @@
         <link rel="apple-touch-icon" href="{{ asset('img/favicon/favicon_114x114.png') }}" sizes="114x114">
         <link rel="icon" type="image/png" href="{{ asset('img/favicon/favicon_16x16.png') }}" sizes="16x16">
         <link rel="icon" type="image/png" href="{{ asset('img/favicon/favicon_32x32.png') }}" sizes="32x32">
-        {{ block('head_stylesheets') }}
-        {{ block('head_scripts') }}
+        {% block head_stylesheets %}{% endblock %}
+        {% block head_scripts %}{% endblock %}
     </head>
-    <body class="{% block bodyClass %}{% endblock %}">
-        {{ block('modals') }}
+    <body class="{% block body_class %}{% endblock %}">
+        {% block modals %}{% endblock %}
         <div class="page-wrapper {% block page_wrapper_class %}{% endblock page_wrapper_class %}">
             <div class="content-wrapper {% block content_wrapper_class %}{% endblock content_wrapper_class %}">
-            {{ block('header') }}
-            {{ block('breadcrumbs') }}
-            {{ block('flash_messages') }}
+                {% block header %}{% endblock %}
+                {% block breadcrumbs %}{% endblock %}
+                {% block flash_messages %}{% endblock %}
             <main>
-                {{ block('content') }}
+                {% block content %}{% endblock %}
             </main>
             </div>
             <footer class="footer {% block footer_size_class %}footer-full{% endblock footer_size_class %}">
-                {{ block('footer') }}
+                {% block footer %}{% endblock %}
             </footer>
         </div>
-        {{ block('footer_scripts') }}
+        {% block footer_scripts %}{% endblock %}
     </body>
 </html>
