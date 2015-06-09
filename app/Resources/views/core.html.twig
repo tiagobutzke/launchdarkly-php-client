@@ -13,8 +13,8 @@
     </head>
     <body class="{% block body_class %}{% endblock %}">
         {% block modals %}{% endblock %}
-        <div class="page-wrapper {% block page_wrapper_class %}{% endblock page_wrapper_class %}">
-            <div class="content-wrapper {% block content_wrapper_class %}{% endblock content_wrapper_class %}">
+        <div class="page-wrapper {% block page_wrapper_class %}{% endblock %}">
+            <div class="content-wrapper {% block content_wrapper_class %}{% endblock %}">
                 {% block header %}{% endblock %}
                 {% block breadcrumbs %}{% endblock %}
                 {% block flash_messages %}{% endblock %}
@@ -22,7 +22,7 @@
                 {% block content %}{% endblock %}
             </main>
             </div>
-            <footer class="footer {% block footer_size_class %}footer-full{% endblock footer_size_class %}">
+            <footer class="footer {% block footer_size_class %}footer-full{% endblock %}">
                 {% block footer %}{% endblock %}
             </footer>
         </div>
