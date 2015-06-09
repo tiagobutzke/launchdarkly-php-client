@@ -32,6 +32,11 @@ class SecurityControllerTestCase extends VoloTestCase
     {
         $client = static::createClient();
 
+        $client->request('GET', '/login', [], [], ['HTTP_X-Requested-With' => 'XMLHttpRequest']);
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+
         $client->request('POST', '/login_check', [
             '_username' => 'john.doe@rocket-internet.de',
             '_password' => 'bad',
