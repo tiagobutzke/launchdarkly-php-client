@@ -1,5 +1,5 @@
 {% block content %}
-    <form class="registration-form" action="{{ path('customer.create') }}" method="post" role="form">
+    <form class="registration-form" action="{{ path('customer.create') }}" method="post" role="form" novalidate>
         <h4 class="modal__h4 text-center">{% trans %}Register{% endtrans %}</h4>
         <div class="modal__padding-left-right">
 
@@ -19,6 +19,8 @@
                        value="{{ customer.first_name|default('') }}"
                        required="true"
                        placeholder="{% trans %}First name{% endtrans %}"
+                       data-toggle="tooltip"
+                       title="{% trans %}validations.error.register.first_name{% endtrans %}"
                 />
             </div>
             <div class="form-group">
@@ -29,6 +31,8 @@
                        value="{{ customer.last_name|default('') }}"
                        required="true"
                        placeholder="{% trans %}Last name{% endtrans %}"
+                       data-toggle="tooltip"
+                       title="{% trans %}validations.error.register.last_name{% endtrans %}"
                 />
             </div>
             <div class="form-group">
@@ -39,6 +43,8 @@
                        value="{{ customer.email|default('') }}"
                        required="true"
                        placeholder="{% trans %}Email{% endtrans %}"
+                       data-toggle="tooltip"
+                       title="{% trans %}validations.error.register.email{% endtrans %}"
                 />
             </div>
             <div class="form-group">
@@ -49,6 +55,8 @@
                        value="{{ customer.mobile_number|default('') }}"
                        required="true"
                        placeholder="{% trans %}Mobile Number{% endtrans %}"
+                       data-toggle="tooltip"
+                       title="{% trans %}validations.error.register.mobile_number{% endtrans %}"
                 />
             </div>
             <div class="form-group">
@@ -58,15 +66,20 @@
                        class="form-control"
                        required="true"
                        placeholder="{% trans %}Password{% endtrans %}"
+                       data-toggle="tooltip"
+                       title="{% trans %}validations.error.register.password{% endtrans %}"
                 />
             </div>
             <!-- TODO: JS validate that password is equivalent to repeat_password -->
             <div class="form-group">
                 <input type="password"
+                       name="customer[confirm_password]"
                        id="repeat_password"
                        class="form-control"
                        required="true"
                        placeholder="{% trans %}Retype password{% endtrans %}"
+                       data-toggle="tooltip"
+                       title="{% trans %}validations.error.register.confirm_password{% endtrans %}"
                 />
             </div>
             <button type="submit" class="button button--full-width">{% trans %}Register{% endtrans %}</button>

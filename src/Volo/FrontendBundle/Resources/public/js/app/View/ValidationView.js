@@ -26,11 +26,8 @@ var ValidationView = Backbone.View.extend({
         var target = e.target,
             $target = $(target),
             value = target.value || '',
-            obj = {},
-            invalidObj;
-
-        obj[target.name] = target.value;
-        invalidObj = validate(obj, this.constraints);
+            formValues = validate.collectFormValues(this.el),
+            invalidObj = validate(formValues, this.constraints);
 
         if (invalidObj && invalidObj[target.name] && value !== '') {
             this._displayMessage(target);
