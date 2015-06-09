@@ -79,7 +79,7 @@ var MenuView = Backbone.View.extend({
 
 var MenuItemView = Backbone.View.extend({
     events: {
-        'click .menu__item__add': 'addProduct'
+        'click': 'addProduct'
     },
 
     initialize : function (options) {
