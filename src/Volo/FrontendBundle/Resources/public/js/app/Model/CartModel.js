@@ -142,9 +142,11 @@ var VendorCartModel = Backbone.Model.extend({
             this._xhr = null;
             this.timeoutReference = null;
         }.bind(this)).error(function(jqXHR) {
-            this.trigger('cart:error', jqXHR.responseJSON);
-            console.log('cart:error fired');
-            this.trigger('cart:ready');
+            if (jqXHR.statusText !== 'abort') {
+                this.trigger('cart:error', jqXHR.responseJSON);
+                console.log('cart:error fired');
+                this.trigger('cart:ready');
+            }
         }.bind(this));
     },
 

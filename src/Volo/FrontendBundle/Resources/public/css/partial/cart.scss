@@ -231,5 +231,11 @@
   overflow: auto;
 }
 .desktop-cart__footer {
+  position: relative;
   overflow: auto;
+  opacity: 1;
+
+  &.disabled {
+    opacity: 0.5;
+  }
 }

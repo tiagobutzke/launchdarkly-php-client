@@ -142,6 +142,8 @@ var CartView = Backbone.View.extend({
         this.cartBottomMargin = VOLO.configuration.cartBottomMargin;
         this.itemsOverflowingClassName = VOLO.configuration.itemsOverflowingClassName;
         this.fixedCartElementsHeight = null;
+        this._spinner = new Spinner();
+
         this.initListener();
 
         // initializing cart sticking behaviour
@@ -164,7 +166,8 @@ var CartView = Backbone.View.extend({
 
     events: {
         'scroll .checkout__summary' : '_updateCartHeight',
-        'click .btn-below-minimum-amount': '_showBelowMinimumAmountMsg'
+        'click .btn-below-minimum-amount': '_showBelowMinimumAmountMsg',
+        'click .btn-checkout': '_handleCartSubmit'
     },
 
     unbind: function() {
@@ -217,11 +220,19 @@ var CartView = Backbone.View.extend({
     },
 
     disableCart: function() {
-        this.$el.css({ opacity: 0.5 });
+        this.$('.desktop-cart__footer').toggleClass('disabled', true);
+        this.$('.btn-checkout').toggleClass('disabled', true);
+        this._spinner.spin(this.$('.desktop-cart__footer')[0]);
     },
 
     enableCart: function() {
-        this.$el.css({ opacity: 1 });
+        this.$('.desktop-cart__footer').toggleClass('disabled', false);
+        this.$('.btn-checkout').toggleClass('disabled', false);
+        this._spinner.stop();
+    },
+
+    _handleCartSubmit: function() {
+        return !this.$('.btn-checkout').hasClass('disabled');
     },
 
     render: function() {
