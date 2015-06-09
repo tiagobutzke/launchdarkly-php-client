@@ -21,6 +21,12 @@
             <textarea cols="30" rows="10" class="form-control" id="delivery_instructions" name="customer_address[delivery_instructions]"
                       value="{{ customer_address.delivery_instructions|default('') }}" placeholder="{% trans %}form.placeholder.delivery_instructions{% endtrans %}"></textarea>
         </div>
+        <input id="address_line2" name="customer_address[address_line2]" type="hidden"
+               value="{{ customer_address.address_line2|default('') }}" />
+        <input id="address_latitude" name="customer_address[latitude]" type="hidden"
+               value="{{ customer_address.latitude|default('') }}" />
+        <input id="address_longitude" name="customer_address[longitude]" type="hidden"
+               value="{{ customer_address.longitude|default('') }}" />
         <input type="hidden" name="customer_address[city_id]" value="{{ vendor.city.id }}">
         <button id="delivery_information_form_button" class="button">{% trans %}button.continue{% endtrans %}</button>
     </div>

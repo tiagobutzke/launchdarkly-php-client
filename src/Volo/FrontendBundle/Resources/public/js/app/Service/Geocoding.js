@@ -2,15 +2,16 @@ var GeocodingService = function(locale) {
     this.autocomplete = null;
     this._listeners = [];
     this.locale = locale;
+    this.defaultTypes = ['(regions)'];
 };
 
 _.extend(GeocodingService.prototype, Backbone.Events, {
-    init: function ($input) {
+    init: function ($input, config) {
         _.bindAll(this);
         this.autocomplete = new google.maps.places.Autocomplete(
             $input[0],
             {
-                types: ['(regions)'],
+                types: config || this.defaultTypes,
                 componentRestrictions: {
                     country: this.locale
                 }
@@ -75,7 +76,7 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
             place = autocomplete.getPlace();
 
         if (!place || !place.place_id) {
-            this._selectFirstResult($input).done(deferred.resolve).fail(deferred.reject);
+            this._selectFirstResult().done(deferred.resolve).fail(deferred.reject);
         } else {
             deferred.resolve(place);
         }
@@ -83,7 +84,7 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
         return deferred;
     },
 
-    _selectFirstResult: function ($input) {
+    _selectFirstResult: function () {
         var deferred = $.Deferred(),
             firstResult = $(".pac-container .pac-item:first").text();
 
@@ -128,6 +129,8 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
                 value: this._findPostalCodeInAddressComponents(place.address_components),
                 isReversed: false
             },
+            street: this._findStreetNameInAddressComponents(place.address_components),
+            building: this._findBuildingNumberInAddressComponents(place.address_components),
             lat: place.geometry.location.A,
             lng: place.geometry.location.F
         };
@@ -173,5 +176,27 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
 
     _findLocalityInAddressComponents: function (addressComponents) {
         return _.pluck(_.where(addressComponents, {'types': ['locality']}), 'long_name')[0];
+    },
+
+    _findStreetNameInAddressComponents: function (addressComponents) {
+        return _.chain(addressComponents)
+            .where({'types': ['route']})
+            .pluck('long_name')
+            .first()
+            .thru(function(first) {
+                return first || '';
+            })
+            .value();
+    },
+
+    _findBuildingNumberInAddressComponents: function (addressComponents) {
+        return _.chain(addressComponents)
+            .where({'types': ['street_number']})
+            .pluck('long_name')
+            .first()
+            .thru(function(first) {
+                return first || '';
+            })
+            .value();
     }
 });
