@@ -112,10 +112,11 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
         var meta = this._getLocationMetaFromGeocode(place),
             deferred = $.Deferred();
 
-        if (!this._hasPostalCode(meta)) {
-            this._enhanceLocationWithGeocode(meta).done(deferred.resolve);
-        } else {
+        if (this._hasPostalCode(meta)) {
+            meta.postcodeGuessed = false;
             deferred.resolve(meta);
+        } else {
+            this._enhanceLocationWithGeocode(meta).done(deferred.resolve);
         }
 
         return deferred;
@@ -152,6 +153,7 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
                     meta.postalCode.isReversed = true;
                 }
 
+                meta.postcodeGuessed = true;
                 deferred.resolve(meta);
             }
         );
