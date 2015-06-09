@@ -54,15 +54,15 @@
     <div class="topping__comment__help-text">
         <% if (quantity_minimum === 0 ) { %>
             <% if (quantity_maximum > 1 ) { %>
-                {{ 'topping.select_up_to'|trans }} <%- quantity_maximum %> ({{ 'topping.optional'|trans }})
+                {% trans with {'%quantity%': '<%- quantity_maximum %>'} %}topping.select_up_to %quantity%{% endtrans %}
             <% } else { %>
-                {{ 'topping.optional'|trans|capitalize }}
+                {% trans %}topping.select_optional{% endtrans %}
             <% } %>
         <% } else { %>
             <% if (quantity_maximum === 1 ) { %>
-                {{ 'topping.select'|trans|capitalize }} 1
+                {% trans %}topping.select_one{% endtrans %}
             <% } else { %>
-                {{ 'topping.select_up_to'|trans }} <%- quantity_maximum %>
+                {% trans with {'%quantity%': '<%- quantity_maximum %>'} %}topping.select_up_to %quantity%{% endtrans %}
             <% } %>
         <% } %>
     </div>

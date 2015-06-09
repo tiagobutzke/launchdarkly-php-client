@@ -18,7 +18,7 @@
                        class="form-control"
                        value="{{ customer.first_name|default('') }}"
                        required="true"
-                       placeholder="{% trans %}First name{% endtrans %}"
+                       placeholder="{% trans %}form.placeholder.firstname{% endtrans %}"
                        data-toggle="tooltip"
                        title="{% trans %}validations.error.register.first_name{% endtrans %}"
                 />
@@ -30,7 +30,7 @@
                        class="form-control"
                        value="{{ customer.last_name|default('') }}"
                        required="true"
-                       placeholder="{% trans %}Last name{% endtrans %}"
+                       placeholder="{% trans %}form.placeholder.lastname{% endtrans %}"
                        data-toggle="tooltip"
                        title="{% trans %}validations.error.register.last_name{% endtrans %}"
                 />
@@ -42,7 +42,7 @@
                        class="form-control"
                        value="{{ customer.email|default('') }}"
                        required="true"
-                       placeholder="{% trans %}Email{% endtrans %}"
+                       placeholder="{% trans %}form.placeholder.email{% endtrans %}"
                        data-toggle="tooltip"
                        title="{% trans %}validations.error.register.email{% endtrans %}"
                 />
@@ -54,7 +54,7 @@
                        class="form-control"
                        value="{{ customer.mobile_number|default('') }}"
                        required="true"
-                       placeholder="{% trans %}Mobile Number{% endtrans %}"
+                       placeholder="{% trans %}form.placeholder.mobile_number{% endtrans %}"
                        data-toggle="tooltip"
                        title="{% trans %}validations.error.register.mobile_number{% endtrans %}"
                 />
@@ -65,7 +65,7 @@
                        name="customer[password]"
                        class="form-control"
                        required="true"
-                       placeholder="{% trans %}Password{% endtrans %}"
+                       placeholder="{% trans %}form.placeholder.password{% endtrans %}"
                        data-toggle="tooltip"
                        title="{% trans %}validations.error.register.password{% endtrans %}"
                 />
@@ -82,8 +82,8 @@
                        title="{% trans %}validations.error.register.confirm_password{% endtrans %}"
                 />
             </div>
-            <button type="submit" class="button button--full-width">{% trans %}Register{% endtrans %}</button>
+            <button type="submit" class="button button--full-width">{% trans %}button.register{% endtrans %}</button>
         </div>
     </form>
-    <div class="text-center login-registration-link">{% trans %}You have an account?{% endtrans %} <a class="login-link">{% trans %}Login here{% endtrans %}</a></div>
+    <div class="text-center login-registration-link">{% trans %}link.have_account{% endtrans %} <a class="login-link">{% trans %}link.login{% endtrans %}</a></div>
 {% endblock %}

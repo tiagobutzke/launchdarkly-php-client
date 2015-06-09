@@ -3,12 +3,10 @@
 {% block body_class %}restaurant-list{% endblock %}
 {% block content %}
     <div class="hero-banner-wrapper">
-        <h1>{{ 'address.promo'|trans({'%city%': formattedLocation['city']})|nl2br }}</h1>
+        <h1>{{ 'address.promo %city%'|trans({'%city%': formattedLocation['city']})|nl2br }}</h1>
         {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image.html.twig' with {vendorCode : 'list', type: 'hero'} %}
     </div>
     <div class="wrapper-fluid">
-        <h2 class="hide">Available now</h2>
-
         <div class="restaurants">
             <div class="restaurants__tool-box">
                 <div class="restaurants__location">
@@ -27,11 +25,11 @@
                     <div class="restaurants__location__title">
                         <span>
                             {% if gpsSearch %}
-                                {{ 'address.delivery_by_gps'|trans({
+                                {{ 'address.delivery_by_gps %address%'|trans({
                                     '%address%': formattedLocation['address']
                                 }) }}
                             {% else %}
-                                {{ 'address.delivery_by_city'|trans({
+                                {{ 'address.delivery_by_city %city%'|trans({
                                     '%city%': formattedLocation['city']
                                 }) }}
                             {% endif %}

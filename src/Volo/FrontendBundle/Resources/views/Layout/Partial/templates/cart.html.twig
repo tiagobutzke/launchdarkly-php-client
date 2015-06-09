@@ -36,7 +36,7 @@
             <p class="desktop-cart_order__message">
                 {{ 'cart.order_message'|trans }}
             </p>
-            <h3 class="desktop-cart__title">{% trans with {'%name%': vendor.name} %}title.cart_order_summary{% endtrans %} <span>{{ vendor.name }}</span></h3>
+            <h3 class="desktop-cart__title">{% trans with {'%name%': vendor.name} %}title.cart_order_summary <span>%name%</span>{% endtrans %}</h3>
         </div>
         <!-- Actual Cart -->
         {#<h3 class="desktop-cart__title">{{ 'My Order'|trans }}</h3>#}
