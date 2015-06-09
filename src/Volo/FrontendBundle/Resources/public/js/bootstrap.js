@@ -4,18 +4,8 @@ $(document).ready(function () {
         breakpoints: volo_thumbor_transformations.breakpoints
     });
 
-    $(window).bind('scroll', function() {
-        var distanceY = window.pageYOffset || document.documentElement.scrollTop,
-            shrinkOn = 1,
-            header = $(".header");
-        if (distanceY > shrinkOn) {
-            header.addClass("header--white");
-        } else {
-            if (header.hasClass("header--white") && !header.hasClass("header-small")) {
-                header.removeClass("header--white");
-            }
-        }
-    });
+
+
 });
 
 VOLO.initCartModel = function (jsonCart) {

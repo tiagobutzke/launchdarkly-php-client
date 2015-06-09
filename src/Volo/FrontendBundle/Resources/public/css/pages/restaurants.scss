@@ -1,6 +1,11 @@
 /*
 * vendor-listing-page declarations
 */
+.restaurant-list {
+  .hero-banner-wrapper {
+    @include appear-from("screen-md");
+  }
+}
 
 .restaurants {
   @include make-row();

@@ -1,6 +1,6 @@
 {% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
 {% use 'VoloFrontendBundle:Location:Partial/vendor_description.html.twig' %}
-
+{% block body_class %}restaurant-list{% endblock %}
 {% block content %}
     <div class="hero-banner-wrapper">
         <h1>{{ 'address.promo'|trans({'%city%': formattedLocation['city']})|nl2br }}</h1>

@@ -1,3 +1,9 @@
+.checkout-page {
+  .header__account, .header__cart {
+    display: none;
+  }
+}
+
 .checkout-wrapper {
   padding-bottom: $top-cart-height / 2;
   @include respond-from("screen-md") {
