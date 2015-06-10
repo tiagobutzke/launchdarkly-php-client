@@ -2,17 +2,12 @@
 
 namespace Volo\FrontendBundle\Service;
 
-use Doctrine\Common\Cache\Cache;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Volo\FrontendBundle\Exception\Location\MissingKeysException;
 
 class CustomerLocationService
 {
-    /**
-     * @var Cache
-     */
-    protected $cache;
-
-    const SESSION_KEY_PREFIX = 'customer_locations:';
+    const SESSION_KEY_PREFIX = 'customer::locations';
 
     const KEY_LAT = 'latitude';
     const KEY_LNG = 'longitude';
@@ -21,33 +16,24 @@ class CustomerLocationService
     const KEY_ADDRESS = 'address';
 
     /**
-     * @param Cache $cache
-     */
-    public function __construct(Cache $cache)
-    {
-        $this->cache = $cache;
-    }
-
-    /**
-     * @param string $sessionId
+     * @param SessionInterface $session
      * @param array $location
      */
-    public function set($sessionId, array $location)
+    public function set(SessionInterface $session, array $location)
     {
         $this->validate($location);
-        $this->cache->save($this->createSessionKey($sessionId), $location);
+
+        $session->set(static::SESSION_KEY_PREFIX, $location);
     }
 
     /**
-     * @param string $sessionId
+     * @param SessionInterface $session
      *
      * @return array
      */
-    public function get($sessionId)
+    public function get(SessionInterface $session)
     {
-        $value = $this->cache->fetch($this->createSessionKey($sessionId));
-
-        return $value;
+        return $session->get(static::SESSION_KEY_PREFIX, $this->create(null, null, null, null, null));
     }
 
     /**
@@ -85,15 +71,5 @@ class CustomerLocationService
         if (count($missingKeys) > 0) {
             throw new MissingKeysException($missingKeys);
         }
-    }
-
-    /**
-     * @param string $sessionId
-     *
-     * @return string
-     */
-    protected function createSessionKey($sessionId)
-    {
-        return sprintf('%s:%s', static::SESSION_KEY_PREFIX, $sessionId);
     }
 }

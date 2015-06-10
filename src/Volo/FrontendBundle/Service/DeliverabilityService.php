@@ -3,6 +3,7 @@
 namespace Volo\FrontendBundle\Service;
 
 use Foodpanda\ApiSdk\Entity\Cart\GpsLocation;
+use Foodpanda\ApiSdk\Exception\ValidationEntityException;
 use Foodpanda\ApiSdk\Provider\VendorProvider;
 
 class DeliverabilityService
@@ -31,6 +32,10 @@ class DeliverabilityService
     {
         $location = new GpsLocation($latitude, $longitude);
 
-        return $this->vendorProvider->isDeliverable($vendorId, $location);
+        try {
+            return $this->vendorProvider->isDeliverable($vendorId, $location);
+        } catch(ValidationEntityException $e) {
+            return false;
+        }
     }
 }

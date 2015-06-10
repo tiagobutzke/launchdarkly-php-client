@@ -1,5 +1,6 @@
 var VendorGeocodingView = HomeSearchView.extend({
     initialize: function (options) {
+        _.bindAll(this);
         this.locationModel = options.locationModel;
 
         this.listenTo(this.model, 'invalid', this._alarmNoPostcode);
