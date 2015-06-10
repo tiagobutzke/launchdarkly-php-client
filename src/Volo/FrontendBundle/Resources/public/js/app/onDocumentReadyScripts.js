@@ -14,7 +14,6 @@ $(document).ready(function() {
         endAtViewPercentage: 0.07,
         targetTransitionLength: 85
     });
-    plateAnimation.init();
 
     deliveryTimeAnimation = new VOLO.NumberScroller({
         $window: $(window),
@@ -27,7 +26,6 @@ $(document).ready(function() {
             return $(".numbers__scroller").offset().top;
         }
     });
-    deliveryTimeAnimation.init();
 
     function initCityAnimations() {
         var cities = $('.city');
@@ -52,5 +50,11 @@ $(document).ready(function() {
             $(document).off('page:load page:restore', initCityAnimations);
         }
     }
-    $(document).on('page:load page:restore', initCityAnimations);
+
+    var md = new MobileDetect(window.navigator.userAgent);
+    if (!md.mobile()) {
+        plateAnimation.init();
+        deliveryTimeAnimation.init();
+        $(document).on('page:load page:restore', initCityAnimations);
+    }
 });
