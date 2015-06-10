@@ -179,7 +179,7 @@ var CartView = Backbone.View.extend({
     events: {
         'scroll .checkout__summary' : '_updateCartHeight',
         'click .btn-below-minimum-amount': '_showBelowMinimumAmountMsg',
-        'click .btn-checkout': '_handleCartSubmit'
+        'click .btn-checkout': '_handleCartSubmit',
         'click .mobile-close__cart' : '_hideMobileCart'
     },
 
