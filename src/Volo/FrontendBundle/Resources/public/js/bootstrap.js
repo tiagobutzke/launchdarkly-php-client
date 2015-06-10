@@ -1,11 +1,9 @@
 var VOLO = VOLO || {};
 $(document).ready(function () {
     window.blazy = new Blazy({
-        breakpoints: volo_thumbor_transformations.breakpoints
+        breakpoints: volo_thumbor_transformations.breakpoints,
+        offset: 400
     });
-
-
-
 });
 
 VOLO.initCartModel = function (jsonCart) {
