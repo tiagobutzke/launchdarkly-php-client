@@ -43,8 +43,11 @@ var HomeSearchView = Backbone.View.extend({
     },
 
     _notFound: function() {
-        console.log('not found');
-        this._showInputPopup(this.$('#postal_index_form_input').data('msg_error_not_found'));
+        var value = this.$('#postal_index_form_input').val() || '';
+        if (value !== '') {
+            console.log('not found');
+            this._showInputPopup(this.$('#postal_index_form_input').data('msg_error_not_found'));
+        }
     },
 
     _search: function(data) {
