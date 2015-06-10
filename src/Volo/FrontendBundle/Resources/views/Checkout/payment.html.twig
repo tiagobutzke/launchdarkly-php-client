@@ -157,11 +157,11 @@
                 VOLO.checkoutModel.set('credit_card_id', $("input:radio[name='credit_card']:checked").val());
                 VOLO.checkoutModel.set('adyen_encrypted_data', null);
             });
-
-            $('.checkout__item__card__help-toggle').click(function() {
-                $('.checkout__item__card__help').toggle();
-            });
         {% endif %}
+
+        $('.checkout__item__card__help-toggle').click(function() {
+            $('.checkout__item__card__help').toggle();
+        });
 
         $('#payment_form input').on('keyup', function () {
             var encryptedForm = adyen.encrypt.createEncryptedForm(
