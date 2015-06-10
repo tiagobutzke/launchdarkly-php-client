@@ -29,6 +29,12 @@ var VendorGeocodingView = HomeSearchView.extend({
         this._enableInputNode();
     },
 
+    _showFormattedAddress: function(address) {
+        this.$('.location__address').html(address);
+        this.$('.vendor__geocoding__tool-box__title').removeClass('hide');
+        this.$('.input__postcode').addClass('hide');
+    },
+
     _search: function (data) {
         console.log('_search ', this.cid, data);
 
