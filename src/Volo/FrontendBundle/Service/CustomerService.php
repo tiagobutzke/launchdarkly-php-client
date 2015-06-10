@@ -129,7 +129,7 @@ class CustomerService
     protected function validatePhoneNumber($mobileNumber)
     {
         $parsedNumber = $this->phoneService->parsePhoneNumber($mobileNumber);
-        $this->phoneService->validateMobilePhone($parsedNumber);
+        $this->phoneService->validateNumber($parsedNumber);
 
         return $parsedNumber;
     }

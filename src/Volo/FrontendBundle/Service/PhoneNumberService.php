@@ -32,31 +32,14 @@ class PhoneNumberService
 
     /**
      * @param PhoneNumber $parsedPhone
-     * @param int $phoneType
      *
      * @throws PhoneNumberValidationException
      */
-    protected function validateNumber(PhoneNumber $parsedPhone, $phoneType)
+    public function validateNumber(PhoneNumber $parsedPhone)
     {
-        $isValidPhoneNumber = $this->phoneNumberUtil->isValidNumberForRegion($parsedPhone, $this->twoLetterCountryCode);
-        $isValidNumberType = $phoneType === $this->phoneNumberUtil->getNumberType($parsedPhone);
-
-        if (!$isValidPhoneNumber || !$isValidNumberType) {
+        if (!$this->phoneNumberUtil->isValidNumber($parsedPhone)) {
             throw new PhoneNumberValidationException('Invalid Phone Number');
         }
-    }
-
-    /**
-     * @param PhoneNumber $phoneNumber
-     *
-     * @throws PhoneNumberValidationException
-     */
-    public function validateMobilePhone(PhoneNumber $phoneNumber)
-    {
-        $this->validateNumber(
-            $phoneNumber,
-            PhoneNumberType::MOBILE
-        );
     }
 
     /**
