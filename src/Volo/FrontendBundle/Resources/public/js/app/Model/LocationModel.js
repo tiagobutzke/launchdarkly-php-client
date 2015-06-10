@@ -2,7 +2,8 @@ var LocationModel = Backbone.Model.extend({
     defaults: {
         location_type: "polygon",
         latitude: null,
-        longitude: null
+        longitude: null,
+        formattedAddress: null
     },
 
     initialize: function (data, options) {

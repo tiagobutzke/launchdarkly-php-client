@@ -11,12 +11,16 @@ var VendorGeocodingView = HomeSearchView.extend({
     },
 
     performDeliverableCheck: function () {
-        if (this.locationModel.isValid() && !this.model.isValid()) {
-            console.log('locationModal has location, checking deliverability');
-            this.model.updateLocationIfDeliverable({
-                lat: this.locationModel.get('latitude'),
-                lng: this.locationModel.get('longitude')
-            });
+        if (this.locationModel.isValid()) {
+            if (!this.model.isValid()) {
+                console.log('locationModal has location, checking deliverability');
+                this.model.updateLocationIfDeliverable({
+                    lat: this.locationModel.get('latitude'),
+                    lng: this.locationModel.get('longitude')
+                });
+            } else {
+                this._showFormattedAddress(this.locationModel.get('formattedAddress'));
+            }
         }
     },
 
@@ -29,7 +33,7 @@ var VendorGeocodingView = HomeSearchView.extend({
         console.log('_search ', this.cid, data);
 
         if (!!data && data.postcode) {
-            this.locationModel.set({latitude: data.lat, longitude: data.lng});
+            this.locationModel.set({latitude: data.lat, longitude: data.lng, formattedAddress: data.formattedAddress});
 
             this._disableInputNode();
 
