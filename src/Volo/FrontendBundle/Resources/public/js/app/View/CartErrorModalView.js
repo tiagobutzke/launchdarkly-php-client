@@ -20,7 +20,6 @@ var CartErrorModalView = Backbone.View.extend({
     },
 
     unbind: function () {
-        this.$el.modal('destroy');
         this.stopListening();
         this.undelegateEvents();
     },
