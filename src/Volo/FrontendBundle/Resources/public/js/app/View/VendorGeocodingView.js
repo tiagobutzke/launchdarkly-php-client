@@ -33,7 +33,7 @@ var VendorGeocodingView = HomeSearchView.extend({
             this._disableInputNode();
 
             this.model.updateLocationIfDeliverable(data)
-                .done(function (response) {this._parseIsDeliverable(data, response)}.bind(this))
+                .done(function (response) {this._parseIsDeliverable(data, response);}.bind(this))
                 .fail(this.onSearchFail);
         } else {
             this._notFound();
