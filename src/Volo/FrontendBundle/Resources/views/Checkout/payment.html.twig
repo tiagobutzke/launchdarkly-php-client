@@ -20,17 +20,16 @@
             </div>
         {% endif %}
 
-        <h4 class="checkout__subtitle">{% trans %}title.delivery_address{% endtrans %}
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <span class="checkout__subtitle__edit">
-                <i class="icon-plus"></i>
-                <a id="add_new_address_link" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">
-                    {% trans %}link.add_new_address{% endtrans %}
-                </a>
-            </span>
-            {% endif %}
-        </h4>
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <h4 class="checkout__subtitle">{% trans %}title.delivery_address{% endtrans %}
+                <span class="checkout__subtitle__edit">
+                    <i class="icon-plus"></i>
+                    <a id="add_new_address_link" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">
+                        {% trans %}link.add_new_address{% endtrans %}
+                    </a>
+                </span>
+            </h4>
+
             <div class="checkout__item checkout__item--delivery-list">
                 <div id="delivery-information-list-wrapper">
                     <div class="selected-address"></div>
