@@ -18,9 +18,9 @@ var CartItemView = Backbone.View.extend({
     className: 'cart__item',
     events: {
         'click .summary__item__name': '_editItem',
-        'click .summary__item__price': '_editItem',
+        'click .summary__item__price-wrap': '_editItem',
         'click .summary__item__sign': '_editItem',
-        'click .summary__item__quantity': '_editItem',
+        'click .summary__item__quantity-wrap': '_editItem',
         'click .summary__item__remove': '_removeItem',
         'click .summary__item__minus': '_decreaseQuantity',
         'click .summary__item__plus': '_increaseQuantity'
@@ -37,6 +37,8 @@ var CartItemView = Backbone.View.extend({
     render: function() {
         this.$el.html(this.template(this.model.toJSON()));
         this._renderToppingViews(this.model.get('toppings'));
+        this._toggleMinusAvailabilty(this.model.get('quantity'));
+        this._toggleRemoveAvailabilty(this.model.get('quantity'));
 
         return this;
     },
@@ -78,11 +80,21 @@ var CartItemView = Backbone.View.extend({
     },
 
     _decreaseQuantity: function() {
-        this.cartModel.getCart(this.vendorId).increaseQuantity(this.model, -1);
+        if (this.model.get('quantity') > 1) {
+            this.cartModel.getCart(this.vendorId).increaseQuantity(this.model, -1);
+        }
     },
 
     _increaseQuantity: function() {
         this.cartModel.getCart(this.vendorId).increaseQuantity(this.model, 1);
+    },
+
+    _toggleMinusAvailabilty: function(quantity) {
+        this.$('.summary__item__minus').toggleClass('summary__item__icon__disabled', quantity < 2);
+    },
+
+    _toggleRemoveAvailabilty: function(quantity) {
+        this.$('.icon-cancel-circled').toggleClass('hide', quantity > 1);
     },
 
     _getAllToppingsWithSelection: function(cartToppings, menuToppings) {
@@ -141,7 +153,6 @@ var CartView = Backbone.View.extend({
         // margin of the menu height from the bottom edge of the window
         this.cartBottomMargin = VOLO.configuration.cartBottomMargin;
         this.itemsOverflowingClassName = VOLO.configuration.itemsOverflowingClassName;
-        this.fixedCartElementsHeight = null;
         this._spinner = new Spinner();
 
         this.initListener();
@@ -149,6 +160,7 @@ var CartView = Backbone.View.extend({
         // initializing cart sticking behaviour
         this.stickOnTopCart = new StickOnTop({
             $container: this.$el,
+            noStickyBreakPoint: 800,
             stickOnTopValueGetter: function() {
                 return this.domObjects.$header.outerHeight();
             }.bind(this),
@@ -167,7 +179,13 @@ var CartView = Backbone.View.extend({
     events: {
         'scroll .checkout__summary' : '_updateCartHeight',
         'click .btn-below-minimum-amount': '_showBelowMinimumAmountMsg',
-        'click .btn-checkout': '_handleCartSubmit'
+        'click .btn-checkout': '_handleCartSubmit',
+        'click .mobile-close__cart' : '_hideMobileCart'
+    },
+
+
+    _hideMobileCart: function() {
+        this.$el.addClass('mobile-cart__hidden');
     },
 
     unbind: function() {
@@ -206,7 +224,21 @@ var CartView = Backbone.View.extend({
         this.listenTo(vendorCart, 'update', this.render, this);
 
         // initializing cart height resize behaviour
+        this.$window.off('resize', this._updateCartHeight).off('scroll', this._updateCartHeight);
         this.$window.on('resize', this._updateCartHeight).on('scroll', this._updateCartHeight);
+
+        this._initializeMobileCartIcon();
+    },
+
+    _initializeMobileCartIcon: function() {
+        //listening on cart icon in header
+        var $header = this.domObjects.$header,
+            $el = this.$el;
+        if ($header) {
+            $header.find('.header__cart').click(function() {
+                $el.removeClass('mobile-cart__hidden');
+            }.bind(this));
+        }
     },
 
     _updateCartIcon: function() {
@@ -242,12 +274,11 @@ var CartView = Backbone.View.extend({
         this.renderProducts();
         this.renderTimePicker();
 
-        this._calculateFixedCartElementsHeight();
-        // recalculating cart scrolling position
-        this.stickOnTopCart.init(this.$('.desktop-cart-container'));
-        this._updateCartHeight();
         this._toggleContainerVisibility();
         this._updateCartIcon();
+        // recalculating cart scrolling position, should be done as last thing
+        this.stickOnTopCart.init(this.$('.desktop-cart-container'));
+        this._updateCartHeight();
 
         if (_.isObject(this.vendorGeocodingSubView)) {
             this.vendorGeocodingSubView.unbind();
@@ -294,26 +325,22 @@ var CartView = Backbone.View.extend({
 
         // recalculating cart scrolling position
         this.stickOnTopCart.updateCoordinates();
-        this._calculateFixedCartElementsHeight();
         this._updateCartHeight();
     },
 
-    _calculateFixedCartElementsHeight: function () {
-        this.fixedCartElementsHeight = this.$('.desktop-cart__header').outerHeight() + this.$('.desktop-cart__footer').outerHeight();
-    },
-
     _updateCartHeight: function () {
-        var $checkoutSummary = this.$('.checkout__summary');
+        var $checkoutSummary = this.$('.checkout__summary'),
+            fixedCartElementsHeight = this.$('.desktop-cart__header').outerHeight() + this.$('.desktop-cart__footer').outerHeight();
 
         // if cart is sticking then adjust the product list max height
         if (this.$el.hasClass(this.stickOnTopCart.stickingOnTopClass)) {
             $checkoutSummary.css({
-                'max-height': (this.$window.outerHeight() - this.domObjects.$header.outerHeight() - this.fixedCartElementsHeight - this.cartBottomMargin) + 'px'
+                'max-height': (this.$window.outerHeight() - this.domObjects.$header.outerHeight() - fixedCartElementsHeight - this.cartBottomMargin) + 'px'
             });
         // if not remove all adjusting
         } else {
             $checkoutSummary.css({
-                'max-height': (this.$window.outerHeight() - (this.$el.offset().top - this.$window.scrollTop()) - this.fixedCartElementsHeight - this.cartBottomMargin) + 'px'
+                'max-height': (this.$window.outerHeight() - (this.$el.offset().top - this.$window.scrollTop()) - fixedCartElementsHeight - this.cartBottomMargin) + 'px'
             });
         }
 

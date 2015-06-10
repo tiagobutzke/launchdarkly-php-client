@@ -1,24 +1,49 @@
 {# cart summary extra item #}
 <script type="text/template" id="template-cart-summary-extra-item">
-+ <%- name %>
+    + <%- name %>
 </script>
 
 {# cart item #}
 <script type="text/template" id="template-cart-item">
-    <td class="summary__item__quantity_buttons">
-        <span class="icon-minus summary__item__minus"></span>
-        <span class="icon-plus summary__item__plus"></span>
+    {# mobile #}
+    <tr class="summary__item__row_mobile">
+        <td class="summary__item__icon">
+            <i class="icon-minus summary__item__minus"></i>
+        </td>
+        <td class="summary__item__quantity">
+            <span class="summary__item__quantity-wrap"><%= VOLO.formatNumber(quantity) %></span>
+        </td>
+        <td class="summary__item__icon"><i class="icon-plus summary__item__plus"></i></td>
+        <td class="summary__item__name">
+            <%- name %>
+            <span class="summary__extra__items"></span>
+        </td>
+        <td class="summary__item__price">
+            <span class="summary__item__price-wrap"><%= VOLO.formatCurrency(total_price) %></span>
+            <i class="icon-cancel-circled icon-cancel"></i>
+        </td>
+    </tr>
+    {# desktop #}
+    <tr class="summary__item__row_desktop">
+    <td class="summary__item__quantity">
+        <span class="summary__item__quantity-wrap"><%= VOLO.formatNumber(quantity) %></span>
+        <div class="summary__item__quantity-icons">
+            <div class="icons_box">
+                <i class="icon-minus summary__item__minus"></i><i class="icon-plus summary__item__plus"></i>
+            </div>
+        </div>
     </td>
-    <td class="summary__item__quantity"><%= VOLO.formatNumber(quantity) %></td>
     <td class="summary__item__sign">x</td>
     <td class="summary__item__name">
         <%- name %>
         <span class="summary__extra__items"></span>
     </td>
     <td class="summary__item__price">
-        <span><%= VOLO.formatCurrency(total_price) %></span>
+        <span class="summary__item__price-wrap"><%= VOLO.formatCurrency(total_price) %></span>
+        <div class="summary__item__remove-icon"><i class="summary__item__remove icon-cancel"></i></div>
     </td>
-    <td class="summary__item__remove icon-cancel-circled"></td>
+    </tr>
+
 </script>
 {# cart #}
 <script type="text/template" id="template-cart">
@@ -30,7 +55,14 @@
             </div>
         </div>
         <div class="desktop-cart__header">
-            <h3 class="desktop-cart__title">{{ 'title.delivery_time'|trans }}</h3>
+            <div class="desktop-cart__hero">
+                {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {type: 'hero', 'vendorCode' : vendor.code, 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
+                <div class="desktop-cart__hero__title">
+                    {{ 'Your cart'|trans }}
+                    <a class="mobile-close__cart"><i class="icon-cancel"></i></a>
+                </div>
+                </div>
+            <h3 class="desktop-cart__title cart__title--time">{{ 'Delivery Time'|trans }}</h3>
             {% include('VoloFrontendBundle:Layout/Partial/templates:timepicker.html.twig') %}
 
             <p class="desktop-cart_order__message">
@@ -51,6 +83,9 @@
             </div>
         </div>
         <div class="desktop-cart__footer">
+            <p class="desktop-cart__footer__message">
+                {{ 'cart.voucher_message'|trans }}
+            </p>
             <div class="desktop-cart__order__subtotal__container"></div>
             <% if (total_value > minimum_order_amount) { %>
                 <a class="button btn-checkout" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">
@@ -62,7 +97,7 @@
             <% }; %>
         </div>
     </div>
- </script>
+</script>
 
 <script type="text/template" id="template-cart-subtotal">
     <div class="desktop-cart__order__subtotal">
@@ -74,4 +109,4 @@
     <div class="desktop-cart__order__total">
         {{ 'cart.total'|trans }} <span class="desktop-cart__order__total__price"><%= VOLO.formatCurrency(total_value) %></span>
     </div>
- </script>
+</script>
