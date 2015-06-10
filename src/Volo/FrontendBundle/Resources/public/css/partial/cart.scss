@@ -114,18 +114,27 @@
   width: 100%;
   height: 100%;
   position: fixed;
-  z-index: 9999;
+  z-index: 1049;
   top: 0;
   left: 0;
   background-color: $color-bg-primary;
   font-size: 0.875em;
   padding: 0 $space-xs;
+
+  &.mobile-cart__hidden {
+    display: none;
+  }
+
   @include respond-from("screen-md") {
     position: static;
     padding: 0;
     padding-left: $grid-gutter-width;
     background-color: transparent;
     height: auto;
+
+    &.mobile-cart__hidden {
+      display: block;
+    }
   }
 
   .cart__item {

@@ -18,9 +18,9 @@ var CartItemView = Backbone.View.extend({
     className: 'cart__item',
     events: {
         'click .summary__item__name': '_editItem',
-        'click .summary__item__price': '_editItem',
+        'click .summary__item__price-wrap': '_editItem',
         'click .summary__item__sign': '_editItem',
-        'click .summary__item__quantity': '_editItem',
+        'click .summary__item__quantity-wrap': '_editItem',
         'click .summary__item__remove': '_removeItem',
         'click .summary__item__minus': '_decreaseQuantity',
         'click .summary__item__plus': '_increaseQuantity'
@@ -37,6 +37,8 @@ var CartItemView = Backbone.View.extend({
     render: function() {
         this.$el.html(this.template(this.model.toJSON()));
         this._renderToppingViews(this.model.get('toppings'));
+        this._toggleMinusAvailabilty(this.model.get('quantity'));
+        this._toggleRemoveAvailabilty(this.model.get('quantity'));
 
         return this;
     },
@@ -78,11 +80,21 @@ var CartItemView = Backbone.View.extend({
     },
 
     _decreaseQuantity: function() {
-        this.cartModel.getCart(this.vendorId).increaseQuantity(this.model, -1);
+        if (this.model.get('quantity') > 1) {
+            this.cartModel.getCart(this.vendorId).increaseQuantity(this.model, -1);
+        }
     },
 
     _increaseQuantity: function() {
         this.cartModel.getCart(this.vendorId).increaseQuantity(this.model, 1);
+    },
+
+    _toggleMinusAvailabilty: function(quantity) {
+        this.$('.summary__item__minus').toggleClass('summary__item__icon__disabled', quantity < 2);
+    },
+
+    _toggleRemoveAvailabilty: function(quantity) {
+        this.$('.icon-cancel-circled').toggleClass('hide', quantity > 1);
     },
 
     _getAllToppingsWithSelection: function(cartToppings, menuToppings) {
@@ -168,6 +180,12 @@ var CartView = Backbone.View.extend({
         'scroll .checkout__summary' : '_updateCartHeight',
         'click .btn-below-minimum-amount': '_showBelowMinimumAmountMsg',
         'click .btn-checkout': '_handleCartSubmit'
+        'click .mobile-close__cart' : '_hideMobileCart'
+    },
+
+
+    _hideMobileCart: function() {
+        this.$el.addClass('mobile-cart__hidden');
     },
 
     unbind: function() {
@@ -207,6 +225,19 @@ var CartView = Backbone.View.extend({
 
         // initializing cart height resize behaviour
         this.$window.on('resize', this._updateCartHeight).on('scroll', this._updateCartHeight);
+
+        this._initializeMobileCartIcon();
+    },
+
+    _initializeMobileCartIcon: function() {
+        //listening on cart icon in header
+        var $header = this.domObjects.$header,
+            $el = this.$el;
+        if ($header) {
+            $header.find('.header__cart').click(function() {
+                $el.removeClass('mobile-cart__hidden');
+            }.bind(this));
+        }
     },
 
     _updateCartIcon: function() {

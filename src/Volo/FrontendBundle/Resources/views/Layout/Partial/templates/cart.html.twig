@@ -8,8 +8,7 @@
     {# mobile #}
     <tr class="summary__item__row_mobile">
         <td class="summary__item__icon">
-            {# please add class "summary__item__icon__disabled" to the icon when quantity reaches 0 #}
-            <i class="icon-minus summary__item__minus summary__item__icon__disabled"></i>
+            <i class="icon-minus summary__item__minus"></i>
         </td>
         <td class="summary__item__quantity">
             <span class="summary__item__quantity-wrap"><%= VOLO.formatNumber(quantity) %></span>
@@ -21,7 +20,6 @@
         </td>
         <td class="summary__item__price">
             <span class="summary__item__price-wrap"><%= VOLO.formatCurrency(total_price) %></span>
-            {# please remove class "hide" from the icon when quantity reaches 0 #}
             <i class="icon-cancel-circled icon-cancel"></i>
         </td>
     </tr>
@@ -61,7 +59,7 @@
                 {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {type: 'hero', 'vendorCode' : vendor.code, 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
                 <div class="desktop-cart__hero__title">
                     {{ 'Your cart'|trans }}
-                    <a href="#"><i class="icon-cancel"></i></a>
+                    <a class="mobile-close__cart"><i class="icon-cancel"></i></a>
                 </div>
                 </div>
             <h3 class="desktop-cart__title cart__title--time">{{ 'Delivery Time'|trans }}</h3>
