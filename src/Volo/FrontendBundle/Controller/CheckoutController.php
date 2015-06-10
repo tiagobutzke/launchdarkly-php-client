@@ -71,7 +71,12 @@ class CheckoutController extends Controller
             'cart'             => $cartManager->calculateCart($this->getCart($vendor)),
             'customer_address' => $defaultAddress + $address,
             'vendor'           => $vendor,
-            'location'         => $location,
+            'address'          => is_array($location) ? $location[CustomerLocationService::KEY_ADDRESS] : '',
+            'location'         => [
+                'type'      => 'polygon',
+                'latitude'  => $location[CustomerLocationService::KEY_LAT],
+                'longitude' => $location[CustomerLocationService::KEY_LNG]
+            ],
             'isDeliverable'    => is_array($location),
         ];
     }
@@ -137,7 +142,12 @@ class CheckoutController extends Controller
                 sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendorCode)
             ),
             'customer' => $this->get('session')->get(sprintf(static::SESSION_CONTACT_KEY_TEMPLATE, $vendorCode)),
-            'location'         => $location,
+            'address'          => is_array($location) ? $location[CustomerLocationService::KEY_ADDRESS] : '',
+            'location'         => [
+                'type'      => 'polygon',
+                'latitude'  => $location[CustomerLocationService::KEY_LAT],
+                'longitude' => $location[CustomerLocationService::KEY_LNG]
+            ],
             'isDeliverable'    => is_array($location),
         ];
     }
@@ -178,7 +188,13 @@ class CheckoutController extends Controller
             'cart'             => $this->get('volo_frontend.service.cart_manager')->calculateCart($cart),
             'vendor'           => $vendor,
             'adyen_public_key' => $configuration->getAdyenEncryptionPublicKey(),
-            'location'         => $location,
+            'address'          => is_array($location) ? $location[CustomerLocationService::KEY_ADDRESS] : '',
+            'location'         => [
+                'type'      => 'polygon',
+                'latitude'  => $location[CustomerLocationService::KEY_LAT],
+                'longitude' => $location[CustomerLocationService::KEY_LNG]
+            ],
+
             'isDeliverable'    => is_array($location),
         ];
 

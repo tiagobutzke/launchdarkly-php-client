@@ -12,6 +12,7 @@ VOLO.initCartModel = function (jsonCart) {
         parse: true
     });
 
+
     return VOLO.cartModel;
 };
 
@@ -21,7 +22,7 @@ VOLO.initCheckoutModel = function (cartModel) {
     return VOLO.checkoutModel;
 };
 
-VOLO.initCartViews = function (cartModel) {
+VOLO.initCartViews = function (cartModel, locationModel) {
     var $header = $('.header');
 
     if (_.isObject(VOLO.menu)) {
@@ -30,6 +31,7 @@ VOLO.initCartViews = function (cartModel) {
     VOLO.menu = new MenuView({
         el: '.menu__main',
         cartModel: cartModel,
+        locationModel: locationModel,
         $header: $header
     });
 
@@ -39,10 +41,10 @@ VOLO.initCartViews = function (cartModel) {
     VOLO.cartView = new CartView({
         el: '.desktop-cart',
         model: cartModel,
+        locationModel: VOLO.locationModel,
         $header: $header,
         $menuMain: $('.menu__main'),
-        $window: $(window),
-        $body: $('body')
+        $window: $(window)
     });
 };
 
@@ -137,6 +139,7 @@ VOLO.initHomeSearch = function() {
     }
     VOLO.homeSearchView = new HomeSearchView({
         el: '.teaser__form',
+        model: VOLO.locationModel,
         geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1])
     });
 };
@@ -153,6 +156,7 @@ VOLO.initLoginButtonView = function() {
 VOLO.initVendorsListSearch = function() {
     VOLO.vendorSearchView = new VendorsSearchView({
         el: '.restaurants__tool-box',
+        model: VOLO.locationModel,
         geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1])
     });
 };
@@ -172,10 +176,15 @@ $(document).on('page:load page:restore', function () {
         return;
     }
 
+    VOLO.locationModel = VOLO.locationModel || new LocationModel(VOLO.jsonLocation);
+    console.log('foo', VOLO.locationModel);
+
     if ($('.menu__main').length > 0) {
         VOLO.initCartModel(VOLO.jsonCart);
-        VOLO.initCartViews(VOLO.cartModel);
+        VOLO.initCartViews(VOLO.cartModel, VOLO.locationModel);
         VOLO.cartView.render();
+
+        VOLO.cartView.performDeliverableCheck();
     }
 
     if ($('.checkout__main').length > 0) {

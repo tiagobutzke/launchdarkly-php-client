@@ -125,6 +125,7 @@ var CartView = Backbone.View.extend({
 
         this.subViews = [];
         this.timePickerView = null;
+        this.locationModel = options.locationModel;
 
         this.template = _.template($('#template-cart').html());
         this.templateSubTotal = _.template($('#template-cart-subtotal').html());
@@ -135,7 +136,6 @@ var CartView = Backbone.View.extend({
         this.domObjects = {};
         this.domObjects.$header = options.$header;
         this.domObjects.$menuMain = options.$menuMain;
-        this.domObjects.$body = options.$body;
         this.$window = options.$window;
 
         // margin of the menu height from the bottom edge of the window
@@ -255,10 +255,15 @@ var CartView = Backbone.View.extend({
         this.vendorGeocodingSubView = new VendorGeocodingView({
             el: this.$('.vendor__geocoding__tool-box'),
             geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1]),
-            model: this.model.getCart(this.vendor_id)
+            model: this.model.getCart(this.vendor_id),
+            locationModel: this.locationModel
         });
 
         return this;
+    },
+
+    performDeliverableCheck: function () {
+        this.vendorGeocodingSubView.performDeliverableCheck();
     },
 
     renderSubTotal: function () {

@@ -1,17 +1,40 @@
 var VendorGeocodingView = HomeSearchView.extend({
     initialize: function (options) {
+        this.locationModel = options.locationModel;
+
         this.listenTo(this.model, 'invalid', this._alarmNoPostcode);
 
         HomeSearchView.prototype.initialize.apply(this, arguments);
+
+        console.log('VendorGeocodingView:init', this.locationModel);
+    },
+
+    performDeliverableCheck: function () {
+        if (this.locationModel.isValid() && !this.model.isValid()) {
+            console.log('locationModal has location, checking deliverability');
+            this.model.updateLocationIfDeliverable({
+                lat: this.locationModel.get('latitude'),
+                lng: this.locationModel.get('longitude')
+            });
+        }
+    },
+
+    onSearchFail: function () {
+        this._showInputPopup(_.template($('#template-vendor-is-deliverable-server-error').html()));
+        this._enableInputNode();
     },
 
     _search: function (data) {
-        console.log('_search ', this.cid);
-        if (_.isObject(data)) {
+        console.log('_search ', this.cid, data);
+
+        if (!!data && data.postcode) {
+            this.locationModel.set({latitude: data.lat, longitude: data.lng});
+
             this._disableInputNode();
-            this._requestIsDeliverable(data)
-                .done(_.curry(this._parseIsDeliverable)(data))
-                .fail(this._enableInputNode);
+
+            this.model.updateLocationIfDeliverable(data)
+                .done(function (response) {this._parseIsDeliverable(data, response)}.bind(this))
+                .fail(this.onSearchFail);
         } else {
             this._notFound();
         }
@@ -25,60 +48,19 @@ var VendorGeocodingView = HomeSearchView.extend({
         this.inputNode.css('opacity', '.4').attr('disabled', 'true');
     },
 
-    _updateGeocodingBox: function (data) {
-        this.$('.location__address').html(data.formattedAddress);
-        this.$('.vendor__geocoding__tool-box__title').removeClass('hide');
-        this.$('.input__postcode').addClass('hide');
-    },
-
-    _requestIsDeliverable: function (data) {
-        var deferred = $.get(
-            Routing.generate('vendor_delivery_validation_by_gps', {
-                vendorId: this.model.get('vendor_id'),
-                latitude: data.lat,
-                longitude: data.lng
-            })
-        );
-
-        deferred.fail(function (e) {
-            this._showInputPopup(_.template($('#template-vendor-is-deliverable-server-error').html()));
-        });
-
-        return deferred;
-    },
-
-    _saveLocation: function (location) {
-        $.ajax({
-            url: Routing.generate('volo_customer_set_location'),
-            data: {
-                city: location.city,
-                latitude: location.lat,
-                longitude: location.lng,
-                address: location.formattedAddress,
-                postcode: location.postcode,
-                _method: 'PUT'
-            },
-            method: 'PUT'
-        }).always(function () {
-            this._updateGeocodingBox(location);
-
-            this.model.set('location', {
-                location_type: "polygon",
-                latitude: location.lat,
-                longitude: location.lng
-            });
-        });
-    },
-
     _alarmNoPostcode: function (event) {
-        if (event.validationError === 'location_not_set') {
+        if (event.validationError === 'location_not_set' && !this.inputNode.hasClass('hide')) {
             this._showInputPopup(_.template($('#template-vendor-supply-postcode').html()));
         }
     },
 
     _parseIsDeliverable: function (data, response) {
         if (response.result) {
-            this._saveLocation(data);
+            this.$('.location__address').html(data.formattedAddress);
+            this.$('.vendor__geocoding__tool-box__title').removeClass('hide');
+            this.$('.input__postcode').addClass('hide');
+
+            this.locationModel.saveLocation(data);
         } else {
             var url = Routing.generate('volo_location_search_vendors_by_gps', {
                 city: data.city,
@@ -92,12 +74,5 @@ var VendorGeocodingView = HomeSearchView.extend({
             this._enableInputNode();
             this._showInputPopup(template({url: url}));
         }
-    },
-
-    _applyNewLocationData: function (locationMeta, $input) {
-        var data = this._getDataFromMeta(locationMeta);
-        $input.val(data.formattedAddress);
-
-        return data;
     }
 });
