@@ -36,8 +36,11 @@
                     <div class="selected-address"></div>
                     <div id="delivery-information-list" data-addresses='{{ customer_addresses|to_escaped_json }}'></div>
                     {% include('VoloFrontendBundle:Layout/Partial/templates:checkout_address.html.twig') %}
-                    <div class="checkout__item"><a id="select_other_address_link" href="#" class="checkout__more-feature-link">Select other</a></div>
-
+                    <div class="checkout__item">
+                        <a id="select_other_address_link" href="#" class="checkout__more-feature-link">
+                            {% trans %}link.select_other_address{% endtrans %}
+                        </a>
+                    </div>
                 </div>
 
                 <div id="add_new_address_form" class="hide">
@@ -114,7 +117,7 @@
         <div class="checkout__submit">
             <button id="finish-and-pay" class="button">{% trans %}button.finish_and_pay{% endtrans %}</button>
         </div>
-        <div class="checkout__disclaimer"> By completing this order, I accept the <a href="#1">Terms & Conditions</a> and our <a href="#1">Privacy Policy</a></div>
+        <div class="checkout__disclaimer">{% trans %}checkout.disclamer{% endtrans %}</div>
         <div class="clearfix"></div>
     </div>
 {% endblock %}
