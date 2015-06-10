@@ -37,7 +37,7 @@
                     <div id="delivery-information-list" data-addresses='{{ customer_addresses|to_escaped_json }}'></div>
                     {% include('VoloFrontendBundle:Layout/Partial/templates:checkout_address.html.twig') %}
                     <div class="checkout__item">
-                        <a id="select_other_address_link" href="#" class="checkout__more-feature-link">
+                        <a id="select_other_address_link" class="checkout__more-feature-link">
                             {% trans %}link.select_other_address{% endtrans %}
                         </a>
                     </div>
@@ -80,7 +80,7 @@
         {% if is_granted('IS_AUTHENTICATED_FULLY') and customer_cards is defined and customer_cards|length > 0 %}
             <span class="checkout__subtitle__edit">
                 <i class="icon-plus"></i>
-                <a id="add_new_credit_card_link" href="#">{% trans %}link.add_new_credit_card{% endtrans %}</a>
+                <a id="add_new_credit_card_link">{% trans %}link.add_new_credit_card{% endtrans %}</a>
             </span>
         {% endif %}
     </h3>
@@ -93,7 +93,7 @@
     </div>
     
     <div class="voucher-component" data-vendor_id="{{ vendor.id }}">
-       <div class="checkout__item"><a href="#" id="add_voucher_link" class="checkout__more-feature-link">{% trans %}link.have_voucher{% endtrans %}</a></div>
+       <div class="checkout__item"><a id="add_voucher_link" class="checkout__more-feature-link">{% trans %}link.have_voucher{% endtrans %}</a></div>
 
         <form action="#" id="voucher_form" role="form" class="hide">
             <div class="checkout__item">
@@ -107,7 +107,7 @@
         </form>
         <div id="voucher-wrapper" class="checkout__item hide">{% trans %}voucher{% endtrans %}
             <b id="voucher-text"></b>
-            <a href="#" id="remove_voucher_link">{% trans %}link.remove_voucher{% endtrans %}</a>
+            <a id="remove_voucher_link">{% trans %}link.remove_voucher{% endtrans %}</a>
         </div>
     </div>
 

@@ -16,7 +16,7 @@
                             </li>
                         </ul>
                     </div>
-                    <a href="#" class="header__account__login-icon"><i class="icon-profile"></i></a>
+                    <a class="header__account__login-icon"><i class="icon-profile"></i></a>
                 {% else %}
                     <a class="show-login-modal header__account__login-text">{% trans %}link.login{% endtrans %}</a>
                     <a class="show-login-modal header__account__login-icon"><i class="icon-profile"></i></a>
@@ -29,7 +29,7 @@
                 </a>
                 <span class="header__logo__restaurant-name"></span>
             </h1>
-            <a class="header__cart" href="#">
+            <a class="header__cart">
                 <i class="icon-cart"></i>
                 <span class="header__cart__products__count">{{ get_default_cart_count() }}</span>
             </a>
