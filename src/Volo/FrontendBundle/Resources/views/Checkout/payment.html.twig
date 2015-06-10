@@ -69,11 +69,11 @@
 
 {% block payment %}
     <h3 class="checkout__title">3. {% trans %}title.payment{% endtrans %}
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') and customer_cards is defined and customer_cards|length > 0 %}
             <span class="checkout__subtitle__edit">
-                        <i class="icon-plus"></i>
-                        <a id="add_new_credit_card_link" href="#">{% trans %}link.add_new_credit_card{% endtrans %}</a>
-                    </span>
+                <i class="icon-plus"></i>
+                <a id="add_new_credit_card_link" href="#">{% trans %}link.add_new_credit_card{% endtrans %}</a>
+            </span>
         {% endif %}
     </h3>
 
@@ -149,6 +149,10 @@
                 $('#payment_form').addClass('hide');
                 VOLO.checkoutModel.set('credit_card_id', $("input:radio[name='credit_card']:checked").val());
                 VOLO.checkoutModel.set('adyen_encrypted_data', null);
+            });
+
+            $('.checkout__item__card__help-toggle').click(function() {
+                $('.checkout__item__card__help').toggle();
             });
         {% endif %}
 
