@@ -62,10 +62,10 @@ var LoginRegistrationView = Backbone.View.extend({
 
     unbind: function() {
         if (this._loginValidationView) {
-            this._loginValidationView.remove();
+            this._loginValidationView.unbind();
         }
         if (this._registerValidationView) {
-            this._registerValidationView.remove();
+            this._registerValidationView.unbind();
         }
 
         this.stopListening();

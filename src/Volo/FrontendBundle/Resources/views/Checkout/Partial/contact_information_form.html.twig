@@ -1,19 +1,25 @@
-<form action="{{ action }}" id="contact_information_form" method="post" role="form">
+<form action="{{ action }}" id="contact_information_form" method="post" role="form" novalidate>
     <div class="checkout__item checkout__item--step">
         <div class="form-group form-group--two_col1--xs-full">
             <input type="text" class="form-control" id="first_name" name="customer[first_name]"
-                   value="{{ customer.first_name|default('') }}" required="true" placeholder="{% trans %}form.placeholder.first_name{% endtrans %}">
+                   value="{{ customer.first_name|default('') }}" required="true" placeholder="{% trans %}form.placeholder.first_name{% endtrans %}"
+                   title="{% trans %}validations.error.checkout.customer_first_name{% endtrans %}">
         </div>
         <div class="form-group form-group--two_col2--xs-full">
             <input type="text" class="form-control" id="last_name" name="customer[last_name]"
-                   value="{{ customer.last_name|default('') }}" required="true" placeholder="{% trans %}form.placeholder.last_name{% endtrans %}">
+                   value="{{ customer.last_name|default('') }}" required="true" placeholder="{% trans %}form.placeholder.last_name{% endtrans %}"
+                   title="{% trans %}validations.error.checkout.customer_last_name{% endtrans %}">
         </div>
         <div class="form-group">
             <input type="email" class="form-control" id="email" name="customer[email]" value="{{ customer.email|default('') }}"
-                   required="true" placeholder="{% trans %}form.placeholder.email{% endtrans %}">
+                   required="true" placeholder="{% trans %}form.placeholder.email{% endtrans %}"
+                   title="{% trans %}validations.error.checkout.customer_email{% endtrans %}">
         </div>
         <div class="form-group">
-            <input type="tel" class="form-control" id="mobile_number" name="customer[mobile_number]" value="{{ customer.mobile_country_code|default('') }}{{ customer.mobile_number|default('') }}" required="true" placeholder="{% trans %}form.placeholder.mobile_number{% endtrans %}">
+            <input type="tel" class="form-control" id="mobile_number" name="customer[mobile_number]"
+                   value="{{ customer.mobile_country_code|default('') }}{{ customer.mobile_number|default('') }}"
+                   required="true" placeholder="{% trans %}form.placeholder.mobile_number{% endtrans %}"
+                   title="{% trans %}validations.error.checkout.customer_mobile_number{% endtrans %}">
         </div>
         <button class="button">{% trans %}button.continue{% endtrans %}</button>
     </div>
