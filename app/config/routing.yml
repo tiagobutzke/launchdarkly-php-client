@@ -47,7 +47,7 @@ redirect_privacy:
     path: /privacy
     defaults:
         _controller: FrameworkBundle:Redirect:redirect
-        route: privacy
+        route: cms
         code: privacy.htm
         permanent: true
 

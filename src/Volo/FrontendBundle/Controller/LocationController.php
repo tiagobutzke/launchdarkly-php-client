@@ -4,6 +4,7 @@ namespace Volo\FrontendBundle\Controller;
 
 use Foodpanda\ApiSdk\Entity\Cart\AbstractLocation;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
+use Foodpanda\ApiSdk\Exception\EntityNotFoundException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -35,10 +36,11 @@ class LocationController extends Controller
      *
      * @param AbstractLocation $location
      * @param array $formattedLocation
+     * @param int $cityId
      *
      * @return array
      */
-    public function locationAction(AbstractLocation $location, array $formattedLocation)
+    public function locationAction(AbstractLocation $location, array $formattedLocation, $cityId)
     {
         $vendors = $this->get('volo_frontend.provider.vendor')->findVendorsByLocation($location);
 
@@ -49,6 +51,7 @@ class LocationController extends Controller
             'formattedLocation' => $formattedLocation,
             'openVendors' => $openVendors,
             'closedVendors' => $closedVendorsWithPreorder,
+            'cityId' => $cityId
         ];
     }
 
