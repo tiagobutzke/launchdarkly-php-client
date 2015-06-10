@@ -185,7 +185,7 @@ var VendorCartModel = Backbone.Model.extend({
         if (_.isUndefined(foundProduct)) {
             clone.quantity = quantity;
 
-            this.products.unshift(clone);
+            this.products.add(clone);
         }
 
         this.updateCart();
