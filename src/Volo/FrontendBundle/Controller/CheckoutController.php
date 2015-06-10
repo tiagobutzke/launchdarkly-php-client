@@ -61,11 +61,11 @@ class CheckoutController extends Controller
         $address = $request->getSession()->get($sessionDeliveryKey, []);
         $customerLocationService = $this->get('volo_frontend.service.customer_location');
         $defaultAddress = [
-            'postcode' => $customerLocationService->get($request->getSession()->getId())[CustomerLocationService::KEY_PLZ],
+            'postcode' => $customerLocationService->get($request->getSession())[CustomerLocationService::KEY_PLZ],
             'city' => $vendor->getCity()->getName()
         ];
         $cartManager = $this->get('volo_frontend.service.cart_manager');
-        $location = $this->get('volo_frontend.service.customer_location')->get($request->getSession()->getId());
+        $location = $this->get('volo_frontend.service.customer_location')->get($request->getSession());
 
         return [
             'cart'             => $cartManager->calculateCart($this->getCart($vendor)),
@@ -132,7 +132,7 @@ class CheckoutController extends Controller
         }
 
         $cart = $this->getCart($vendor);
-        $location = $this->get('volo_frontend.service.customer_location')->get($request->getSession()->getId());
+        $location = $this->get('volo_frontend.service.customer_location')->get($request->getSession());
 
         return [
             'errorMessages'    => $errorMessages,
@@ -182,7 +182,7 @@ class CheckoutController extends Controller
         }
 
         $configuration = $this->get('volo_frontend.service.configuration')->getConfiguration();
-        $location = $this->get('volo_frontend.service.customer_location')->get($request->getSession()->getId());
+        $location = $this->get('volo_frontend.service.customer_location')->get($request->getSession());
 
         $viewData = [
             'cart'             => $this->get('volo_frontend.service.cart_manager')->calculateCart($cart),
@@ -208,7 +208,7 @@ class CheckoutController extends Controller
 
             $customerLocationService = $this->get('volo_frontend.service.customer_location');
             $viewData['default_address'] = [
-                'postcode' => $customerLocationService->get($session->getId())[CustomerLocationService::KEY_PLZ],
+                'postcode' => $customerLocationService->get($session)[CustomerLocationService::KEY_PLZ],
                 'city' => $vendor->getCity()->getName()
             ];
             $viewData['customer_addresses'] = $serializer->normalize($addresses)['items'];

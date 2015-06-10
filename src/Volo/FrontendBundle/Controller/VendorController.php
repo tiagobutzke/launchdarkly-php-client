@@ -55,7 +55,7 @@ class VendorController extends Controller
             $vendor->getId()
         );
 
-        $location = $this->get('volo_frontend.service.customer_location')->get($request->getSession()->getId());
+        $location = $this->get('volo_frontend.service.customer_location')->get($request->getSession());
         $isDeliverable = is_array($location) ? $this->get('volo_frontend.service.deliverability')
             ->isDeliverableLocation(
                 $vendor->getId(),

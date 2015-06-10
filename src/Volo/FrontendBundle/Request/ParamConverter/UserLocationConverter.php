@@ -68,7 +68,7 @@ class UserLocationConverter implements ParamConverterInterface
             case $areaId:
                 $convertedParameter = new AreaLocation($areaId);
                 break;
-            case $lat && $lng:
+            case is_numeric($lat) && is_numeric($lng):
                 $convertedParameter = new GpsLocation($lat, $lng);
 
                 $gpsLocation = $this->customerLocationService->create(
@@ -79,7 +79,7 @@ class UserLocationConverter implements ParamConverterInterface
                     $request->get(CustomerLocationService::KEY_ADDRESS)
                 );
 
-                $this->customerLocationService->set($request->getSession()->getId(), $gpsLocation);
+                $this->customerLocationService->set($request->getSession(), $gpsLocation);
                 $formattedLocation = $this->createFormattedLocation(
                     $convertedParameter->getLocationType(),
                     $gpsLocation[CustomerLocationService::KEY_CITY],

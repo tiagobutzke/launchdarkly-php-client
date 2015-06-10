@@ -100,7 +100,7 @@ class CustomerController extends Controller
         );
 
         try {
-            $customerLocationService->set($request->getSession()->getId(), $gpsLocation);
+            $customerLocationService->set($request->getSession(), $gpsLocation);
         } catch (MissingKeysException $e) {
             throw new BadRequestHttpException($e->getMessage(), $e);
         }

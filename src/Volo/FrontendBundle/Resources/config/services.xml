@@ -139,9 +139,7 @@
             <argument type="service" id="volo_frontend.provider.vendor" />
         </service>
 
-        <service id="volo_frontend.service.customer_location" class="%volo_frontend.service.customer_location.class%">
-            <argument type="service" id="doctrine_cache.providers.configuration_cache" />
-        </service>
+        <service id="volo_frontend.service.customer_location" class="%volo_frontend.service.customer_location.class%" />
 
         <service id="volo_frontend.service.phone_number" class="%volo_frontend.service.phone_number.class%">
             <argument type="service" id="libphonenumber.phone_number_util" />
