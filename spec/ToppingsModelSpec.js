@@ -22,7 +22,7 @@ describe("topping model to json output", function() {
                 id: 1,
                 selected: false,
                 name: 'option 1',
-                buttonType: 'radioButton'
+                buttonType: 'checkBox'
             }],
             selectedOptions: []
         });
@@ -88,7 +88,7 @@ describe("topping model setOptionsVisibility", function() {
                 id: 1,
                 selected: false,
                 name: 'option 1',
-                buttonType: 'radioButton'
+                buttonType: 'checkBox'
             }],
             selectedOptions: []
         });
@@ -105,7 +105,7 @@ describe("topping model setOptionsVisibility", function() {
                 id: 1,
                 selected: false,
                 name: 'option 1',
-                buttonType: 'radioButton'
+                buttonType: 'checkBox'
             }],
             selectedOptions: []
         });
@@ -142,7 +142,7 @@ describe("topping model isCheckBoxList", function() {
             }]
         });
 
-        expect(toppingModel.isCheckBoxList()).toEqual(false);
+        expect(toppingModel.isCheckBoxList()).toEqual(true);
     });
 });
 

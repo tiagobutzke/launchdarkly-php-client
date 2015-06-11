@@ -166,8 +166,7 @@ var ToppingView = Backbone.View.extend({
 });
 
 var ToppingsProductQuantityView = Backbone.View.extend({
-    tagName: 'span',
-    className: 'topping-option',
+    className: 'toppings-product-quantity',
 
     events: {
         'click .product__quantity__decrease': '_decreaseQuantity',
@@ -218,6 +217,7 @@ var ToppingsView = Backbone.View.extend({
         this._initToppings();
         this._renderQuantitySelector();
         this._validate();
+        this.subViews[0].setOptionsVisibility(true);
 
         return this;
     },
