@@ -20,7 +20,7 @@
         </td>
         <td class="summary__item__price">
             <span class="summary__item__price-wrap"><%= VOLO.formatCurrency(total_price) %></span>
-            <i class="icon-cancel-circled icon-cancel"></i>
+            <i class="icon-cancel-circled icon-cancel summary__item__remove"></i>
         </td>
     </tr>
     {# desktop #}
@@ -92,7 +92,7 @@
                     {% trans %}cart.checkout_link{% endtrans %}
                 </a>
             <% } else { %>
-                <a class="button btn-below-minimum-amount button--disabled btn-checkout">{% trans with {'%min%': vendor.minimumOrderAmount|price} %}cart.cart_below_mininum_total_amount %min%{% endtrans %}</a>
+                <a class="button btn-below-minimum-amount button--disabled btn-checkout disabled">{% trans with {'%min%': vendor.minimumOrderAmount|price} %}cart.cart_below_mininum_total_amount %min%{% endtrans %}</a>
                 <span class="error-below-minimum-amount error_msg hide">{% trans %}cart.need_add_more_products_to_place_order{% endtrans %}</span>
             <% }; %>
         </div>
