@@ -71,9 +71,9 @@ var ValidationView = Backbone.View.extend({
         }
     },
 
-    remove: function() {
+    unbind: function() {
         _.invoke(this._errorMessages, 'remove');
 
-        Backbone.View.prototype.remove.apply(this, arguments);
+        this.undelegateEvents();
     }
 });

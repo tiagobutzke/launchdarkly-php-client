@@ -112,6 +112,27 @@ VOLO.initCheckoutViews = function (cartModel, checkoutModel, deliveryCheck) {
         });
     }
 
+    if ($('#contact_information_form').length > 0 ) {
+        VOLO.checkoutInformationValidationFormView = new ValidationView({
+            el: '#contact_information_form',
+            constraints: {
+                "customer[first_name]": {
+                    presence: true
+                },
+                "customer[last_name]": {
+                    presence: true
+                },
+                "customer[email]": {
+                    presence: true,
+                    email: true
+                },
+                "customer[mobile_number]": {
+                    presence: true
+                }
+            }
+        })
+    }
+
     if (_.isObject(VOLO.cartErrorModalView )) {
         VOLO.cartErrorModalView.unbind();
     }
@@ -275,6 +296,9 @@ $(document).on('page:before-unload', function () {
     }
     if (_.isObject(VOLO.cartErrorModalView )) {
         VOLO.cartErrorModalView.unbind();
+    }
+    if (_.isObject(VOLO.checkoutInformationValidationFormView)) {
+        VOLO.checkoutInformationValidationFormView.unbind();
     }
 });
 

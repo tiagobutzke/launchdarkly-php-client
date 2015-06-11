@@ -7,12 +7,28 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
         this.vendorId = this.$('#postal_index_form_input').data('vendor_id');
         this.geocodingService.init(this.$('#address_line1'), []);
         this.deliveryCheck = options.deliveryCheck;
+        this._jsValidationView = new ValidationView({
+            el: this.el,
+            constraints: {
+                "customer_address[address_line1]": {
+                    presence: true
+                },
+                "customer_address[postcode]": {
+                    presence: true
+                },
+                "customer_address[city]": {
+                    presence: true
+                }
+            }
+        });
+
         this.listenTo(this.geocodingService, 'autocomplete:submit_pressed', this._submitPressed);
         this.listenTo(this.geocodingService, 'autocomplete:place_changed', this._tabPressed);
         this.listenTo(this.geocodingService, 'autocomplete:tab_pressed', this._tabPressed);
     },
 
     unbind: function () {
+        this._jsValidationView.unbind();
         this.geocodingService.removeListeners(this.$('#postal_index_form_input'));
         this.stopListening();
         this.undelegateEvents();
