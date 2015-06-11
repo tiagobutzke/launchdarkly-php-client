@@ -6,11 +6,12 @@ use CommerceGuys\Guzzle\Oauth2\AccessToken;
 use Foodpanda\ApiSdk\Exception\OrderNotFoundException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @Route("/order")
+ * @Route("/orders")
  */
 class OrderController extends Controller
 {
@@ -19,13 +20,12 @@ class OrderController extends Controller
     /**
      * @Route("/{orderCode}/tracking", name="order_tracking", options={"expose"=true})
      * @Method({"GET"})
-     * @Template()
      *
+     * @param Request $request
      * @param string $orderCode
-     *
      * @return array
      */
-    public function statusAction($orderCode)
+    public function statusAction(Request $request, $orderCode)
     {
         $session = $this->get('session');
         $accessToken = $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')
@@ -39,9 +39,16 @@ class OrderController extends Controller
             throw $this->createNotFoundException('Order not found.', $e);
         }
 
-        return [
+        $viewName = 'VoloFrontendBundle:Order:status.html.twig';
+        if ($request->isXmlHttpRequest() && $request->query->get('partial')) {
+            $viewName = 'VoloFrontendBundle:Order:tracking_steps.html.twig';
+        }
+
+        $content = $this->renderView($viewName, [
             'order' => $order,
             'status' => $status,
-        ];
+        ]);
+
+        return new Response($content);
     }
 }

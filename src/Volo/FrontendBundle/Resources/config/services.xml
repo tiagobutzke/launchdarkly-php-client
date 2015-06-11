@@ -30,6 +30,7 @@
         <parameter key="volo_frontend.service.vendor.class">Volo\FrontendBundle\Service\VendorService</parameter>
         <parameter key="volo_frontend.twig.vendor_image_extension.class">Volo\FrontendBundle\Twig\ThumborImageExtension</parameter>
         <parameter key="volo_frontend.twig.volo_extension.class">Volo\FrontendBundle\Twig\VoloExtension</parameter>
+        <parameter key="volo_frontend.twig.order_extension.class">Volo\FrontendBundle\Twig\OrderExtension</parameter>
         <parameter key="volo_frontend.thumbor_builder_factory.class">Thumbor\Url\BuilderFactory</parameter>
         <parameter key="volo_frontend.thumbor_dumper.class">Volo\FrontendBundle\Dumper\ThumborConfigurationDumper</parameter>
         <parameter key="volo_frontend.service.api_error_translator.class">Volo\FrontendBundle\Service\ApiErrorTranslator</parameter>
@@ -61,6 +62,10 @@
 
         <service id="volo_frontend.twig.vendor_extension" class="%volo_frontend.twig.vendor_extension.class%">
             <argument>%locale%</argument>
+            <tag name="twig.extension" />
+        </service>
+
+        <service id="volo_frontend.twig.order_extension" class="%volo_frontend.twig.order_extension.class%">
             <tag name="twig.extension" />
         </service>
 
