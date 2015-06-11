@@ -115,6 +115,11 @@ var HomeSearchView = Backbone.View.extend({
     _showInputPopup: function (text) {
         this.inputNode.attr('title', text).tooltip('fixTitle');
         this.inputNode.tooltip('show');
+
+        var newPosition = this.inputNode.position().left;
+
+        $('.tooltip').css('left', newPosition + 'px');
+        $('.tooltip').css('visibility', 'visible');
     },
 
     _hideTooltip: function () {

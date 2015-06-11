@@ -122,6 +122,11 @@
 .teaser__form {
   @include make-xs-column(12, 0);
   text-align: center;
+
+  .tooltip {
+    visibility: hidden;
+    z-index: auto;
+  }
 }
 
 .teaser__form__input {
