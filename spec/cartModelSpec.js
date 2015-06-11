@@ -671,7 +671,7 @@ describe("A cart", function() {
         cart.getCart(vendor_id).addItem(cartItem.toJSON(), 1);
         cart.getCart(vendor_id).addItem(differentCartItem.toJSON(), 1);
 
-        cart.getCart(vendor_id).updateItem(cart.getCart(vendor_id).products.at(1), cartItem.toJSON());
+        cart.getCart(vendor_id).updateItem(cart.getCart(vendor_id).products.at(0), cartItem.toJSON());
         expect(cart.getCart(vendor_id).products.at(0).get('quantity')).toEqual(2);
         expect(cart.getCart(vendor_id).products.length).toEqual(1);
     });

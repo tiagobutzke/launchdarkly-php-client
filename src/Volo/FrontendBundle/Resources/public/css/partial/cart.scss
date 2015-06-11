@@ -232,7 +232,17 @@
           display: block;
         }
         .summary__item__name {
-          color: $color-text-highlight
+          color: $color-text-highlight;
+        }
+
+        .summary__item__remove-icon:before {
+          display: block;
+          content: '';
+          position: absolute;
+          right: 26px;
+          height: 30px;
+          width: 263px;
+          top: 9px;
         }
       }
     }
@@ -325,6 +335,7 @@
   left: -2px;
   text-align: center;
   color: $color-text-highlight;
+  z-index: 999;
   @include transition(all .1s linear);
 
   .icons_box {
