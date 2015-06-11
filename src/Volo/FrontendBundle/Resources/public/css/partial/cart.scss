@@ -231,6 +231,9 @@
         .summary__item__quantity-icons, .summary__item__remove-icon {
           display: block;
         }
+        .summary__item__name {
+          color: $color-text-highlight
+        }
       }
     }
   }
@@ -321,6 +324,7 @@
   top: -25px;
   left: -2px;
   text-align: center;
+  color: $color-text-highlight;
   @include transition(all .1s linear);
 
   .icons_box {
@@ -367,6 +371,7 @@
   right: -2px;
   background-image: url("#{$imagepath}cart/bg_delete-toggle-2x.png");
   background-size: 28px 32px;
+  color: $color-text-highlight;
   @include transition(all .1s linear);
   i {
     display: block;
