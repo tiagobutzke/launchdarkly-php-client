@@ -82,9 +82,7 @@
                                     <div class="menu__item__name">
                                         {{ product.name }}
                                         {% if product.productVariations.first.name %}
-                                            <a class="btn-allergy">
-                                                <sup>{{ product.productVariations.first.name }}</sup>
-                                            </a>
+                                                <sup> {{ product.productVariations.first.name }}</sup>
                                         {% endif %}
                                     </div>
                                     <div class="menu__item__description">
@@ -99,8 +97,9 @@
                             <div class="clearfix"></div>
                         {% endfor %}
                     {% endfor %}
-
+                    <div class="menu__icon-legend"><i class="icon-info-circled"></i><a class="btn-allergy">{% trans %}allergy.headline{% endtrans %}</a></div>
                 </div>
+
             </div>
         </div>
         <div class="desktop-cart mobile-cart__hidden" data-minimum_order_amount="{{ vendor.minimumOrderAmount}}" data-vendor_id="{{ vendor.id }}">{# cart from template#}</div>

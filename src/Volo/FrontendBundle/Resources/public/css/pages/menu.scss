@@ -173,7 +173,6 @@
   @include respond-from("screen-md") {
     @include make-md-column(8);
     @include make-lg-column(9);
-    padding-bottom: 40px;
   }
 }
 
@@ -293,6 +292,16 @@
     color: $color-text-light;
     margin-left: 6px;
   }
+
+  sup {
+    color: $color-text-light;
+    i {
+      font-size: 1.1em;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+  }
 }
 
 .menu__item__description {
@@ -324,13 +333,14 @@
 .menu__icon-legend {
   text-align:  center;
   font-size: 0.875em;
-  color: $color-text-secondary;
+  color: $color-text-light;
   padding: $space-sm * 3;
 
   span {
     display: inline-block;
     margin-right: 14px;
   }
+
   i {
     margin-right: 6px;
     color: $color-text-light;
@@ -401,4 +411,39 @@
     padding: 0;
   }
 }
+.allergy-modal {
+  .modal-body {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .modal-dialog {
+    @include respond-from("screen-sm") {
+      width: 500px;
+    }
+  }
+
+  .allergy-legend {
+    ul {
+      @include make-sm-column(6);
+      font-size: 0.875em;
+      li {
+        padding-left: 30px;
+        line-height: 20px;
+        padding-bottom: 5px;
+      }
+    }
+
+    i {
+      color: $color-text-light;
+      font-size: 1.2em;
+      display: inline-block;
+      width: 30px;
+      margin-left: -30px;
+    }
+  }
+}
+
+
+
 
