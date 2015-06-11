@@ -5,18 +5,10 @@
 }
 
 .checkout-wrapper {
-  padding-bottom: $top-cart-height / 2;
+  padding-bottom: 0;
   @include respond-from("screen-md") {
     @include fluid-container();
-    padding-bottom: 0;
-  }
 
-  .desktop-cart {
-    @include respond-from("screen-md") {
-      @include make-md-column(3);
-      @extend .col-md-push-1;
-      position: relative;
-    }
   }
 }
 
@@ -28,14 +20,15 @@
 }
 
 .checkout__main {
+  @include make-md-column(8);
+  @include make-lg-column(7);
+  @extend .col-lg-push-1;
+  padding: 0;
   background-color: $color-bg-primary;
   margin-top:  $header-height-extra-small;
   @include respond-from("screen-md") {
-    @include make-md-column(7);
-    @extend .col-md-push-1;
     margin-top: $header-height-small + $grid-gutter-width;
     margin-bottom: $grid-gutter-width;
-    padding: 0;
   }
 }
 
@@ -71,6 +64,11 @@
   &:first-child {
     border-top: none;
   }
+}
+
+.checkout__title--summary {
+  border-top: 0;
+  background-color: $color-bg-secondary;
 }
 
 .checkout__title--step {
@@ -257,162 +255,7 @@
   }
 }
 
-// order summary mobile
-
-.checkout__summary-wrapper {
-  @include respond-from("screen-md") {
-    display: none;
-  }
-}
-
-// styles reused in cart.css for desktop cart (nested in .desktop-cart) start
-
-.checkout__summary {
-  @extend .checkout__item;
-  padding: 0;
-  overflow:auto;
-}
-
-.summary__restaurant-name {
-   @include make-xs-column(12);
-   font-size: 1em;
-   margin:  $grid-gutter-width / 2 0;
-   text-transform: uppercase;
-}
-
-.summary__items {
-  width: 100%;
-
-  td {
-    vertical-align: top;
-    padding: $space-xs;
-    text-align: left;
-  }
-}
-
-td.summary__item__quantity {
-  padding-left: $grid-gutter-width / 2;
-  padding-right: 0;
-  width: 1%;
-}
-td.summary__item__sign {
-  padding-right: 0;
-  width: 1%;
- }
-
-td.summary__item__name {
-  width: 78%;
-}
-
-td.summary__item__price {
-  padding-right: $grid-gutter-width / 2;
-  text-align: right;
-  width: 20%;
-  white-space: nowrap;
-}
-
-td.summary__item__empty {
-  padding: 0;
-  height: $grid-gutter-width / 2;
-}
-
-.summary__item__extra {
-  display: block;
-  color: $color-text-secondary;
-}
-
-// styles reused in cart.css for desktop cart (nested in .desktop-cart) end
-
-.summary__foot {
-  width: 100%;
-  float: left;
-  clear: both;
-  padding: $grid-gutter-width / 2 0;
-  background-color: $color-bg-secondary;
-  line-height: 1.4em;
-  font-size: 0.813em;
-  @include respond-from("screen-md") {
-    display: none;
-  }
-}
-
-.summary__foot__voucher__label {
-  @include make-xs-column(9);
-  padding-bottom: $grid-gutter-width / 2;
-  color: $color-text-highlight;
-}
-
-.summary__foot__voucher__price {
-  @include make-xs-column(3);
-  text-align: right;
-  padding-bottom: $grid-gutter-width / 2;
-  color: $color-text-highlight;
-}
-
-.summary__foot__subtotal__label {
-  @extend .summary__foot__voucher__label;
-  color: $color-text-primary;
-}
-
-.summary__foot__subtotal__price {
-  @extend .summary__foot__voucher__price;
-  color: $color-text-primary;
-}
-
-.summary__foot__delivery__label {
-  @extend .summary__foot__voucher__label;
-  color: $color-text-secondary;
-}
-
-.summary__foot__delivery__price {
-  @extend .summary__foot__voucher__price;
-  color: $color-text-secondary;
-}
-
-.summary__foot__total__label {
-  @extend .summary__foot__voucher__label;
-  color: $color-text-primary;
-  font-size: 1.2em;
-}
-
-.summary__foot__total__price {
-  @extend .summary__foot__voucher__price;
-  color: $color-text-primary;
-  font-size: 1.2em;
-}
-
-.summary__foot__voucher-detail {
-  @include make-xs-column(12);
-  text-align:  center;
-  margin:  $grid-gutter-width / 2 0;
-
-  span {
-    display: inline-block;
-    float: right;
-
-    i {
-      display: inline-block;
-      vertical-align: middle;
-      color: $color-text-highlight;
-      font-size: 1.2em;
-    }
-  }
-}
-
-.summary__foot__disclaimer {
-  width: 70%;
-  clear: both;
-  padding-bottom: $grid-gutter-width / 2;
-  margin: 0 auto;
-  text-align:  center;
-  color: $color-text-secondary;
-}
-
 // address box
-
-.checkout__address {
-//  border-bottom: $dropdown-border;
-}
 
 .checkout__address-boxes {
 

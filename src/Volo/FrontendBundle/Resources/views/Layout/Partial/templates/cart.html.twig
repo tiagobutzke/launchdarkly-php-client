@@ -13,10 +13,11 @@
         <td class="summary__item__quantity">
             <span class="summary__item__quantity-wrap"><%= VOLO.formatNumber(quantity) %></span>
         </td>
+        <td class="summary__item__sign">x</td>
         <td class="summary__item__icon"><i class="icon-plus summary__item__plus"></i></td>
         <td class="summary__item__name">
             <%- name %>
-            <span class="summary__extra__items"></span>
+            <div class="summary__extra__items"></div>
         </td>
         <td class="summary__item__price">
             <span class="summary__item__price-wrap"><%= VOLO.formatCurrency(total_price) %></span>
