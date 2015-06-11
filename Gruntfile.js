@@ -60,6 +60,7 @@ module.exports = function (grunt) {
         'web/bower_components/adyen-cse-js/js/adyen.encrypt.js',
         'web/bower_components/spin.js/spin.js',
         'web/bower_components/validate/validate.js',
+        'web/bower_components/real-shadow/realshadow.js',
         'web/bower_components/mobile-detect/mobile-detect.js',
         frontendAssetPath('/js/**/*.js')
     ];
@@ -156,6 +157,7 @@ module.exports = function (grunt) {
                 'web/bower_components/intl/Intl.js',
                 'web/bower_components/spin.js/spin.js',
                 'web/bower_components/validate/validate.js',
+                'web/bower_components/real-shadow/realshadow.js',
                 'web/bower_components/mobile-detect/mobile-detect.js'
             ]
         },
