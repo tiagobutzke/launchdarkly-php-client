@@ -1,6 +1,6 @@
 {% block content %}
     <form class="registration-form" action="{{ path('customer.create') }}" method="post" role="form" novalidate>
-        <h4 class="modal__h4 text-center">{% trans %}Register{% endtrans %}</h4>
+        <h4 class="modal__h4 text-center">{% trans %}title.register{% endtrans %}</h4>
         <div class="modal__padding-left-right">
 
             {% if errors %}
@@ -77,7 +77,7 @@
                        id="repeat_password"
                        class="form-control"
                        required="true"
-                       placeholder="{% trans %}Retype password{% endtrans %}"
+                       placeholder="{% trans %}form.placeholder.retype_password{% endtrans %}"
                        data-toggle="tooltip"
                        title="{% trans %}validations.error.register.confirm_password{% endtrans %}"
                 />

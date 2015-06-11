@@ -58,11 +58,11 @@
             <div class="desktop-cart__hero">
                 {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {type: 'hero', 'vendorCode' : vendor.code, 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
                 <div class="desktop-cart__hero__title">
-                    {{ 'Your cart'|trans }}
+                    {{ 'title.your_cart'|trans }}
                     <a class="mobile-close__cart"><i class="icon-cancel"></i></a>
                 </div>
                 </div>
-            <h3 class="desktop-cart__title cart__title--time">{{ 'Delivery Time'|trans }}</h3>
+            <h3 class="desktop-cart__title cart__title--time">{{ 'title.delivery_time'|trans }}</h3>
             {% include('VoloFrontendBundle:Layout/Partial/templates:timepicker.html.twig') %}
 
             <p class="desktop-cart_order__message">
