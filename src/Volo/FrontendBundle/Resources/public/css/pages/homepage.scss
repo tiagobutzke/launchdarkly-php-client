@@ -142,19 +142,6 @@
   }
 }
 
-.teaser__arrow {
-  width: 100%;
-  position: absolute;
-  left: 0;
-  text-align: center;
-  color: white;
-  bottom: 3%;
-  font-size: 1.5em;
-  @include respond-from('screen-sm') {
-    font-size: 1.8em;
-  }
-}
-
 // -------------------------- TEASER END --------------------------
 
 // -------------------------- LOGOS START --------------------------
