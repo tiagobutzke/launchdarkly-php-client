@@ -27,23 +27,22 @@
     <div class="hero-menu__info">
         <h2 class="hero-menu__info__headline">{{ vendor.name }}</h2>
         <h4 class="hero-menu__info__description">{{ vendor.description }}</h4>
+    </div>
+    <div class="hero-menu__info-extra">
         {% set closingInMinutes = getClosingIn(vendor.schedules) %}
-        <p>
+        <i class="icon-clock-o"></i>
             {% if (closingInMinutes <= 0) %}
                 <span class="line-wrapper">{{ 'vendor_closed_preorder_available'|trans }}</span>
                 <span>{{ getNextOpeningWeekDayNumber(vendor.schedules)|dayOfTheWeek }}
-                {{ getNextOpeningHours(vendor.schedules)|formatTime }} - {{ getNextClosingHours(vendor.schedules)|formatTime }}</span>
+                    {{ getNextOpeningHours(vendor.schedules)|formatTime }} - {{ getNextClosingHours(vendor.schedules)|formatTime }}</span>
             {% elseif (closingInMinutes < 60) %}
                 <span class="line-wrapper">Closing in {{ closingInMinutes }} min.</span>
                 <span>{{ getNextOpeningWeekDayNumber(vendor.schedules)|dayOfTheWeek }}
-                {{ getNextOpeningHours(vendor.schedules)|formatTime }} - {{ getNextClosingHours(vendor.schedules)|formatTime }}</span>
+                    {{ getNextOpeningHours(vendor.schedules)|formatTime }} - {{ getNextClosingHours(vendor.schedules)|formatTime }}</span>
             {% else %}
                 <span class="green-class">Open</span>
                 <span>{{ getOpeningTime(vendor.schedules)|formatTime }} – {{ getClosingTime(vendor.schedules)|formatTime }}</span>
             {% endif %}
-        </p>
-    </div>
-    <div class="hero-menu__info-extra">
         {% if ('' != vendor.address) %}
             <i class="icon-pin-map"></i> {{ vendor.address }}
         {% endif %}
@@ -58,8 +57,9 @@
             <div class="menu__main__list">
                 {{ include('VoloFrontendBundle:Vendor:allergyLegend.html.twig') }}
                 <div class="menu__categories">
-                    <div class="b-lazy aspect-ratio-117-45 menu__vendor-logo" data-src="{{ vendor.logo|prepareLogoUrl(logo_image_dimensions) }}">
-                    </div>
+                    {% if vendor.logo is not empty %}
+                    <div class="b-lazy aspect-ratio-117-45 menu__vendor-logo" data-src="{{ vendor.logo|prepareLogoUrl(logo_image_dimensions) }}"></div>
+                    {% endif %}
                     <nav>
                         <ul>
                             {% for menuCategory in vendor.menus.first.menuCategories %}
