@@ -1,5 +1,6 @@
 {% block head_scripts %}
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false&amp;libraries=places&language={{ locale|replace('_', '-') }}"></script>
+    {% set config = get_configuration() %}
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false&amp;libraries=places&amp;language={{ locale|replace('_', '-') }}&amp;key={{ config.google.placesApiKey }}"></script>
     <script src="{{ asset('js/dist/head.js') }}"></script>
     {% if app.debug == true %}
         <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
@@ -22,7 +23,6 @@
         VOLO.configuration.cartBottomMargin = 50;
         VOLO.configuration.itemsOverflowingClassName = 'checkout__summary-overflowing';
 
-        {% set config = get_configuration() %}
         VOLO.initIntl(VOLO.configuration.locale.replace('_', '-'), '{{ config.currency.currency_symbol_iso }}');
     </script>
 
