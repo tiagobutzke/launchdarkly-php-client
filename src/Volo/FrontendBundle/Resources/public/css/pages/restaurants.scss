@@ -19,7 +19,6 @@
 .restaurants__tool-box {
   @include make-row();
   height: 84px;
-  @include appear-from("screen-sm")
 }
 
 .restaurants__location {
