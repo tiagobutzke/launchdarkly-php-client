@@ -130,7 +130,7 @@ VOLO.initCheckoutViews = function (cartModel, checkoutModel, deliveryCheck) {
                     presence: true
                 }
             }
-        })
+        });
     }
 
     if (_.isObject(VOLO.cartErrorModalView )) {
