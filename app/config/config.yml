@@ -71,49 +71,85 @@ jb_phumbor:
         # start of the breakpoints definition
         bp_300:
             resize: { width: 300, height: 0 }
+            filters:
+                - { name: "quality", arguments: [80] }
         bp_300_retina:
             resize: { width: 600, height: 0 }
+            filters:
+                - { name: "quality", arguments: [45] }
 
         bp_400:
             resize: { width: 400, height: 0 }
+            filters:
+                - { name: "quality", arguments: [80] }
         bp_400_retina:
             resize: { width: 800, height: 0 }
+            filters:
+                - { name: "quality", arguments: [45] }
 
         bp_600:
             resize: { width: 600, height: 0 }
+            filters:
+                - { name: "quality", arguments: [80] }
         bp_600_retina:
             resize: { width: 1200, height: 0 }
+            filters:
+                - { name: "quality", arguments: [45] }
 
         bp_800:
             resize: { width: 800, height: 0 }
+            filters:
+                - { name: "quality", arguments: [80] }
         bp_800_retina:
             resize: { width: 1600, height: 0 }
+            filters:
+                - { name: "quality", arguments: [45] }
 
         bp_1000:
             resize: { width: 1000, height: 0 }
+            filters:
+                - { name: "quality", arguments: [80] }
         bp_1000_retina:
             resize: { width: 2000, height: 0 }
+            filters:
+                - { name: "quality", arguments: [45] }
 
         bp_1200:
             resize: { width: 1200, height: 0 }
+            filters:
+                - { name: "quality", arguments: [60] }
         bp_1200_retina:
             resize: { width: 2400, height: 0 }
+            filters:
+                - { name: "quality", arguments: [40] }
 
         bp_1400:
             resize: { width: 1400, height: 0 }
+            filters:
+                - { name: "quality", arguments: [60] }
         bp_1400_retina:
             resize: { width: 2800, height: 0 }
+            filters:
+                - { name: "quality", arguments: [40] }
 
         bp_biggest:
             resize: { width: 2000, height: 0 }
+            filters:
+                - { name: "quality", arguments: [60] }
         bp_biggest_retina:
             resize: { width: 4000, height: 0 }
+            filters:
+                - { name: "quality", arguments: [40] }
         # end of the breakpoints definition
 
         500:
-            resize: { width: 500, height: 0 }
+            resize: { width: 400, height: 0 }
+            filters:
+                - { name: "quality", arguments: [80] }
         500_retina:
-            resize: { width: 1000, height: 0 }
+            resize: { width: 800, height: 0 }
+            filters:
+                - { name: "quality", arguments: [45] }
 
 volo_frontend:
     api:
