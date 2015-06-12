@@ -2,9 +2,6 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
 
-parameters:
-    http_schema: http
-
 framework:
     #esi:             ~
     translator:      { fallbacks: ["en"] }
