@@ -4,8 +4,8 @@
 
 {% block content %}
     <div class="hero-banner-wrapper">
-        <h1>{{ 'static_page_title'|trans }}</h1>
         {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {'vendorCode' : 'cms', type: 'hero', 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
+        <h1>{{ 'static_page_title'|trans }}</h1>
     </div>
     <div class="static-pages-wrapper">
         <div class="static-pages">
