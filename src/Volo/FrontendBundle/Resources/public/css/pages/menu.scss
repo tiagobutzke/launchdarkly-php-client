@@ -98,9 +98,9 @@
   left: 0px;
   @include appear-from("screen-md");
 
-  i.icon-call-phone {
+  i {
     display: inline-block;
-    margin-left: 22px;
+    margin-left: $space-md;
   }
 }
 
