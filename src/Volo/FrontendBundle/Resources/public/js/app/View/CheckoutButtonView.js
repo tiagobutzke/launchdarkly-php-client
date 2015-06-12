@@ -45,6 +45,7 @@ var CheckoutButtonView = Backbone.View.extend({
     },
 
     handlePaymentSuccess: function (data) {
+        this.model.cartModel.emptyCart(this.vendorId);
         Turbolinks.visit(Routing.generate('order_tracking', {orderCode: data.code}));
     },
 
