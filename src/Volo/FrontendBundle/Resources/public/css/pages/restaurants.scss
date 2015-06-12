@@ -94,6 +94,9 @@
 }
 
 .restaurant__image {
+    &.aspect-ratio-100-52 {
+      background-size: 100% 100%;
+    }
     @include responsive-img();
 }
 
