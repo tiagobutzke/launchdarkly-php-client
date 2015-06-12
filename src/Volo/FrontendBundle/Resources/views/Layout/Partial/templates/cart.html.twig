@@ -25,26 +25,26 @@
     </tr>
     {# desktop #}
     <tr class="summary__item__row_desktop">
-    <td class="summary__item__quantity">
-        <span class="summary__item__quantity-wrap"><%= VOLO.formatNumber(quantity) %></span>
-        <div class="summary__item__quantity-icons">
-            <div class="icons_box">
-                <i class="icon-minus summary__item__minus"></i><i class="icon-plus summary__item__plus"></i>
+        <td class="summary__item__quantity">
+            <span class="summary__item__quantity-wrap"><%= VOLO.formatNumber(quantity) %></span>
+            <div class="summary__item__quantity-icons">
+                <div class="icons_box">
+                    <i class="icon-minus summary__item__minus"></i><i class="icon-plus summary__item__plus"></i>
+                </div>
             </div>
-        </div>
-    </td>
-    <td class="summary__item__sign">x</td>
-    <td class="summary__item__name">
-        <%- name %>
-        <span class="summary__extra__items"></span>
-    </td>
-    <td class="summary__item__price">
-        <span class="summary__item__price-wrap"><%= VOLO.formatCurrency(total_price) %></span>
-        <div class="summary__item__remove-icon"><i class="summary__item__remove icon-cancel"></i></div>
-    </td>
+        </td>
+        <td class="summary__item__sign">x</td>
+        <td class="summary__item__name">
+            <%- name %>
+            <span class="summary__extra__items"></span>
+        </td>
+        <td class="summary__item__price">
+            <span class="summary__item__price-wrap"><%= VOLO.formatCurrency(total_price) %></span>
+            <div class="summary__item__remove-icon"><i class="summary__item__remove icon-cancel"></i></div>
+        </td>
     </tr>
-
 </script>
+
 {# cart #}
 <script type="text/template" id="template-cart">
     <div class="desktop-cart-container">

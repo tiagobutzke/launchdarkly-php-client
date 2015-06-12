@@ -215,7 +215,8 @@ module.exports = function (grunt) {
                 'web/bundles/fosjsrouting/js/router.js',
                 'web/js/fos_js_routes.js',
                 'web/bower_components/blazy/blazy.js',
-                'vendor/helthe/turbolinks/Resources/public/js/turbolinks.js'
+                'vendor/helthe/turbolinks/Resources/public/js/turbolinks.js',
+                'web/bower_components/mobile-detect/mobile-detect.js'
             ]
         }
     };
