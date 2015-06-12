@@ -54,24 +54,26 @@ class OrderManagerService
      *
      * @param GuestCustomer $guestCustomer
      * @param float         $expectedAmount
+     * @param int           $paymentTypeId
      * @param array         $cart
      *
      * @return array
      */
-    public function placeGuestOrder(GuestCustomer $guestCustomer, $expectedAmount, array $cart)
+    public function placeGuestOrder(GuestCustomer $guestCustomer, $expectedAmount, $paymentTypeId, array $cart)
     {
         $order = [
-            'location'              => $cart['location'],
-            'products'              => $cart['products'],
-            'vouchers'              => $cart['vouchers'],
-            'expedition_type'       => 'delivery',
-            'payment_type_id'       => 5,
-            'customer_address_id'   => $guestCustomer->getCustomerAddress()->getId(),
-            'customer_id'           => $guestCustomer->getCustomer()->getId(),
-            'customer_mail'         => $guestCustomer->getCustomer()->getEmail(),
-            'customer_comment'      => '',
-            'expected_total_amount' => $expectedAmount,
-            'source'                => $this->apiClientId,
+            'location'                             => $cart['location'],
+            'products'                             => $cart['products'],
+            'vouchers'                             => $cart['vouchers'],
+            'expedition_type'                      => 'delivery',
+            'payment_type_id'                      => $paymentTypeId,
+            'customer_address_id'                  => $guestCustomer->getCustomerAddress()->getId(),
+            'customer_id'                          => $guestCustomer->getCustomer()->getId(),
+            'customer_mail'                        => $guestCustomer->getCustomer()->getEmail(),
+            'customer_comment'                     => '',
+            'expected_total_amount'                => $expectedAmount,
+            'source'                               => $this->apiClientId,
+            'trigger_hosted_payment_page_handling' => true,
         ];
 
         return $this->orderProvider->guestOrder($order);
@@ -84,22 +86,24 @@ class OrderManagerService
      * @param AccessToken $accessToken
      * @param int         $addressId
      * @param float       $expectedAmount
+     * @param int         $paymentTypeId
      * @param array       $cart
      *
      * @return array
      */
-    public function placeOrder(AccessToken $accessToken, $addressId, $expectedAmount, array $cart)
+    public function placeOrder(AccessToken $accessToken, $addressId, $expectedAmount, $paymentTypeId, array $cart)
     {
         $order = [
-            'location'              => $cart['location'],
-            'products'              => $cart['products'],
-            'vouchers'              => $cart['vouchers'],
-            'expedition_type'       => 'delivery',
-            'payment_type_id'       => 5,
-            'customer_address_id'   => $addressId,
-            'customer_comment'      => '',
-            'expected_total_amount' => $expectedAmount,
-            'source'                => $this->apiClientId,
+            'location'                             => $cart['location'],
+            'products'                             => $cart['products'],
+            'vouchers'                             => $cart['vouchers'],
+            'expedition_type'                      => 'delivery',
+            'payment_type_id'                      => $paymentTypeId,
+            'customer_address_id'                  => $addressId,
+            'customer_comment'                     => '',
+            'expected_total_amount'                => $expectedAmount,
+            'source'                               => $this->apiClientId,
+            'trigger_hosted_payment_page_handling' => true,
         ];
 
         return $this->orderProvider->order($accessToken, $order);

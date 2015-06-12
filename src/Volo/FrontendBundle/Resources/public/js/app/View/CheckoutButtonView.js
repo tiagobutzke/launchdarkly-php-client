@@ -15,6 +15,8 @@ var CheckoutButtonView = Backbone.View.extend({
         this.listenTo(this.model, 'change:address_id', this.render, this);
         this.listenTo(this.model, 'change:credit_card_id', this.render, this);
         this.listenTo(this.model, 'change:adyen_encrypted_data', this.render, this);
+        this.listenTo(this.model, 'change:payment_type_id', this.render, this);
+        this.listenTo(this.model, 'change:payment_type_code', this.render, this);
         this.listenTo(this.model, 'change:cart_dirty', this.render, this);
         this.listenTo(this.model, 'change:placing_order', this.render, this);
 
@@ -45,8 +47,12 @@ var CheckoutButtonView = Backbone.View.extend({
     },
 
     handlePaymentSuccess: function (data) {
-        this.model.cartModel.emptyCart(this.vendorId);
-        Turbolinks.visit(Routing.generate('order_tracking', {orderCode: data.code}));
+        if (_.isNull(data.hosted_payment_page_redirect)) {
+            this.model.cartModel.emptyCart(this.vendorId);
+            Turbolinks.visit(Routing.generate('order_tracking', {orderCode: data.code}));
+        } else {
+            window.location.replace(data.hosted_payment_page_redirect.url);
+        }
     },
 
     handlePaymentError: function (data) {

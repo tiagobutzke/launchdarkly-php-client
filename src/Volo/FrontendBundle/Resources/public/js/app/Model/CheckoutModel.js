@@ -5,6 +5,8 @@ var CheckoutModel = Backbone.Model.extend({
         "cart_dirty": false,
         "address_id": null,
         "credit_card_id": null,
+        "payment_type_id": null,
+        "payment_type_code": null,
         "adyen_encrypted_data": null,
         "subtotal_before_discount": 0
     },
@@ -26,14 +28,22 @@ var CheckoutModel = Backbone.Model.extend({
         }
 
         if (this.get('is_guest_user')) {
-            return !_.isNull(this.get('adyen_encrypted_data'));
+            if (this.get('payment_type_code') === 'paypal') {
+                return true;
+            }
 
+            return !_.isNull(this.get('adyen_encrypted_data'));
         }
 
         if (_.isNull(this.get('address_id'))) {
             return false;
         }
-        if (_.isNull(this.get('credit_card_id')) && _.isNull(this.get('adyen_encrypted_data'))) {
+
+        if (_.isNull(this.get('payment_type_id')) || _.isNull(this.get('payment_type_code'))) {
+            return false;
+        }
+
+        if (this.get('payment_type_code') === 'adyen' && _.isNull(this.get('credit_card_id')) && _.isNull(this.get('adyen_encrypted_data'))) {
             return false;
         }
 
@@ -42,13 +52,16 @@ var CheckoutModel = Backbone.Model.extend({
 
     placeOrder: function (vendorCode, vendorId) {
         var data = {
-            expected_total_amount: this.cartModel.getCart(vendorId).get('total_value')
+            expected_total_amount: this.cartModel.getCart(vendorId).get('total_value'),
+            payment_type_id: this.get('payment_type_id')
         };
 
-        if (_.isNull(this.get('adyen_encrypted_data'))) {
-            data.credit_card_id = this.get('credit_card_id');
-        } else {
-            data.encrypted_payment_data = this.get('adyen_encrypted_data');
+        if (this.get('payment_type_code') === 'adyen') {
+            if (_.isNull(this.get('adyen_encrypted_data'))) {
+                data.credit_card_id = this.get('credit_card_id');
+            } else {
+                data.encrypted_payment_data = this.get('adyen_encrypted_data');
+            }
         }
 
         if (!this.get('is_guest_user')) {
