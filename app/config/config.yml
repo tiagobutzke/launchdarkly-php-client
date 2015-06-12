@@ -14,9 +14,10 @@ framework:
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
-        assets_version: 1
+        assets_version: asset_version_placeholder
         packages:
             cdn_s3:
+                version: asset_version_placeholder
                 base_urls:
                     [ "%volo_frontend.image_server_base_url%/%country_code%" ]
     default_locale:  "%locale%"
