@@ -64,6 +64,8 @@
 <script type="text/template" id="template-topping-comment">
     <div class="topping__comment__help-text">
         <% if (quantity_minimum === 0) { %>
+            {# 1000 is a magic number decided by backend CMS to represent an unlimited number of selectable topping options #}
+            {# we should keep it until a more proper CMS feature is implemented #}
             <% if (quantity_maximum > 1 && quantity_maximum < 1000) { %>
                 {% trans with {'%quantity%': '<%- quantity_maximum %>'} %}topping.select_up_to %quantity%{% endtrans %}
             <% } else { %>
