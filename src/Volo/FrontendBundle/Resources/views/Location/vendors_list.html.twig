@@ -6,38 +6,41 @@
         {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {vendorCode : 'list', type: 'hero', 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
         <h1>{{ 'address.promo %city%'|trans({'%city%': formattedLocation['city']})|nl2br }}</h1>
     </div>
-    <div class="wrapper-fluid">
-        <div class="restaurants">
-            <div class="restaurants__tool-box">
-                <div class="restaurants__location">
-                    <input
-                            id="postal_index_form_input"
-                            type="text"
-                            class="form-control hide"
-                            name="location_set"
-                            value=""
-                            placeholder="{% trans %}postal_code.your_postal_code{% endtrans %}"
-                            data-msg_error_not_found="{% trans %}postal_code.not_found{% endtrans %}"
-                            data-msg_you_probably_mean="{% trans %}postal_code.you_probably_mean{% endtrans %}"
-                            required="true"
-                    >
+    <div class="restaurants-container wrapper-fluid">
+        <div class="restaurants__tool-box">
+            <div class="restaurants__location">
+                <input
+                        id="postal_index_form_input"
+                        type="text"
+                        class="restaurants__location__input form-control hide"
+                        name="location_set"
+                        value=""
+                        placeholder="{% trans %}postal_code.your_postal_code{% endtrans %}"
+                        data-msg_error_not_found="{% trans %}postal_code.not_found{% endtrans %}"
+                        data-msg_you_probably_mean="{% trans %}postal_code.you_probably_mean{% endtrans %}"
+                        required="true"
+                >
 
-                    <div class="restaurants__location__title">
-                        <span>
-                            {% if gpsSearch %}
-                                {{ 'address.delivery_by_gps %address%'|trans({
-                                    '%address%': formattedLocation['address']
-                                }) }}
-                            {% else %}
-                                {{ 'address.delivery_by_city %city%'|trans({
-                                    '%city%': formattedLocation['city']
-                                }) }}
-                            {% endif %}
-                        </span>
-                        <a id="change_user_location_box_button">{{ 'buttons.change'|trans }}</a>
-                    </div>
+                <div class="restaurants__location__title">
+                    <span class="restaurants__location__address">
+                        {% if gpsSearch %}
+                            {{ 'address.delivery_by_gps %address%'|trans({
+                                '%address%': formattedLocation['address']
+                            }) }}
+                        {% else %}
+                            {{ 'address.delivery_by_city %city%'|trans({
+                                '%city%': formattedLocation['city']
+                            }) }}
+                        {% endif %}
+                    </span>
+                    <a class="restaurants__location__change-button" id="change_user_location_box_button">
+                        <span class="restaurants__change-button__text">{{ 'buttons.change'|trans }}</span>
+                        <span class="restaurants__change-button__arrow icon-down-open-big"></span>
+                    </a>
                 </div>
             </div>
+        </div>
+        <div class="restaurants">
             {% for vendor in openVendors %}
                 {{ block('vendor_description') }}
             {% endfor %}
