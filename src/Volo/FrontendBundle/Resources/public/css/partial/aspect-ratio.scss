@@ -11,11 +11,6 @@
   @extend %aspect-ratio-base;
 }
 
-.aspect-ratio-117-45 {
-  @include aspect-ratio(117, 45);
-  @extend %aspect-ratio-base;
-}
-
 .aspect-ratio-100-52 {
   @include aspect-ratio(100, 52);
   @extend %aspect-ratio-base;

@@ -186,15 +186,13 @@
 }
 
 .menu__vendor-logo {
-  padding-top: $grid-gutter-width;
+  padding: $grid-gutter-width 0 10px;
   margin: 0;
-  text-align: center;
-  height: 140px;
 
   img {
+    max-height: 195px;
+    max-width: 195px;
     display: block;
-    width: auto;
-    height: 100%;
     margin: 0 auto;
   }
 }

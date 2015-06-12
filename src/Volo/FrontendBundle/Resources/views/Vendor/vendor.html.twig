@@ -58,7 +58,9 @@
                 {{ include('VoloFrontendBundle:Vendor:allergyLegend.html.twig') }}
                 <div class="menu__categories">
                     {% if vendor.logo is not empty %}
-                    <div class="b-lazy aspect-ratio-117-45 menu__vendor-logo" data-src="{{ vendor.logo|prepareLogoUrl(logo_image_dimensions) }}"></div>
+                        <div class="menu__vendor-logo">
+                            <img src="{{ vendor.logo|prepareLogoUrl(logo_image_dimensions) }}" alt="{{ vendor.name }}">
+                        </div>
                     {% endif %}
                     <nav>
                         <ul>
