@@ -44,6 +44,10 @@
 .footer__subscribe {
   @include make-xs-column(12);
   @include make-md-column(6);
+  margin-bottom: $space-lg;
+  @include respond-from('screen-md') {
+    margin-bottom: 0;
+  }
   @extend .col-md-push-3;
 }
 
