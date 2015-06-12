@@ -248,7 +248,32 @@ var CartView = Backbone.View.extend({
 
         if (productCounter) {
             productCounter.text(productsCount);
+            this._animateAddToCart(productCounter);
         }
+    },
+
+    _animateAddToCart: function(counter) {
+        var $counter = $(counter);
+        if (!$counter) {
+            return;
+        }
+
+        var animationLength = 100,
+            originalWidth = $counter.width(),
+            originalHeight = $counter.height(),
+            sizeIncrease = 3;
+
+        counter.animate({
+            width: originalWidth + sizeIncrease + 'px',
+            height: originalHeight + sizeIncrease + 'px',
+            'line-height': originalHeight + sizeIncrease + 'px'
+        }, animationLength, function () {
+            counter.animate({
+                width: originalWidth + 'px',
+                height: originalHeight + 'px',
+                'line-height': originalHeight + 'px'
+            }, animationLength);
+        });
     },
 
     disableCart: function() {
