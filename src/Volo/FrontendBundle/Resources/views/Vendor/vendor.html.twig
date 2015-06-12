@@ -136,3 +136,9 @@
     {{ include('VoloFrontendBundle:Layout/Partial/templates/popups:vendor.html.twig') }}
 
 {% endblock %}
+
+{% block footer_bottom %}
+    <div class="footer__wrapper__bottom">
+        {{ cms_footer(vendor.city.id, 'footer-menu') }}
+    </div>
+{% endblock %}

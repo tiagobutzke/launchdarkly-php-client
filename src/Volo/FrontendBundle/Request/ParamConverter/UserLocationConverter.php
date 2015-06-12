@@ -4,6 +4,7 @@ namespace Volo\FrontendBundle\Request\ParamConverter;
 
 use Foodpanda\ApiSdk\Entity\Cart\AbstractLocation;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -28,13 +29,23 @@ class UserLocationConverter implements ParamConverterInterface
     protected $customerLocationService;
 
     /**
+     * @var Translator
+     */
+    protected $translator;
+
+    /**
      * @param CityProvider $cityProvider
      * @param CustomerLocationService $customerLocationService
+     * @param Translator $translator
      */
-    public function __construct(CityProvider $cityProvider, CustomerLocationService $customerLocationService)
-    {
+    public function __construct(
+        CityProvider $cityProvider,
+        CustomerLocationService $customerLocationService,
+        Translator $translator
+    ) {
         $this->cityProvider = $cityProvider;
         $this->customerLocationService = $customerLocationService;
+        $this->translator = $translator;
     }
 
     /**
@@ -50,6 +61,8 @@ class UserLocationConverter implements ParamConverterInterface
         $lat = $request->attributes->get('latitude', false);
         $lng = $request->attributes->get('longitude', false);
 
+        $request->attributes->set('cityId', null);
+
         switch(true) {
             case $cityUrlKey:
                 $city = $this->findCityByCode($cityUrlKey);
@@ -64,6 +77,8 @@ class UserLocationConverter implements ParamConverterInterface
                     null,
                     null
                 );
+
+                $request->attributes->set('cityId', $city->getId());
                 break;
             case $areaId:
                 $convertedParameter = new AreaLocation($areaId);
@@ -88,7 +103,7 @@ class UserLocationConverter implements ParamConverterInterface
                 );
                 break;
             default:
-                $message = 'Please supply keys `city_id` or `area_id` or `latitude` and `longitude`.';
+                $message = $this->translator->trans('customer.location.missing_keys');
                 throw new BadRequestHttpException($message);
         }
 

@@ -27,6 +27,7 @@ class CmsExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('cms', [$this, 'getCmsContent'], ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('cms_footer', [$this, 'getCmsFooterContent'], ['is_safe' => ['html']]),
         );
     }
 
@@ -42,6 +43,23 @@ class CmsExtension extends \Twig_Extension
         } catch (EntityNotFoundException $exception) {
             return '';
         }
+    }
+
+    /**
+     * @param int $cityId
+     * @param string $cmsCodeBase
+     *
+     * @return string
+     */
+    public function getCmsFooterContent($cityId, $cmsCodeBase)
+    {
+        $cmsFooterContent = $this->getCmsContent($cmsCodeBase . '-' . $cityId);
+
+        if ('' === $cmsFooterContent) {
+            $cmsFooterContent = $this->getCmsContent($cmsCodeBase);
+        }
+
+        return $cmsFooterContent;
     }
 
     /**

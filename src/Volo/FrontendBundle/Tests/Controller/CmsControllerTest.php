@@ -2,6 +2,7 @@
 
 namespace Volo\FrontendBundle\Tests\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use Volo\FrontendBundle\Tests\VoloTestCase;
 
 class CmsControllerTest extends VoloTestCase
@@ -18,9 +19,13 @@ class CmsControllerTest extends VoloTestCase
     public function testPrivacyPath()
     {
         $client = static::createClient();
+        $client->followRedirects(false);
 
         $client->request('GET', '/privacy');
 
+        $this->assertEquals(Response::HTTP_MOVED_PERMANENTLY, $client->getResponse()->getStatusCode());
+
+        $client->followRedirect();
         $this->isSuccessful($client->getResponse());
     }
 }

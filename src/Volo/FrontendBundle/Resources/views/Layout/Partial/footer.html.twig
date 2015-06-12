@@ -1,5 +1,11 @@
 {% block footer %}
-    {{ include('VoloFrontendBundle:Layout/Partial/footerPartial:footer_top.html.twig') }}
-    {{ include('VoloFrontendBundle:Layout/Partial/footerPartial:footer_middle.html.twig') }}
-    {{ include('VoloFrontendBundle:Layout/Partial/footerPartial:footer_bottom.html.twig') }}
+    {% block footer_top %}
+        {{ include('VoloFrontendBundle:Layout/Partial/footerPartial:footer_top.html.twig') }}
+    {% endblock %}
+    {% block footer_middle %}
+        {{ include('VoloFrontendBundle:Layout/Partial/footerPartial:footer_middle.html.twig') }}
+    {% endblock %}
+    {% block footer_bottom %}
+        {{ include('VoloFrontendBundle:Layout/Partial/footerPartial:footer_bottom.html.twig') }}
+    {% endblock %}
 {% endblock footer %}
