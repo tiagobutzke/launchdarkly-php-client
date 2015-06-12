@@ -11,7 +11,7 @@ var VoucherView = Backbone.View.extend({
         var vendorCart = this.model.getCart(this.vendor_id);
 
         this.isFormOpen = false;
-        this.voucherInvalid = false;
+        this.voucherError = null;
 
         this.listenTo(vendorCart, 'change:voucher', this.render, this);
         this.listenTo(vendorCart, 'cart:error', this.handleCartError, this);
@@ -36,8 +36,9 @@ var VoucherView = Backbone.View.extend({
             this.$('#voucher-wrapper').addClass('hide');
         }
 
-        if (this.voucherInvalid) {
+        if (_.isString(this.voucherError)) {
             this.$('.error_invalid_voucher').removeClass('hide');
+            this.$('.error_invalid_voucher_text').html(this.voucherError);
             this.isFormOpen = true;
         } else {
             this.$('.error_invalid_voucher').addClass('hide');
@@ -75,7 +76,7 @@ var VoucherView = Backbone.View.extend({
     addVoucher: function (event) {
         var vendorCart = this.model.getCart(this.vendor_id);
 
-        this.voucherInvalid = false;
+        this.voucherError = null;
         vendorCart.set('voucher', this.$('#voucher').val());
         vendorCart.updateCart();
 
@@ -99,7 +100,10 @@ var VoucherView = Backbone.View.extend({
 
             vendorCart.set('voucher', null);
             this.isFormOpen = true;
-            this.voucherInvalid = true;
+
+            if (_.isObject(data) && _.isString(data.error.errors.message)) {
+                this.voucherError = data.error.errors.message;
+            }
             
             this.render();
         }

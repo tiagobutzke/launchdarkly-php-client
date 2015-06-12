@@ -32,6 +32,7 @@
         <parameter key="volo_frontend.twig.volo_extension.class">Volo\FrontendBundle\Twig\VoloExtension</parameter>
         <parameter key="volo_frontend.thumbor_builder_factory.class">Thumbor\Url\BuilderFactory</parameter>
         <parameter key="volo_frontend.thumbor_dumper.class">Volo\FrontendBundle\Dumper\ThumborConfigurationDumper</parameter>
+        <parameter key="volo_frontend.service.api_error_translator.class">Volo\FrontendBundle\Service\ApiErrorTranslator</parameter>
     </parameters>
 
     <services>
@@ -144,6 +145,10 @@
         <service id="volo_frontend.service.phone_number" class="%volo_frontend.service.phone_number.class%">
             <argument type="service" id="libphonenumber.phone_number_util" />
             <argument>%locale%</argument>
+        </service>
+
+        <service id="volo_frontend.service.api_error_translator" class="%volo_frontend.service.api_error_translator.class%">
+            <argument type="service" id="translator" />
         </service>
     </services>
 </container>

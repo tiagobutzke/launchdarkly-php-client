@@ -115,7 +115,7 @@ class VendorController extends Controller
 
             return new JsonResponse(['result' => $result]);
         } catch (ApiErrorException $e) {
-            return new JsonErrorResponse($e);
+            return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
         }
     }
 
