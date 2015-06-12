@@ -3,6 +3,7 @@
 namespace Volo\FrontendBundle\Controller;
 
 use Foodpanda\ApiSdk\Entity\Customer\CustomerPassword;
+use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Volo\FrontendBundle\Security\Token;
@@ -18,6 +19,8 @@ use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
  */
 class ProfileController extends Controller
 {
+    const FLASH_TYPE_ERRORS = 'errors';
+
     /**
      * @Route("", name="profile_index")
      * @Method({"GET", "POST"})
@@ -28,7 +31,7 @@ class ProfileController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $errorMessages = [];
+        $errorMessages = $this->get('session')->getFlashBag()->get(static::FLASH_TYPE_ERRORS);
         /** @var Token $token */
         $token            = $this->get('security.token_storage')->getToken();
         $serializer       = $this->get('volo_frontend.api.serializer');
@@ -69,7 +72,11 @@ class ProfileController extends Controller
             CustomerPassword::class
         );
 
-        $this->get('volo_frontend.service.customer')->updateCustomerPassword($customerPassword);
+        try {
+            $this->get('volo_frontend.service.customer')->updateCustomerPassword($customerPassword);
+        } catch (ApiErrorException $e) {
+            $this->addFlash(static::FLASH_TYPE_ERRORS, $e->getMessage());
+        }
 
         return $this->redirectToRoute('profile_index');
     }
