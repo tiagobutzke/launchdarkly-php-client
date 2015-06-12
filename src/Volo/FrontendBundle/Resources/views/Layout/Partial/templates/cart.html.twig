@@ -49,7 +49,9 @@
 <script type="text/template" id="template-cart">
     <div class="desktop-cart-container">
         <div class="vendor__geocoding__tool-box">
-            <input id="postal_index_form_input" type="text" class="input__postcode{{ isDeliverable ? ' hide' }}" autofocus="">
+            <form>
+                <input id="postal_index_form_input" type="text" class="menu__input__postcode input__postcode{{ isDeliverable ? ' hide' }}" autofocus="">
+            </form>
             <div class="vendor__geocoding__tool-box__title{{ isDeliverable ? '' : ' hide' }}">
                 {{ 'cart.delivering_to'|trans }} <span class="location__address">{{ address }}</span>
             </div>
