@@ -48,6 +48,10 @@
   @include respond-from("screen-md") {
     font-size: 0.875em;
   }
+
+  &:hover {
+    background-color: $color-bg-secondary;
+  }
 }
 
 .topping__header__name {
@@ -64,6 +68,7 @@
 
 .topping__header__comment {
   @extend .text-right;
+  overflow: auto;
   float: right;
   width: 80%;
   padding-right: 0;
@@ -109,12 +114,16 @@
   padding: $space-sm $space-md;
   cursor: pointer;
 
+  &:hover {
+    background-color: $color-bg-secondary;
+  }
+
   &:first-child {
-    padding-top: $space-md;
+    margin-top: $space-md;
   }
 
   &:last-child {
-    padding-bottom: $space-md * 2;
+    margin-bottom: $space-md * 2;
   }
 
   @include respond-from("screen-md") {
@@ -135,10 +144,8 @@
 .topping-option__button {
   display: inline-block;
   vertical-align: text-top;
-  margin-right: $space-xs;
   position: relative;
-  top: 3px;
-  float: left;
+  top: 1px;
   @include retina-sprite($radiobutton-unselected-group);
 }
 
@@ -228,5 +235,31 @@
       margin-top: 70px;
       width: 600px;
     }
+  }
+}
+
+.toppings-product-quantity {
+  float: left;
+  line-height: $form-element-height-default;
+
+  & .product__quantity__decrease,
+  & .product__quantity__increase {
+    cursor: pointer;
+    background-color: $color-bg-secondary;
+    color: $color-text-link;
+    line-height: inherit;
+    text-align: center;
+    font-size: 28px;
+  }
+
+  & .product__quantity {
+    line-height: inherit;
+    text-align: center;
+  }
+
+  & .product__quantity__container {
+    float: left;
+    width: $form-element-height-default;
+    height: $form-element-height-default;
   }
 }

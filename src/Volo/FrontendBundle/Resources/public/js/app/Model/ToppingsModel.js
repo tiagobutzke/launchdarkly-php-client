@@ -64,13 +64,28 @@ var ToppingModel = Backbone.Model.extend({
 
     initialize: function() {
         this.options = new ToppingOptionCollection(_.cloneDeep(this.get('options')));
+        this.listenTo(this.options, 'add', this._setInitialSelection);
+        _.each(this.options.models, this._setInitialSelection, this);
         _.invoke(this.options.models, 'setToppingModel', this);
         _.invoke(this.options.models, (this.isCheckBoxList() ? 'setToCheckBox' : 'setToRadioButton'), this);
         delete this.attributes.options;
     },
 
+    _setInitialSelection: function(toppingModel) {
+        var quantity_minimum;
+
+        if (!toppingModel) {
+            return;
+        }
+
+        quantity_minimum = this.get('quantity_minimum');
+        if (this.options.length <= quantity_minimum && this._getSelectedItems.length < quantity_minimum) {
+            toppingModel.select(true);
+        }
+    },
+
     isCheckBoxList: function() {
-        return this.get('quantity_maximum') > 1;
+        return this.get('quantity_maximum') > 1 || this.options.length === 1;
     },
 
     areOptionsVisible: function() {
@@ -97,8 +112,10 @@ var ToppingModel = Backbone.Model.extend({
         var selectedItems = this._getSelectedItems(),
             selectedCount = selectedItems.length,
             max = this.get('quantity_maximum'),
-            min = this.get('quantity_minimum');
+            min = this.get('quantity_minimum'),
+            options = this.options.length;
 
+        min = options > min ? min : options;
         return (selectedCount >= min) && (selectedCount <= max);
     },
 
@@ -112,8 +129,11 @@ var ToppingModel = Backbone.Model.extend({
     },
 
     canUnselectSubModel: function(buttonType) {
-        if ((buttonType === 'radioButton' && this.isSelectionRequired()) ||
-            this._getSelectedItems().length <= this.get('quantity_minimum')) {
+        var max = this.get('quantity_maximum'),
+            min = this.get('quantity_minimum');
+
+        if (max !== min &&
+            ((buttonType === 'radioButton' && this.isSelectionRequired()) || this._getSelectedItems().length <= min)) {
 
             return false;
         }

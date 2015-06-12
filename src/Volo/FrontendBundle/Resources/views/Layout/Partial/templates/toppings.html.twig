@@ -24,9 +24,15 @@
 
 {# product quantity in modal #}
 <script type="text/template" id="toppings-product-quantity">
-    <span class="icon-minus product__quantity__decrease"></span>
-    <span class="product__quantity"><%- quantity %></span>
-    <span class="icon-plus product__quantity__increase"></span>
+    <div class="product__quantity__container">
+        <div class="icon-minus product__quantity__decrease"></div>
+    </div>
+    <div class="product__quantity__container">
+        <div class="product__quantity"><%- quantity %></div>
+    </div>
+    <div class="product__quantity__container">
+        <div class="icon-plus product__quantity__increase"></div>
+    </div>
 </script>
 
 {# topping fragment #}
@@ -46,23 +52,35 @@
 {#topping option fragment #}
 <script type="text/template" id="template-topping-option">
     <div class="topping-option__button"></div>
-    <div class="topping-option__name"><%- name %></div>
+    <div class="topping-option__name">
+        <%- name %>
+        <% if (price != 0 ) { %>
+        (+<%= VOLO.formatCurrency(price) %>)
+        <% } %>
+    </div>
 </script>
 
 {#topping option header comment fragment #}
 <script type="text/template" id="template-topping-comment">
     <div class="topping__comment__help-text">
-        <% if (quantity_minimum === 0 ) { %>
-            <% if (quantity_maximum > 1 ) { %>
+        <% if (quantity_minimum === 0) { %>
+            <% if (quantity_maximum > 1 && quantity_maximum < 1000) { %>
                 {% trans with {'%quantity%': '<%- quantity_maximum %>'} %}topping.select_up_to %quantity%{% endtrans %}
             <% } else { %>
                 {% trans %}topping.select_optional{% endtrans %}
             <% } %>
         <% } else { %>
-            <% if (quantity_maximum === 1 ) { %>
-                {% trans %}topping.select_one{% endtrans %}
+            <% if (quantity_minimum === quantity_maximum) { %>
+                {% trans with {'%quantity%': '<%- quantity_minimum %>'} %}topping.select %quantity%{% endtrans %}
             <% } else { %>
-                {% trans with {'%quantity%': '<%- quantity_maximum %>'} %}topping.select_up_to %quantity%{% endtrans %}
+                <% if (quantity_maximum < 1000) { %>
+                    {% trans with {
+                        '%quantity_max%': '<%- quantity_maximum %>',
+                        '%quantity_min%': '<%- quantity_minimum %>'
+                    } %}topping.select_from_x_to_y %quantity_min% %quantity_max%{% endtrans %}
+                <% } else { %>
+                    {% trans with {'%quantity%': '<%- quantity_minimum %>'} %}topping.select_x_or_more %quantity%{% endtrans %}
+                <% } %>
             <% } %>
         <% } %>
     </div>
@@ -71,7 +89,7 @@
         <li>
             <%= option.name %>
             <% if (option.price != 0 ) { %>
-            (<%= VOLO.formatCurrency(option.price) %>)
+            (+<%= VOLO.formatCurrency(option.price) %>)
             <% } %>
         </li>
         <% }); %>
