@@ -4,7 +4,7 @@
 {% block content %}
     <div class="hero-banner-wrapper">
         <h1>{{ 'address.promo %city%'|trans({'%city%': formattedLocation['city']})|nl2br }}</h1>
-        {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image.html.twig' with {vendorCode : 'list', type: 'hero'} %}
+        {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {vendorCode : 'list', type: 'hero', 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
     </div>
     <div class="wrapper-fluid">
         <div class="restaurants">
