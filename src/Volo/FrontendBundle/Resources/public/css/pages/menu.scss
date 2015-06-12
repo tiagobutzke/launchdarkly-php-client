@@ -20,7 +20,7 @@
 }
 
 .hero-menu__info {
-  width: 400px;
+  width: 250px;
   padding: 0;
   text-align: center;
   color: $color-text-selection;
@@ -29,12 +29,15 @@
   @include absolute-center-box();
   margin-top: 10%;
 
+  @include respond-from("screen-sm") {
+    width: 350px
+  }
   @include respond-from("screen-md") {
+    width: 600px;
     margin-top: auto;
     height: 107px;
   }
   @include respond-from("screen-lg") {
-    width: 600px;
     height: 129px;
   }
 
