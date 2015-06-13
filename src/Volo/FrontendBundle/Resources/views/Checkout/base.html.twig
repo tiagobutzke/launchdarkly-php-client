@@ -27,77 +27,9 @@
 
             {# Payment #}
             {{ block('payment') }}
-
-            {# Order summary mobile #}
-            <div class="checkout__summary-wrapper">
-                <h3 class="checkout__title">Order summary
-                    <span class="checkout__subtitle__edit">
-                        <i class="icon-pencil"></i><a href="#1">Edit</a>
-                    </span>
-                </h3>
-                <div class="checkout__summary">
-                    <h3 class="summary__restaurant-name">{{ vendor.name }}</h3>
-                    <table class="summary__items">
-                        <tr>
-                            <td class="summary__item__quantity">2</td>
-                            <td class="summary__item__sign">x</td>
-                            <td class="summary__item__name">
-                                ÜBER Marinade Chicken Menü
-                                    <span class="summary__item__extra">
-                                       + No eggplants
-                                    </span>
-                            </td>
-                            <td class="summary__item__price">5,50 &euro;</td>
-                        </tr>
-                        <tr>
-                            <td class="summary__item__quantity">1</td>
-                            <td class="summary__item__sign">x</td>
-                            <td class="summary__item__name">
-                                Ga Cam Bio-Tofu mit
-                                Orangen-Kokos Sauce
-                                    <span class="summary__item__extra">
-                                       + Piccante Dip oder Kräuterbutter
-                                    </span>
-                                    <span class="summary__item__extra">
-                                       + Frischen Kräutern und Ratatouille
-                                    </span>
-                            </td>
-                            <td class="summary__item__price">5,50 &euro;</td>
-                        </tr>
-                        <tr>
-                            <td class="summary__item__quantity">1</td>
-                            <td class="summary__item__sign">x</td>
-                            <td class="summary__item__name">
-                                Veggie Protein
-                            </td>
-                            <td class="summary__item__price">4,40 &euro;</td>
-                        </tr>
-                        <tr>
-                            <td class="summary__item__quantity">1</td>
-                            <td class="summary__item__sign">x</td>
-                            <td class="summary__item__name">
-                                Ga Cam Bio-Tofu mit
-                                Orangen-Kokos Sauce
-                            </td>
-                            <td class="summary__item__price">5,50 &euro;</td>
-                        </tr>
-                        <tr>
-                            <td colspan="4" class="summary__item__empty"></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
         </div>
-        <div class="summary__foot">
-            <div class="summary__foot__subtotal__label">Subtotal</div>
-            <div class="summary__foot__subtotal__price">8,50 &euro;</div>
-            <div class="summary__foot__delivery__label">Delivery</div>
-            <div class="summary__foot__delivery__price">+ 5,00 &euro;</div>
-            <div class="summary__foot__total__label">Total (inkl. VAT)</div>
-            <div class="summary__foot__total__price">15,12 &euro;</div>
-        </div>
-        {# Order summary desktop #}
-        <div class="desktop-cart mobile-cart__hidden" data-minimum_order_amount="{{ vendor.minimumOrderAmount }}" data-vendor_id="{{ vendor.id }}">{# cart from template #}</div>
+        <h3 class="checkout__title checkout__title--summary">{% trans %}title.order_summary{% endtrans %}</h3>
+        <div class="desktop-cart" data-minimum_order_amount="{{ vendor.minimumOrderAmount }}" data-vendor_id="{{ vendor.id }}">{# cart from template #}</div>
     </div>
 </div>
 {# Sticky bottom cart mobile #}
