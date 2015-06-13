@@ -66,6 +66,7 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
         return [
             new \Twig_SimpleFunction('get_configuration', array($this, 'getConfiguration')),
             new \Twig_SimpleFunction('get_default_cart_count', array($this, 'getDefaultCartCount')),
+            new \Twig_SimpleFunction('get_default_cart_vendor_id', array($this, 'getDefaultCartVendorId')),
         ];
     }
 
@@ -107,8 +108,18 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
     public function getDefaultCartCount()
     {
         $cart = $this->cartManager->getDefaultCart($this->session->getId());
-        
+
         return $cart === null ? 0 : array_sum(array_column($cart['products'], 'quantity'));
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultCartVendorId()
+    {
+        $cart = $this->cartManager->getDefaultCart($this->session->getId());
+
+        return ($cart === null || !array_key_exists('vendor_id', $cart)) ? '' : $cart['vendor_id'];
     }
 
     /**
