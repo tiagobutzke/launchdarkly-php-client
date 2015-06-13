@@ -1,5 +1,7 @@
 {% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
 
+{% block title %}{{ element.metaTitle }} | {% trans %}brand{% endtrans %}{% endblock %}
+
 {% block content_wrapper_class %}menu-bg{% endblock content_wrapper_class %}
 
 {% block content %}
