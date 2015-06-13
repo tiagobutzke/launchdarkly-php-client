@@ -44,8 +44,12 @@ module.exports = function (grunt) {
 
     var jsSources = {};
 
-    jsSources.head = [
+    jsSources.libs = [
         'web/bower_components/jquery/dist/jquery.js',
+        'web/bower_components/real-shadow/realshadow.js'
+    ];
+
+    jsSources.head = jsSources.libs.concat([
         'web/bundles/heltheturbolinks/js/turbolinks.js',
         'web/js/lib/andr3pt-blazy.js',
         'web/bundles/fosjsrouting/js/router.js',
@@ -60,10 +64,9 @@ module.exports = function (grunt) {
         'web/bower_components/adyen-cse-js/js/adyen.encrypt.js',
         'web/bower_components/spin.js/spin.js',
         'web/bower_components/validate/validate.js',
-        'web/bower_components/real-shadow/realshadow.js',
         'web/bower_components/mobile-detect/mobile-detect.js',
         frontendAssetPath('/js/**/*.js')
-    ];
+    ]);
 
     var sprite = {
         common: {},
@@ -119,6 +122,10 @@ module.exports = function (grunt) {
             },
             beautify: debug,
             mangle: !debug
+        },
+        libs: {
+            src: jsSources.libs,
+            dest: frontendWebPath('/js/dist/libs.js')
         },
         head: {
             src: jsSources.head,

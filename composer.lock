@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a8cf49c6924f3aa82512bd1307ccd677",
+    "hash": "7fb25a503dd096ff343ff3adc8175251",
     "packages": [
         {
             "name": "99designs/phumbor",
@@ -663,7 +663,7 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:foodpanda/api-sdk.git",
-                "reference": "0be2553"
+                "reference": "92b0367"
             },
             "require": {
                 "commerceguys/guzzle-oauth2-plugin": "~2.0",
@@ -692,7 +692,7 @@
                 }
             ],
             "description": "Foodpanda API SDK",
-            "time": "2015-06-06 18:01:42"
+            "time": "2015-06-10 10:06:43"
         },
         {
             "name": "foodpanda/translation-bundle",
@@ -3253,54 +3253,6 @@
                 "standards"
             ],
             "time": "2015-04-28 23:28:20"
-        },
-        {
-            "name": "webfactory/exceptions-bundle",
-            "version": "4.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/webfactory/exceptions-bundle.git",
-                "reference": "176e86fee71d4b7a5c382654a1f4161cf9d53917"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/webfactory/exceptions-bundle/zipball/176e86fee71d4b7a5c382654a1f4161cf9d53917",
-                "reference": "176e86fee71d4b7a5c382654a1f4161cf9d53917",
-                "shasum": ""
-            },
-            "require": {
-                "symfony/twig-bundle": "~2.2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0",
-                "symfony/framework-bundle": "~2.2"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-default": "3.1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Webfactory\\Bundle\\ExceptionsBundle\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "webfactory GmbH",
-                    "email": "info@webfactory.de",
-                    "homepage": "http://www.webfactory.de",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A simple controller to display error pages during development plus some building blocks for more user-friendly error pages.",
-            "homepage": "http://inside.webfactory.de/de/blog/symfony2-exception-handling-and-custom-error-pages-explained.html",
-            "time": "2015-05-22 12:31:25"
         }
     ],
     "aliases": [],
