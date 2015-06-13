@@ -2,7 +2,8 @@ $(document).ready(function() {
     var plateAnimation,
         deliveryTimeAnimation,
         cityFlipperAnimation,
-        calledActionAnimation;
+        calledActionAnimation,
+        plzSelectionAnimation;
 
     plateAnimation = new VOLO.RevealOnScroll({
         $window: $(window),
@@ -23,9 +24,23 @@ $(document).ready(function() {
         toNumber: 29,
         transition: 'cubic-bezier(0.270, 1.170, 1.000, 1.000)',
         startingPointGetter: function() {
-            return $(".numbers__scroller").offset().top;
+            return $('.numbers__scroller').offset().top;
         }
     });
+
+    plzSelectionAnimation = new VOLO.AddClassOnScroll({
+        $window: $(window),
+        $document: $(document),
+        targetSelector: '.restaurants__tool-box, .header',
+        className: 'restaurants__tool-box-sticking',
+        isActiveGetter: function() {
+            return $('.restaurants').length && $('.header').length;
+        },
+        startingPointGetter: function() {
+            return $('.restaurants').offset().top - $('.header').height() + 30;
+        }
+    });
+    plzSelectionAnimation.init();
 
     function initCityAnimations() {
         var cities = $('.city');
