@@ -1,7 +1,7 @@
 <h4 class="checkout__subtitle">{% trans %}title.delivery_time{% endtrans %}</h4>
 <div class="checkout__item" id="selected_delivery_address">
-    <span>{{ date(cart.orderTime)|localizeddate('long', 'none') }}</span>
-    <span>{{date( cart.orderTime)|formatTime }} - {{date( cart.orderTime)|date_modify('+1 hour')|formatTime }}</span>
+    <span>{{ date(cart.order_time)|localizeddate('long', 'none') }}</span>
+    <span>{{date( cart.order_time)|formatTime }} - {{date( cart.order_time)|date_modify('+1 hour')|formatTime }}</span>
 </div>
 
 <h4 class="checkout__subtitle">{% trans %}title.delivery_address{% endtrans %}</h4>

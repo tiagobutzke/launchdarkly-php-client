@@ -25,7 +25,7 @@ var CartDataProvider = function() {
                 };
             }),
             "location": data.location,
-            "orderTime": data.orderTime,
+            "order_time": data.order_time,
             "paymentTypeId": 0,
             "activeLanguage": 1,
             "groupCode": "",

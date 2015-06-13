@@ -17,7 +17,7 @@
 {% block content %}
 <div class="checkout-wrapper">
     <div class="checkout">
-        <div class="checkout__main">
+        <div class="checkout__main" data-vendor_id="{{ vendor.id }}">
 
             {# delivery information #}
             {{ block('delivery_information') }}

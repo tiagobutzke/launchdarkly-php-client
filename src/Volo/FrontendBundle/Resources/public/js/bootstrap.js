@@ -16,8 +16,10 @@ VOLO.initCartModel = function (jsonCart) {
     return VOLO.cartModel;
 };
 
-VOLO.initCheckoutModel = function (cartModel) {
+VOLO.initCheckoutModel = function (cartModel, locationModel, vendorId) {
     VOLO.checkoutModel = new CheckoutModel({}, {cartModel: cartModel});
+
+    cartModel.getCart(vendorId).set('location', locationModel.attributes);
 
     return VOLO.checkoutModel;
 };
@@ -73,6 +75,7 @@ VOLO.initCheckoutViews = function (cartModel, checkoutModel, deliveryCheck) {
         el: '.desktop-cart',
         model: cartModel,
         $header: $('.header'),
+        locationModel: VOLO.locationModel,
         $menuMain: $('.checkout__main'),
         $window: $(window)
     });
@@ -236,7 +239,7 @@ $(document).on('page:load page:restore', function () {
 
     if ($('.checkout__main').length > 0) {
         VOLO.initCartModel(VOLO.jsonCart);
-        VOLO.initCheckoutModel(VOLO.cartModel);
+        VOLO.initCheckoutModel(VOLO.cartModel, VOLO.locationModel, $('.checkout__main').data('vendor_id'));
         VOLO.initCheckoutViews(VOLO.cartModel, VOLO.checkoutModel, new DeliveryCheck());
         VOLO.CheckoutCartView.render();
 
