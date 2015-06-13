@@ -236,12 +236,17 @@ class VendorExtension extends \Twig_Extension
     /**
      * @param SchedulesCollection $schedules
      * @param int $numberOfDays
+     * @param int $averageDeliveryTime
      * @param \DateTime $startDay
      *
      * @return \DateTime[]
      */
-    public function getDeliveryDays(SchedulesCollection $schedules, $numberOfDays, \DateTime $startDay = null)
-    {
+    public function getDeliveryDays(
+        SchedulesCollection $schedules,
+        $numberOfDays,
+        $averageDeliveryTime,
+        \DateTime $startDay = null
+    ) {
         $dayToCheck = $startDay !== null ? clone $startDay : new \DateTime();
         $deliveryPossible = $this->isDeliveryPossibleOnThisDay($schedules, $dayToCheck);
 
@@ -252,7 +257,9 @@ class VendorExtension extends \Twig_Extension
         $attempts = 0;
         while ((count($openingDays) < $numberOfDays) && ($attempts < 7)) {
             $nextOpeningDay = $this->getNextOpeningDay($schedules, $dayToCheck);
-            $openingDays[] = $nextOpeningDay;
+            if ($this->canDeliver($nextOpeningDay, $schedules, $averageDeliveryTime)) {
+                $openingDays[] = $nextOpeningDay;
+            }
 
             // set the new startingDayToCheck to the new found day plus 1
             $dayToCheck->setTimestamp($nextOpeningDay->getTimestamp());
@@ -264,15 +271,49 @@ class VendorExtension extends \Twig_Extension
     }
 
     /**
+     * @param \DateTime $day
+     * @param SchedulesCollection $schedules
+     * @param int $averageDeliveryTimeInMinutes
+     * @return bool
+     */
+    protected function canDeliver(\DateTime $day, SchedulesCollection $schedules, $averageDeliveryTimeInMinutes)
+    {
+        $canDeliver = true;
+
+        if ($this->isToday($day)) {
+            $closingTime = $this->getClosingTime($schedules);
+            $nextPossibleDeliveryTimeInSeconds = time() + (60 * $averageDeliveryTimeInMinutes);
+            $canDeliver = (int) $closingTime->format('Hi') > (int) date('Hi', $nextPossibleDeliveryTimeInSeconds);
+        }
+
+        return $canDeliver;
+    }
+
+    /**
+     * @param \DateTime $day
+     *
+     * @return bool
+     */
+    protected function isToday(\DateTime $day)
+    {
+        $today = new \DateTime();
+
+        return $today->format('Y-m-d') === $day->format('Y-m-d');
+    }
+
+    /**
      * This method takes a day (DateTime) and returns deliver ranges [[18:00, 19:00], [19:00, 20:00], [20:00, 21:30]]
      *
      * @param SchedulesCollection $schedules
      * @param \DateTime $day
      *
+     * @param int $averageDeliveryTime average delivery time in minutes
      * @return array
      */
-    public function getClosingHoursRange(SchedulesCollection $schedules, \DateTime $day)
+    public function getClosingHoursRange(SchedulesCollection $schedules, \DateTime $day, $averageDeliveryTime)
     {
+        $averageDeliveryTimeInSeconds = $averageDeliveryTime * 60;
+
         $openingTime = $this->getOpeningTime($schedules, $day->format('N'));
         $closingTime = $this->getClosingTime($schedules, $day->format('N'));
 
@@ -303,28 +344,38 @@ class VendorExtension extends \Twig_Extension
             $startTimeInSecondsToday = max($openingTimeInSecondsOfTheDay, $secondsSinceTheBeginningOfTheDay);
 
             // we do this to round to the nearest 1/2 hour in case that the Restaurant opens for example at 10:30
-            $startingHour = ceil(2 * $startTimeInSecondsToday / 3600) / 2;
-            $deliveryStartingTimeInSecondsOfTheDay = $startingHour * 3600;
+            $startingHour = ceil(2 * ($startTimeInSecondsToday + $averageDeliveryTimeInSeconds)  / 3600) / 2;
+            $deliveryStartingTimeInSecondsOfTheDay =  $startingHour * 3600;
         }
 
-        return $this->getDeliveryRanges($deliveryStartingTimeInSecondsOfTheDay, $closingTimeInSecondsOfTheDay);
+        return $this->getDeliveryRanges(
+            $deliveryStartingTimeInSecondsOfTheDay,
+            $closingTimeInSecondsOfTheDay,
+            $averageDeliveryTimeInSeconds
+        );
     }
 
     /**
-     * @param $actualStartingTimeInSecondsToday
-     * @param $closingTimeInSecondsToday
+     * @param int $actualStartingTimeInSecondsToday
+     * @param int $closingTimeInSecondsToday
+     * @param int $averageDeliveryTimeInSeconds
+     *
      * @return array
      */
-    protected function getDeliveryRanges($actualStartingTimeInSecondsToday, $closingTimeInSecondsToday)
-    {
+    protected function getDeliveryRanges(
+        $actualStartingTimeInSecondsToday,
+        $closingTimeInSecondsToday,
+        $averageDeliveryTimeInSeconds
+    ) {
         $dateTimeForFormatting = new \DateTime();
 
         $deliveryPairs = [];
+        $rangePeriodInSeconds = ceil($averageDeliveryTimeInSeconds / 1800) * 1800;
 
         // we loop on the time hour by hour
-        for ($i = $actualStartingTimeInSecondsToday; $i < $closingTimeInSecondsToday; $i += 3600) {
+        for ($i = $actualStartingTimeInSecondsToday; $i < $closingTimeInSecondsToday; $i += $rangePeriodInSeconds) {
             $startingTime = ($i / 3600);
-            $endingTime = min($closingTimeInSecondsToday, ($i + 3600)) / 3600;
+            $endingTime = min($closingTimeInSecondsToday, ($i + $rangePeriodInSeconds)) / 3600;
 
             // calculating and formatting the range
             $rangeStartingMinutes = ($startingTime - floor($startingTime)) * 60;
