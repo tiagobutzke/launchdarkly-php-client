@@ -5,8 +5,8 @@
         <h3 class="checkout__title">1. {% trans %}title.delivery_details{% endtrans %}
             <span class="checkout__subtitle__edit">
                 {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <i class="icon-pencil"></i>
                     <a id="add_new_address_link" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">
+                        <i class="icon-pencil"></i>
                         {% trans %}link.add_new_address{% endtrans %}
                     </a>
                 {% endif %}
@@ -23,9 +23,10 @@
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <h4 class="checkout__subtitle">{% trans %}title.delivery_address{% endtrans %}
                 <span class="checkout__subtitle__edit">
-                    <i class="icon-plus"></i>
                     <a id="add_new_address_link" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">
-                        {% trans %}link.add_new_address{% endtrans %}
+                        <i class="icon-plus"></i>
+                        <span class="add_new_address_link__text--add-address">{% trans %}link.add_new_address{% endtrans %}</span>
+                        <span class="add_new_address_link__text--cancel">{% trans %}link.cancel{% endtrans %}</span>
                     </a>
                 </span>
             </h4>
@@ -37,7 +38,8 @@
                     {% include('VoloFrontendBundle:Layout/Partial/templates:checkout_address.html.twig') %}
                     <div class="checkout__item">
                         <a id="select_other_address_link" class="checkout__more-feature-link">
-                            {% trans %}link.select_other_address{% endtrans %}
+                            <span class="select_other_address_link__text--select">{% trans %}link.select_other_address{% endtrans %}</span>
+                            <span class="select_other_address_link__text--cancel">{% trans %}link.cancel{% endtrans %}</span>
                         </a>
                     </div>
                 </div>
@@ -56,10 +58,12 @@
     <h3 class="checkout__title">
         2. {% trans %}title.contact_information{% endtrans %}
         <span class="checkout__subtitle__edit">
-        <i class="icon-pencil"></i>
         <a id="edit_contact_information_form_link"
-           href="{{ path('checkout_contact_information', {vendorCode: vendor.code}) }}">{% trans %}
-            link.edit_contact_information{% endtrans %}</a>
+           href="{{ path('checkout_contact_information', {vendorCode: vendor.code}) }}">
+            <i class="icon-pencil"></i>
+            <span class="edit_contact_information_form_link__text--edit">{% trans %}link.edit_contact_information{% endtrans %}</span>
+            <span class="edit_contact_information_form_link__text--cancel">{% trans %}link.cancel{% endtrans %}</span>
+        </a>
     </span>
     </h3>
 
@@ -113,6 +117,11 @@
                     </div>
                     <div class="checkout__payment_label"><i class="icon-check"></i>{{ label_credit_cart|trans }}</div>
                 </div>
+                {% if payment.paymentTypeCode == 'paypal' %}
+                <div class="checkout__payment_description">
+                    {% trans %}generic.payment_paypal_description{% endtrans %}
+                </div>
+                {% endif %}
             </div>
         {% endfor %}
     </div>
@@ -161,9 +170,12 @@
     {{ parent() }}
     
     <script data-turbolinks-eval=false>
+        //TODO make this a backbone view
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             $('#edit_contact_information_form_link').click(function () {
                 $('#edit_contact_information_form').toggleClass('hide');
+                $(this).toggleClass('contact_information_form-open');
+                $('#contact_information').find('.checkout__item').toggleClass('hide');
                 event.preventDefault();
             });
     
@@ -172,10 +184,12 @@
                         Routing.generate('checkout_edit_contact_information'),
                         $('#contact_information_form').serialize()
                 ).done(function (data) {
-                            $('#contact_information').html(data);
-                            $('#contact_information_form').toggleClass('hide');
-                        });
-    
+                    $('#contact_information').html(data);
+                    $('#edit_contact_information_form').toggleClass('hide');
+                    $('#edit_contact_information_form_link').removeClass('contact_information_form-open');
+                });
+
+
                 // replace the list with the new list from the POST request
                 event.preventDefault();
             });

@@ -93,3 +93,25 @@
   }
 }
 // ----------- ASPECT RATIO START END ----------
+
+// ----------- RADIO BUTTON SPRITE START ----------
+// mixin should be applied to input type radio followed by label with no content
+//<input type="radio">
+//<label></label>
+@mixin make-sprite-radiobutton($spriteGroupUnselected, $spriteGroupSelected, $spriteGroupHeight) {
+  margin  : 0;
+  padding : 0;
+  opacity : 0;
+
+  & + label{
+    display: inline-block;
+    vertical-align: top;
+    @include retina-sprite($spriteGroupUnselected);
+    min-height: $spriteGroupHeight;
+  }
+
+  &:checked + label{
+    @include retina-sprite($spriteGroupSelected);
+  }
+}
+// ----------- RADIO BUTTON SPRITE END ----------

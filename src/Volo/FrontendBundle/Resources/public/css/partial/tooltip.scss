@@ -48,4 +48,15 @@ $tooltip-arrow-color: $tooltip-bg;
     border-width: 0 $tooltip-arrow-width $tooltip-arrow-width;
     border-bottom-color: $tooltip-arrow-color;
   }
+
+  &.top {
+    .tooltip-arrow {
+      bottom: -8px;
+      left: 50%;
+      margin-left: -$tooltip-arrow-width;
+      border-left: $tooltip-arrow-width solid transparent;
+      border-right: $tooltip-arrow-width solid transparent;
+      border-top: $tooltip-arrow-width solid $tooltip-arrow-color;
+    }
+  }
 }

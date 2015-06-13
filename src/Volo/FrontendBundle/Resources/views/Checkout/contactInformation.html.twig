@@ -7,7 +7,9 @@
         <a href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">{% trans %}link.edit_delivery_information{% endtrans %}</a>
     </span>
     </h3>
-    {% include('VoloFrontendBundle:Checkout/Partial:delivery_information_edit.html.twig') %}
+    <div class="checkout__delivery_information">
+        {% include('VoloFrontendBundle:Checkout/Partial:delivery_information_edit.html.twig') %}
+    </div>
 {% endblock %}
 
 {% block contact_information %}

@@ -172,6 +172,9 @@ var CartView = Backbone.View.extend({
             startingPointGetter: function() {
                 return this.$el.offset().top;
             }.bind(this),
+            isActiveGetter: function() {
+                return !$('body').hasClass('checkout-page');
+            }.bind(this),
             endPointGetter: function() {
                 return this.domObjects.$menuMain.offset().top + this.domObjects.$menuMain.outerHeight();
             }.bind(this)

@@ -13,6 +13,7 @@ var StickOnTop  = (function() {
         this.endPointGetter = options.endPointGetter;
         //-16 is for the scrollbar width, this magic number can be solved with modernizr.mq
         this.noStickyBreakPoint = options.noStickyBreakPoint - 16 || 0;
+        this.isActiveGetter = options.isActiveGetter || function() { return true; };
         this.stickingOnTopClass = 'stickingOnTop';
 
         this.targetHeight = null;
@@ -25,6 +26,9 @@ var StickOnTop  = (function() {
 
     // reset state, recalculate the starting values and save a new target
     StickOnTop.prototype.init = function(newTarget) {
+        if (!this.isActiveGetter()) {
+            return;
+        }
         this.domObjects.$target = newTarget;
         this.updateCoordinates();
 
@@ -37,6 +41,9 @@ var StickOnTop  = (function() {
 
     // reset state, recalculate the starting values and save a new target
     StickOnTop.prototype.updateCoordinates = function() {
+        if (!this.isActiveGetter()) {
+            return;
+        }
         this.stickOnTopValue = this.stickOnTopValueGetter();
         this.startingPoint = this.startingPointGetter();
         this.endpoint = this.endPointGetter();
@@ -84,7 +91,11 @@ var StickOnTop  = (function() {
 
     // adding sticking behaviour
     StickOnTop.prototype._addSticking = function() {
-        if (this.domObjects.$target && this.domObjects.$target.length && !this.domObjects.$container.hasClass(this.stickingOnTopClass)) {
+        if (!this.isActiveGetter()) {
+            return;
+        }
+        if (this.domObjects.$target && this.domObjects.$target.length &&
+            !this.domObjects.$container.hasClass(this.stickingOnTopClass)) {
             this.domObjects.$container.addClass(this.stickingOnTopClass);
             this.domObjects.$target.css({
                 position: 'fixed',

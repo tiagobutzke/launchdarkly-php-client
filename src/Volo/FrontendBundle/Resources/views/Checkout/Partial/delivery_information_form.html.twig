@@ -1,11 +1,19 @@
 <form action="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}" id="delivery_information_form" method="post" role="form" novalidate>
     <div class="checkout__item checkout__item--step">
         <div class="form-group">
-            <input type="text" class="form-control" id="formatted_address" name="formatted_address"
-                   value="{{ customer_address.address_line1|default('') }} {{ customer_address.address_line2|default('') }}"
-                   required="true" placeholder="{% trans %}form.placeholder.address{% endtrans %}"
-                   data-msg_ensure_full_address="{% trans %}formatted_address.ensure_full_address_with_number{% endtrans %}"
-                   data-validation-msg="{% trans %}validations.error.checkout.customer_address{% endtrans %}">
+            <input
+                type="text"
+                class="form-control"
+                id="formatted_address"
+                name="formatted_address"
+                {% set addressValue = customer_address.address_line1|default('') ~ ' ' ~ customer_address.address_line2|default('') %}
+                {#trim removes the empty string if address is empty, otherwise placeholder doesn't work#}
+                value="{{ addressValue|trim }}"
+                required="true"
+                placeholder="{% trans %}form.placeholder.address{% endtrans %}"
+                data-msg_ensure_full_address="{% trans %}formatted_address.ensure_full_address_with_number{% endtrans %}"
+                data-validation-msg="{% trans %}validations.error.checkout.customer_address{% endtrans %}"
+                >
         </div>
         <div class="form-group form-group--two_col1">
             <input type="text" class="form-control"  id="postal_index_form_input" name="customer_address[postcode]"
