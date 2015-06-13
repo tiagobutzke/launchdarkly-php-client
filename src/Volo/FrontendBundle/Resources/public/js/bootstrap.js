@@ -198,6 +198,16 @@ VOLO.initVendorsListSearch = function() {
     });
 };
 
+VOLO.OrderTracking = function() {
+    var code = $('.order-status-wrapper').data().order_code;
+    $.ajax({
+        url: Routing.generate('order_tracking', {orderCode: code, partial: 1})
+    }).done(function(response) {
+        console.log('order tracking update ', (new Date()).toString());
+        $('.tracking-steps').html(response);
+    });
+};
+
 $(document).ready(function () {
     // On document.ready we trigger Turbolinks page:load event
     $(document).trigger('page:load');
@@ -257,6 +267,12 @@ $(document).on('page:load page:restore', function () {
         VOLO.initVendorsListSearch();
         VOLO.vendorSearchView.render();
     }
+    if ($('.order-status-wrapper').length > 0) {
+        if (!_.isNull(VOLO.orderTrackingInterval)) {
+            clearInterval(VOLO.orderTrackingInterval);
+        }
+        VOLO.orderTrackingInterval = setInterval(VOLO.OrderTracking, 60000);
+    }
 });
 
 $(document).on('page:before-unload', function () {
@@ -299,6 +315,10 @@ $(document).on('page:before-unload', function () {
     }
     if (_.isObject(VOLO.checkoutInformationValidationFormView)) {
         VOLO.checkoutInformationValidationFormView.unbind();
+    }
+    if (!_.isNull(VOLO.orderTrackingInterval)) {
+        clearInterval(VOLO.orderTrackingInterval);
+        VOLO.orderTrackingInterval = null;
     }
 });
 

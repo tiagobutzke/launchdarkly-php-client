@@ -6,11 +6,12 @@
 {% block content %}
     <div class="hero-banner-wrapper">
         {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {type: 'hero', 'vendorCode' : order.vendor_code, 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
+
         <div class="hero-traking__info">
             <h2 class="tracking-header__title">{% trans %}title.we_have_received_your_order{% endtrans %}!</h2>
             <h2 class="tracking-header__title">
                 {% trans %}title.it_should_arrive_at{% endtrans %}
-                <span class="time_value">00:00 {% trans %}time.pm{% endtrans %}</span>
+                <span class="time_value">{{ date(status.confirmed_delivery_time.date, status.confirmed_delivery_time.timezone)|formatTime }}</span>
             </h2>
             {#TODO app - show app info when app is available #}
             {#<div class="tracking-header__app">#}
@@ -19,87 +20,21 @@
             {#</div>#}
         </div>
     </div>
-    <div class="order-status-wrapper">
+    <div class="order-status-wrapper" data-order_code="{{ order.reference }}">
         <div class="order-status-row">
-            <div class="tracking-steps" >
-                <div class="tracking-step tracking-step-first tracking-step-active">
-                    <div class="tracking-step__line"></div>
-                    <div class="tracking-step__image">
-                        <div class="tracking-step__image__number">1</div>
-                    </div>
-                    <div class="tracking-step__message">
-                        <h2 class="tracking-step__message__title">{% trans %}title.order_accepted{% endtrans %}</h2>
-                        <div class="tracking-step__message__text">{% trans %}title.order_accepted_comment{% endtrans %}</div>
-                    </div>
-                    <div class="tracking-step__time">
-                        <span class="time_value">00:00 {% trans %}time.am{% endtrans %}</span>
-                    </div>
-                </div>
-                <div class="tracking-step">
-                    <div class="tracking-step__line"></div>
-                    <div class="tracking-step__image">
-                        <div class="tracking-step__image__number">2</div>
-                    </div>
-                    <div class="tracking-step__message">
-                        <h2 class="tracking-step__message__title">{% trans %}title.being_prepared{% endtrans %}</h2>
-                        <div class="tracking-step__message__text">{% trans %}title.being_prepared_comment{% endtrans %}</div>
-                    </div>
-                    <div class="tracking-step__time">
-                        <span class="time_value">00:00 {% trans %}time.am{% endtrans %}</span>
-                    </div>
-                </div>
-                <div class="tracking-step">
-                    <div class="tracking-step__line"></div>
-                    <div class="tracking-step__image">
-                        <div class="tracking-step__image__number">3</div>
-                    </div>
-                    <div class="tracking-step__message">
-                        <h2 class="tracking-step__message__title">{% trans %}title.picked_up_for_delivery{% endtrans %}</h2>
-                        <div class="tracking-step__message__text">{% trans %}title.picked_up_for_delivery_comment{% endtrans %}</div>
-                    </div>
-                    <div class="tracking-step__time">
-                        <span class="time_value">00:00 {% trans %}time.am{% endtrans %}</span>
-                    </div>
-                </div>
-                <div class="tracking-step">
-                    <div class="tracking-step__line"></div>
-                    <div class="tracking-step__image">
-                        <div class="tracking-step__image__number">4</div>
-                    </div>
-                    <div class="tracking-step__message">
-                        <h2 class="tracking-step__message__title">{% trans %}title.arriving_soon{% endtrans %}</h2>
-                        <div class="tracking-step__message__text">{% trans %}title.arriving_soon_comment{% endtrans %}</div>
-                    </div>
-                    <div class="tracking-step__time">
-                        <span class="time_value">00:00 {% trans %}time.am{% endtrans %}</span>
-                    </div>
-                </div>
-                <div class="tracking-step tracking-step-last">
-                    <div class="tracking-step__line"></div>
-                    <div class="tracking-step__image">
-                        <div class="tracking-step__image__number">
-                            <span class="icon-check"></span>
-                        </div>
-                    </div>
-                    <div class="tracking-step__message">
-                        <h2 class="tracking-step__message__title">{% trans %}title.delivered{% endtrans %}</h2>
-                        <div class="tracking-step__message__text">{% trans %}title.delivered_comment{% endtrans %}</div>
-                    </div>
-                    <div class="tracking-step__time">
-                        <span class="time_value">00:00 {% trans %}time.am{% endtrans %}</span>
-                    </div>
-                </div>
+            <div class="tracking-steps">
+                {% include 'VoloFrontendBundle:Order:tracking_steps.html.twig' with {"status": status} %}
             </div>
             {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-            <div class="create_account">
-                <div class="create_account__message">
-                    <h2 class="create_account__message__title">{% trans %}title.create_account{% endtrans %}</h2>
-                    <div class="create_account__message__text">{% trans %}title.create_account_invitation{% endtrans %}</div>
+                <div class="create_account">
+                    <div class="create_account__message">
+                        <h2 class="create_account__message__title">{% trans %}title.create_account{% endtrans %}</h2>
+                        <div class="create_account__message__text">{% trans %}title.create_account_invitation{% endtrans %}</div>
+                    </div>
+                    <div class="create_account__login">
+                        <button class="create_account__login__button button">{% trans %}title.create_account{% endtrans %}</button>
+                    </div>
                 </div>
-                <div class="create_account__login">
-                    <button class="create_account__login__button button">{% trans %}title.create_account{% endtrans %}</button>
-                </div>
-            </div>
             {% endif %}
         </div>
         {#TODO app - show app info when app is available #}
