@@ -69,7 +69,7 @@ class LocationController extends Controller
 
         /** @var Vendor[] $closedVendorsWithPreorder */
         $closedVendorsWithPreorder = $items->filter(function (Vendor $vendor) {
-            return !$vendor->isIsPickupEnabled() && !$vendor->isIsDeliveryEnabled() && $vendor->isIsPreorderEnabled();
+            return !(bool) $vendor->getMetadata()->getAvailableIn();
         });
 
         return [$openVendors, $closedVendorsWithPreorder];

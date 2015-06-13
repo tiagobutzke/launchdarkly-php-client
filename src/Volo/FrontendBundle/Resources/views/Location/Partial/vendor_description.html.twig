@@ -23,7 +23,7 @@
                 </div>
                 <div class="restaurants__item__wrapper__time--closed">
                     <i class="icon-clock-o"></i>
-                    {% trans with {'%time%': date('now')|localizeddate('none', 'short')}%}restaurant.open_at %time%{% endtrans %}
+                    {% trans with {'%time%': getNextOpeningHours(vendor.schedules)|formatTime}%}restaurant.open_at %time%{% endtrans %}
                 </div>
             </div>
         </div>
