@@ -64,7 +64,7 @@ function changeHeader() {
     //change header to Desktop when screen bigger that 800
     } else if ($(window).width() >= 800 && $('.header').hasClass('header--mobile')) {
         //on checkout remove only header mobile
-        if ($('body').hasClass('checkout-page')) {
+        if ($('body').hasClass('checkout-page') || $('body').hasClass('general-error-page')) {
             $('.header').removeClass('header--mobile');
         } else {
             //if scrolled down don't remove the white header

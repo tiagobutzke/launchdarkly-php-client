@@ -1,0 +1,34 @@
+{% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
+
+{% block body_class %}general-error-page{% endblock %}
+
+{% block headerClass %}header--white header-small{% endblock headerClass %}
+{% block head_scripts %}
+    <script src="{{ asset('js/dist/libs.js') }}"></script>
+{% endblock head_scripts %}
+
+{% block content %}
+    <div class="error-page-wrapper">
+        <div class="error-page">
+            <div class="error-page__main">
+                <h1 class="shadowed-static">403</h1>
+                <h1 class="shadowed-dynamic">403</h1>
+                <p>{% trans %}error.403_text_italic{% endtrans %}</p>
+                <h2>{% trans %}error.403_text_main{% endtrans %}</h2>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('h1.shadowed-dynamic').realshadow({
+                color: '100,100,0',
+                type: 'text'
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block footer_size_class %}footer-reduced{% endblock footer_size_class %}
+{% block footer %}
+    {{ include('VoloFrontendBundle:Layout/Partial/:reduced_footer.html.twig') }}
+{% endblock footer %}

@@ -1,0 +1,101 @@
+.general-error-page {
+    background-color: $color-bg-secondary;
+    .header__account, .header__cart {
+    display: none;
+  }
+  .footer {
+    overflow: visible;
+  }
+}
+
+.error-page-wrapper {
+  @include respond-from("screen-md") {
+    @include fluid-container();
+  }
+}
+
+.error-page {
+  @include respond-from("screen-md") {
+    @include make-row();
+  }
+}
+
+.error-page__main {
+  @include make-xs-column(12);
+  margin-top:  $header-height-extra-small;
+  text-align: center;
+  line-height: normal;
+  @include respond-from("screen-sm") {
+    margin-top: $header-height-small;
+  }
+
+  h1.shadowed-static {
+    color: $color-bg-secondary;
+    text-shadow: rgba(100, 100, 0, 0.0470588) 0px 0px 1px,
+    rgba(100, 100, 0, 0.0470588) -3px -3px 3px,
+    rgba(100, 100, 0, 0.0470588) -9px -8px 6px,
+    rgba(100, 100, 0, 0.0470588) -18px -16px 10px,
+    rgba(100, 100, 0, 0.0470588) -30px -27px 15px,
+    rgba(100, 100, 0, 0.0470588) -45px -41px 21px;
+    font-size: 8.2em;
+    font-weight: normal;
+    text-transform: uppercase;
+    margin: 0;
+    @include respond-from("screen-sm") {
+     display: none;
+    }
+  }
+
+  h1.shadowed-dynamic {
+    color: $color-bg-secondary;
+    font-size: 14em;
+    font-weight: normal;
+    text-transform: uppercase;
+    margin: 0;
+    @include appear-from("screen-sm");
+   }
+
+  p {
+    font-family: $satisfy-font-family;
+    color: $color-text-highlight;
+    font-size: 1.5em;
+    font-weight: normal;
+    margin: 0;
+    line-height: normal;
+    @include respond-from("screen-sm") {
+      font-size: 1.7em;
+    }
+  }
+
+  h2 {
+    font-family: $base-font-family;
+    text-transform: uppercase;
+    font-size: 1.5em;
+    font-weight: normal;
+    margin: -16px 0 0 0;
+    padding-bottom: 60px;
+    @include respond-from("screen-sm") {
+      font-size: 2.4em;
+      margin-top: -25px;
+    }
+  }
+}
+
+.error-page__main--general {
+
+  h1.shadowed-dynamic {
+    @include respond-from("screen-sm") {
+      font-size: 6em;
+    }
+    @include respond-from("screen-md") {
+       font-size: 7.4em;
+     }
+    @include respond-from("screen-lg") {
+      font-size: 9em;
+    }
+  }
+
+  h1.shadowed-static {
+    font-size: 4em;
+  }
+}
