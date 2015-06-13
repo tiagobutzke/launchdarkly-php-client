@@ -18,6 +18,8 @@
         VOLO.configuration.countryCode = '{{ country_code }}';
         VOLO.configuration.locale = '{{ locale }}';
         VOLO.configuration.userLocale = '{{ app.request.locale }}';
+        VOLO.configuration.sessionId = '{{ app.session.id }}';
+        VOLO.configuration.googleTagManagerContainerId = '{{ google_tag_manager_container_id }}';
         VOLO.orderTrackingInterval = null;
 
         // cart layout and animation
@@ -28,4 +30,16 @@
         VOLO.initIntl(VOLO.configuration.locale.replace('_', '-'), '{{ config.currency.currency_symbol_iso }}');
     </script>
 
+    <script type="text/javascript">
+        var dataLayer = [];
+    </script>
+    {% if google_tag_manager_container_id %}
+        <!-- Google Tag Manager -->
+        <script>
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','{{ google_tag_manager_container_id }}');
+        </script>
+        <!-- End Google Tag Manager -->
+    {% endif %}
 {% endblock %}

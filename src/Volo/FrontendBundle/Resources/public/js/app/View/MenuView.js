@@ -10,6 +10,8 @@ var MenuView = Backbone.View.extend({
         this.subViews = [];
         this.vendor_id = this.$el.data().vendor_id;
 
+        this.gtmService = options.gtmService || false;
+
         _.each(this.$('.menu__item'), this.initSubViews, this);
 
         // initializing menu height resize behaviour
@@ -32,6 +34,13 @@ var MenuView = Backbone.View.extend({
         this.stickOnTopMenu.init(this.$('.menu__categories nav'));
     },
 
+    setGtmService: function (gtmService) {
+        this.gtmService = gtmService;
+        for (var i in this.subViews) {
+            this.subViews[i].setGtmService(gtmService);
+        }
+    },
+
     // attaching navigation behaviour to menu links
     events: {
         'click .anchorNavigation': '_navigateToAnchor',
@@ -49,6 +58,7 @@ var MenuView = Backbone.View.extend({
         this.stopListening();
         this.undelegateEvents();
         this.domObjects = {};
+        this.gtmService.unbind();
     },
 
     initSubViews: function(item) {
@@ -57,7 +67,8 @@ var MenuView = Backbone.View.extend({
             el: $(item),
             model: new MenuItemModel(object),
             cartModel: this.cartModel,
-            vendor_id: this.vendor_id
+            vendor_id: this.vendor_id,
+            gtmService: this.gtmService
         }));
     },
 
@@ -85,6 +96,11 @@ var MenuItemView = Backbone.View.extend({
     initialize : function (options) {
         this.cartModel = options.cartModel;
         this.vendor_id = options.vendor_id;
+        this.gtmService = options.gtmService;
+    },
+
+    setGtmService: function (gtmService) {
+        this.gtmService = gtmService;
     },
 
     addProduct: function() {
@@ -95,6 +111,10 @@ var MenuItemView = Backbone.View.extend({
                 this.createViewDialog();
             } else {
                 var model = CartItemModel.createFromMenuItem(this.model.toJSON());
+                this.gtmService.fireAddProduct(this.vendor_id, {
+                    id: model.get('product_variation_id'),
+                    name: model.get('name')
+                });
                 this.cartModel.getCart(this.vendor_id).addItem(model.toJSON(), 1);
             }
         }
@@ -107,7 +127,8 @@ var MenuItemView = Backbone.View.extend({
             el: '.modal-dialogs',
             model: cartItemModel,
             cartModel: this.cartModel,
-            vendorId: this.vendor_id
+            vendorId: this.vendor_id,
+            gtmService: this.gtmService
         });
 
         view.render(); //render dialog

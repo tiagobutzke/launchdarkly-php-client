@@ -116,6 +116,11 @@ var HomeSearchView = Backbone.View.extend({
             city: data.city,
             address: data.postcode + ", " + data.city
         });
+
+        dataLayer.push({
+            'zipcode': data.postcode,
+            'city': data.city
+        });
     },
 
     _getDataFromMeta: function (locationMeta) {

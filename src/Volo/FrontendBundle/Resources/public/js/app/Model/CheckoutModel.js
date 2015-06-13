@@ -60,6 +60,10 @@ var CheckoutModel = Backbone.Model.extend({
             payment_type_id: this.get('payment_type_id')
         };
 
+        this.trigger('payment:attempt_to_pay', {
+            paymentMethod: this.get('payment_type_code')
+        });
+
         if (this.get('payment_type_code') === 'adyen') {
             if (_.isNull(this.get('adyen_encrypted_data'))) {
                 data.credit_card_id = this.get('credit_card_id');
@@ -93,7 +97,9 @@ var CheckoutModel = Backbone.Model.extend({
 
         xhr.fail(function (jqXHR) {
             console.log("fail", jqXHR.responseJSON);
-            this.trigger("payment:error", jqXHR.responseJSON);
+            var eventData = jqXHR.responseJSON;
+            eventData.paymentMethod = this.get('payment_type_code');
+            this.trigger("payment:error", eventData);
         }.bind(this));
     }
 });

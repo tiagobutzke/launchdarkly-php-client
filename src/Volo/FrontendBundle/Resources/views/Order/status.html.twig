@@ -4,6 +4,25 @@
 
 {% block body_class %}order-status-page{% endblock %}
 
+{% block google_tag_manager %}
+    <script type="text/javascript" data-turbolinks-eval=always>
+        dataLayer.push({
+            'event': 'transaction',
+            'sessionId': VOLO.configuration.sessionId,
+            'deliveryDay': '{{ gtm_delivery_day(status.ordered_at.date, status.expected_delivery_time.date) }}',
+            'deliveryDayWeek': '{{ gtm_delivery_weekday(status.expected_delivery_time.date) }}',
+            'checkoutType': '{{ is_customer_authenticated_fully() ? 'registered' : 'guest' }}',
+            'purchase': {
+                'actionField': {
+                    'id': '{{ order.reference }}',
+                    'affiliation': 'Online Store',
+                    'revenue': '{{ order.amount }}'
+                }
+            }
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
     <div class="hero-banner-wrapper">
         {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {type: 'tracking-success', 'vendorCode' : 'order', 'aspectRatioClass' : 'aspect-ratio-40-22'} %}

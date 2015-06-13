@@ -204,6 +204,7 @@ var ToppingsView = Backbone.View.extend({
         this.vendorId = options.vendorId;
         this.subViews = [];
         this.productToUpdate = options.productToUpdate || null;
+        this.gtmService = options.gtmService;
     },
 
     events: {
@@ -270,6 +271,11 @@ var ToppingsView = Backbone.View.extend({
 
             return;
         }
+
+        this.gtmService.fireAddProduct(this.vendorId, {
+            id: this.model.get('product_variation_id'),
+            name: this.model.get('name')
+        });
 
         if (this.productToUpdate) {
             this.cartModel.getCart(this.vendorId).updateItem(this.productToUpdate, this.model.toJSON()); //modify product

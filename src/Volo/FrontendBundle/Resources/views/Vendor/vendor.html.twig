@@ -4,7 +4,18 @@
 
 {% block content_wrapper_class %}menu-bg{% endblock content_wrapper_class %}
 {% block body_class %}menu-page{% endblock %}
-
+{% block google_tag_manager %}
+    <script type="text/javascript" data-turbolinks-eval=always>
+        dataLayer.push({
+            'pageType': 'Restaurant Detail Page',
+            'zipcode': '{{ customer_location().postcode }}',
+            'city': '{{ customer_location().city }}',
+            'country': 'Germany',
+            'loggedIn': '{{ is_customer_authenticated_fully() ? 'true' : 'false' }}',
+            'customerId': '{{ is_customer_authenticated_fully() ? get_authenticated_customer().id }}'
+        });
+    </script>
+{% endblock %}
 {% block footer_scripts %}
     {{ parent() }}
 

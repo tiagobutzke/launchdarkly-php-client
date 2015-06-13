@@ -49,7 +49,15 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
     },
 
     _submit: function () {
-        return $(document.activeElement).attr('id') !== 'formatted_address' && !this.$("#delivery_information_form_button").attr('disabled');
+        var submitAllowed = $(document.activeElement).attr('id') !== 'formatted_address' && !this.$("#delivery_information_form_button").attr('disabled');
+
+        if (submitAllowed) {
+            this.trigger('submit:successful_before', {
+                deliveryTime: $('#order-delivery-time').val()
+            });
+        }
+
+        return submitAllowed;
     },
 
     onPlaceChanged: function (locationMeta) {

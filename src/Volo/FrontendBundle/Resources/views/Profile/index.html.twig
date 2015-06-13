@@ -6,6 +6,18 @@
 
 {% block body_class %}profile-page{% endblock %}
 
+{% block google_tag_manager %}
+    <script type="text/javascript" data-turbolinks-eval=always>
+        dataLayer.push({
+            'pageType': 'User Account',
+            'zipcode': '{{ customer_location().postcode }}',
+            'city': '{{ customer_location().city }}',
+            'country': 'Germany',
+            'loggedIn': '{{ is_customer_authenticated_fully() ? 'true' : 'false' }}',
+            'customerId': '{{ is_customer_authenticated_fully() ? get_authenticated_customer().id }}'
+        });
+    </script>
+{% endblock %}
 {% block headerClass %}header--white header-small{% endblock headerClass %}
 
 {% block content %}
