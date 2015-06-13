@@ -78,25 +78,19 @@
 }
 
 .teaser__slogan {
-  @include make-xs-column(12, 0);
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
   color: #fff;
   text-align: center;
   padding-bottom: 10px;
   padding-top: 90px;
-  padding-left: 5%;
-  padding-right: 5%;
-  @include respond-from('screen-sm') {
-    padding-left: 10%;
-    padding-right: 10%;
-  }
   @include respond-from('screen-md') {
-    padding-left: 17%;
-    padding-right: 17%;
+    width: 86%;
   }
   @include respond-from('screen-lg') {
     padding-top: 160px;
-    padding-left: 25%;
-    padding-right: 25%;
+    width: 70%;
   }
 }
 
@@ -106,8 +100,6 @@
   font-size: 1.2em;
   margin-bottom: 0.5em;
   text-transform: uppercase;
-  padding-left: 10%;
-  padding-right: 10%;
   @include respond-from('screen-sm') {
     font-size: 1.8em;
   }
@@ -133,7 +125,6 @@
   width: 70%;
   margin-bottom: $space-sm;
   @include respond-from('screen-sm') {
-    margin-right: $space-xs;
     width: 280px;
     bottom: 8%;
   }
@@ -142,8 +133,15 @@
 .teaser__button {
   width: 70%;
   @include respond-from('screen-sm') {
-    width: auto;
+    width: 280px;
     vertical-align: top;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  @include respond-from('screen-md') {
+    display: inline-block;
+    margin-left: $space-xs;
   }
 }
 
