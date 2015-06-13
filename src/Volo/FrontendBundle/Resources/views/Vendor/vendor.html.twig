@@ -14,14 +14,6 @@
 {% endblock %}
 
 {% block content %}
-<div class="top-cart">
-    <div class="top-cart__info">
-        <h3>Restaurant name</h3>
-    </div>
-    <div class="top-cart__extra-fee">
-        Delivery fee added to your final order  <span>{{ "5.00"|price }}</span>
-    </div>
-</div>
 <div class="hero-banner-wrapper">
     {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {type: 'hero', 'vendorCode' : vendor.code, 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
     <div class="hero-menu__info">
