@@ -3,7 +3,6 @@
 namespace Volo\FrontendBundle\Controller;
 
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
-use Foodpanda\ApiSdk\Exception\EntityNotFoundException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -12,7 +11,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Volo\FrontendBundle\Http\JsonErrorResponse;
 use Volo\FrontendBundle\Service\CustomerLocationService;
 
 /**

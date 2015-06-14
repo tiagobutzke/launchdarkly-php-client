@@ -1,5 +1,5 @@
 security:
-    session_fixation_strategy:  migrate
+    session_fixation_strategy: migrate
 
     providers:
         in_memory:
@@ -16,6 +16,7 @@ security:
                 authenticator: volo_frontend.security.authenticator
                 login_path: /login
                 check_path: /login_check
+                use_referer: true
 
             logout:
                 path:   /logout

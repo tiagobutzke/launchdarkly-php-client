@@ -204,6 +204,15 @@ VOLO.initLoginButtonView = function() {
     });
 };
 
+VOLO.initExistingUserLoginView = function() {
+    if (VOLO.existingUserLoginView) {
+        VOLO.existingUserLoginView.unbind();
+    }
+    VOLO.existingUserLoginView = new ExistingUserLoginView({
+        el: '#show-login-overlay'
+    });
+};
+
 VOLO.initCartIconLink = function() {
     console.log("initializing cart icon link");
     if (VOLO.cartIconView) {
@@ -299,6 +308,11 @@ $(document).on('page:load page:restore', function () {
         }
         VOLO.orderTrackingInterval = setInterval(VOLO.OrderTracking, 60000);
     }
+
+    if ($('#show-login-overlay').length > 0) {
+        VOLO.initExistingUserLoginView();
+        VOLO.existingUserLoginView.render();
+    }
 });
 
 $(document).on('page:before-unload', function () {
@@ -351,6 +365,9 @@ $(document).on('page:before-unload', function () {
     }
     if (_.isObject(VOLO.paymentFormView)) {
         VOLO.paymentFormView.unbind();
+    }
+    if (_.isObject(VOLO.existingUserLoginView)) {
+        VOLO.existingUserLoginView.unbind();
     }
 });
 

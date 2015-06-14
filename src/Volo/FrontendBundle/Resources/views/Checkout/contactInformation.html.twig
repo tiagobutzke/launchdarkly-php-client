@@ -14,9 +14,14 @@
     <h3 class="checkout__title">2. {% trans %}title.contact_info{% endtrans %}</h3>
 
     {% for message in errorMessages %}
-        <div class="error">
-            {{ message }}
-        </div>
+        {% if 'ApiCustomerAlreadyExistsException' in message %}
+            <div id="show-login-overlay"
+                 data-error-message-key="checkout.user_already_exists"
+                 data-username="{{ username }}"
+                 class="error">{% trans %}checkout.user_already_exists{% endtrans %}</div>
+        {% else %}
+            <div class="error">{{ message }}</div>
+        {% endif %}
     {% endfor %}
 
     {% include('VoloFrontendBundle:Checkout/Partial:contact_information_form.html.twig') with {action: path('checkout_contact_information', {vendorCode: vendor.code})} %}

@@ -1,5 +1,5 @@
 .checkout-page {
-  .header__account, .header__cart {
+  .header__cart {
     display: none;
   }
   .desktop-cart__title {
@@ -35,6 +35,9 @@
   @include respond-from("screen-md") {
     margin-top: $header-height-small + $grid-gutter-width;
     margin-bottom: $grid-gutter-width;
+  }
+  #show-login-overlay {
+    display: none;
   }
 }
 
