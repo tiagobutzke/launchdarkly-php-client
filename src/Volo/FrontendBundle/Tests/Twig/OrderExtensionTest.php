@@ -51,7 +51,7 @@ class OrderExtensionTest extends VoloTestCase
             $status['display_status']['code'],
             $position,
             $expectedClass,
-            $now->format('Y-m-d H:i:s.u'),
+            $now,
             $status['status_history'][0]['changedAt']['date']
         );
         $this->assertEquals($expectedClass, $result, $message);
@@ -147,15 +147,14 @@ class OrderExtensionTest extends VoloTestCase
 
     protected function createStatus($code, $isFake = false)
     {
-        $date = new \DateTime('now', new \DateTimeZone('Europe/Berlin'));
+        $now = new \DateTime('now', new \DateTimeZone('Europe/Berlin'));
+        $lastStatusUpdate = new \DateTime('now', new \DateTimeZone('Europe/Berlin'));
         if ($isFake) {
-            $date = new \DateTime('now', new \DateTimeZone('Europe/Berlin'));
-            $date->sub(\DateInterval::createFromDateString('+2 minute +1 second'));
+            $lastStatusUpdate->sub(\DateInterval::createFromDateString('+2 minute +1 second'));
         }
-        $lastStatusUpdate = $date->format('Y-m-d H:i:s.u');
 
         return [
-            'now'    => $date,
+            'now'    => $now->format('Y-m-d H:i:s.u'),
             'status' => [
                 'status_history' => [
                     [
@@ -163,7 +162,7 @@ class OrderExtensionTest extends VoloTestCase
                         'message' => 'Order accepted by vendor',
                         'type' => 'final',
                         'changedAt' => [
-                            'date' => $lastStatusUpdate,
+                            'date' => $lastStatusUpdate->format('Y-m-d H:i:s.u'),
                             'timezone_type' => 3,
                             'timezone' => 'Europe/Berlin',
                         ],
