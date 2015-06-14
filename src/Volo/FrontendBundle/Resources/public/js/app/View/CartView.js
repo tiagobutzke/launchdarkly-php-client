@@ -149,6 +149,10 @@ var CartView = Backbone.View.extend({
 
         this.vendor_id = this.$el.data().vendor_id;
         this.model.getCart(this.vendor_id).set('minimum_order_amount', this.$el.data().minimum_order_amount);
+        this.model.getCart(this.vendor_id).set('location', {
+            latitude:  this.locationModel.get('latitude'),
+            longitude: this.locationModel.get('longitude')
+        });
 
         this.domObjects = {};
         this.domObjects.$header = options.$header;
@@ -228,7 +232,6 @@ var CartView = Backbone.View.extend({
         this.listenTo(vendorCart.products, 'update', this._toggleContainerVisibility, this);
         this.listenTo(vendorCart.products, 'update', this._updateCartIcon, this);
         this.listenTo(vendorCart.products, 'change', this._updateCartIcon, this);
-        this.listenTo(vendorCart, 'cart:ready', this.render, this);
         this.listenTo(vendorCart, 'update', this.render, this);
 
         // initializing cart height resize behaviour
@@ -320,15 +323,11 @@ var CartView = Backbone.View.extend({
         this.vendorGeocodingSubView = new VendorGeocodingView({
             el: this.$('.vendor__geocoding__tool-box'),
             geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1]),
-            model: this.model.getCart(this.vendor_id),
-            locationModel: this.locationModel
+            model: this.locationModel,
+            modelCart: this.model.getCart(this.vendor_id)
         });
 
         return this;
-    },
-
-    performDeliverableCheck: function () {
-        this.vendorGeocodingSubView.performDeliverableCheck();
     },
 
     renderSubTotal: function () {

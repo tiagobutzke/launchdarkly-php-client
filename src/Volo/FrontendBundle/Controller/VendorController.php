@@ -80,11 +80,7 @@ class VendorController extends Controller
             'vendor'        => $vendor,
             'cart'          => $cart,
             'address'       => is_array($location) ? $location[CustomerLocationService::KEY_PLZ] : '',
-            'location'      => [
-                'type'      => 'polygon',
-                'latitude'  => $isDeliverable ? $location[CustomerLocationService::KEY_LAT] : null,
-                'longitude' => $isDeliverable ? $location[CustomerLocationService::KEY_LNG] : null
-            ],
+            'location'      => $location,
             'isDeliverable' => $isDeliverable
         ];
     }

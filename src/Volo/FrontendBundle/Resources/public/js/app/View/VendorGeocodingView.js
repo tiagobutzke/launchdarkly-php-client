@@ -1,26 +1,45 @@
+/**
+ * model: LocationModel
+ * options:
+ * - modelCart: VendorCartModel
+ */
 var VendorGeocodingView = HomeSearchView.extend({
     initialize: function (options) {
         _.bindAll(this);
-        this.locationModel = options.locationModel;
+        this.modelCart = options.modelCart;
 
-        this.listenTo(this.model, 'invalid', this._alarmNoPostcode);
+        this.listenTo(this.modelCart, 'invalid', this._alarmNoPostcode);
+        this.listenTo(this.geocodingService, 'autocomplete:place_changed', this.performDeliverableCheck);
 
         HomeSearchView.prototype.initialize.apply(this, arguments);
 
-        console.log('VendorGeocodingView:init', this.locationModel);
+        console.log('VendorGeocodingView:init', this.model);
+
+        this.performDeliverableCheck();
+    },
+
+    /**
+     * @override
+     */
+    postInit: function() {
+        this.modelCart.set('location', this.modelCart.defaults.location);
+        if (this.model.isValid()) {
+            this.modelCart.set('location', {
+                location_type: this.model.defaults.location_type,
+                latitude:  this.model.get('latitude'),
+                longitude: this.model.get('longitude')
+            });
+        }
     },
 
     performDeliverableCheck: function () {
-        if (this.locationModel.isValid()) {
-            if (!this.model.isValid()) {
-                console.log('locationModal has location, checking deliverability');
-                this.model.updateLocationIfDeliverable({
-                    lat: this.locationModel.get('latitude'),
-                    lng: this.locationModel.get('longitude')
-                });
-            } else {
-                this._showFormattedAddress(this.locationModel.get('formattedAddress'));
-            }
+        console.log('performDeliverableCheck ', this.cid);
+        if (this.model.isValid() && !this.modelCart.isValid()) {
+            this.modelCart.updateLocationIfDeliverable(this.model.toJSON())
+                .done(this._parseIsDeliverable)
+                .fail(this.onSearchFail);
+        } else {
+            this.onSearchFail();
         }
     },
 
@@ -29,58 +48,51 @@ var VendorGeocodingView = HomeSearchView.extend({
         this._enableInputNode();
     },
 
-    _showFormattedAddress: function(address) {
-        this.$('.location__address').html(address);
+    _applyNewLocationData: function (locationMeta) {
+        HomeSearchView.prototype._applyNewLocationData.apply(this, arguments);
+        this._submitPressed();
+    },
+
+    _showFormattedAddress: function() {
+        console.log('_showFormattedAddress ', this.cid);
         this.$('.vendor__geocoding__tool-box__title').removeClass('hide');
         this.$('.input__postcode').addClass('hide');
+        this._hideTooltip();
     },
 
-    _search: function (data) {
-        console.log('_search ', this.cid, data);
-
-        if (!!data && data.postcode) {
-            this.locationModel.set({
-                latitude: data.lat,
-                longitude: data.lng,
-                formattedAddress: data.postcode + ", " + data.city
-            });
-
-            this._disableInputNode();
-
-            this.model.updateLocationIfDeliverable(data)
-                .done(function (response) {this._parseIsDeliverable(data, response);}.bind(this))
-                .fail(this.onSearchFail);
-        } else {
-            this._notFound();
-        }
+    _hideFormattedAddress: function() {
+        console.log('_hideFormattedAddress ', this.cid);
+        this.$('.vendor__geocoding__tool-box__title').addClass('hide');
+        this.$('.input__postcode').removeClass('hide');
     },
 
-    _enableInputNode: function () {
-        this.inputNode.css('opacity', '1').attr('disabled', false).focus();
-    },
-
-    _disableInputNode: function () {
-        this.inputNode.css('opacity', '.4').attr('disabled', 'true');
+    /**
+     * @override
+     * @private
+     */
+    _afterSubmit: function() {
+        this._disableInputNode();
+        this.performDeliverableCheck();
     },
 
     _alarmNoPostcode: function (event) {
-        if (event.validationError === 'location_not_set' && !this.inputNode.hasClass('hide')) {
+        if (event.validationError === 'location_not_set') {
+            this._hideFormattedAddress();
             this._showInputPopup(_.template($('#template-vendor-supply-postcode').html()));
         }
     },
 
-    _parseIsDeliverable: function (data, response) {
-        if (response.result) {
-            this.$('.location__address').html(data.postcode);
-            this.$('.vendor__geocoding__tool-box__title').removeClass('hide');
-            this.$('.input__postcode').addClass('hide');
-
-            this.locationModel.saveLocation(data);
+    _parseIsDeliverable: function (response) {
+        var data = this.model.toJSON();
+        if (response.result) { // is deliverable
+            this.$('.location__address').html(this.model.get('postcode'));
+            this._showFormattedAddress();
+            this.model.save();
         } else {
             var url = Routing.generate('volo_location_search_vendors_by_gps', {
                 city: data.city,
-                latitude: data.lat,
-                longitude: data.lng,
+                latitude: data.latitude,
+                longitude: data.longitude,
                 address: data.postcode + ", " + data.city,
                 postcode: data.postcode
             });

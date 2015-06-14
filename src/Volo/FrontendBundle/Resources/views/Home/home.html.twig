@@ -12,7 +12,7 @@
         <div class="teaser__slogan">
             <h2 class="teaser__slogan__h2">{{ 'general.slogan'|trans }}</h2>
         </div>
-        <form class="teaser__form" id="postal_index_form" action="#" method="GET">
+        <form class="teaser__form" id="postal_index_form" method="GET">
             <input type="text" class="teaser__form__input"
                    id="postal_index_form_input"
                    value="{{ postalCode }}"
@@ -21,7 +21,7 @@
                    data-msg_error_not_found="{% trans %}postal_code.not_found{% endtrans %}"
                    data-msg_you_probably_mean="{% trans %}postal_code.you_probably_mean{% endtrans %}"
                    >
-            <button class="teaser__button button button--inline" type="button">{{ 'buttons.find_food'|trans }}</button>
+            <input class="teaser__button button button--inline" type="submit" value="{{ 'buttons.find_food'|trans }}">
         </form>
     </section>
 

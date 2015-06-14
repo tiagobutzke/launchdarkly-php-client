@@ -73,11 +73,7 @@ class CheckoutController extends Controller
             'customer_address' => $defaultAddress + $address,
             'vendor'           => $vendor,
             'address'          => is_array($location) ? $location[CustomerLocationService::KEY_ADDRESS] : '',
-            'location'         => [
-                'type'      => 'polygon',
-                'latitude'  => $location[CustomerLocationService::KEY_LAT],
-                'longitude' => $location[CustomerLocationService::KEY_LNG]
-            ],
+            'location'         => $location,
             'isDeliverable'    => is_array($location),
         ];
     }
@@ -160,11 +156,7 @@ class CheckoutController extends Controller
             'customer_address' => $session->get(sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendorCode)),
             'customer'         => $session->get(sprintf(static::SESSION_CONTACT_KEY_TEMPLATE, $vendorCode)),
             'address'          => is_array($location) ? $location[CustomerLocationService::KEY_ADDRESS] : '',
-            'location'         => [
-                'type'      => 'polygon',
-                'latitude'  => $location[CustomerLocationService::KEY_LAT],
-                'longitude' => $location[CustomerLocationService::KEY_LNG]
-            ],
+            'location'         => $location,
             'isDeliverable'    => is_array($location),
         ];
     }
@@ -206,11 +198,7 @@ class CheckoutController extends Controller
             'vendor'           => $vendor,
             'adyen_public_key' => $configuration->getAdyenEncryptionPublicKey(),
             'address'          => is_array($location) ? $location[CustomerLocationService::KEY_ADDRESS] : '',
-            'location'         => [
-                'type'      => 'polygon',
-                'latitude'  => $location[CustomerLocationService::KEY_LAT],
-                'longitude' => $location[CustomerLocationService::KEY_LNG]
-            ],
+            'location'         => $location,
 
             'isDeliverable'    => is_array($location),
         ];

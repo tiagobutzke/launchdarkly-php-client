@@ -21,32 +21,36 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
         this._initListeners($input);
     },
 
-    _initListeners: function ($input) {
-        var self = this;
-        this._listeners.push(google.maps.event.addDomListener($input[0], 'keydown', this._keyDown));
-
-        this._listeners.push(this.autocomplete.addListener('place_changed', function () {
-            self.trigger('autocomplete:place_changed');
-        }));
-
-        this._listeners.push(google.maps.event.addDomListener($input[0], 'blur', this._blur));
-    },
-
-    _keyDown: function (e) {
-        if (e.keyCode === 13) { //enter
-            this.trigger('autocomplete:submit_pressed');
-            e.preventDefault();
-        } else if (e.keyCode === 9) { //tab
-            this.trigger('autocomplete:tab_pressed');
+    setLocation: function(latLng) {
+        if (_.isNumber(latLng.latitude) && _.isNumber(latLng.longitude)) {
+            var geolocation = new google.maps.LatLng(latLng.latitude, latLng.longitude);
+            var circle = new google.maps.Circle({
+                center: geolocation,
+                radius: 100000 // 100km
+            });
+            this.autocomplete.setBounds(circle.getBounds());
         }
     },
 
-    _blur: function () {
-        google.maps.event.trigger(this, 'keydown', {
-            keyCode: 9
-        });
+    _initListeners: function ($input) {
+        this._listeners.push(this.autocomplete.addListener('place_changed', this._onPlaceChanged));
+        this._listeners.push(google.maps.event.addDomListener($input[0], 'blur', this._onBlur));
+    },
 
-        this.trigger('autocomplete:place_changed');
+    _onBlur: function(e) {
+        google.maps.event.trigger(e.target, 'focus');
+        google.maps.event.trigger(e.target, 'keydown', {
+            keyCode: 13 //enter
+        });
+    },
+
+    _onPlaceChanged: function () {
+        console.log('place_changed');
+        this.getLocation().done(this._onGetLocationDone);
+    },
+
+    _onGetLocationDone: function(locationMeta) {
+        this.trigger('autocomplete:place_changed', locationMeta);
     },
 
     removeListeners: function ($input) {
@@ -56,25 +60,27 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
         _.each(this._listeners, function(listener) {
             google.maps.event.removeListener(listener);
         }, this);
+        $(".pac-container").remove();
     },
 
     /**
      * @returns $.Deferred
      */
-    getLocation: function ($input) {
+    getLocation: function () {
         var deferred = $.Deferred();
 
-        this._getSearchPlace($input, this.autocomplete)
+        this._getSearchPlace()
             .then(this._getLocationMeta, deferred.reject)
             .done(deferred.resolve);
 
         return deferred;
     },
 
-    _getSearchPlace: function ($input, autocomplete) {
+    _getSearchPlace: function () {
         var deferred = $.Deferred(),
-            place = autocomplete.getPlace();
+            place = this.autocomplete.getPlace();
 
+        console.log(place);
         if (!place || !place.place_id) {
             this._selectFirstResult().done(deferred.resolve).fail(deferred.reject);
         } else {
@@ -85,9 +91,11 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
     },
 
     _selectFirstResult: function () {
+        console.log('select first result');
         var deferred = $.Deferred(),
             firstResult = $(".pac-container .pac-item:first").text();
 
+        console.log('firstResult ', firstResult);
         var geocoder = new google.maps.Geocoder();
 
         geocoder.geocode({"address": firstResult}, function (results, status) {
