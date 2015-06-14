@@ -38,7 +38,7 @@ class CartController extends Controller
         $cartManager = $this->get('volo_frontend.service.cart_manager');
         try {
             $apiResult = $cartManager->calculateCart($data);
-            $cartManager->saveCart($request->getSession()->getId(), $data['vendor_id'], $data);
+            $cartManager->saveCart($request->getSession(), $data['vendor_id'], $data);
         } catch (ApiErrorException $e) {
             return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
         }

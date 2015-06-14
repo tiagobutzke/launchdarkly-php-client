@@ -35,13 +35,4 @@ class ThumborControllerTest extends VoloTestCase
             )
         );
     }
-
-    public function testFakeInProduction()
-    {
-        $client = static::createClient(['debug' => false]);
-
-        $client->request('GET', '/thumbor/fake/a/b/c/d');
-
-        $this->assertFalse($client->getResponse()->isSuccessful());
-    }
 }

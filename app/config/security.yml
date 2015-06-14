@@ -1,4 +1,6 @@
 security:
+    session_fixation_strategy:  migrate
+
     providers:
         in_memory:
             memory: ~

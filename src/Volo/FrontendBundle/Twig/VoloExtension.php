@@ -2,9 +2,9 @@
 
 namespace Volo\FrontendBundle\Twig;
 
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Twig_Extensions_Extension_Intl;
 use Volo\FrontendBundle\Service\CartManagerService;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class VoloExtension extends Twig_Extensions_Extension_Intl
 {
@@ -17,11 +17,6 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
      * @var CartManagerService
      */
     private $cartManager;
-    
-    /**
-     * @var Session
-     */
-    private $session;
 
     /**
      * @var string
@@ -31,15 +26,13 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
     /**
      * @param string $locale
      * @param CartManagerService $cartManager
-     * @param Session $session
      * @param string $googlePlacesApiKey
      */
-    public function __construct($locale, CartManagerService $cartManager, Session $session, $googlePlacesApiKey)
+    public function __construct($locale, CartManagerService $cartManager, $googlePlacesApiKey)
     {
         parent::__construct();
 
         $this->locale = $locale;
-        $this->session = $session;
         $this->cartManager = $cartManager;
         $this->googlePlacesApiKey = $googlePlacesApiKey;
     }
@@ -103,21 +96,25 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
     }
 
     /**
+     * @param SessionInterface $session
+     *
      * @return int
      */
-    public function getDefaultCartCount()
+    public function getDefaultCartCount(SessionInterface $session)
     {
-        $cart = $this->cartManager->getDefaultCart($this->session->getId());
+        $cart = $this->cartManager->getDefaultCart($session);
 
         return $cart === null ? 0 : array_sum(array_column($cart['products'], 'quantity'));
     }
 
     /**
+     * @param SessionInterface $session
+     *
      * @return string
      */
-    public function getDefaultCartVendorId()
+    public function getDefaultCartVendorId(SessionInterface $session)
     {
-        $cart = $this->cartManager->getDefaultCart($this->session->getId());
+        $cart = $this->cartManager->getDefaultCart($session);
 
         return ($cart === null || !array_key_exists('vendor_id', $cart)) ? '' : $cart['vendor_id'];
     }

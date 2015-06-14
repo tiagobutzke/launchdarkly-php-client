@@ -52,7 +52,7 @@ class VendorController extends Controller
         }
 
         $cart = $this->get('volo_frontend.service.cart_manager')->getCartIfDefault(
-            $request->getSession()->getId(),
+            $request->getSession(),
             $vendor->getId()
         );
 

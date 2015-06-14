@@ -12,11 +12,9 @@ class CheckoutControllerTest extends VoloTestCase
 
         $vendorId = '684';
         $vendorCode = 'm2hc';
-        $cart = ['products' => ['fake'], 'expeditionType' => 'delivery', 'order_time' => date('c')];
-        
-        $sessionId = 'test_session_id';
-        $client->getContainer()->get('session')->setId($sessionId);
-        $client->getContainer()->get('volo_frontend.service.cart_manager')->saveCart($sessionId, $vendorId, $this->getCart());
+
+        $session = $client->getContainer()->get('session');
+        $client->getContainer()->get('volo_frontend.service.cart_manager')->saveCart($session, $vendorId, $this->getCart());
         
         $client->request('GET', sprintf('/checkout/%s/delivery', $vendorCode));
 

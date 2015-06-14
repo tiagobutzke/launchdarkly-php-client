@@ -44,7 +44,6 @@
         <service id="volo_frontend.twig.volo_extension" class="%volo_frontend.twig.volo_extension.class%">
             <argument>%locale%</argument>
             <argument type="service" id="volo_frontend.service.cart_manager" />
-            <argument type="service" id="session" />
             <argument>%google.places_api_key%</argument>
             <tag name="twig.extension"/>
         </service>
@@ -70,7 +69,6 @@
         </service>
 
         <service id="volo_frontend.service.cart_manager" class="%volo_frontend.service.cart_manager.class%">
-            <argument type="service" id="doctrine_cache.providers.configuration_cache" />
             <argument type="service" id="volo_frontend.provider.cart" />
             <argument type="service" id="volo_frontend.provider.vendor" />
         </service>
