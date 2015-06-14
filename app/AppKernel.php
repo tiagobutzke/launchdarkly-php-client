@@ -77,6 +77,19 @@ class AppKernel extends Kernel
         $loader->load($this->getCountryParametersPathname());
         $loader->load($configFilePath);
         $this->loadCountryConfig($loader, $parameters);
+        $this->setDefaultTimezone($parameters);
+    }
+
+    /**
+     * @param array $params
+     */
+    protected function setDefaultTimezone(array $params)
+    {
+        $countryCode = isset($params['parameters']['country_code']) ? $params['parameters']['country_code'] : null;
+
+        if ($this->getCountryCodeEnvironmentVariable() === $countryCode && isset($params['parameters']['timezone'])) {
+            date_default_timezone_set($params['parameters']['timezone']);
+        }
     }
 
     /**
