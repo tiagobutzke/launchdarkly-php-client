@@ -6,7 +6,7 @@
 
 <h4 class="checkout__subtitle">{% trans %}title.delivery_address{% endtrans %}</h4>
 <div class="checkout__item" id="selected_delivery_address">
-    <span>{{ customer_address.address_line1 }}</span>
+    <span>{{ customer_address.address_line1 }} {{ customer_address.address_line2 }}</span>
     <span>{{ customer_address.postcode }}, {{ customer_address.city }}</span>
     <span>{{ customer_address.company }}</span>
     <span>{{ customer_address.delivery_instructions }}</span>
