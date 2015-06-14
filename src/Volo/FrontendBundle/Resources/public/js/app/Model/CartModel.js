@@ -355,5 +355,9 @@ var CartModel = Backbone.Model.extend({
         }
 
         return this.vendorCarts.get(vendorId);
+    },
+
+    emptyCart: function(vendorId) {
+        this.vendorCarts.remove(vendorId);
     }
 });
