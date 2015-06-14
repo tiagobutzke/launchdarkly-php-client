@@ -53,10 +53,14 @@ var HomeSearchView = Backbone.View.extend({
     _search: function(data) {
         console.log('_search ', this.cid);
         if (!!data && data.postcode) {
-            this.model.set({latitude: data.lat, longitude: data.lng, formattedAddress: data.formattedAddress});
+            this.model.set({
+                latitude: data.lat,
+                longitude: data.lng,
+                formattedAddress: data.postcode + ", " + data.city
+            });
             Turbolinks.visit(Routing.generate('volo_location_search_vendors_by_gps', {
                 city: data.city,
-                address: data.formattedAddress,
+                address: data.postcode + ", " + data.city,
                 longitude: data.lng,
                 latitude: data.lat,
                 postcode: data.postcode
@@ -100,7 +104,7 @@ var HomeSearchView = Backbone.View.extend({
         var formattedAddress = locationMeta.formattedAddress;
 
         if (!formattedAddress.match(locationMeta.postalCode.value)) {
-            formattedAddress = locationMeta.postalCode.value + " " + formattedAddress;
+            formattedAddress = locationMeta.postalCode.value + ", " + locationMeta.city;
         }
 
         return {
