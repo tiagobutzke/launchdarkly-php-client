@@ -5,7 +5,7 @@
                    value="{{ customer_address.address_line1|default('') }} {{ customer_address.address_line2|default('') }}"
                    required="true" placeholder="{% trans %}form.placeholder.address{% endtrans %}"
                    data-msg_ensure_full_address="{% trans %}formatted_address.ensure_full_address_with_number{% endtrans %}"
-                   title="{% trans %}validations.error.checkout.customer_address{% endtrans %}">
+                   data-validation-msg="{% trans %}validations.error.checkout.customer_address{% endtrans %}">
         </div>
         <div class="form-group form-group--two_col1">
             <input type="text" class="form-control"  id="postal_index_form_input" name="customer_address[postcode]"
@@ -16,7 +16,7 @@
         <div class="form-group form-group--two_col2">
             <input type="text" class="form-control" id="city" name="customer_address[city]"
                    value="{{ customer_address.city|default('') }}" required="true" placeholder="{% trans %}form.placeholder.city{% endtrans %}"
-                   title="{% trans %}validations.error.checkout.customer_city{% endtrans %}">
+                   data-validation-msg="{% trans %}validations.error.checkout.customer_city{% endtrans %}">
         </div>
         <div class="form-group">
             <input type="text" class="form-control" id="company" name="customer_address[company]"
