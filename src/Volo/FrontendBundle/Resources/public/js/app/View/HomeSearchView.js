@@ -22,7 +22,8 @@ var HomeSearchView = Backbone.View.extend({
         'click .teaser__button': '_submit',
         'autocomplete:submit_pressed .teaser__button': '_submitPressed',
         'focus #postal_index_form_input': '_hideTooltip',
-        'blur #postal_index_form_input': '_hideTooltip'
+        'blur #postal_index_form_input': '_hideTooltip',
+        'click #postal_index_form_input': '_scrollToInput'
     },
 
     unbind: function() {
@@ -47,6 +48,15 @@ var HomeSearchView = Backbone.View.extend({
         if (value !== '') {
             console.log('not found');
             this._showInputPopup(this.$('#postal_index_form_input').data('msg_error_not_found'));
+        }
+    },
+
+    _scrollToInput: function() {
+        var md = new MobileDetect(window.navigator.userAgent);
+        if (md.mobile()) {
+            $('html, body').animate({
+                scrollTop: this.$('#postal_index_form_input').offset().top - ($('.header').height() + 10)
+            });
         }
     },
 
