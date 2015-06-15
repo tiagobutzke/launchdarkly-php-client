@@ -55,7 +55,7 @@ var HomeSearchView = Backbone.View.extend({
         var md = new MobileDetect(window.navigator.userAgent);
         if (md.mobile()) {
             $('html, body').animate({
-                scrollTop: this.$('#postal_index_form_input').offset().top - 50
+                scrollTop: this.$('#postal_index_form_input').offset().top - ($('.header').height() + 10)
             });
         }
     },
