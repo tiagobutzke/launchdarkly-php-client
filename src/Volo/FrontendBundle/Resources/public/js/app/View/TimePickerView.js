@@ -12,11 +12,11 @@ var TimePickerView = Backbone.View.extend({
     },
 
     render: function () {
-        var date = this.model.getCart(this.vendor_id).get('order_time');
+        var dateObj = this.model.getCart(this.vendor_id).get('order_time');
 
-        if (_.isDate(date)) {
-            var dateKey = date.toISOString().split('T')[0],
-                timeKey = date.toTimeString().substring(0, 5);
+        if (_.isDate(dateObj)) {
+            var dateKey = dateObj.toISOString().split('T')[0],
+                timeKey = dateObj.toTimeString().substring(0, 5);
 
             if ($("#order-delivery-date option[value='" + dateKey + "']").length > 0) {
                 this.$('#order-delivery-date').val(dateKey);

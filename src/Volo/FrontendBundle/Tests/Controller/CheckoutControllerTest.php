@@ -69,7 +69,7 @@ class CheckoutControllerTest extends VoloTestCase
                 'latitude' => 52.5237282,
                 'longitude"' => 13.3908286
             ],
-            'orderTime' => '2015-05-12T07:31:20.795Z',
+            'order_time' => '2015-05-12T07:31:20.795Z',
             'paymentTypeId' => 0,
             'activeLanguage' => 1,
             'groupCode' => '',
