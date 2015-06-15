@@ -41,6 +41,12 @@
             <argument type="string">%session_handler_redis_save_path%</argument>
         </service>
 
+        <service id="volo_frontend.event_listener.default_time_zone_listener"
+                 class="Volo\FrontendBundle\EventListener\DefaultTimeZoneListener">
+            <argument>%timezone%</argument>
+            <tag name="kernel.event_listener" event="kernel.request" method="setDefaultTimeZone" priority="100" />
+        </service>
+
         <service id="volo_frontend.twig.volo_extension" class="%volo_frontend.twig.volo_extension.class%">
             <argument>%locale%</argument>
             <argument type="service" id="volo_frontend.service.cart_manager" />
