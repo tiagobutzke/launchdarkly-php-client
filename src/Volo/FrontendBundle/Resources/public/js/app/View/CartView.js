@@ -32,6 +32,7 @@ var CartItemView = Backbone.View.extend({
         this.cartModel = options.cartModel;
         this.vendorId = options.vendorId;
         this.listenTo(this.model.toppings, 'change', this.render);
+        this.listenTo(this.model, 'change:quantity', this._updateItemQuantity);
     },
 
     render: function() {
@@ -83,13 +84,14 @@ var CartItemView = Backbone.View.extend({
         if (this.model.get('quantity') > 1) {
             this.cartModel.getCart(this.vendorId).increaseQuantity(this.model, -1);
         }
+    },
+
+    _updateItemQuantity: function() {
         this.$('.summary__item__quantity-wrap').text(VOLO.formatNumber(this.model.get('quantity')));
     },
 
     _increaseQuantity: function() {
         this.cartModel.getCart(this.vendorId).increaseQuantity(this.model, 1);
-
-        this.$('.summary__item__quantity-wrap').text(VOLO.formatNumber(this.model.get('quantity')));
     },
 
     _toggleMinusAvailabilty: function(quantity) {
