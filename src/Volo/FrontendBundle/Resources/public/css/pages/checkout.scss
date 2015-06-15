@@ -2,6 +2,12 @@
   .header__account, .header__cart {
     display: none;
   }
+  .desktop-cart__title {
+    display: block;
+    @include respond-from("screen-md") {
+      display: block;
+    }
+  }
 }
 
 .checkout-wrapper {

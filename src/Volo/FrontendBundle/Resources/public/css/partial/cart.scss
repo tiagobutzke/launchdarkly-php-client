@@ -1,5 +1,8 @@
-
 //mobile bottom cart
+.modal-close-button.mobile-close__cart {
+  right: 4px;
+  top: 2px;
+}
 
 .bottom-cart {
   display: none;
@@ -417,16 +420,12 @@ tr.summary__item__row_mobile {
   padding: $space-md $space-sm;
   border-bottom: $base-border;
   span {
-    display: inline;
+    display: none;
   }
   @include respond-from("screen-md") {
     border: none;
     padding-bottom: 0;
     margin: 0;
-
-    span {
-      display: block;
-    }
   }
 }
 
@@ -551,10 +550,9 @@ tr.summary__item__row_mobile {
     width: 100%;
     text-align: center;
     font-size: 0.9em;
-    padding: 0;
+    padding-top: 10px;
     @include respond-from("screen-md") {
       font-size: 0.95em;
-      padding-top: 30px;
     }
     @include respond-from("screen-lg") {
       font-size: 0.9em;
@@ -566,14 +564,9 @@ tr.summary__item__row_mobile {
       font-family: $bold-font-family;
       line-height: 1.4em;
       @include respond-from("screen-md") {
-        margin-top: -17px;
         margin-bottom: $space-sm;
         padding-top: 0;
       }
-    }
-
-    .location__address {
-      display: block;
     }
 
     .form-group {
