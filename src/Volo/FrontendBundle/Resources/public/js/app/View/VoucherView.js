@@ -95,13 +95,13 @@ var VoucherView = Backbone.View.extend({
             'ApiVoucherUsageExceededException',
         ];
 
-        if (_.indexOf(supportedErrors, data.error.errors.exception_type) !== -1) {
+        if (_.isObject(data) && _.indexOf(supportedErrors, data.error.errors.exception_type) !== -1) {
             var vendorCart = this.model.getCart(this.vendor_id);
 
             vendorCart.set('voucher', null);
             this.isFormOpen = true;
 
-            if (_.isObject(data) && _.isString(data.error.errors.message)) {
+            if (_.isString(data.error.errors.message)) {
                 this.voucherError = data.error.errors.message;
             }
             
