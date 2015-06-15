@@ -113,6 +113,7 @@ class CartManagerService
     public function calculateCart(array $jsonCart)
     {
         $jsonCart['order_time'] = date_format(new \DateTime($jsonCart['order_time']), \DateTime::ISO8601);
+        $jsonCart['vouchers'] = $this->prepareVouchersForTheApi($jsonCart['vouchers']);
 
         $response = $this->cartProvider->calculate($jsonCart);
 
@@ -121,6 +122,20 @@ class CartManagerService
         }
 
         return $this->fixMinDeliveryFeeDiscount($jsonCart['vendor_id'], $response);
+    }
+
+    /**
+     * @param array $cartVouchers
+     *
+     * @return array
+     */
+    protected function prepareVouchersForTheApi(array $cartVouchers)
+    {
+        foreach ($cartVouchers as &$voucher) {
+            $voucher = substr($voucher, 0, 16);
+        }
+
+        return $cartVouchers;
     }
 
     /**

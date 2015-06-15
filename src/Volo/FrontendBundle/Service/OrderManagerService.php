@@ -64,7 +64,7 @@ class OrderManagerService
         $order = [
             'location'                             => $cart['location'],
             'products'                             => $cart['products'],
-            'vouchers'                             => $cart['vouchers'],
+            'vouchers'                             => $this->prepareVouchersForTheApi($cart['vouchers']),
             'expedition_type'                      => 'delivery',
             'order_time'                           => date_format(new \DateTime($cart['order_time']) ,\DateTime::ISO8601),
             'payment_type_id'                      => $paymentTypeId,
@@ -78,6 +78,20 @@ class OrderManagerService
         ];
 
         return $this->orderProvider->guestOrder($order);
+    }
+
+    /**
+     * @param array $cartVouchers
+     *
+     * @return array
+     */
+    protected function prepareVouchersForTheApi(array $cartVouchers)
+    {
+        foreach ($cartVouchers as &$voucher) {
+            $voucher = substr($voucher, 0, 16);
+        }
+
+        return $cartVouchers;
     }
 
     /**
@@ -97,7 +111,7 @@ class OrderManagerService
         $order = [
             'location'                             => $cart['location'],
             'products'                             => $cart['products'],
-            'vouchers'                             => $cart['vouchers'],
+            'vouchers'                             => $this->prepareVouchersForTheApi($cart['vouchers']),
             'order_time'                           => date_format(new \DateTime($cart['order_time']) ,\DateTime::ISO8601),
             'expedition_type'                      => 'delivery',
             'payment_type_id'                      => $paymentTypeId,
