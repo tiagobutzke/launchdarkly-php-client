@@ -61,6 +61,7 @@
 
         <service id="volo_frontend.twig.vendor_extension" class="%volo_frontend.twig.vendor_extension.class%">
             <argument>%locale%</argument>
+            <argument type="service" id="translator" />
             <tag name="twig.extension" />
         </service>
 
