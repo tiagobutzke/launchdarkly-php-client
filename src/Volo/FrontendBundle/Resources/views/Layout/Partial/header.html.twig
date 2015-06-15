@@ -2,7 +2,7 @@
     <header class="header {% block headerClass %}{% endblock headerClass %}">
         <div class="header__wrapper">
             <div class="header__account">
-                {% if app.user is not null and is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% if app.security.token.roles|length > 0 and is_granted('IS_AUTHENTICATED_FULLY') %}
                     <div class="header__account__dropdown dropdown">
                         <a class="header__account__open" id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ app.security.token.attributes.customer.firstName }}<i class="icon-down-open-mini"></i>
