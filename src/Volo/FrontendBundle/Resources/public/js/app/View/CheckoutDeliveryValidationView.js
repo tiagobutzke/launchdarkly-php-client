@@ -1,25 +1,33 @@
 var CheckoutDeliveryValidationView = Backbone.View.extend({
-    events: {},
+    events: {
+        'focus #formatted_address': '_hideTooltip',
+        'click': '_hideTooltip'
+    },
 
     initialize: function (options) {
         _.bindAll(this);
         this.geocodingService = options.geocodingService;
         this.vendorId = this.$('#postal_index_form_input').data('vendor_id');
-        this.geocodingService.init(this.$('#address_line1'), []);
+        this.geocodingService.init(this.$('#formatted_address'), []);
         this.deliveryCheck = options.deliveryCheck;
         this._jsValidationView = new ValidationView({
             el: this.el,
             constraints: {
-                "customer_address[address_line1]": {
-                    presence: true
-                },
                 "customer_address[postcode]": {
                     presence: true
                 },
                 "customer_address[city]": {
                     presence: true
+                },
+                "formatted_address": {
+                    presence: true
                 }
             }
+        });
+        this.$('#formatted_address').tooltip({
+            placement: 'bottom',
+            html: true,
+            trigger: 'manual'
         });
 
         this.listenTo(this.geocodingService, 'autocomplete:submit_pressed', this._submitPressed);
@@ -53,14 +61,15 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
 
                 this.$("#city").val(data.city);
                 this.$('#postal_index_form_input').val(data.postcode);
+                this.$('#formatted_address').val($.trim(addressLine1));
+                this.$('#address_line1').val(data.street);
+                this.$('#address_line2').val(data.building);
+                this.$('#address_latitude').val(data.lat);
+                this.$('#address_longitude').val(data.lng);
                 this._validateDelivery(
                     data,
                     continueButton
                 );
-                this.$('#address_line1').val($.trim(addressLine1));
-                this.$('#address_line2').val(data.building);
-                this.$('#address_latitude').val(data.lat);
-                this.$('#address_longitude').val(data.lng);
                 deferred.resolve(data);
             }.bind(this));
 
@@ -84,12 +93,36 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
         };
     },
 
+    _hideTooltip: function () {
+        this.$('#formatted_address').tooltip('hide');
+    },
+
+    _showInputPopup: function (inputNode, text) {
+        inputNode.attr('title', text).tooltip('fixTitle');
+        inputNode.tooltip('show');
+        var newPosition = inputNode.position().left;
+        $('.tooltip')
+            .css('left', newPosition + 'px')
+            .css('visibility', 'visible');
+    },
+
+    _validateAddressFields: function () {
+        if (this.$('#address_line1').val() === '' || this.$('#address_line2').val() === '') {
+            this._showInputPopup(
+                this.$('#formatted_address'),
+                this.$('#formatted_address').data('msg_ensure_full_address')
+            );
+        }
+    },
+
     _validateDelivery: function (locationData, continueButton) {
         if ($('#delivery-modal').hasClass('in')) {
             return;
         }
 
         continueButton.attr('disabled', true);
+        this._hideTooltip();
+        this._validateAddressFields();
 
         var deliveryCheckData = {
             vendorId: this.vendorId,
