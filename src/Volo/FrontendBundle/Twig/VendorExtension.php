@@ -4,6 +4,7 @@ namespace Volo\FrontendBundle\Twig;
 
 use Foodpanda\ApiSdk\Entity\Schedule\Schedule;
 use Foodpanda\ApiSdk\Entity\Schedule\SchedulesCollection;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class VendorExtension extends \Twig_Extension
 {
@@ -13,11 +14,18 @@ class VendorExtension extends \Twig_Extension
     protected $locale;
 
     /**
-     * @param string $locale
+     * @var TranslatorInterface
      */
-    public function __construct($locale)
+    protected $translator;
+
+    /**
+     * @param string $locale
+     * @param TranslatorInterface $translator
+     */
+    public function __construct($locale, TranslatorInterface $translator)
     {
         $this->locale = $locale;
+        $this->translator = $translator;
     }
 
     /**
@@ -328,9 +336,9 @@ class VendorExtension extends \Twig_Extension
         }
 
         $today = new \DateTime();
+        $isOpen = false;
 
-        $deliveryStartingTimeInSecondsOfTheDay = $openingTimeInSecondsOfTheDay;
-
+        $deliveryStartingTimeInSecondsOfTheDay = ($openingTimeInSecondsOfTheDay + $averageDeliveryTimeInSeconds);
         // in the following part we try to determine the 1st hour of deliver
         // such that if the day is today, we start from the next hour from the time now
         // otherwise(not today) we start from the normal opening hours
@@ -339,57 +347,73 @@ class VendorExtension extends \Twig_Extension
             $today->setTime(0, 0, 0);
             $midnightTimestamp = $today->getTimestamp();
             // number of seconds that passed today from 00:00 til this moment e.g. if it's 7:30 am then (7.5 hrs * 3600)
-            $secondsSinceTheBeginningOfTheDay = $unixTimestampOfNow - $midnightTimestamp;
+            $secondsSinceTheBeginningOfToday = $unixTimestampOfNow - $midnightTimestamp + $averageDeliveryTimeInSeconds;
 
-            $startTimeInSecondsToday = max($openingTimeInSecondsOfTheDay, $secondsSinceTheBeginningOfTheDay);
-
-            // we do this to round to the nearest 1/2 hour in case that the Restaurant opens for example at 10:30
-            $startingHour = ceil(2 * ($startTimeInSecondsToday + $averageDeliveryTimeInSeconds)  / 3600) / 2;
-            $deliveryStartingTimeInSecondsOfTheDay =  $startingHour * 3600;
+            if ($secondsSinceTheBeginningOfToday > $deliveryStartingTimeInSecondsOfTheDay) {
+                $deliveryStartingTimeInSecondsOfTheDay = $secondsSinceTheBeginningOfToday;
+            }
+            $isOpen = ($openingTime->getTimestamp() < time()) && ($closingTime->getTimestamp() > time());
         }
+
+        // we do this to round to the nearest 1/2 hour in case that the Restaurant opens for example at 10:30
+        $startingHour = ceil(2 * $deliveryStartingTimeInSecondsOfTheDay / 3600) / 2;
+        $deliveryStartingTimeInSecondsOfTheDay = $startingHour * 3600;
 
         return $this->getDeliveryRanges(
             $deliveryStartingTimeInSecondsOfTheDay,
             $closingTimeInSecondsOfTheDay,
-            $averageDeliveryTimeInSeconds
+            1800,
+            $isOpen
         );
     }
 
     /**
-     * @param int $actualStartingTimeInSecondsToday
-     * @param int $closingTimeInSecondsToday
-     * @param int $averageDeliveryTimeInSeconds
+     * @param int $actualStartingTimeInSecondsOfDay
+     * @param int $closingTimeInSecondsOfDay
+     * @param int $rangePeriodInSeconds
+     * @param bool $isOpen
      *
      * @return array
      */
     protected function getDeliveryRanges(
-        $actualStartingTimeInSecondsToday,
-        $closingTimeInSecondsToday,
-        $averageDeliveryTimeInSeconds
+        $actualStartingTimeInSecondsOfDay,
+        $closingTimeInSecondsOfDay,
+        $rangePeriodInSeconds,
+        $isOpen
     ) {
         $dateTimeForFormatting = new \DateTime();
 
         $deliveryPairs = [];
-        $rangePeriodInSeconds = ceil($averageDeliveryTimeInSeconds / 1800) * 1800;
 
         // we loop on the time hour by hour
-        for ($i = $actualStartingTimeInSecondsToday; $i < $closingTimeInSecondsToday; $i += $rangePeriodInSeconds) {
-            $startingTime = ($i / 3600);
-            $endingTime = min($closingTimeInSecondsToday, ($i + $rangePeriodInSeconds)) / 3600;
+        for ($i = $actualStartingTimeInSecondsOfDay; $i < $closingTimeInSecondsOfDay; $i += $rangePeriodInSeconds) {
+            $startingTimeInHoursWithFraction = ($i / 3600);
+            $endingTimeInHoursWithFraction = min($closingTimeInSecondsOfDay, ($i + $rangePeriodInSeconds)) / 3600;
 
             // calculating and formatting the range
-            $rangeStartingMinutes = ($startingTime - floor($startingTime)) * 60;
-            $rangeStartingHours = floor($startingTime);
+
+            // Starting Time For The Slot
+            $rangeStartingHours = floor($startingTimeInHoursWithFraction);
+            $rangeStartingMinutes = ($startingTimeInHoursWithFraction - $rangeStartingHours) * 60;
+
             $dateTimeForFormatting->setTime($rangeStartingHours, $rangeStartingMinutes);
             $formattedRangeStartingTime = $this->formatTime($dateTimeForFormatting);
 
-            $rangeEndingMinutes = ($endingTime - floor($endingTime)) * 60;
-            $rangeEndingHours = floor($endingTime);
+            // Ending Time For The Slot
+            $rangeEndingHours = floor($endingTimeInHoursWithFraction);
+            $rangeEndingMinutes = ($endingTimeInHoursWithFraction - $rangeEndingHours) * 60;
+
             $dateTimeForFormatting->setTime($rangeEndingHours, $rangeEndingMinutes);
             $formattedRangeEndingTime = $this->formatTime($dateTimeForFormatting);
 
+            // Formatting the whole range for the slot
             $rangeKey = sprintf('%02d:%02d', $rangeStartingHours, $rangeStartingMinutes);
-            $deliveryPairs[$rangeKey] = sprintf('%s - %s', $formattedRangeStartingTime, $formattedRangeEndingTime);
+
+            $formattedValueRange = sprintf('%s - %s', $formattedRangeStartingTime, $formattedRangeEndingTime);
+            if ($actualStartingTimeInSecondsOfDay === $i && $isOpen) {
+                $formattedValueRange = $this->translator->trans('time_picker.now');
+            }
+            $deliveryPairs[$rangeKey] = $formattedValueRange;
         }
 
         return $deliveryPairs;
