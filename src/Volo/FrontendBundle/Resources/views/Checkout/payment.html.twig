@@ -84,6 +84,18 @@
         {% endif %}
     </h3>
 
+    <div class="checkout__payments">
+        {% for payment in vendor.paymentTypes %}
+            <div class="checkout__payment">
+                <div class="checkout__payment__wrapper"
+                     data-payment_type_id="{{ payment.id }}"
+                     data-payment_type_code="{{ payment.paymentTypeCode }}">
+                    {{ payment.paymentTypeCode }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     {% include('VoloFrontendBundle:Checkout/Partial:payment_list.html.twig') %}
     {% endif %}
@@ -112,7 +124,10 @@
 
     <div class="clearfix"></div>
     <div class="checkout-button" data-vendor_code="{{ vendor.code }}" data-vendor_id="{{ vendor.id}}" data-is_guest_user="{{ is_granted('IS_AUTHENTICATED_FULLY') ? 'false' : 'true'}}">
-        <span class="error_msg hide"></span>
+        {% set paypalError = app.session.flashbag.get('paypal-error') %}
+        <span class="error_msg {{ paypalError|length > 0 ? '' : 'hide' }}">
+            {% if paypalError|length > 0 %}{% trans %}paypal.payment_error{% endtrans %}{% endif %}
+        </span>
         <div class="checkout__submit">
             <button id="finish-and-pay" class="button">{% trans %}button.finish_and_pay{% endtrans %}</button>
         </div>
@@ -158,6 +173,22 @@
                 VOLO.checkoutModel.set('adyen_encrypted_data', null);
             });
         {% endif %}
+
+        $('.checkout__payment__wrapper').click(function () {
+            $('.checkout__payment__wrapper--active').removeClass('checkout__payment__wrapper--active');
+            $(this).addClass('checkout__payment__wrapper--active');
+
+            VOLO.checkoutModel.set('payment_type_code', $(this).data('payment_type_code'));
+            VOLO.checkoutModel.set('payment_type_id', $(this).data('payment_type_id'));
+
+            if ($(this).data('payment_type_code') === "paypal") {
+                $('#payment_form').addClass('hide');
+                $('.checkout__list').addClass('hide');
+            } else {
+                $('#payment_form').toggleClass('hide', $("input:radio[name='credit_card']").length > 0);
+                $('.checkout__list').removeClass('hide');
+            }
+        });
 
         $('.checkout__item__card__help-toggle').click(function() {
             $('.checkout__item__card__help').toggle();

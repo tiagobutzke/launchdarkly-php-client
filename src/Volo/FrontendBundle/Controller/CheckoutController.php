@@ -339,12 +339,21 @@ class CheckoutController extends Controller
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             /** @var \Volo\FrontendBundle\Security\Token $token */
             $token          = $this->get('security.token_storage')->getToken();
+            $paymentTypeId  = $data['payment_type_id'];
             $addressId      = $data['customer_address_id'];
             $expectedAmount = $data['expected_total_amount'];
 
-            $order = $orderManager->placeOrder($token->getAccessToken(), $addressId, $expectedAmount, $cart);
+            $order = $orderManager->placeOrder(
+                $token->getAccessToken(),
+                $addressId,
+                $expectedAmount,
+                $paymentTypeId,
+                $cart
+            );
 
-            $orderManager->payment($token->getAccessToken(), $data + $order);
+            if ($order['hosted_payment_page_redirect'] === null) {
+                $orderManager->payment($token->getAccessToken(), $data + $order);
+            }
         } else {
             $session = $this->get('session');
             $guestCustomer = $this->get('volo_frontend.service.customer')->createGuestCustomer(
@@ -353,12 +362,22 @@ class CheckoutController extends Controller
             );
             $session->set(OrderController::SESSION_GUEST_ORDER_ACCESS_TOKEN, $guestCustomer->getAccessToken());
 
-            $order = $orderManager->placeGuestOrder($guestCustomer, $data['expected_total_amount'], $cart);
+            $order = $orderManager->placeGuestOrder(
+                $guestCustomer,
+                $data['expected_total_amount'],
+                $data['payment_type_id'],
+                $cart
+            );
 
-            $orderManager->guestPayment($order, $data['encrypted_payment_data']);
+            if ($order['hosted_payment_page_redirect'] === null) {
+                $orderManager->guestPayment($order, $data['encrypted_payment_data']);
+            }
         }
 
-        $this->get('volo_frontend.service.cart_manager')->deleteCart($this->get('session')->getId(), $vendor->getId());
+        // if we're using hosted payment, at this point the order is placed but not paid.
+        if ($order['hosted_payment_page_redirect'] === null) {
+            $this->get('volo_frontend.service.cart_manager')->deleteCart($this->get('session')->getId(), $vendor->getId());
+        }
 
         return $order;
     }
