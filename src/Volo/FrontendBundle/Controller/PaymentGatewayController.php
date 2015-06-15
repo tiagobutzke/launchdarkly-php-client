@@ -50,7 +50,7 @@ class PaymentGatewayController extends Controller
 
         if ($request->query->get('success')) {
             $this->get('volo_frontend.service.cart_manager')->deleteCart(
-                $this->get('session')->getId(),
+                $request->getSession(),
                 $vendor->getId()
             );
 
