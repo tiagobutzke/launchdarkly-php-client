@@ -2,9 +2,11 @@ volo_frontend:
     resource: "@VoloFrontendBundle/Controller/"
     type:     annotation
     prefix:   /
+    schemes:  [%http_schema%]
 
 logout:
-    path:   /logout
+    path:     /logout
+    schemes:  [%http_schema%]
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
