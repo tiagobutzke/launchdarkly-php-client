@@ -11,7 +11,7 @@
             <input type="text" class="form-control"  id="postal_index_form_input" name="customer_address[postcode]"
                    data-vendor_id="{{ vendor.id }}"
                    value="{{ customer_address.postcode|default('') }}" required="true" placeholder="{% trans %}form.placeholder.postcode{% endtrans %}"
-                   title="{% trans %}validations.error.checkout.customer_postcode{% endtrans %}">
+                   data-validation-msg="{% trans %}validations.error.checkout.customer_postcode{% endtrans %}">
         </div>
         <div class="form-group form-group--two_col2">
             <input type="text" class="form-control" id="city" name="customer_address[city]"
