@@ -8,11 +8,11 @@ var TimePickerView = Backbone.View.extend({
         this.vendor_id = this.$el.data().vendor_id;
 
         var vendorCart = this.model.getCart(this.vendor_id);
-        this.listenTo(vendorCart, 'change:orderTime', this.render, this);
+        this.listenTo(vendorCart, 'change:order_time', this.render, this);
     },
 
     render: function () {
-        var date = this.model.getCart(this.vendor_id).get('orderTime');
+        var date = this.model.getCart(this.vendor_id).get('order_time');
 
         if (_.isDate(date)) {
             var dateKey = date.toISOString().split('T')[0],
@@ -32,6 +32,14 @@ var TimePickerView = Backbone.View.extend({
             if ($("#order-delivery-time option[value='" + timeKey + "']").length > 0) {
                 this.$('#order-delivery-time').val(timeKey);
             }
+        } else {
+            var time = this.$('#order-delivery-time').val().split(':'),
+                date = this.$('#order-delivery-date').val().split('-');
+
+            this.model.getCart(this.vendor_id).set(
+                'order_time',
+                new Date(date[0], date[1] - 1, date[2], time[0], time[1])
+            );
         }
     },
 
@@ -46,7 +54,7 @@ var TimePickerView = Backbone.View.extend({
             date = this.$('#order-delivery-date').val().split('-'),
             datetime = new Date(date[0], date[1] - 1, date[2], time[0], time[1]);
 
-        vendorCart.set('orderTime', datetime);
+        vendorCart.set('order_time', datetime);
         vendorCart.updateCart();
     }
 });

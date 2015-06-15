@@ -111,10 +111,12 @@ class CartManagerService
      */
     public function calculateCart(array $jsonCart)
     {
+        $jsonCart['order_time'] = date_format(new \DateTime($jsonCart['order_time']), \DateTime::ISO8601);
+
         $response = $this->cartProvider->calculate($jsonCart);
 
         if (array_key_exists('vendorCart', $response)) {
-            $response['orderTime'] = $jsonCart['orderTime'];
+            $response['order_time'] = $jsonCart['order_time'];
         }
 
         return $response;

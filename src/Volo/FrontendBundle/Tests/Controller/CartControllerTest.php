@@ -39,7 +39,7 @@ class CartControllerTest extends VoloTestCase
                 'latitude' => 52.5237282,
                 'longitude"' => 13.3908286
             ],
-            'orderTime' => '2015-05-12T07:31:20.795Z',
+            'order_time' => '2015-05-12T07:31:20.795Z',
             'paymentTypeId' => 0,
             'activeLanguage' => 1,
             'groupCode' => '',
@@ -85,7 +85,7 @@ class CartControllerTest extends VoloTestCase
                 'location_type' => 'area',
                 'area_id' => 0
             ],
-            'orderTime' => '',
+            'order_time' => '',
             'paymentTypeId' => 0,
             'activeLanguage' => 1,
             'groupCode' => '',
@@ -112,7 +112,7 @@ class CartControllerTest extends VoloTestCase
                 'location_type' => 'area',
                 'area_id' => 127
             ],
-            'orderTime' => '',
+            'order_time' => '',
             'paymentTypeId' => 0,
             'activeLanguage' => 1,
             'groupCode' => '',

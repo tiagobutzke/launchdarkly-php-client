@@ -28,7 +28,7 @@ describe("A cart", function() {
             "service_tax_total": 0,
             "service_fee_total": 0,
             "voucher": [],
-            "orderTime": "2015-06-01T05:26:57-07:00",
+            "order_time": null,
             "vendorCart": [
                 {
                     "subtotal": 7.9,

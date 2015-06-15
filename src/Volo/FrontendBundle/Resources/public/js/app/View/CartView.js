@@ -218,7 +218,7 @@ var CartView = Backbone.View.extend({
         this.listenTo(vendorCart, 'cart:dirty', this.disableCart, this);
         this.listenTo(vendorCart, 'cart:ready', this.enableCart, this);
         this.listenTo(vendorCart, 'change', this.renderSubTotal);
-        this.listenTo(vendorCart, 'change:orderTime', this.renderTimePicker, this);
+        this.listenTo(vendorCart, 'change:order_time', this.renderTimePicker, this);
         this.listenTo(vendorCart.products, 'update', this.renderProducts, this);
         this.listenTo(vendorCart.products, 'update', this._toggleContainerVisibility, this);
         this.listenTo(vendorCart.products, 'update', this._updateCartIcon, this);
