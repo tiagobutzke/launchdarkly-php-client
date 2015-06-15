@@ -121,6 +121,25 @@ class VendorController extends Controller
     }
 
     /**
+     * @Route("/{id}", name="vendor_by_id", options={"expose"=true}, requirements={"id": "^([0-9]+)$"})
+     * @Method({"GET"})
+     *
+     * @param int $id
+     *
+     * @return array
+     */
+    public function vendorByIdAction($id)
+    {
+        try {
+            $vendorIdentifierCache = $this->get('volo_frontend.service.vendor')->getVendorCodeById($id);
+        } catch (\RuntimeException $e) {
+            throw $this->createNotFoundException('Vendor not found!', $e);
+        }
+
+        return $this->redirectToVendorPage($vendorIdentifierCache['code'], $vendorIdentifierCache['urlKey']);
+    }
+
+    /**
      * @Route("/{code}", name="vendor_by_code", requirements={"code": "([A-Za-z][A-Za-z0-9]{3})"})
      * @Method({"GET"})
      *

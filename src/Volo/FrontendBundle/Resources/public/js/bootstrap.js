@@ -193,6 +193,16 @@ VOLO.initLoginButtonView = function() {
     });
 };
 
+VOLO.initCartIconLink = function() {
+    console.log("initializing cart icon link");
+    if (VOLO.cartIconView) {
+        VOLO.cartIconView.unbind();
+    }
+    VOLO.cartIconView = new VendorCartIconView({
+        el: '.header__cart'
+    });
+};
+
 VOLO.initVendorsListSearch = function() {
     VOLO.vendorSearchView = new VendorsSearchView({
         el: '.restaurants__tool-box',
@@ -260,6 +270,7 @@ $(document).on('page:load page:restore', function () {
     if ($('.teaser__form').length > 0) {
         VOLO.initHomeSearch();
         VOLO.homeSearchView.render();
+        VOLO.initCartIconLink();
     }
 
     if ($('.header__account').length > 0) {
@@ -269,6 +280,7 @@ $(document).on('page:load page:restore', function () {
     if($('.restaurants__tool-box').length > 0) {
         VOLO.initVendorsListSearch();
         VOLO.vendorSearchView.render();
+        VOLO.initCartIconLink();
     }
     if ($('.order-status-wrapper').length > 0) {
         if (!_.isNull(VOLO.orderTrackingInterval)) {
@@ -322,6 +334,9 @@ $(document).on('page:before-unload', function () {
     if (!_.isNull(VOLO.orderTrackingInterval)) {
         clearInterval(VOLO.orderTrackingInterval);
         VOLO.orderTrackingInterval = null;
+    }
+    if (!_.isNull(VOLO.cartIconView)) {
+        VOLO.cartIconView.unbind();
     }
 });
 

@@ -406,3 +406,28 @@ var CartView = Backbone.View.extend({
         this.$('.error-below-minimum-amount').removeClass('hide');
     }
 });
+
+var VendorCartIconView = Backbone.View.extend({
+    events: {
+        'click' : '_gotoMenuPage'
+    },
+
+    initialize: function() {
+        _.bindAll(this);
+    },
+
+    _gotoMenuPage: function() {
+        var vendorId = this.$el.data().vendor_id + '';
+        if (vendorId.length > 0) {
+            Turbolinks.visit(Routing.generate('vendor_by_id', {id: vendorId}));
+        }
+    },
+
+    unbind: function() {
+        this.undelegateEvents();
+    },
+
+    render: function() {
+        return this;
+    }
+});

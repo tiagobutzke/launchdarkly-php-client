@@ -9,6 +9,7 @@ use Foodpanda\ApiSdk\Provider\VendorProvider;
 
 class VendorService
 {
+    const VENDOR_ID_CACHE_KEY_PREFIX = 'vendorId::';
     /**
      * @var CityProvider
      */
@@ -62,6 +63,32 @@ class VendorService
     }
 
     /**
+     * This method returns the vendor code by id
+     *
+     * All the codes are cached with timeLife = 0
+     *
+     * The data could be outdated
+     *
+     * @param string $id
+     *
+     * @return array
+     * @throws \RuntimeException
+     */
+    public function getVendorCodeById($id)
+    {
+        $key = static::VENDOR_ID_CACHE_KEY_PREFIX . $id;
+
+        if (!$this->cache->contains($key)) {
+            $this->refreshCachedVendorCode();
+        }
+
+        if (!$this->cache->contains($key)) {
+            throw new \RuntimeException(sprintf('Vendor not found for id "%s".', $id));
+        }
+
+        return $this->cache->fetch($key);
+    }
+    /**
      *
      */
     public function refreshCachedVendorCode()
@@ -71,6 +98,13 @@ class VendorService
             foreach ($this->vendorProvider->findVendorsByCity($city)->getItems() as $vendor) {
                 /** @var $vendor Vendor */
                 $this->cache->save($vendor->getUrlKey(), $vendor->getCode());
+                $this->cache->save(
+                    static::VENDOR_ID_CACHE_KEY_PREFIX . $vendor->getId(),
+                    [
+                        'code' => $vendor->getCode(),
+                        'urlKey' => $vendor->getUrlKey(),
+                    ]
+                );
             }
         }
     }
