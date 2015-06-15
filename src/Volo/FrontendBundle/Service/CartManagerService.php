@@ -2,18 +2,13 @@
 
 namespace Volo\FrontendBundle\Service;
 
-use Doctrine\Common\Cache\Cache;
 use Foodpanda\ApiSdk\Provider\CartProvider;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Foodpanda\ApiSdk\Provider\VendorProvider;
 
 class CartManagerService
 {
-    /**
-     * @var Cache
-     */
-    protected $cache;
-
-    const CARTS_KEY_PREFIX = 'customer_carts:';
+    const CARTS_KEY_PREFIX = 'customer:carts';
     const CART_KEY = 'cart';
     const DEFAULT_CART_FLAG = 'default';
 
@@ -28,85 +23,80 @@ class CartManagerService
     protected $vendorProvider;
 
     /**
-     * @param Cache          $cache
      * @param CartProvider   $cartProvider
      * @param VendorProvider $vendorProvider
      */
     public function __construct(
-        Cache $cache,
         CartProvider $cartProvider,
         VendorProvider $vendorProvider
     ) {
         $this->cartProvider = $cartProvider;
         $this->vendorProvider = $vendorProvider;
-        $this->cache = $cache;
     }
 
     /**
-     * @param string $sessionId
+     * @param SessionInterface $session
      * @param string $vendorIdentifier
      * @param array $cart
      */
-    public function saveCart($sessionId, $vendorIdentifier, array $cart)
+    public function saveCart($session, $vendorIdentifier, array $cart)
     {
-        $cartCollection = $this->getCartCollection($sessionId);
-        $vendorCartKey = $this->createCartKey($sessionId, $vendorIdentifier);
+        $cartCollection = $this->getCartCollection($session);
+        $vendorCartKey = $this->createCartKey($vendorIdentifier);
 
         foreach ($cartCollection as $key => &$values) {
             $values[static::DEFAULT_CART_FLAG] = false;
         }
         $cartCollection[$vendorCartKey] = [static::DEFAULT_CART_FLAG => true, static::CART_KEY => $cart];
 
-        $this->cache->save($this->createCartCollectionKey($sessionId), $cartCollection);
+        $session->set($this->createCartCollectionKey(), $cartCollection);
     }
 
     /**
-     * @param string $sessionId
+     * @param SessionInterface $session
      * @param string $vendorIdentifier
      */
-    public function deleteCart($sessionId, $vendorIdentifier)
+    public function deleteCart($session, $vendorIdentifier)
     {
-        $cartCollection = $this->getCartCollection($sessionId);
-        $vendorCartKey = $this->createCartKey($sessionId, $vendorIdentifier);
+        $cartCollection = $this->getCartCollection($session);
+        $vendorCartKey = $this->createCartKey($vendorIdentifier);
 
         if (array_key_exists($vendorCartKey, $cartCollection)) {
             unset($cartCollection[$vendorCartKey]);
         }
 
-        $this->cache->save($this->createCartCollectionKey($sessionId), $cartCollection);
+        $session->set($this->createCartCollectionKey(), $cartCollection);
     }
 
     /**
-     * @param string $sessionId
+     * @param SessionInterface $session
      * @param string $vendorIdentifier
      *
      * @return array|null
      */
-    public function getCart($sessionId, $vendorIdentifier)
+    public function getCart($session, $vendorIdentifier)
     {
         $cart = null;
-        $cartKey = $this->createCartKey($sessionId, $vendorIdentifier);
-        $cartCollection = $this->getCartCollection($sessionId);
+        $cartKey = $this->createCartKey($vendorIdentifier);
+        $cartCollection = $this->getCartCollection($session);
 
-        foreach ($cartCollection as $key => $values) {
-            if ($key === $cartKey) {
-                return $values[static::CART_KEY];
-            }
+        if (isset($cartCollection[$cartKey])) {
+            $cart = $cartCollection[$cartKey][static::CART_KEY];
         }
 
         return $cart;
     }
 
     /**
-     * @param string $sessionId
+     * @param SessionInterface $session
      * @param string $vendorIdentifier
      *
      * @return array|null
      */
-    public function getCartIfDefault($sessionId, $vendorIdentifier)
+    public function getCartIfDefault($session, $vendorIdentifier)
     {
-        $cartKey = $this->createCartKey($sessionId, $vendorIdentifier);
-        $cartCollection = $this->getCartCollection($sessionId);
+        $cartKey = $this->createCartKey($vendorIdentifier);
+        $cartCollection = $this->getCartCollection($session);
 
         if (array_key_exists($cartKey, $cartCollection) && $cartCollection[$cartKey][static::DEFAULT_CART_FLAG]) {
             return $cartCollection[$cartKey][static::CART_KEY];
@@ -134,25 +124,23 @@ class CartManagerService
     }
 
     /**
-     * @param string $sessionId
+     * @param SessionInterface $session
      *
      * @return array
      */
-    protected function getCartCollection($sessionId)
+    protected function getCartCollection($session)
     {
-        $carts = $this->cache->fetch($this->createCartCollectionKey($sessionId));
-
-        return false === $carts ? [] : $carts;
+        return $session->get($this->createCartCollectionKey(), []);
     }
 
     /**
-     * @param string $sessionId
+     * @param SessionInterface $session
      *
      * @return array
      */
-    public function getDefaultCart($sessionId)
+    public function getDefaultCart($session)
     {
-        $cartCollection = $this->getCartCollection($sessionId);
+        $cartCollection = $this->getCartCollection($session);
         $defaultCart = null;
 
         foreach ($cartCollection as $values) {
@@ -165,24 +153,21 @@ class CartManagerService
     }
 
     /**
-     * @param string $sessionId
      * @param string $vendorIdentifier
      *
      * @return string
      */
-    protected function createCartKey($sessionId, $vendorIdentifier)
+    protected function createCartKey($vendorIdentifier)
     {
-        return sprintf('cart:%s_%s', $sessionId, $vendorIdentifier);
+        return sprintf('%s:%s', static::CART_KEY, $vendorIdentifier);
     }
 
     /**
-     * @param string $sessionId
-     *
      * @return string
      */
-    protected function createCartCollectionKey($sessionId)
+    protected function createCartCollectionKey()
     {
-        return static::CARTS_KEY_PREFIX . $sessionId;
+        return static::CARTS_KEY_PREFIX;
     }
 
     /**

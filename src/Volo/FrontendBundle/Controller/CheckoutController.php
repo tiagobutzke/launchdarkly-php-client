@@ -315,7 +315,7 @@ class CheckoutController extends Controller
      */
     protected function getCart(Vendor $vendor)
     {
-        $session = $this->get('session')->getId();
+        $session = $this->get('session');
         $cart = $this->get('volo_frontend.service.cart_manager')->getCart($session, $vendor->getId());
 
         if ($cart === null || count($cart['products']) === 0) {
@@ -376,7 +376,7 @@ class CheckoutController extends Controller
 
         // if we're using hosted payment, at this point the order is placed but not paid.
         if ($order['hosted_payment_page_redirect'] === null) {
-            $this->get('volo_frontend.service.cart_manager')->deleteCart($this->get('session')->getId(), $vendor->getId());
+            $this->get('volo_frontend.service.cart_manager')->deleteCart($this->get('session'), $vendor->getId());
         }
 
         return $order;
