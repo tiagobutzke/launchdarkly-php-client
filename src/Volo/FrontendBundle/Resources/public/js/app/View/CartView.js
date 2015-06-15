@@ -262,8 +262,8 @@ var CartView = Backbone.View.extend({
         }
 
         var animationLength = 100,
-            originalWidth = $counter.width(),
-            originalHeight = $counter.height(),
+            originalWidth = 23,
+            originalHeight = 23,
             sizeIncrease = 3;
 
         counter.animate({
