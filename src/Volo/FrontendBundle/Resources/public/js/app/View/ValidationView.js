@@ -58,7 +58,7 @@ var ValidationView = Backbone.View.extend({
         if (view) {
             view.show();
         } else {
-            var msg = $('<span class="error_msg">'+target.title+'</span>');
+            var msg = $('<span class="error_msg">'+target.getAttribute('data-validation-msg')+'</span>');
             this._errorMessages[target.name] = msg;
 
             msg.insertAfter(target);

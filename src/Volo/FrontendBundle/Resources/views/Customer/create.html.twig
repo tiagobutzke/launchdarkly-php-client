@@ -20,7 +20,7 @@
                        required="true"
                        placeholder="{% trans %}form.placeholder.first_name{% endtrans %}"
                        data-toggle="tooltip"
-                       title="{% trans %}validations.error.register.first_name{% endtrans %}"
+                       data-validation-msg="{% trans %}validations.error.register.first_name{% endtrans %}"
                 />
             </div>
             <div class="form-group">
@@ -32,7 +32,7 @@
                        required="true"
                        placeholder="{% trans %}form.placeholder.last_name{% endtrans %}"
                        data-toggle="tooltip"
-                       title="{% trans %}validations.error.register.last_name{% endtrans %}"
+                       data-validation-msg="{% trans %}validations.error.register.last_name{% endtrans %}"
                 />
             </div>
             <div class="form-group">
@@ -44,7 +44,7 @@
                        required="true"
                        placeholder="{% trans %}form.placeholder.email{% endtrans %}"
                        data-toggle="tooltip"
-                       title="{% trans %}validations.error.register.email{% endtrans %}"
+                       data-validation-msg="{% trans %}validations.error.register.email{% endtrans %}"
                 />
             </div>
             <div class="form-group">
@@ -56,7 +56,7 @@
                        required="true"
                        placeholder="{% trans %}form.placeholder.mobile_number{% endtrans %}"
                        data-toggle="tooltip"
-                       title="{% trans %}validations.error.register.mobile_number{% endtrans %}"
+                       data-validation-msg="{% trans %}validations.error.register.mobile_number{% endtrans %}"
                 />
             </div>
             <div class="form-group">
@@ -67,7 +67,7 @@
                        required="true"
                        placeholder="{% trans %}form.placeholder.password{% endtrans %}"
                        data-toggle="tooltip"
-                       title="{% trans %}validations.error.register.password{% endtrans %}"
+                       data-validation-msg="{% trans %}validations.error.register.password{% endtrans %}"
                 />
             </div>
             <!-- TODO: JS validate that password is equivalent to repeat_password -->
@@ -79,7 +79,7 @@
                        required="true"
                        placeholder="{% trans %}form.placeholder.retype_password{% endtrans %}"
                        data-toggle="tooltip"
-                       title="{% trans %}validations.error.register.confirm_password{% endtrans %}"
+                       data-validation-msg="{% trans %}validations.error.register.confirm_password{% endtrans %}"
                 />
             </div>
             <button type="submit" class="button button--full-width">{% trans %}button.register{% endtrans %}</button>
