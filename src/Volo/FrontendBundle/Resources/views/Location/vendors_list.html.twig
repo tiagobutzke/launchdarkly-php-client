@@ -41,7 +41,10 @@
             </div>
         </div>
         {% if openVendors|length == 0 and closedVendors|length == 0 %}
-            <div class="restaurants__not__available">{% trans %}restaurants.not_available{% endtrans %}</div>
+            <div class="restaurants__not__available">
+                <p>{% trans %}restaurant.not_available.title{% endtrans %}</p>
+                <h2>{% trans %}restaurants.not_available{% endtrans %}</h2>
+            </div>
         {% else %}
             <div class="restaurants">
                 {% for vendor in openVendors %}
