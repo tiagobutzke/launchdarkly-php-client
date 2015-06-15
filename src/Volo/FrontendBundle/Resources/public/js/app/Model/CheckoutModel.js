@@ -27,6 +27,10 @@ var CheckoutModel = Backbone.Model.extend({
             return false;
         }
 
+        if (_.isNull(this.get('payment_type_code'))) {
+            return false;
+        }
+
         if (this.get('is_guest_user')) {
             if (this.get('payment_type_code') === 'paypal') {
                 return true;
