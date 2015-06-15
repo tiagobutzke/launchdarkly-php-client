@@ -53,6 +53,11 @@ a.button {
 
 .button--disabled {
   background-color: $cta-color-bg-disabled;
+  &:hover, &:focus {
+    background-color: $cta-color-bg-disabled;
+    color: $cta-color-text-primary;
+    cursor: default;
+  }
 }
 
 .button--pressed {
