@@ -40,16 +40,20 @@
                 </div>
             </div>
         </div>
-        <div class="restaurants">
-            {% for vendor in openVendors %}
-                {{ block('vendor_description') }}
-            {% endfor %}
-        </div>
-        <div class="restaurants restaurants--closed">
-            {% for vendor in closedVendors %}
-                {{ block('vendor_description') }}
-            {% endfor %}
-        </div>
+        {% if openVendors|length == 0 and closedVendors|length == 0 %}
+            <div class="restaurants__not__available">{% trans %}restaurants.not_available{% endtrans %}</div>
+        {% else %}
+            <div class="restaurants">
+                {% for vendor in openVendors %}
+                    {{ block('vendor_description') }}
+                {% endfor %}
+            </div>
+            <div class="restaurants restaurants--closed">
+                {% for vendor in closedVendors %}
+                    {{ block('vendor_description') }}
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
 
