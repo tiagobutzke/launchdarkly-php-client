@@ -3,7 +3,17 @@ $(document).ready(function() {
         deliveryTimeAnimation,
         cityFlipperAnimation,
         calledActionAnimation,
-        plzSelectionAnimation;
+        plzSelectionAnimation,
+        homeTeaseFullWidth;
+
+    //Attention: this script should go first
+    //initialize it before running any other animation script since it changes DOM elements size
+    homeTeaseFullWidth = new VOLO.FullWindowHeight({
+        $window: $(window),
+        $document: $(document),
+        targetSelector: '.fullWindowHeight'
+    });
+    homeTeaseFullWidth.init();
 
     plateAnimation = new VOLO.RevealOnScroll({
         $window: $(window),
