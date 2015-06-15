@@ -17,7 +17,7 @@ before_install:
 
 install:
     # Install composer dependencies
-    - cd $TRAVIS_BUILD_DIR && composer self-update
+    #    - cd $TRAVIS_BUILD_DIR && composer self-update
     - cd $TRAVIS_BUILD_DIR && composer install --no-interaction --optimize-autoloader
     - php app/console assets:install web --env=test
     - php app/console fos:js-routing:dump --env=test
