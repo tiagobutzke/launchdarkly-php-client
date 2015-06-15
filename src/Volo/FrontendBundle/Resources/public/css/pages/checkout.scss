@@ -392,6 +392,7 @@
   i {
     display: inline-block;
     margin-right: $space-xs;
+    color: $color-text-highlight;
   }
 
   @include respond-from("screen-md") {

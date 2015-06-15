@@ -90,7 +90,28 @@
                 <div class="checkout__payment__wrapper"
                      data-payment_type_id="{{ payment.id }}"
                      data-payment_type_code="{{ payment.paymentTypeCode }}">
-                    {{ payment.paymentTypeCode }}
+                    <div class="checkout__payment_img">
+                        {% set label_credit_cart = '' %}
+                        {% if payment.paymentTypeCode == 'paypal' %}
+                            <img class="b-lazy"
+                                 src=data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+                                 data-src="{{ asset('img/checkout/paypal.png') }}|{{ asset('img/checkout/paypal-2x.png') }}"
+                                 alt="alt-text" />
+                            {% set label_credit_cart = 'payment.label_paypal' %}
+                        {% endif %}
+                        {% if payment.paymentTypeCode == 'adyen' %}
+                                <img class="b-lazy"
+                                     src=data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+                                     data-src="{{ asset('img/checkout/visa.png') }}|{{ asset('img/checkout/visa-2x.png') }}"
+                                     alt="alt-text"/>
+                                <img class="b-lazy"
+                                     src=data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+                                     data-src="{{ asset('img/checkout/mastercard.png') }}|{{ asset('img/checkout/mastercard-2x.png') }}"
+                                     alt="alt-text"/>
+                            {% set label_credit_cart = 'payment.paymentTypeCode' %}
+                        {% endif %}
+                    </div>
+                    <div class="checkout__payment_label"><i class="icon-check"></i>{{ label_credit_cart|trans }}</div>
                 </div>
             </div>
         {% endfor %}
