@@ -193,16 +193,5 @@
         $('.checkout__item__card__help-toggle').click(function() {
             $('.checkout__item__card__help').toggle();
         });
-
-        $('#payment_form input').on('keyup', function () {
-            var encryptedForm = adyen.encrypt.createEncryptedForm(
-                    document.getElementById('payment_form'),
-                    '{{ adyen_public_key }}',
-                    {cardTypeElement: document.getElementById('cardType')}
-            );
-
-            var isComplete = !$("#payment_form input").filter(function() { return $(this).val() == ""; }).length;
-            VOLO.checkoutModel.set('adyen_encrypted_data', isComplete ? encryptedForm.encrypt() : null);
-        });
     </script>
 {% endblock %}

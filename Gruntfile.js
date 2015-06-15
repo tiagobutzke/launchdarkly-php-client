@@ -65,6 +65,7 @@ module.exports = function (grunt) {
         'web/bower_components/spin.js/spin.js',
         'web/bower_components/validate/validate.js',
         'web/bower_components/mobile-detect/mobile-detect.js',
+        'web/bower_components/jquery.payment/lib/jquery.payment.js',
         frontendAssetPath('/js/**/*.js')
     ]);
 
@@ -165,7 +166,8 @@ module.exports = function (grunt) {
                 'web/bower_components/spin.js/spin.js',
                 'web/bower_components/validate/validate.js',
                 'web/bower_components/real-shadow/realshadow.js',
-                'web/bower_components/mobile-detect/mobile-detect.js'
+                'web/bower_components/mobile-detect/mobile-detect.js',
+                'web/bower_components/jquery.payment/lib/jquery.payment.js'
             ]
         },
         gruntfile: {
