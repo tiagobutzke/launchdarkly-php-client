@@ -39,7 +39,11 @@ var VendorGeocodingView = HomeSearchView.extend({
         console.log('_search ', this.cid, data);
 
         if (!!data && data.postcode) {
-            this.locationModel.set({latitude: data.lat, longitude: data.lng, formattedAddress: data.formattedAddress});
+            this.locationModel.set({
+                latitude: data.lat,
+                longitude: data.lng,
+                formattedAddress: data.postcode + ", " + data.city
+            });
 
             this._disableInputNode();
 
@@ -67,7 +71,7 @@ var VendorGeocodingView = HomeSearchView.extend({
 
     _parseIsDeliverable: function (data, response) {
         if (response.result) {
-            this.$('.location__address').html(data.formattedAddress);
+            this.$('.location__address').html(data.postcode);
             this.$('.vendor__geocoding__tool-box__title').removeClass('hide');
             this.$('.input__postcode').addClass('hide');
 
@@ -77,7 +81,7 @@ var VendorGeocodingView = HomeSearchView.extend({
                 city: data.city,
                 latitude: data.lat,
                 longitude: data.lng,
-                address: data.formattedAddress,
+                address: data.postcode + ", " + data.city,
                 postcode: data.postcode
             });
 

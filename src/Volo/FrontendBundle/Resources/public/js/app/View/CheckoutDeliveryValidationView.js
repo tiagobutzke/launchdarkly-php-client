@@ -69,9 +69,9 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
 
     _getDataFromMeta: function (locationMeta, $input) {
         console.log(locationMeta);
-        var formattedAddress = locationMeta.formattedAddress;
-
         var postCode = (locationMeta.postalCode && locationMeta.postalCode.value) || $input.val();
+
+        var formattedAddress = postCode + ", " + locationMeta.city;
 
         return {
             formattedAddress: formattedAddress,
@@ -139,7 +139,7 @@ var CheckoutNoDeliveryView = Backbone.View.extend({
         this.undelegateEvents();
         Turbolinks.visit(Routing.generate('volo_location_search_vendors_by_gps', {
             city: data.city,
-            address: data.formattedAddress,
+            address: data.postcode + ", " + data.city,
             longitude: data.lng,
             latitude: data.lat,
             postcode: data.postcode
