@@ -4,6 +4,7 @@ namespace Volo\FrontendBundle\Service;
 
 use Doctrine\Common\Cache\Cache;
 use Foodpanda\ApiSdk\Provider\CartProvider;
+use Foodpanda\ApiSdk\Provider\VendorProvider;
 
 class CartManagerService
 {
@@ -22,12 +23,22 @@ class CartManagerService
     protected $cartProvider;
 
     /**
-     * @param Cache $cache
-     * @param CartProvider $cartProvider
+     * @var VendorProvider;
      */
-    public function __construct(Cache $cache, CartProvider $cartProvider)
-    {
+    protected $vendorProvider;
+
+    /**
+     * @param Cache          $cache
+     * @param CartProvider   $cartProvider
+     * @param VendorProvider $vendorProvider
+     */
+    public function __construct(
+        Cache $cache,
+        CartProvider $cartProvider,
+        VendorProvider $vendorProvider
+    ) {
         $this->cartProvider = $cartProvider;
+        $this->vendorProvider = $vendorProvider;
         $this->cache = $cache;
     }
 
@@ -119,7 +130,7 @@ class CartManagerService
             $response['order_time'] = $jsonCart['order_time'];
         }
 
-        return $response;
+        return $this->fixMinDeliveryFeeDiscount($jsonCart['vendor_id'], $response);
     }
 
     /**
@@ -172,5 +183,37 @@ class CartManagerService
     protected function createCartCollectionKey($sessionId)
     {
         return static::CARTS_KEY_PREFIX . $sessionId;
+    }
+
+    /**
+     * API doesn't fill the delivery_fee_discount attribute correctly
+     * Until it's fixed we'll need to fix it here.
+     *
+     * Assumption :
+     *  - we have only one delivery_fee value per vendor
+     *
+     * @param int $vendorId
+     * @param array $apiResult
+     *
+     * @return array
+     */
+    protected function fixMinDeliveryFeeDiscount($vendorId, array $apiResult)
+    {
+        foreach ($apiResult['vendorCart'] as &$vendorCart) {
+            $vendor = $this->vendorProvider->find($vendorCart['vendor_id']);
+            if ($vendor->getMinimumDeliveryFee() > $vendorCart['delivery_fee']) {
+                $vendorCart['delivery_fee_discount'] = $vendor->getMinimumDeliveryFee();
+            }
+        }
+
+        if ($vendor->getId() !== $vendorId) {
+            $vendor = $this->vendorProvider->find($vendorId);
+        }
+
+        if ($vendor->getMinimumDeliveryFee() > $apiResult['delivery_fee']) {
+            $apiResult['delivery_fee_discount'] = $vendor->getMinimumDeliveryFee();
+        }
+
+        return $apiResult;
     }
 }

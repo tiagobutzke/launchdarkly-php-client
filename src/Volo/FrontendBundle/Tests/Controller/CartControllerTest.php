@@ -14,10 +14,10 @@ class CartControllerTest extends VoloTestCase
         $body = [
             'expeditionType' => 'delivery',
             'vouchers' => [],
-            'vendor_id' => 9,
+            'vendor_id' => 684,
             'products' => [
                 [
-                    'vendor_id' => 9,
+                    'vendor_id' => 684,
                     'variation_id' => 2179465,
                     'quantity' => 2,
                     'groupOrderUserName' => '',
