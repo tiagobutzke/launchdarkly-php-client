@@ -466,6 +466,18 @@
   float: left;
   clear: both;
 
+  #voucher_form {
+    display: none;
+  }
+
+  #voucher-wrapper {
+    display: none;
+  }
+
+  .error_invalid_voucher {
+    display: none;
+  }
+
   .checkout__item {
     border: none;
   }
