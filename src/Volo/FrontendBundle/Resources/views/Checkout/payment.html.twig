@@ -106,17 +106,17 @@
     <div class="voucher-component" data-vendor_id="{{ vendor.id }}">
        <div class="checkout__item"><a id="add_voucher_link" class="checkout__more-feature-link">{% trans %}link.have_voucher{% endtrans %}</a></div>
 
-        <form action="#" id="voucher_form" role="form" class="hide">
+        <form action="#" id="voucher_form" role="form">
             <div class="checkout__item">
                 <div class="form-group form-group--two_col1--xs-full">
                     <input type="text" class="form-control" id="voucher" name="voucher"
                            required="true" placeholder="{% trans %}form.label.enter_voucher{% endtrans %}">
-                    <span class="error_msg error_invalid_voucher"><i class="icon-attention"></i><span class="error_invalid_voucher_text"></span></span>
+                    <span class="error_msg error_invalid_voucher"></span>
                 </div>
                 <div class="form-group form-group--two_col2--xs-full"> <button class="button pull-left">{% trans %}button.apply{% endtrans %}</button></div>
             </div>
         </form>
-        <div id="voucher-wrapper" class="checkout__item hide">{% trans %}voucher{% endtrans %}
+        <div id="voucher-wrapper" class="checkout__item">{% trans %}voucher{% endtrans %}
             <b id="voucher-text"></b>
             <a id="remove_voucher_link">{% trans %}link.remove_voucher{% endtrans %}</a>
         </div>
