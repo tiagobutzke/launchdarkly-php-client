@@ -19,7 +19,14 @@
                 <h4 class="restaurants__item__wrapper__desc">{{ vendor.description }}</h4>
                 <div class="restaurants__item__wrapper__time">
                     <i class="icon-clock-o"></i>
-                    {% trans with {'%time%': getNextOpeningHours(vendor.schedules)|formatTime}%}restaurant.open_at %time%{% endtrans %}
+                    {% set availableIn = date(vendor.metadata.availableIn) %}
+                    {% if (availableIn|date('d-m-Y') == 'now'|date('d-m-Y')) %}
+                        {% trans with {'%time%': availableIn|formatTime} %}restaurant.open_at %time%{% endtrans %}
+                    {% else %}
+                        {% trans with {'%time%': availableIn|formatTime, '%day%': availableIn|localisedDay} %}
+                        restaurant.open_at %day% %time%
+                        {% endtrans %}
+                    {% endif %}
                 </div>
             </div>
         </div>
