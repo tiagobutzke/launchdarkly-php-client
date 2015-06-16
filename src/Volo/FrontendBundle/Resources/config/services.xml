@@ -50,7 +50,6 @@
         <service id="volo_frontend.twig.volo_extension" class="%volo_frontend.twig.volo_extension.class%">
             <argument>%locale%</argument>
             <argument type="service" id="volo_frontend.service.cart_manager" />
-            <argument>%google.places_api_key%</argument>
             <tag name="twig.extension"/>
         </service>
 
