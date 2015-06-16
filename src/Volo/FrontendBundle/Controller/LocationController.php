@@ -44,9 +44,12 @@ class LocationController extends Controller
     {
         $vendors = $this->get('volo_frontend.provider.vendor')->findVendorsByLocation($location);
 
-        list($openVendors, $closedVendorsWithPreorder) = $vendors->getItems()->partition(function ($key, Vendor $vendor) {
-            return $vendor->getMetadata()->getAvailableIn() === null;
-        });
+        list($openVendors, $closedVendorsWithPreorder) = $vendors->getItems()
+            ->filter(function (Vendor $vendor) { // filter restaurant closed
+                return !$vendor->getSchedules()->isEmpty();
+            })->partition(function ($key, Vendor $vendor) {
+                return $vendor->getMetadata()->getAvailableIn() === null;
+            });
 
         return [
             'gpsSearch' => $location->getLocationType() === 'polygon',
