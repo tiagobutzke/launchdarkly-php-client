@@ -25,6 +25,7 @@ class CheckoutController extends Controller
 {
     const SESSION_DELIVERY_KEY_TEMPLATE = 'checkout-%s-delivery';
     const SESSION_CONTACT_KEY_TEMPLATE  = 'checkout-%s-contact';
+    const SESSION_GUEST_CUSTOMER_KEY_TEMPLATE = 'checkout-%s-guest';
 
     /**
      * @Route("/{vendorCode}/delivery", name="checkout_delivery_information")
