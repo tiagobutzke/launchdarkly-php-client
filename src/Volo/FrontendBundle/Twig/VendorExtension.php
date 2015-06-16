@@ -5,6 +5,7 @@ namespace Volo\FrontendBundle\Twig;
 use Foodpanda\ApiSdk\Entity\Schedule\Schedule;
 use Foodpanda\ApiSdk\Entity\Schedule\SchedulesCollection;
 use Symfony\Component\Translation\TranslatorInterface;
+use Volo\FrontendBundle\Service\OrderManagerService;
 
 class VendorExtension extends \Twig_Extension
 {
@@ -349,10 +350,14 @@ class VendorExtension extends \Twig_Extension
             // number of seconds that passed today from 00:00 til this moment e.g. if it's 7:30 am then (7.5 hrs * 3600)
             $secondsSinceTheBeginningOfToday = $unixTimestampOfNow - $midnightTimestamp + $averageDeliveryTimeInSeconds;
 
-            if ($secondsSinceTheBeginningOfToday > $deliveryStartingTimeInSecondsOfTheDay) {
+            $isOpen = ($openingTime->getTimestamp() < time()) && ($closingTime->getTimestamp() > time());
+
+            // if it's currently open, then the starting range is right now (this moment)
+            if ($isOpen) {
+                $deliveryStartingTimeInSecondsOfTheDay = $unixTimestampOfNow - $midnightTimestamp;
+            } elseif ($secondsSinceTheBeginningOfToday > $deliveryStartingTimeInSecondsOfTheDay) {
                 $deliveryStartingTimeInSecondsOfTheDay = $secondsSinceTheBeginningOfToday;
             }
-            $isOpen = ($openingTime->getTimestamp() < time()) && ($closingTime->getTimestamp() > time());
         }
 
         // we do this to round to the nearest 1/2 hour in case that the Restaurant opens for example at 10:30
@@ -412,6 +417,7 @@ class VendorExtension extends \Twig_Extension
             $formattedValueRange = sprintf('%s - %s', $formattedRangeStartingTime, $formattedRangeEndingTime);
             if ($actualStartingTimeInSecondsOfDay === $i && $isOpen) {
                 $formattedValueRange = $this->translator->trans('time_picker.now');
+                $rangeKey = OrderManagerService::ORDER_NOW_TIME_PICKER_IDENTIFIER;
             }
             $deliveryPairs[$rangeKey] = $formattedValueRange;
         }
