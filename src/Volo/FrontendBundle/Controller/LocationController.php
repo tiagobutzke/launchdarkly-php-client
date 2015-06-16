@@ -44,7 +44,9 @@ class LocationController extends Controller
     {
         $vendors = $this->get('volo_frontend.provider.vendor')->findVendorsByLocation($location);
 
-        list($openVendors, $closedVendorsWithPreorder) = $this->filterOpenClosedVendors($vendors->getItems());
+        list($openVendors, $closedVendorsWithPreorder) = $vendors->getItems()->partition(function ($key, Vendor $vendor) {
+            return $vendor->getMetadata()->getAvailableIn() === null;
+        });
 
         return [
             'gpsSearch' => $location->getLocationType() === 'polygon',
@@ -53,25 +55,5 @@ class LocationController extends Controller
             'closedVendors' => $closedVendorsWithPreorder,
             'cityId' => $cityId
         ];
-    }
-
-    /**
-     * @param VendorsCollection $items
-     *
-     * @return array
-     */
-    protected function filterOpenClosedVendors(VendorsCollection $items)
-    {
-        /** @var Vendor[] $openVendors */
-        $openVendors = $items->filter(function (Vendor $vendor) {
-            return $vendor->getMetadata()->getAvailableIn() === null;
-        });
-
-        /** @var Vendor[] $closedVendorsWithPreorder */
-        $closedVendorsWithPreorder = $items->filter(function (Vendor $vendor) {
-            return $vendor->getMetadata()->getAvailableIn() !== null;
-        });
-
-        return [$openVendors, $closedVendorsWithPreorder];
     }
 }
