@@ -1,7 +1,7 @@
 {% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
 {% use 'VoloFrontendBundle:Location:Partial/vendor_description.html.twig' %}
 
-{% block title %}{{ formattedLocation.postcode }}, {{ formattedLocation.city }} | {% trans %}brand{% endtrans %}{% endblock %}
+{% block title %}{{ formattedLocation.city }} | {% trans %}brand{% endtrans %}{% endblock %}
 {% block body_class %}restaurant-list{% endblock %}
 {% block content %}
     <div class="hero-banner-wrapper">
