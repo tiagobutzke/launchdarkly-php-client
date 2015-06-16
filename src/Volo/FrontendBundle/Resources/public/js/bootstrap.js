@@ -179,6 +179,7 @@ VOLO.initIntl = function (locale, currency_symbol) {
 VOLO.initCurrencyFormat = function (locale, currency_symbol) {
     VOLO.formatCurrency = new Intl.NumberFormat(locale, {
         style: 'currency',
+        minimumFractionDigits: 2,
         currency: currency_symbol
     }).format;
     VOLO.formatNumber = new Intl.NumberFormat(locale).format;
