@@ -112,16 +112,29 @@ class CartManagerService
      */
     public function calculateCart(array $jsonCart)
     {
-        $jsonCart['order_time'] = date_format(new \DateTime($jsonCart['order_time']), \DateTime::ISO8601);
+        $cartOrderTime = $jsonCart['order_time'];
+        $this->adjustOrderTime($jsonCart);
         $jsonCart['vouchers'] = $this->prepareVouchersForTheApi($jsonCart['vouchers']);
 
         $response = $this->cartProvider->calculate($jsonCart);
 
         if (array_key_exists('vendorCart', $response)) {
-            $response['order_time'] = $jsonCart['order_time'];
+            $response['order_time'] = $cartOrderTime;
         }
 
         return $this->fixMinDeliveryFeeDiscount($jsonCart['vendor_id'], $response);
+    }
+
+    /**
+     * @param array $cart
+     */
+    protected function adjustOrderTime(array &$cart)
+    {
+        if ($cart['order_time'] === OrderManagerService::ORDER_NOW_TIME_PICKER_IDENTIFIER) {
+            $cart['order_time'] = date_format(new \DateTime($cart['order_time']), \DateTime::ISO8601);
+        } else {
+            unset($cart['order_time']);
+        }
     }
 
     /**

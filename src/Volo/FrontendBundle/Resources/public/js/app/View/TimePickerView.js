@@ -54,6 +54,6 @@ var TimePickerView = Backbone.View.extend({
         var time = this.$('#order-delivery-time').val(),
             date = this.$('#order-delivery-date').val();
 
-        return moment(date+time, "YYYY-MM-DDHH:mm").toISOString();
+        return time === 'now' ? time : moment(date+time, "YYYY-MM-DDHH:mm").toISOString();
     }
 });

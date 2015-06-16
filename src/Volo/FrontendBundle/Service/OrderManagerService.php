@@ -10,6 +10,7 @@ use Foodpanda\ApiSdk\Entity\Order\GuestCustomer;
 
 class OrderManagerService
 {
+    const ORDER_NOW_TIME_PICKER_IDENTIFIER = 'now';
     /**
      * @var OrderProvider
      */
@@ -66,7 +67,6 @@ class OrderManagerService
             'products'                             => $cart['products'],
             'vouchers'                             => $this->prepareVouchersForTheApi($cart['vouchers']),
             'expedition_type'                      => 'delivery',
-            'order_time'                           => date_format(new \DateTime($cart['order_time']) ,\DateTime::ISO8601),
             'payment_type_id'                      => $paymentTypeId,
             'customer_address_id'                  => $guestCustomer->getCustomerAddress()->getId(),
             'customer_id'                          => $guestCustomer->getCustomer()->getId(),
@@ -76,8 +76,20 @@ class OrderManagerService
             'source'                               => $this->apiClientId,
             'trigger_hosted_payment_page_handling' => true,
         ];
+        $this->addOrderTimeIfApplicable($order, $cart);
 
         return $this->orderProvider->guestOrder($order);
+    }
+
+    /**
+     * @param array $order
+     * @param array $cart
+     */
+    protected function addOrderTimeIfApplicable(array &$order, array $cart)
+    {
+        if ($cart['order_time'] !== static::ORDER_NOW_TIME_PICKER_IDENTIFIER) {
+            $order['order_time'] = date_format(new \DateTime($cart['order_time']), \DateTime::ISO8601);
+        }
     }
 
     /**
@@ -112,7 +124,6 @@ class OrderManagerService
             'location'                             => $cart['location'],
             'products'                             => $cart['products'],
             'vouchers'                             => $this->prepareVouchersForTheApi($cart['vouchers']),
-            'order_time'                           => date_format(new \DateTime($cart['order_time']) ,\DateTime::ISO8601),
             'expedition_type'                      => 'delivery',
             'payment_type_id'                      => $paymentTypeId,
             'customer_address_id'                  => $addressId,
@@ -121,6 +132,7 @@ class OrderManagerService
             'source'                               => $this->apiClientId,
             'trigger_hosted_payment_page_handling' => true,
         ];
+        $this->addOrderTimeIfApplicable($order, $cart);
 
         return $this->orderProvider->order($accessToken, $order);
     }
