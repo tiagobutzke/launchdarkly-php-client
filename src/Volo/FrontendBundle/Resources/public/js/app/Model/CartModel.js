@@ -148,13 +148,14 @@ var VendorCartModel = Backbone.Model.extend({
     },
 
     _sendRequest: function() {
-        var data = {
-            products: this.products.toJSON(),
-            vendor_id: this.id,
-            location: this.get('location')
-        };
+        var orderTime = this.get('order_time'),
+            data = {
+                products: this.products.toJSON(),
+                vendor_id: this.id,
+                location: this.get('location')
+            };
 
-        data.order_time = _.isDate(this.get('order_time')) ? this.get('order_time').toISOString() : new Date().toISOString();
+        data.order_time = orderTime ? orderTime : moment().toISOString();
         data.voucher = _.isString(this.get('voucher')) ? [this.get('voucher')] : [];
 
         this._xhr = this.collection.cart.dataProvider.calculateCart(data).done(function(calculatedData) {
@@ -336,7 +337,7 @@ var CartModel = Backbone.Model.extend({
                     'voucher',
                     cart.voucher.length > 0 ? cart.voucher[0].code : null
                 );
-                this.getCart(vendorCart.vendor_id).set('order_time', new Date(cart.order_time));
+                this.getCart(vendorCart.vendor_id).set('order_time', cart.order_time);
             }, this);
 
             //clear all carts

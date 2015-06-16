@@ -12,11 +12,12 @@ var TimePickerView = Backbone.View.extend({
     },
 
     render: function () {
-        var dateObj = this.model.getCart(this.vendor_id).get('order_time');
+        var date = this.model.getCart(this.vendor_id).get('order_time');
 
-        if (_.isDate(dateObj)) {
-            var dateKey = dateObj.toISOString().split('T')[0],
-                timeKey = dateObj.toTimeString().substring(0, 5);
+        if (date) {
+            var dateObj = moment(date),
+                dateKey = dateObj.format('YYYY-MM-DD'),
+                timeKey = dateObj.format('HH:mm');
 
             if ($("#order-delivery-date option[value='" + dateKey + "']").length > 0) {
                 this.$('#order-delivery-date').val(dateKey);
@@ -33,13 +34,7 @@ var TimePickerView = Backbone.View.extend({
                 this.$('#order-delivery-time').val(timeKey);
             }
         } else {
-            var time = this.$('#order-delivery-time').val().split(':'),
-                date = this.$('#order-delivery-date').val().split('-');
-
-            this.model.getCart(this.vendor_id).set(
-                'order_time',
-                new Date(date[0], date[1] - 1, date[2], time[0], time[1])
-            );
+            this.model.getCart(this.vendor_id).set('order_time', this._getDateFromForm());
         }
     },
 
@@ -49,12 +44,16 @@ var TimePickerView = Backbone.View.extend({
     },
 
     updateDeliveryTime: function () {
-        var vendorCart = this.model.getCart(this.vendor_id),
-            time = this.$('#order-delivery-time').val().split(':'),
-            date = this.$('#order-delivery-date').val().split('-'),
-            datetime = new Date(date[0], date[1] - 1, date[2], time[0], time[1]);
+        var vendorCart = this.model.getCart(this.vendor_id);
 
-        vendorCart.set('order_time', datetime);
+        vendorCart.set('order_time', this._getDateFromForm());
         vendorCart.updateCart();
+    },
+
+    _getDateFromForm: function() {
+        var time = this.$('#order-delivery-time').val(),
+            date = this.$('#order-delivery-date').val();
+
+        return moment(date+time, "YYYY-MM-DDHH:mm").toISOString();
     }
 });
