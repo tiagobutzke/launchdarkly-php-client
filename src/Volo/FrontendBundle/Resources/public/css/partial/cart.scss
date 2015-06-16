@@ -419,9 +419,6 @@ tr.summary__item__row_mobile {
   margin: 0 0 $space-md;
   padding: $space-md $space-sm;
   border-bottom: $base-border;
-  span {
-    display: none;
-  }
   @include respond-from("screen-md") {
     border: none;
     padding-bottom: 0;
