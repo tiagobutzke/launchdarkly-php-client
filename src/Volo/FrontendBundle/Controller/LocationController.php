@@ -64,12 +64,12 @@ class LocationController extends Controller
     {
         /** @var Vendor[] $openVendors */
         $openVendors = $items->filter(function (Vendor $vendor) {
-            return (bool) $vendor->getMetadata()->getAvailableIn();
+            return $vendor->getMetadata()->getAvailableIn() === null;
         });
 
         /** @var Vendor[] $closedVendorsWithPreorder */
         $closedVendorsWithPreorder = $items->filter(function (Vendor $vendor) {
-            return !(bool) $vendor->getMetadata()->getAvailableIn();
+            return $vendor->getMetadata()->getAvailableIn() !== null;
         });
 
         return [$openVendors, $closedVendorsWithPreorder];
