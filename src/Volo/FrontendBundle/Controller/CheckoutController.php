@@ -5,6 +5,7 @@ namespace Volo\FrontendBundle\Controller;
 use Foodpanda\ApiSdk\Entity\Address\Address;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
+use Foodpanda\ApiSdk\Exception\ApiException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -14,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Volo\FrontendBundle\Http\JsonErrorResponse;
 use Volo\FrontendBundle\Service\CustomerLocationService;
 use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
 
@@ -94,6 +94,7 @@ class CheckoutController extends Controller
     public function contactInformationAction(Request $request, $vendorCode)
     {
         $errorMessages = [];
+        $session = $this->get('session');
 
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirectToRoute('checkout_payment', ['vendorCode' => $vendorCode]);
@@ -105,15 +106,17 @@ class CheckoutController extends Controller
             throw new NotFoundHttpException('Vendor invalid', $exception);
         }
 
-        if (!$this->get('session')->has(sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendorCode))) {
+        if (!$session->has(sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendorCode))) {
             throw new HttpException(Response::HTTP_BAD_REQUEST, 'No contact information found');
         }
-
+        $username = '';
         if ($request->getMethod() === Request::METHOD_POST) {
             $customerData = $request->request->get('customer');
+            $username = $customerData['email'];
             try {
-                $parsedNumber = $this->get('volo_frontend.service.phone_number')
-                    ->parsePhoneNumber($customerData['mobile_number']);
+                $phoneNumberService = $this->get('volo_frontend.service.phone_number');
+                $parsedNumber = $phoneNumberService->parsePhoneNumber($customerData['mobile_number']);
+                $phoneNumberService->validateNumber($parsedNumber);
 
                 $customerData['mobile_number'] = $parsedNumber->getNationalNumber();
                 $customerData['mobile_country_code'] = '+' . $parsedNumber->getCountryCode();
@@ -121,8 +124,22 @@ class CheckoutController extends Controller
                 $errorMessages[] = $this->get('translator')->trans(sprintf('%s: %s', 'Phone number', $e->getMessage()));
             }
 
+            if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+                try {
+                    $guestCustomer = $this->get('volo_frontend.service.customer')->createGuestCustomer(
+                        $customerData,
+                        $session->get(sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendor->getCode()))
+                    );
+                    $session->set(OrderController::SESSION_GUEST_ORDER_ACCESS_TOKEN, $guestCustomer->getAccessToken());
+                    $guestCustomerKey = sprintf(static::SESSION_GUEST_CUSTOMER_KEY_TEMPLATE, $vendorCode);
+                    $session->set($guestCustomerKey, $guestCustomer);
+                } catch (ApiException $e) {
+                    $errorMessages[] = $e->getMessage();
+                }
+            }
+
             if (count($errorMessages) === 0) {
-                $this->get('session')->set(
+                $session->set(
                     sprintf(static::SESSION_CONTACT_KEY_TEMPLATE, $vendorCode),
                     $customerData
                 );
@@ -132,16 +149,15 @@ class CheckoutController extends Controller
         }
 
         $cart = $this->getCart($vendor);
-        $location = $this->get('volo_frontend.service.customer_location')->get($request->getSession());
+        $location = $this->get('volo_frontend.service.customer_location')->get($session);
 
         return [
+            'username'         => $username,
             'errorMessages'    => $errorMessages,
             'cart'             => $this->get('volo_frontend.service.cart_manager')->calculateCart($cart),
             'vendor'           => $vendor,
-            'customer_address' => $this->get('session')->get(
-                sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendorCode)
-            ),
-            'customer' => $this->get('session')->get(sprintf(static::SESSION_CONTACT_KEY_TEMPLATE, $vendorCode)),
+            'customer_address' => $session->get(sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendorCode)),
+            'customer'         => $session->get(sprintf(static::SESSION_CONTACT_KEY_TEMPLATE, $vendorCode)),
             'address'          => is_array($location) ? $location[CustomerLocationService::KEY_ADDRESS] : '',
             'location'         => [
                 'type'      => 'polygon',
@@ -356,10 +372,7 @@ class CheckoutController extends Controller
             }
         } else {
             $session = $this->get('session');
-            $guestCustomer = $this->get('volo_frontend.service.customer')->createGuestCustomer(
-                $session->get(sprintf(static::SESSION_CONTACT_KEY_TEMPLATE, $vendor->getCode())),
-                $session->get(sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendor->getCode()))
-            );
+            $guestCustomer = $session->get(sprintf(static::SESSION_GUEST_CUSTOMER_KEY_TEMPLATE, $vendor->getCode()));
             $session->set(OrderController::SESSION_GUEST_ORDER_ACCESS_TOKEN, $guestCustomer->getAccessToken());
 
             $order = $orderManager->placeGuestOrder(
@@ -373,7 +386,7 @@ class CheckoutController extends Controller
                 $orderManager->guestPayment($order, $data['encrypted_payment_data']);
             }
         }
-
+        
         // if we're using hosted payment, at this point the order is placed but not paid.
         if ($order['hosted_payment_page_redirect'] === null) {
             $this->get('volo_frontend.service.cart_manager')->deleteCart($this->get('session'), $vendor->getId());
