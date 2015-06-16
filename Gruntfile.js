@@ -66,6 +66,7 @@ module.exports = function (grunt) {
         'web/bower_components/validate/validate.js',
         'web/bower_components/mobile-detect/mobile-detect.js',
         'web/bower_components/jquery.payment/lib/jquery.payment.js',
+        'web/bower_components/moment/moment.js',
         frontendAssetPath('/js/**/*.js')
     ]);
 
@@ -167,7 +168,8 @@ module.exports = function (grunt) {
                 'web/bower_components/validate/validate.js',
                 'web/bower_components/real-shadow/realshadow.js',
                 'web/bower_components/mobile-detect/mobile-detect.js',
-                'web/bower_components/jquery.payment/lib/jquery.payment.js'
+                'web/bower_components/jquery.payment/lib/jquery.payment.js',
+                'web/bower_components/moment/moment.js'
             ]
         },
         gruntfile: {
@@ -227,7 +229,8 @@ module.exports = function (grunt) {
                 'web/js/fos_js_routes.js',
                 'web/bower_components/blazy/blazy.js',
                 'vendor/helthe/turbolinks/Resources/public/js/turbolinks.js',
-                'web/bower_components/mobile-detect/mobile-detect.js'
+                'web/bower_components/mobile-detect/mobile-detect.js',
+                'web/bower_components/moment/moment.js'
             ]
         }
     };
