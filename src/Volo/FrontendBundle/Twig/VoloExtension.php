@@ -19,22 +19,15 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
     private $cartManager;
 
     /**
-     * @var string
-     */
-    private $googlePlacesApiKey;
-
-    /**
      * @param string $locale
      * @param CartManagerService $cartManager
-     * @param string $googlePlacesApiKey
      */
-    public function __construct($locale, CartManagerService $cartManager, $googlePlacesApiKey)
+    public function __construct($locale, CartManagerService $cartManager)
     {
         parent::__construct();
 
         $this->locale = $locale;
         $this->cartManager = $cartManager;
-        $this->googlePlacesApiKey = $googlePlacesApiKey;
     }
 
     /**
@@ -89,9 +82,6 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
             'currency' => [
                 'currency_symbol_iso' => $currencyIso,
             ],
-            'google' => [
-                'placesApiKey' => $this->googlePlacesApiKey,
-            ]
         ];
     }
 

@@ -3,6 +3,8 @@ imports:
 
 parameters:
     http_schema: https
+    google_api_client_id: 'gme-rocketinternetag'
+    google_api_channel: 'foodora'
 
 framework:
     session:

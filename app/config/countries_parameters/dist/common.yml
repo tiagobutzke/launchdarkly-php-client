@@ -27,5 +27,3 @@ parameters:
     volo_frontend.thumbor_secret: ~
     volo_frontend.image_server_base_url: https://volo-image.s3.amazonaws.com
     timezone: "Europe/Berlin"
-
-    google.places_api_key: ~

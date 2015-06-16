@@ -4,6 +4,8 @@ imports:
 
 parameters:
     http_schema: http
+    google_api_client_id: ''
+    google_api_channel: ''
 
 framework:
     #esi:             ~
@@ -42,6 +44,8 @@ twig:
         country_code: "%country_code%"
         locale: "%locale%"
         blazy_placeholder: 'data:image/gif;base64,R0lGODdhAQABAIAAAMzMzJaWliwAAAAAAQABAAACAkQBADs='
+        google_api_client_id: "%google_api_client_id%"
+        google_api_channel: '%google_api_channel%'
 
 # Assetic Configuration
 assetic:
