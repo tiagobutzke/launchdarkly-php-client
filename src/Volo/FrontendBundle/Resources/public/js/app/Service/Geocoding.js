@@ -132,8 +132,8 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
             },
             street: this._findStreetNameInAddressComponents(place.address_components),
             building: this._findBuildingNumberInAddressComponents(place.address_components),
-            lat: place.geometry.location.A,
-            lng: place.geometry.location.F
+            lat: place.geometry.location.lat(),
+            lng: place.geometry.location.lng()
         };
     },
 
