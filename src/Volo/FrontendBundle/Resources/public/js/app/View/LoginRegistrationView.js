@@ -34,15 +34,15 @@ var LoginRegistrationView = Backbone.View.extend({
         }
     },
 
-    initialize: function () {
+    initialize: function (options) {
+        options = options || {};
         console.log('LoginRegistrationView.initialize ', this.cid);
         _.bindAll(this);
+        this.queryParams = options.queryParams || {};
     },
 
-    render: function(parameters) {
-        var queryParameters = parameters || '';
-
-        this.$('.modal-content').load(Routing.generate('login') + '?' + queryParameters, function(){
+    render: function() {
+        this.$('.modal-content').load(Routing.generate('login', this.queryParams), function(){
             this.$el.modal();
             this._loginValidationView = new ValidationView({
                 el: this.$('.login-form'),
