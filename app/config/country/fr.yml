@@ -1,2 +1,3 @@
 parameters:
     locale: fr_FR
+    timezone: "Europe/Berlin"

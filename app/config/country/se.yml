@@ -1,2 +1,3 @@
 parameters:
     locale: sv_SE
+    timezone: "Europe/Berlin"
