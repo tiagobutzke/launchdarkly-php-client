@@ -14,7 +14,7 @@
 .restaurants {
   @include make-row(0);
   margin: 0;
-  padding-top: 84px;
+  padding-top: 50px;
   .restaurants__item__wrapper__time {
     display: none;
   }
@@ -24,7 +24,7 @@
   @include make-row(0);
   margin: 0;
   position: absolute;
-  top: 20px;
+  top: 10px;
   left: 0;
   right: 0;
   z-index: 0;
@@ -36,7 +36,6 @@
   z-index: 2;
   @include respond-from("screen-md") {
     position: absolute;
-    top: 20px;
     z-index: 0;
   }
 }
@@ -73,9 +72,14 @@
 
 .restaurants__location__title {
   text-align: center;
+  line-height: 30px;
   @include respond-from("screen-md") {
     text-align: right;
   }
+}
+
+.restaurants__tool-box-sticking .restaurants__location__title {
+  @include centerTextVerticallyByHeight($header-height-extra-small);
 }
 
 .restaurants__location__change-button {
@@ -101,7 +105,9 @@
 
 .restaurants__change-button__text {
   display: inline;
-  line-height: $form-element-height-default;
+  @include respond-from("screen-md") {
+    line-height: 30px;
+  }
 }
 
 .restaurants__tool-box-sticking .restaurants__change-button__text {
@@ -143,25 +149,12 @@
 }
 
 .restaurants__location__input {
-  height: $form-element-height-default;
-  line-height: $form-element-height-default;
+  @include centerTextVerticallyByHeight(30px);
   margin-top: 0;
 }
 
 .restaurants__tool-box-sticking .restaurants__location__input {
-  height: 38px;
-  line-height: 38px;
-  margin-top: 4px;
-  @include respond-from("screen-md") {
-    height: $form-element-height-default;
-    line-height: $form-element-height-default;
-  }
-}
-
-.restaurants__tool-box-sticking .restaurants__location__input {
-  height: 38px;
-  line-height: 36px;
-  margin-top: 4px;
+  margin-top: 8px;
 }
 
 .restaurants__item {
@@ -259,7 +252,7 @@
     text-align: center;
     position: absolute;
     color: $color-text-selection;
-    z-index: 9995;
+    z-index: 1;
     display: block;
     @include vertical-center-absolute();
   }
@@ -274,14 +267,18 @@
     text-align: center;
     text-transform: uppercase;
     display: block;
+    width: 90%;
+    margin: 0 auto;
   }
 
   .restaurants__item__wrapper__picture {
     background-color: #000;
+    z-index: 0;
   }
 
   .restaurant__image {
     opacity: 0.5;
+    z-index: 0;
   }
 
   .restaurants__item__wrapper__time {

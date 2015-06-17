@@ -337,68 +337,47 @@
 
 .menu__bottom-info {
   font-size: 0.875em;
-  margin:  $space-md 0 0 0;
-  padding-bottom:  $space-md;
-  @include respond-from("screen-md") {
-    @include make-md-column(8);
-    @include make-lg-column(9);
-    padding: 0 0 $space-md 0;
-  }
+  @include make-md-column(8);
+  @include make-lg-column(9);
+  padding: 0;
+  padding-bottom: $space-lg;
 }
 
 .menu__bottom-info__title {
   @extend .menu__items__title;
   border: none;
-  @include respond-from("screen-lg") {
-    margin: 0 $space-md;
-    width: 67%;
+  margin: 0;
+  padding: $space-xs 0;
+
+  &:first-child {
+    padding-top: $space-lg;
   }
 }
 
 .menu__bottom-info__openings {
-  @include make-lg-column(3);
+  width: 100%;
   text-align: center;
 
   ul {
-    margin: 0 auto;
-    display: inline-block;
+    margin: 0;
+    display: block;
 
     li {
       text-align: left;
       font-size: 0.875em;
       color: $color-text-secondary;
+      display: inline-block;
     }
 
     span {
       color: $color-text-primary;
       display: inline-block;
-      margin-left: 25px;
-      float: right;
-    }
-  }
-  @include respond-from("screen-lg") {
-    text-align: left;
-    padding: 0;
-
-    ul {
-      display: block;
-      margin: 0 $space-md;
-      width: 67%;
+      margin-right: $space-lg;
     }
   }
 
 }
 
-.menu__bottom-info__seo {
-  padding:  $grid-gutter-width / 2;
-  font-size: 0.875em;
-  color: $color-text-secondary;
-  @include respond-from("screen-lg") {
-    @include make-lg-column(9);
-    margin-top: 40px;
-    padding: 0;
-  }
-}
 .allergy-modal {
   .modal-body {
     padding-top: 0;
