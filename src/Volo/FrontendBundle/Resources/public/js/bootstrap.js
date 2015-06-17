@@ -215,7 +215,7 @@ VOLO.initExistingUserLoginView = function() {
     });
 };
 
-VOLO.initCartIconLink = function() {
+VOLO.initCartIconView = function() {
     console.log("initializing cart icon link");
     if (VOLO.cartIconView) {
         VOLO.cartIconView.unbind();
@@ -291,7 +291,11 @@ $(document).on('page:load page:restore', function () {
     if ($('.teaser__form').length > 0) {
         VOLO.initHomeSearch();
         VOLO.homeSearchView.render();
-        VOLO.initCartIconLink();
+
+        if ($('.header__cart').length > 0) {
+            VOLO.initCartIconView();
+            VOLO.cartIconView.render();
+        }
     }
 
     if ($('.header__account').length > 0) {
@@ -301,7 +305,10 @@ $(document).on('page:load page:restore', function () {
     if($('.restaurants__tool-box').length > 0) {
         VOLO.initVendorsListSearch();
         VOLO.vendorSearchView.render();
-        VOLO.initCartIconLink();
+        if ($('.header__cart').length > 0) {
+            VOLO.initCartIconView();
+            VOLO.cartIconView.render();
+        }
     }
     if ($('.order-status-wrapper').length > 0) {
         if (!_.isNull(VOLO.orderTrackingInterval)) {
