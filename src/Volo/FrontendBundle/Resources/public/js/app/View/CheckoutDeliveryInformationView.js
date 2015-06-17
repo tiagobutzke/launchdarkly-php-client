@@ -27,6 +27,10 @@ var CheckoutDeliveryInformationView = Backbone.View.extend({
     },
 
     render: function () {
+        var selectedAddressId,
+            $selectedAddress,
+            $selectedAddressParent;
+
         this.$('#delivery-information-list').html('');
         _.forEach(this.addresses, function (address) {
             this.$('#delivery-information-list').append(this.template(address));
@@ -34,13 +38,17 @@ var CheckoutDeliveryInformationView = Backbone.View.extend({
 
         this.$('#select_other_address_link').toggleClass('hide', this.addresses.length < 2);
         this.$('#add_new_address_form').toggleClass('hide', !this.showForm);
+        this.$el.toggleClass('delivery_information_list-shown', this.showForm);
         this.$('#delivery-information-list-wrapper').toggleClass('hide', this.showForm);
         this.$('#delivery-information-list').toggleClass('hide', !this.showList);
 
-        var selectedAddress = this.model.get('address_id');
-        if (!_.isNull(selectedAddress)) {
+        selectedAddressId = this.model.get('address_id');
+        if (!_.isNull(selectedAddressId)) {
             this.$('.selected-address').empty();
-            this.$('.selected-address').append(this.$('.delivery_address[data-id="' + selectedAddress + '"]'));
+            $selectedAddress = this.$('.delivery_address[data-id="' + selectedAddressId + '"]');
+            $selectedAddressParent = $selectedAddress.parent();
+            this.$('.selected-address').append($selectedAddress);
+            $selectedAddressParent.remove();
         }
     },
 
@@ -52,6 +60,8 @@ var CheckoutDeliveryInformationView = Backbone.View.extend({
     changeAddress: function (event) {
         this.showList = false;
         this.model.set('address_id', $(event.currentTarget).data('id'));
+        this.$('#select_other_address_link').toggleClass('address-selection--open', this.showList);
+        this.$('.selected-address').toggle(!this.showList);
     },
 
     addAddressLink: function (event) {
@@ -61,8 +71,10 @@ var CheckoutDeliveryInformationView = Backbone.View.extend({
         event.preventDefault();
     },
 
-    selectOtherAddressLink: function () {
+    selectOtherAddressLink: function (event) {
         this.showList = !this.showList;
+        this.$('#select_other_address_link').toggleClass('address-selection--open', this.showList);
+        this.$('.selected-address').toggle(!this.showList);
         this.render();
 
         event.preventDefault();

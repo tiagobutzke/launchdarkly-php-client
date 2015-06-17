@@ -126,6 +126,32 @@
   @extend .checkout__title__edit;
 }
 
+.add_new_address_link__text--cancel{
+  display: none;
+}
+
+.delivery_information_list-shown {
+  & .add_new_address_link__text--add-address,
+  & .icon-plus {
+    display: none;
+  }
+
+  & .add_new_address_link__text--cancel {
+    display: block;
+  }
+}
+
+.checkout__delivery_information {
+  @include make-row();
+}
+
+.checkout__delivery_information__time {
+  @include make-xs-column(6, 0);
+}
+
+.checkout__delivery_information__address {
+  @include make-xs-column(6);
+}
 // main fields
 
 .checkout__time-field {
@@ -187,6 +213,33 @@
 .checkout__item--delivery-list {
   padding-left: 0;
   padding-right: 0;
+}
+
+.contact_information_form-open {
+  .edit_contact_information_form_link__text--edit,
+  .icon-pencil {
+    display: none;
+  }
+  .edit_contact_information_form_link__text--cancel {
+    display: block;
+  }
+}
+
+.edit_contact_information_form_link__text--cancel {
+  display: none;
+}
+
+.checkout__more-feature-link .select_other_address_link__text--cancel {
+  display: none;
+}
+
+.checkout__more-feature-link.address-selection--open {
+  & .select_other_address_link__text--select {
+    display: none;
+  }
+  & .select_other_address_link__text--cancel {
+    display: block;
+  }
 }
 
 .checkout__item--no-subtitle {
@@ -377,7 +430,7 @@
 
     &:hover {
       cursor: pointer;
-      border: $input-border-active;
+      border: $cta-secondary-border;
       color: $color-text-highlight;
     }
   }
@@ -393,7 +446,7 @@
   }
 
   @include respond-from("screen-md") {
-    border: $input-border-active;
+    border: $cta-secondary-border;
 
     i {
       display: none;
@@ -433,6 +486,10 @@
     width: 100%;
     text-align: center;
   }
+}
+
+.checkout__payment_description {
+  color: $color-text-inactive;
 }
 
 // credit card form
@@ -526,23 +583,23 @@
 
 .checkout__list {
   @extend .radio;
-  line-height: 1.4em;
+  line-height: $radiobutton-simple-unselected-height;
   font-size: 0.875em;
-  padding: $space-sm;
+  padding: $space-md;
   margin: 0;
-  border-bottom: $dropdown-border;
+}
 
-  @include respond-from("screen-md") {
-    padding: $grid-gutter-width;
-  }
+.checkout__list__radio_button {
+  @include make-sprite-radiobutton(
+    $radiobutton-simple-unselected-group,
+    $radiobutton-simple-selected-group,
+    $radiobutton-simple-unselected-height
+  );
+}
 
-  &:first-child {
-    border-top: $dropdown-border;
-  }
-
-  label {
-    display: block;
-  }
+.checkout__list__text {
+  display: inline-block;
+  line-height: $radiobutton-simple-unselected-height;
 }
 
 .delivery__notes {
@@ -555,17 +612,26 @@
 }
 
 .checkout__address-list {
-  @extend .radio;
   line-height: 1.4em;
-  padding: $space-sm;
-  margin: 0;
+  padding: $space-xs;
   border-top: $dropdown-border;
+  margin: 0;
   @include respond-from("screen-md") {
-    padding: $grid-gutter-width;
+    padding: $space-sm;
   }
-
   &:last-child {
     border-bottom: $dropdown-border;
+  }
+  .delivery_address {
+    padding: $space-xs;
+    @include respond-from("screen-md") {
+      padding: $space-sm;
+    }
+    background-color: $color-bg-primary;
+    cursor: pointer;
+    &:hover {
+      background-color: $color-bg-secondary;
+    }
   }
 }
 

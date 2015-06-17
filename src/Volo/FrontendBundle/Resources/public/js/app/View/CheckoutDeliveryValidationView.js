@@ -25,7 +25,7 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
             }
         });
         this.$('#formatted_address').tooltip({
-            placement: 'bottom',
+            placement: 'top',
             html: true,
             trigger: 'manual'
         });
@@ -97,13 +97,12 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
         this.$('#formatted_address').tooltip('hide');
     },
 
-    _showInputPopup: function (inputNode, text) {
-        inputNode.attr('title', text).tooltip('fixTitle');
+    _showInputPopup: function (inputNode, text, isBlocking) {
+        inputNode.attr({
+            'data-is-blocking-popup': isBlocking !== undefined ? isBlocking : false,
+            'title': text
+        }).tooltip('fixTitle');
         inputNode.tooltip('show');
-        var newPosition = inputNode.position().left;
-        $('.tooltip')
-            .css('left', newPosition + 'px')
-            .css('visibility', 'visible');
     },
 
     _validateAddressFields: function () {
@@ -133,56 +132,16 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
             .done(function (resultData) {
                 if (resultData.result === true) {
                     continueButton.attr('disabled', false);
+                    if (this.$('#formatted_address').data('is-blocking-popup')) {
+                        this._hideTooltip();
+                    }
                 } else {
-                    var view = new CheckoutNoDeliveryView({
-                        el: '.modal-dialogs',
-                        locationData: locationData
-                    });
-                    view.render(); //render dialog
-                    $('#delivery-modal').modal();
+                    this._showInputPopup(
+                        this.$('#formatted_address'),
+                        this.$('#formatted_address').data('validation-msg'),
+                        true
+                    );
                 }
-            });
+            }.bind(this));
     }
 });
-
-var CheckoutNoDeliveryView = Backbone.View.extend({
-    initialize: function (options) {
-        this.template = _.template($('#template-delivery-modal').html());
-        this.locationData = options.locationData;
-    },
-
-    events: {
-        'click .delivery-error__find-restaurants': '_findRestaurants',
-        'click .modal-close-button': '_closeModal'
-    },
-
-    render: function () {
-        this.$el.html(this.template());
-
-        return this;
-    },
-
-    unbind: function() {
-        this.stopListening();
-        this.undelegateEvents();
-    },
-
-    _findRestaurants: function () {
-        var data = this.locationData;
-        this.undelegateEvents();
-        Turbolinks.visit(Routing.generate('volo_location_search_vendors_by_gps', {
-            city: data.city,
-            address: data.postcode + ", " + data.city,
-            longitude: data.lng,
-            latitude: data.lat,
-            postcode: data.postcode
-        }));
-    },
-
-    _closeModal: function () {
-        this.unbind();
-        delete this.locationData;
-        this.$('#delivery-modal').modal('hide');
-    }
-});
-
