@@ -25,18 +25,18 @@
     <div class="hero-menu__info-extra">
         {% set closingInMinutes = getClosingIn(vendor.schedules) %}
         <i class="icon-clock-o"></i>
-            {% if (closingInMinutes <= 0) %}
-                <span class="line-wrapper">{{ 'vendor_closed_preorder_available'|trans }}</span>
-                <span>{{ getNextOpeningWeekDayNumber(vendor.schedules)|dayOfTheWeek }}
-                    {{ getNextOpeningHours(vendor.schedules)|formatTime }} - {{ getNextClosingHours(vendor.schedules)|formatTime }}</span>
-            {% elseif (closingInMinutes < 60) %}
-                <span class="line-wrapper">Closing in {{ closingInMinutes }} min.</span>
-                <span>{{ getNextOpeningWeekDayNumber(vendor.schedules)|dayOfTheWeek }}
-                    {{ getNextOpeningHours(vendor.schedules)|formatTime }} - {{ getNextClosingHours(vendor.schedules)|formatTime }}</span>
-            {% else %}
-                <span class="green-class">Open</span>
-                <span>{{ getOpeningTime(vendor.schedules)|formatTime }} – {{ getClosingTime(vendor.schedules)|formatTime }}</span>
-            {% endif %}
+        {% if (closingInMinutes <= 0) %}
+            <span class="line-wrapper">{{ 'vendor_closed_preorder_available'|trans }}</span>
+            <span>{{ getNextOpeningWeekDayNumber(vendor.schedules)|dayOfTheWeek }}
+                {{ getNextOpeningHours(vendor.schedules)|formatTime }} - {{ getNextClosingHours(vendor.schedules)|formatTime }}</span>
+        {% elseif (closingInMinutes < 60) %}
+            <span class="line-wrapper">{% trans %}generic.closing_in{% endtrans %} {{ closingInMinutes }} {% trans %}generic.min{% endtrans %}</span>
+            <span>{{ getNextOpeningWeekDayNumber(vendor.schedules)|dayOfTheWeek }}
+                {{ getNextOpeningHours(vendor.schedules)|formatTime }} - {{ getNextClosingHours(vendor.schedules)|formatTime }}</span>
+        {% else %}
+            <span class="green-class">{% trans %}generic.open{% endtrans %}</span>
+            <span>{{ getOpeningTime(vendor.schedules)|formatTime }} – {{ getClosingTime(vendor.schedules)|formatTime }}</span>
+        {% endif %}
         {% if ('' != vendor.address) %}
             <i class="icon-pin-map"></i> {{ vendor.address }}
         {% endif %}
