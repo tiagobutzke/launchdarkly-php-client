@@ -155,7 +155,7 @@
   overflow-y: auto;
   overflow-x: visible;
   @include respond-from("screen-md") {
-    padding: $space-sm 0;
+    padding: $space-xs 0 $space-sm;
   }
 }
 
@@ -415,7 +415,7 @@ tr.summary__item__row_mobile {
   font-family: $bold-font-family;
   @extend .text-center;
   text-transform: uppercase;
-  font-size: 0.875em;
+  font-size: 1em;
   margin: 0 0 $space-md;
   padding: $space-md $space-sm;
   border-bottom: $base-border;
@@ -423,6 +423,10 @@ tr.summary__item__row_mobile {
     border: none;
     padding-bottom: 0;
     margin: 0;
+
+    span {
+      display: none;
+    }
   }
 }
 
@@ -465,6 +469,7 @@ tr.summary__item__row_mobile {
   @extend .text-center;
   color: $color-text-secondary;
   margin-bottom: 0;
+  margin-top: $space-sm;
   line-height: 1.4em;
 }
 
@@ -546,22 +551,16 @@ tr.summary__item__row_mobile {
     @include clearfix;
     width: 100%;
     text-align: center;
-    font-size: 0.9em;
     padding-top: 10px;
-    @include respond-from("screen-md") {
-      font-size: 0.95em;
-    }
-    @include respond-from("screen-lg") {
-      font-size: 0.9em;
-    }
 
     .vendor__geocoding__tool-box__title {
-      font-size: 1.19em;
+      font-size: 1em;
       margin-top: $space-sm;
       font-family: $bold-font-family;
       line-height: 1.4em;
+      text-transform: uppercase;
       @include respond-from("screen-md") {
-        margin-bottom: $space-sm;
+        margin-bottom: $space-md;
         padding-top: 0;
       }
     }
@@ -633,6 +632,10 @@ tr.summary__item__row_mobile {
       font-family: $bold-font-family;
       font-weight: normal;
       padding: $space-md;
+    }
+
+    span {
+      display: inline;
     }
   }
 
