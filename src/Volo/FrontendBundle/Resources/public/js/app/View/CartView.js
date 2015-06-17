@@ -242,6 +242,7 @@ var CartView = Backbone.View.extend({
         if ($header) {
             $header.find('.header__cart').click(function() {
                 $el.removeClass('mobile-cart__hidden');
+                window.blazy.revalidate();
             }.bind(this));
         }
     },
