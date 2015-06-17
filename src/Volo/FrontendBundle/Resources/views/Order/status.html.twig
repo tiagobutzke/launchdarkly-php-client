@@ -7,7 +7,7 @@
 
 {% block content %}
     <div class="hero-banner-wrapper">
-        {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {type: 'hero', 'vendorCode' : order.vendor_code, 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
+        {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {type: 'tracking-success', 'vendorCode' : 'order', 'aspectRatioClass' : 'aspect-ratio-40-22'} %}
 
         <div class="hero-traking__info">
             <h2 class="tracking-header__title">{% trans %}title.we_have_received_your_order{% endtrans %}!</h2>
@@ -15,6 +15,17 @@
                 {% trans %}title.it_should_arrive_at{% endtrans %}
                 <span class="time_value">{{ date(status.confirmed_delivery_time.date, status.confirmed_delivery_time.timezone)|formatTime }}</span>
             </h2>
+
+            <p>{% trans %}title.get_free_delivery_next_order{% endtrans %}</p>
+            <div class="voucher__box__wrapper">
+                <div class="voucher__box">
+                    <div class="voucher__box__header">
+                        {% trans %}title.voucher_code{% endtrans %}
+                    </div>
+                    <p>{% trans %}voucher_success_page{% endtrans %}</p>
+                </div>
+            </div>
+            <p class="bottom-text">{% trans %}voucher.success_page_only_once{% endtrans %}</p>
             {#TODO app - show app info when app is available #}
             {#<div class="tracking-header__app">#}
                 {#<button class="tracking-header__app__button">{% trans %}button.download_app{% endtrans %}</button>#}
@@ -24,9 +35,9 @@
     </div>
     <div class="order-status-wrapper" data-order_code="{{ order.reference }}">
         <div class="order-status-row">
-            <div class="tracking-steps">
-                {% include 'VoloFrontendBundle:Order:tracking_steps.html.twig' with {"status": status} %}
-            </div>
+            {#<div class="tracking-steps">#}
+                {#{% include 'VoloFrontendBundle:Order:tracking_steps.html.twig' with {"status": status} %}#}
+            {#</div>#}
             {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
                 <div class="create_account">
                     <div class="create_account__message">

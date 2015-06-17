@@ -6,6 +6,11 @@
   background-position: center;
 }
 
+.aspect-ratio-40-22 {
+  @include aspect-ratio(40, 22);
+  @extend %aspect-ratio-base;
+}
+
 .aspect-ratio-40-11 {
   @include aspect-ratio(40, 11);
   @extend %aspect-ratio-base;
