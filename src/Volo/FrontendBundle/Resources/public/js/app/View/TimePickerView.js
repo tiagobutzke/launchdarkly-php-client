@@ -15,7 +15,7 @@ var TimePickerView = Backbone.View.extend({
         var date = this.model.getCart(this.vendor_id).get('order_time');
 
         if (date) {
-            var dateObj = moment(date),
+            var dateObj = date === 'now' ? moment() : moment(date),
                 dateKey = dateObj.format('YYYY-MM-DD'),
                 timeKey = dateObj.format('HH:mm');
 
