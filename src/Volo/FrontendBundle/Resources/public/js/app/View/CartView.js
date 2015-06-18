@@ -146,6 +146,7 @@ var CartView = Backbone.View.extend({
 
         this.template = _.template($('#template-cart').html());
         this.templateSubTotal = _.template($('#template-cart-subtotal').html());
+        this.templateCheckoutButton = _.template($('#template-cart-checkout-button').html());
 
         this.vendor_id = this.$el.data().vendor_id;
         this.model.getCart(this.vendor_id).set('minimum_order_amount', this.$el.data().minimum_order_amount);
@@ -226,6 +227,7 @@ var CartView = Backbone.View.extend({
         var vendorCart = this.model.getCart(this.vendor_id);
         this.listenTo(vendorCart, 'cart:dirty', this.disableCart, this);
         this.listenTo(vendorCart, 'cart:ready', this.enableCart, this);
+        this.listenTo(vendorCart, 'cart:ready', this.renderCheckoutButton, this);
         this.listenTo(vendorCart, 'change', this.renderSubTotal);
         this.listenTo(vendorCart, 'change:order_time', this.renderTimePicker, this);
         this.listenTo(vendorCart.products, 'update', this.renderProducts, this);
@@ -308,6 +310,7 @@ var CartView = Backbone.View.extend({
         console.log('CartView:render');
         this.$el.html(this.template(this.model.getCart(this.vendor_id).attributes));
         this.renderSubTotal();
+        this.renderCheckoutButton();
         this.renderProducts();
         this.renderTimePicker();
 
@@ -330,8 +333,14 @@ var CartView = Backbone.View.extend({
         return this;
     },
 
+    renderCheckoutButton: function() {
+        this.$('.desktop-cart__order__checkout_button_container').html(
+            this.templateCheckoutButton(this.model.getCart(this.vendor_id).attributes)
+        );
+    },
+
     renderSubTotal: function () {
-        this.$('.desktop-cart__order__subtotal__container').html(
+        this.$('.desktop-cart__order__subtotal_container').html(
             this.templateSubTotal(this.model.getCart(this.vendor_id).attributes)
         );
 
