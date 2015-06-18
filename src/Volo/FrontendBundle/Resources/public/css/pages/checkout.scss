@@ -27,6 +27,7 @@
   background-color: $color-bg-primary;
   margin-top:  $header-height-extra-small;
   @include respond-from("screen-md") {
+    border-radius: $border-radius-default;
     margin-top: $header-height-small + $grid-gutter-width;
     margin-bottom: $grid-gutter-width;
   }

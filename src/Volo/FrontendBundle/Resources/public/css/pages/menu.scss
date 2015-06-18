@@ -161,6 +161,7 @@
 .menu__main {
   background-color: $color-bg-primary;
   @include respond-from("screen-md") {
+    border-radius: $border-radius-default;
     @include make-md-column(8);
     @include make-lg-column(9);
   }
