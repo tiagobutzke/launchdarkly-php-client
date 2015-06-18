@@ -33,7 +33,7 @@
 .restaurants__tool-box.restaurants__tool-box-sticking {
   position: fixed;
   top: 0;
-  z-index: 2;
+  z-index: 1000;
   @include respond-from("screen-md") {
     position: absolute;
     z-index: 1;
