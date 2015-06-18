@@ -217,7 +217,10 @@ var ToppingsView = Backbone.View.extend({
         this._initToppings();
         this._renderQuantitySelector();
         this._validate();
-        this.subViews[0].setOptionsVisibility(true);
+
+        if (this.subViews.length > 0) {
+            this.subViews[0].setOptionsVisibility(true);
+        }
 
         return this;
     },
@@ -232,7 +235,7 @@ var ToppingsView = Backbone.View.extend({
         });
 
         this.listenTo(this.model, 'change:quantity', this._validate, this);
-        this.subViews.push(view);
+        this.quantitySelectorView = view;
         this.$('.modal-footer').append(view.render().el);
     },
 
@@ -279,6 +282,7 @@ var ToppingsView = Backbone.View.extend({
     _closeModal: function() {
         this.undelegateEvents(); //stop listening on events, very important!
         _.invoke(this.subViews, 'remove');
+        this.quantitySelectorView.remove();
         this.$('#choices-toppings-modal').modal('hide');
     }
 });
