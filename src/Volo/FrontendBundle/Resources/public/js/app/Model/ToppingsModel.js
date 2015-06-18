@@ -1,52 +1,14 @@
 var ToppingOptionModel = Backbone.Model.extend({
     defaults: {
-        selected: false,
-        buttonType: 'radioButton'
+        selected: false
     },
 
-    toggleSelection: function() {
-        if(this.get('selected')) {
-            return this.select();
-        }
-
-        return this.unselect();
+    setSelection: function(selection) {
+        this.set('selected', selection);
     },
 
-    select: function(force) {
-        if(force || this.toppingModel.canSelectSubModel(this.get('buttonType'))) {
-            this.trigger('toppingOption:beforeSelection');
-            this.set({ selected: true });
-
-            return true;
-        }
-
-        return false;
-    },
-
-    unselect: function(force) {
-        if(force || this.toppingModel.canUnselectSubModel(this.get('buttonType'))) {
-            this.set({ selected: false });
-
-            return true;
-        }
-
-        return false;
-    },
-
-    isSelected: function () {
+    isSelected: function() {
         return this.get('selected');
-    },
-
-    setToppingModel: function (toppingModel) {
-        this.toppingModel = toppingModel;
-    },
-
-    setToRadioButton: function () {
-        this.set('buttonType', 'radioButton');
-    },
-
-    setToCheckBox: function () {
-        this.set('buttonType', 'checkBox');
     }
 });
 
@@ -63,33 +25,33 @@ var ToppingModel = Backbone.Model.extend({
     },
 
     initialize: function() {
+        _.bindAll(this);
+
         this.options = new ToppingOptionCollection(_.cloneDeep(this.get('options')));
         this.listenTo(this.options, 'add', this._setInitialSelection);
         _.each(this.options.models, this._setInitialSelection, this);
-        _.invoke(this.options.models, 'setToppingModel', this);
-        _.invoke(this.options.models, (this.isCheckBoxList() ? 'setToCheckBox' : 'setToRadioButton'), this);
         delete this.attributes.options;
     },
 
-    _setInitialSelection: function(toppingModel) {
+    _setInitialSelection: function(optionModel) {
         var quantity_minimum;
 
-        if (!toppingModel) {
+        if (!optionModel) {
             return;
         }
 
         quantity_minimum = this.get('quantity_minimum');
         if (this.options.length <= quantity_minimum && this._getSelectedItems().length < quantity_minimum) {
-            toppingModel.select(true);
+            optionModel.setSelection(false);
         }
-    },
-
-    isCheckBoxList: function() {
-        return this.get('quantity_maximum') > 1 || this.options.length === 1;
     },
 
     areOptionsVisible: function() {
         return this.get('optionsVisible');
+    },
+
+    isCheckBoxList: function() {
+        return this.get('quantity_maximum') > 1 || this.options.length === 1;
     },
 
     setOptionsVisibility: function(areVisible, isSilent) {
@@ -103,9 +65,27 @@ var ToppingModel = Backbone.Model.extend({
     },
 
     _getSelectedItems: function() {
-        return this.options.where({
-            selected: true
+        return _.filter(this.options.models, function(optionModel) {
+            return optionModel.isSelected();
         });
+    },
+
+    toggleToppingOptionSelection: function(optionModel) {
+        var isSelected = optionModel.get('selected');
+
+        if (this._isToppingUnselectable() && isSelected) {
+            optionModel.setSelection(false);
+            this.trigger('topping:validateOptions');
+        } else if (this._isToppingSelectable() && !isSelected) {
+            //if radio button, unselect all at first
+            if (!this.isCheckBoxList()) {
+                _.invoke(this.options.models, 'setSelection', false);
+            }
+            optionModel.setSelection(true);
+            this.trigger('topping:validateOptions');
+        } else {
+            this.trigger('topping:toggleDenied');
+        }
     },
 
     isValid: function() {
@@ -119,28 +99,24 @@ var ToppingModel = Backbone.Model.extend({
         return (selectedCount >= min) && (selectedCount <= max);
     },
 
-    canSelectSubModel: function(buttonType) {
-        if ((buttonType === 'checkBox') && (this._getSelectedItems().length >= this.get('quantity_maximum'))) {
+    _isToppingSelectable: function() {
+        var isCheckbox = this.isCheckBoxList(),
+            selectedItemsCount = this._getSelectedItems().length,
+            quantityMaximum = this.get('quantity_maximum');
 
-            return false;
-        }
-
-        return true;
+        return !isCheckbox || (selectedItemsCount < quantityMaximum);
     },
 
-    canUnselectSubModel: function(buttonType) {
+    _isToppingUnselectable: function() {
         var max = this.get('quantity_maximum'),
-            min = this.get('quantity_minimum');
-
-        if ((buttonType === 'radioButton' && this.isSelectionRequired()) ||
-            (this._getSelectedItems().length <= this.get('quantity_minimum') && max !== min) ||
-            (this.options.length <= min)
-        ) {
-
-            return false;
-        }
-
-        return true;
+            min = this.get('quantity_minimum'),
+            selectedItemsCount = this._getSelectedItems().length,
+            optionsCount = this.options.length,
+            maxEqualsMin = max === min,
+            unselectableBySelected = selectedItemsCount > min && !maxEqualsMin,
+            unselectableByMaxMin = maxEqualsMin && min > 1 && min < optionsCount;
+        
+        return unselectableByMaxMin || unselectableBySelected;
     },
 
     toJSON: function() {

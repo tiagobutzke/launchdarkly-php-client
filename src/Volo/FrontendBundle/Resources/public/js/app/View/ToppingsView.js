@@ -22,10 +22,12 @@ var ToppingOptionView = Backbone.View.extend({
     initialize: function() {
         this.template = _.template($('#template-topping-option').html());
         this.$el.toggleClass('selected', this.model.isSelected());
+
+        this.listenTo(this.model, 'change:selected', this._updateVisualization);
     },
 
     events: {
-        'click': 'toggleSelection'
+        'click': '_updateSelection'
     },
 
     render: function() {
@@ -34,45 +36,26 @@ var ToppingOptionView = Backbone.View.extend({
         return this;
     },
 
-    select: function(force) {
-        if (this.model.select(force)) {
-            this.$el.addClass('selected', true);
-            this.trigger('topping:validate');
-        }
+    _updateVisualization: function() {
+        this.$el.toggleClass('selected', this.model.isSelected());
     },
 
-    unselect: function(force) {
-        if (this.model.unselect(force)) {
-            this.$el.removeClass('selected');
-            this.trigger('topping:validate');
-        }
-    },
-
-    toggleSelection: function() {
-        if (this.model.isSelected()) {
-            this.unselect();
-        } else {
-            this.select();
-        }
-    },
-
-    remove: function() {
-        this.undelegateEvents();
-        Backbone.View.prototype.remove.apply(this, arguments);
+    _updateSelection: function() {
+        this.trigger('toppingOption:updateSelection', this.model);
     }
-
 });
 
 var ToppingView = Backbone.View.extend({
     className: 'topping',
 
     initialize: function() {
-        _.bindAll(this, '_unselectAllToppingOptions');
+        _.bindAll(this);
 
         this.template = _.template($('#template-topping').html());
-        this.subModels = [];
         this.subViews = [];
         this.headerCommentSubView = null;
+
+        this.listenTo(this.model, 'topping:validateOptions', this._validateTopping);
     },
 
     events: {
@@ -81,18 +64,20 @@ var ToppingView = Backbone.View.extend({
 
     render: function() {
         this.$el.html(this.template(this.model.toJSON()));
+
+        this.$el.toggleClass('topicOptionCheckbox', this.model.isCheckBoxList());
+        this.$el.toggleClass('selection-required', this.model.isSelectionRequired());
+
         this._initToppingOptions();
-        this._validate();
         this._showOptions(this.model.areOptionsVisible());
         this._renderToppingHeaderCommentView();
+        this._validateTopping();
 
         return this;
     },
 
     _initToppingOptions: function() {
-        var toppingOptions = this.model.options;
-
-        toppingOptions.map(this._renderToppingOptionView, this);
+        this.model.options.each(this._renderToppingOptionView, this);
     },
 
     _renderToppingOptionView: function(toppingOptionModel) {
@@ -100,11 +85,8 @@ var ToppingView = Backbone.View.extend({
             model: toppingOptionModel
         });
 
-        if(!this.model.isCheckBoxList()) {
-            this.listenTo(toppingOptionModel, 'toppingOption:beforeSelection', this._unselectAllToppingOptions);
-        }
-        this.listenTo(view, 'topping:validate', this._validate, this);
-        this.subModels.push(toppingOptionModel);
+        this.listenTo(view, 'toppingOption:updateSelection', this.model.toggleToppingOptionSelection);
+
         this.subViews.push(view);
         this.$('.topping__options').append(view.render().el);
     },
@@ -139,15 +121,9 @@ var ToppingView = Backbone.View.extend({
         $(".portlet-header").toggleClass("ui-icon-plus ui-icon-minus");
     },
 
-    _unselectAllToppingOptions: function() {
-        _.invoke(this.subViews, 'unselect', true);
-    },
-
-    _validate: function() {
+    _validateTopping: function() {
         this.$('.topping__header').toggleClass('valid invalid', this.model.isValid());
-        this.$el.toggleClass('topicOptionCheckbox', this.model.isCheckBoxList());
-        this.$el.toggleClass('selection-required', this.model.isSelectionRequired());
-        this.trigger('toppings:validate');
+        this.trigger('toppings:validateToppings');
     },
 
     _removeHeaderCommentSubView: function() {
@@ -157,7 +133,7 @@ var ToppingView = Backbone.View.extend({
     },
 
     remove: function() {
-        _.invoke(this.subModels, 'remove');
+        this.model.options.reset(null);
         _.invoke(this.subViews, 'remove');
         this._removeHeaderCommentSubView();
         this.undelegateEvents();
@@ -205,6 +181,8 @@ var ToppingsView = Backbone.View.extend({
         this.subViews = [];
         this.productToUpdate = options.productToUpdate || null;
         this.gtmService = options.gtmService;
+
+        this.listenTo(this.model, 'change:quantity', this._validateToppings);
     },
 
     events: {
@@ -217,7 +195,7 @@ var ToppingsView = Backbone.View.extend({
         this.$('.modal-error-message').hide();
         this._initToppings();
         this._renderQuantitySelector();
-        this._validate();
+        this._validateToppings();
 
         if (this.subViews.length > 0) {
             this.subViews[0].setOptionsVisibility(true);
@@ -235,7 +213,6 @@ var ToppingsView = Backbone.View.extend({
             model: this.model
         });
 
-        this.listenTo(this.model, 'change:quantity', this._validate, this);
         this.quantitySelectorView = view;
         this.$('.modal-footer').append(view.render().el);
     },
@@ -245,14 +222,14 @@ var ToppingsView = Backbone.View.extend({
             model: topping
         });
 
-        this.listenTo(view, 'toppings:validate', this._validate, this);
+        this.listenTo(view, 'toppings:validateToppings', this._validateToppings, this);
         this.listenTo(view, 'topping:openingOptions', this._closeAllTopicOptions, this);
 
         this.subViews.push(view);
         this.$('.toppings').append(view.render().el);
     },
 
-    _validate: function() {
+    _validateToppings: function() {
         var valid = this.model.isValid();
 
         this.$('.toppings-add__to__cart').toggleClass('disabled', !valid);
