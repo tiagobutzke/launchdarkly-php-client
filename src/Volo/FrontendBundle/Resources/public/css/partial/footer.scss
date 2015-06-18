@@ -23,6 +23,9 @@
 .footer__wrapper__top {
   @extend %footer__wrapper;
   border-top: $dropdown-border;
+  //TODO: footer__subscribe enable - remove padding top and bottom again
+  padding-top: $space-sm;
+  padding-bottom: $space-sm;
 }
 
 .footer__wrapper__middle {
@@ -114,12 +117,14 @@
 .footer__logo {
   @include make-xs-column(6);
   @include make-md-column(3);
-  @extend .col-md-pull-6;
+  //TODO: footer__subscribe enable - remove comment
+  //@extend .col-md-pull-6;
   overflow: hidden;
   height: 45px;
   margin-top: 10px;
   @include respond-from("screen-md") {
-    margin-top: 0;
+    //TODO: footer__subscribe enable - remove comment
+    //margin-top: 0;
   }
 
   i {
@@ -136,7 +141,8 @@
 
 .footer__social {
   @include make-xs-column(6);
-  @include make-md-column(3);
+  //TODO: footer__subscribe enable - change to make-md-column(3)
+  @include make-md-column(9);
   text-align: right;
   overflow: hidden;
   height: 42px;
@@ -146,7 +152,8 @@
     margin-top: 10px;
     margin-right: $space-sm;
     @include respond-from("screen-md") {
-      margin-top: 1px;
+      //TODO: footer__subscribe enable - comment in again
+      //margin-top: 1px;
     }
 
     i {
