@@ -95,7 +95,7 @@
                 {{ 'cart.voucher_message'|trans }}
             </p>
             <div class="desktop-cart__order__subtotal__container"></div>
-            <% if (total_value > minimum_order_amount) { %>
+            <% if (subtotal >= minimum_order_amount) { %>
                 <a class="button btn-checkout" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">
                     {% trans %}cart.checkout_link{% endtrans %}
                 </a>
