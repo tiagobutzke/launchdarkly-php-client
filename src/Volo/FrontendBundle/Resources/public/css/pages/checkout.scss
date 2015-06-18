@@ -561,6 +561,18 @@
   }
 }
 
+.checkout__legal {
+  text-align:  center;
+  font-size: 0.875em;
+  color: $color-text-light;
+  padding: $space-sm;
+
+  span {
+    display: inline-block;
+    margin-right: 14px;
+  }
+}
+
 .checkout__submit {
   @include make-xs-column(12);
   @include make-md-column(6);
