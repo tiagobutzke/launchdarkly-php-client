@@ -21,10 +21,10 @@
                     <i class="icon-clock-o"></i>
                     {% set availableIn = date(vendor.metadata.availableIn) %}
                     {% if (availableIn|date('d-m-Y') == 'now'|date('d-m-Y')) %}
-                        {% trans with {'%time%': availableIn|formatTime} %}restaurant.open_at %time%{% endtrans %}
+                        {% trans with {'%time%': availableIn|formatTime} %}restaurant.open_at_time{% endtrans %}
                     {% else %}
                         {% trans with {'%time%': availableIn|formatTime, '%day%': availableIn|localisedDay} %}
-                        restaurant.open_at %day% %time%
+                        restaurant.open_at_day_time
                         {% endtrans %}
                     {% endif %}
                 </div>
