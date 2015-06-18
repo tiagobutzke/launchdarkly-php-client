@@ -154,6 +154,7 @@
   font-size: 1em;
   overflow-y: auto;
   overflow-x: visible;
+  min-height: 50px;
   @include respond-from("screen-md") {
     padding: $space-xs 0 $space-sm;
   }
