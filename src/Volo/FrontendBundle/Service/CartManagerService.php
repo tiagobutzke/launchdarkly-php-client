@@ -217,14 +217,10 @@ class CartManagerService
             if ($vendor->getMinimumDeliveryFee() > $vendorCart['delivery_fee']) {
                 $vendorCart['delivery_fee_discount'] = $vendor->getMinimumDeliveryFee();
             }
-        }
 
-        if ($vendor->getId() !== $vendorId) {
-            $vendor = $this->vendorProvider->find($vendorId);
-        }
-
-        if ($vendor->getMinimumDeliveryFee() > $apiResult['delivery_fee']) {
-            $apiResult['delivery_fee_discount'] = $vendor->getMinimumDeliveryFee();
+            if ($vendor->getId() === $vendorId && $vendor->getMinimumDeliveryFee() > $apiResult['delivery_fee']) {
+                $apiResult['delivery_fee_discount'] = $vendor->getMinimumDeliveryFee();
+            }
         }
 
         return $apiResult;
