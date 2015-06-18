@@ -34,7 +34,7 @@
                         <div class="create_account__message__text">{% trans %}title.create_account_invitation{% endtrans %}</div>
                     </div>
                     <div class="create_account__login">
-                        <button class="create_account__login__button button">{% trans %}title.create_account{% endtrans %}</button>
+                        <button class="create_account__login__button button" data-object={{ serialize(customer)|raw }}>{% trans %}title.create_account{% endtrans %}</button>
                     </div>
                 </div>
             {% endif %}

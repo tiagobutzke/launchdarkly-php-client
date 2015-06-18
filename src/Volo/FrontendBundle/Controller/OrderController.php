@@ -3,6 +3,7 @@
 namespace Volo\FrontendBundle\Controller;
 
 use CommerceGuys\Guzzle\Oauth2\AccessToken;
+use Foodpanda\ApiSdk\Entity\Order\GuestCustomer;
 use Foodpanda\ApiSdk\Exception\OrderNotFoundException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -43,10 +44,14 @@ class OrderController extends Controller
         if ($request->isXmlHttpRequest() && $request->query->get('partial')) {
             $viewName = 'VoloFrontendBundle:Order:tracking_steps.html.twig';
         }
+        /** @var GuestCustomer $guestCustomer */
+        $guestCustomer = $session->get(CheckoutController::SESSION_GUEST_CUSTOMER_KEY_TEMPLATE);
+        $customer = $guestCustomer ? $guestCustomer->getCustomer() : new GuestCustomer();
 
         $content = $this->renderView($viewName, [
             'order' => $order,
             'status' => $status,
+            'customer' => $customer,
         ]);
 
         return new Response($content);
