@@ -79,15 +79,7 @@
 {% endblock %}
 
 {% block payment %}
-    <h3 class="checkout__title">3. {% trans %}title.payment{% endtrans %}
-        {% if is_granted('IS_AUTHENTICATED_FULLY') and customer_cards is defined and customer_cards|length > 0 %}
-            <span class="checkout__subtitle__edit">
-                <i class="icon-plus"></i>
-                <a id="add_new_credit_card_link">{% trans %}link.add_new_credit_card{% endtrans %}</a>
-            </span>
-        {% endif %}
-    </h3>
-
+    <h3 class="checkout__title">3. {% trans %}title.payment{% endtrans %}</h3>
     <div class="checkout__payments">
         {% for payment in vendor.paymentTypes %}
             <div class="checkout__payment">
@@ -117,13 +109,16 @@
                     </div>
                     <div class="checkout__payment_label"><i class="icon-check"></i>{{ label_credit_cart|trans }}</div>
                 </div>
-                {% if payment.paymentTypeCode == 'paypal' %}
-                <div class="checkout__payment_description">
-                    {% trans %}generic.payment_paypal_description{% endtrans %}
-                </div>
-                {% endif %}
             </div>
         {% endfor %}
+        <div class="checkout__payment_paypal_description hide">
+            <div class="checkout__payment_paypal_description__title">
+                {% trans %}generic.payment_paypal_description_title{% endtrans %}
+            </div>
+            <div class="checkout__payment_paypal_description__text">
+                {% trans %}generic.payment_paypal_description_text{% endtrans %}
+            </div>
+        </div>
     </div>
 
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -195,6 +190,7 @@
             });
     
             $('#add_new_credit_card_link').click(function () {
+                    $('#add_new_credit_card_link').toggleClass('paymentFormOpen');
                     $('#payment_form').toggleClass('hide');
                     if (!$('#payment_form').hasClass('hide')) {
                         $('input[name="credit_card"]').attr("checked", false);
@@ -218,10 +214,16 @@
 
             if ($(this).data('payment_type_code') === "paypal") {
                 $('#payment_form').addClass('hide');
+                $('#saved_payment_options').addClass('hide');
                 $('.checkout__list').addClass('hide');
+                $('.checkout__payment_paypal_description').removeClass('hide');
+                $('input[name="credit_card"]').attr("checked", false);
+                VOLO.checkoutModel.set('credit_card_id', null);
             } else {
                 $('#payment_form').toggleClass('hide', $("input:radio[name='credit_card']").length > 0);
+                $('#saved_payment_options').removeClass('hide');
                 $('.checkout__list').removeClass('hide');
+                $('.checkout__payment_paypal_description').addClass('hide');
             }
         });
 

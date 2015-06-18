@@ -1,6 +1,5 @@
-{% set showForm = is_granted('IS_AUTHENTICATED_FULLY') and customer_cards is defined and customer_cards|length > 0 %}
 <form action="{{ path('checkout_payment', {vendorCode: vendor.code}) }}"
-      class="{% if showForm %}hide{% endif %}"
+      class="hide"
       id="payment_form" method="post" role="form" data-adyen_public_key="{{ adyen_public_key }}">
     <h4 class="checkout__subtitle">{% trans %}title.credit_card_details{% endtrans %}</h4>
     <div class="checkout__item">
