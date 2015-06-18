@@ -1,7 +1,7 @@
 {% extends 'VoloFrontendBundle:Checkout:base.html.twig' %}
 
 {% block delivery_information %}
-    <div class="{% if is_granted('IS_AUTHENTICATED_FULLY') %}checkout-delivery-component{% endif %}">
+    <div class="checkout__delivery_information {% if is_granted('IS_AUTHENTICATED_FULLY') %}checkout-delivery-component{% endif %}">
         <h3 class="checkout__title">1. {% trans %}title.delivery_details{% endtrans %}
             <span class="checkout__subtitle__edit">
                 {% if not is_granted('IS_AUTHENTICATED_FULLY') %}

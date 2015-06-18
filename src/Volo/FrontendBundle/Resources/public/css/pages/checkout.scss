@@ -142,16 +142,29 @@
 }
 
 .checkout__delivery_information {
-  @include make-row();
+  @include make-row(0);
+}
+
+.checkout__delivery_information__address {
+  .checkout__subtitle {
+    text-align: left;
+  }
+  @include make-xs-column(6, 0);
 }
 
 .checkout__delivery_information__time {
   @include make-xs-column(6, 0);
+  .checkout__subtitle {
+    text-align: left;
+  }
+  @include respond-from("screen-md") {
+    .checkout__subtitle,
+    .checkout__item {
+      padding-left: 5px;
+    }
+  }
 }
 
-.checkout__delivery_information__address {
-  @include make-xs-column(6);
-}
 // main fields
 
 .checkout__time-field {
