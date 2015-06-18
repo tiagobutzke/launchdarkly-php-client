@@ -67,6 +67,7 @@ module.exports = function (grunt) {
         'web/bower_components/mobile-detect/mobile-detect.js',
         'web/bower_components/jquery.payment/lib/jquery.payment.js',
         'web/bower_components/moment/moment.js',
+        'web/bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js',
         frontendAssetPath('/js/**/*.js')
     ]);
 
@@ -169,7 +170,8 @@ module.exports = function (grunt) {
                 'web/bower_components/real-shadow/realshadow.js',
                 'web/bower_components/mobile-detect/mobile-detect.js',
                 'web/bower_components/jquery.payment/lib/jquery.payment.js',
-                'web/bower_components/moment/moment.js'
+                'web/bower_components/moment/moment.js',
+                'web/bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js'
             ]
         },
         gruntfile: {
@@ -230,7 +232,8 @@ module.exports = function (grunt) {
                 'web/bower_components/blazy/blazy.js',
                 'vendor/helthe/turbolinks/Resources/public/js/turbolinks.js',
                 'web/bower_components/mobile-detect/mobile-detect.js',
-                'web/bower_components/moment/moment.js'
+                'web/bower_components/moment/moment.js',
+                'web/bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js'
             ]
         }
     };

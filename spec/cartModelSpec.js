@@ -8,6 +8,12 @@ describe("A cart", function() {
     var response;
 
     beforeEach(function() {
+        VOLO = {
+            configuration: {
+                timeZone: "Europe/Berlin"
+            }
+        };
+
         vendor_id = 4;
         cartResponse = {
             "subtotal": 7.9,

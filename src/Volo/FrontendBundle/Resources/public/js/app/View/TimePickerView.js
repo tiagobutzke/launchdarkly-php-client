@@ -5,6 +5,7 @@ var TimePickerView = Backbone.View.extend({
     },
 
     initialize: function () {
+        _.bindAll(this);
         this.vendor_id = this.$el.data().vendor_id;
 
         var vendorCart = this.model.getCart(this.vendor_id);
@@ -54,6 +55,6 @@ var TimePickerView = Backbone.View.extend({
         var time = this.$('#order-delivery-time').val(),
             date = this.$('#order-delivery-date').val();
 
-        return time === 'now' ? time : moment(date+time, "YYYY-MM-DDHH:mm").toISOString();
+        return time === 'now' ? time : moment(date+time, "YYYY-MM-DDHH:mm").tz(VOLO.configuration.timeZone).format();
     }
 });
