@@ -41,6 +41,7 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
             new \Twig_SimpleFilter('dayOfTheWeek', array($this, 'formatDayOfTheWeek')),
             new \Twig_SimpleFilter('formatOpeningDay', array($this, 'formatOpeningDay')),
             new \Twig_SimpleFilter('prepareLogoUrl', array($this, 'prepareLogoUrl')),
+            new \Twig_SimpleFilter('localisedDay', array($this, 'localisedDay')),
         ]);
     }
 
@@ -147,6 +148,19 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
         $formatter->setPattern('eee');
 
         return $formatter->format($dateTime);
+    }
+
+    /**
+     * @param \DateTime $date
+     *
+     * @return string
+     */
+    public function localisedDay(\DateTime $date)
+    {
+        $formatter = \IntlDateFormatter::create($this->locale, \IntlDateFormatter::GREGORIAN, \IntlDateFormatter::NONE);
+
+        $formatter->setPattern('eeee');
+        return $formatter->format($date);
     }
 
     /**
