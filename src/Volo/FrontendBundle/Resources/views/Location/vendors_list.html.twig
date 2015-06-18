@@ -11,17 +11,19 @@
     <div class="restaurants-container wrapper-fluid">
         <div class="restaurants__tool-box">
             <div class="restaurants__location">
-                <input
-                        id="postal_index_form_input"
-                        type="text"
-                        class="restaurants__location__input form-control hide"
-                        name="location_set"
-                        value=""
-                        placeholder="{% trans %}postal_code.your_postal_code{% endtrans %}"
-                        data-msg_error_not_found="{% trans %}postal_code.not_found{% endtrans %}"
-                        data-msg_you_probably_mean="{% trans %}postal_code.you_probably_mean{% endtrans %}"
-                        required="true"
-                >
+                <form id="postal_index_form" method="GET">
+                    <input
+                            id="postal_index_form_input"
+                            type="text"
+                            class="restaurants__location__input form-control hide"
+                            name="location_set"
+                            value=""
+                            placeholder="{% trans %}postal_code.your_postal_code{% endtrans %}"
+                            data-msg_error_not_found="{% trans %}postal_code.not_found{% endtrans %}"
+                            data-msg_you_probably_mean="{% trans %}postal_code.you_probably_mean{% endtrans %}"
+                            required="true"
+                    >
+                </form>
 
                 <div class="restaurants__location__title">
                     <span class="restaurants__location__address">

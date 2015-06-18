@@ -106,7 +106,7 @@ var VendorCartModel = Backbone.Model.extend({
     },
 
     validate: function(attrs) {
-        if (attrs.location.latitude === null || attrs.location.longitude === null) {
+        if (_.isNull(attrs.location.latitude) || _.isNull(attrs.location.longitude) || _.isNull(attrs.location.location_type)) {
             return 'location_not_set';
         }
     },
@@ -115,8 +115,8 @@ var VendorCartModel = Backbone.Model.extend({
         var xhr = $.get(
             Routing.generate('vendor_delivery_validation_by_gps', {
                 vendorId: this.get('vendor_id'),
-                latitude: data.lat,
-                longitude: data.lng
+                latitude: data.latitude,
+                longitude: data.longitude
             })
         );
 
@@ -124,8 +124,8 @@ var VendorCartModel = Backbone.Model.extend({
             if (response.result) {
                 this.set('location', {
                     location_type: "polygon",
-                    latitude: data.lat,
-                    longitude: data.lng
+                    latitude: data.latitude,
+                    longitude: data.longitude
                 });
             }
         }.bind(this));

@@ -32,7 +32,7 @@
         </div>
         <div class="form-group">
             <textarea cols="30" rows="10" class="form-control" id="delivery_instructions" name="customer_address[delivery_instructions]"
-                      value="{{ customer_address.delivery_instructions|default('') }}" placeholder="{% trans %}form.placeholder.delivery_instructions{% endtrans %}"></textarea>
+                      placeholder="{% trans %}form.placeholder.delivery_instructions{% endtrans %}">{{ customer_address.delivery_instructions|default('') }}</textarea>
         </div>
         <input id="address_line1" name="customer_address[address_line1]" type="hidden"
                value="{{ customer_address.address_line1|default('') }}">

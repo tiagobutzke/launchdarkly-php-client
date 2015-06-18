@@ -79,7 +79,7 @@ class CustomerController extends Controller
      *          "postcode"="\d+"
      *      }
      * )
-     * @Method({"PUT"})
+     * @Method({"POST", "PUT"})
      *
      * @param Request $request
      *
@@ -91,12 +91,22 @@ class CustomerController extends Controller
     {
         $customerLocationService = $this->get('volo_frontend.service.customer_location');
 
+        $content = $request->getContent();
+        if ('' === $content) {
+            throw new BadRequestHttpException('Content is empty.');
+        }
+
+        $data = json_decode($content, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new BadRequestHttpException('Content is not a valid json.');
+        }
+
         $gpsLocation = $customerLocationService->create(
-            $request->request->get(CustomerLocationService::KEY_LAT),
-            $request->request->get(CustomerLocationService::KEY_LNG),
-            $request->request->get(CustomerLocationService::KEY_PLZ),
-            $request->request->get(CustomerLocationService::KEY_CITY),
-            $request->request->get(CustomerLocationService::KEY_ADDRESS)
+            $data[CustomerLocationService::KEY_LAT],
+            $data[CustomerLocationService::KEY_LNG],
+            $data[CustomerLocationService::KEY_PLZ],
+            $data[CustomerLocationService::KEY_CITY],
+            $data[CustomerLocationService::KEY_ADDRESS]
         );
 
         try {

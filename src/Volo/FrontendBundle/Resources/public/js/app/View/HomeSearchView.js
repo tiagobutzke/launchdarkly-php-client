@@ -1,46 +1,45 @@
+/**
+ * model: LocationModel
+ * options:
+ * - geocodingService: GeocodingService
+ */
 var HomeSearchView = Backbone.View.extend({
     initialize: function (options) {
         console.log('HomeSearchView.initialize ', this.cid);
         _.bindAll(this);
         this.geocodingService = options.geocodingService;
-        this.inputNode = this.$('#postal_index_form_input');
 
-        this.geocodingService.init(this.inputNode);
+        this.geocodingService.init(this.$('#postal_index_form_input'));
 
-        this.listenTo(this.geocodingService, 'autocomplete:submit_pressed', this._submitPressed);
-        this.listenTo(this.geocodingService, 'autocomplete:tab_pressed', this._tabPressed);
-        this.listenTo(this.geocodingService, 'autocomplete:place_changed', this._tabPressed);
+        this.listenTo(this.geocodingService, 'autocomplete:place_changed', this._applyNewLocationData);
 
-        this.inputNode.tooltip({
+        this.$('#postal_index_form_input').tooltip({
             placement: 'bottom',
             html: true,
             trigger: 'manual'
         });
+
+        this.postInit();
     },
 
     events: {
-        'click .teaser__button': '_submit',
-        'autocomplete:submit_pressed .teaser__button': '_submitPressed',
+        'click .teaser__button': '_submitPressed',
+        'submit': '_submitPressed',
         'focus #postal_index_form_input': '_hideTooltip',
         'blur #postal_index_form_input': '_hideTooltip',
         'click #postal_index_form_input': '_scrollToInput'
     },
 
     unbind: function() {
-        this.inputNode.tooltip('destroy');
-        this.geocodingService.removeListeners(this.inputNode);
+        this.$('#postal_index_form_input').tooltip('destroy');
+        this.geocodingService.removeListeners(this.$('#postal_index_form_input'));
         this.stopListening();
         this.undelegateEvents();
+        this.$('#postal_index_form_input').val('');
     },
 
-    _tabPressed: function() {
-        console.log('_tabPressed ', this.cid);
-        this._getNewLocation(this.$('#postal_index_form_input')).fail(this._notFound);
-    },
-
-    _submitPressed: function() {
-        console.log('_submitPressed ', this.cid);
-        this._getNewLocation(this.$('#postal_index_form_input')).done(this._search);
+    postInit: function() {
+        this.model.set(this.model.defaults);
     },
 
     _notFound: function() {
@@ -49,6 +48,10 @@ var HomeSearchView = Backbone.View.extend({
             console.log('not found');
             this._showInputPopup(this.$('#postal_index_form_input').data('msg_error_not_found'));
         }
+
+        this.model.set(this.model.defaults);
+
+        return false;
     },
 
     _scrollToInput: function() {
@@ -60,54 +63,57 @@ var HomeSearchView = Backbone.View.extend({
         }
     },
 
-    _search: function(data) {
-        console.log('_search ', this.cid);
-        if (!!data && data.postcode) {
-            this.model.set({
-                latitude: data.lat,
-                longitude: data.lng,
-                formattedAddress: data.postcode + ", " + data.city
-            });
-            Turbolinks.visit(Routing.generate('volo_location_search_vendors_by_gps', {
-                city: data.city,
-                address: data.postcode + ", " + data.city,
-                longitude: data.lng,
-                latitude: data.lat,
-                postcode: data.postcode
-            }));
+    _submitPressed: function() {
+        console.log('_submitPressed ', this.cid);
+        console.log(this.model.toJSON());
+        if (this.model.get('postcode') && this.model.get('city')) {
+            console.log('FOUND!!!');
+            this._afterSubmit();
         } else {
             this._notFound();
         }
+
+        return false;
     },
 
-    _submit: function() {
-        console.log('_submit ', this.cid);
-        this._getNewLocation(this.$('#postal_index_form_input')).done(this._search);
+    _afterSubmit: function() {
+        var data = this.model.toJSON();
+        console.log('Turbolinks.visit volo_location_search_vendors_by_gps');
+        console.log(data);
+        Turbolinks.visit(Routing.generate('volo_location_search_vendors_by_gps', {
+            city: data.city,
+            address: data.address,
+            longitude: data.longitude,
+            latitude: data.latitude,
+            postcode: data.postcode
+        }));
     },
 
-    _getNewLocation: function($input) {
-        console.log('_getNewLocation ', this.cid);
-        var deferred = $.Deferred();
-
-        this.geocodingService.getLocation($input)
-            .fail(deferred.reject, this)
-            .done(function(locationMeta) {
-                console.log('_getNewLocation.done ', this.cid);
-                deferred.resolve(this._applyNewLocationData(locationMeta, $input));
-            }.bind(this));
-
-        return deferred;
-    },
-
-    _applyNewLocationData: function (locationMeta, $input) {
+    _applyNewLocationData: function (locationMeta) {
+        console.log('_applyNewLocationData ', this.cid);
         var data = this._getDataFromMeta(locationMeta);
-        $input.val(data.formattedAddress);
+
+        this._hideTooltip();
+        if (!locationMeta.formattedAddress) {
+            this._notFound();
+
+            return false;
+        }
+
+        this.$('#postal_index_form_input').val(data.formattedAddress);
 
         if (locationMeta.postcodeGuessed) {
+            console.log('locationMeta.postcodeGuessed ', locationMeta.postcodeGuessed);
             this._showInputPopup(this.$('#postal_index_form_input').data('msg_you_probably_mean'));
         }
 
-        return data;
+        this.model.set({
+            latitude: data.lat,
+            longitude: data.lng,
+            postcode: data.postcode,
+            city: data.city,
+            address: data.postcode + ", " + data.city
+        });
     },
 
     _getDataFromMeta: function (locationMeta) {
@@ -127,16 +133,27 @@ var HomeSearchView = Backbone.View.extend({
     },
 
     _showInputPopup: function (text) {
-        this.inputNode.attr('title', text).tooltip('fixTitle');
-        this.inputNode.tooltip('show');
+        console.log('_showInputPopup ', this.cid);
+        this.$('#postal_index_form_input').attr('title', text).tooltip('fixTitle');
+        this.$('#postal_index_form_input').tooltip('show');
 
-        var newPosition = this.inputNode.position().left;
+        var newPosition = this.$('#postal_index_form_input').position().left;
 
         $('.tooltip').css('left', newPosition + 'px');
         $('.tooltip').css('visibility', 'visible');
     },
 
     _hideTooltip: function () {
-        this.inputNode.tooltip('hide');
+        console.log('_hideTooltip');
+
+        this.$('#postal_index_form_input').tooltip('hide');
+    },
+
+    _enableInputNode: function () {
+        this.$('#postal_index_form_input').css('opacity', '1').attr('disabled', false).focus();
+    },
+
+    _disableInputNode: function () {
+        this.$('#postal_index_form_input').css('opacity', '.4').attr('disabled', 'true');
     }
 });

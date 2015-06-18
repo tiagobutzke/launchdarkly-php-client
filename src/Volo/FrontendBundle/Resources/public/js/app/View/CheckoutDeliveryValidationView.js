@@ -1,5 +1,6 @@
 var CheckoutDeliveryValidationView = Backbone.View.extend({
     events: {
+        "submit": '_submit',
         'focus #formatted_address': '_hideTooltip',
         'click': '_hideTooltip'
     },
@@ -9,6 +10,11 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
         this.geocodingService = options.geocodingService;
         this.vendorId = this.$('#postal_index_form_input').data('vendor_id');
         this.geocodingService.init(this.$('#formatted_address'), []);
+        this.geocodingService.setLocation({
+            latitude: options.locationModel.get('latitude'),
+            longitude: options.locationModel.get('longitude')
+        });
+
         this.deliveryCheck = options.deliveryCheck;
         this._jsValidationView = new ValidationView({
             el: this.el,
@@ -30,9 +36,9 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
             trigger: 'manual'
         });
 
-        this.listenTo(this.geocodingService, 'autocomplete:submit_pressed', this._submitPressed);
-        this.listenTo(this.geocodingService, 'autocomplete:place_changed', this._tabPressed);
-        this.listenTo(this.geocodingService, 'autocomplete:tab_pressed', this._tabPressed);
+        this.listenTo(this.geocodingService, 'autocomplete:place_changed', this.onPlaceChanged);
+
+        this.$("#delivery_information_form_button").attr('disabled', true);
     },
 
     unbind: function () {
@@ -42,43 +48,29 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
         this.undelegateEvents();
     },
 
-    _tabPressed: function () {
-        this._getNewLocation(this.$('#postal_index_form_input')).fail(this._notFound);
+    _submit: function () {
+        return $(document.activeElement).attr('id') !== 'formatted_address' && !this.$("#delivery_information_form_button").attr('disabled');
     },
 
-    _notFound: function () {
-        console.log('not found');
+    onPlaceChanged: function (locationMeta) {
+        var data = this._getDataFromMeta(locationMeta);
+        var addressLine1 = data.street + ' ' + data.building;
+
+        this._hideTooltip();
+
+        this.$("#city").val(data.city);
+        this.$('#postal_index_form_input').val(data.postcode);
+        this.$('#formatted_address').val($.trim(addressLine1));
+        this.$('#address_line1').val(data.street);
+        this.$('#address_line2').val(data.building);
+        this.$('#address_latitude').val(data.lat);
+        this.$('#address_longitude').val(data.lng);
+        this._validateDelivery(data);
     },
 
-    _getNewLocation: function ($input) {
-        var deferred = $.Deferred();
-        var continueButton = this.$("#delivery_information_form_button");
-        this.geocodingService.getLocation($input)
-            .fail(deferred.reject, this)
-            .done(function (locationMeta) {
-                var data = this._getDataFromMeta(locationMeta, $input);
-                var addressLine1 = data.street + ' ' + data.building;
-
-                this.$("#city").val(data.city);
-                this.$('#postal_index_form_input').val(data.postcode);
-                this.$('#formatted_address').val($.trim(addressLine1));
-                this.$('#address_line1').val(data.street);
-                this.$('#address_line2').val(data.building);
-                this.$('#address_latitude').val(data.lat);
-                this.$('#address_longitude').val(data.lng);
-                this._validateDelivery(
-                    data,
-                    continueButton
-                );
-                deferred.resolve(data);
-            }.bind(this));
-
-        return deferred;
-    },
-
-    _getDataFromMeta: function (locationMeta, $input) {
+    _getDataFromMeta: function (locationMeta) {
         console.log(locationMeta);
-        var postCode = (locationMeta.postalCode && locationMeta.postalCode.value) || $input.val();
+        var postCode = (locationMeta.postalCode && locationMeta.postalCode.value) || this.$('#postal_index_form_input').val();
 
         var formattedAddress = postCode + ", " + locationMeta.city;
 
@@ -97,31 +89,30 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
         this.$('#formatted_address').tooltip('hide');
     },
 
-    _showInputPopup: function (inputNode, text, isBlocking) {
-        inputNode.attr({
-            'data-is-blocking-popup': isBlocking !== undefined ? isBlocking : false,
+    _showInputPopup: function (text, isBlocking) {
+        this.$('#formatted_address').attr({
+            'data-is-blocking-popup': _.isUndefined(isBlocking) ? false : isBlocking,
             'title': text
         }).tooltip('fixTitle');
-        inputNode.tooltip('show');
+
+        this.$('#formatted_address').tooltip('show');
     },
 
     _validateAddressFields: function () {
         if (this.$('#address_line1').val() === '' || this.$('#address_line2').val() === '') {
-            this._showInputPopup(
-                this.$('#formatted_address'),
-                this.$('#formatted_address').data('msg_ensure_full_address')
-            );
+            this._showInputPopup(this.$('#formatted_address').data('msg_ensure_full_address'));
         }
     },
 
-    _validateDelivery: function (locationData, continueButton) {
+    _validateDelivery: function (locationData) {
+        var continueButton = this.$("#delivery_information_form_button");
+
         if ($('#delivery-modal').hasClass('in')) {
             return;
         }
 
         continueButton.attr('disabled', true);
         this._hideTooltip();
-        this._validateAddressFields();
 
         var deliveryCheckData = {
             vendorId: this.vendorId,
@@ -135,12 +126,9 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
                     if (this.$('#formatted_address').data('is-blocking-popup')) {
                         this._hideTooltip();
                     }
+                    this._validateAddressFields();
                 } else {
-                    this._showInputPopup(
-                        this.$('#formatted_address'),
-                        this.$('#formatted_address').data('validation-msg'),
-                        true
-                    );
+                    this._showInputPopup(this.$('#formatted_address').data('validation-msg'), true);
                 }
             }.bind(this));
     }

@@ -58,7 +58,7 @@ VOLO.initCartViews = function (cartModel, locationModel) {
     });
 };
 
-VOLO.initCheckoutViews = function (cartModel, checkoutModel, deliveryCheck) {
+VOLO.initCheckoutViews = function (cartModel, checkoutModel, deliveryCheck, locationModel) {
     if (_.isObject(VOLO.CheckoutCartView)) {
         VOLO.CheckoutCartView.unbind();
     }
@@ -75,7 +75,7 @@ VOLO.initCheckoutViews = function (cartModel, checkoutModel, deliveryCheck) {
         el: '.desktop-cart',
         model: cartModel,
         $header: $('.header'),
-        locationModel: VOLO.locationModel,
+        locationModel: locationModel,
         $menuMain: $('.checkout__main'),
         $window: $(window)
     });
@@ -111,6 +111,7 @@ VOLO.initCheckoutViews = function (cartModel, checkoutModel, deliveryCheck) {
         VOLO.checkoutDeliveryValidationView = new CheckoutDeliveryValidationView({
             el: '#delivery_information_form',
             deliveryCheck: deliveryCheck,
+            locationModel: locationModel,
             geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1])
         });
     }
@@ -257,21 +258,20 @@ $(document).on('page:load page:restore', function () {
         return;
     }
 
+    console.log(VOLO.jsonLocation);
     VOLO.locationModel = VOLO.locationModel || new LocationModel(VOLO.jsonLocation);
-    console.log('foo', VOLO.locationModel);
+    console.log('locationModel', VOLO.locationModel);
 
     if ($('.menu__main').length > 0) {
         VOLO.initCartModel(VOLO.jsonCart);
         VOLO.initCartViews(VOLO.cartModel, VOLO.locationModel);
         VOLO.cartView.render();
-
-        VOLO.cartView.performDeliverableCheck();
     }
 
     if ($('.checkout__main').length > 0) {
         VOLO.initCartModel(VOLO.jsonCart);
         VOLO.initCheckoutModel(VOLO.cartModel, VOLO.locationModel, $('.checkout__main').data('vendor_id'));
-        VOLO.initCheckoutViews(VOLO.cartModel, VOLO.checkoutModel, new DeliveryCheck());
+        VOLO.initCheckoutViews(VOLO.cartModel, VOLO.checkoutModel, new DeliveryCheck(), VOLO.locationModel);
         VOLO.CheckoutCartView.render();
 
         if (_.isObject(VOLO.timePickerView)) {
