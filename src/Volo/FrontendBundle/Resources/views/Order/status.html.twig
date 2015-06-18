@@ -2,36 +2,35 @@
 
 {% block title %}{% trans %}meta_title.status{% endtrans %} | {% trans %}brand{% endtrans %}{% endblock %}
 
-{% block page_wrapper_class %}menu-bg{% endblock page_wrapper_class %}
 {% block body_class %}order-status-page{% endblock %}
 
 {% block content %}
     <div class="hero-banner-wrapper">
         {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {type: 'tracking-success', 'vendorCode' : 'order', 'aspectRatioClass' : 'aspect-ratio-40-22'} %}
 
-        <div class="hero-traking__info">
-            <h2 class="tracking-header__title">{% trans %}title.we_have_received_your_order{% endtrans %}!</h2>
-            <h2 class="tracking-header__title">
+        <div class="tracking-hero__info">
+            <h2 class="tracking-hero__title">{% trans %}title.we_have_received_your_order{% endtrans %}</h2>
+            <h2 class="tracking-hero__title">
                 {% trans %}title.it_should_arrive_at{% endtrans %}
-                <span class="time_value">{{ date(status.confirmed_delivery_time.date, status.confirmed_delivery_time.timezone)|formatTime }}</span>
+                <span class="tracking-hero__time">{{ date(status.confirmed_delivery_time.date, status.confirmed_delivery_time.timezone)|formatTime }}</span>
             </h2>
 
             <p>{% trans %}title.get_free_delivery_next_order{% endtrans %}</p>
-            <div class="voucher__box__wrapper">
-                <div class="voucher__box">
-                    <div class="voucher__box__header">
+            <div class="tracking-hero__voucher__wrapper">
+                <div class="tracking-hero__voucher">
+                    <div class="tracking-hero__voucher__header">
                         {% trans %}title.voucher_code{% endtrans %}
                     </div>
-                    <p>{% trans %}voucher_success_page{% endtrans %}</p>
+                    <div class="tracking-hero__voucher__txt">{% trans %}voucher_success_page{% endtrans %}</div>
                 </div>
             </div>
-            <p class="bottom-text">{% trans %}voucher.success_page_only_once{% endtrans %}</p>
             {#TODO app - show app info when app is available #}
             {#<div class="tracking-header__app">#}
                 {#<button class="tracking-header__app__button">{% trans %}button.download_app{% endtrans %}</button>#}
                 {#<div class="tracking-header__app__message">{% trans %}general.to_get_real_time_updates_on_your_order{% endtrans %}.</div>#}
             {#</div>#}
         </div>
+        <p class="hero-traking__bottom-text">{% trans %}voucher.success_page_only_once{% endtrans %}</p>
     </div>
     <div class="order-status-wrapper" data-order_code="{{ order.reference }}">
         <div class="order-status-row">

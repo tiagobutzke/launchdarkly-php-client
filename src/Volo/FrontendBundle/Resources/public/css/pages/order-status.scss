@@ -1,64 +1,103 @@
 .order-status-page {
+
   .hero-banner-wrapper {
     max-height: 700px;
-
-    @include respond-to-custom(975px) {
+    color: $color-text-selection;
+    @include respond-from("screen-md") {
       overflow: hidden;
     }
+  }
 
-    h2 {
-      font-size: 1em;
+  .footer {
+    margin-top: 0;
+  }
 
-      @include respond-from("screen-sm") {
-        font-size: 1.4em;
-      }
-      @include respond-from("screen-md") {
-        font-size: 1.6em;
-      }
-      @include respond-from("screen-lg") {
-        font-size: 2em;
-      }
-    }
+  .footer__wrapper__top {
+    padding-top: 0;
+    border: none;
   }
 }
 
-.hero-traking__info {
+.tracking-hero__info {
   padding: 0;
   text-align: center;
-  color: $color-text-selection;
-  overflow: hidden;
   width: 96%;
+  max-height: 170px;
   @include absolute-center-box();
-  top: 5%;
 
-  @include respond-from("screen-sm") {
-    top: 20%;
-  }
-
-  @include respond-from("screen-md") {
-    top: 40%;
-  }
-  .bottom-text {
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    font-size: 0.8em;
-  }
   p {
-    margin: 5px;
+    font-size:0.875em;
+     margin: 5px;
   }
 }
 
-.tracking-header__title {
-  font-size: 1.3em;
+.tracking-hero__title {
+  font-size: 1em;
   line-height: 1.2em;
   margin: 0;
+  @include respond-from("screen-sm") {
+    font-size: 1.35em;
+  }
   @include respond-from("screen-md") {
     font-size: 1.8em;
-    line-height: 1.2em;
   }
   @include respond-from("screen-lg") {
     font-size: 2.2em;
+  }
+}
+
+.tracking-hero__voucher__wrapper {
+  width: 34%;
+  font-size: 0.875em;
+  margin: 0 auto;
+  @include respond-from("screen-sm") {
+    width: 28%;
+  }
+  @include respond-from("screen-md") {
+    width: 22%;
+  }
+  @include respond-from("screen-lg") {
+    width: 17%;
+  }
+}
+
+.tracking-hero__voucher {
+  border-radius: $border-radius-medium;
+  border: $base-border;
+}
+
+.tracking-hero__voucher__header {
+  border-bottom: $base-border;
+  background: rgba($base-border-color, 0.5);
+  font-size: 0.9em;
+}
+
+.tracking-hero__voucher__txt {
+  font-family: $bold-font-family;
+  font-size: 1.1em;
+  text-align: center;
+  margin: 0;
+  padding: $space-xs 0;
+  @include respond-from("screen-sm") {
+    padding: $space-sm 0;
+    font-size: 1.35em;
+  }
+  @include respond-from("screen-md") {
+    font-size: 1.6em;
+  }
+  @include respond-from("screen-lg") {
+    font-size: 1.9em;
+  }
+}
+
+.hero-traking__bottom-text {
+  width: 100%;
+  position: absolute;
+  bottom: -10px;
+  font-size: 0.875em;
+  text-align: center;
+  @include respond-from("screen-sm") {
+    bottom: 0;
   }
 }
 
@@ -338,17 +377,3 @@
   }
 }
 
-.voucher__box__wrapper {
-  width: 240px;
-  margin: 0 auto;
-
-  .voucher__box {
-    border-radius: $border-radius-medium;
-    border: $base-border;
-  }
-
-  .voucher__box__header {
-    border-bottom: $base-border;
-    background: rgba($base-border-color, 0.5)
-  }
-}
