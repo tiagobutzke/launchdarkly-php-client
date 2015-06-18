@@ -46,6 +46,7 @@ twig:
         blazy_placeholder: 'data:image/gif;base64,R0lGODdhAQABAIAAAMzMzJaWliwAAAAAAQABAAACAkQBADs='
         google_api_client_id: "%google_api_client_id%"
         google_api_channel: '%google_api_channel%'
+        timezone: '%timezone%'
 
 # Assetic Configuration
 assetic:

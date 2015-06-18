@@ -23,7 +23,7 @@
         // cart layout and animation
         VOLO.configuration.cartBottomMargin = 50;
         VOLO.configuration.itemsOverflowingClassName = 'checkout__summary-overflowing';
-        VOLO.configuration.timeZone = 'Europe/Berlin';
+        VOLO.configuration.timeZone = '{{ timezone }}';
 
         VOLO.initIntl(VOLO.configuration.locale.replace('_', '-'), '{{ config.currency.currency_symbol_iso }}');
     </script>
