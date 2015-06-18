@@ -28,6 +28,8 @@
 @mixin make-link($color: $color-text-link, $color-hover:$color-text-link-hover) {
   cursor: pointer;
   color: $color;
+
+  @include transition(color .1s linear);
   &:hover, &:focus {
     color: $color-hover;
     text-decoration: none;

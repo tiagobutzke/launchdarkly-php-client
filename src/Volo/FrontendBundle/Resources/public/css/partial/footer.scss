@@ -153,6 +153,7 @@
       font-size: 2.4em;
       color: $color-icons-separator;
 
+      @include transition(color .1s linear);
       &:hover {
         color: $color-text-highlight;
       }
@@ -193,11 +194,7 @@
     }
 
     a {
-      color: $color-text-primary;
-
-      &:hover {
-       color: $color-text-highlight;
-      }
+      @include make-link($color-text-primary, $color-text-highlight)
     }
   }
 }
@@ -243,10 +240,7 @@
   }
 
   a {
-    color: $color-text-secondary;
-
-    &:hover {
-      color: $color-text-highlight;
-    }
+    @include make-link($color-text-secondary, $color-text-highlight);
   }
+
 }

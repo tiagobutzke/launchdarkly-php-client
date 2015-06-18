@@ -22,7 +22,11 @@
   border: 0;
   color: $cta-color-text-primary;
   background-color: $cta-color-bg-primary;
+  line-height: 1em;
+  padding-top: $space-xs;
+  position: relative;
 
+  @include transition(all .1s linear);
   &:hover, &:focus {
     background-color: $cta-color-bg-primary-hover;
     color: $cta-color-text-primary;
@@ -48,7 +52,13 @@
 }
 
 a.button {
-  line-height: $cta-height;
+  padding: 0;
+  span {
+    @include vertical-center-absolute();
+    display: block;
+    width: 100%;
+    padding: 0 $cta-padding-right 0 $cta-padding-left;
+  }
 }
 
 .button--disabled {

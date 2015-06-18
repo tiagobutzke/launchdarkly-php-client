@@ -11,11 +11,13 @@
                 </div>
                 <div class="modal-footer">
                     <a class="toppings-add__to__cart button">
-                        <% if (this.productToUpdate) { %>
-                            {% trans %}topping.update_item{% endtrans %}
-                        <% } else { %>
-                            {% trans %}topping.add_to_cart{% endtrans %}
-                        <% } %>
+                        <span>
+                            <% if (this.productToUpdate) { %>
+                                {% trans %}topping.update_item{% endtrans %}
+                            <% } else { %>
+                                {% trans %}topping.add_to_cart{% endtrans %}
+                            <% } %>
+                        </span>
                     </a>
                     {# quantity selector from toppings-product-quantity #}
                 </div>

@@ -593,14 +593,6 @@ tr.summary__item__row_mobile {
     padding: 0;
     margin: 0;
   }
-
-  .button {
-    @include respond-from("screen-md") {
-      width: 99%;
-      margin-left: auto;
-      margin-right: auto;
-    }
-  }
 }
 
 // ------------------------------------------ checkout page variations -------------------------------------------------//

@@ -49,6 +49,7 @@
     font-size: 0.875em;
   }
 
+  @include transition(background-color .1s linear);
   &:hover {
     background-color: $color-bg-secondary;
   }
@@ -114,6 +115,7 @@
   padding: $space-sm $space-md;
   cursor: pointer;
 
+  @include transition(background-color .1s linear);
   &:hover {
     background-color: $color-bg-secondary;
   }

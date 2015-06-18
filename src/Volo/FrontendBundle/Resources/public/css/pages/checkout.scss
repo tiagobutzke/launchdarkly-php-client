@@ -428,6 +428,7 @@
     font-size: 1em;
     position: relative;
 
+    @include transition(all .1s linear);
     &:hover {
       cursor: pointer;
       border: $cta-secondary-border;
@@ -629,6 +630,8 @@
     }
     background-color: $color-bg-primary;
     cursor: pointer;
+
+    @include transition(background-color .1s linear);
     &:hover {
       background-color: $color-bg-secondary;
     }
