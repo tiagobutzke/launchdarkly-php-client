@@ -86,12 +86,9 @@
   font-size: $restaurant-font-size;
   display: inline-block;
   text-align: center;
-  margin-left: $space-sm;
+  margin-left: $space-xs;
   width: auto;
   overflow: auto;
-  @include respond-from("screen-md") {
-    margin-left: $space-md;
-  }
 }
 
 .restaurants__tool-box-sticking .restaurants__location__change-button {
