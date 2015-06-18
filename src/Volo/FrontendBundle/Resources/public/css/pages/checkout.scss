@@ -91,26 +91,32 @@
 
 .checkout__subtitle {
   font-family: $bold-font-family;
-  font-size: 0.875em;
+  font-size: $small-font-size;
   padding: $space-md $grid-gutter-width / 2;
   line-height: normal;
   margin: 0;
-  text-align: center;
+  text-align: left;
   text-transform: uppercase;
   position: relative;
   @include respond-from("screen-md") {
     padding: 0 $grid-gutter-width $space-md;
-    text-align: left;
+    font-size: $base-font-size;
+  }
+
+  i.icon-cancel {
+    font-size: 1.2em;
   }
 }
 
 .checkout__title__edit {
+  float: right;
   display: inline-block;
-  @include vertical-center-absolute();
-  right: $grid-gutter-width / 2;
   text-transform: none;
   font-family: $base-font-family;
-  font-size: $smaller-font-size;
+  font-size: $small-font-size;
+  @include respond-from("screen-md") {
+    font-size: $base-font-size;
+  }
 
   i {
     display: inline-block;
@@ -118,10 +124,27 @@
     vertical-align: middle;
     color: $color-text-highlight;
   }
+
+  i.icon-cancel {
+    font-size: 1.2em;
+  }
+}
+
+.checkout_cart {
+  margin-top: 53px;
 }
 
 .checkout__subtitle__edit {
   @extend .checkout__title__edit;
+}
+
+.checkout__subtitle__open {
+  @extend .checkout__title__edit;
+  padding: $grid-gutter-width / 2;
+  float: none;
+  @include respond-from("screen-md") {
+    padding: $grid-gutter-width;
+  }
 }
 
 .add_new_address_link__text--cancel{
@@ -167,6 +190,7 @@
   overflow: auto;
   position: relative;
   height: 30px;
+  padding-right: $grid-gutter-width;
 }
 
 .paymentFormOpen {
@@ -281,9 +305,7 @@
 
 .checkout__item--step {
   padding-top: $space-sm;
-  border-bottom: $dropdown-border;
   @include respond-from("screen-md") {
-    border-bottom: none;
     padding-top: 0;
   }
 }
@@ -487,7 +509,7 @@
 
 .checkout__payment_img {
   float: right;
-  width: 30%;
+  width: 40%;
   height: 30px;
   text-align: right;
   margin-top: -5px;
@@ -521,8 +543,14 @@
 
 .checkout__payment_paypal_description {
   color: $color-text-inactive;
-  font-size: 0.8em;
   clear: both;
+  font-size: 0.8em;
+  padding-left: $grid-gutter-width / 2;
+  padding-right: $grid-gutter-width / 2;
+  @include respond-from("screen-md") {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 // credit card form
@@ -616,10 +644,15 @@
 
 .checkout__list {
   @extend .radio;
-  line-height: $radiobutton-simple-unselected-height;
+  line-height: 40px;
   font-size: 0.875em;
-  padding: $space-md;
+  padding: $space-xs $space-md;
   margin: 0;
+  .checkout__list__radio_button {
+    height: 44px;
+    width: 20px;
+    margin-left: 0 !important;
+  }
 }
 
 .checkout__list__radio_button {
@@ -631,13 +664,13 @@
 }
 
 .checkout__list__text {
+  line-height: 40px;
   padding-left: 0 !important;
   display: inline-block;
-  line-height: $radiobutton-simple-unselected-height;
 }
 
 .checkout__list__payment_option_type {
-  vertical-align: top;
+  vertical-align: middle;
   display: inline-block;
 }
 

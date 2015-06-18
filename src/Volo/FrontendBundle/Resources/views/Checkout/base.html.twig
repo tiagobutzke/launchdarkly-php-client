@@ -30,8 +30,9 @@
             {# Payment #}
             {{ block('payment') }}
         </div>
-        <h3 class="checkout__title checkout__title--summary">{% trans %}title.order_summary{% endtrans %}</h3>
-        <div class="desktop-cart" data-minimum_order_amount="{{ vendor.minimumOrderAmount }}" data-vendor_id="{{ vendor.id }}">{# cart from template #}</div>
+        <div class="checkout_cart desktop-cart" data-minimum_order_amount="{{ vendor.minimumOrderAmount }}" data-vendor_id="{{ vendor.id }}">
+            {# cart from template #}
+        </div>
     </div>
 </div>
 {# Sticky bottom cart mobile #}
@@ -40,7 +41,6 @@
         <div class="bottom-cart__cta--full">{{ block('checkout_button') }}</div>
     </div>
 </div>
-
 {{ include('VoloFrontendBundle:Layout/Partial/templates:cart.html.twig') }}
 {% endblock %}
 
