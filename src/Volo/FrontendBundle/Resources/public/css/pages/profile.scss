@@ -26,6 +26,7 @@
   background-color: $color-bg-primary;
   @include respond-from("screen-md") {
     margin-bottom: $space-sm;
+    border-radius: $border-radius-default;
 
     &:first-child {
       margin-top: $space-lg;
