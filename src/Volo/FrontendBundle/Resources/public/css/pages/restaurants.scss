@@ -314,14 +314,15 @@
   h2 {
     font-family: $base-font-family;
     text-transform: uppercase;
-    font-size: 0.875em;
+    font-size: 0.9em;
     font-weight: normal;
-    line-height: 1.4em;
+    line-height: normal;
     padding-bottom: 60px;
     width: 86%;
     margin: 0 auto;
     @include respond-from("screen-sm") {
-      font-size: 1.4em;
+      font-size: 1.15em;
+      width: 60%;
     }
   }
 
