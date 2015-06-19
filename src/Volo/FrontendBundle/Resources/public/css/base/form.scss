@@ -9,6 +9,12 @@
   }
 }
 
+input.button {
+  &:focus {
+    border: none;
+  }
+}
+
 .button {
   font-family: $cta-font-family;
   font-size: $cta-font-size;
