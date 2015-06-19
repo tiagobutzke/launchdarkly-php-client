@@ -20,12 +20,8 @@
                    value="{{ customer.mobile_country_code|default('') }}{{ customer.mobile_number|default('') }}"
                    required="true" placeholder="{% trans %}form.placeholder.mobile_number{% endtrans %}"
                    data-validation-msg="{% trans %}validations.error.checkout.customer_mobile_number{% endtrans %}">
-            {% if errorMessages is defined %}
-                {% for message in errorMessages %}
-                    {% if 'ApiCustomerAlreadyExistsException' not in message %}
-                        <div class="error_msg">{{ message }}</div>
-                    {% endif %}
-                {% endfor %}
+            {% if phoneNumberError %}
+                <span class="error_msg invalid_number">{{ phoneNumberError|trans|raw }}</span>
             {% endif %}
         </div>
         <button class="button">{% trans %}button.continue{% endtrans %}</button>

@@ -24,7 +24,13 @@
         {% endif %}
     {% endfor %}
 
-    {% include('VoloFrontendBundle:Checkout/Partial:contact_information_form.html.twig') with {action: path('checkout_contact_information', {vendorCode: vendor.code})} %}
+    {%
+        include('VoloFrontendBundle:Checkout/Partial:contact_information_form.html.twig')
+        with {
+            action: path('checkout_contact_information', {vendorCode: vendor.code}),
+            phoneNumberError: phoneNumberError|default('')
+        }
+    %}
 {% endblock %}
 
 {% block payment %}

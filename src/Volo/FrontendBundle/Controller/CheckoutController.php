@@ -107,7 +107,11 @@ class CheckoutController extends Controller
             throw new HttpException(Response::HTTP_BAD_REQUEST, 'No contact information found');
         }
         $username = '';
+        $phoneNumberError = '';
+        // We set it to the session data to handle the "Edit" case
+        $customerData = $session->get(sprintf(static::SESSION_CONTACT_KEY_TEMPLATE, $vendorCode));
         if ($request->getMethod() === Request::METHOD_POST) {
+            // Here override it to handle the form/post with validation case
             $customerData = $request->request->get('customer');
             $username = $customerData['email'];
             try {
@@ -117,25 +121,22 @@ class CheckoutController extends Controller
 
                 $customerData['mobile_number'] = $parsedNumber->getNationalNumber();
                 $customerData['mobile_country_code'] = '+' . $parsedNumber->getCountryCode();
-            } catch (PhoneNumberValidationException $e) {
-                $errorMessages[] = $this->get('translator')->trans(sprintf('%s: %s', 'Phone number', $e->getMessage()));
-            }
 
-            if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-                try {
+                if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
                     $guestCustomer = $this->get('volo_frontend.service.customer')->createGuestCustomer(
                         $customerData,
                         $session->get(sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendor->getCode()))
                     );
                     $session->set(OrderController::SESSION_GUEST_ORDER_ACCESS_TOKEN, $guestCustomer->getAccessToken());
-                    $guestCustomerKey = static::SESSION_GUEST_CUSTOMER_KEY_TEMPLATE;
-                    $session->set($guestCustomerKey, $guestCustomer);
-                } catch (ApiException $e) {
-                    $errorMessages[] = $e->getMessage();
+                    $session->set(static::SESSION_GUEST_CUSTOMER_KEY_TEMPLATE, $guestCustomer);
                 }
+            } catch (PhoneNumberValidationException $e) {
+                $phoneNumberError = $e->getMessage();
+            } catch (ApiException $e) {
+                $errorMessages[] = $e->getMessage();
             }
 
-            if (count($errorMessages) === 0) {
+            if ('' === $phoneNumberError && count($errorMessages) === 0) {
                 $session->set(
                     sprintf(static::SESSION_CONTACT_KEY_TEMPLATE, $vendorCode),
                     $customerData
@@ -149,12 +150,13 @@ class CheckoutController extends Controller
         $location = $this->get('volo_frontend.service.customer_location')->get($session);
 
         return [
+            'phoneNumberError' => $phoneNumberError,
             'username'         => $username,
             'errorMessages'    => $errorMessages,
             'cart'             => $this->get('volo_frontend.service.cart_manager')->calculateCart($cart),
             'vendor'           => $vendor,
             'customer_address' => $session->get(sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendorCode)),
-            'customer'         => $session->get(sprintf(static::SESSION_CONTACT_KEY_TEMPLATE, $vendorCode)),
+            'customer'         => $customerData,
             'address'          => is_array($location) ? $location[CustomerLocationService::KEY_ADDRESS] : '',
             'location'         => $location,
             'isDeliverable'    => is_array($location),

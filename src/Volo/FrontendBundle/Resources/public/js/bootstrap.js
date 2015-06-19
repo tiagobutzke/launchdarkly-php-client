@@ -128,7 +128,19 @@ VOLO.initCheckoutViews = function (cartModel, checkoutModel, deliveryCheck, loca
     }
 
     if ($('#contact_information_form').length > 0 ) {
-        VOLO.checkoutInformationValidationFormView = new ValidationView({
+        var View = ValidationView.extend({
+            events: function(){
+                return _.extend({},ValidationView.prototype.events,{
+                    'keydown #mobile_number': '_hideErrorMsg'
+                });
+            },
+
+            _hideErrorMsg: function() {
+                this.$('.invalid_number').hide();
+            }
+        });
+
+        VOLO.checkoutInformationValidationFormView = new View({
             el: '#contact_information_form',
             constraints: {
                 "customer[first_name]": {
