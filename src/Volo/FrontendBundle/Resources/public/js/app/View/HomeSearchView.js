@@ -8,7 +8,6 @@ var HomeSearchView = Backbone.View.extend({
         console.log('HomeSearchView.initialize ', this.cid);
         _.bindAll(this);
         this.geocodingService = options.geocodingService;
-
         this.geocodingService.init(this.$('#postal_index_form_input'));
 
         this.listenTo(this.geocodingService, 'autocomplete:place_changed', this._applyNewLocationData);
@@ -27,7 +26,8 @@ var HomeSearchView = Backbone.View.extend({
         'submit': '_submitPressed',
         'focus #postal_index_form_input': '_hideTooltip',
         'blur #postal_index_form_input': '_hideTooltip',
-        'click #postal_index_form_input': '_scrollToInput'
+        'click #postal_index_form_input': '_scrollToInput',
+        'keyup #postal_index_form_input': '_inputChanged'
     },
 
     unbind: function() {
@@ -63,6 +63,11 @@ var HomeSearchView = Backbone.View.extend({
         }
     },
 
+    _inputChanged: function() {
+        this.model.set(this.model.defaults);
+        this._hideTooltip();
+    },
+
     _submitPressed: function() {
         console.log('_submitPressed ', this.cid);
         console.log(this.model.toJSON());
@@ -78,8 +83,6 @@ var HomeSearchView = Backbone.View.extend({
 
     _afterSubmit: function() {
         var data = this.model.toJSON();
-        console.log('Turbolinks.visit volo_location_search_vendors_by_gps');
-        console.log(data);
         Turbolinks.visit(Routing.generate('volo_location_search_vendors_by_gps', {
             city: data.city,
             address: data.address,
@@ -90,7 +93,6 @@ var HomeSearchView = Backbone.View.extend({
     },
 
     _applyNewLocationData: function (locationMeta) {
-        console.log('_applyNewLocationData ', this.cid);
         var data = this._getDataFromMeta(locationMeta);
 
         this._hideTooltip();

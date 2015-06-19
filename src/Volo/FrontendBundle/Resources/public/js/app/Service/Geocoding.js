@@ -91,14 +91,13 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
     },
 
     _selectFirstResult: function () {
-        console.log('select first result');
         var deferred = $.Deferred(),
-            firstResult = $(".pac-container .pac-item:first").text();
+            place = $(".pac-container .pac-item:first .pac-item-query").text(),
+            region = $(".pac-container .pac-item:first span:last").text();
 
-        console.log('firstResult ', firstResult);
         var geocoder = new google.maps.Geocoder();
 
-        geocoder.geocode({"address": firstResult}, function (results, status) {
+        geocoder.geocode({"address": [place,region].join(' ')}, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 $(".pac-container .pac-item:first").addClass("pac-selected");
                 $(".pac-container").css("display", "none");
