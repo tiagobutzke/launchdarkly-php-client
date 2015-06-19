@@ -34,7 +34,7 @@ var VendorGeocodingView = HomeSearchView.extend({
 
     performDeliverableCheck: function () {
         console.log('performDeliverableCheck ', this.cid);
-        if (this.model.isValid() && !this.modelCart.isValid()) {
+        if (this.model.isValid()) {
             this.modelCart.updateLocationIfDeliverable(this.model.toJSON())
                 .done(this._parseIsDeliverable)
                 .fail(this.onSearchFail);

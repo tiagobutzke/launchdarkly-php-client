@@ -101,7 +101,7 @@
 </script>
 
 <script type="text/template" id="template-cart-checkout-button">
-    <% if (subtotal >= minimum_order_amount) { %>
+    <% if (subtotal > minimum_order_amount) { %>
         <a class="button btn-checkout" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">
             <span>{% trans %}cart.checkout_link{% endtrans %}</span>
         </a>
