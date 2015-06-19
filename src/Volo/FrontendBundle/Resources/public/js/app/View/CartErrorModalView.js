@@ -25,9 +25,11 @@ var CartErrorModalView = Backbone.View.extend({
     },
 
     _cartCalculationErrorShowModal: function (data) {
-        if (_.isUndefined(data) ||
-            (_.isObject(data) && _.indexOf(this.supportedErrors, _.get(data, 'error.errors.exception_type')) !== -1)
-        ) {
+        var showModal = _.isUndefined(data)
+            || (_.isObject(data) && _.indexOf(this.supportedErrors, _.get(data, 'error.errors.exception_type')) !== -1)
+            || (_.isObject(data) && 500 === _.get(data, 'error.code'));
+
+        if (showModal) {
             this.$el.modal('show');
         }
     },

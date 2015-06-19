@@ -226,10 +226,17 @@ var CartView = Backbone.View.extend({
     initListener: function () {
         var vendorCart = this.model.getCart(this.vendor_id);
         this.listenTo(vendorCart, 'cart:dirty', this.disableCart, this);
+
         this.listenTo(vendorCart, 'cart:ready', this.enableCart, this);
         this.listenTo(vendorCart, 'cart:ready', this.renderCheckoutButton, this);
+        this.listenTo(vendorCart, 'cart:ready', this.stopSpinner, this);
+
+        this.listenTo(vendorCart, 'cart:error', this.stopSpinner, this);
+        this.listenTo(vendorCart, 'cart:error', this.renderProducts, this);
+
         this.listenTo(vendorCart, 'change', this.renderSubTotal);
         this.listenTo(vendorCart, 'change:order_time', this.renderTimePicker, this);
+
         this.listenTo(vendorCart.products, 'update', this.renderProducts, this);
         this.listenTo(vendorCart.products, 'update', this._toggleContainerVisibility, this);
         this.listenTo(vendorCart.products, 'update', this._updateCartIcon, this);
@@ -299,6 +306,9 @@ var CartView = Backbone.View.extend({
     enableCart: function() {
         this.$('.desktop-cart__footer').toggleClass('disabled', false);
         this.$('.btn-checkout').toggleClass('disabled', false);
+    },
+
+    stopSpinner: function() {
         this._spinner.stop();
     },
 
