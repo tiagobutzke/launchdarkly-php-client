@@ -155,7 +155,7 @@ var VendorCartModel = Backbone.Model.extend({
                 location: this.get('location')
             };
 
-        data.order_time = orderTime ? orderTime : moment().toISOString();
+        data.order_time = orderTime ? orderTime : moment().tz(VOLO.configuration.timeZone).format();
         data.voucher = _.isString(this.get('voucher')) ? [this.get('voucher')] : [];
 
         this._xhr = this.collection.cart.dataProvider.calculateCart(data).done(function(calculatedData) {

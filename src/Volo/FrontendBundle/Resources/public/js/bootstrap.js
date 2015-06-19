@@ -234,7 +234,15 @@ VOLO.initVendorsListSearch = function() {
 };
 
 VOLO.OrderTracking = function() {
-    var code = $('.order-status-wrapper').data().order_code;
+    var $statusWrapper = $('.order-status-wrapper'),
+        code;
+
+    if ($statusWrapper.length === 0) {
+        return;
+    }
+
+    code = $statusWrapper.data().order_code;
+
     $.ajax({
         url: Routing.generate('order_tracking', {orderCode: code, partial: 1})
     }).done(function(response) {
