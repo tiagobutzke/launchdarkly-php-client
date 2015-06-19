@@ -73,7 +73,7 @@
 
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <div id="edit_contact_information_form" class="hide">
-            {% include('VoloFrontendBundle:Checkout/Partial:contact_information_form.html.twig') with {action: '#', phoneNumberError: phoneNumberError|default("")} %}
+            {% include('VoloFrontendBundle:Checkout/Partial:contact_information_form.html.twig') with {action: '', phoneNumberError: phoneNumberError|default("")} %}
         </div>
     {% endif %}
 {% endblock %}
