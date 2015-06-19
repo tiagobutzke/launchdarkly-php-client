@@ -460,10 +460,7 @@ tr.summary__item__row_mobile {
 .desktop-cart__order {
   overflow-y: auto;
   overflow-x: visible;
-  padding: 0 $space-sm;
-  @include respond-from("screen-md") {
-    padding: 0;
-  }
+  padding: 0;
 }
 
 .desktop-cart_order__message {
@@ -487,9 +484,7 @@ tr.summary__item__row_mobile {
 
 .desktop-cart__order__subtotal {
   padding-top: $space-md;
-  @include respond-from("screen-md") {
-    border-top: $base-border;
-  }
+  border-top: $base-border;
 }
 
 .desktop-cart__order__voucher {
@@ -712,9 +707,7 @@ tr.summary__item__row_mobile {
   }
 
   .desktop-cart__footer {
-    @include respond-from("screen-md") {
-      padding: 0  $grid-gutter-width / 2;
-    }
+    padding: 0 $space-sm;
   }
 }
 
