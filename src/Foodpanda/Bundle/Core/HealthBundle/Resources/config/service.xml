@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="foodpanda.core.health.service.version"
+                 class="Foodpanda\Bundle\Core\HealthBundle\Services\VersionService">
+            <argument type="service" id="foodpanda.core.configuration.service.release_information" />
+        </service>
+
+        <service id="foodpanda.core.health.service.session"
+                 class="Foodpanda\Bundle\Core\HealthBundle\Services\SessionService">
+            <argument type="service" id="session" />
+        </service>
+
+        <service id="foodpanda.core.health.service.cache"
+                 class="Foodpanda\Bundle\Core\HealthBundle\Services\CacheService">
+            <argument type="service" id="doctrine_cache.providers.health_check_redis"/>
+        </service>
+
+        <service id="foodpanda.core.health.service"
+                 class="Foodpanda\Bundle\Core\HealthBundle\Services\HealthService">
+            <argument type="service" id="service_container" />
+            <argument>%foodpanda_core_health.enabled%</argument>
+            <argument>%foodpanda_core_health.prefix%</argument>
+        </service>
+
+        <service id="foodpanda.core.configuration.service.release_information"
+                 class="Foodpanda\Bundle\Core\ReleaseInformation">
+            <argument>%health_check_branch_name%</argument>
+            <argument>%health_check_branch_commit%</argument>
+            <argument>%environment%</argument>
+        </service>
+
+        <service id="foodpanda.core.health.service.formatter"
+                 class="Foodpanda\Bundle\Core\HealthBundle\Services\FormatterService">
+            <argument type="service" id="foodpanda.core.configuration.service.release_information" />
+        </service>
+    </services>
+</container>

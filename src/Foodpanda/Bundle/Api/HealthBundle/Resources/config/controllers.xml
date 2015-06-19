@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="foodpanda.api.health.controller.check"
+                 class="Foodpanda\Bundle\Api\HealthBundle\Controller\CheckController">
+            <argument type="service" id="foodpanda.core.health.service" />
+            <argument type="service" id="foodpanda.core.health.service.formatter" />
+        </service>
+    </services>
+
+</container>
