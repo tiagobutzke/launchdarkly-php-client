@@ -49,14 +49,14 @@ module.exports = function (grunt) {
         'web/bower_components/real-shadow/realshadow.js'
     ];
 
-    jsSources.head = jsSources.libs.concat([
+    jsSources.allLibs = jsSources.libs.concat([
         'web/bundles/heltheturbolinks/js/turbolinks.js',
         'web/js/lib/andr3pt-blazy.js',
         'web/bundles/fosjsrouting/js/router.js',
         'web/js/fos_js_routes.js',
         'web/thumbor/configuration.js',
         'web/bower_components/lodash/lodash.js',
-        'web/bower_components/backbone/backbone-min.js',
+        'web/bower_components/backbone/backbone.js',
         'web/bower_components/geocomplete/jquery.geocomplete.js',
         'web/bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/modal.js',
         'web/bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/tooltip.js',
@@ -67,7 +67,11 @@ module.exports = function (grunt) {
         'web/bower_components/mobile-detect/mobile-detect.js',
         'web/bower_components/jquery.payment/lib/jquery.payment.js',
         'web/bower_components/moment/moment.js',
-        'web/bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js',
+        'web/bower_components/bootstrap-select/dist/js/bootstrap-select.js',
+        'web/bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js'
+    ]);
+
+    jsSources.head = jsSources.allLibs.concat([
         frontendAssetPath('/js/**/*.js')
     ]);
 
@@ -153,26 +157,7 @@ module.exports = function (grunt) {
     config.jshint = {
         options: {
             force: true,
-            ignores: [
-                'web/bower_components/jquery/dist/jquery.js',
-                'web/bundles/heltheturbolinks/js/turbolinks.js',
-                'web/js/lib/andr3pt-blazy.js',
-                'web/bower_components/lodash/lodash.js',
-                'web/bower_components/backbone/backbone-min.js',
-                'web/bundles/fosjsrouting/js/router.js',
-                'web/bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/modal.js',
-                'web/bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/tooltip.js',
-                'web/bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/dropdown.js',
-                'web/bower_components/adyen-cse-js/js/adyen.encrypt.js',
-                'web/bower_components/intl/Intl.js',
-                'web/bower_components/spin.js/spin.js',
-                'web/bower_components/validate/validate.js',
-                'web/bower_components/real-shadow/realshadow.js',
-                'web/bower_components/mobile-detect/mobile-detect.js',
-                'web/bower_components/jquery.payment/lib/jquery.payment.js',
-                'web/bower_components/moment/moment.js',
-                'web/bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js'
-            ]
+            ignores: jsSources.allLibs
         },
         gruntfile: {
             src: 'Gruntfile.js'
@@ -223,18 +208,7 @@ module.exports = function (grunt) {
         ],
         options: {
             specs: "spec/**/*Spec.js",
-            vendor: [
-                'web/bower_components/jquery/dist/jquery.js',
-                'web/bower_components/lodash/lodash.js',
-                'web/bower_components/backbone/backbone.js',
-                'web/bundles/fosjsrouting/js/router.js',
-                'web/js/fos_js_routes.js',
-                'web/bower_components/blazy/blazy.js',
-                'vendor/helthe/turbolinks/Resources/public/js/turbolinks.js',
-                'web/bower_components/mobile-detect/mobile-detect.js',
-                'web/bower_components/moment/moment.js',
-                'web/bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js'
-            ]
+            vendor: jsSources.allLibs
         }
     };
 

@@ -42,7 +42,7 @@ VOLO.initCartViews = function (cartModel, locationModel) {
         VOLO.cartView.unbind();
     }
     VOLO.cartView = new CartView({
-        el: '.desktop-cart',
+        el: '#cart',
         model: cartModel,
         locationModel: VOLO.locationModel,
         $header: $header,

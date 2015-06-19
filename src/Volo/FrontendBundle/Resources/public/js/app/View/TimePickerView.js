@@ -13,6 +13,7 @@ var TimePickerView = Backbone.View.extend({
     },
 
     render: function () {
+        console.log('TimePickerView.render ', this.cid);
         var date = this.model.getCart(this.vendor_id).get('order_time');
 
         if (date) {
@@ -37,6 +38,8 @@ var TimePickerView = Backbone.View.extend({
         } else {
             this.model.getCart(this.vendor_id).set('order_time', this._getDateFromForm());
         }
+
+        this.$('select').selectpicker();
     },
 
     unbind: function () {

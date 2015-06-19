@@ -101,6 +101,7 @@
 .desktop-cart__hero {
   width: 100%;
   position: relative;
+  margin-top: 41px;
   @include respond-from("screen-md") {
     display: none;
   }
@@ -435,16 +436,10 @@ tr.summary__item__row_mobile {
   @include appear-from("screen-md");
 }
 
-.desktop-cart__time {
-  overflow: auto;
-}
-
-
 %desktop-cart__time__field {
+  position: relative;
+  height: 35px;
   @include make-xs-column(6, 0);
-  select {
-    @extend .form-control;
-  }
 }
 
 .desktop-cart__time__field-date {
@@ -456,6 +451,22 @@ tr.summary__item__row_mobile {
   @extend %desktop-cart__time__field;
   padding-left: $space-xs;
 }
+
+// START silviomoreto/bootstrap-select style
+.bootstrap-select.btn-group .dropdown-menu {
+  z-index: 800;
+}
+
+.bootstrap-select > .dropdown-toggle {
+  height: 35px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+
+.bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+  width: 100%;
+}
+// END silviomoreto/bootstrap-select style
 
 .desktop-cart__order {
   overflow-y: auto;
