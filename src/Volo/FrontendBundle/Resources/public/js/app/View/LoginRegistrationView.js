@@ -53,6 +53,25 @@ var LoginRegistrationView = Backbone.View.extend({
         return this;
     },
 
+    renderRegistration: function(data) {
+        this.$('.modal-content').load(Routing.generate('customer.create'), function(){
+            this.$el.modal();
+            this._registerValidationView = new ValidationView({
+                el: this.$('.registration-form'),
+                constraints: this._registrationConstraints
+            });
+
+            if (data) {
+                this.$('#first_name').val(data.first_name);
+                this.$('#last_name').val(data.last_name);
+                this.$('#email').val(data.email);
+                this.$('#mobile_number').val(data.mobile_number);
+            }
+        }.bind(this));
+
+        return this;
+    },
+
     events: {
         'click .register-link': '_loadRegistrationFormIntoLoginModal',
         'click .login-link': 'render',

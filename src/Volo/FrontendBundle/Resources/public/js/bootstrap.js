@@ -314,10 +314,24 @@ $(document).on('page:load page:restore', function () {
         VOLO.initExistingUserLoginView();
         VOLO.existingUserLoginView.render();
     }
+
+    var $registerButton = $('.create_account__login__button');
+    if ($registerButton.length > 0) {
+        VOLO.registerClick = $registerButton.click(function() {
+            var customerData = $registerButton.data();
+            customerData = customerData ? customerData.object : null;
+
+            VOLO.loginButtonView.showRegistrationModal(customerData);
+        });
+    }
 });
 
 $(document).on('page:before-unload', function () {
     console.log('page:before-unload');
+    if (VOLO.registerClick) {
+        VOLO.registerClick.unbind();
+    }
+
     if (_.isObject(VOLO.menu)) {
         VOLO.menu.unbind();
     }

@@ -25,7 +25,7 @@ class CheckoutController extends Controller
 {
     const SESSION_DELIVERY_KEY_TEMPLATE = 'checkout-%s-delivery';
     const SESSION_CONTACT_KEY_TEMPLATE  = 'checkout-%s-contact';
-    const SESSION_GUEST_CUSTOMER_KEY_TEMPLATE = 'checkout-%s-guest';
+    const SESSION_GUEST_CUSTOMER_KEY_TEMPLATE = 'checkout-guest';
 
     /**
      * @Route("/{vendorCode}/delivery", name="checkout_delivery_information")
@@ -128,7 +128,7 @@ class CheckoutController extends Controller
                         $session->get(sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendor->getCode()))
                     );
                     $session->set(OrderController::SESSION_GUEST_ORDER_ACCESS_TOKEN, $guestCustomer->getAccessToken());
-                    $guestCustomerKey = sprintf(static::SESSION_GUEST_CUSTOMER_KEY_TEMPLATE, $vendorCode);
+                    $guestCustomerKey = static::SESSION_GUEST_CUSTOMER_KEY_TEMPLATE;
                     $session->set($guestCustomerKey, $guestCustomer);
                 } catch (ApiException $e) {
                     $errorMessages[] = $e->getMessage();
@@ -361,7 +361,7 @@ class CheckoutController extends Controller
             }
         } else {
             $session = $this->get('session');
-            $guestCustomer = $session->get(sprintf(static::SESSION_GUEST_CUSTOMER_KEY_TEMPLATE, $vendor->getCode()));
+            $guestCustomer = $session->get(static::SESSION_GUEST_CUSTOMER_KEY_TEMPLATE);
             $session->set(OrderController::SESSION_GUEST_ORDER_ACCESS_TOKEN, $guestCustomer->getAccessToken());
 
             $order = $orderManager->placeGuestOrder(
