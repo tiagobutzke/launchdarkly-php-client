@@ -3,7 +3,7 @@ var VoucherView = Backbone.View.extend({
         'click #add_voucher_link': '_toggleForm',
         'click #remove_voucher_link': '_removeVoucher',
         'submit #voucher_form': '_addVoucher',
-        'keyup #voucher': '_hideErrorMsg'
+        'keyup #voucher': '_voucherKeyup'
     },
 
     initialize: function() {
@@ -13,6 +13,7 @@ var VoucherView = Backbone.View.extend({
 
         this._initListeners();
         this._enableVoucher();
+        this._setButtonState();
     },
 
     _initListeners: function() {
@@ -44,6 +45,19 @@ var VoucherView = Backbone.View.extend({
     _disableVoucher: function() {
         this.$el.css({opacity: 0.5});
         this._hideErrorMsg();
+    },
+
+    _voucherKeyup: function() {
+        this._setButtonState();
+        this._hideErrorMsg();
+    },
+
+    _setButtonState: function() {
+        if(this.$el.find('#voucher').val().length) {
+            this.$el.find('#checkout-voucher-button').removeAttr('disabled');
+        } else {
+            this.$el.find('#checkout-voucher-button').attr('disabled', 'disabled');
+        }
     },
 
     _hideErrorMsg: function() {

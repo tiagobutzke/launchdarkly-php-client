@@ -36,7 +36,7 @@
                     <div class="selected-address"></div>
                     <div id="delivery-information-list" data-addresses='{{ customer_addresses|to_escaped_json }}'></div>
                     {% include('VoloFrontendBundle:Layout/Partial/templates:checkout_address.html.twig') %}
-                    <div class="checkout__item">
+                    <div class="checkout__subtitle__open">
                         <a id="select_other_address_link" class="checkout__more-feature-link">
                             <span class="select_other_address_link__text--select">{% trans %}link.select_other_address{% endtrans %}</span>
                             <span class="select_other_address_link__text--cancel">{% trans %}link.cancel{% endtrans %}</span>
@@ -129,16 +129,22 @@
     </div>
     
     <div class="voucher-component" data-vendor_id="{{ vendor.id }}">
-       <div class="checkout__item"><a id="add_voucher_link" class="checkout__more-feature-link">{% trans %}link.have_voucher{% endtrans %}</a></div>
+       <div class="checkout__subtitle__open">
+           <a id="add_voucher_link" class="checkout__more-feature-link">
+               {% trans %}link.have_voucher{% endtrans %}
+           </a>
+       </div>
 
-        <form action="#" id="voucher_form" role="form">
+        <form action="#" id="voucher_form" role="form" novalidate>
             <div class="checkout__item">
                 <div class="form-group form-group--two_col1--xs-full">
                     <input type="text" class="form-control" id="voucher" name="voucher"
                            required="true" placeholder="{% trans %}form.label.enter_voucher{% endtrans %}">
                     <span class="error_msg error_invalid_voucher"></span>
                 </div>
-                <div class="form-group form-group--two_col2--xs-full"> <button class="button pull-left">{% trans %}button.apply{% endtrans %}</button></div>
+                <div class="form-group form-group--two_col2--xs-full">
+                    <button id="checkout-voucher-button" class="button pull-left">{% trans %}button.apply{% endtrans %}</button>
+                </div>
             </div>
         </form>
         <div id="voucher-wrapper" class="checkout__item">{% trans %}voucher{% endtrans %}

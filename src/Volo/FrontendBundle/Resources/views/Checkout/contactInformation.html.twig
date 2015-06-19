@@ -20,9 +20,7 @@
             <div id="show-login-overlay"
                  data-error-message-key="checkout.user_already_exists"
                  data-username="{{ username }}"
-                 class="error">{% trans %}checkout.user_already_exists{% endtrans %}</div>
-        {% else %}
-            <div class="error">{{ message }}</div>
+                 class="error_msg">{% trans %}checkout.user_already_exists{% endtrans %}</div>
         {% endif %}
     {% endfor %}
 
