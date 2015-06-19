@@ -447,11 +447,21 @@ var VendorCartIconView = Backbone.View.extend({
         }
     },
 
+    _reloadCartIconValues: function () {
+        var that = this;
+        $.get(Routing.generate('default_cart_values'))
+            .done(function (response) {
+                that.$el.data('vendor_id', response.vendor_id);
+                that.$('.header__cart__products__count').html(response.products_count);
+            });
+    },
+
     unbind: function() {
         this.undelegateEvents();
     },
 
     render: function() {
+        this._reloadCartIconValues();
         return this;
     }
 });
