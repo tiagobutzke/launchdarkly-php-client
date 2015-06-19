@@ -14,7 +14,7 @@
             <div class="profile__main">
                 <h3 class="profile__title">{% trans %}title.my_profile{% endtrans %}</h3>
                 {% for message in errorMessages %}
-                    <div class="error_msg"><i class="icon-attention"></i> {{ message }}</div>
+                    <div class="error_msg">{{ message }}</div>
                 {% endfor %}
                 {% include 'VoloFrontendBundle:Checkout/Partial:contact_information_form.html.twig' with {action: path('profile_index')} %}
             </div>
