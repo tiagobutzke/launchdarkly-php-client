@@ -110,16 +110,13 @@
   right: $grid-gutter-width / 2;
   text-transform: none;
   font-family: $base-font-family;
+  font-size: $smaller-font-size;
 
   i {
     display: inline-block;
     margin-right: 2px;
     vertical-align: middle;
     color: $color-text-highlight;
-  }
-
-  i.icon-cancel {
-    font-size: 1.2em;
   }
 }
 
@@ -166,6 +163,25 @@
   }
 }
 
+.checkout__add_new_credit_card__container {
+  overflow: auto;
+  position: relative;
+  height: 30px;
+}
+
+.paymentFormOpen {
+  .checkout__add_new_credit_card__text--edit,
+  .icon-plus {
+    display: none;
+  }
+  .checkout__add_new_credit_card__text--cancel {
+    display: block;
+  }
+}
+
+.checkout__add_new_credit_card__text--cancel {
+  display: none;
+}
 // main fields
 
 .checkout__time-field {
@@ -503,8 +519,10 @@
   }
 }
 
-.checkout__payment_description {
+.checkout__payment_paypal_description {
   color: $color-text-inactive;
+  font-size: 0.8em;
+  clear: both;
 }
 
 // credit card form
@@ -613,8 +631,22 @@
 }
 
 .checkout__list__text {
+  padding-left: 0 !important;
   display: inline-block;
   line-height: $radiobutton-simple-unselected-height;
+}
+
+.checkout__list__payment_option_type {
+  vertical-align: top;
+  display: inline-block;
+}
+
+.checkout__list__payment_option_type--visa {
+  @include retina-sprite($visa-group);
+}
+
+.checkout__list__payment_option_type--mastercard {
+  @include retina-sprite($mastercard-group);
 }
 
 .delivery__notes {
