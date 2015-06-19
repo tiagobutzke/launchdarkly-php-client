@@ -73,7 +73,7 @@
   width: 100%;
   height: 100%;
   position: fixed;
-  z-index: 899;
+  z-index: 999;
   top: 0;
   left: 0;
   background-color: $color-bg-primary;
@@ -87,6 +87,7 @@
 
   @include respond-from("screen-md") {
     position: static;
+    padding-top: 0;
     padding-left: $grid-gutter-width;
     background-color: transparent;
     height: auto;
@@ -101,7 +102,6 @@
 .desktop-cart__hero {
   width: 100%;
   position: relative;
-  margin-top: 41px;
   @include respond-from("screen-md") {
     display: none;
   }
@@ -136,6 +136,43 @@
     right: $space-xs;
     color: $color-text-selection;
     font-size: 2em;
+  }
+}
+
+.vendor__geocoding__tool-box {
+  @include clearfix;
+  width: 100%;
+  text-align: center;
+  padding-top: $space-xs;
+  @include respond-from("screen-md") {
+    padding: 0 $space-sm;
+    width: 99%;
+    margin: 0 auto;
+  }
+
+  .vendor__geocoding__tool-box__title {
+    font-size: 1em;
+    margin-top: $space-sm;
+    margin-bottom: $space-sm;
+    font-family: $bold-font-family;
+    line-height: 1.4em;
+    text-transform: uppercase;
+    @include respond-from("screen-md") {
+      margin-top: 30px;
+      margin-bottom: $space-md;
+    }
+  }
+
+  .form-group {
+    margin: 0 0 $space-xs;
+    padding: 0;
+    @include respond-from("screen-md") {
+      margin: 17px 0 $space-sm;
+    }
+
+    input {
+      margin: 0;
+    }
   }
 }
 
@@ -436,37 +473,42 @@ tr.summary__item__row_mobile {
   @include appear-from("screen-md");
 }
 
-%desktop-cart__time__field {
-  position: relative;
-  height: 35px;
-  @include make-xs-column(6, 0);
+.desktop-cart__time {
+  padding: 0;
+  @include respond-from("screen-md") {
+    width: 99%;
+    margin: 0 auto;
+    padding: 0 $space-sm;
+  }
+
+  .dropdown-menu {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    font-size: 14px;
+    text-align: left;
+    background-color: #fff;
+    border: $dropdown-border;
+    border-radius: $input-border-radius;
+    color: $dropdown-color-text;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    background-clip: padding-box;
+    width: 100%;
+    text-align: left;
+  }
 }
 
 .desktop-cart__time__field-date {
-  @extend %desktop-cart__time__field;
-  padding-right: $space-xs;
+  height: $input-height;
+  @include make-xs-column(6, 0);
 }
 
 .desktop-cart__time__field-time {
-  @extend %desktop-cart__time__field;
-  padding-left: $space-xs;
+  height: $input-height;
+  @include make-xs-column(6, 0);
+  margin-left: -1px;
 }
-
-// START silviomoreto/bootstrap-select style
-.bootstrap-select.btn-group .dropdown-menu {
-  z-index: 800;
-}
-
-.bootstrap-select > .dropdown-toggle {
-  height: 35px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-}
-
-.bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
-  width: 100%;
-}
-// END silviomoreto/bootstrap-select style
 
 .desktop-cart__order {
   overflow-y: auto;
@@ -552,37 +594,6 @@ tr.summary__item__row_mobile {
 
   .desktop-cart__time {
     @include appear-from("screen-md")
-  }
-
-  .vendor__geocoding__tool-box {
-    @include clearfix;
-    width: 100%;
-    text-align: center;
-    padding-top: 10px;
-
-    .vendor__geocoding__tool-box__title {
-      font-size: 1em;
-      margin-top: $space-sm;
-      font-family: $bold-font-family;
-      line-height: 1.4em;
-      text-transform: uppercase;
-      @include respond-from("screen-md") {
-        margin-bottom: $space-md;
-        padding-top: 0;
-      }
-    }
-
-    .form-group {
-      margin: $space-xs 0;
-      padding: 0;
-      @include respond-from("screen-md") {
-        margin: 0 0 $space-sm;
-      }
-
-      input {
-        margin: 0;
-      }
-    }
   }
 }
 

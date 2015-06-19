@@ -106,7 +106,7 @@ a.button {
 
 // ----------------------- INPUT FIELDS START ------------------
 
-input, .form-control {
+input, .form-control, .mobile-select {
   font-family: $input-font-family;
   font-size: $input-font-size;
   text-align: $input-text-align;
@@ -137,6 +137,10 @@ input, .form-control {
   &[type="radio"], &[type="checkbox"] {
     height: auto;
   }
+}
+
+.mobile-select {
+  width: 100%;
 }
 
 .form-group {
@@ -207,6 +211,62 @@ input, .form-control {
     }
   }
 }
+
+// BOOTSTRAP SELECT START
+.bootstrap-select {
+  width: 100% !important;
+  height: 43px;
+  position: relative;
+}
+
+.caret {
+  @include use-iconmoon-font();
+  border: none;
+  right: 20px !important;
+  margin-top: -5px !important;
+  color: $color-text-highlight;
+  font-size: 1.15em;
+
+  &:before {
+    content: "\44";
+  }
+}
+
+.dropdown-menu {
+  max-height: 120px !important;
+  min-height: inherit !important;
+  z-index: 800 !important;
+
+  li {
+    &.selected {
+        background-color: $color-bg-secondary;
+    }
+    a {
+      padding: 10px;
+      border-bottom: $input-border;
+      &:hover {
+        background-color: $color-bg-secondary;
+      }
+    }
+  }
+}
+
+.bootstrap-select > .dropdown-toggle {
+  height: $input-height;
+  line-height: $input-height;
+  background-color: $dropdown-color-bg-2;
+  border: $dropdown-border;
+  padding-left: $space-sm;
+  padding-right: $space-xs;
+  border-radius: $input-border-radius;
+  color: $dropdown-color-text;
+  font-size: 1em;
+
+  &:hover, &:focus {
+    outline: none !important;
+  }
+}
+// BOOTSTRAP SELECT END
 
 // ----------------------- INPUT FIELDS END ------------------
 

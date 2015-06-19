@@ -73,7 +73,7 @@ VOLO.initCheckoutViews = function (cartModel, checkoutModel, deliveryCheck, loca
         VOLO.checkoutDeliveryInformationView.unbind();
     }
     VOLO.CheckoutCartView = new CheckoutCartView({
-        el: '.desktop-cart',
+        el: '#cart',
         model: cartModel,
         $header: $('.header'),
         locationModel: locationModel,
