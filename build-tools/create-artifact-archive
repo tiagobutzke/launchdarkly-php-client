@@ -45,7 +45,7 @@ if [ -f $REVISION_FILE ]; then
     rm $REVISION_FILE
 fi
 
-echo -e "parameters:\n  tracking_branch_name: $BRANCH_NAME\n  tracking_branch_commit: $COMMIT_HASH\n" > $REVISION_FILE
+echo -e "parameters:\n  health_check_branch_name: $BRANCH_NAME\n  health_check_branch_commit: $COMMIT_HASH\n" > $REVISION_FILE
 
 tar -pchzf "${OUTPUT_FILE}" "$ROOT_DIR" \
     --exclude "$ROOT_DIR/build" \
