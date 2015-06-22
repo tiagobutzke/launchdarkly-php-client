@@ -131,7 +131,9 @@
 }
 
 .checkout_cart {
-  margin-top: 53px;
+  @include respond-from("screen-md") {
+    margin-top: 17px;
+  }
 }
 
 .checkout__subtitle__edit {
