@@ -8,12 +8,28 @@ var CheckoutCartView = CartView.extend({
         this.$('.vendor__geocoding__tool-box').hide();
         return this;
     },
-
+ 
+    /**
+     * @override
+     * @private
+     */
     renderTimePicker: function () {
 
     },
 
+    /**
+     * @override
+     * @private
+     */
     _makeCartAndMenuSticky: function () {
+
+    },
+
+    /**
+     * @override
+     * @private
+     */
+    renderCheckoutButton: function() {
 
     }
 });
