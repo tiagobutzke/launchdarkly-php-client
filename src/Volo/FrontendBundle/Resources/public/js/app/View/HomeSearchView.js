@@ -63,9 +63,11 @@ var HomeSearchView = Backbone.View.extend({
         }
     },
 
-    _inputChanged: function() {
+    _inputChanged: function(e) {
         this.model.set(this.model.defaults);
-        this._hideTooltip();
+        if (e.keyCode !== 13) {
+            this._hideTooltip();
+        }
     },
 
     _submitPressed: function() {
