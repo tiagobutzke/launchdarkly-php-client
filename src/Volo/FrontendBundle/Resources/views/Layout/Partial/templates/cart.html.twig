@@ -101,12 +101,20 @@
 </script>
 
 <script type="text/template" id="template-cart-checkout-button">
-    <% if (subtotal > minimum_order_amount) { %>
+    <% if (subtotal >= minimum_order_amount && subtotal > 0) { %>
         <a class="button btn-checkout" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">
             <span>{% trans %}cart.checkout_link{% endtrans %}</span>
         </a>
     <% } else { %>
-        <a class="button btn-below-minimum-amount button--disabled btn-checkout disabled"><span>{% trans with {'%min%': vendor.minimumOrderAmount|price} %}cart.cart_below_mininum_total_amount %min%{% endtrans %}</span></a>
+        <a class="button btn-below-minimum-amount button--disabled btn-checkout disabled">
+            <span>
+            <% if (subtotal > 0) { %>
+                {% trans with {'%min%': vendor.minimumOrderAmount|price} %}cart.cart_below_mininum_total_amount %min%{% endtrans %}
+            <% } else { %>
+                {% trans %}cart.cart_below_mininum_total_amount{% endtrans %}
+            <% }; %>
+            </span>
+        </a>
         <span class="error-below-minimum-amount error_msg hide">{% trans %}cart.need_add_more_products_to_place_order{% endtrans %}</span>
     <% }; %>
 </script>
