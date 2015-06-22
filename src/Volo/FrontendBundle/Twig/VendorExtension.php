@@ -360,10 +360,6 @@ class VendorExtension extends \Twig_Extension
             }
         }
 
-        // we do this to round to the nearest 1/2 hour in case that the Restaurant opens for example at 10:30
-        $startingHour = ceil(2 * $deliveryStartingTimeInSecondsOfTheDay / 3600) / 2;
-        $deliveryStartingTimeInSecondsOfTheDay = $startingHour * 3600;
-
         return $this->getDeliveryRanges(
             $deliveryStartingTimeInSecondsOfTheDay,
             $closingTimeInSecondsOfTheDay,
@@ -390,6 +386,14 @@ class VendorExtension extends \Twig_Extension
 
         $deliveryPairs = [];
 
+        if ($isOpen) {
+            $formattedValueRange = $this->translator->trans('time_picker.now');
+            $rangeKey = OrderManagerService::ORDER_NOW_TIME_PICKER_IDENTIFIER;
+            $deliveryPairs[$rangeKey] = $formattedValueRange;
+        }
+        // Here we start from the next whole (half hour) e.g. 14:30, 15:00, 15:30 ... etc
+        $startingHour = ceil(2 * $actualStartingTimeInSecondsOfDay / 3600) / 2;
+        $actualStartingTimeInSecondsOfDay = (int) ($startingHour * 3600);
         // we loop on the time hour by hour
         for ($i = $actualStartingTimeInSecondsOfDay; $i < $closingTimeInSecondsOfDay; $i += $rangePeriodInSeconds) {
             $startingTimeInHoursWithFraction = ($i / 3600);
@@ -415,10 +419,7 @@ class VendorExtension extends \Twig_Extension
             $rangeKey = sprintf('%02d:%02d', $rangeStartingHours, $rangeStartingMinutes);
 
             $formattedValueRange = sprintf('%s - %s', $formattedRangeStartingTime, $formattedRangeEndingTime);
-            if ($actualStartingTimeInSecondsOfDay === $i && $isOpen) {
-                $formattedValueRange = $this->translator->trans('time_picker.now');
-                $rangeKey = OrderManagerService::ORDER_NOW_TIME_PICKER_IDENTIFIER;
-            }
+
             $deliveryPairs[$rangeKey] = $formattedValueRange;
         }
 
