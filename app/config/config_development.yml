@@ -1,6 +1,9 @@
 imports:
     - { resource: config.yml }
 
+parameters:
+    google_tag_manager_container_id: ''
+
 framework:
     router:
         resource: "%kernel.root_dir%/config/routing_dev.yml"

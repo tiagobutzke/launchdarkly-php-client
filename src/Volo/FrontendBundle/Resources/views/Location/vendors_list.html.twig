@@ -3,6 +3,24 @@
 
 {% block title %}{{ formattedLocation.city }} | {% trans %}brand{% endtrans %}{% endblock %}
 {% block body_class %}restaurant-list{% endblock %}
+{% block google_tag_manager %}
+<script type="text/javascript" data-turbolinks-eval=always>
+    dataLayer.push({
+        'event': 'enterZipcode',
+        'zipcode': '{{ formattedLocation['postcode'] }}',
+        'city': '{{ formattedLocation['city'] }}',
+        'serviceArea': '{% if (openVendors.count() > 0) or (closedVendors.count() > 0) %}True{% else %}False{% endif %}'
+    });
+    dataLayer.push({
+        'pageType': 'Restaurant List Page',
+        'zipcode': '{{ customer_location().postcode }}',
+        'city': '{{ customer_location().city }}',
+        'country': 'Germany',
+        'loggedIn': '{{ is_customer_authenticated_fully() ? 'true' : 'false' }}',
+        'customerId': '{{ is_customer_authenticated_fully() ? get_authenticated_customer().id }}'
+    });
+</script>
+{% endblock %}
 {% block content %}
     <div class="hero-banner-wrapper">
         {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {vendorCode : 'list', type: 'hero', 'aspectRatioClass' : 'aspect-ratio-40-11'} %}

@@ -3,6 +3,7 @@
 namespace Volo\FrontendBundle\Twig;
 
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Twig_Extensions_Extension_Intl;
 use Volo\FrontendBundle\Service\CartManagerService;
 
@@ -54,6 +55,9 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
             new \Twig_SimpleFunction('get_configuration', array($this, 'getConfiguration')),
             new \Twig_SimpleFunction('get_default_cart_count', array($this, 'getDefaultCartCount')),
             new \Twig_SimpleFunction('get_default_cart_vendor_id', array($this, 'getDefaultCartVendorId')),
+
+            new \Twig_SimpleFunction('gtm_delivery_day', array($this, 'createDeliveryDay')),
+            new \Twig_SimpleFunction('gtm_delivery_weekday', array($this, 'createDeliveryWeekday')),
         ];
     }
 
@@ -186,5 +190,39 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
     public function prepareLogoUrl($logoUrl, $dimensions)
     {
         return sprintf($logoUrl, $dimensions[0], $dimensions[1]);
+    }
+
+    // ---------------------------------- @todo to be extended to a separate extension
+
+    /**
+     * @param string $time
+     *
+     * @return string
+     */
+    public function createDeliveryWeekday($time)
+    {
+        $dateTime = new \DateTime($time);
+        $index = (int) $dateTime->format('N');
+
+        $matrix = ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+        if (isset($matrix[$index])) {
+            return $matrix[$index];
+        }
+
+        return '';
+    }
+
+    /**
+     * @param string $orderTime
+     * @param string $orderConfirmedDeliveryTime
+     *
+     * @return string
+     */
+    public function createDeliveryDay($orderTime, $orderConfirmedDeliveryTime)
+    {
+        $timeDifference = strtotime($orderConfirmedDeliveryTime) - strtotime($orderTime);
+
+        return floor($timeDifference / (1*24*60*60));
     }
 }

@@ -34,7 +34,8 @@ VOLO.initCartViews = function (cartModel, locationModel) {
         el: '.menu__main',
         cartModel: cartModel,
         locationModel: locationModel,
-        $header: $header
+        $header: $header,
+        gtmService: VOLO.GTMServiceInstance
     });
 
     if (_.isObject(VOLO.cartView)) {
@@ -308,6 +309,16 @@ $(document).on('page:load page:restore', function () {
         }
     }
 
+    VOLO.GTMServiceInstance = new VOLO.GTMService({
+        dataLayer: dataLayer,
+        checkoutModel: VOLO.checkoutModel,
+        sessionId: VOLO.configuration.sessionId,
+        checkoutDeliveryValidationView: VOLO.checkoutDeliveryValidationView
+    });
+    if (_.isObject(VOLO.menu)) {
+        VOLO.menu.setGtmService(VOLO.GTMServiceInstance);
+    }
+
     if ($('.teaser__form').length > 0) {
         VOLO.initHomeSearch();
         VOLO.homeSearchView.render();
@@ -411,6 +422,9 @@ $(document).on('page:before-unload', function () {
     if (_.isObject(VOLO.existingUserLoginView)) {
         VOLO.existingUserLoginView.unbind();
     }
+
+    delete VOLO.GTMServiceInstance;
+    dataLayer = [];
 });
 
 Turbolinks.pagesCached(10);

@@ -6,6 +6,7 @@ parameters:
     http_schema: http
     google_api_client_id: ''
     google_api_channel: ''
+    google_tag_manager_container_id: ''
 
 framework:
     #esi:             ~
@@ -47,6 +48,7 @@ twig:
         google_api_client_id: "%google_api_client_id%"
         google_api_channel: '%google_api_channel%'
         timezone: '%timezone%'
+        google_tag_manager_container_id: %google_tag_manager_container_id%
 
 # Assetic Configuration
 assetic:
