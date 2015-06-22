@@ -3,7 +3,7 @@ var VoucherView = Backbone.View.extend({
         'click #add_voucher_link': '_toggleForm',
         'click #remove_voucher_link': '_removeVoucher',
         'submit #voucher_form': '_addVoucher',
-        'keyup #voucher': '_voucherKeyup'
+        'keyup #voucher': '_hideErrorMsg'
     },
 
     initialize: function() {
@@ -13,7 +13,6 @@ var VoucherView = Backbone.View.extend({
 
         this._initListeners();
         this._enableVoucher();
-        this._setButtonState();
     },
 
     _initListeners: function() {
@@ -47,26 +46,18 @@ var VoucherView = Backbone.View.extend({
         this._hideErrorMsg();
     },
 
-    _voucherKeyup: function() {
-        this._setButtonState();
-        this._hideErrorMsg();
-    },
-
-    _setButtonState: function() {
-        if(this.$el.find('#voucher').val().length) {
-            this.$el.find('#checkout-voucher-button').removeAttr('disabled');
-        } else {
-            this.$el.find('#checkout-voucher-button').attr('disabled', 'disabled');
-        }
-    },
-
     _hideErrorMsg: function() {
         this.$('.error_invalid_voucher').css('display', 'none');
+        this.$('.error_empty_voucher').addClass('hide');
     },
 
     _showErrorMsg: function() {
         this.$('.error_invalid_voucher').css('display', 'block');
         this.$('.error_invalid_voucher').text(this.voucherError);
+    },
+
+    _showEmptyFieldErrorMsg: function() {
+        this.$('.error_empty_voucher').removeClass('hide');
     },
 
     unbind: function () {
@@ -87,10 +78,19 @@ var VoucherView = Backbone.View.extend({
     },
 
     _addVoucher: function (event) {
-        var vendorCart = this.model.getCart(this.vendor_id);
+        var vendorCart,
+            $voucher = this.$('#voucher');
 
+        if (!$voucher.val().length) {
+            this._showEmptyFieldErrorMsg();
+            event.preventDefault();
+
+            return;
+        }
+
+        vendorCart = this.model.getCart(this.vendor_id);
         this.voucherError = null;
-        vendorCart.set('voucher', this.$('#voucher').val());
+        vendorCart.set('voucher', $voucher.val());
         vendorCart.updateCart();
 
         event.preventDefault();
