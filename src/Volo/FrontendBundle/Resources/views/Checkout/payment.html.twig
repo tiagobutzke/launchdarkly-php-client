@@ -206,9 +206,17 @@
                         Routing.generate('checkout_edit_contact_information'),
                         $('#contact_information_form').serialize()
                 ).done(function (data) {
-                    $('#contact_information').html(data);
-                    $('#edit_contact_information_form').toggleClass('hide');
-                    $('.edit_contact_information_form_link__text--edit').removeClass('contact_information_form-open');
+                    var mobileNumberWrap = $('#mobile_number_wrap');
+                    mobileNumberWrap.find('.invalid_number').remove();
+                    if (_.isUndefined(data.invalidPhoneError)) {
+                        $('#contact_information').html(data.html);
+                        $('#edit_contact_information_form').toggleClass('hide');
+                        $('.edit_contact_information_form_link__text--edit').removeClass('contact_information_form-open');
+                    } else {
+                        mobileNumberWrap.append('<span class="error_msg invalid_number">' +
+                            data.invalidPhoneError +
+                            '</span>');
+                    }
                 });
 
 

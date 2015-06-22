@@ -298,7 +298,7 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @Route("/checkout/edit_contact_information", name="checkout_edit_contact_information", options={"expose"=true})
+     * @Route("/edit_contact_information", name="checkout_edit_contact_information", options={"expose"=true})
      * @Method({"POST"})
      * @Template("VoloFrontendBundle:Checkout/Partial:contact_information_edit.html.twig")
      *
@@ -308,11 +308,22 @@ class CheckoutController extends Controller
      */
     public function editContactInformationAction(Request $request)
     {
-        $customer = $this->get('volo_frontend.service.customer')->updateCustomer($request->request->get('customer'));
+        try {
+            $customer = $this->get('volo_frontend.service.customer')->updateCustomer($request->request->get('customer'));
 
-        return [
-            'customer' => $this->get('volo_frontend.api.serializer')->normalize($customer),
-        ];
+            return new JsonResponse([
+                'html' => $this->render(
+                    'VoloFrontendBundle:Checkout/Partial:contact_information_edit.html.twig',
+                    [
+                        'customer' => $this->get('volo_frontend.api.serializer')->normalize($customer)
+                    ]
+                )->getContent()
+            ]);
+        } catch (PhoneNumberValidationException $e) {
+            return new JsonResponse([
+                'invalidPhoneError' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
