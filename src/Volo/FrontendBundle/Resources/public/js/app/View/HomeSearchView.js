@@ -11,6 +11,7 @@ var HomeSearchView = Backbone.View.extend({
         this.geocodingService.init(this.$('#postal_index_form_input'));
 
         this.listenTo(this.geocodingService, 'autocomplete:place_changed', this._applyNewLocationData);
+        this.listenTo(this.geocodingService, 'autocomplete:not_found', this._notFound);
 
         this.$('#postal_index_form_input').tooltip({
             placement: 'bottom',
@@ -27,7 +28,7 @@ var HomeSearchView = Backbone.View.extend({
         'focus #postal_index_form_input': '_hideTooltip',
         'blur #postal_index_form_input': '_hideTooltip',
         'click #postal_index_form_input': '_scrollToInput',
-        'keyup #postal_index_form_input': '_inputChanged'
+        'keydown #postal_index_form_input': '_inputChanged'
     },
 
     unbind: function() {
@@ -63,21 +64,23 @@ var HomeSearchView = Backbone.View.extend({
         }
     },
 
-    _inputChanged: function(e) {
-        this.model.set(this.model.defaults);
-        if (e.keyCode !== 13) {
-            this._hideTooltip();
+    _inputChanged: function() {
+        if(this.model.get('formattedAddress') !== this.$('#postal_index_form_input').val()) {
+            this.model.set(this.model.defaults);
         }
+
+        this._hideTooltip();
     },
 
     _submitPressed: function() {
         console.log('_submitPressed ', this.cid);
         console.log(this.model.toJSON());
         if (this.model.get('postcode') && this.model.get('city')) {
-            console.log('FOUND!!!');
             this._afterSubmit();
-        } else {
-            this._notFound();
+        }
+
+        if (this.$('#postal_index_form_input').val() === '') {
+            this._showInputPopup(this.$('#postal_index_form_input').data('msg_error_empty'));
         }
 
         return false;
@@ -98,11 +101,6 @@ var HomeSearchView = Backbone.View.extend({
         var data = this._getDataFromMeta(locationMeta);
 
         this._hideTooltip();
-        if (!locationMeta.formattedAddress) {
-            this._notFound();
-
-            return false;
-        }
 
         this.$('#postal_index_form_input').val(data.formattedAddress);
 
@@ -112,11 +110,12 @@ var HomeSearchView = Backbone.View.extend({
         }
 
         this.model.set({
+            formattedAddress: data.formattedAddress,  // address in input field
             latitude: data.lat,
             longitude: data.lng,
             postcode: data.postcode,
             city: data.city,
-            address: data.postcode + ", " + data.city
+            address: data.postcode + ", " + data.city // address in query param
         });
 
         dataLayer.push({

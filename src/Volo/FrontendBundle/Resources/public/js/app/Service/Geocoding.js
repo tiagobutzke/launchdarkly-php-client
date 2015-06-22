@@ -46,11 +46,17 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
 
     _onPlaceChanged: function () {
         console.log('place_changed');
-        this.getLocation().done(this._onGetLocationDone);
+        var getLocation = this.getLocation();
+        getLocation.done(this._onGetLocationDone);
+        getLocation.fail(this._onGetLocationFail);
     },
 
     _onGetLocationDone: function(locationMeta) {
         this.trigger('autocomplete:place_changed', locationMeta);
+    },
+
+    _onGetLocationFail: function() {
+        this.trigger('autocomplete:not_found');
     },
 
     removeListeners: function ($input) {
