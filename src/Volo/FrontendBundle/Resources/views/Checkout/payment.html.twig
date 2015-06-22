@@ -18,7 +18,7 @@
                 {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
                     <a id="add_new_address_link" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">
                         <i class="icon-pencil"></i>
-                        {% trans %}link.add_new_address{% endtrans %}
+                        {% trans %}link.edit_delivery_information{% endtrans %}
                     </a>
                 {% endif %}
             </span>
