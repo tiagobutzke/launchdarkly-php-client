@@ -12,11 +12,13 @@
             'deliveryDay': '{{ gtm_delivery_day(status.ordered_at.date, status.confirmed_delivery_time.date) }}',
             'deliveryDayWeek': '{{ gtm_delivery_weekday(status.confirmed_delivery_time.date) }}',
             'checkoutType': '{{ is_customer_authenticated_fully() ? 'registered' : 'guest' }}',
-            'purchase': {
-                'actionField': {
-                    'id': '{{ order.reference }}',
-                    'affiliation': 'Online Store',
-                    'revenue': '{{ order.amount }}'
+            'ecommerce': {
+                'purchase': {
+                    'actionField': {
+                        'id': '{{ order.reference }}',
+                        'affiliation': 'Online Store',
+                        'revenue': '{{ order.amount }}'
+                    }
                 }
             }
         });
