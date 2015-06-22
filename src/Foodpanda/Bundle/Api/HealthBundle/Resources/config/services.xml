@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="foodpanda_core_health.enabled">%foodpanda_api_health.enabled%</parameter>
+        <parameter key="foodpanda_core_health.prefix">%foodpanda_api_health.prefix%</parameter>
+    </parameters>
+    <services>
+        <service id="health_check.version" alias="foodpanda.core.health.service.version"/>
+        <service id="health_check.session" alias="foodpanda.core.health.service.session"/>
+        <service id="health_check.cache" alias="foodpanda.core.health.service.cache"/>
+    </services>
+</container>

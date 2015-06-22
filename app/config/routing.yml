@@ -11,6 +11,11 @@ logout:
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 
+foodpanda_web_health:
+    resource: "@FoodpandaApiHealthBundle/Controller/CheckController.php"
+    type:     annotation
+    prefix:   /health
+
 redirect_terms:
     path: /terms
     defaults:

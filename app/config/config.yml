@@ -1,6 +1,7 @@
 imports:
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: revision.yml }
 
 parameters:
     http_schema: http
@@ -66,6 +67,9 @@ doctrine_cache:
         vendor_cache:
             namespace: %country_code%_%kernel.environment%_vendor_cache
             type: file_system
+        health_check_redis:
+            redis:
+                connection_id: volo_frontend_redis_connection_service
 
 foodpanda_web_translate_it:
     base_url: %foodpanda_web_translate_it_base_url%
@@ -166,3 +170,8 @@ volo_frontend:
     api:
         configuration:
             life_time: %volo_frontend_configuration_cache_life_time%
+
+foodpanda_api_health:
+    enabled: ['version', 'session', 'cache']
+    prefix: 'health_check.'
+#    sqs_endpoint: %aws_sqs_elasticsearch_update_queue%
