@@ -16,6 +16,11 @@
 
 {% block body_class %}home-page{% endblock %}
 
+{% block head_meta_seo %}
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="{% trans %}meta.description{% endtrans %}">
+{% endblock %}
+
 {% block content %}
     <section class="home-section teaser__home-section fullWindowHeight teaser b-lazy"
          data-src="{{ asset('img/homepage/teaser_2400.jpg') }}"
