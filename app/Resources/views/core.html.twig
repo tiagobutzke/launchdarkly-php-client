@@ -29,6 +29,15 @@
             <!-- End Google Tag Manager -->
             {% block google_tag_manager %}{% endblock %}
         {% endif %}
+        {% if google_tag_manager_container_id %}
+            <!-- Google Tag Manager -->
+            <script>
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','{{ google_tag_manager_container_id }}');
+            </script>
+            <!-- End Google Tag Manager -->
+        {% endif %}
         {% block modals %}{% endblock %}
         <div class="page-wrapper {% block page_wrapper_class %}{% endblock %}">
             <div class="content-wrapper {% block content_wrapper_class %}{% endblock %}">
