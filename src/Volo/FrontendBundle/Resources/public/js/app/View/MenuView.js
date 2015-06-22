@@ -10,7 +10,7 @@ var MenuView = Backbone.View.extend({
         this.subViews = [];
         this.vendor_id = this.$el.data().vendor_id;
 
-        this.gtmService = options.gtmService || false;
+        this.gtmService = options.gtmService || null;
 
         _.each(this.$('.menu__item'), this.initSubViews, this);
 
@@ -58,7 +58,9 @@ var MenuView = Backbone.View.extend({
         this.stopListening();
         this.undelegateEvents();
         this.domObjects = {};
-        this.gtmService.unbind();
+        if (_.isObject(this.gtmService)) {
+            this.gtmService.unbind();
+        }
     },
 
     initSubViews: function(item) {

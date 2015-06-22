@@ -9,8 +9,8 @@
         dataLayer.push({
             'event': 'transaction',
             'sessionId': VOLO.configuration.sessionId,
-            'deliveryDay': '{{ gtm_delivery_day(status.ordered_at.date, status.expected_delivery_time.date) }}',
-            'deliveryDayWeek': '{{ gtm_delivery_weekday(status.expected_delivery_time.date) }}',
+            'deliveryDay': '{{ gtm_delivery_day(status.ordered_at.date, status.confirmed_delivery_time.date) }}',
+            'deliveryDayWeek': '{{ gtm_delivery_weekday(status.confirmed_delivery_time.date) }}',
             'checkoutType': '{{ is_customer_authenticated_fully() ? 'registered' : 'guest' }}',
             'purchase': {
                 'actionField': {
