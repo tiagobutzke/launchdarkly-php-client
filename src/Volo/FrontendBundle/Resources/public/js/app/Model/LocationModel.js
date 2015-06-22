@@ -5,7 +5,8 @@ var LocationModel = Backbone.Model.extend({
         longitude: null,
         postcode: null,
         city: '',
-        address: null
+        address: null,
+        formattedAddress: null
     },
 
     urlRoot: function() {
