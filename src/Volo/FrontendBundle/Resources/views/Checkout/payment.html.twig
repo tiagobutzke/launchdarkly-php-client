@@ -152,6 +152,7 @@
                     <input type="text" class="form-control" id="voucher" name="voucher"
                            required="true" placeholder="{% trans %}form.label.enter_voucher{% endtrans %}">
                     <span class="error_msg error_invalid_voucher"></span>
+                    <span class="error_msg error_empty_voucher hide">{% trans %}error.please_insert_voucher_code{% endtrans %}</span>
                 </div>
                 <div class="form-group form-group--two_col2--xs-full">
                     <button id="checkout-voucher-button" class="button pull-left">{% trans %}button.apply{% endtrans %}</button>
@@ -189,9 +190,13 @@
         //TODO make this a backbone view
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             $('#edit_contact_information_form_link').click(function () {
-                $('#edit_contact_information_form').toggleClass('hide');
-                $(this).toggleClass('contact_information_form-open');
-                $('#contact_information').find('.checkout__item').toggleClass('hide');
+                var $editContactInformationForm = $('#edit_contact_information_form'),
+                    editContactInformationFormIsVisible;
+
+                $editContactInformationForm.toggleClass('hide');
+                editContactInformationFormIsVisible = $editContactInformationForm.hasClass('hide');
+                $(this).toggleClass('contact_information_form-open', editContactInformationFormIsVisible);
+                $('#contact_information').find('.checkout__item').toggleClass('hide', !editContactInformationFormIsVisible);
                 event.preventDefault();
             });
     
@@ -211,13 +216,17 @@
             });
     
             $('#add_new_credit_card_link').click(function () {
-                    $('#add_new_credit_card_link').toggleClass('paymentFormOpen');
-                    $('#payment_form').toggleClass('hide');
-                    if (!$('#payment_form').hasClass('hide')) {
-                        $('input[name="credit_card"]').attr("checked", false);
-                        VOLO.checkoutModel.set('credit_card_id', null);
-                    }
-                });
+                var $payment_form = $('#payment_form'),
+                    paymentFormIsHidden;
+
+                paymentFormIsHidden = $payment_form.hasClass('hide');
+                $payment_form.toggleClass('hide');
+                $('#add_new_credit_card_link').toggleClass('paymentFormOpen', paymentFormIsHidden);
+                if (!paymentFormIsHidden) {
+                    $('input[name="credit_card"]').attr("checked", false);
+                    VOLO.checkoutModel.set('credit_card_id', null);
+                }
+            });
     
             $('input[name="credit_card"]').click(function(){
                 $('#payment_form').addClass('hide');

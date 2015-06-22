@@ -187,10 +187,14 @@
 }
 
 .checkout__add_new_credit_card__container {
-  overflow: auto;
   position: relative;
   height: 30px;
-  padding-right: $grid-gutter-width;
+  padding-right: $grid-gutter-width / 2;
+  padding-top: $space-sm;
+  @include respond-from("screen-md") {
+    padding-right: $grid-gutter-width;
+    padding-top: 0;
+  }
 }
 
 .paymentFormOpen {
@@ -549,8 +553,19 @@
   padding-right: $grid-gutter-width / 2;
   @include respond-from("screen-md") {
     padding-left: 0;
-    padding-right: 0;
   }
+}
+
+.checkout__payment_paypal_description__title {
+  font-family: $bold-font-family;
+  padding-top: $space-sm;
+  @include respond-from("screen-md") {
+    padding-top: 0;
+  }
+}
+
+.checkout__payment_paypal_description__text {
+  line-height: $base-line-height;
 }
 
 // credit card form
@@ -708,9 +723,6 @@
   padding: $space-xs;
   border-top: $dropdown-border;
   margin: 0;
-  @include respond-from("screen-md") {
-    padding: $space-sm;
-  }
   &:last-child {
     border-bottom: $dropdown-border;
   }
