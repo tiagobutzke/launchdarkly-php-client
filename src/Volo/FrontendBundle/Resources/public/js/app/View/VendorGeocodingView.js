@@ -18,6 +18,13 @@ var VendorGeocodingView = HomeSearchView.extend({
         this.performDeliverableCheck();
     },
 
+    events: {
+        'submit': '_submitPressed',
+        'focus #postal_index_form_input': '_hideTooltip',
+        'click #postal_index_form_input': '_scrollToInput',
+        'keyup #postal_index_form_input': '_inputChanged'
+    },
+
     /**
      * @override
      */
