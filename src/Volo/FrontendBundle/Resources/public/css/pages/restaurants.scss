@@ -298,6 +298,7 @@
 .restaurants__not__available {
   @extend .restaurants;
   text-align: center;
+  padding-top: 100px;
 
   p {
     font-family: $satisfy-font-family;
@@ -313,7 +314,6 @@
 
   h2 {
     font-family: $base-font-family;
-    text-transform: uppercase;
     font-size: 0.9em;
     font-weight: normal;
     line-height: normal;
