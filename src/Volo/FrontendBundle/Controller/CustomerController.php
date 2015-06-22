@@ -45,15 +45,11 @@ class CustomerController extends Controller
 
                 return $this->redirectToRoute('home');
             } catch (PhoneNumberValidationException $e) {
-                $errorMessages[] = $this->get('translator')->trans(sprintf('%s: %s', 'Phone number', $e->getMessage()));
+                $errorMessages[] = $e->getMessage();
                 $statusCode = Response::HTTP_BAD_REQUEST;
             } catch (ValidationEntityException $e) {
                 $errors = json_decode($e->getMessage(), true)['data']['items'];
                 $errorMessages = $this->createErrors($errors);
-                $statusCode = Response::HTTP_BAD_REQUEST;
-            } catch (\Exception $e) {
-                // @TODO: ask PMs about the appropriate message and use the translation
-                $errorMessages[] = 'An error occurred, please try again';
                 $statusCode = Response::HTTP_BAD_REQUEST;
             }
 
@@ -123,7 +119,7 @@ class CustomerController extends Controller
         $errorMessages = [];
         foreach ($errors as $error) {
             foreach ($error['violation_messages'] as $violationMessage) {
-                $errorMessages[] = sprintf('%s: %s', $error['field_name'], $violationMessage);
+                $errorMessages[] = $violationMessage;
             }
         }
 
