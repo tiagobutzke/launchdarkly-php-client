@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class ApiAuthenticator implements SimpleFormAuthenticatorInterface
 {
@@ -26,13 +27,23 @@ class ApiAuthenticator implements SimpleFormAuthenticatorInterface
     private $authenticator;
 
     /**
-     * @param CustomerProvider $customerProvider
-     * @param Authenticator $authenticator
+     * @var TranslatorInterface
      */
-    public function __construct(CustomerProvider $customerProvider, Authenticator $authenticator)
-    {
+    protected $translator;
+
+    /**
+     * @param CustomerProvider    $customerProvider
+     * @param Authenticator       $authenticator
+     * @param TranslatorInterface $translator
+     */
+    public function __construct(
+        CustomerProvider $customerProvider,
+        Authenticator $authenticator,
+        TranslatorInterface $translator
+    ) {
         $this->customerProvider = $customerProvider;
         $this->authenticator = $authenticator;
+        $this->translator = $translator;
     }
 
     /**
@@ -60,7 +71,7 @@ class ApiAuthenticator implements SimpleFormAuthenticatorInterface
             $accessToken = $this->authenticator->authenticate($credentials);
             $customer = $this->customerProvider->getCustomer($accessToken);
         } catch (ApiException $e) {
-            throw new AuthenticationException('Invalid username or password');
+            throw new AuthenticationException($this->translator->trans('error.invalid_username_or_password'));
         }
 
         $username = sprintf('%s %s', $customer->getFirstName(), $customer->getLastName());
