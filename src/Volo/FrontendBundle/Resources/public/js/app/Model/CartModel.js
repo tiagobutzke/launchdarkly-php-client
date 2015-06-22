@@ -112,6 +112,7 @@ var VendorCartModel = Backbone.Model.extend({
     },
 
     updateLocationIfDeliverable: function (data) {
+        console.log('updateLocationIfDeliverable ', this.cid);
         var xhr = $.get(
             Routing.generate('vendor_delivery_validation_by_gps', {
                 vendorId: this.get('vendor_id'),

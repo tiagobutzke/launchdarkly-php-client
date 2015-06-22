@@ -43,7 +43,7 @@ VOLO.initCartViews = function (cartModel, locationModel, gtmService) {
     }
 
     VOLO.cartView = new CartView({
-        el: '.desktop-cart',
+        el: '#cart',
         model: cartModel,
         locationModel: VOLO.locationModel,
         $header: $header,
@@ -75,7 +75,7 @@ VOLO.initCheckoutViews = function (cartModel, checkoutModel, deliveryCheck, loca
         VOLO.checkoutDeliveryInformationView.unbind();
     }
     VOLO.CheckoutCartView = new CheckoutCartView({
-        el: '.desktop-cart',
+        el: '#cart',
         model: cartModel,
         $header: $('.header'),
         locationModel: locationModel,

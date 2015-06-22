@@ -48,31 +48,29 @@
 
 {# cart #}
 <script type="text/template" id="template-cart">
+    <div class="desktop-cart__hero">
+        {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {type: 'hero', 'vendorCode' : vendor.code, 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
+        <div class="desktop-cart__hero__title">
+            {{ 'title.your_cart'|trans }}
+            <div class="modal-close-button mobile-close__cart"></div>
+        </div>
+    </div>
+    <div class="vendor__geocoding__tool-box">
+        <form>
+            <div class="form-group">
+                <input id="postal_index_form_input" type="text" class="form-control menu__input__postcode input__postcode{{ isDeliverable ? ' hide' }}" autofocus="">
+            </div>
+        </form>
+        <div class="vendor__geocoding__tool-box__title{{ isDeliverable ? '' : ' hide' }}">
+            {{ 'cart.delivering_to'|trans }} <span class="location__address">{{ address }}</span>
+        </div>
+    </div>
+    {% include('VoloFrontendBundle:Layout/Partial/templates:timepicker.html.twig') %}
     <div class="desktop-cart-container">
         {# NOTE if you want to add new elements to the cart add them inside one of the 3 divs: #}
         {# desktop-cart__header, desktop-cart__order, desktop-cart__footer #}
         {# no html elements should be outside of this 3 divs, since the resizing scripts relay on this structure #}
         <div class="desktop-cart__header">
-            <div class="desktop-cart__hero">
-                {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {type: 'hero', 'vendorCode' : vendor.code, 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
-                <div class="desktop-cart__hero__title">
-                    {{ 'title.your_cart'|trans }}
-                    <div class="modal-close-button mobile-close__cart"></div>
-
-                </div>
-            </div>
-            <div class="vendor__geocoding__tool-box">
-                <form>
-                    <div class="form-group">
-                        <input id="postal_index_form_input" type="text" class="form-control menu__input__postcode input__postcode{{ isDeliverable ? ' hide' }}" autofocus="">
-                    </div>
-                </form>
-                <div class="vendor__geocoding__tool-box__title{{ isDeliverable ? '' : ' hide' }}">
-                    {{ 'cart.delivering_to'|trans }} <span class="location__address">{{ address }}</span>
-                </div>
-            </div>
-            {% include('VoloFrontendBundle:Layout/Partial/templates:timepicker.html.twig') %}
-
             <h3 class="desktop-cart__title">{% trans with {'%name%': vendor.name} %}title.cart_order_summary <span>%name%</span>{% endtrans %}</h3>
             <p class="desktop-cart_order__message">
                 {{ 'cart.order_message'|trans }}

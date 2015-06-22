@@ -13,6 +13,7 @@ var TimePickerView = Backbone.View.extend({
     },
 
     render: function () {
+        console.log('TimePickerView.render ', this.cid);
         var date = this.model.getCart(this.vendor_id).get('order_time');
 
         if (date) {
@@ -37,11 +38,19 @@ var TimePickerView = Backbone.View.extend({
         } else {
             this.model.getCart(this.vendor_id).set('order_time', this._getDateFromForm());
         }
+
+        var md = new MobileDetect(window.navigator.userAgent);
+        if (!md.mobile()) {
+            this.$('select').selectpicker();
+        } else {
+            this.$('select').addClass('mobile-select');
+        }
     },
 
     unbind: function () {
         this.stopListening();
         this.undelegateEvents();
+        this.$('select').selectpicker('destroy');
     },
 
     updateDeliveryTime: function () {

@@ -215,10 +215,6 @@
 .checkout__time-field {
   @include make-xs-column(6);
   padding: 0;
-
-  select {
-    @extend .form-control;
-  }
 }
 
 .checkout__item {
