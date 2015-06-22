@@ -19,6 +19,10 @@
         <meta name="msapplication-TileColor" content="#D70F64">
         <meta name="msapplication-TileImage" content="{{ asset('img/favicon/mediumtile.png') }}">
 
+        {% block head_meta_seo %}
+            <meta name="robots" content="noindex, follow">
+        {% endblock %}
+
         {% block head_stylesheets %}{% endblock %}
         {% block head_scripts %}{% endblock %}
     </head>
