@@ -41,13 +41,15 @@ VOLO.initCartViews = function (cartModel, locationModel, gtmService) {
     if (_.isObject(VOLO.cartView)) {
         VOLO.cartView.unbind();
     }
+
     VOLO.cartView = new CartView({
         el: '.desktop-cart',
         model: cartModel,
         locationModel: VOLO.locationModel,
         $header: $header,
         $menuMain: $('.menu__main'),
-        $window: $(window)
+        $window: $(window),
+        gtmService: gtmService
     });
 
     if (_.isObject(VOLO.cartErrorModalView )) {
@@ -317,6 +319,10 @@ $(document).on('page:load page:restore', function () {
     });
     if (_.isObject(VOLO.menu)) {
         VOLO.menu.setGtmService(VOLO.GTMServiceInstance);
+    }
+
+    if (_.isObject(VOLO.cartView)) {
+        VOLO.cartView.setGtmService(VOLO.GTMServiceInstance);
     }
 
     if ($('.teaser__form').length > 0) {

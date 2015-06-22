@@ -69,7 +69,8 @@ var CartItemView = Backbone.View.extend({
             model: clone,
             cartModel: this.cartModel,
             vendorId: this.vendorId,
-            productToUpdate: this.model
+            productToUpdate: this.model,
+            gtmService: this.gtmService
         });
 
         view.render(); //render dialog
@@ -132,6 +133,12 @@ var CartItemView = Backbone.View.extend({
         }, this);
 
         return menuItem ? $(menuItem).data().object : null;
+    },
+
+    unbind: function() {
+        if (_.isObject(this.gtmService)) {
+            this.gtmService.unbind();
+        }
     }
 });
 
@@ -186,6 +193,14 @@ var CartView = Backbone.View.extend({
         });
     },
 
+    setGtmService: function(gtmService) {
+        this.gtmService = gtmService;
+
+        _.each(this.subViews, function(cartItemView) {
+            cartItemView.gtmService = gtmService;
+        });
+    },
+
     // attaching cart resize also to items scroll to avoid a bug not triggering resize
     // when scrolling page from summary list
 
@@ -220,6 +235,10 @@ var CartView = Backbone.View.extend({
 
         if (_.isObject(this.vendorGeocodingSubView)) {
             this.vendorGeocodingSubView.unbind();
+        }
+
+        if (_.isObject(this.gtmService)) {
+            this.gtmService.unbind();
         }
     },
 
@@ -363,6 +382,7 @@ var CartView = Backbone.View.extend({
         _.invoke(this.subViews, 'remove');
         this.subViews.length = 0;
         this.model.getCart(this.vendor_id).products.each(this.renderNewItem);
+        this.setGtmService(this.gtmService);
     },
 
     renderNewItem: function(item) {
