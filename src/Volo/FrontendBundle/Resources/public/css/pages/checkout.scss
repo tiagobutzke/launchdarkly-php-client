@@ -581,18 +581,18 @@
 }
 
 .checkout__item__card__help {
+  width: 67%;
   text-align: right;
   display: none;
-
   @include respond-from("screen-md") {
+    text-align: left;
     width: 45%;
     float: left;
     padding-left: 28px;
-    text-align: left;
+  }
 
-    img {
-      @include responsive-img();
-    }
+  img {
+    @include responsive-img();
   }
 }
 
