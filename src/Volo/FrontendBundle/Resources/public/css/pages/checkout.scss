@@ -615,6 +615,10 @@
 
   .checkout__item {
     border: none;
+    margin-bottom: 25px;
+    @include respond-from("screen-md") {
+      margin-bottom: 0;
+    }
   }
 }
 
