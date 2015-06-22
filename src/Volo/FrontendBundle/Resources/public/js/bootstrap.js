@@ -24,7 +24,7 @@ VOLO.initCheckoutModel = function (cartModel, locationModel, vendorId) {
     return VOLO.checkoutModel;
 };
 
-VOLO.initCartViews = function (cartModel, locationModel) {
+VOLO.initCartViews = function (cartModel, locationModel, gtmService) {
     var $header = $('.header');
 
     if (_.isObject(VOLO.menu)) {
@@ -35,7 +35,7 @@ VOLO.initCartViews = function (cartModel, locationModel) {
         cartModel: cartModel,
         locationModel: locationModel,
         $header: $header,
-        gtmService: VOLO.GTMServiceInstance
+        gtmService: gtmService
     });
 
     if (_.isObject(VOLO.cartView)) {
@@ -285,7 +285,7 @@ $(document).on('page:load page:restore', function () {
 
     if ($('.menu__main').length > 0) {
         VOLO.initCartModel(VOLO.jsonCart);
-        VOLO.initCartViews(VOLO.cartModel, VOLO.locationModel);
+        VOLO.initCartViews(VOLO.cartModel, VOLO.locationModel, VOLO.GTMServiceInstance);
         VOLO.cartView.render();
     }
 
@@ -423,7 +423,9 @@ $(document).on('page:before-unload', function () {
         VOLO.existingUserLoginView.unbind();
     }
 
-    delete VOLO.GTMServiceInstance;
+    if (_.isObject(VOLO.GTMServiceInstance)) {
+        delete VOLO.GTMServiceInstance;
+    }
     dataLayer = [];
 });
 
