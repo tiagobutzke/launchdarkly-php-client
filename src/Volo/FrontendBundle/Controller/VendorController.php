@@ -134,7 +134,7 @@ class VendorController extends Controller
     }
 
     /**
-     * @Route("/{code}", name="vendor_by_code", requirements={"code": "([A-Za-z][A-Za-z0-9]{3})"})
+     * @Route("/{code}", name="vendor_by_code", requirements={"code": "(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{4}"})
      * @Method({"GET"})
      *
      * @param string $code
