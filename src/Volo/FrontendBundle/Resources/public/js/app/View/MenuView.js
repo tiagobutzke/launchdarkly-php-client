@@ -32,7 +32,7 @@ var MenuView = Backbone.View.extend({
             }.bind(this)
         });
         this.stickOnTopMenu.init(this.$('.menu__categories nav'));
-        this._boundStickyUpdate = this.stickOnTopMenu.updateCoordinates.bind(this);
+        this._boundStickyUpdate = this.stickOnTopMenu.updateCoordinates.bind(this.stickOnTopMenu);
         this.$('.menu__vendor-logo__img').off('load', this._boundStickyUpdate).on('load', this._boundStickyUpdate);
     },
 
