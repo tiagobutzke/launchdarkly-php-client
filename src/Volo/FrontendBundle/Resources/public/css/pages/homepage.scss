@@ -121,13 +121,19 @@
   }
 }
 
+.teaser__form__input__wrapper {
+   display: inline-block;
+  position: relative;
+   width: 85%;
+   margin-bottom: $space-sm;
+   @include respond-from('screen-sm') {
+     width: 280px;
+     bottom: 8%;
+   }
+ }
+
 .teaser__form__input {
-  width: 85%;
-  margin-bottom: $space-sm;
-  @include respond-from('screen-sm') {
-    width: 280px;
-    bottom: 8%;
-  }
+  width: 100%;
 }
 
 .teaser__button {
