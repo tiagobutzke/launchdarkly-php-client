@@ -98,14 +98,23 @@ var VoucherView = Backbone.View.extend({
 
     _handleCartError: function (data) {
         var supportedErrors = [
-            'ApiVoucherDoesNotExistException',
             'ApiVoucherInactiveException',
+            'ApiVoucherDoesNotExistException',
             'ApiVoucherInvalidVendorException',
-            'ApiVoucherLimitedToNewCustomersException',
+            'ApiVoucherUsageExceededException',
+            'ApiVoucherTemporaryClosedException',
+            'ApiVoucherCustomerRequiredException',
             'ApiVoucherInvalidPaymentTypeException',
             'ApiVoucherNotValidForCustomerException',
-            'ApiVoucherTemporaryClosedException',
-            'ApiVoucherUsageExceededException'
+            'ApiVoucherOrderAmountExceededException',
+            'ApiVoucherProductCategoryUsageException',
+            'ApiVoucherIsNotValidForPlatformException',
+            'ApiVoucherLimitedToNewCustomersException',
+            'ApiVoucherOrderAmountNotReachedException',
+            'ApiVoucherUsagePerCustomerExceededException',
+            'ApiVoucherTemporaryClosedWithScheduleException',
+            'ApiVoucherPromotionOrderAmountNotReachedException',
+            'ApiVoucherInvalidPaymentTypeButAnotherOneIsAvailableException'
         ];
 
         if (_.isObject(data) && _.indexOf(supportedErrors, _.get(data, 'error.errors.exception_type')) !== -1) {
