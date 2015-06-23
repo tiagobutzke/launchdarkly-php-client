@@ -5,7 +5,7 @@ parameters:
     http_schema: https
     google_api_client_id: 'gme-rocketinternetag'
     google_api_channel: 'foodora'
-    google_tag_manager_container_id: 'GTM-MMWRXS'
+    google_tag_manager_container_id: 'GTM-5WN2Q7'
 
 framework:
     session:
