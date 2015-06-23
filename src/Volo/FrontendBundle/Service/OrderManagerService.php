@@ -140,10 +140,11 @@ class OrderManagerService
     /**
      * @param string $adyenEncryptedData
      * @param array  $order
+     * @param string $clientIp
      *
      * @return array
      */
-    public function guestPayment(array $order, $adyenEncryptedData)
+    public function guestPayment(array $order, $adyenEncryptedData, $clientIp)
     {
         $paymentRequest = [
             'order_code'             => $order['code'],
@@ -151,6 +152,7 @@ class OrderManagerService
             'customer_email'         => $order['customer']['email'],
             'amount'                 => $order['total_value'],
             'encrypted_payment_data' => $adyenEncryptedData,
+            'client_ip'              => $clientIp,
         ];
 
         return $this->orderProvider->guestPayment($paymentRequest);
@@ -167,6 +169,7 @@ class OrderManagerService
         $paymentRequest = [
             'order_code'             => $order['code'],
             'amount'                 => $order['total_value'],
+            'client_ip'              => $order['client_ip'],
         ];
 
         switch (true) {
