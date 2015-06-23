@@ -166,6 +166,7 @@ var CartView = Backbone.View.extend({
         this.domObjects.$header = options.$header;
         this.domObjects.$menuMain = options.$menuMain;
         this.$window = options.$window;
+        this.smallScreenMaxSize = options.smallScreenMaxSize;
 
         // margin of the menu height from the bottom edge of the window
         this.cartBottomMargin = VOLO.configuration.cartBottomMargin;
@@ -177,7 +178,7 @@ var CartView = Backbone.View.extend({
         // initializing cart sticking behaviour
         this.stickOnTopCart = new StickOnTop({
             $container: this.$('.desktop-cart'),
-            noStickyBreakPoint: 800,
+            noStickyBreakPoint: this.smallScreenMaxSize,
             stickOnTopValueGetter: function() {
                 return this.domObjects.$header.outerHeight();
             }.bind(this),
@@ -358,7 +359,8 @@ var CartView = Backbone.View.extend({
             el: this.$('.vendor__geocoding__tool-box'),
             geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1]),
             model: this.locationModel,
-            modelCart: this.model.getCart(this.vendor_id)
+            modelCart: this.model.getCart(this.vendor_id),
+            smallScreenMaxSize: this.smallScreenMaxSize
         });
 
         return this;
