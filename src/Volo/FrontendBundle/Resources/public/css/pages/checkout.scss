@@ -747,6 +747,10 @@
 
 .checkout__more-feature-link {
   display: block;
+
+  b {
+    font-weight: normal;
+  }
 }
 
 .checkout__address-list {
