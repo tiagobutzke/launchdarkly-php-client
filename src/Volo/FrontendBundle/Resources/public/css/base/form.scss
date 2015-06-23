@@ -1,0 +1,289 @@
+/*
+* form elements definitions
+*/
+
+// ----------------------- BUTTONS START -----------------------
+.button, button {
+  &:hover, &:focus {
+    outline: none;
+  }
+}
+
+input.button {
+  &:focus {
+    border: none;
+  }
+}
+
+.button {
+  font-family: $cta-font-family;
+  font-size: $cta-font-size;
+  text-align: $cta-text-align;
+  text-transform: $cta-text-transform;
+  padding-left: $cta-padding-left;
+  padding-right: $cta-padding-right;
+  border-radius: $cta-border-radius;
+  height: $cta-height;
+  display: block;
+  border: 0;
+  color: $cta-color-text-primary;
+  background-color: $cta-color-bg-primary;
+  line-height: 1em;
+  padding-top: $space-xs;
+  position: relative;
+
+  @include transition(all .1s linear);
+  &:hover, &:focus {
+    background-color: $cta-color-bg-primary-hover;
+    color: $cta-color-text-primary;
+    text-decoration: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -moz-transition: none;
+    -webkit-transition: none;
+  }
+}
+
+.button-secondary {
+  @extend .button;
+  border: $cta-secondary-border;
+  color: $cta-color-text-secondary;
+  background-color: $cta-color-bg-secondary;
+
+  &:hover, &:focus {
+    background-color: $cta-color-bg-secondary-hover;
+    color: $cta-color-text-primary;
+  }
+}
+
+a.button {
+  padding: 0;
+  span {
+    @include vertical-center-absolute();
+    display: block;
+    width: 100%;
+    padding: 0 $cta-padding-right 0 $cta-padding-left;
+  }
+}
+
+.button--disabled {
+  background-color: $cta-color-bg-disabled;
+  &:hover, &:focus {
+    background-color: $cta-color-bg-disabled;
+    color: $cta-color-text-primary;
+    cursor: default;
+  }
+}
+
+.button--pressed {
+  background-color: $cta-pressed-box-shadow;
+}
+
+.button--inline {
+  display: inline-block;
+}
+
+.button--add {
+  height: 18px;
+  width: 18px;
+  padding: 0;
+  display: inline-block;
+  margin-left: $space-sm;
+}
+
+.button--full-width {
+  width: 100%;
+}
+
+.button:disabled, button:disabled {
+  background-color: $cta-color-bg-disabled;
+}
+
+// ----------------------- BUTTONS END -----------------------
+
+
+
+// ----------------------- INPUT FIELDS START ------------------
+
+input, .form-control, .mobile-select {
+  font-family: $input-font-family;
+  font-size: $input-font-size;
+  text-align: $input-text-align;
+  padding-left: $input-padding-left;
+  padding-right: $input-padding-right;
+  border-radius: $input-border-radius;
+  height: $input-height;
+  line-height: $input-height;
+  border: $input-border;
+  color: $input-color-text;
+
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -moz-transition: none;
+  -webkit-transition: none;
+
+  &:focus {
+    outline: none;
+    border: $input-border-active;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -moz-transition: none;
+    -webkit-transition: none;
+  }
+
+  &[type="radio"], &[type="checkbox"] {
+    height: auto;
+  }
+}
+
+.mobile-select {
+  width: 100%;
+}
+
+.form-group {
+  clear: both;
+  position: relative;
+}
+
+
+.form-group--two_col1 {
+  width: 50%;
+  float: left;
+  padding-right: $space-xs;
+  clear: none;
+}
+
+.form-group--two_col2 {
+  width: 50%;
+  float: left;
+  padding-left: $space-xs;
+  clear: none;
+}
+
+.form-group--two_col1--xs-full {
+  width: 100%;
+  float: none;
+  padding-right: 0;
+  @include respond-from("screen-md") {
+    width: 50%;
+    float: left;
+    padding-right: $space-xs;
+  }
+}
+
+.form-group--two_col2--xs-full {
+  width: 100%;
+  float: none;
+  padding-left:0;
+  @include respond-from("screen-md") {
+    width: 50%;
+    float: left;
+    padding-left: $space-xs;
+    clear: none;
+  }
+}
+
+.form-group--3col {
+  width: 33%;
+  float: left;
+  padding-right: $space-sm;
+  clear: none;
+}
+
+.form-group--3col-last {
+  width: 34%;
+  float: left;
+  clear: none;
+  padding-right: 0;
+
+  i {
+    display: block;
+    color: $color-text-highlight;
+    position: absolute;
+    right: $input-padding-right;
+    top: 15px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+// BOOTSTRAP SELECT START
+.bootstrap-select {
+  width: 100% !important;
+  height: 43px;
+  position: relative;
+}
+
+.caret {
+  @include use-iconmoon-font();
+  border: none;
+  right: 20px !important;
+  margin-top: -5px !important;
+  color: $color-text-highlight;
+  font-size: 1.15em;
+
+  &:before {
+    content: "\44";
+  }
+}
+
+.dropdown-menu {
+  max-height: 120px !important;
+  min-height: inherit !important;
+  z-index: 800 !important;
+
+  li {
+    &.selected {
+        background-color: $color-bg-secondary;
+    }
+    a {
+      padding: 10px;
+      border-bottom: $input-border;
+      &:hover {
+        background-color: $color-bg-secondary;
+      }
+    }
+  }
+}
+
+.bootstrap-select > .dropdown-toggle {
+  height: $input-height;
+  line-height: $input-height;
+  background-color: $dropdown-color-bg-2;
+  border: $dropdown-border;
+  padding-left: $space-sm;
+  padding-right: $space-xs;
+  border-radius: $input-border-radius;
+  color: $dropdown-color-text;
+  font-size: 1em;
+
+  &:hover, &:focus {
+    outline: none !important;
+  }
+}
+// BOOTSTRAP SELECT END
+
+// ----------------------- INPUT FIELDS END ------------------
+
+// ----------------------- ERROR -----------------------------
+
+.error {
+  color: $input-color-text-error;
+  background-color: $input-color-bg-error;
+  border: $input-border-error;
+}
+
+.error_msg {
+  display: block;
+  color: $error-msg-color-text;
+  background-color: $error-msg-color-bg;
+  font-size: $error-msg-font-size;
+  line-height: $error-msg-line-height;
+  padding: $space-xs $input-padding-left;
+  margin-top: -1px;
+}

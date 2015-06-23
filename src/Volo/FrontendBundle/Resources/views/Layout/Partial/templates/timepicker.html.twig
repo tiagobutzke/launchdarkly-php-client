@@ -1,0 +1,23 @@
+<div class="desktop-cart__time" data-vendor_id="{{ vendor.id }}">
+    <div class="desktop-cart__time__field-date">
+        <select id="order-delivery-date">
+            {% set nextThreeOpeningDays = getDeliveryDays(vendor.schedules, 3, vendor.minimumDeliveryTime) %}
+            {% for openingDay in nextThreeOpeningDays %}
+                <option value="{{ openingDay.format("Y-m-d") }}"
+                        data-delivery-hours='{{ getClosingHoursRange(vendor.schedules, openingDay, vendor.minimumDeliveryTime)|to_escaped_json }}'>
+                    {{ openingDay|formatOpeningDay }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="desktop-cart__time__field-time">
+        <select id="order-delivery-time">
+            {% set nextOpeningDay = getDeliveryDays(vendor.schedules, 1, vendor.minimumDeliveryTime) %}
+            {% for value, text in getClosingHoursRange(vendor.schedules, nextOpeningDay|first, vendor.minimumDeliveryTime) %}
+                <option value="{{ value }}">
+                    {{ text }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+</div>

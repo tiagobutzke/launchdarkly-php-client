@@ -1,69 +1,123 @@
-Symfony Standard Edition
-========================
+#Volo Frontend
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony2
-application that you can use as the skeleton for your new applications.
+[![build Status](https://magnum.travis-ci.com/foodpanda/volo-frontend.svg?token=9eHFdnBaxCRVqqTYivpW&branch=develop)](https://magnum.travis-ci.com/foodpanda/volo-frontend)
 
-For details on how to download and get started with Symfony, see the
-[Installation][1] chapter of the Symfony Documentation.
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/foodpanda/volo-frontend/badges/quality-score.png?b=develop&s=fe3b7820a25ed19b25e9e9a98e300497928310f7)](https://scrutinizer-ci.com/g/foodpanda/volo-frontend/?branch=develop) [![Code Coverage](https://scrutinizer-ci.com/g/foodpanda/volo-frontend/badges/coverage.png?b=develop&s=b5c39cd699602731616d7b2838bb994235c57317)](https://scrutinizer-ci.com/g/foodpanda/volo-frontend/?branch=develop)
 
-What's inside?
---------------
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/df9c2144-acd0-4df1-90e1-86d4408fe520/mini.png)](https://insight.sensiolabs.com/projects/df9c2144-acd0-4df1-90e1-86d4408fe520)
+(to get access, create https://insight.sensiolabs.com/ account and ask @mathias-work to be added)
 
-The Symfony Standard Edition is configured with the following defaults:
 
-  * An AppBundle you can use to start coding;
+Brief description
+---
+[VOLO](https://www.volo.de) uses [FoodPanda’s API](https://api-st.foodpanda.in/doc/v4/).
 
-  * Twig as the only configured template engine;
+The VOLO website is built using vanilla Symfony2.
 
-  * Doctrine ORM/DBAL;
+Installation
+---
 
-  * Swiftmailer;
+You'll need **PHP ~5.5.14**, **node.js**, **NPM**, **Bower**, **SASS ~3.4.13** & **Grunt** (cli) installed
 
-  * Annotations enabled for everything.
+**One time installation (Linux users: YMMV :-)):**
 
-It comes pre-configured with the following bundles:
+```
+$ brew install php55 --with-fpm
+$ brew install php55-xdebug
+$ brew install nginx
+$ # TODO: install node/npm instructions go here
+$ npm install -g grunt-cli
+$ npm install -g bower
+$ gem install sass -v '~> 3.4.13'
+```
 
-  * **FrameworkBundle** - The core Symfony framework bundle
+**Setup the project (dependecies and assets):**
 
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
+```
+$ npm install
+$ php composer.phar install
+$ grunt
+```
 
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
+Setup
+---
 
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
+***nginx configuration***
 
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
+```
+server {
+    server_name ~^(?<country_code>.+)\.volo\.dev$;
+    root /path/to/volo/web;
 
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
+    location / {
+        # try to serve file directly, fallback to app.php
+        try_files $uri /app_dev.php$is_args$args;
+    }
+    # DEV
+    # This rule should only be placed on your development environment
+    # In production, don't include this and don't deploy app_dev.php or config.php
+    location ~ ^/(app_dev|config)\.php(/|$) {
+        fastcgi_pass unix:/tmp/php5-fpm.sock;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param HTTPS off;
+        fastcgi_param  COUNTRY_CODE $country_code;
+    }
+    # PROD
+    location ~ ^/app\.php(/|$) {
+        fastcgi_pass unix:/tmp/php5-fpm.sock;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param HTTPS off;
+        fastcgi_param  COUNTRY_CODE $country_code;
+        # Prevents URIs that include the front controller. This will 404:
+        # http://domain.tld/app.php/some-path
+        # Remove the internal directive to allow URIs like this
+        internal;
+    }
 
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
+    error_log /path/to/nginx/logs/volo_error.log;
+    access_log /path/to/nginx/logs/volo_access.log;
+}
+```
 
-  * [**AsseticBundle**][12] - Adds support for Assetic, an asset processing
-    library
+Please add in your ```.bashrc``` or ```.zshrc```
 
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
+```
+export COUNTRY_CODE=de
+```
 
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
+Add a local alias:
 
-  * [**SensioGeneratorBundle**][13] (in dev/test env) - Adds code generation
-    capabilities
+```
+echo "127.0.0.1 de.volo.dev" >> /etc/hosts
+```
 
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
+Go to http://de.volo.dev/ in your browser.
 
-Enjoy!
+Parameters
+---
 
-[1]:  http://symfony.com/doc/2.6/book/installation.html
-[6]:  http://symfony.com/doc/2.6/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  http://symfony.com/doc/2.6/book/doctrine.html
-[8]:  http://symfony.com/doc/2.6/book/templating.html
-[9]:  http://symfony.com/doc/2.6/book/security.html
-[10]: http://symfony.com/doc/2.6/cookbook/email.html
-[11]: http://symfony.com/doc/2.6/cookbook/logging/monolog.html
-[12]: http://symfony.com/doc/2.6/cookbook/assetic/asset_management.html
-[13]: http://symfony.com/doc/2.6/bundles/SensioGeneratorBundle/index.html
+The parameters are defined in ```app/config/countries_parameters```, for each country defined in ```composer.json```, ```composer install``` will create a file (e.g. ```de.yml```) in ```app/config/countries_parameters``` based on ```app/config/parameters.yml.dist```
+
+Translation
+---
+The dictionary is saved at [https://webtranslateit.com/en/projects/11407-Volo](https://webtranslateit.com/en/projects/11407-Volo) (next: WTI). English language is used as a fallback language. Site's locale should be ```de```.
+
+Translations are being imported to our project using the command ```app/console foodpanda:translations:sync```. The translation dictionary
+
+Example of a non-plural translation
+
+	<h1 class="text-center">{{ 'general.motto'|trans }}</h1>
+
+Example of a plural translation
+
+	<h2 class="text-center">{{ 'vendors.list.no_location'|transchoice(2) }}</h2>
+
+A key of a translation is set in WTI's master file (which is English). You can edit the master file either in WTI UI, or using your favorite text editor and ```wti``` utility (github: [https://github.com/AtelierConvivialite/webtranslateit](https://github.com/AtelierConvivialite/webtranslateit)). In a project root execute ```wti pull```. The master file and translations (that has nothing to do with the actual symfony translations) will be pulled to ```app/Resources/translations```. There you can edit the master file ```en.yml``` and then ```wti push```. After that go to WTI UI, perform translations and ```app/console foodpanda:translations:sync```.
+
+Useful links
+---
+* [https://github.com/foodpanda/vagrant-dev](https://github.com/foodpanda/vagrant-dev) — setting up the vagrant machine

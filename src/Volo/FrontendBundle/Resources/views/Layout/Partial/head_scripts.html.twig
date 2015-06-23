@@ -1,0 +1,36 @@
+{% block head_scripts %}
+    {% set config = get_configuration() %}
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.2&amp;sensor=false&amp;libraries=places&amp;language={{ locale|replace('_', '-') }}&amp;client={{ google_api_client_id }}&amp;channel={{ google_api_channel }}"></script>
+    <script src="{{ asset('js/dist/head.js') }}"></script>
+    {% if app.debug == true %}
+        <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+        <script src="{{ path('thumbor_configuration') }}"></script>
+    {% endif %}
+
+    <script type="text/javascript">
+        var VOLO = VOLO || {};
+        VOLO.Translations = {
+            home: {
+                postal_index_form_please_select_option: '{{ 'home.postal_index_form_please_select_option'|trans|e }}'
+            }
+        };
+        VOLO.configuration = VOLO.configuration || {};
+        VOLO.configuration.countryCode = '{{ country_code }}';
+        VOLO.configuration.locale = '{{ locale }}';
+        VOLO.configuration.userLocale = '{{ app.request.locale }}';
+        VOLO.configuration.sessionId = '{{ app.session.id }}';
+        VOLO.configuration.googleTagManagerContainerId = '{{ google_tag_manager_container_id }}';
+        VOLO.orderTrackingInterval = null;
+
+        // cart layout and animation
+        VOLO.configuration.cartBottomMargin = 50;
+        VOLO.configuration.itemsOverflowingClassName = 'checkout__summary-overflowing';
+        VOLO.configuration.timeZone = '{{ timezone }}';
+
+        VOLO.initIntl(VOLO.configuration.locale.replace('_', '-'), '{{ config.currency.currency_symbol_iso }}');
+    </script>
+
+    <script type="text/javascript">
+        var dataLayer = [];
+    </script>
+{% endblock %}

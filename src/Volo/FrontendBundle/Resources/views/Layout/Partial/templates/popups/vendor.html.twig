@@ -1,0 +1,11 @@
+<script type="text/template" id="template-vendor-supply-postcode">
+    {% trans %}tooltip.enter_postcode_to_find_restaurants{% endtrans %}
+</script>
+
+<script type="text/template" id="template-vendor-menu-nothing-found">
+    {% trans with {'%url%': '<%- url %>'}%}tooltip.no_restaurant_delivery_click_search_in_your_area <a href="%url%">link</a>{% endtrans %}
+</script>
+
+<script type="text/template" id="template-vendor-is-deliverable-server-error">
+    {% trans %}tooltip.is_vendor_deliverable_check_error{% endtrans %}
+</script>

@@ -1,0 +1,3 @@
+parameters:
+    locale: de_AT
+    timezone: "Europe/Berlin"

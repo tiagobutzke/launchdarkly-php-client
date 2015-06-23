@@ -1,0 +1,16 @@
+<div class="checkout__delivery_information__address">
+    <h4 class="checkout__subtitle">{% trans %}title.delivery_address{% endtrans %}</h4>
+    <div class="checkout__item" id="selected_delivery_address">
+        <span>{{ customer_address.address_line1 }} {{ customer_address.address_line2 }}</span>
+        <span>{{ customer_address.postcode }}, {{ customer_address.city }}</span>
+        <span>{{ customer_address.company }}</span>
+        <span>{{ customer_address.delivery_instructions }}</span>
+    </div>
+</div>
+<div class="checkout__delivery_information__time">
+    <h4 class="checkout__subtitle">{% trans %}title.delivery_time{% endtrans %}</h4>
+    <div class="checkout__item" id="selected_delivery_address">
+        <span>{{ date(cart.order_time)|localizeddate('long', 'none') }}</span>
+        <span>{{date( cart.order_time)|formatTime }} - {{date( cart.order_time)|date_modify('+1 hour')|formatTime }}</span>
+    </div>
+</div>

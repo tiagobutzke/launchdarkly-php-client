@@ -1,0 +1,59 @@
+#!/bin/bash
+#
+# Creates an deployable build artifact archive
+#
+# Usage:
+# ./create -o build.tar.gz
+#
+
+set -e
+
+usage() {
+cat << EOF
+  usage: $0 options
+
+  OPTIONS:
+    -o output file
+    -b branch name
+    -c commit hash
+EOF
+exit 1;
+}
+
+while getopts "o:b:c:" OPTION; do
+  case ${OPTION} in
+    o) OUTPUT_FILE=${OPTARG};;
+    b) BRANCH_NAME=${OPTARG};;
+    c) COMMIT_HASH=${OPTARG};;
+  esac
+done
+
+if [ -z "${OUTPUT_FILE}" ]; then
+  echo "-o param missing"
+  usage
+fi
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ROOT_DIR=$DIR/..
+
+if [ -f $OUTPUT_FILE ]; then
+    rm $OUTPUT_FILE
+fi
+
+REVISION_FILE="$ROOT_DIR/app/config/revision.yml"
+if [ -f $REVISION_FILE ]; then
+    rm $REVISION_FILE
+fi
+
+echo -e "parameters:\n  health_check_branch_name: $BRANCH_NAME\n  health_check_branch_commit: $COMMIT_HASH\n" > $REVISION_FILE
+
+tar -pchzf "${OUTPUT_FILE}" "$ROOT_DIR" \
+    --exclude "$ROOT_DIR/build" \
+    --exclude "$ROOT_DIR/build-tools" \
+    --exclude "$ROOT_DIR/.git" \
+    --exclude "$ROOT_DIR/app/config/parameters.yml" \
+    --exclude "$ROOT_DIR/app/cache/*" \
+    --exclude "$ROOT_DIR/app/logs/*" \
+    --exclude "$ROOT_DIR/web/app_dev.php" \
+    --exclude "$ROOT_DIR/web/bower_components" \
+    --exclude "$ROOT_DIR/web/config.php" \

@@ -1,0 +1,99 @@
+{% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
+{% use 'VoloFrontendBundle:Location:Partial/vendor_description.html.twig' %}
+
+{% block title %}{{ formattedLocation.city }} | {% trans %}brand{% endtrans %}{% endblock %}
+{% block body_class %}restaurant-list{% endblock %}
+{% block google_tag_manager %}
+<script type="text/javascript" data-turbolinks-eval=always>
+    dataLayer.push({
+        'event': 'enterZipcode',
+        'zipcode': '{{ formattedLocation['postcode'] }}',
+        'city': '{{ formattedLocation['city'] }}',
+        'serviceArea': '{% if (openVendors.count() > 0) or (closedVendors.count() > 0) %}True{% else %}False{% endif %}'
+    });
+    dataLayer.push({
+        'pageType': 'Restaurant List Page',
+        'zipcode': '{{ customer_location().postcode }}',
+        'city': '{{ customer_location().city }}',
+        'country': 'Germany',
+        'loggedIn': '{{ is_customer_authenticated_fully() ? 'true' : 'false' }}',
+        'customerId': '{{ is_customer_authenticated_fully() ? get_authenticated_customer().id }}'
+    });
+</script>
+{% endblock %}
+
+{% block footer_scripts %}
+    {{ parent() }}
+
+    <script data-turbolinks-eval=always>
+        var VOLO = VOLO || {};
+        VOLO.jsonLocation = {{ location|to_escaped_json }};
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="hero-banner-wrapper">
+        {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {vendorCode : 'list', type: 'hero', 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
+        <h1>{{ 'address.promo %city%'|trans({'%city%': formattedLocation['city']})|nl2br }}</h1>
+    </div>
+    <div class="restaurants-container wrapper-fluid">
+        <div class="restaurants__tool-box">
+            <div class="restaurants__location">
+                <form id="postal_index_form" method="GET">
+                    <input
+                            id="postal_index_form_input"
+                            type="text"
+                            class="restaurants__location__input form-control hide"
+                            name="location_set"
+                            value=""
+                            placeholder="{% trans %}postal_code.your_postal_code{% endtrans %}"
+                            data-msg_error_not_found="{% trans %}postal_code.not_found{% endtrans %}"
+                            data-msg_you_probably_mean="{% trans %}postal_code.you_probably_mean{% endtrans %}"
+                            required="true"
+                    >
+                </form>
+
+                <div class="restaurants__location__title">
+                    <span class="restaurants__location__address">
+                        {% if gpsSearch %}
+                            {{ 'address.delivery_by_gps %address%'|trans({
+                                '%address%': formattedLocation['address']
+                            }) }}
+                        {% else %}
+                            {{ 'address.delivery_by_city %city%'|trans({
+                                '%city%': formattedLocation['city']
+                            }) }}
+                        {% endif %}
+                    </span>
+                    <a class="restaurants__location__change-button" id="change_user_location_box_button">
+                        <span class="restaurants__change-button__text">{{ 'buttons.change'|trans }}</span>
+                        <span class="restaurants__change-button__arrow icon-down-open-big"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% if openVendors|length == 0 and closedVendors|length == 0 %}
+            <div class="restaurants__not__available">
+                <p>{% trans %}restaurant.not_available.title{% endtrans %}</p>
+                <h2>{% trans %}restaurants.not_available{% endtrans %}</h2>
+            </div>
+        {% else %}
+            <div class="restaurants">
+                {% for vendor in openVendors %}
+                    {{ block('vendor_description') }}
+                {% endfor %}
+            </div>
+            <div class="restaurants restaurants--closed">
+                {% for vendor in closedVendors %}
+                    {{ block('vendor_description') }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block footer_bottom %}
+    <div class="footer__wrapper__bottom">
+        {{ cms_footer(cityId, 'footer-restaurant-list') }}
+    </div>
+{% endblock %}

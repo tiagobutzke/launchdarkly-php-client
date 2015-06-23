@@ -1,0 +1,329 @@
+/*
+* vendor-listing-page declarations
+*/
+.restaurant-list {
+  .hero-banner-wrapper {
+    @include appear-from("screen-md");
+  }
+}
+
+.restaurants-container {
+  position: relative;
+}
+
+.restaurants {
+  @include make-row(0);
+  margin: 0;
+  padding-top: 50px;
+  .restaurants__item__wrapper__time {
+    display: none;
+  }
+}
+
+.restaurants__tool-box {
+  @include make-row(0);
+  margin: 0;
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.restaurants__tool-box.restaurants__tool-box-sticking {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  @include respond-from("screen-md") {
+    position: absolute;
+    z-index: 1;
+  }
+}
+
+.restaurants__location {
+  @include make-xs-column(12, 0);
+  @include make-md-column(6);
+  @include make-lg-column(5);
+  line-height: $form-element-height-default;
+  padding-left: $space-lg;
+  padding-right: $space-lg;
+  float: left;
+  text-align: left;
+  @include respond-from("screen-md") {
+    padding-right: $space-lg;
+    padding-left: 0;
+    float: right;
+    text-align: right;
+  }
+}
+
+.restaurants__tool-box-sticking .restaurants__location {
+  padding-left: 60px;
+  padding-right: 60px;
+  float: none;
+  text-align: center;
+  @include respond-from("screen-md") {
+    padding-right: $space-lg;
+    padding-left: 0;
+    float: right;
+    text-align: right;
+  }
+}
+
+.restaurants__location__title {
+  text-align: center;
+  line-height: 30px;
+  @include respond-from("screen-md") {
+    text-align: right;
+  }
+}
+
+.restaurants__tool-box-sticking .restaurants__location__title {
+  @include centerTextVerticallyByHeight($header-height-extra-small);
+}
+
+.restaurants__location__change-button {
+  font-size: $restaurant-font-size;
+  display: inline-block;
+  text-align: center;
+  margin-left: $space-xs;
+  width: auto;
+  overflow: auto;
+}
+
+.restaurants__tool-box-sticking .restaurants__location__change-button {
+  margin-left: 0;
+  width: 15px;
+  @include respond-from("screen-md") {
+    margin-left: $space-md;
+    width: auto;
+  }
+}
+
+.restaurants__change-button__text {
+  display: inline;
+  @include respond-from("screen-md") {
+    line-height: 30px;
+  }
+}
+
+.restaurants__tool-box-sticking .restaurants__change-button__text {
+  display: none;
+  @include respond-from("screen-md") {
+    display: inline;
+  }
+}
+
+.restaurants__change-button__arrow {
+  display: none;
+  line-height: $form-element-height-default;
+  margin: 0;
+}
+
+.restaurants__tool-box-sticking .restaurants__change-button__arrow {
+  display: inline;
+  @include respond-from("screen-md") {
+    display: none;
+  }
+}
+
+.restaurants__location__address {
+  font-size: $restaurant-font-size;
+  display: inline-block;
+  max-width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: top;
+  margin: 0;
+}
+
+.restaurants__location__address .restaurants__tool-box-sticking {
+  max-width: 90%;
+  @include respond-from("screen-md") {
+    max-width: 70%;
+  }
+}
+
+.restaurants__location__input {
+  font-size: 0.875em;
+  @include centerTextVerticallyByHeight(30px);
+  margin-top: 0;
+}
+
+.restaurants__tool-box-sticking .restaurants__location__input {
+  margin-top: 8px;
+}
+
+.restaurants__item {
+  @include make-xs-column(12);
+  @include make-sm-column(6);
+  @include make-md-column(4);
+  @include make-lg-column(3);
+  @include set-no-gutter();
+  text-align: left;
+  @include respond-from("screen-sm") {
+    @include set-default-gutter();
+    text-align: center;
+  }
+}
+
+.restaurants__item__wrapper {
+  overflow: hidden;
+  margin-bottom: $space-lg;
+  position: relative;
+  @include transition(all 0.1s ease-out);
+  @include respond-from("screen-sm") {
+    padding-bottom: 12px;
+    border-radius: $border-radius-default;
+    background-color: $restaurant-bg-color;
+    box-shadow: $restaurant-box-shadow;
+    top: 0;
+    margin-bottom: $grid-gutter-width;
+
+    &:hover {
+      box-shadow: $restaurant-box-shadow-hover;
+      top: -5px;
+      cursor: pointer;
+      border-top: none;
+    }
+  }
+
+  .restaurants__item__preorder {
+    display: none;
+  }
+}
+
+.restaurants__item__wrapper__picture {
+  height: 150px;
+  overflow: hidden;
+  position: relative;
+  @include respond-from("screen-sm") {
+    height: auto;
+  }
+}
+
+.restaurant__image {
+    &.aspect-ratio-100-52 {
+      background-size: 100% 100%;
+    }
+    @include responsive-img();
+}
+
+.restaurants__item__wrapper__name {
+  font-size: $restaurant-font-size;
+  font-weight: bold;
+  color: $color-text-highlight;
+  text-transform: uppercase;
+  margin: $space-sm 0 0;
+  @include set-default-gutter();
+  height: 15px;
+  line-height: 15px;
+  @include text-overflow();
+
+  @include respond-from("screen-sm") {
+    height: 20px;
+    line-height: 20px;
+  }
+}
+
+.restaurants__item__wrapper__desc {
+  font-size: $restaurant-font-size;
+  margin: 0;
+  width: 57%;
+  float: left;
+  height: 20px;
+  color: $color-text-secondary;
+  @include text-overflow();
+  @include set-default-gutter();
+  @include respond-from("screen-sm") {
+    width: auto;
+    float: none;
+  }
+}
+
+.restaurants--closed {
+  padding-top: 0;
+
+  .restaurants__item__preorder {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    color: $color-text-selection;
+    z-index: 1;
+    display: block;
+    @include vertical-center-absolute();
+  }
+
+  .icon-preorder {
+    margin: 0 auto $space-sm;
+    display: inline-block;
+    font-size: 1.7em;
+  }
+
+  .item__preorder__label {
+    text-align: center;
+    text-transform: uppercase;
+    display: block;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .restaurants__item__wrapper__picture {
+    background-color: #000;
+    z-index: 0;
+  }
+
+  .restaurant__image {
+    opacity: 0.5;
+    z-index: 0;
+  }
+
+  .restaurants__item__wrapper__time {
+    display: block;
+    @include text-overflow();
+    @include set-default-gutter();
+    font-size: $restaurant-font-size;
+    margin: 0;
+    height: 20px;
+    color: $color-text-secondary;
+    float: right;
+    @include respond-from("screen-sm") {
+      float: none;
+    }
+  }
+
+}
+
+.restaurants__not__available {
+  @extend .restaurants;
+  text-align: center;
+  padding-top: 100px;
+
+  p {
+    font-family: $satisfy-font-family;
+    color: $color-text-highlight;
+    font-size: 1.5em;
+    font-weight: normal;
+    margin: 0;
+    line-height: normal;
+    @include respond-from("screen-sm") {
+      font-size: 1.7em;
+    }
+  }
+
+  h2 {
+    font-family: $base-font-family;
+    font-size: 0.9em;
+    font-weight: normal;
+    line-height: normal;
+    padding-bottom: 60px;
+    width: 86%;
+    margin: 0 auto;
+    @include respond-from("screen-sm") {
+      font-size: 1.15em;
+      width: 60%;
+    }
+  }
+
+}

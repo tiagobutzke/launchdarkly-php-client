@@ -1,0 +1,19 @@
+{% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
+
+{% block title %}{{ element.metaTitle }} | {% trans %}brand{% endtrans %}{% endblock %}
+
+{% block content_wrapper_class %}menu-bg{% endblock content_wrapper_class %}
+
+{% block content %}
+    <div class="hero-banner-wrapper">
+        {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {'vendorCode' : 'cms', type: 'hero', 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
+        <h1>{{ element.metaTitle }}</h1>
+    </div>
+    <div class="static-pages-wrapper">
+        <div class="static-pages">
+            <div class="static-pages__main">
+                {{ element.content|raw }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

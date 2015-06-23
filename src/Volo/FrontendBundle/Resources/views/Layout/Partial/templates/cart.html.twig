@@ -1,0 +1,137 @@
+{# cart summary extra item #}
+<script type="text/template" id="template-cart-summary-extra-item">
+    + <%- name %>
+</script>
+
+{# cart item #}
+<script type="text/template" id="template-cart-item">
+    {# mobile #}
+    <tr class="summary__item__row_mobile">
+        <td class="summary__item__icon">
+            <i class="icon-minus summary__item__minus"></i>
+        </td>
+        <td class="summary__item__quantity">
+            <span class="summary__item__quantity-wrap"><%= VOLO.formatNumber(quantity) %></span>
+        </td>
+        <td class="summary__item__sign">x</td>
+        <td class="summary__item__icon"><i class="icon-plus summary__item__plus"></i></td>
+        <td class="summary__item__name">
+            <%- name %>
+            <div class="summary__extra__items"></div>
+        </td>
+        <td class="summary__item__price">
+            <span class="summary__item__price-wrap"><%= VOLO.formatCurrency(total_price) %></span>
+            <i class="icon-cancel-circled icon-cancel summary__item__remove"></i>
+        </td>
+    </tr>
+    {# desktop #}
+    <tr class="summary__item__row_desktop">
+        <td class="summary__item__quantity">
+            <span class="summary__item__quantity-wrap"><%= VOLO.formatNumber(quantity) %></span>
+            <div class="summary__item__quantity-icons">
+                <div class="icons_box">
+                    <i class="icon-minus summary__item__minus"></i><i class="icon-plus summary__item__plus"></i>
+                </div>
+            </div>
+        </td>
+        <td class="summary__item__sign">x</td>
+        <td class="summary__item__name">
+            <%- name %>
+            <span class="summary__extra__items"></span>
+        </td>
+        <td class="summary__item__price">
+            <span class="summary__item__price-wrap"><%= VOLO.formatCurrency(total_price) %></span>
+            <div class="summary__item__remove-icon"><i class="summary__item__remove icon-cancel"></i></div>
+        </td>
+    </tr>
+</script>
+
+{# cart #}
+<script type="text/template" id="template-cart">
+    <div class="desktop-cart__hero">
+        {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {type: 'hero', 'vendorCode' : vendor.code, 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
+        <div class="desktop-cart__hero__title">
+            {{ 'title.your_cart'|trans }}
+            <div class="modal-close-button mobile-close__cart"></div>
+        </div>
+    </div>
+    <div class="vendor__geocoding__tool-box">
+        <form>
+            <div class="form-group">
+                <input id="postal_index_form_input" type="text" class="form-control menu__input__postcode input__postcode{{ isDeliverable ? ' hide' }}" autofocus="">
+            </div>
+        </form>
+        <div class="vendor__geocoding__tool-box__title{{ isDeliverable ? '' : ' hide' }}">
+            {{ 'cart.delivering_to'|trans }} <span class="location__address">{{ address }}</span>
+        </div>
+    </div>
+    {% include('VoloFrontendBundle:Layout/Partial/templates:timepicker.html.twig') %}
+    <div class="desktop-cart-container">
+        {# NOTE if you want to add new elements to the cart add them inside one of the 3 divs: #}
+        {# desktop-cart__header, desktop-cart__order, desktop-cart__footer #}
+        {# no html elements should be outside of this 3 divs, since the resizing scripts relay on this structure #}
+        <div class="desktop-cart__header">
+            <h3 class="desktop-cart__title">{% trans with {'%name%': vendor.name} %}title.cart_order_summary <span>%name%</span>{% endtrans %}</h3>
+            <p class="desktop-cart_order__message">
+                {{ 'cart.order_message'|trans }}
+            </p>
+        </div>
+        <!-- Actual Cart -->
+        {#<h3 class="desktop-cart__title">{{ 'My Order'|trans }}</h3>#}
+        <div class="desktop-cart__order">
+            <div class="checkout__summary">
+                <table class="summary__items desktop-cart__products">
+                    {# cart item included here #}
+                    <tr>
+                        <td colspan="4" class="summary__item__empty"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="desktop-cart__footer">
+            <p class="desktop-cart__footer__message">
+                {{ 'cart.voucher_message'|trans }}
+            </p>
+            <div class="desktop-cart__order__subtotal_container"></div>
+            <div class="desktop-cart__order__checkout_button_container"></div>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="template-cart-checkout-button">
+    <% if (subtotal >= minimum_order_amount && subtotal > 0) { %>
+        <a class="button btn-checkout" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">
+            <span>{% trans %}cart.checkout_link{% endtrans %}</span>
+        </a>
+    <% } else { %>
+        <a class="button btn-below-minimum-amount button--disabled btn-checkout disabled">
+            <span>
+            <% if (subtotal > 0) { %>
+                {% trans with {'%min%': vendor.minimumOrderAmount|price} %}cart.cart_below_mininum_total_amount %min%{% endtrans %}
+            <% } else { %>
+                {% trans %}cart.cart_below_mininum_total_amount{% endtrans %}
+            <% }; %>
+            </span>
+        </a>
+        <span class="error-below-minimum-amount error_msg hide">{% trans %}cart.need_add_more_products_to_place_order{% endtrans %}</span>
+    <% }; %>
+</script>
+
+<script type="text/template" id="template-cart-subtotal">
+    <div class="desktop-cart__order__subtotal">
+        {{ 'cart.subtotal'|trans }} <span class="desktop-cart__order__total__price"><%= VOLO.formatCurrency(subtotal_after_discount) %></span>
+    </div>
+    <div class="desktop-cart__order__delivery">
+        {{ 'cart.delivery'|trans }}
+        <span>
+            <% if (delivery_fee_discount > delivery_fee) { %>
+                <s><%= VOLO.formatCurrency(delivery_fee_discount) %></s> 
+            <% } %>
+            <%= VOLO.formatCurrency(delivery_fee) %>
+        </span>
+    </div>
+    <div class="desktop-cart__order__total">
+        {{ 'cart.total'|trans }} <em>{{ 'cart.total_note'|trans }}</em>
+        <span class="desktop-cart__order__total__price"><%= VOLO.formatCurrency(total_value) %></span>
+    </div>
+</script>

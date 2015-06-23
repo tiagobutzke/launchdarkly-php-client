@@ -1,0 +1,107 @@
+{# choices and toppings modal #}
+<script type="text/template" id="template-choices-toppings">
+    <div class="modal fade topping-modal" id="choices-toppings-modal" tabindex="-1" role="dialog" aria-labelledby="choicesToppings" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="toppings-product__name"><%- name %></div>
+                    <div class="toppings-product__price"><%= VOLO.formatCurrency(total_price) %></div>
+                    <div class="toppings-product__description"><%- description %></div>
+                    <div class="toppings"></div>
+                </div>
+                <div class="modal-footer">
+                    <a class="toppings-add__to__cart button">
+                        <span>
+                            <% if (this.productToUpdate) { %>
+                                {% trans %}topping.update_item{% endtrans %}
+                            <% } else { %>
+                                {% trans %}topping.add_to_cart{% endtrans %}
+                            <% } %>
+                        </span>
+                    </a>
+                    {# quantity selector from toppings-product-quantity #}
+                </div>
+                <div class="modal-error-message">
+                    {{ 'topping.make_requested_selection'|trans }}
+                </div>
+                <div class="modal-close-button"></div>
+            </div>
+        </div>
+    </div>
+</script>
+
+{# product quantity in modal #}
+<script type="text/template" id="toppings-product-quantity">
+    <div class="product__quantity__container">
+        <div class="icon-minus product__quantity__decrease"></div>
+    </div>
+    <div class="product__quantity__container">
+        <div class="product__quantity"><%- quantity %></div>
+    </div>
+    <div class="product__quantity__container">
+        <div class="icon-plus product__quantity__increase"></div>
+    </div>
+</script>
+
+{# topping fragment #}
+<script type="text/template" id="template-topping">
+    <div class="topping__header">
+        <div class="topping__header__name">
+            <%- name %>
+        </div>
+        <div class="topping__header__info">
+            {#header comment#}
+            <div class="topping__header__arrow icon-down-open-big"></div>
+        </div>
+    </div>
+    <div class="topping__options"></div>
+</script>
+
+{#topping option fragment #}
+<script type="text/template" id="template-topping-option">
+    <div class="topping-option__button"></div>
+    <div class="topping-option__name">
+        <%- name %>
+        <% if (price != 0 ) { %>
+        (+<%= VOLO.formatCurrency(price) %>)
+        <% } %>
+    </div>
+</script>
+
+{#topping option header comment fragment #}
+<script type="text/template" id="template-topping-comment">
+    <div class="topping__comment__help-text">
+        <% if (quantity_minimum === 0) { %>
+            {# 1000 is a magic number decided by backend CMS to represent an unlimited number of selectable topping options #}
+            {# we should keep it until a more proper CMS feature is implemented #}
+            <% if (quantity_maximum > 1 && quantity_maximum < 1000) { %>
+                {% trans with {'%quantity%': '<%- quantity_maximum %>'} %}topping.select_up_to %quantity%{% endtrans %}
+            <% } else { %>
+                {% trans %}topping.select_optional{% endtrans %}
+            <% } %>
+        <% } else { %>
+            <% if (quantity_minimum === quantity_maximum) { %>
+                {% trans with {'%quantity%': '<%- quantity_minimum %>'} %}topping.select %quantity%{% endtrans %}
+            <% } else { %>
+                <% if (quantity_maximum < 1000) { %>
+                    {% trans with {
+                        '%quantity_max%': '<%- quantity_maximum %>',
+                        '%quantity_min%': '<%- quantity_minimum %>'
+                    } %}topping.select_from_x_to_y %quantity_min% %quantity_max%{% endtrans %}
+                <% } else { %>
+                    {% trans with {'%quantity%': '<%- quantity_minimum %>'} %}topping.select_x_or_more %quantity%{% endtrans %}
+                <% } %>
+            <% } %>
+        <% } %>
+    </div>
+    <ul class="topping__comment__selected_items_list">
+        <% _.each(selectedOptions, function(option) { %>
+        <li>
+            <%= option.name %>
+            <% if (option.price != 0 ) { %>
+            (+<%= VOLO.formatCurrency(option.price) %>)
+            <% } %>
+        </li>
+        <% }); %>
+    </ul>
+</script>

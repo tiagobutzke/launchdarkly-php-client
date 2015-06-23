@@ -1,0 +1,51 @@
+{% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
+
+{% block title %}{% trans %}meta_title.status{% endtrans %} | {% trans %}brand{% endtrans %}{% endblock %}
+
+{% block page_wrapper_class %}menu-bg{% endblock page_wrapper_class %}
+{% block body_class %}order-status-page{% endblock %}
+
+{% block content %}
+    <div class="hero-banner-wrapper">
+        {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {type: 'hero', 'vendorCode' : order.vendor_code, 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
+
+        <div class="hero-traking__info">
+            <h2 class="tracking-header__title">{% trans %}title.we_have_received_your_order{% endtrans %}!</h2>
+            <h2 class="tracking-header__title">
+                {% trans %}title.it_should_arrive_at{% endtrans %}
+                <span class="time_value">{{ date(status.confirmed_delivery_time.date, status.confirmed_delivery_time.timezone)|formatTime }}</span>
+            </h2>
+            {#TODO app - show app info when app is available #}
+            {#<div class="tracking-header__app">#}
+                {#<button class="tracking-header__app__button">{% trans %}button.download_app{% endtrans %}</button>#}
+                {#<div class="tracking-header__app__message">{% trans %}general.to_get_real_time_updates_on_your_order{% endtrans %}.</div>#}
+            {#</div>#}
+        </div>
+    </div>
+    <div class="order-status-wrapper" data-order_code="{{ order.reference }}">
+        <div class="order-status-row">
+            <div class="tracking-steps">
+                {% include 'VoloFrontendBundle:Order:tracking_steps.html.twig' with {"status": status} %}
+            </div>
+            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                <div class="create_account">
+                    <div class="create_account__message">
+                        <h2 class="create_account__message__title">{% trans %}title.create_account{% endtrans %}</h2>
+                        <div class="create_account__message__text">{% trans %}title.create_account_invitation{% endtrans %}</div>
+                    </div>
+                    <div class="create_account__login">
+                        <button class="create_account__login__button button">{% trans %}title.create_account{% endtrans %}</button>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        {#TODO app - show app info when app is available #}
+        {#<div class="order-status-row order-status-row__app">#}
+            {#<div class="titles">#}
+                {#<div class="titles__title">{% trans %}title.get_real_time_updates{% endtrans %}</div>#}
+                {#<div class="titles__subtitle">{% trans %}title.download_foodora_app{% endtrans %}</div>#}
+            {#</div>#}
+            {#{% include('VoloFrontendBundle:Home/Partial:app-section.html.twig') %}#}
+        {#</div>#}
+    </div>
+{% endblock %}

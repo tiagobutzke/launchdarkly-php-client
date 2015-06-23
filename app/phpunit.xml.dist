@@ -12,6 +12,7 @@
             <directory>../src/*/*Bundle/Tests</directory>
             <directory>../src/*/Bundle/*Bundle/Tests</directory>
             <directory>../src/*Bundle/Tests</directory>
+            <directory>../src/Foodpanda/ApiSdk/Tests</directory>
         </testsuite>
     </testsuites>
 
@@ -20,6 +21,9 @@
         <server name="KERNEL_DIR" value="/path/to/your/app/" />
     </php>
     -->
+    <php>
+        <server name="COUNTRY_CODE" value="test" />
+    </php>
 
     <filter>
         <whitelist>
@@ -31,7 +35,9 @@
                 <directory>../src/*/*Bundle/Tests</directory>
                 <directory>../src/*/Bundle/*Bundle/Resources</directory>
                 <directory>../src/*/Bundle/*Bundle/Tests</directory>
+                <directory>../src/Foodpanda/ApiSdk/Tests</directory>
             </exclude>
         </whitelist>
     </filter>
+
 </phpunit>

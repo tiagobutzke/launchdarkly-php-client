@@ -22,6 +22,9 @@ class VoloFrontendExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $name = sprintf('%s.api.configuration.life_time', $this->getAlias());
+        $container->setParameter($name, $config['api']['configuration']['life_time']);
+
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
     }

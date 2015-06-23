@@ -1,4 +1,6 @@
 security:
+    session_fixation_strategy: migrate
+
     providers:
         in_memory:
             memory: ~
@@ -10,3 +12,12 @@ security:
 
         default:
             anonymous: ~
+            simple_form:
+                authenticator: volo_frontend.security.authenticator
+                login_path: /login
+                check_path: /login_check
+                use_referer: true
+
+            logout:
+                path:   /logout
+                target: / 

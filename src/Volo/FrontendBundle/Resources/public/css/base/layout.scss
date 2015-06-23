@@ -1,0 +1,40 @@
+/*
+* layout definitions
+*/
+body {
+  background-color: $color-bg-primary;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
+
+.fluid-container {
+  @include fluid-container();
+}
+
+.responsive-img {
+  @include responsive-img();
+}
+
+.wrapper-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left:  0;
+  padding-right: 0;
+  max-width: $screen-lg-min;
+  @include respond-from("screen-sm") {
+    padding-left:  $grid-gutter-width / 2;
+    padding-right: $grid-gutter-width / 2;
+  };
+}
+
+.turbolinks-progress-bar::before {
+  background-color: #d70f64 !important;
+  height: 5px;
+}

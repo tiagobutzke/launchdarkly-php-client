@@ -2,3 +2,77 @@ volo_frontend:
     resource: "@VoloFrontendBundle/Controller/"
     type:     annotation
     prefix:   /
+    schemes:  [%http_schema%]
+
+logout:
+    path:     /logout
+    schemes:  [%http_schema%]
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+foodpanda_web_health:
+    resource: "@FoodpandaApiHealthBundle/Controller/CheckController.php"
+    type:     annotation
+    prefix:   /health
+
+redirect_terms:
+    path: /terms
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: cms
+        code: terms-and-conditions.htm
+        permanent: true
+
+redirect_drivers:
+    path: /drivers
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: cms
+        code: drivers-and-restaurants.htm
+        permanent: true
+
+redirect_restaurants:
+    path: /restaurants
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: cms
+        code: drivers-and-restaurants.htm
+        permanent: true
+
+redirect_imprint:
+    path: /imprint
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: cms
+        code: imprint.htm
+        permanent: true
+
+redirect_privacy:
+    path: /privacy
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: cms
+        code: privacy.htm
+        permanent: true
+
+redirect_city:
+    path: /r/{cityUrlKey}
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: volo_location_search_vendors_by_city
+        permanent: true
+
+redirect_location:
+    path: /location/{urlKey}
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: vendor_by_url_key
+        permanent: true
+
+redirect_signup:
+    path: /signup
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: login
+        permanent: true

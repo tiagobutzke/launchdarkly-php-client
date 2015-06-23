@@ -1,0 +1,252 @@
+/*
+* footer declarations
+*/
+
+.footer {
+  margin-top: $space-lg * 2;
+  overflow: auto;
+  font-size: 0.875em;
+  line-height: 1.5em;
+  padding-bottom: $top-cart-height / 2 + $space-lg;
+  @include respond-from("screen-md") {
+    @include fluid-container();
+  }
+}
+
+%footer__wrapper {
+  @include make-row();
+  padding-top: $space-lg * 2;
+  padding-bottom: $space-lg * 2;
+  margin: 0;
+}
+
+.footer__wrapper__top {
+  @extend %footer__wrapper;
+  border-top: $dropdown-border;
+  //TODO: footer__subscribe enable - remove padding top and bottom again
+  padding-top: $space-sm;
+  padding-bottom: $space-sm;
+}
+
+.footer__wrapper__middle {
+  @extend %footer__wrapper;
+  border-top: $dropdown-border;
+  padding-top: $space-lg;
+  padding-bottom: $space-lg;
+}
+
+.footer-reduced .footer__wrapper__middle {
+  border-bottom: $dropdown-border;
+}
+
+.footer__wrapper__bottom {
+  @extend %footer__wrapper;
+  border-top: $dropdown-border;
+}
+
+.footer__subscribe {
+  @include make-xs-column(12);
+  @include make-md-column(6);
+  margin-bottom: $space-lg;
+  @include respond-from('screen-md') {
+    margin-bottom: 0;
+  }
+  @extend .col-md-push-3;
+}
+
+.footer__subscribe__txt {
+  @include make-xs-column(12);
+  text-align: center;
+  padding-bottom: $space-md;
+
+  p {
+    width: 55%;
+    margin: 0 auto;
+    @include respond-from("screen-sm") {
+      width: 100%;
+    }
+
+    b {
+      display: block;
+      font-family: $bold-font-family;
+      text-transform: uppercase;
+      font-weight: normal;
+    }
+  }
+}
+
+.footer__subscribe__city {
+  @include make-xs-column(4);
+  @include make-sm-column(3);
+  padding-right: $space-xs;
+  @include respond-from("screen-sm") {
+    padding-right: $space-sm;
+  }
+}
+
+.footer__subscribe__email {
+  @include make-xs-column(8);
+  @include make-sm-column(5);
+  @include make-md-column(4);
+  @include make-lg-column(5);
+  padding-left: 0;
+  @include respond-from("screen-sm") {
+    padding-right: 0;
+  }
+}
+
+.footer__subscribe__button {
+  @include make-xs-column(12);
+  @include make-sm-column(4);
+  @include make-md-column(5);
+  @include make-lg-column(4);
+  padding-top: $space-xs;
+  @include respond-from("screen-sm") {
+    padding-top: 0;
+    padding-left: $space-sm;
+  }
+
+  .button {
+    width: 100%;
+    @include respond-from("screen-sm") {
+      margin: 0;
+    }
+  }
+}
+
+.footer__logo {
+  @include make-xs-column(6);
+  @include make-md-column(3);
+  //TODO: footer__subscribe enable - remove comment
+  //@extend .col-md-pull-6;
+  overflow: hidden;
+  height: 45px;
+  margin-top: 10px;
+  @include respond-from("screen-md") {
+    //TODO: footer__subscribe enable - remove comment
+    //margin-top: 0;
+  }
+
+  i {
+    font-size: 1.938em;
+    color: $color-icons-separator;
+    display: block;
+    height: 30px;
+    margin-left: $space-sm;
+    @include respond-from("screen-md") {
+      margin-left: - $space-sm;
+    }
+  }
+}
+
+.footer__social {
+  @include make-xs-column(6);
+  //TODO: footer__subscribe enable - change to make-md-column(3)
+  @include make-md-column(9, 0);
+  text-align: right;
+  height: 42px;
+
+  a {
+    display: inline-block;
+    margin-top: 10px;
+    margin-right: $space-sm;
+    @include respond-from("screen-md") {
+      //TODO: footer__subscribe enable - comment in again
+      //margin-top: 1px;
+    }
+
+    i {
+      font-size: 2.4em;
+      color: $color-icons-separator;
+
+      @include transition(color .1s linear);
+      &:hover {
+        color: $color-text-highlight;
+      }
+    }
+  }
+
+  a:last-child {
+    margin-right: 12px;
+    @include respond-from("screen-md") {
+      margin-right: 0;
+    }
+  }
+}
+
+.footer__nav {
+  @include make-xs-column(12);
+  @include make-md-column(7);
+  @extend .col-md-push-5;
+  text-align: center;
+  @include respond-from("screen-md") {
+    text-align: right;
+    padding-right: 0;
+    ul {
+      width: 100%;
+    }
+  }
+
+  ul {
+    width: 90%;
+    display: inline-block;
+  }
+
+  li {
+    display: inline-block;
+    margin: 0 $space-sm;
+    @include respond-from("screen-md") {
+      margin-right: 0;
+    }
+
+    a {
+      @include make-link($color-text-primary, $color-text-highlight)
+    }
+  }
+}
+
+.footer__disclaimer {
+  @include make-xs-column(12);
+  @include make-md-column(5);
+  @extend .col-md-pull-7;
+  margin-top: $space-md;
+  text-align: center;
+  @include respond-from("screen-md") {
+    text-align: left;
+    margin-top: 0;
+    padding-left: 0;
+  }
+}
+
+.footer__popular {
+  @include make-xs-column(12);
+  @include make-md-column(4);
+  text-align: center;
+  @include respond-from("screen-md") {
+    text-align: left;
+    padding-right: $grid-gutter-width;
+  }
+
+  h4 {
+    margin: 0;
+    font-family: $bold-font-family;
+    text-transform: uppercase;
+    font-size: 1em;
+  }
+
+  p {
+    color: $color-text-secondary;
+    width: 90%;
+    margin: 0 auto $space-md;
+    @include respond-from("screen-md") {
+      width: 100%;
+      margin: 0 0 $space-md;
+      line-height: 1.6em;
+    }
+  }
+
+  a {
+    @include make-link($color-text-secondary, $color-text-highlight);
+  }
+
+}

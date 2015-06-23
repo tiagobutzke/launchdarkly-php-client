@@ -1,0 +1,39 @@
+{% block header %}
+    <header class="header {% block headerClass %}{% endblock headerClass %}">
+        <div class="header__wrapper">
+            <div class="header__account">
+                {% if is_customer_authenticated_fully() %}
+                    <div class="header__account__dropdown dropdown">
+                        <a class="header__account__open" id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ get_authenticated_customer().firstName }}<i class="icon-down-open-mini"></i>
+                        </a>
+                        <a href="#" class="header__account__login-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-profile"></i></a>
+                        <ul class="dropdown-menu arrow header__acount__dropdown_rows" role="menu" aria-labelledby="dLabel">
+                            <li>
+                                <a href="{{ path('profile_index')}}" class="header_account__dropdown__link">{% trans %}profile{% endtrans %}</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('logout') }}" class="header_account__dropdown__link">{% trans %}logout{% endtrans %}</a>
+                            </li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <a class="show-login-modal header__account__login-text">{% trans %}link.login{% endtrans %}</a>
+                    <a class="show-login-modal header__account__login-icon"><i class="icon-profile"></i></a>
+                {% endif %}
+            </div>
+            <h1 class="header__logo">
+                <a class="header__logo__a" href="{{ path('home') }}">
+                    <i class="icon-logo"></i>
+                    <span>{% trans %}brand_name{% endtrans %}</span>
+                </a>
+                <span class="header__logo__restaurant-name"></span>
+            </h1>
+            <a class="header__cart" data-vendor_id="{{ get_default_cart_vendor_id(app.session) }}">
+                <i class="icon-cart"></i>
+                <span class="header__cart__products__count">{{ get_default_cart_count(app.session) }}</span>
+            </a>
+        </div>
+        <div class="header__wrapper__bg"></div>
+    </header>
+{% endblock header %}

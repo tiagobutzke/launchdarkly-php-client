@@ -1,0 +1,55 @@
+{% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
+
+{% block title %}{% trans %}meta_title.checkout{% endtrans %} | {% trans %}brand{% endtrans %}{% endblock %}
+
+{% block page_wrapper_class %}menu-bg{% endblock page_wrapper_class %}
+{% block body_class %}checkout-page{% endblock %}
+
+{% block headerClass %}header--white header-small{% endblock headerClass %}
+
+{% block footer_scripts %}
+
+    <script data-turbolinks-eval=always>
+        var VOLO = VOLO || {};
+        VOLO.jsonCart = {{ cart|to_escaped_json }};
+        VOLO.jsonLocation = {{ location|to_escaped_json }};
+    </script>
+{% endblock footer_scripts %}
+
+{% block content %}
+<div class="checkout-wrapper">
+    <div class="checkout">
+        <div class="checkout__main" data-vendor_id="{{ vendor.id }}">
+
+            {# delivery information #}
+            {{ block('delivery_information') }}
+
+            {# contact info   #}
+            {{ block('contact_information') }}
+
+            {# Payment #}
+            {{ block('payment') }}
+        </div>
+        <h3 class="checkout__title checkout__title--summary">{% trans %}title.order_summary{% endtrans %}</h3>
+        <div id="cart">
+            <div class="checkout_cart desktop-cart" data-minimum_order_amount="{{ vendor.minimumOrderAmount }}" data-vendor_id="{{ vendor.id }}">
+                {# cart from template #}
+            </div>
+        </div>
+    </div>
+</div>
+{# Sticky bottom cart mobile #}
+<div class="bottom-cart">
+    <div class="bottom-cart__wrapper">
+        <div class="bottom-cart__cta--full">{{ block('checkout_button') }}</div>
+    </div>
+</div>
+
+{{ include('VoloFrontendBundle:Layout/Partial/templates:cart.html.twig') }}
+{% endblock %}
+
+{# overriding for reduced footer in checkout page #}
+{% block footer_size_class %}footer-reduced{% endblock footer_size_class %}
+{% block footer %}
+    {{ include('VoloFrontendBundle:Layout/Partial/:reduced_footer.html.twig') }}
+{% endblock footer %}

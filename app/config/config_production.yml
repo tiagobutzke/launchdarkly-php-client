@@ -1,0 +1,55 @@
+imports:
+    - { resource: config.yml }
+
+parameters:
+    http_schema: https
+    google_api_client_id: 'gme-rocketinternetag'
+    google_api_channel: 'foodora'
+    google_tag_manager_container_id: 'GTM-MMWRXS'
+
+framework:
+    session:
+        handler_id:     session.handler.redis
+        cookie_lifetime: 31536000 # 60 * 60 * 24 * 365 * 1 = one year
+        gc_maxlifetime: 31536000 # 60 * 60 * 24 * 365 * 1 = one year
+    validation:
+        cache: apc
+
+monolog:
+    channels: ["api"]
+    handlers:
+        api:
+            type:     syslog
+            level:    error
+            handler:  nested
+            channels: ['api']
+        main:
+            type:         fingers_crossed
+            action_level: error
+            handler:      nested
+            channels:     ['!api']
+        nested:
+            type:     syslog
+            ident:    symfony_volo_%environment%_%country_code%
+            facility: local7
+            level:    debug
+        console:
+            type:  console
+
+doctrine_cache:
+    providers:
+        translator_cache:
+            type: redis
+            redis:
+              host: %redis_cache_host%
+              port: %redis_cache_port%
+        configuration_cache:
+            type: redis
+            redis:
+              host: %redis_cache_host%
+              port: %redis_cache_port%
+        vendor_cache:
+            type: redis
+            redis:
+              host: %redis_cache_host%
+              port: %redis_cache_port%

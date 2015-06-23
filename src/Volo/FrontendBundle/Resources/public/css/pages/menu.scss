@@ -1,0 +1,431 @@
+/*
+* menu-page declarations
+*/
+
+.menu-bg {
+  background: $color-bg-secondary;
+}
+
+.hero-menu__info {
+  width: 250px;
+  padding: 0;
+  text-align: center;
+  color: $color-text-selection;
+  overflow: hidden;
+  height: 40px;
+  @include absolute-center-box();
+  margin-top: 10%;
+
+  @include respond-from("screen-sm") {
+    width: 350px
+  }
+  @include respond-from("screen-md") {
+    width: 600px;
+    margin-top: auto;
+    height: 107px;
+  }
+  @include respond-from("screen-lg") {
+    height: 129px;
+  }
+
+  p {
+    font-size: 0.835em;
+    margin: 0;
+    @include centerTextVerticallyByHeight(36px);
+    @include appear-from("screen-md");
+    span {
+      display: inline-block;
+      margin-left: 22px;
+    }
+  }
+}
+
+.hero-menu__info__headline {
+  font-family: $bold-font-family;
+  font-size: 1em;
+  text-transform: uppercase;
+  line-height: normal;
+  margin: 0;
+  padding: $space-xs;
+  @include text-overflow();
+  @include respond-from("screen-sm") {
+    font-size: 1.4em;
+  }
+  @include respond-from("screen-md") {
+    font-size: 1.6em;
+  }
+  @include respond-from("screen-lg") {
+    font-size: 2em;
+    padding: $space-sm;
+  }
+}
+
+.hero-menu__info__description {
+  font-family: $base-font-family;
+  display: block;
+  @include text-overflow();
+  font-size: 1.4em;
+  line-height: normal;
+  margin: 0;
+  @include appear-from("screen-md");
+  @include respond-from("screen-lg") {
+    font-size: 1.3em;
+  }
+}
+
+.hero-menu__info-extra {
+  font-size: 0.835em;
+  width: 100%;
+  @include centerTextVerticallyByHeight(40px);
+  padding: 0;
+  text-align: center;
+  background-color: $color-bg-primary;
+  @include opacity(0.90);
+  box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  @include appear-from("screen-md");
+
+  i {
+    display: inline-block;
+    margin-left: $space-md;
+  }
+}
+
+//mobile top cart
+
+.top-cart {
+  display: none;
+  width: 100%;
+  position: fixed;
+  top: $header-height;
+  left: 0;
+  height: $top-cart-height;
+  background-color: $color-bg-primary;
+  z-index: $zindex-navbar-fixed;
+  border-top: 1px solid #e6e1d7;
+  box-shadow: 0px 1px 4px rgba(1, 1, 1, 0.2);
+  font-size: 0.875em;
+  @include opacity(0.90);
+  @include respond-from("screen-md") {
+    display: none;
+  }
+}
+
+.top-cart__info {
+  @include make-xs-column(12);
+  height: $top-cart-height / 2;
+  @extend .text-center;
+
+  h3 {
+    width: 80%;
+    margin: 0 auto;
+    @include centerTextVerticallyByHeight($top-cart-height / 2);
+    @include text-overflow();
+    font-size: 1.125em;
+    text-transform: uppercase;
+  }
+}
+
+.top-cart__extra-fee {
+  @include make-xs-column(12);
+  height: $top-cart-height / 2;
+  background: $color-bg-secondary;
+  border-top: 1px solid #e6e1d7;
+  @include centerTextVerticallyByHeight($top-cart-height / 2);
+
+  span {
+    @extend .desktop-cart__order__total__price;
+  }
+}
+
+// main content
+
+.menu-wrapper {
+  @include clearfix;
+  @include respond-from("screen-md") {
+    @include fluid-container();
+  }
+}
+
+.menu {
+  //margin-top: $top-cart-height +  $grid-gutter-width / 2;
+  @include respond-from("screen-md") {
+    @include make-row();
+    margin-top: 0;
+  }
+}
+
+.menu__main {
+  background-color: $color-bg-primary;
+  @include respond-from("screen-md") {
+    border-radius: $border-radius-default;
+    @include make-md-column(8);
+    @include make-lg-column(9);
+  }
+}
+
+.menu__main__list {
+  @include respond-from("screen-md") {
+    @include make-row();
+  }
+}
+
+.menu__vendor-logo {
+  padding: $grid-gutter-width 0 10px;
+  margin: 0;
+
+  img {
+    max-height: 195px;
+    max-width: 195px;
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+.menu__categories  {
+  @include appear-from("screen-lg");
+  @include make-lg-column(3);
+  text-align: right;
+
+  nav {
+    padding-top: 10px;
+  }
+
+  a {
+     @include make-link($color-text-primary, $color-text-highlight);
+     font-size: 0.875em;
+   }
+}
+
+.menu__items  {
+  padding-top: $header-height-extra-small;
+  @include respond-from("screen-md") {
+    @include make-md-column(12);
+    @include make-lg-column(9);
+    padding-top: 0;
+  }
+}
+
+.menu__items__title {
+  font-family: $bold-font-family;
+  font-size: 0.750em;
+  @extend .text-center;
+  border-bottom: $base-border;
+  padding: 35px 0 15px;
+  margin: 0;
+  text-transform: uppercase;
+  line-height: normal;
+  &:first-child {
+    padding-top: 15px;
+  }
+  @include respond-from("screen-md") {
+    font-size: 0.875em;
+    padding: 55px 0 25px;
+    &:first-child {
+      padding-top: 30px;
+    }
+  }
+}
+
+.menu__item {
+  border-bottom: $base-border;
+  line-height: normal;
+  font-size: 0.813em;
+  padding: 0 $space-sm;
+  float: left;
+  width: 100%;
+  display: table;
+  min-height: 60px;
+
+  @include transition(background-color .1s linear);
+  @include respond-from("screen-md") {
+    font-size: 0.875em;
+    min-height: 96px;
+    padding: 0 $space-xs 0 $space-lg;
+  }
+
+  &:last-child {
+    border: none;
+  }
+
+  &:hover {
+    background-color: $color-bg-secondary;
+    cursor: pointer;
+  }
+}
+
+.menu__item--selected {
+  background-color: $color-bg-secondary;
+
+  &:hover {
+    cursor: default;
+  }
+}
+
+.menu__item__wrapper {
+  width: 75%;
+  padding: $space-sm 0;
+  display: table-cell;
+  vertical-align: middle;
+  @include respond-from("screen-md") {
+    padding: $space-lg 0;
+  }
+}
+
+.menu__item__name {
+  font-weight: bold;
+
+  i {
+    color: $color-text-light;
+    margin-left: 6px;
+  }
+
+  sup {
+    color: $color-text-light;
+    i {
+      font-size: 1.1em;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+  }
+}
+
+.menu__item__description {
+  color: $color-text-secondary;
+}
+
+.menu__item__price {
+  width: 25%;
+  text-align: right;
+  display: table-cell;
+  vertical-align: middle;
+
+  button {
+    height: 20px;
+    padding: 0 5px;
+    background: none;
+    border: none;
+
+    i {
+      font-size: 1.7em;
+      display: inline-block;
+      vertical-align: middle;
+      margin-top: -1px;
+      color: $color-text-highlight;
+    }
+  }
+}
+
+.menu__icon-legend {
+  text-align:  center;
+  font-size: 0.875em;
+  color: $color-text-light;
+  padding-top: $space-sm * 3;
+
+  span {
+    display: inline-block;
+    margin-right: 14px;
+  }
+
+  i {
+    margin-right: 6px;
+    color: $color-text-light;
+  }
+}
+
+.menu__legal {
+  text-align:  center;
+  font-size: 0.875em;
+  color: $color-text-light;
+  padding: $space-sm;
+
+  span {
+    display: inline-block;
+    margin-right: 14px;
+  }
+}
+
+.menu__bottom-info {
+  font-size: 0.875em;
+  @include make-md-column(8);
+  @include make-lg-column(9);
+  padding: 0;
+  padding-bottom: $space-lg;
+}
+
+.menu__bottom-info__title {
+  @extend .menu__items__title;
+  border: none;
+  margin: 0;
+  padding: $space-xs 0;
+
+  &:first-child {
+    padding-top: $space-lg;
+  }
+}
+
+.menu__bottom-info__openings {
+  width: 100%;
+  text-align: center;
+
+  ul {
+    margin: 0;
+    display: block;
+
+    li {
+      text-align: left;
+      font-size: 0.875em;
+      color: $color-text-secondary;
+      display: inline-block;
+    }
+
+    span {
+      color: $color-text-primary;
+      display: inline-block;
+      margin-right: $space-lg;
+    }
+  }
+
+}
+
+.allergy-modal {
+  .modal-body {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .modal-dialog {
+    @include respond-from("screen-sm") {
+      width: 500px;
+    }
+  }
+
+  .allergy-legend {
+    ul {
+      @include make-sm-column(6);
+      font-size: 0.875em;
+      li {
+        padding-left: 30px;
+        line-height: 20px;
+        padding-bottom: 5px;
+      }
+    }
+
+    i {
+      color: $color-text-light;
+      font-size: 1.2em;
+      display: inline-block;
+      width: 30px;
+      margin-left: -30px;
+    }
+  }
+}
+
+.menu__input__postcode {
+  margin-top: 15px;
+  width: 100%;
+}

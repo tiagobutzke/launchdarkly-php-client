@@ -1,0 +1,59 @@
+<div class="tracking-step tracking-step-first {{ 'tracking-step-active'|activateStepTracking(1, status) }}">
+    <div class="tracking-step__line"></div>
+    <div class="tracking-step__image">
+        <div class="tracking-step__image__number">1</div>
+    </div>
+    <div class="tracking-step__message">
+        <h2 class="tracking-step__message__title">{% trans %}title.order_accepted{% endtrans %}</h2>
+        <div class="tracking-step__message__text">{% trans %}title.order_accepted_comment{% endtrans %}</div>
+    </div>
+    <div class="tracking-step__time">
+        <span class="time_value">{{ date(status.ordered_at.date, status.ordered_at.timezone)|formatTime }}</span>
+    </div>
+</div>
+
+<div class="tracking-step {{ 'tracking-step-active'|activateStepTracking(2, status) }}">
+    <div class="tracking-step__line"></div>
+    <div class="tracking-step__image">
+        <div class="tracking-step__image__number">2</div>
+    </div>
+    <div class="tracking-step__message">
+        <h2 class="tracking-step__message__title">{% trans %}title.being_prepared{% endtrans %}</h2>
+        <div class="tracking-step__message__text">{% trans %}title.being_prepared_comment{% endtrans %}</div>
+    </div>
+</div>
+
+<div class="tracking-step {{ 'tracking-step-active'|activateStepTracking(3, status) }}">
+    <div class="tracking-step__line"></div>
+    <div class="tracking-step__image">
+        <div class="tracking-step__image__number">3</div>
+    </div>
+    <div class="tracking-step__message">
+        <h2 class="tracking-step__message__title">{% trans %}title.picked_up_for_delivery{% endtrans %}</h2>
+        <div class="tracking-step__message__text">{% trans %}title.picked_up_for_delivery_comment{% endtrans %}</div>
+    </div>
+</div>
+
+<div class="tracking-step {{ 'tracking-step-active'|activateStepTracking(4, status) }}">
+    <div class="tracking-step__line"></div>
+    <div class="tracking-step__image">
+        <div class="tracking-step__image__number">4</div>
+    </div>
+    <div class="tracking-step__message">
+        <h2 class="tracking-step__message__title">{% trans %}title.arriving_soon{% endtrans %}</h2>
+        <div class="tracking-step__message__text">{% trans %}title.arriving_soon_comment{% endtrans %}</div>
+    </div>
+</div>
+
+<div class="tracking-step tracking-step-last {{ 'tracking-step-active'|activateStepTracking(5, status) }}">
+    <div class="tracking-step__line"></div>
+    <div class="tracking-step__image">
+        <div class="tracking-step__image__number">
+            <span class="icon-check"></span>
+        </div>
+    </div>
+    <div class="tracking-step__message">
+        <h2 class="tracking-step__message__title">{% trans %}title.delivered{% endtrans %}</h2>
+        <div class="tracking-step__message__text">{% trans %}title.delivered_comment{% endtrans %}</div>
+    </div>
+</div>

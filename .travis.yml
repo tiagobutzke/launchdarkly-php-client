@@ -1,0 +1,63 @@
+language: php
+php:
+  - 5.5
+
+env:
+   global:
+     - COUNTRY_CODE=test
+
+before_install:
+    - sudo apt-get update
+    - sudo apt-get install -y graphicsmagick libgraphicsmagick1-dev
+    - npm install -g grunt-cli
+    - npm install -g bower
+    - gem update --system
+    - gem install sass -v '~> 3.4.13'
+    - sed "s/asset_version_placeholder/'${TRAVIS_COMMIT:0:7}\'/g" -i app/config/config.yml
+
+install:
+    # Install composer dependencies
+    #    - cd $TRAVIS_BUILD_DIR && composer self-update
+    - cd $TRAVIS_BUILD_DIR && composer install --no-interaction --optimize-autoloader
+    - php app/console assets:install web --env=test
+    - php app/console fos:js-routing:dump --env=test
+    - php app/console volo:thumbor:dump --env=test
+    - npm install
+    - grunt deploy --env=prod
+
+cache:
+    # Cache composer packages
+    apt: true
+    directories:
+        - $HOME/.composer
+        - node_modules
+        - bower_components
+
+before_script:
+    # Prepare cache folders for WWW. Cache gets cleared with composer install.
+    - cd $TRAVIS_BUILD_DIR && chmod -R 777 app/cache
+    - cd $TRAVIS_BUILD_DIR && chmod -R 777 app/logs
+
+script:
+    - phpunit -c $TRAVIS_BUILD_DIR/app/
+    - grunt test --env=prod
+    - app/console foodpanda:translations:sync
+
+notifications:
+  slack:
+    rooms:
+      - hydrolo:W3sf04Zamqrz1d0CMFW3omV2#general
+    on_success: [never]
+
+before_deploy:
+    - $TRAVIS_BUILD_DIR/build-tools/create-artifact-archive -o $TRAVIS_BUILD_DIR/build-tools/build.tar.gz -b $TRAVIS_BRANCH -c $TRAVIS_COMMIT
+
+deploy:
+    provider: releases
+    api-key: "4f43a5306c7dfbc3e7ab9d1d6791de2e4d98a711"
+    file: $TRAVIS_BUILD_DIR/build-tools/build.tar.gz
+    skip_cleanup: true
+    on:
+        tags: true
+        all_branches: true
+        condition: $TRAVIS_PHP_VERSION != hhvm

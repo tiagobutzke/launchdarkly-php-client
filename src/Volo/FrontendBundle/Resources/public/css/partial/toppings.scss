@@ -1,0 +1,267 @@
+
+.toppings-product__name {
+  padding: $space-md $space-lg 0 $space-md;
+  font-family: $bold-font-family;
+  font-size: 0.9em;
+  line-height: 1.5em;
+  @include respond-from("screen-md") {
+    line-height: initial;
+    padding: initial;
+  }
+}
+
+.toppings-product__price {
+  padding: 0 $space-md 0 $space-md;
+  font-family: $bold-font-family;
+  line-height: 1.5em;
+  font-size: 0.9em;
+  @include respond-from("screen-md") {
+    line-height: initial;
+    padding: initial;
+  }
+}
+
+.toppings-product__description {
+  padding: 0 $space-md $space-sm $space-md;
+  color: $color-text-secondary;
+  font-size: 0.8em;
+  line-height: 1.4em;
+  @include respond-from("screen-md") {
+    font-size: 0.9em;
+    padding: $space-sm 0 $space-md 0;
+  }
+}
+
+.toppings {
+  border-top: $base-border;
+}
+
+.topping__header {
+  font-family: $bold-font-family;
+  font-size: 0.750em;
+  border-bottom: $base-border;
+  padding: $space-sm 0;
+  margin: 0;
+  text-transform: uppercase;
+  overflow: auto;
+  cursor: pointer;
+  @include respond-from("screen-md") {
+    font-size: 0.875em;
+  }
+
+  @include transition(background-color .1s linear);
+  &:hover {
+    background-color: $color-bg-secondary;
+  }
+}
+
+.topping__header__name {
+  @include make-xs-column(6);
+  @include respond-from("screen-md") {
+    padding-left: 0;
+  }
+}
+
+.topping__header__info {
+  @include make-xs-column(6);
+  padding-right: 0;
+}
+
+.topping__header__comment {
+  @extend .text-right;
+  overflow: auto;
+  float: right;
+  width: 80%;
+  padding-right: 0;
+  text-transform: none;
+  font-family: $base-font-family;
+  color: $color-text-primary;
+  @include respond-from("screen-md") {
+    float: none;
+    width: auto;
+  }
+}
+
+.topping__comment__help-text {
+  color: $color-text-inactive;
+}
+
+.selection-required .topping__comment__help-text {
+  color: $color-text-highlight;
+}
+
+.selection-required .valid .topping__comment__help-text {
+  color: $color-text-inactive;
+}
+
+.topping__header__arrow {
+  padding: 6px;
+  float: right;
+  color: $color-text-highlight;
+  @include respond-from("screen-md") {
+    padding-right: 0;
+  }
+}
+
+.topping__options {
+  border-bottom: $base-border;
+  overflow: auto;
+}
+
+.topping-option {
+  overflow: auto;
+  color: $color-text-secondary;
+  font-size: 0.8em;
+  padding: $space-sm $space-md;
+  cursor: pointer;
+
+  @include transition(background-color .1s linear);
+  &:hover {
+    background-color: $color-bg-secondary;
+  }
+
+  &:first-child {
+    margin-top: $space-md;
+  }
+
+  &:last-child {
+    margin-bottom: $space-md * 2;
+  }
+
+  @include respond-from("screen-md") {
+    font-size: 0.9em;
+    padding: $space-sm 0;
+  }
+}
+
+.topping-option__name {
+  float: left;
+  padding-left: 0;
+  width: 87%;
+  @include respond-from("screen-md") {
+    width: 95%;
+  }
+}
+
+.topping-option__button {
+  display: inline-block;
+  vertical-align: text-top;
+  position: relative;
+  top: 1px;
+  @include retina-sprite($radiobutton-unselected-group);
+}
+
+.selected .topping-option__button {
+  @include retina-sprite($radiobutton-selected-group);
+}
+
+.topicOptionCheckbox .topping-option__button {
+  @include retina-sprite($checkbox-unselected-group);
+}
+
+.topicOptionCheckbox .selected .topping-option__button {
+  @include retina-sprite($checkbox-selected-group);
+}
+
+.topping__options.selected {
+  background-color: $brand-success;
+}
+
+.toppings-add__to__cart {
+  @include make-xs-column(6);
+  @extend .pull-right;
+
+  &.disabled {
+    background-color: $color-text-inactive;
+    cursor: no-drop;
+  }
+}
+
+.topping-modal {
+  .modal-close-button {
+    cursor: pointer;
+    position: absolute;
+    right: 4px;
+    top: 2px;
+    @include retina-sprite($modal-close-group);
+    @include respond-from("screen-md") {
+      right: 15px;
+      top: -15px;
+    }
+  }
+
+  .modal-content {
+    border-radius: 0;
+    height: 100%;
+    overflow: auto;
+    padding-bottom: 34px;
+    @include respond-from("screen-md") {
+      padding-bottom: 0;
+      overflow: visible;
+    }
+  }
+
+  .modal-footer {
+    padding: $space-md;
+    border-top: none;
+    @include respond-from("screen-md") {
+      padding: 0 $space-lg $space-lg $space-lg;
+    }
+  }
+
+  .modal-body {
+    padding: 0;
+    @include respond-from("screen-md") {
+      padding: $space-md $space-lg $space-lg $space-lg;
+    }
+  }
+
+  .modal-error-message {
+    color: $error-msg-color-text;
+    padding: 5px 10px;
+    background-color: $error-msg-color-bg;
+    font-size: 0.8em;
+    @include respond-from("screen-md") {
+      font-size: 0.9em;
+    }
+  }
+
+  .modal-dialog {
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+    @include respond-from("screen-xs") {
+      margin: 0;
+    }
+    @include respond-from("screen-md") {
+      margin-top: 70px;
+      width: 600px;
+    }
+  }
+}
+
+.toppings-product-quantity {
+  float: left;
+  line-height: $form-element-height-default;
+
+  & .product__quantity__decrease,
+  & .product__quantity__increase {
+    cursor: pointer;
+    background-color: $color-bg-secondary;
+    color: $color-text-link;
+    line-height: inherit;
+    text-align: center;
+    font-size: 28px;
+  }
+
+  & .product__quantity {
+    line-height: inherit;
+    text-align: center;
+  }
+
+  & .product__quantity__container {
+    float: left;
+    width: $form-element-height-default;
+    height: $form-element-height-default;
+  }
+}

@@ -1,0 +1,31 @@
+{% extends 'VoloFrontendBundle:Checkout:base.html.twig' %}
+
+{% block google_tag_manager %}
+    <script type="text/javascript" data-turbolinks-eval=always>
+        dataLayer.push({
+            'event': 'checkout',
+            'checkoutStep': '1 - Checkout Started',
+            'sessionId': VOLO.configuration.sessionId
+        });
+    </script>
+{% endblock %}
+
+{% block delivery_information %}
+    <h3 class="checkout__title">1. {% trans %}title.delivery_details{% endtrans %}</h3>
+
+    <h4 class="checkout__subtitle">{% trans %}title.delivery_time{% endtrans %}</h4>
+    <div class="time-picker" data-vendor_id="{{ vendor.id }}">
+        {% include('VoloFrontendBundle:Layout/Partial/templates:timepicker.html.twig') %}
+    </div>
+
+    <h4 class="checkout__subtitle">{% trans %}title.delivery_address{% endtrans %}</h4>
+    {% include('VoloFrontendBundle:Checkout/Partial:delivery_information_form.html.twig') %}
+{% endblock %}
+
+{% block contact_information %}
+    <h3 class="checkout__title checkout__title--step">2. {% trans %}title.contact_info{% endtrans %}</h3>
+{% endblock %}
+
+{% block payment %}
+    <h3 class="checkout__title checkout__title--step">3. {% trans %}title.payment{% endtrans %}</h3>
+{% endblock %}

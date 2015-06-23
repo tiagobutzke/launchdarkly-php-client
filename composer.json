@@ -1,27 +1,38 @@
 {
-    "name": "symfony/framework-standard-edition",
-    "license": "MIT",
+    "name": "volo/frontend",
+    "license": "proprietary",
     "type": "project",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "description": "Volo frontend",
     "autoload": {
         "psr-0": { "": "src/", "SymfonyStandard": "app/" }
     },
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=5.5",
         "symfony/symfony": "2.6.*",
-        "doctrine/orm": "~2.2,>=2.2.3,<2.5",
-        "doctrine/dbal": "<2.5",
-        "doctrine/doctrine-bundle": "~1.2",
         "twig/extensions": "~1.0",
         "symfony/assetic-bundle": "~2.3",
-        "symfony/swiftmailer-bundle": "~2.3",
         "symfony/monolog-bundle": "~2.4",
         "sensio/distribution-bundle": "~3.0,>=3.0.12",
         "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
-        "incenteev/composer-parameter-handler": "~2.0"
+        "incenteev/composer-parameter-handler": "~2.0",
+        "friendsofsymfony/jsrouting-bundle": "1.5.4",
+        "guzzlehttp/guzzle": "~5.0",
+        "guzzlehttp/log-subscriber": "1.0.*",
+        "commerceguys/guzzle-oauth2-plugin": "~2.0",
+        "helthe/turbolinks-bundle": "~1.1",
+        "foodpanda/translation-library": "~1.1",
+        "foodpanda/translation-bundle": "~1.0",
+        "foodpanda/api-sdk": "dev-master#fa4906b5216131f4a4e4e8bb8d6612c6bad19db9",
+        "drak/native-session": "^1.0",
+        "misd/phone-number-bundle": "~1.0",
+        "jbouzekri/phumbor-bundle": "~1.1"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3"
+        "sensio/generator-bundle": "~2.3",
+        "phpunit/phpunit": "4.6.*",
+        "phpunit/php-code-coverage": "2.0.*",
+        "phpmd/phpmd": "2.2.*",
+        "squizlabs/php_codesniffer": "2.3.*"
     },
     "scripts": {
         "post-root-package-install": [
@@ -34,7 +45,8 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
+            "Helthe\\Bundle\\TurbolinksBundle\\Composer\\ScriptHandler::installAssets"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
@@ -43,21 +55,111 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
+            "Helthe\\Bundle\\TurbolinksBundle\\Composer\\ScriptHandler::installAssets"
         ]
     },
     "config": {
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+        "github-oauth": {"github.com": "d0aaaffa006d9117502c6beb2203fda616b469cd"}
     },
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
         "symfony-assets-install": "relative",
-        "incenteev-parameters": {
-            "file": "app/config/parameters.yml"
-        },
+        "incenteev-parameters": [
+            {
+              "file": "app/config/countries_parameters/at.yml",
+              "dist-file": "app/config/countries_parameters/dist/at.yml.dist",
+              "keep-outdated": true
+            },
+            {
+                "file": "app/config/countries_parameters/au.yml",
+                "dist-file": "app/config/countries_parameters/dist/au.yml.dist",
+                "keep-outdated": true
+            },
+            {
+                "file": "app/config/countries_parameters/ca.yml",
+                "dist-file": "app/config/countries_parameters/dist/ca.yml.dist",
+                "keep-outdated": true
+            },
+            {
+                "file": "app/config/countries_parameters/ch.yml",
+                "dist-file": "app/config/countries_parameters/dist/ch.yml.dist",
+                "keep-outdated": true
+            },
+            {
+                "file": "app/config/countries_parameters/de.yml",
+                "dist-file": "app/config/countries_parameters/dist/de.yml.dist",
+                "keep-outdated": true
+            },
+            {
+                "file": "app/config/countries_parameters/dk.yml",
+                "dist-file": "app/config/countries_parameters/dist/dk.yml.dist",
+                "keep-outdated": true
+            },
+            {
+                "file": "app/config/countries_parameters/es.yml",
+                "dist-file": "app/config/countries_parameters/dist/es.yml.dist",
+                "keep-outdated": true
+            },
+            {
+                "file": "app/config/countries_parameters/fi.yml",
+                "dist-file": "app/config/countries_parameters/dist/fi.yml.dist",
+                "keep-outdated": true
+            },
+            {
+                "file": "app/config/countries_parameters/fr.yml",
+                "dist-file": "app/config/countries_parameters/dist/fr.yml.dist",
+                "keep-outdated": true
+            },
+            {
+                "file": "app/config/countries_parameters/ie.yml",
+                "dist-file": "app/config/countries_parameters/dist/ie.yml.dist",
+                "keep-outdated": true
+            },
+            {
+                "file": "app/config/countries_parameters/it.yml",
+                "dist-file": "app/config/countries_parameters/dist/it.yml.dist",
+                "keep-outdated": true
+            },
+            {
+                "file": "app/config/countries_parameters/nl.yml",
+                "dist-file": "app/config/countries_parameters/dist/nl.yml.dist",
+                "keep-outdated": true
+            },
+            {
+                "file": "app/config/countries_parameters/no.yml",
+                "dist-file": "app/config/countries_parameters/dist/no.yml.dist",
+                "keep-outdated": true
+            },
+            {
+                "file": "app/config/countries_parameters/se.yml",
+                "dist-file": "app/config/countries_parameters/dist/se.yml.dist",
+                "keep-outdated": true
+            },
+            {
+                "file": "app/config/countries_parameters/gb.yml",
+                "dist-file": "app/config/countries_parameters/dist/gb.yml.dist",
+                "keep-outdated": true
+            }
+        ],
         "branch-alias": {
             "dev-master": "2.6-dev"
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/foodpanda/translation-library.git"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/foodpanda/translation-bundle.git"
+        },
+        {
+            "type": "git",
+            "url": "git@github.com:foodpanda/api-sdk.git"
+        }
+    ]
 }

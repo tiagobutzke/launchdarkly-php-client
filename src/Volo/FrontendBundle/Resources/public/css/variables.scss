@@ -1,0 +1,190 @@
+/*
+* variables declarations
+*/
+
+// ----------------------- FONTS START -----------------------
+$fontspath: "../../fonts/";
+
+@font-face {
+  font-family: 'icomoon';
+  src:url('#{$fontspath}icomoon.eot?i5ic2x');
+  src:url('#{$fontspath}icomoon.eot?#iefixi5ic2x') format('embedded-opentype'),
+  url('#{$fontspath}icomoon.ttf?i5ic2x') format('truetype'),
+  url('#{$fontspath}icomoon.woff?i5ic2x') format('woff'),
+  url('#{$fontspath}icomoon.svg?i5ic2x#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Avenir Book';
+  src: url('#{$fontspath}AvenirBook.eot');
+  src: url('#{$fontspath}AvenirBook.eot') format('embedded-opentype'),
+  url('#{$fontspath}AvenirBook.woff2') format('woff2'),
+  url('#{$fontspath}AvenirBook.woff') format('woff'),
+  url('#{$fontspath}AvenirBook.ttf') format('truetype'),
+  url('#{$fontspath}AvenirBook.svg#AvenirBook') format('svg');
+}
+
+@font-face {
+  font-family: 'Avenir Heavy';
+  src: url('#{$fontspath}AvenirHeavy.eot');
+  src: url('#{$fontspath}AvenirHeavy.eot') format('embedded-opentype'),
+  url('#{$fontspath}AvenirHeavy.woff2') format('woff2'),
+  url('#{$fontspath}AvenirHeavy.woff') format('woff'),
+  url('#{$fontspath}AvenirHeavy.ttf') format('truetype'),
+  url('#{$fontspath}AvenirHeavy.svg#AvenirHeavy') format('svg');
+}
+
+@font-face {
+  font-family: 'Satisfy Regular';
+  src: url('#{$fontspath}SatisfyRegular.eot');
+  src: url('#{$fontspath}SatisfyRegular.eot') format('embedded-opentype'),
+  url('#{$fontspath}SatisfyRegular.woff2') format('woff2'),
+  url('#{$fontspath}SatisfyRegular.woff') format('woff'),
+  url('#{$fontspath}SatisfyRegular.ttf') format('truetype'),
+  url('#{$fontspath}SatisfyRegular.svg#SatisfyRegular') format('svg');
+}
+
+$base-font-size: 16px;
+$small-font-size: 13px;
+$base-font-family: 'Avenir Book', Arial, sans-serif;
+$base-font-weight: 400;
+$base-line-height: 1.6em;
+$color-text-primary: #292929;
+$color-text-secondary: #666;
+$color-text-light: #999;
+$color-text-highlight: #d70f64;
+$color-text-inactive: #bcbcbc;
+$color-text-selection: #fff;
+$color-text-link: #d70f64;
+$color-text-link-hover: #ac0c50;
+
+$bold-font-family: 'Avenir Heavy', Arial, sans-serif;
+$satisfy-font-family: 'Satisfy Regular', Arial, sans-serif;
+// ----------------------- FONTS END --------------------------
+
+// ----------------------- IMAGES START -----------------------
+$imagepath: "../../img/";
+// ----------------------- IMAGES END -------------------------
+
+// ----------------------- BACKGROUND COLORS START -----------------------
+$color-icons-separator: #c8c8c8;
+$color-bg-primary: #fff;
+$color-bg-secondary: #f7f7f7;
+$color-bg-footer: #5e5e5e;
+$color-bg-text-selection: #d70f64;
+// ----------------------- BACKGROUND COLORS END -------------------------
+
+// ----------------------- SPACES START -----------------------
+$space-xs: 5px;
+$space-sm: 10px;
+$space-md: 15px;
+$space-lg: 20px;
+// ----------------------- SPACES END --------------------------
+
+// ----------------------- PERCENT SPACES START -----------------------
+$space-percent-xs: 1%;
+$space-percent-sm: 2%;
+$space-percent-md: 4%;
+$space-percent-lg: 6%;
+// ----------------------- PERCENT SPACES END --------------------------
+
+// ----------------------- BORDER START -----------------
+$border-radius-default: 2px;
+$border-radius-medium: 5px;
+$base-border-color: #bcbcbc;
+$base-border: 1px solid $base-border-color;
+// ----------------------- BORDER END -------------------
+
+// ----------------------- FORM ELEMENTS START -----------------------
+$form-element-height-default: 44px;
+
+//  BUTTONS START
+$cta-font-family: 'Avenir Heavy', Arial, sans-serif;
+$cta-font-size: 0.875em;
+$cta-text-align: center;
+$cta-text-transform: uppercase;
+$cta-padding-left: 20px;
+$cta-padding-right: 20px;
+$cta-border-radius: $border-radius-default;
+$cta-height: $form-element-height-default;
+// Primary button
+$cta-color-text-primary: #fff;
+$cta-color-bg-primary: #d70f64;
+$cta-color-bg-primary-hover: #ac0c50;
+// Secondary button
+$cta-color-text-secondary: #d70f64;
+$cta-color-bg-secondary: transparent;
+$cta-color-bg-secondary-hover: #ac0c50;
+$cta-secondary-border: 1px solid #d70f64;
+// Disabled button
+$cta-color-bg-disabled: #bcbcbc;
+// Pressed state
+$cta-pressed-box-shadow: inset 0 2px 0 1px #8a0a40;
+// BUTTONS END
+
+//  INPUT FIELDS START
+$input-font-family: 'Avenir Book', Arial, sans-serif;
+$input-font-size: 1em;
+$input-text-align: left;
+$input-padding-left: 12px;
+$input-padding-right: 12px;
+$input-border-radius: $border-radius-default;
+$input-height: $form-element-height-default;
+$input-color-text: #666;
+$input-color-bg: #fff;
+$input-border: 1px solid #c8c8c8;
+// Focus state
+$input-color-text-active: #292929;
+$input-border-active: 1px solid #888;
+// Error state
+$input-color-text-error: #f0502d;
+$input-color-bg-error: #ffefef;
+$input-border-error: 1px solid #f0502d;
+// Error contextual message
+$error-msg-font-family: 'Avenir Book', Arial, sans-serif;
+$error-msg-font-size: 12px;
+$error-msg-line-height: 1.45em;
+$error-msg-color-bg: #f0502d;
+$error-msg-color-text: #fff;
+$error-msg-height: 20px;
+//  INPUT FIELDS END
+
+// ----------------------- FORM ELEMENTS END -----------------------
+
+// ----------------------- DROP DOWNS START --------------------
+$dropdown-font-family: 'Avenir Book', Arial, sans-serif;
+$dropdown-font-size: 0.875em;
+$dropdown-color-text: #292929;
+$dropdown-color-bg-1: #fff;
+$dropdown-color-bg-2: transparent;
+$dropdown-border: 1px solid #c8c8c8;
+$dropdown-text-align: left;
+$dropdown-padding-left: 12px;
+$dropdown-padding-right: 12px;
+// ----------------------- DROP DOWNS END ----------------------
+
+// ----------------------- HOMEPAGE START ----------------------
+
+// ----------------------- HOMEPAGE END ------------------------
+
+// ----------------------- RESTAURANT LIST START ------------------------
+$hero-restaurant-img: "#{$imagepath}hero_banners/hero_restaurant.jpg";
+$restaurant-font-size: 0.875em;
+$restaurant-box-shadow: 0px 0px 2px 0px rgba(1,1,1,0.2);
+$restaurant-box-shadow-hover: 0px 7px 20px 0px rgba(1,1,1,0.2);
+$restaurant-bg-color: #fff;
+// ----------------------- RESTAURANT LIST END ------------------------
+
+// ----------------------- MENU START ------------------------
+$top-cart-height: 100px;
+// ----------------------- MENU END ------------------------
+
+// ----------------------- HEADER START ------------------------
+$header-height: 100px;
+$header-height-small: 55px;
+$header-height-extra-small: 46px;
+$header-background: $color-bg-primary;
+$link-color-bg-dark: #fff;
+// ----------------------- HEADER END ------------------------

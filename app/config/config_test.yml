@@ -1,5 +1,5 @@
 imports:
-    - { resource: config_dev.yml }
+    - { resource: config_development.yml }
 
 framework:
     test: ~
@@ -12,5 +12,5 @@ web_profiler:
     toolbar: false
     intercept_redirects: false
 
-swiftmailer:
-    disable_delivery: true
+parameters:
+    foodpanda.api.handler: guzzle.ring.client.mock_handler

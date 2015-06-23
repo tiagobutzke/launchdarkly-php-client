@@ -1,0 +1,62 @@
+$tooltip-bg: #D70F64;
+$tooltip-arrow-color: $tooltip-bg;
+
+.tooltip {
+  position: absolute;
+  z-index: $zindex-tooltip;
+  display: block;
+  // Reset font and text properties given new insertion method
+  font-family: $font-family-base;
+  font-size: $font-size-small;
+  font-weight: normal;
+  line-height: 1.4;
+  @include opacity(0);
+
+  &.in     { @include opacity($tooltip-opacity); }
+  &.bottom { margin-top: 3px; padding: $tooltip-arrow-width 0; }
+
+  a {
+    color: #fff;
+    text-decoration: underline;
+  }
+}
+
+// Wrapper for the tooltip content
+.tooltip-inner {
+  max-width: $tooltip-max-width;
+  padding: 3px 8px;
+  color: $tooltip-color;
+  text-align: center;
+  text-decoration: none;
+  background-color: $tooltip-bg;
+}
+
+// Arrows
+.tooltip-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+
+.tooltip {
+  &.bottom .tooltip-arrow {
+    top: 0;
+    left: 25px !important;
+    margin-left: -$tooltip-arrow-width;
+    border-width: 0 $tooltip-arrow-width $tooltip-arrow-width;
+    border-bottom-color: $tooltip-arrow-color;
+  }
+
+  &.top {
+    .tooltip-arrow {
+      bottom: -8px;
+      left: 50%;
+      margin-left: -$tooltip-arrow-width;
+      border-left: $tooltip-arrow-width solid transparent;
+      border-right: $tooltip-arrow-width solid transparent;
+      border-top: $tooltip-arrow-width solid $tooltip-arrow-color;
+    }
+  }
+}

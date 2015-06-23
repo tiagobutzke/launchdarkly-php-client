@@ -1,11 +1,17 @@
 imports:
-    - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: revision.yml }
+
+parameters:
+    http_schema: http
+    google_api_client_id: ''
+    google_api_channel: ''
+    google_tag_manager_container_id: ''
 
 framework:
     #esi:             ~
-    #translator:      { fallbacks: ["%locale%"] }
+    translator:      { fallbacks: ["en"] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -15,7 +21,12 @@ framework:
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
-        #assets_version: SomeVersionScheme
+        assets_version: asset_version_placeholder
+        packages:
+            cdn_s3:
+                version: asset_version_placeholder
+                base_urls:
+                    [ "%volo_frontend.image_server_base_url%/%country_code%" ]
     default_locale:  "%locale%"
     trusted_hosts:   ~
     trusted_proxies: ~
@@ -29,45 +40,138 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        # logo image [width, height]
+        logo_image_dimensions: [195, 195]
+        country_code: "%country_code%"
+        locale: "%locale%"
+        blazy_placeholder: 'data:image/gif;base64,R0lGODdhAQABAIAAAMzMzJaWliwAAAAAAQABAAACAkQBADs='
+        google_api_client_id: "%google_api_client_id%"
+        google_api_channel: '%google_api_channel%'
+        timezone: '%timezone%'
+        google_tag_manager_container_id: %google_tag_manager_container_id%
 
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ ]
-    #java: /usr/bin/java
-    filters:
-        cssrewrite: ~
-        #closure:
-        #    jar: "%kernel.root_dir%/Resources/java/compiler.jar"
-        #yui_css:
-        #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
 
-# Doctrine Configuration
-doctrine:
-    dbal:
-        driver:   "%database_driver%"
-        host:     "%database_host%"
-        port:     "%database_port%"
-        dbname:   "%database_name%"
-        user:     "%database_user%"
-        password: "%database_password%"
-        charset:  UTF8
-        # if using pdo_sqlite as your database driver:
-        #   1. add the path in parameters.yml
-        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
-        #   2. Uncomment database_path in parameters.yml.dist
-        #   3. Uncomment next line:
-        #     path:     "%database_path%"
+doctrine_cache:
+    providers:
+        translator_cache:
+            namespace: %country_code%_%kernel.environment%_translator_cache
+            type: php_file
+        configuration_cache:
+            namespace: %country_code%_%kernel.environment%_configuration_cache
+            type: file_system
+        vendor_cache:
+            namespace: %country_code%_%kernel.environment%_vendor_cache
+            type: file_system
+        health_check_redis:
+            redis:
+                connection_id: volo_frontend_redis_connection_service
 
-    orm:
-        auto_generate_proxy_classes: "%kernel.debug%"
-        auto_mapping: true
+foodpanda_web_translate_it:
+    base_url: %foodpanda_web_translate_it_base_url%
+    public_api_key: %foodpanda_web_translate_it_public_api_key%
+    private_api_key: %foodpanda_web_translate_it_private_api_key%
+    main_translation_label: %foodpanda_web_translate_it_main_translation_label%
 
-# Swiftmailer Configuration
-swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
-    spool:     { type: memory }
+jb_phumbor:
+    server:
+        url: %volo_frontend.thumbor_base_url%
+        secret: %volo_frontend.thumbor_secret%
+    # by convention all the trasnformations starting with "bp_" define the breakpoints
+    transformations:
+        # start of the breakpoints definition
+        bp_300:
+            resize: { width: 300, height: 0 }
+            filters:
+                - { name: "quality", arguments: [80] }
+        bp_300_retina:
+            resize: { width: 600, height: 0 }
+            filters:
+                - { name: "quality", arguments: [45] }
+
+        bp_400:
+            resize: { width: 400, height: 0 }
+            filters:
+                - { name: "quality", arguments: [80] }
+        bp_400_retina:
+            resize: { width: 800, height: 0 }
+            filters:
+                - { name: "quality", arguments: [45] }
+
+        bp_600:
+            resize: { width: 600, height: 0 }
+            filters:
+                - { name: "quality", arguments: [80] }
+        bp_600_retina:
+            resize: { width: 1200, height: 0 }
+            filters:
+                - { name: "quality", arguments: [45] }
+
+        bp_800:
+            resize: { width: 800, height: 0 }
+            filters:
+                - { name: "quality", arguments: [80] }
+        bp_800_retina:
+            resize: { width: 1600, height: 0 }
+            filters:
+                - { name: "quality", arguments: [45] }
+
+        bp_1000:
+            resize: { width: 1000, height: 0 }
+            filters:
+                - { name: "quality", arguments: [80] }
+        bp_1000_retina:
+            resize: { width: 2000, height: 0 }
+            filters:
+                - { name: "quality", arguments: [45] }
+
+        bp_1200:
+            resize: { width: 1200, height: 0 }
+            filters:
+                - { name: "quality", arguments: [60] }
+        bp_1200_retina:
+            resize: { width: 2400, height: 0 }
+            filters:
+                - { name: "quality", arguments: [40] }
+
+        bp_1400:
+            resize: { width: 1400, height: 0 }
+            filters:
+                - { name: "quality", arguments: [60] }
+        bp_1400_retina:
+            resize: { width: 2800, height: 0 }
+            filters:
+                - { name: "quality", arguments: [40] }
+
+        bp_biggest:
+            resize: { width: 2000, height: 0 }
+            filters:
+                - { name: "quality", arguments: [60] }
+        bp_biggest_retina:
+            resize: { width: 4000, height: 0 }
+            filters:
+                - { name: "quality", arguments: [40] }
+        # end of the breakpoints definition
+
+        500:
+            resize: { width: 400, height: 0 }
+            filters:
+                - { name: "quality", arguments: [80] }
+        500_retina:
+            resize: { width: 800, height: 0 }
+            filters:
+                - { name: "quality", arguments: [45] }
+
+volo_frontend:
+    api:
+        configuration:
+            life_time: %volo_frontend_configuration_cache_life_time%
+
+foodpanda_api_health:
+    enabled: ['version', 'session', 'cache']
+    prefix: 'health_check.'
+#    sqs_endpoint: %aws_sqs_elasticsearch_update_queue%

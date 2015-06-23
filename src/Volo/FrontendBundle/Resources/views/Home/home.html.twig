@@ -1,0 +1,172 @@
+{% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
+
+{% block title %}{% trans %}brand{% endtrans %} | {% trans %}meta_title.home_page{% endtrans %}{% endblock %}
+{% block google_tag_manager %}
+    <script type="text/javascript" data-turbolinks-eval=always>
+        dataLayer.push({
+            'pageType': 'Home',
+            'zipcode': '{{ customer_location().postcode }}',
+            'city': '{{ customer_location().city }}',
+            'country': 'Germany',
+            'loggedIn': '{{ is_customer_authenticated_fully() ? 'true' : 'false' }}',
+            'customerId': '{{ is_customer_authenticated_fully() ? get_authenticated_customer().id }}'
+        });
+    </script>
+{% endblock %}
+
+{% block body_class %}home-page{% endblock %}
+
+{% block head_meta_seo %}
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="{% trans %}meta.description{% endtrans %}">
+{% endblock %}
+
+{% block content %}
+    <section class="home-section teaser__home-section fullWindowHeight teaser b-lazy"
+         data-src="{{ asset('img/homepage/teaser_2400.jpg') }}"
+         data-src-1400="{{ asset('img/homepage/teaser_2800.jpg') }}"
+         data-src-biggest="{{ asset('img/homepage/teaser_4000.jpg') }}">
+        <div class="teaser__slogan">
+            <h2 class="teaser__slogan__h2">{{ 'general.slogan'|trans }}</h2>
+        </div>
+        <form class="teaser__form" id="postal_index_form" method="GET">
+            <input type="text" class="teaser__form__input"
+                   id="postal_index_form_input"
+                   value="{{ postalCode }}"
+                   autofocus=""
+                   placeholder="{% trans %}postal_code.your_postal_code{% endtrans %}"
+                   data-msg_error_not_found="{% trans %}postal_code.not_found{% endtrans %}"
+                   data-msg_you_probably_mean="{% trans %}postal_code.you_probably_mean{% endtrans %}"
+                   data-msg_error_empty="{% trans %}postal_code.empty{% endtrans %}"
+                   >
+            <input class="teaser__button button button--inline" type="submit" value="{{ 'buttons.find_food'|trans }}">
+        </form>
+    </section>
+
+    <div class="titles restaurants__titles">
+        <div class="titles__title">
+            {{ 'title.only_the_best'|trans }}
+        </div>
+        <div class="titles__subtitle">
+            {{ 'title.carefully_selected'|trans }}
+        </div>
+    </div>
+    <section class="home-section restaurants-home">
+        {{ cms('homepage-restaurants') }}
+    </section>
+
+    <div class="titles">
+        <div class="titles__title">
+            {{ 'title.no_long_wait'|trans }}
+        </div>
+        <div class="titles__subtitle">
+            {{ 'title.get_your_meals_fast'|trans }}
+        </div>
+    </div>
+    <section class="home-section stats">
+        <div class="stats__container">
+            <div class="stats__content" >
+                <img class="stats__fork-knife b-lazy" alt="" data-src="{{ asset('img/fork-knife.png') }}"  src="{{ blazy_placeholder }}" />
+                <div class="stats__numbers">
+                    <div class="stats__numbers__first">
+                        <div class="numbers__scroller">
+                            <div class="numbers__sprite number6"></div>
+                            <div class="numbers__sprite number5"></div>
+                            <div class="numbers__sprite number5"></div>
+                            <div class="numbers__sprite number5"></div>
+                            <div class="numbers__sprite number5"></div>
+                            <div class="numbers__sprite number5"></div>
+                            <div class="numbers__sprite number5"></div>
+                            <div class="numbers__sprite number5"></div>
+                            <div class="numbers__sprite number5"></div>
+                            <div class="numbers__sprite number5"></div>
+                            <div class="numbers__sprite number5"></div>
+                            <div class="numbers__sprite number4"></div>
+                            <div class="numbers__sprite number4"></div>
+                            <div class="numbers__sprite number4"></div>
+                            <div class="numbers__sprite number4"></div>
+                            <div class="numbers__sprite number4"></div>
+                            <div class="numbers__sprite number4"></div>
+                            <div class="numbers__sprite number4"></div>
+                            <div class="numbers__sprite number4"></div>
+                            <div class="numbers__sprite number4"></div>
+                            <div class="numbers__sprite number4"></div>
+                            <div class="numbers__sprite number3"></div>
+                            <div class="numbers__sprite number3"></div>
+                            <div class="numbers__sprite number3"></div>
+                            <div class="numbers__sprite number3"></div>
+                            <div class="numbers__sprite number3"></div>
+                            <div class="numbers__sprite number3"></div>
+                            <div class="numbers__sprite number3"></div>
+                            <div class="numbers__sprite number3"></div>
+                            <div class="numbers__sprite number3"></div>
+                            <div class="numbers__sprite number3"></div>
+                            <div class="numbers__sprite number2"></div>
+                            <div class="numbers__sprite number2"></div>
+                            <div class="numbers__sprite number2"></div>
+                            <div class="numbers__sprite number2"></div>
+                            <div class="numbers__sprite number2"></div>
+                            <div class="numbers__sprite number2"></div>
+                            <div class="numbers__sprite number2"></div>
+                            <div class="numbers__sprite number2"></div>
+                            <div class="numbers__sprite number2"></div>
+                            <div class="numbers__sprite number2"></div>
+                            <div class="numbers__sprite number1"></div>
+                            <div class="numbers__sprite number1"></div>
+                            <div class="numbers__sprite number1"></div>
+                            <div class="numbers__sprite number1"></div>
+                            <div class="numbers__sprite number1"></div>
+                            <div class="numbers__sprite number1"></div>
+                            <div class="numbers__sprite number1"></div>
+                            <div class="numbers__sprite number1"></div>
+                            <div class="numbers__sprite number1"></div>
+                            <div class="numbers__sprite number1"></div>
+                        </div>
+                    </div>
+                    <div class="stats__numbers__second">
+                        <div class="numbers__scroller">
+                            <div class="numbers__sprite number0"></div>
+                            <img class="number__spacer b-lazy" alt="" data-src="{{ asset('img/numbers/numbers-sprite.jpg') }}" src="{{ blazy_placeholder }}">
+                            <img class="number__spacer b-lazy" alt="" data-src="{{ asset('img/numbers/numbers-sprite.jpg') }}" src="{{ blazy_placeholder }}">
+                            <img class="number__spacer b-lazy" alt="" data-src="{{ asset('img/numbers/numbers-sprite.jpg') }}" src="{{ blazy_placeholder }}">
+                            <img class="number__spacer b-lazy" alt="" data-src="{{ asset('img/numbers/numbers-sprite.jpg') }}" src="{{ blazy_placeholder }}">
+                        </div>
+                    </div>
+                    <div class="stats__comment__minutes">
+                        {{ 'minutes'|trans }}
+                    </div>
+                    <div class="stats__comment">
+                        {{ 'average_time_per_order'|trans }}
+                    </div>
+                    <img class="stats__dish" alt=""  src="{{ asset('img/dish.png') }}" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="titles">
+        <div class="titles__title">
+            {{ 'title.were_in_your_city'|trans }}
+        </div>
+        <div class="titles__subtitle">
+            {{ 'title.find_your_favorites'|trans }}
+        </div>
+    </div>
+    <section class="home-section cities">
+        <div class="cities__container">
+            {{ cms('homepage-cities') }}
+        </div>
+    </section>
+    {#TODO app - show app info when app is available #}
+    {#<div class="titles">#}
+        {#<div class="titles__title">#}
+            {#{{ 'title.take_volo_where_you_go'|trans }}#}
+        {#</div>#}
+        {#<div class="titles__subtitle">#}
+            {#{{ 'title.download_free_app'|trans }}#}
+        {#</div>#}
+    {#</div>#}
+    {#<section class="home-section app">#}
+        {#{% include('VoloFrontendBundle:Home/Partial:app-section.html.twig') %}#}
+    {#</section>#}
+{% endblock %}

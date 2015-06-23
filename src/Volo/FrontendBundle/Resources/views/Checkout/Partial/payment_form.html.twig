@@ -1,0 +1,37 @@
+<form action="{{ path('checkout_payment', {vendorCode: vendor.code}) }}"
+      class="hide"
+      id="payment_form" method="post" role="form" data-adyen_public_key="{{ adyen_public_key }}">
+    <h4 class="checkout__subtitle">{% trans %}title.credit_card_details{% endtrans %}</h4>
+    <div class="checkout__item">
+        <div class="checkout__item__card">
+            <div class="form-group">
+                <input type="text" class="form-control" id="adyen-encrypted-form-holder-name" size="20"
+                       autocomplete="off" data-encrypted-name="holderName" placeholder="{% trans %}form.placeholder.card_holder_name{% endtrans %}">
+            </div>
+            <div class="form-group">
+                <input type="tel" class="form-control" id="adyen-encrypted-form-number" size="20"
+                       autocomplete="off" data-encrypted-name="number" placeholder="{% trans %}form.placeholder.card_number{% endtrans %}">
+                <span id="cardType"></span>
+            </div>
+            <div class="form-group form-group--3col">
+                <input type="tel" class="form-control" id="form-expiry" maxlength="7" size="7"
+                       autocomplete="off" placeholder="{% trans %}form.placeholder.mmyy{% endtrans %}">
+            </div>
+            <div class="form-group form-group--3col-last">
+                <input type="tel" class="form-control" id="adyen-encrypted-form-cvc" size="4" maxlength="4"
+                       autocomplete="off" data-encrypted-name="cvc" placeholder="{% trans %}form.placeholder.cvc{% endtrans %}">
+                <i class="icon-help-circled checkout__item__card__help-toggle"></i>
+            </div>
+            <div class="hide"><input type="hidden" id="adyen-encrypted-form-expiry-generationtime" value="{{ "now"|date('c') }}"
+                                     data-encrypted-name="generationtime"/></div>
+            <div class="hide">
+                <input type="hidden" id="adyen-encrypted-form-expiry-year" maxlength="4" size="4" data-encrypted-name="expiryYear">
+            </div>
+            <div class="hide">
+                <input type="hidden" id="adyen-encrypted-form-expiry-month" maxlength="4" size="4" data-encrypted-name="expiryMonth">
+            </div>
+        </div>
+
+        <div class="checkout__item__card__help"><img alt="" src="{{ asset('img/checkout/cvc_help-2x.png') }}" /></div>
+    </div>
+</form>
