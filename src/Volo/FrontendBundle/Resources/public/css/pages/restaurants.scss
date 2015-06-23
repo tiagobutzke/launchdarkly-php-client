@@ -33,7 +33,9 @@
 .restaurants__tool-box.restaurants__tool-box-sticking {
   position: fixed;
   top: 0;
-  z-index: 1000;
+  z-index: 1020;
+  width: 77%;
+  margin: auto;
   @include respond-from("screen-md") {
     position: absolute;
     z-index: 1;
@@ -58,8 +60,6 @@
 }
 
 .restaurants__tool-box-sticking .restaurants__location {
-  padding-left: 60px;
-  padding-right: 60px;
   float: none;
   text-align: center;
   @include respond-from("screen-md") {
