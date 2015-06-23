@@ -24,7 +24,7 @@ VOLO.initCheckoutModel = function (cartModel, locationModel, vendorId) {
     return VOLO.checkoutModel;
 };
 
-VOLO.initCartViews = function (cartModel, locationModel) {
+VOLO.initCartViews = function (cartModel, locationModel, gtmService) {
     var $header = $('.header');
 
     if (_.isObject(VOLO.menu)) {
@@ -35,19 +35,21 @@ VOLO.initCartViews = function (cartModel, locationModel) {
         cartModel: cartModel,
         locationModel: locationModel,
         $header: $header,
-        gtmService: VOLO.GTMServiceInstance
+        gtmService: gtmService
     });
 
     if (_.isObject(VOLO.cartView)) {
         VOLO.cartView.unbind();
     }
+
     VOLO.cartView = new CartView({
-        el: '.desktop-cart',
+        el: '#cart',
         model: cartModel,
         locationModel: VOLO.locationModel,
         $header: $header,
         $menuMain: $('.menu__main'),
-        $window: $(window)
+        $window: $(window),
+        gtmService: gtmService
     });
 
     if (_.isObject(VOLO.cartErrorModalView )) {
@@ -73,7 +75,7 @@ VOLO.initCheckoutViews = function (cartModel, checkoutModel, deliveryCheck, loca
         VOLO.checkoutDeliveryInformationView.unbind();
     }
     VOLO.CheckoutCartView = new CheckoutCartView({
-        el: '.desktop-cart',
+        el: '#cart',
         model: cartModel,
         $header: $('.header'),
         locationModel: locationModel,
@@ -285,7 +287,7 @@ $(document).on('page:load page:restore', function () {
 
     if ($('.menu__main').length > 0) {
         VOLO.initCartModel(VOLO.jsonCart);
-        VOLO.initCartViews(VOLO.cartModel, VOLO.locationModel);
+        VOLO.initCartViews(VOLO.cartModel, VOLO.locationModel, VOLO.GTMServiceInstance);
         VOLO.cartView.render();
     }
 
@@ -317,6 +319,10 @@ $(document).on('page:load page:restore', function () {
     });
     if (_.isObject(VOLO.menu)) {
         VOLO.menu.setGtmService(VOLO.GTMServiceInstance);
+    }
+
+    if (_.isObject(VOLO.cartView)) {
+        VOLO.cartView.setGtmService(VOLO.GTMServiceInstance);
     }
 
     if ($('.teaser__form').length > 0) {
@@ -423,7 +429,9 @@ $(document).on('page:before-unload', function () {
         VOLO.existingUserLoginView.unbind();
     }
 
-    delete VOLO.GTMServiceInstance;
+    if (_.isObject(VOLO.GTMServiceInstance)) {
+        delete VOLO.GTMServiceInstance;
+    }
     dataLayer = [];
 });
 

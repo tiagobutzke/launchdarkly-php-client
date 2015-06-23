@@ -36,12 +36,12 @@ class ProfileController extends Controller
         $token            = $this->get('security.token_storage')->getToken();
         $serializer       = $this->get('volo_frontend.api.serializer');
         $customerProvider = $this->get('volo_frontend.provider.customer');
-
+        $phoneNumberError = '';
         if ($request->getMethod() === Request::METHOD_POST) {
             try {
                 $this->get('volo_frontend.service.customer')->updateCustomer($request->request->get('customer'));
             } catch (PhoneNumberValidationException $e) {
-                $errorMessages[] = $this->get('translator')->trans(sprintf('%s: %s', 'Phone number', $e->getMessage()));
+                $phoneNumberError = $e->getMessage();
             }
         }
 
@@ -51,6 +51,7 @@ class ProfileController extends Controller
         $creditCards = $customerProvider->getAdyenCards($accessToken);
 
         return [
+            'phoneNumberError'   => $phoneNumberError,
             'errorMessages'      => $errorMessages,
             'customer'           => $serializer->normalize($customer),
             'customer_addresses' => $serializer->normalize($addresses->getItems()),

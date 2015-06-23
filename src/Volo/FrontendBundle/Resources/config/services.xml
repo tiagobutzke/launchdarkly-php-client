@@ -7,6 +7,7 @@
     <imports>
         <import resource="api.xml"/>
         <import resource="converters.xml"/>
+        <import resource="redis_cache.xml"/>
     </imports>
 
     <parameters>
@@ -58,6 +59,7 @@
         <service id="volo_frontend.security.authenticator" class="%volo_frontend.security.authenticator.class%">
             <argument type="service" id="volo_frontend.provider.customer" />
             <argument type="service" id="volo_frontend.api.authenticator" />
+            <argument type="service" id="translator" />
         </service>
 
         <service id="volo_frontend.service.customer_manager" alias="volo_frontend.provider.customer" />
@@ -170,6 +172,7 @@
         <service id="volo_frontend.service.phone_number" class="%volo_frontend.service.phone_number.class%">
             <argument type="service" id="libphonenumber.phone_number_util" />
             <argument>%locale%</argument>
+            <argument type="service" id="translator" />
         </service>
 
         <service id="volo_frontend.service.api_error_translator" class="%volo_frontend.service.api_error_translator.class%">

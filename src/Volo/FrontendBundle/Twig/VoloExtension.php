@@ -202,15 +202,8 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
     public function createDeliveryWeekday($time)
     {
         $dateTime = new \DateTime($time);
-        $index = (int) $dateTime->format('N');
 
-        $matrix = ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
-        if (isset($matrix[$index])) {
-            return $matrix[$index];
-        }
-
-        return '';
+        return $dateTime->format('D');
     }
 
     /**
@@ -223,6 +216,6 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
     {
         $timeDifference = strtotime($orderConfirmedDeliveryTime) - strtotime($orderTime);
 
-        return floor($timeDifference / (1*24*60*60));
+        return floor($timeDifference / 86400);
     }
 }

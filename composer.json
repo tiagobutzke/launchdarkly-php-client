@@ -139,8 +139,8 @@
                 "keep-outdated": true
             },
             {
-                "file": "app/config/countries_parameters/uk.yml",
-                "dist-file": "app/config/countries_parameters/dist/uk.yml.dist",
+                "file": "app/config/countries_parameters/gb.yml",
+                "dist-file": "app/config/countries_parameters/dist/gb.yml.dist",
                 "keep-outdated": true
             }
         ],

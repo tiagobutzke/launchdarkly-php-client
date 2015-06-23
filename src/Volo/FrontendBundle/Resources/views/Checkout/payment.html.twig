@@ -18,7 +18,7 @@
                 {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
                     <a id="add_new_address_link" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">
                         <i class="icon-pencil"></i>
-                        {% trans %}link.add_new_address{% endtrans %}
+                        {% trans %}link.edit_delivery_information{% endtrans %}
                     </a>
                 {% endif %}
             </span>
@@ -152,6 +152,7 @@
                     <input type="text" class="form-control" id="voucher" name="voucher"
                            required="true" placeholder="{% trans %}form.label.enter_voucher{% endtrans %}">
                     <span class="error_msg error_invalid_voucher"></span>
+                    <span class="error_msg error_empty_voucher hide">{% trans %}error.please_insert_voucher_code{% endtrans %}</span>
                 </div>
                 <div class="form-group form-group--two_col2--xs-full">
                     <button id="checkout-voucher-button" class="button pull-left">{% trans %}button.apply{% endtrans %}</button>
@@ -178,6 +179,7 @@
     </div>
 
     <div class="checkout__legal">
+        <span>{% trans with {'%legal_name%': vendor.addressLine2 }%}vendor.sold_by %legal_name%{% endtrans %}</span>
         <span>{% trans %}checkout.legal_disclamer{% endtrans %}</span>
     </div>
 {% endblock %}
@@ -188,10 +190,14 @@
     <script data-turbolinks-eval=false>
         //TODO make this a backbone view
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            $('#edit_contact_information_form_link').click(function () {
-                $('#edit_contact_information_form').toggleClass('hide');
-                $(this).toggleClass('contact_information_form-open');
-                $('#contact_information').find('.checkout__item').toggleClass('hide');
+            $('.edit_contact_information_form_link__text--edit').click(function (event) {
+                var $editContactInformationForm = $('#edit_contact_information_form'),
+                    editContactInformationFormIsVisible;
+
+                $editContactInformationForm.toggleClass('hide');
+                editContactInformationFormIsVisible = $editContactInformationForm.hasClass('hide');
+                $(this).toggleClass('contact_information_form-open', editContactInformationFormIsVisible);
+                $('#contact_information').find('.checkout__item').toggleClass('hide', !editContactInformationFormIsVisible);
                 event.preventDefault();
             });
     
@@ -202,7 +208,7 @@
                 ).done(function (data) {
                     $('#contact_information').html(data);
                     $('#edit_contact_information_form').toggleClass('hide');
-                    $('#edit_contact_information_form_link').removeClass('contact_information_form-open');
+                    $('.edit_contact_information_form_link__text--edit').removeClass('contact_information_form-open');
                 });
 
 
@@ -211,13 +217,17 @@
             });
     
             $('#add_new_credit_card_link').click(function () {
-                    $('#add_new_credit_card_link').toggleClass('paymentFormOpen');
-                    $('#payment_form').toggleClass('hide');
-                    if (!$('#payment_form').hasClass('hide')) {
-                        $('input[name="credit_card"]').attr("checked", false);
-                        VOLO.checkoutModel.set('credit_card_id', null);
-                    }
-                });
+                var $payment_form = $('#payment_form'),
+                    paymentFormIsHidden;
+
+                paymentFormIsHidden = $payment_form.hasClass('hide');
+                $payment_form.toggleClass('hide');
+                $('#add_new_credit_card_link').toggleClass('paymentFormOpen', paymentFormIsHidden);
+                if (!paymentFormIsHidden) {
+                    $('input[name="credit_card"]').attr("checked", false);
+                    VOLO.checkoutModel.set('credit_card_id', null);
+                }
+            });
     
             $('input[name="credit_card"]').click(function(){
                 $('#payment_form').addClass('hide');

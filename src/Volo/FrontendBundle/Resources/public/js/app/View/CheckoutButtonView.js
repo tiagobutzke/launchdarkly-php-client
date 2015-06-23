@@ -8,6 +8,9 @@ var CheckoutButtonView = Backbone.View.extend({
 
         this.vendorCode = this.$el.data().vendor_code;
         this.vendorId = this.$el.data().vendor_id;
+
+        this.spinner = new Spinner();
+
         console.log('is guest user', this.$el.data().is_guest_user);
 
         this.model.set('is_guest_user', this.$el.data().is_guest_user);
@@ -42,6 +45,7 @@ var CheckoutButtonView = Backbone.View.extend({
     },
 
     placeOrder: function () {
+        this.spinner.spin(this.$('#finish-and-pay')[0]);
         this.model.placeOrder(this.vendorCode, this.vendorId);
         this.$('.error_msg').addClass('hide');
     },
@@ -53,6 +57,7 @@ var CheckoutButtonView = Backbone.View.extend({
         } else {
             window.location.replace(data.hosted_payment_page_redirect.url);
         }
+        this.spinner.stop();
     },
 
     handlePaymentError: function (data) {
@@ -61,5 +66,6 @@ var CheckoutButtonView = Backbone.View.extend({
         if (_.isObject(data) && _.isString(data.error.errors.message)) {
             this.$('.error_msg').html(data.error.errors.message);
         }
+        this.spinner.stop();
     }
 });

@@ -91,7 +91,7 @@
 
 .checkout__subtitle {
   font-family: $bold-font-family;
-  font-size: $small-font-size;
+  font-size: 13px;
   padding: $space-md $grid-gutter-width / 2;
   line-height: normal;
   margin: 0;
@@ -100,7 +100,7 @@
   position: relative;
   @include respond-from("screen-md") {
     padding: 0 $grid-gutter-width $space-md;
-    font-size: $base-font-size;
+    font-size: 14px;
   }
 
   i.icon-cancel {
@@ -113,9 +113,9 @@
   display: inline-block;
   text-transform: none;
   font-family: $base-font-family;
-  font-size: $small-font-size;
+  font-size: 13px;
   @include respond-from("screen-md") {
-    font-size: $base-font-size;
+    font-size: 14px;
   }
 
   i {
@@ -131,7 +131,9 @@
 }
 
 .checkout_cart {
-  margin-top: 53px;
+  @include respond-from("screen-md") {
+    margin-top: 17px;
+  }
 }
 
 .checkout__subtitle__edit {
@@ -187,10 +189,14 @@
 }
 
 .checkout__add_new_credit_card__container {
-  overflow: auto;
   position: relative;
   height: 30px;
-  padding-right: $grid-gutter-width;
+  padding-right: $grid-gutter-width / 2;
+  padding-top: $space-sm;
+  @include respond-from("screen-md") {
+    padding-right: $grid-gutter-width;
+    padding-top: 0;
+  }
 }
 
 .paymentFormOpen {
@@ -211,10 +217,6 @@
 .checkout__time-field {
   @include make-xs-column(6);
   padding: 0;
-
-  select {
-    @extend .form-control;
-  }
 }
 
 .checkout__item {
@@ -542,15 +544,26 @@
 }
 
 .checkout__payment_paypal_description {
-  color: $color-text-inactive;
   clear: both;
   font-size: 0.8em;
   padding-left: $grid-gutter-width / 2;
   padding-right: $grid-gutter-width / 2;
   @include respond-from("screen-md") {
     padding-left: 0;
-    padding-right: 0;
   }
+}
+
+.checkout__payment_paypal_description__title {
+  font-family: $bold-font-family;
+  padding-top: $space-sm;
+  padding-bottom: $space-sm;
+  @include respond-from("screen-md") {
+    padding-top: 0;
+  }
+}
+
+.checkout__payment_paypal_description__text {
+  line-height: $base-line-height;
 }
 
 // credit card form
@@ -568,18 +581,18 @@
 }
 
 .checkout__item__card__help {
+  width: 67%;
   text-align: right;
   display: none;
-
   @include respond-from("screen-md") {
+    text-align: left;
     width: 45%;
     float: left;
     padding-left: 28px;
-    text-align: left;
+  }
 
-    img {
-      @include responsive-img();
-    }
+  img {
+    @include responsive-img();
   }
 }
 
@@ -602,6 +615,10 @@
 
   .checkout__item {
     border: none;
+    margin-bottom: 25px;
+    @include respond-from("screen-md") {
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -624,7 +641,8 @@
 
 .checkout__legal {
   text-align:  center;
-  font-size: 0.875em;
+  font-size: 0.7em;
+  line-height: 1.3em;
   color: $color-text-light;
   padding: $space-sm;
 
@@ -708,9 +726,6 @@
   padding: $space-xs;
   border-top: $dropdown-border;
   margin: 0;
-  @include respond-from("screen-md") {
-    padding: $space-sm;
-  }
   &:last-child {
     border-bottom: $dropdown-border;
   }

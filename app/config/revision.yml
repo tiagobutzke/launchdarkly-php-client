@@ -1,0 +1,3 @@
+parameters:
+  health_check_branch_name: branch_name
+  health_check_branch_commit: commit

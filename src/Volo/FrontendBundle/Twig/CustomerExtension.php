@@ -39,7 +39,10 @@ class CustomerExtension extends \Twig_Extension
      */
     public function isCustomerAuthenticatedFully()
     {
-        return count($this->securityContext->getToken()->getRoles()) > 0
+        $token = $this->securityContext->getToken();
+
+        return $token !== null
+            && count($token->getRoles()) > 0
             && $this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY');
     }
 

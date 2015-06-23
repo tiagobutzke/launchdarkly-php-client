@@ -16,6 +16,11 @@
 
 {% block body_class %}home-page{% endblock %}
 
+{% block head_meta_seo %}
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="{% trans %}meta.description{% endtrans %}">
+{% endblock %}
+
 {% block content %}
     <section class="home-section teaser__home-section fullWindowHeight teaser b-lazy"
          data-src="{{ asset('img/homepage/teaser_2400.jpg') }}"
@@ -32,6 +37,7 @@
                    placeholder="{% trans %}postal_code.your_postal_code{% endtrans %}"
                    data-msg_error_not_found="{% trans %}postal_code.not_found{% endtrans %}"
                    data-msg_you_probably_mean="{% trans %}postal_code.you_probably_mean{% endtrans %}"
+                   data-msg_error_empty="{% trans %}postal_code.empty{% endtrans %}"
                    >
             <input class="teaser__button button button--inline" type="submit" value="{{ 'buttons.find_food'|trans }}">
         </form>

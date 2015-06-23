@@ -85,7 +85,7 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
 
         for (var i = 0; i < cookies.length; i++) {
             var c = cookies[i];
-            while (c.charAt(0) == ' ') {
+            while (c.charAt(0) === ' ') {
                 c = c.substring(1);
             }
             if (c.indexOf(formattedName) === 0) {

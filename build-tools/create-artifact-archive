@@ -14,13 +14,17 @@ cat << EOF
 
   OPTIONS:
     -o output file
+    -b branch name
+    -c commit hash
 EOF
 exit 1;
 }
 
-while getopts "o:" OPTION; do
+while getopts "o:b:c:" OPTION; do
   case ${OPTION} in
     o) OUTPUT_FILE=${OPTARG};;
+    b) BRANCH_NAME=${OPTARG};;
+    c) COMMIT_HASH=${OPTARG};;
   esac
 done
 
@@ -36,7 +40,15 @@ if [ -f $OUTPUT_FILE ]; then
     rm $OUTPUT_FILE
 fi
 
+REVISION_FILE="$ROOT_DIR/app/config/revision.yml"
+if [ -f $REVISION_FILE ]; then
+    rm $REVISION_FILE
+fi
+
+echo -e "parameters:\n  health_check_branch_name: $BRANCH_NAME\n  health_check_branch_commit: $COMMIT_HASH\n" > $REVISION_FILE
+
 tar -pchzf "${OUTPUT_FILE}" "$ROOT_DIR" \
+    --exclude "$ROOT_DIR/build" \
     --exclude "$ROOT_DIR/build-tools" \
     --exclude "$ROOT_DIR/.git" \
     --exclude "$ROOT_DIR/app/config/parameters.yml" \

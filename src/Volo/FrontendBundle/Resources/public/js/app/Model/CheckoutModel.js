@@ -86,9 +86,6 @@ var CheckoutModel = Backbone.Model.extend({
         this.set('placing_order', true);
 
         var xhr = $.ajax(requestSettings);
-        xhr.always(function () {
-            this.set('placing_order', false);
-        }.bind(this));
 
         xhr.success(function (data) {
             console.log("payment success", data);
@@ -100,6 +97,7 @@ var CheckoutModel = Backbone.Model.extend({
             var eventData = jqXHR.responseJSON;
             eventData.paymentMethod = this.get('payment_type_code');
             this.trigger("payment:error", eventData);
+            this.set('placing_order', false);
         }.bind(this));
     }
 });
