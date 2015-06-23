@@ -14,6 +14,14 @@ var TimePickerView = Backbone.View.extend({
 
     render: function () {
         console.log('TimePickerView.render ', this.cid);
+
+        var md = new MobileDetect(window.navigator.userAgent);
+        if (md.mobile()) {
+            this.$('select').selectpicker('mobile');
+        } else {
+            this.$('select').selectpicker();
+        }
+
         var date = this.model.getCart(this.vendor_id).get('order_time');
 
         if (date) {
@@ -25,12 +33,7 @@ var TimePickerView = Backbone.View.extend({
                 this.$('#order-delivery-date').val(dateKey);
             }
 
-            this.$('#order-delivery-time').empty();
-            _.forEach(this.$('#order-delivery-date option:selected').data('delivery-hours'), function (element, key) {
-                this.$('#order-delivery-time').append(
-                    $('<option/>').val(key).text(element)
-                );
-            }, this);
+            this.renderTimeSelect();
 
             if ($("#order-delivery-time option[value='" + timeKey + "']").length > 0) {
                 this.$('#order-delivery-time').val(timeKey);
@@ -39,12 +42,18 @@ var TimePickerView = Backbone.View.extend({
             this.model.getCart(this.vendor_id).set('order_time', this._getDateFromForm());
         }
 
-        var md = new MobileDetect(window.navigator.userAgent);
-        if (!md.mobile()) {
-            this.$('select').selectpicker();
-        } else {
-            this.$('select').addClass('mobile-select');
-        }
+        this.$('select').selectpicker('refresh');
+    },
+
+    renderTimeSelect: function () {
+        this.$('#order-delivery-time').empty();
+        _.forEach(this.$('#order-delivery-date option:selected').data('delivery-hours'), function (element, key) {
+            this.$('#order-delivery-time').append(
+                $('<option/>').val(key).text(element)
+            );
+        }, this);
+
+        this.$('select').selectpicker('refresh');
     },
 
     unbind: function () {
@@ -55,6 +64,11 @@ var TimePickerView = Backbone.View.extend({
 
     updateDeliveryTime: function () {
         var vendorCart = this.model.getCart(this.vendor_id);
+        var data = this.$('#order-delivery-date option:selected').data('delivery-hours');
+
+        if (_.isUndefined(data[this.$('#order-delivery-time').val()])) {
+            this.renderTimeSelect();
+        }
 
         vendorCart.set('order_time', this._getDateFromForm());
         vendorCart.updateCart();
