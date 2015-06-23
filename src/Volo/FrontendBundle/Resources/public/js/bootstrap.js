@@ -49,7 +49,8 @@ VOLO.initCartViews = function (cartModel, locationModel, gtmService) {
         $header: $header,
         $menuMain: $('.menu__main'),
         $window: $(window),
-        gtmService: gtmService
+        gtmService: gtmService,
+        smallScreenMaxSize: VOLO.configuration.smallScreenMaxSize
     });
 
     if (_.isObject(VOLO.cartErrorModalView )) {

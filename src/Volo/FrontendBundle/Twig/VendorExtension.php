@@ -43,6 +43,9 @@ class VendorExtension extends \Twig_Extension
             new \Twig_SimpleFunction('getNextClosingHours', array($this, 'getNextClosingHours')),
             new \Twig_SimpleFunction('getNextOpeningWeekDayNumber', array($this, 'getNextOpeningWeekDayNumber')),
             new \Twig_SimpleFunction('getClosingHoursRange', array($this, 'getClosingHoursRange')),
+
+            new \Twig_SimpleFunction('getOpeningPeriods', array($this, 'getOpeningPeriods')),
+            new \Twig_SimpleFunction('getMinutesTilClosing', array($this, 'getMinutesTilClosing')),
         );
     }
 
@@ -81,6 +84,104 @@ class VendorExtension extends \Twig_Extension
     }
 
     /**
+     * @param \DateTime $time
+     * @param array $periods [[\DateTime $opening, \Datetime $closing], ..... [opening, closing]]
+     *
+     * @return array
+     */
+    public function getPeriodForTime(\DateTime $time, array $periods)
+    {
+        $timestamp = $time->getTimestamp();
+        /** @var \DateTime[] $period */
+        foreach ($periods as $period) {
+            if ($timestamp >= $period[0]->getTimestamp() && $timestamp <= $period[1]->getTimestamp()) {
+                return $period;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param SchedulesCollection $schedulesCollection
+     * @param string $weekDay
+     *
+     * @return string
+     */
+    public function getMinutesTilClosing(SchedulesCollection $schedulesCollection, $weekDay = null)
+    {
+        $openingPeriods = $this->getOpeningPeriods($schedulesCollection, $weekDay);
+        $noOpeningForThisDay = (count($openingPeriods) === 0);
+
+        $now = new \DateTime();
+        $currentTimePeriod = $this->getPeriodForTime($now, $openingPeriods);
+        if ($noOpeningForThisDay || (null === $currentTimePeriod)) {
+            return 0;
+        }
+        $diffToClosingTime = $now->diff($currentTimePeriod[1]);
+
+        return $diffToClosingTime->i + (60 * $diffToClosingTime->h);
+    }
+
+    /**
+     * @param SchedulesCollection $schedulesCollection
+     * @param int $weekDay
+     *
+     * @return array
+     */
+    public function getOpeningPeriods(SchedulesCollection $schedulesCollection, $weekDay = null)
+    {
+        $openingPeriods = $this->getTime($schedulesCollection, $weekDay, 'delivering', 'opening_time');
+        $closingPeriods = $this->getTime($schedulesCollection, $weekDay, 'delivering', 'closing_time');
+
+        $periods = [];
+        if (count($openingPeriods) > 0) {
+            foreach ($openingPeriods as $k => $period) {
+                $date = $this->createDateTimeForDayOfTheWeek($weekDay);
+
+                $periodStartDate = clone $date;
+                $periodEndDate   = clone $date;
+
+                $startPeriod = explode(':', $period);
+                $endPeriod   = explode(':', $closingPeriods[$k]);
+
+                $periodStartDate->setTime($startPeriod[0], $startPeriod[1]);
+                $periodEndDate->setTime($endPeriod[0],     $endPeriod[1]);
+
+                $periods[$k] = [$periodStartDate, $periodEndDate];
+            }
+        }
+
+        return $periods;
+    }
+
+    /**
+     * @param int $weekDay
+     *
+     * @return \DateTime
+     */
+    protected function createDateTimeForDayOfTheWeek($weekDay = null) {
+        $todayOfTheWeek = (int) (new \DateTime())->format('N');
+        if ($weekDay === null) {
+            $weekDay = $todayOfTheWeek;
+        }
+
+        $timestamp = strtotime("+{$weekDay} day", strtotime('next Sunday'));
+        $dateTime = new \DateTime();
+        $dateTime->setTimestamp($timestamp);
+        $namedDayOfTheWeek = $dateTime->format('D');
+
+        if ($todayOfTheWeek === (int) $weekDay) {
+            $date = new \DateTime();
+            $date->setTime(0,0,0);
+        } else {
+            $date = new \DateTime("next $namedDayOfTheWeek");
+        }
+
+        return $date;
+    }
+
+    /**
      * @param SchedulesCollection $schedulesCollection
      * @param int $weekDay
      *
@@ -88,7 +189,8 @@ class VendorExtension extends \Twig_Extension
      */
     public function getClosingTime(SchedulesCollection $schedulesCollection, $weekDay = null)
     {
-        $closingAt = $this->getTime($schedulesCollection, $weekDay, 'delivering', 'closing_time');
+        $closingPeriods = $this->getTime($schedulesCollection, $weekDay, 'delivering', 'closing_time');
+        $closingAt = count($closingPeriods) === 0 ? null : $closingPeriods[0];
 
         return $closingAt === null ? null : \DateTime::createFromFormat('H:i', $closingAt);
     }
@@ -101,7 +203,8 @@ class VendorExtension extends \Twig_Extension
      */
     public function getOpeningTime(SchedulesCollection $schedulesCollection, $weekDay = null)
     {
-        $openingAt = $this->getTime($schedulesCollection, $weekDay, 'delivering', 'opening_time');
+        $openingPeriods = $this->getTime($schedulesCollection, $weekDay, 'delivering', 'opening_time');
+        $openingAt = count($openingPeriods) === 0 ? null : $openingPeriods[0];
 
         return $openingAt === null ? null : \DateTime::createFromFormat('H:i', $openingAt);
     }
@@ -112,10 +215,11 @@ class VendorExtension extends \Twig_Extension
      * @param string $openingType
      * @param string $field
      *
-     * @return string
+     * @return array
      */
     protected function getTime(SchedulesCollection $schedules, $weekDay, $openingType, $field)
     {
+        $timeCollection = [];
         if ($weekDay === null) {
             $weekDay = (int)date('N');
         }
@@ -123,11 +227,13 @@ class VendorExtension extends \Twig_Extension
         /** @var Schedule $schedule */
         foreach ($schedules as $schedule) {
             if ((int)$weekDay === (int)$schedule->getWeekday() && $openingType === $schedule->getOpeningType()) {
-                return $field === 'closing_time' ? $schedule->getClosingTime() : $schedule->getOpeningTime();
+                $isClosing = $field === 'closing_time';
+                $timeCollection[] = $isClosing ? $schedule->getClosingTime() : $schedule->getOpeningTime();
             }
         }
+        asort($timeCollection);
 
-        return null;
+        return $timeCollection;
     }
 
     /**
@@ -140,15 +246,18 @@ class VendorExtension extends \Twig_Extension
     {
         $deliveryPossible = false;
         $dayOfTheWeek = $dateTime->format('N');
-        $closingTime = $this->getClosingTime($schedules, $dayOfTheWeek);
+        $openingPeriods = $this->getOpeningPeriods($schedules, $dayOfTheWeek);
 
-        if ($closingTime !== null) {
-            $closingTimeTodayInSeconds = $this->getSecondsInThisDay($closingTime);
-            $currentTimeTodayInSeconds = $this->getSecondsInThisDay($dateTime);
-
-            $deliveryPossible = $currentTimeTodayInSeconds < $closingTimeTodayInSeconds;
+        if (count($openingPeriods) > 0) {
+            /** @var \DateTime[] $period */
+            foreach ($openingPeriods as $period) {
+                /** @var \DateTime $closingTime */
+                $closingTime = $period[1];
+                if ($dateTime->getTimestamp() < $closingTime->getTimestamp()) {
+                    $deliveryPossible = true;
+                }
+            }
         }
-
 
         return $deliveryPossible;
     }
@@ -194,9 +303,9 @@ class VendorExtension extends \Twig_Extension
 
         for ($i = 0; $i < 7; $i++) {
             $weekDay = $dayToCheck->format('N');
-            $openingHours = $this->getOpeningTime($schedules, $weekDay);
+            $openingPeriods = $this->getOpeningPeriods($schedules, $weekDay);
 
-            if (null !== $openingHours) {
+            if (count($openingPeriods) > 0) {
                 return $dayToCheck;
             }
             $this->incrementOneDay($dayToCheck);
@@ -227,6 +336,19 @@ class VendorExtension extends \Twig_Extension
     {
         $nextOpeningDay = $this->getNextOpeningWeekDayNumber($schedules);
 
+        $periods = $this->getOpeningPeriods($schedules, $nextOpeningDay);
+        $todayOfTheWeek = (new \DateTime())->format('N');
+        if ($nextOpeningDay === $todayOfTheWeek) {
+            $timeNow = $this->getTimeNow();
+            foreach ($periods as $period) {
+                /** @var \DateTime $closingTime */
+                $closingTime = $period[1];
+                if ($timeNow < $closingTime->getTimestamp()) {
+                    return $period[0];
+                }
+            }
+        }
+
         return $this->getOpeningTime($schedules, $nextOpeningDay);
     }
 
@@ -238,6 +360,19 @@ class VendorExtension extends \Twig_Extension
     public function getNextClosingHours(SchedulesCollection $schedules)
     {
         $nextOpeningDay = $this->getNextOpeningWeekDayNumber($schedules);
+
+        $periods = $this->getOpeningPeriods($schedules, $nextOpeningDay);
+        $todayOfTheWeek = (new \DateTime())->format('N');
+        if ($nextOpeningDay === $todayOfTheWeek) {
+            $timeNow = $this->getTimeNow();
+            foreach ($periods as $period) {
+                /** @var \DateTime $closingTime */
+                $closingTime = $period[1];
+                if ($timeNow < $closingTime->getTimestamp()) {
+                    return $closingTime;
+                }
+            }
+        }
 
         return $this->getClosingTime($schedules, $nextOpeningDay);
     }
@@ -290,12 +425,27 @@ class VendorExtension extends \Twig_Extension
         $canDeliver = true;
 
         if ($this->isToday($day)) {
-            $closingTime = $this->getClosingTime($schedules);
-            $nextPossibleDeliveryTimeInSeconds = time() + (60 * $averageDeliveryTimeInMinutes);
-            $canDeliver = (int) $closingTime->format('Hi') > (int) date('Hi', $nextPossibleDeliveryTimeInSeconds);
+            $canDeliver = false;
+            $openingPeriods = $this->getOpeningPeriods($schedules, $day->format('N'));
+            $timeNow = $this->getTimeNow();
+            foreach ($openingPeriods as $openingPeriod) {
+                /** @var \DateTime $closingTime */
+                $closingTime = $openingPeriod[1];
+                if ($closingTime->getTimestamp() > $timeNow) {
+                    $canDeliver = true;
+                }
+            }
         }
 
         return $canDeliver;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getTimeNow()
+    {
+        return (new \DateTime())->getTimestamp();
     }
 
     /**
@@ -323,49 +473,61 @@ class VendorExtension extends \Twig_Extension
     {
         $averageDeliveryTimeInSeconds = $averageDeliveryTime * 60;
 
-        $openingTime = $this->getOpeningTime($schedules, $day->format('N'));
-        $closingTime = $this->getClosingTime($schedules, $day->format('N'));
+        $openingPeriods = $this->getOpeningPeriods($schedules, $day->format('N'));
 
-        // for example if it open as 10:00 (am) then this number is 10 hrs * 3600 = 36,000 seconds
-        $openingTimeInSecondsOfTheDay = $this->getSecondsInThisDay($openingTime);
-        // for example if it closes as 22:00 (pm) then this number is 20 hrs * 3600 = 72,000 seconds
-        $closingTimeInSecondsOfTheDay = $this->getSecondsInThisDay($closingTime);
+        $allDeliveryRanges = [];
 
-        // This case covers restaurants that close after 24:00(00:00)
-        if ($closingTimeInSecondsOfTheDay < $openingTimeInSecondsOfTheDay) {
-            $closingTimeInSecondsOfTheDay += 86400;
-        }
+        foreach ($openingPeriods as $openingPeriod) {
+            /** @var \DateTime $openingTime */
+            $openingTime = $openingPeriod[0];
+            /** @var \DateTime $closingTime */
+            $closingTime = $openingPeriod[1];
 
-        $today = new \DateTime();
-        $isOpen = false;
+            // for example if it open as 10:00 (am) then this number is 10 hrs * 3600 = 36,000 seconds
+            $openingTimeInSecondsOfTheDay = $this->getSecondsInThisDay($openingTime);
+            // for example if it closes as 22:00 (pm) then this number is 20 hrs * 3600 = 72,000 seconds
+            $closingTimeInSecondsOfTheDay = $this->getSecondsInThisDay($closingTime);
 
-        $deliveryStartingTimeInSecondsOfTheDay = ($openingTimeInSecondsOfTheDay + $averageDeliveryTimeInSeconds);
-        // in the following part we try to determine the 1st hour of deliver
-        // such that if the day is today, we start from the next hour from the time now
-        // otherwise(not today) we start from the normal opening hours
-        if ($day->format('Y-m-d') === $today->format('Y-m-d')) {
-            $unixTimestampOfNow = $today->getTimestamp();
-            $today->setTime(0, 0, 0);
-            $midnightTimestamp = $today->getTimestamp();
-            // number of seconds that passed today from 00:00 til this moment e.g. if it's 7:30 am then (7.5 hrs * 3600)
-            $secondsSinceTheBeginningOfToday = $unixTimestampOfNow - $midnightTimestamp + $averageDeliveryTimeInSeconds;
-
-            $isOpen = ($openingTime->getTimestamp() < time()) && ($closingTime->getTimestamp() > time());
-
-            // if it's currently open, then the starting range is right now (this moment)
-            if ($isOpen) {
-                $deliveryStartingTimeInSecondsOfTheDay = $unixTimestampOfNow - $midnightTimestamp;
-            } elseif ($secondsSinceTheBeginningOfToday > $deliveryStartingTimeInSecondsOfTheDay) {
-                $deliveryStartingTimeInSecondsOfTheDay = $secondsSinceTheBeginningOfToday;
+            // This case covers restaurants that close after 24:00(00:00)
+            if ($closingTimeInSecondsOfTheDay < $openingTimeInSecondsOfTheDay) {
+                $closingTimeInSecondsOfTheDay += 86400;
             }
+
+            $today = new \DateTime();
+            $isOpen = false;
+
+            $deliveryStartingTimeInSecondsOfTheDay = ($openingTimeInSecondsOfTheDay + $averageDeliveryTimeInSeconds);
+            // in the following part we try to determine the 1st hour of deliver
+            // such that if the day is today, we start from the next hour from the time now
+            // otherwise(not today) we start from the normal opening hours
+            if ($day->format('Y-m-d') === $today->format('Y-m-d')) {
+                $unixTimestampOfNow = $today->getTimestamp();
+                $today->setTime(0, 0, 0);
+                $midnightTimestamp = $today->getTimestamp();
+                // number of seconds that passed today from 00:00 til this moment e.g. if it's 7:30 am then (7.5 hrs * 3600)
+                $secondsSinceTheBeginningOfToday = $unixTimestampOfNow - $midnightTimestamp + $averageDeliveryTimeInSeconds;
+                $timeNow = $this->getTimeNow();
+                $isOpen = ($openingTime->getTimestamp() < $timeNow) && ($closingTime->getTimestamp() > $timeNow);
+
+                // if it's currently open, then the starting range is right now (this moment)
+                if ($isOpen) {
+                    $deliveryStartingTimeInSecondsOfTheDay = $unixTimestampOfNow - $midnightTimestamp;
+                } elseif ($secondsSinceTheBeginningOfToday > $deliveryStartingTimeInSecondsOfTheDay) {
+                    $deliveryStartingTimeInSecondsOfTheDay = $secondsSinceTheBeginningOfToday;
+                }
+            }
+
+            $deliveryRanges = $this->getDeliveryRanges(
+                $deliveryStartingTimeInSecondsOfTheDay,
+                $closingTimeInSecondsOfTheDay,
+                1800,
+                $isOpen
+            );
+
+            $allDeliveryRanges = array_merge($allDeliveryRanges, $deliveryRanges);
         }
 
-        return $this->getDeliveryRanges(
-            $deliveryStartingTimeInSecondsOfTheDay,
-            $closingTimeInSecondsOfTheDay,
-            1800,
-            $isOpen
-        );
+        return $allDeliveryRanges;
     }
 
     /**

@@ -7,6 +7,8 @@ var VendorGeocodingView = HomeSearchView.extend({
     initialize: function (options) {
         _.bindAll(this);
         this.modelCart = options.modelCart;
+        this.smallScreenMaxSize = options.smallScreenMaxSize;
+        this.scrollBarSize = 16;
 
         this.listenTo(this.modelCart, 'invalid', this._alarmNoPostcode);
         this.listenTo(this.geocodingService, 'autocomplete:place_changed', this.performDeliverableCheck);
@@ -84,8 +86,20 @@ var VendorGeocodingView = HomeSearchView.extend({
 
     _alarmNoPostcode: function (event) {
         if (event.validationError === 'location_not_set') {
+
             this._hideFormattedAddress();
-            this._showInputPopup(_.template($('#template-vendor-supply-postcode').html()));
+            var $body = $('body'),
+                offset = $('.menu').offset().top - $('.header__wrapper').height();
+
+            if ($body.width() - this.scrollBarSize > this.smallScreenMaxSize) {
+                $body.animate({
+                    scrollTop: offset
+                }, 'fast', function() {
+                    this._showInputPopup(_.template($('#template-vendor-supply-postcode').html()));
+                }.bind(this));
+            } else {
+                this._showInputPopup(_.template($('#template-vendor-supply-postcode').html()));
+            }
         }
     },
 

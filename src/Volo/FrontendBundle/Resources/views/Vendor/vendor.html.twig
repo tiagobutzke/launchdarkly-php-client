@@ -34,7 +34,7 @@
         <h4 class="hero-menu__info__description">{{ vendor.description }}</h4>
     </div>
     <div class="hero-menu__info-extra">
-        {% set closingInMinutes = getClosingIn(vendor.schedules) %}
+        {% set closingInMinutes = getMinutesTilClosing(vendor.schedules) %}
         <i class="icon-clock-o"></i>
         {% if (closingInMinutes <= 0) %}
             <span class="line-wrapper">{{ 'vendor_closed_preorder_available'|trans }}</span>
@@ -64,7 +64,7 @@
                 <div class="menu__categories">
                     {% if vendor.logo is not empty %}
                         <div class="menu__vendor-logo">
-                            <img src="{{ vendor.logo|prepareLogoUrl(logo_image_dimensions) }}" alt="{{ vendor.name }}">
+                            <img class="menu__vendor-logo__img" src="{{ vendor.logo|prepareLogoUrl(logo_image_dimensions) }}" alt="{{ vendor.name }}">
                         </div>
                     {% endif %}
                     <nav>
@@ -119,10 +119,17 @@
             <h3 class="menu__bottom-info__title">Öffnungszeiten</h3>
             <ul>
                 {% for weekdayIndex in 1..7 %}
-                    {% set openingTime = getOpeningTime(vendor.schedules, weekdayIndex) %}
-                    {% if (null != openingTime) %}
+                    {% set openingTimes = getOpeningPeriods(vendor.schedules, weekdayIndex) %}
+                    {% set totalPeriods = openingTimes|length %}
+                    {% if (totalPeriods > 0) %}
                         <li>
-                            {{ weekdayIndex|dayOfTheWeek }} <span>{{ openingTime|formatTime }} - {{ getClosingTime(vendor.schedules, weekdayIndex)|formatTime }}</span>
+                            {{ weekdayIndex|dayOfTheWeek }}
+                            <span>
+                                {% for i in 0..(totalPeriods-1) %}
+                                    {% set openingTime = openingTimes[i] %}
+                                    {{ openingTime|first|formatTime }} - {{ openingTime|last|formatTime }}{% if i < (totalPeriods-1) %}, {% endif %}
+                                {% endfor %}
+                            </span>
                         </li>
                     {% endif %}
                 {% endfor %}
