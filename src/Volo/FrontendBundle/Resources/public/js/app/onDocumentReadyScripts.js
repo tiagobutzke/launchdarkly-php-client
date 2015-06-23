@@ -31,7 +31,7 @@ $(document).ready(function() {
         $document: $(document),
         scrollersSelector: '.numbers__scroller',
         fromNumber: 60,
-        toNumber: 35,
+        toNumber: 30,
         transition: 'cubic-bezier(0.270, 1.170, 1.000, 1.000)',
         startingPointGetter: function() {
             return $('.numbers__scroller').offset().top;
