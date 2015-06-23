@@ -73,13 +73,20 @@
 // address box
 
 .profile__main--list {
+  @include respond-from("screen-md") {
+    padding-bottom: $space-sm;
+  }
 
   .profile__title {
     margin-bottom: 0;
   }
 
-  .checkout__list:last-child {
-    border: none;
+  .checkout__list{
+    line-height: normal;
+    margin-top: $space-xs;
+    @include respond-from("screen-md") {
+      margin-top: $space-sm;
+    }
   }
 }
 
