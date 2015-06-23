@@ -8,13 +8,15 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
     initialize: function (options) {
         _.bindAll(this);
         this.geocodingService = options.geocodingService;
+        this.postalCodeGeocodingService = options.postalCodeGeocodingService;
         this.vendorId = this.$('#postal_index_form_input').data('vendor_id');
         this.geocodingService.init(this.$('#formatted_address'), []);
-        this.geocodingService.setLocation({
-            latitude: options.locationModel.get('latitude'),
+        var locationObject = {
+            latitude:  options.locationModel.get('latitude'),
             longitude: options.locationModel.get('longitude')
-        });
-
+        };
+        this.geocodingService.setLocation(locationObject);
+        this.postalCodeGeocodingService.setLocation(locationObject);
         this.deliveryCheck = options.deliveryCheck;
         this._jsValidationView = new ValidationView({
             el: this.el,
@@ -74,7 +76,7 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
         this.$('#address_line2').val(data.building);
         this.$('#address_latitude').val(data.lat);
         this.$('#address_longitude').val(data.lng);
-        this._validateDelivery(data);
+        this._geocodePostalCode(data);
     },
 
     _getDataFromMeta: function (locationMeta) {
@@ -111,6 +113,21 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
         if (this.$('#address_line1').val() === '' || this.$('#address_line2').val() === '') {
             this._showInputPopup(this.$('#formatted_address').data('msg_ensure_full_address'));
         }
+    },
+
+    _geocodePostalCode: function (locationData) {
+        var that = this;
+        this.postalCodeGeocodingService.geoCodePostalCode({
+            postalCode: locationData.postcode,
+            city: locationData.city,
+            success: function (result) {
+                that._validateDelivery({lat: result.lat(), lng: result.lng()});
+            },
+            error: function () {
+                // if Google can't geo-code it, who are we to stop the user!!!, just consider it valid man :)
+                this.$("#delivery_information_form_button").attr('disabled', false);
+            }
+        });
     },
 
     _validateDelivery: function (locationData) {
