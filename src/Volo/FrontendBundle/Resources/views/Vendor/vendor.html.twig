@@ -64,7 +64,7 @@
                 <div class="menu__categories">
                     {% if vendor.logo is not empty %}
                         <div class="menu__vendor-logo">
-                            <img src="{{ vendor.logo|prepareLogoUrl(logo_image_dimensions) }}" alt="{{ vendor.name }}">
+                            <img class="menu__vendor-logo__img" src="{{ vendor.logo|prepareLogoUrl(logo_image_dimensions) }}" alt="{{ vendor.name }}">
                         </div>
                     {% endif %}
                     <nav>

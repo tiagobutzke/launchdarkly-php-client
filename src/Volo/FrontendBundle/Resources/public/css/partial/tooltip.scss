@@ -3,7 +3,7 @@ $tooltip-arrow-color: $tooltip-bg;
 
 .tooltip {
   position: absolute;
-  z-index: $zindex-tooltip;
+  z-index: 800;
   display: block;
   // Reset font and text properties given new insertion method
   font-family: $font-family-base;
