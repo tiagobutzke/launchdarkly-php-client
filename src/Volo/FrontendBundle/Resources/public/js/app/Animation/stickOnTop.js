@@ -44,11 +44,11 @@ var StickOnTop  = (function() {
         if (!this.isActiveGetter()) {
             return;
         }
+        this._removeSticking();
         this.stickOnTopValue = this.stickOnTopValueGetter();
         this.startingPoint = this.startingPointGetter();
         this.endpoint = this.endPointGetter();
         this.maxHeight = this.$window.outerHeight() - this.stickOnTopValue;
-        this._removeSticking();
         this.redraw();
     };
 
