@@ -201,12 +201,9 @@
 }
 
 .menu__items  {
-  padding-top: $header-height-extra-small;
-  @include respond-from("screen-md") {
-    @include make-md-column(12);
-    @include make-lg-column(9);
-    padding-top: 0;
-  }
+  @include make-md-column(12);
+  @include make-lg-column(9);
+  padding-top: 0;
 }
 
 .menu__items__title {
@@ -222,7 +219,7 @@
     padding-top: 15px;
   }
   @include respond-from("screen-md") {
-    font-size: 0.875em;
+    font-size: 0.875em;K
     padding: 55px 0 25px;
     &:first-child {
       padding-top: 30px;
