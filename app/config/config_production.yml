@@ -33,6 +33,9 @@ monolog:
             ident:    symfony_volo_%environment%_%country_code%
             facility: local7
             level:    debug
+        newrelic:
+            type:     newrelic
+            level:    error
         console:
             type:  console
 
