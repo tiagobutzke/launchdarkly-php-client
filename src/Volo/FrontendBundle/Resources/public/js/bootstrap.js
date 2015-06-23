@@ -116,7 +116,8 @@ VOLO.initCheckoutViews = function (cartModel, checkoutModel, deliveryCheck, loca
             el: '#delivery_information_form',
             deliveryCheck: deliveryCheck,
             locationModel: locationModel,
-            geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1])
+            geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1]),
+            postalCodeGeocodingService: new PostalCodeGeocodingService(VOLO.configuration.locale.split('_')[1])
         });
     }
 
