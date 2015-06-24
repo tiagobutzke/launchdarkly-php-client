@@ -10,6 +10,10 @@
     border-bottom: 1px solid $dropdown-border;
   }
 
+  .dropdown-backdrop {
+    position: static;
+  }
+
   .dropdown-menu {
     margin-top: 30px;
     left: -2px;
