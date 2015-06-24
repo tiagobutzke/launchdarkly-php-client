@@ -142,7 +142,7 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
             },
             error: function (results, status) {
                 if (_.isString(status) && status === 'ZERO_RESULTS') {
-                    that.$("#delivery_information_form_button").attr('disabled', false);
+                    that.$("#delivery_information_form_button").attr('disabled', true);
                     that._showInputPopup(that.$('#postal_index_form_input').data('validation-msg'), true);
                 } else {
                     // if Google can't geo-code it, who are we to stop the user!!!, just consider it valid man :)
