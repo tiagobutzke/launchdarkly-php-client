@@ -203,7 +203,6 @@
 .menu__items  {
   @include make-md-column(12);
   @include make-lg-column(9);
-  padding-top: 0;
 }
 
 .menu__items__title {
