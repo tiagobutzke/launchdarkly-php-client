@@ -165,6 +165,13 @@ VOLO.initCheckoutViews = function (cartModel, checkoutModel, deliveryCheck, loca
         });
     }
 
+    if ($('.checkout__payments-wrapper').length > 0) {
+        VOLO.paymentTypeView = new PaymentTypeView({
+            el: '.checkout__payments-wrapper',
+            checkoutModel: checkoutModel
+        });
+    }
+
     if (_.isObject(VOLO.cartErrorModalView )) {
         VOLO.cartErrorModalView.unbind();
     }
@@ -433,6 +440,10 @@ $(document).on('page:before-unload', function () {
 
     if (_.isObject(VOLO.GTMServiceInstance)) {
         delete VOLO.GTMServiceInstance;
+    }
+
+    if (_.isObject(VOLO.paymentTypeView)) {
+        VOLO.paymentTypeView.unbind();
     }
     dataLayer = [];
 });
