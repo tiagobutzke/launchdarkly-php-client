@@ -106,7 +106,7 @@ a.button {
 
 // ----------------------- INPUT FIELDS START ------------------
 
-input, .form-control, .mobile-select {
+input, .form-control {
   font-family: $input-font-family;
   font-size: $input-font-size;
   text-align: $input-text-align;
@@ -137,10 +137,6 @@ input, .form-control, .mobile-select {
   &[type="radio"], &[type="checkbox"] {
     height: auto;
   }
-}
-
-.mobile-select {
-  width: 100%;
 }
 
 .form-group {
