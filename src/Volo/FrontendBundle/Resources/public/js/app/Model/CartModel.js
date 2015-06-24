@@ -128,6 +128,12 @@ var VendorCartModel = Backbone.Model.extend({
                     latitude: data.latitude,
                     longitude: data.longitude
                 });
+            } else {
+                this.set('location', {
+                    location_type: "polygon",
+                    latitude: null,
+                    longitude: null
+                });
             }
         }.bind(this));
 
