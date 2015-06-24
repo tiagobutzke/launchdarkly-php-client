@@ -411,29 +411,48 @@ var CartView = Backbone.View.extend({
 
     _updateCartHeight: function () {
         var $checkoutSummary = this.$('.checkout__summary'),
-            $stickOnTopCartContainer = this.$(this.stickOnTopCartContainerSelector),
-            isCartSticky = $stickOnTopCartContainer.hasClass(this.stickOnTopCart.stickingOnTopClass),
-            additionalElementsHeight = isCartSticky ? 0 : this.$(this.stickOnTopCartTargetSelector).offset().top - $stickOnTopCartContainer.offset().top,
-            fixedCartElementsHeight = additionalElementsHeight + this.$('.desktop-cart__header').outerHeight() + this.$('.desktop-cart__footer').outerHeight();
+            $stickOnTopCartContainer,
+            isCartSticky,
+            additionalElementsHeight,
+            fixedCartElementsHeight;
 
-        // if cart is sticking then adjust the product list max height
+        if (VOLO.configuration.isBelowMediumScreen()) {
+            // disabling cart resizing on small screens
+            $checkoutSummary.css({
+                'max-height': ''
+            });
+            $checkoutSummary.removeClass(this.itemsOverflowingClassName);
+
+            return;
+        }
+
+        $stickOnTopCartContainer = this.$(this.stickOnTopCartContainerSelector);
+        isCartSticky = $stickOnTopCartContainer.hasClass(this.stickOnTopCart.stickingOnTopClass);
+        additionalElementsHeight = isCartSticky ? 0 :
+            this.$(this.stickOnTopCartTargetSelector).offset().top - $stickOnTopCartContainer.offset().top;
+        fixedCartElementsHeight = additionalElementsHeight + this.$('.desktop-cart__header').outerHeight() +
+            this.$('.desktop-cart__footer').outerHeight();
+
         if (isCartSticky) {
+            // reduced window size cart resizing when not sticking
             $checkoutSummary.css({
-                'max-height': (this.$window.outerHeight() - this.domObjects.$header.outerHeight() - fixedCartElementsHeight - this.cartBottomMargin) + 'px'
+                'max-height': (this.$window.outerHeight() - this.domObjects.$header.outerHeight() -
+                fixedCartElementsHeight - this.cartBottomMargin) + 'px'
             });
-        // if not remove all adjusting
+
         } else {
+            // full window size cart resizing when sticking
             $checkoutSummary.css({
-                'max-height': (this.$window.outerHeight() - ($stickOnTopCartContainer.offset().top - this.$window.scrollTop()) - fixedCartElementsHeight - this.cartBottomMargin) + 'px'
+                'max-height': (this.$window.outerHeight() - ($stickOnTopCartContainer.offset().top -
+                this.$window.scrollTop()) - fixedCartElementsHeight - this.cartBottomMargin) + 'px'
             });
+
         }
 
         // adding css styling in case of scrolling of summary list
-        if ($checkoutSummary.find('.summary__items').outerHeight() > $checkoutSummary.outerHeight()) {
-            $checkoutSummary.addClass(this.itemsOverflowingClassName);
-        } else {
-            $checkoutSummary.removeClass(this.itemsOverflowingClassName);
-        }
+        $checkoutSummary.toggleClass(this.itemsOverflowingClassName,
+            this.$('.summary__items').outerHeight() > $checkoutSummary.outerHeight()
+        );
     },
 
     _toggleContainerVisibility: function() {
