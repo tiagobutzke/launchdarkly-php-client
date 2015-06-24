@@ -578,6 +578,10 @@ tr.summary__item__row_mobile {
   }
 }
 
+.desktop-cart__error__below-minimum-amount {
+  margin-top: $space-xs;
+}
+
 .desktop-cart__header {
   overflow: auto;
   @include respond-from("screen-md") {
