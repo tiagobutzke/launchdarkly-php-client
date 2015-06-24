@@ -11,6 +11,19 @@ var LoginRegistrationView = Backbone.View.extend({
         }
     },
 
+    _forgotPasswordConstraints: {
+        _email: {
+            presence: true,
+            email: true
+        }
+    },
+
+    _resetPasswordConstraints: {
+        '_password': {
+            presence: true
+        }
+    },
+
     _registrationConstraints: {
         'customer[first_name]': {
             presence: true
@@ -66,9 +79,24 @@ var LoginRegistrationView = Backbone.View.extend({
         return this;
     },
 
+    renderResetPassword: function (code) {
+        this.$('.modal-content').load(Routing.generate('customer_reset_password', {code: code}), function(){
+            this.$el.modal();
+            this._registerValidationView = new ValidationView({
+                el: this.$('.reset-password-form'),
+                constraints: this._resetPasswordConstraints
+            });
+        }.bind(this));
+
+        return this;
+    },
+
     events: {
         'click .register-link': '_loadRegistrationFormIntoLoginModal',
         'click .login-link': 'render',
+        'click .forgot-password-link': '_loadForgotPasswordFormIntoLoginModal',
+        'submit .forgot-password-form': '_handingSubmitOfLostPasswordForm',
+        'submit .reset-password-form': '_handingSubmitOfResetPasswordForm',
         'submit .login-form': '_handingSubmitOfLoginForm',
         'submit .registration-form': '_handingSubmitOfRegistrationForm',
         'click .modal-close-button': '_closeLoginRegistrationOverlay'
@@ -83,6 +111,81 @@ var LoginRegistrationView = Backbone.View.extend({
 
     _loadRegistrationFormIntoLoginModal: function() {
         this.$('.modal-content').load(Routing.generate('customer.create'), this._bindRegisterValidationView);
+    },
+
+    _loadForgotPasswordFormIntoLoginModal: function() {
+        var email = this.$('#username').val();
+        
+        this.$('.modal-content').load(Routing.generate('customer.forgot_password'), function() {
+            this._registerValidationView = new ValidationView({
+                el: this.$('.forgot-password-form'),
+                constraints: this._forgotPasswordConstraints
+            });
+
+            this.$('#email').val(email);
+        }.bind(this));
+    },
+
+    _handingSubmitOfLostPasswordForm: function(event) {
+        event.preventDefault();
+        var $form = this.$('.forgot-password-form'),
+            $modalContent = this.$('.modal-content'),
+            target = document.getElementById('spinner-wrapper'),
+            spinner = new Spinner();
+
+        $.ajax({
+            type: $form.attr('method'),
+            url: $form.attr('action'),
+            data: $form.serialize(),
+
+            beforeSend: function() {
+                $(target).addClass('modal-content--loading');
+                spinner.spin(target);
+                $form.find('button').prop("disabled", true);
+            },
+            success: function(data) {
+                spinner.stop();
+                $(target).removeClass('modal-content--loading');
+                $modalContent.html(data);
+            },
+            error: function (data) {
+                spinner.stop();
+                $(target).removeClass('modal-content--loading');
+                $modalContent.html(data.responseText);
+                $form.find('button').prop("disabled", false);
+            }
+        });
+    },
+
+    _handingSubmitOfResetPasswordForm: function(event) {
+        event.preventDefault();
+        var $form = this.$('.reset-password-form'),
+            $modalContent = this.$('.modal-content'),
+            target = document.getElementById('spinner-wrapper'),
+            spinner = new Spinner();
+
+        $.ajax({
+            type: $form.attr('method'),
+            url: $form.attr('action'),
+            data: $form.serialize(),
+
+            beforeSend: function() {
+                $(target).addClass('modal-content--loading');
+                spinner.spin(target);
+                $form.find('button').prop("disabled", true);
+            },
+            success: function() {
+                spinner.stop();
+                $(target).removeClass('modal-content--loading');
+                this.render();
+            }.bind(this),
+            error: function (data) {
+                spinner.stop();
+                $(target).removeClass('modal-content--loading');
+                $modalContent.html(data.responseText);
+                $form.find('button').prop("disabled", false);
+            }
+        });
     },
 
     _handingSubmitOfLoginForm: function(event) {
