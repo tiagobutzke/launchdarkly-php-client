@@ -79,7 +79,7 @@ var ToppingModel = Backbone.Model.extend({
         }
 
         quantity_minimum = this.get('quantity_minimum');
-        if (this.options.length <= quantity_minimum && this._getSelectedItems.length < quantity_minimum) {
+        if (this.options.length <= quantity_minimum && this._getSelectedItems().length < quantity_minimum) {
             toppingModel.select(true);
         }
     },
@@ -132,8 +132,10 @@ var ToppingModel = Backbone.Model.extend({
         var max = this.get('quantity_maximum'),
             min = this.get('quantity_minimum');
 
-        if (max !== min &&
-            ((buttonType === 'radioButton' && this.isSelectionRequired()) || this._getSelectedItems().length <= min)) {
+        if ((buttonType === 'radioButton' && this.isSelectionRequired()) ||
+            (this._getSelectedItems().length <= this.get('quantity_minimum') && max !== min) ||
+            (this.options.length <= min)
+        ) {
 
             return false;
         }
