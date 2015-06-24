@@ -231,7 +231,7 @@ class VendorExtension extends \Twig_Extension
                 $timeCollection[] = $isClosing ? $schedule->getClosingTime() : $schedule->getOpeningTime();
             }
         }
-        asort($timeCollection);
+        natsort($timeCollection);
 
         return $timeCollection;
     }
