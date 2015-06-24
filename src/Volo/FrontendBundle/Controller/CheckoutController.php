@@ -267,6 +267,8 @@ class CheckoutController extends Controller
         }
         $cart = $this->getCart($vendor);
 
+        $data['client_ip'] = $request->getClientIp();
+
         try {
             $apiResult = $this->handleOrder($cart, $vendor, $data);
         } catch (ApiErrorException $e) {
@@ -385,7 +387,7 @@ class CheckoutController extends Controller
             );
 
             if ($order['hosted_payment_page_redirect'] === null) {
-                $orderManager->guestPayment($order, $data['encrypted_payment_data']);
+                $orderManager->guestPayment($order, $data['encrypted_payment_data'], $data['client_ip']);
             }
         }
         

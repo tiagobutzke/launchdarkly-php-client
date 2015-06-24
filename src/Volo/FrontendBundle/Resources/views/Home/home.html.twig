@@ -30,15 +30,17 @@
             <h2 class="teaser__slogan__h2">{{ 'general.slogan'|trans }}</h2>
         </div>
         <form class="teaser__form" id="postal_index_form" method="GET">
-            <input type="text" class="teaser__form__input"
-                   id="postal_index_form_input"
-                   value="{{ postalCode }}"
-                   autofocus=""
-                   placeholder="{% trans %}postal_code.your_postal_code{% endtrans %}"
-                   data-msg_error_not_found="{% trans %}postal_code.not_found{% endtrans %}"
-                   data-msg_you_probably_mean="{% trans %}postal_code.you_probably_mean{% endtrans %}"
-                   data-msg_error_empty="{% trans %}postal_code.empty{% endtrans %}"
-                   >
+            <div class="teaser__form__input__wrapper">
+                <input type="text" class="teaser__form__input"
+                       id="postal_index_form_input"
+                       value="{{ postalCode }}"
+                       autofocus=""
+                       placeholder="{% trans %}postal_code.your_postal_code{% endtrans %}"
+                       data-msg_error_not_found="{% trans %}postal_code.not_found{% endtrans %}"
+                       data-msg_you_probably_mean="{% trans %}postal_code.you_probably_mean{% endtrans %}"
+                       data-msg_error_empty="{% trans %}postal_code.empty{% endtrans %}"
+                       >
+            </div>
             <input class="teaser__button button button--inline" type="submit" value="{{ 'buttons.find_food'|trans }}">
         </form>
     </section>

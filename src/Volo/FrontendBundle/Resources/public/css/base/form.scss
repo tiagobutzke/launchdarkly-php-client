@@ -106,7 +106,7 @@ a.button {
 
 // ----------------------- INPUT FIELDS START ------------------
 
-input, .form-control, .mobile-select {
+input, .form-control {
   font-family: $input-font-family;
   font-size: $input-font-size;
   text-align: $input-text-align;
@@ -139,22 +139,31 @@ input, .form-control, .mobile-select {
   }
 }
 
-.mobile-select {
-  width: 100%;
-}
-
 .form-group {
   clear: both;
   position: relative;
 }
 
-
-.form-group--two_col1 {
-  width: 50%;
+.form-group--two_col1_larger {
+  width: 80%;
   float: left;
   padding-right: $space-xs;
   clear: none;
 }
+
+.form-group--two_col2_smaller {
+  width: 20%;
+  float: left;
+  padding-left: $space-xs;
+  clear: none;
+}
+
+.form-group--two_col1 {
+   width: 50%;
+   float: left;
+   padding-right: $space-xs;
+   clear: none;
+ }
 
 .form-group--two_col2 {
   width: 50%;

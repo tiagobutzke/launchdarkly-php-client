@@ -5,45 +5,48 @@
 // ----------------------- FONTS START -----------------------
 $fontspath: "../../fonts/";
 
+// this value should be changed anytime fonts file are updated in order to avoid caching issues
+$font-version: 1;
+
 @font-face {
   font-family: 'icomoon';
-  src:url('#{$fontspath}icomoon.eot?i5ic2x');
-  src:url('#{$fontspath}icomoon.eot?#iefixi5ic2x') format('embedded-opentype'),
-  url('#{$fontspath}icomoon.ttf?i5ic2x') format('truetype'),
-  url('#{$fontspath}icomoon.woff?i5ic2x') format('woff'),
-  url('#{$fontspath}icomoon.svg?i5ic2x#icomoon') format('svg');
+  src:url('#{$fontspath}icomoon.eot?#{$font-version}');
+  src:url('#{$fontspath}icomoon.eot?#{$font-version}') format('embedded-opentype'),
+  url('#{$fontspath}icomoon.ttf?#{$font-version}') format('truetype'),
+  url('#{$fontspath}icomoon.woff?#{$font-version}') format('woff'),
+  url('#{$fontspath}icomoon.svg?#{$font-version}#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Avenir Book';
-  src: url('#{$fontspath}AvenirBook.eot');
-  src: url('#{$fontspath}AvenirBook.eot') format('embedded-opentype'),
-  url('#{$fontspath}AvenirBook.woff2') format('woff2'),
-  url('#{$fontspath}AvenirBook.woff') format('woff'),
-  url('#{$fontspath}AvenirBook.ttf') format('truetype'),
-  url('#{$fontspath}AvenirBook.svg#AvenirBook') format('svg');
+  src: url('#{$fontspath}AvenirBook.eot?#{$font-version}');
+  src: url('#{$fontspath}AvenirBook.eot?#{$font-version}') format('embedded-opentype'),
+  url('#{$fontspath}AvenirBook.woff?#{$font-version}') format('woff2'),
+  url('#{$fontspath}AvenirBook.woff?#{$font-version}') format('woff'),
+  url('#{$fontspath}AvenirBook.ttf?#{$font-version}') format('truetype'),
+  url('#{$fontspath}AvenirBook.svg?#{$font-version}#AvenirBook') format('svg');
 }
 
 @font-face {
   font-family: 'Avenir Heavy';
-  src: url('#{$fontspath}AvenirHeavy.eot');
-  src: url('#{$fontspath}AvenirHeavy.eot') format('embedded-opentype'),
-  url('#{$fontspath}AvenirHeavy.woff2') format('woff2'),
-  url('#{$fontspath}AvenirHeavy.woff') format('woff'),
-  url('#{$fontspath}AvenirHeavy.ttf') format('truetype'),
-  url('#{$fontspath}AvenirHeavy.svg#AvenirHeavy') format('svg');
+  src: url('#{$fontspath}AvenirHeavy.eot?#{$font-version}');
+  src: url('#{$fontspath}AvenirHeavy.eot?#{$font-version}') format('embedded-opentype'),
+  url('#{$fontspath}AvenirHeavy.woff2?#{$font-version}') format('woff2'),
+  url('#{$fontspath}AvenirHeavy.woff?#{$font-version}') format('woff'),
+  url('#{$fontspath}AvenirHeavy.ttf?#{$font-version}') format('truetype'),
+  url('#{$fontspath}AvenirHeavy.svg?#{$font-version}#AvenirHeavy') format('svg');
 }
 
 @font-face {
   font-family: 'Satisfy Regular';
-  src: url('#{$fontspath}SatisfyRegular.eot');
-  src: url('#{$fontspath}SatisfyRegular.eot') format('embedded-opentype'),
-  url('#{$fontspath}SatisfyRegular.woff2') format('woff2'),
-  url('#{$fontspath}SatisfyRegular.woff') format('woff'),
-  url('#{$fontspath}SatisfyRegular.ttf') format('truetype'),
-  url('#{$fontspath}SatisfyRegular.svg#SatisfyRegular') format('svg');
+  src: url('#{$fontspath}SatisfyRegular.eot?#{$font-version}');
+  src: url('#{$fontspath}SatisfyRegular.eot?#{$font-version}') format('embedded-opentype'),
+  url('#{$fontspath}SatisfyRegular.woff2?#{$font-version}') format('woff2'),
+  url('#{$fontspath}SatisfyRegular.woff?#{$font-version}') format('woff'),
+  url('#{$fontspath}SatisfyRegular.ttf?#{$font-version}') format('truetype'),
+  url('#{$fontspath}SatisfyRegular.svg?#{$font-version}#SatisfyRegular') format('svg');
 }
 
 $base-font-size: 16px;

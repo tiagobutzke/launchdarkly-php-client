@@ -32,8 +32,6 @@ class ProfileController extends Controller
     public function indexAction(Request $request)
     {
         $errorMessages = $this->get('session')->getFlashBag()->get(static::FLASH_TYPE_ERRORS);
-        /** @var Token $token */
-        $token            = $this->get('security.token_storage')->getToken();
         $serializer       = $this->get('volo_frontend.api.serializer');
         $customerProvider = $this->get('volo_frontend.provider.customer');
         $phoneNumberError = '';
@@ -45,6 +43,8 @@ class ProfileController extends Controller
             }
         }
 
+        /** @var Token $token */
+        $token       = $this->get('security.token_storage')->getToken();
         $accessToken = $token->getAccessToken();
         $customer    = $customerProvider->getCustomer($accessToken);
         $addresses   = $customerProvider->getAddresses($accessToken);

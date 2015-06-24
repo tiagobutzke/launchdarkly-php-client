@@ -29,9 +29,14 @@
                 </a>
                 <span class="header__logo__restaurant-name"></span>
             </h1>
+            {% set cartProductCount = get_default_cart_count(app.session) %}
             <a class="header__cart" data-vendor_id="{{ get_default_cart_vendor_id(app.session) }}">
                 <i class="icon-cart"></i>
-                <span class="header__cart__products__count">{{ get_default_cart_count(app.session) }}</span>
+                {% if cartProductCount > 0 %}
+                    <span class="header__cart__products__count">{{ cartProductCount }}</span>
+                {% else %}
+                    <span class="header__cart__products__count hidden">{{ cartProductCount }}</span>
+                {% endif %}
             </a>
         </div>
         <div class="header__wrapper__bg"></div>
