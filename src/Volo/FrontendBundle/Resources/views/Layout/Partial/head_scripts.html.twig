@@ -22,6 +22,9 @@
         VOLO.configuration.googleTagManagerContainerId = '{{ google_tag_manager_container_id }}';
         VOLO.orderTrackingInterval = null;
         VOLO.configuration.smallScreenMaxSize = 800;
+        VOLO.configuration.isBelowMediumScreen = function() {
+            return $(window).width() < VOLO.configuration.smallScreenMaxSize;
+        };
 
         // cart layout and animation
         VOLO.configuration.cartBottomMargin = 50;

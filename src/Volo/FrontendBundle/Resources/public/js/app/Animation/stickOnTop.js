@@ -12,7 +12,7 @@ var StickOnTop  = (function() {
         this.startingPointGetter = options.startingPointGetter;
         this.endPointGetter = options.endPointGetter;
         //-16 is for the scrollbar width, this magic number can be solved with modernizr.mq
-        this.noStickyBreakPoint = options.noStickyBreakPoint - 16 || 0;
+        this.noStickyBreakPoint = options.noStickyBreakPoint || 0;
         this.isActiveGetter = options.isActiveGetter || function() { return true; };
         this.stickingOnTopClass = 'stickingOnTop';
 
@@ -59,7 +59,7 @@ var StickOnTop  = (function() {
         // target after starting point
         if ((this.windowScrollTop + this.stickOnTopValue) > this.startingPoint) {
             // if not below not-sticking breakpoint start sticking
-            if (this.$window.outerWidth() > this.noStickyBreakPoint) {
+            if (this.$window.outerWidth() >= this.noStickyBreakPoint) {
                 this._addSticking();
 
                 if (this.domObjects.$target && this.domObjects.$target.length) {
