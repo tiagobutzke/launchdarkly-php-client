@@ -22,7 +22,7 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
     },
 
     setLocation: function(latLng) {
-        if (_.isNumber(latLng.latitude) && _.isNumber(latLng.longitude)) {
+        if (this.isNumeric(latLng.latitude) && this.isNumeric(latLng.longitude)) {
             var geolocation = new google.maps.LatLng(latLng.latitude, latLng.longitude);
             var circle = new google.maps.Circle({
                 center: geolocation,
@@ -30,6 +30,10 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
             });
             this.autocomplete.setBounds(circle.getBounds());
         }
+    },
+
+    isNumeric: function(str) {
+        return !isNaN(parseFloat(str)) && isFinite(str);
     },
 
     _initListeners: function ($input) {
