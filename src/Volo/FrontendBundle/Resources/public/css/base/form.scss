@@ -144,13 +144,26 @@ input, .form-control {
   position: relative;
 }
 
-
-.form-group--two_col1 {
-  width: 50%;
+.form-group--two_col1_larger {
+  width: 80%;
   float: left;
   padding-right: $space-xs;
   clear: none;
 }
+
+.form-group--two_col2_smaller {
+  width: 20%;
+  float: left;
+  padding-left: $space-xs;
+  clear: none;
+}
+
+.form-group--two_col1 {
+   width: 50%;
+   float: left;
+   padding-right: $space-xs;
+   clear: none;
+ }
 
 .form-group--two_col2 {
   width: 50%;
