@@ -289,11 +289,12 @@ var CartView = Backbone.View.extend({
     _updateCartIcon: function() {
         var productsCount = this.model.getCart(this.vendor_id).getProductsCount(),
             $header = this.domObjects.$header,
-            productCounter = $header ? $header.find('.header__cart__products__count') : null;
+            $productCounter = $header ? $header.find('.header__cart__products__count') : null;
 
-        if (productCounter) {
-            productCounter.text(productsCount);
-            this._animateAddToCart(productCounter);
+        if ($productCounter) {
+            $productCounter.toggleClass('hidden', productsCount < 1);
+            $productCounter.text(productsCount);
+            this._animateAddToCart($productCounter);
         }
     },
 
