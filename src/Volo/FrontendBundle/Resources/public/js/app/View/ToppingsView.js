@@ -209,7 +209,7 @@ var ToppingsView = Backbone.View.extend({
 
     events: {
         'click .toppings-add__to__cart': '_addToCart',
-        'click .modal-close-button': '_closeModal'
+        'hide.bs.modal': '_closeModal'
     },
 
     render: function() {
