@@ -139,32 +139,6 @@
   @extend .checkout__title__edit;
 }
 
-.delivery-information-list__wrapper {
-  margin-top: -15px;
-
-  .selected-address {
-    padding: $space-sm;
-    margin: 0;
-    @include respond-from("screen-md") {
-      padding: $grid-gutter-width;
-
-    }
-  }
-
-  .checkout__address-list {
-    border: none;
-    &:last-child {
-      border: none;
-    }
-    .delivery_address {
-      padding: $space-xs;
-      @include respond-from("screen-md") {
-        padding: $space-md;
-      }
-    }
-  }
-}
-
 .checkout__subtitle__open {
   @extend .checkout__title__edit;
   padding: 0 $grid-gutter-width / 2;
@@ -753,21 +727,23 @@
   }
 }
 
+.delivery-information-list__wrapper {
+  margin-top: -15px;
+}
+
 .checkout__address-list {
   line-height: 1.4em;
   padding: $space-xs;
-  border-top: $dropdown-border;
+
   margin: 0;
-  &:last-child {
-    border-bottom: $dropdown-border;
-  }
+
   .delivery_address {
     padding: $space-xs;
     background-color: $color-bg-primary;
     cursor: pointer;
     @include transition(background-color .1s linear);
     @include respond-from("screen-md") {
-      padding: $space-sm;
+      padding: $space-md;
     }
     &:hover {
       background-color: $color-bg-secondary;
