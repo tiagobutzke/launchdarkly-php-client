@@ -136,12 +136,7 @@
             </ul>
         </div>
         <div class="menu__bottom-info__restaurant-description">
-            {% set restaurantSpecificDescription = cms('restaurant-description-' ~ vendor.code) %}
-            {% if restaurantSpecificDescription is not empty %}
-                {{ restaurantSpecificDescription }}
-            {% else  %}
-                {{ cms('restaurant-description') }}
-            {% endif  %}
+            {{ cms('restaurant-description-' ~ vendor.code, 'restaurant-description') }}
         </div>
     </div>
 </div>
@@ -161,6 +156,6 @@
 
 {% block footer_bottom %}
     <div class="footer__wrapper__bottom">
-        {{ cms_footer(vendor.city.id, 'footer-menu') }}
+        {{ cms('footer-menu-' ~ vendor.city.id, 'footer-menu') }}
     </div>
 {% endblock %}

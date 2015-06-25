@@ -27,39 +27,32 @@ class CmsExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('cms', [$this, 'getCmsContent'], ['is_safe' => ['html']]),
-            new \Twig_SimpleFunction('cms_footer', [$this, 'getCmsFooterContent'], ['is_safe' => ['html']]),
         );
     }
 
     /**
      * @param $code
+     * @param null $fallback
      *
      * @return string
      */
-    public function getCmsContent($code)
+    public function getCmsContent($code, $fallback = null)
     {
         try {
-            return $this->cmsApiProvider->findByCode($code)->getContent();
+            $content =  $this->cmsApiProvider->findByCode($code)->getContent();
         } catch (EntityNotFoundException $exception) {
-            return '';
-        }
-    }
-
-    /**
-     * @param int $cityId
-     * @param string $cmsCodeBase
-     *
-     * @return string
-     */
-    public function getCmsFooterContent($cityId, $cmsCodeBase)
-    {
-        $cmsFooterContent = $this->getCmsContent($cmsCodeBase . '-' . $cityId);
-
-        if ('' === $cmsFooterContent) {
-            $cmsFooterContent = $this->getCmsContent($cmsCodeBase);
+            $content =  '';
         }
 
-        return $cmsFooterContent;
+        if ('' === $content && null !== $fallback) {
+            try {
+                $content =  $this->cmsApiProvider->findByCode($fallback)->getContent();
+            } catch (EntityNotFoundException $exception) {
+                $content =  '';
+            }
+        }
+
+        return $content;
     }
 
     /**
