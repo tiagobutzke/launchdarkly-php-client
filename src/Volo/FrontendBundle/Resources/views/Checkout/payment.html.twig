@@ -226,25 +226,6 @@
                     }
                 });
             });
-    
-            $('#add_new_credit_card_link').click(function () {
-                var $payment_form = $('#payment_form'),
-                    paymentFormIsHidden;
-
-                paymentFormIsHidden = $payment_form.hasClass('hide');
-                $payment_form.toggleClass('hide');
-                $('#add_new_credit_card_link').toggleClass('paymentFormOpen', paymentFormIsHidden);
-                if (!paymentFormIsHidden) {
-                    $('input[name="credit_card"]').attr("checked", false);
-                    VOLO.checkoutModel.set('credit_card_id', null);
-                }
-            });
-    
-            $('input[name="credit_card"]').click(function(){
-                $('#payment_form').addClass('hide');
-                VOLO.checkoutModel.set('credit_card_id', $("input:radio[name='credit_card']:checked").val());
-                VOLO.checkoutModel.set('adyen_encrypted_data', null);
-            });
         {% endif %}
     </script>
 {% endblock %}
