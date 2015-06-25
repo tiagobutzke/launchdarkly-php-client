@@ -222,10 +222,10 @@ input, .form-control, .mobile-select {
 .caret {
   @include use-iconmoon-font();
   border: none;
-  right: 20px !important;
-  margin-top: -5px !important;
+  right: 24px !important;
+  margin-top: -8px !important;
   color: $color-text-highlight;
-  font-size: 1.15em;
+  font-size: 1.35em;
 
   &:before {
     content: "\44";
