@@ -3,10 +3,8 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
         "submit": '_submit',
         'focus #postal_index_form_input': '_hideTooltip',
         'click': '_hideTooltip',
-        'change #postal_index_form_input': '_geoCodeAndValidateDelivery',
-        'change #city': '_geoCodeAndValidateDelivery',
-        'change #address_line1': '_geocodeAddress',
-        'change #address_line2': '_geocodeAddress'
+        'change #city, #postal_index_form_input': '_geoCodeAndValidateDelivery',
+        "keydown #address_line1, #address_line2": '_geoCodeAndValidateDelivery'
     },
 
     initialize: function (options) {
@@ -49,8 +47,6 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
         });
         // @TODO: re-enable this later when it works better
         //this.listenTo(this.geocodingService, 'autocomplete:place_changed', this.onPlaceChanged);
-
-        this._disableSubmitButton();
         this._geoCodeAndValidateDelivery();
     },
 
@@ -127,29 +123,28 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
         this.$('#postal_index_form_input').tooltip('show');
     },
 
-    _disableSubmitButton: function () {
-        this.$("#delivery_information_form_button").attr('disabled', true);
-    },
-
-    _enableSubmitButton: function() {
-        this.$("#delivery_information_form_button").attr('disabled', false);
+    _toggleSubmitButtonDisabled: function(disabledState) {
+        this.$("#delivery_information_form_button").attr('disabled', disabledState);
     },
 
     _validateAddressFields: function () {
-        if (this.$('#address_line1').val() === '' || this.$('#address_line2').val() === '') {
-            // this._showInputPopup(this.$('#formatted_address').data('msg_ensure_full_address'));
-        }
+        var street = this.$('#address_line1').val(),
+            houseNum = this.$('#address_line2').val(),
+            streetValid = street !== '',
+            houseNumValid = houseNum !== '';
+
+        return streetValid && houseNumValid;
     },
 
     _geocodeAddress: function() {
-        var fullAddress = this.$('#address_line1').val().length > 0 && this.$('#address_line2').val().length > 0
-            && this.$('#postal_index_form_input').val().length > 0 && this.$('#city').val().length > 0;
+        var fullAddress = this.$('#address_line1').val().length > 0 && this.$('#address_line2').val().length > 0 &&
+            this.$('#postal_index_form_input').val().length > 0 && this.$('#city').val().length > 0;
 
+        this._toggleSubmitButtonDisabled(true);
         if (!fullAddress) {
             return;
         }
 
-        this._disableSubmitButton();
         this.postalCodeGeocodingService.geocode({
             address: this.$('#address_line1').val() + ' ' + this.$('#address_line2').val() + ', ' + this.$('#postal_index_form_input').val() + ', ' + this.$('#city').val(),
 
@@ -157,20 +152,17 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
                 console.log(result);
                 this.$("#address_latitude").val(result.lat());
                 this.$("#address_longitude").val(result.lng());
-                this._enableSubmitButton();
             }.bind(this),
 
             error: function () {
                 this.$("#address_latitude").val('');
                 this.$("#address_longitude").val('');
-                this._enableSubmitButton();
             }.bind(this)
         });
     },
 
     _geocodePostalCode: function (locationData) {
         this._geocodeAddress();
-        this._disableSubmitButton();
 
         this.postalCodeGeocodingService.geocode({
             address: locationData.postcode + ", " + locationData.city,
@@ -183,11 +175,11 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
 
             error: function (results, status) {
                 if (_.isString(status) && status === 'ZERO_RESULTS') {
-                    this._disableSubmitButton();
                     this._showInputPopup(this.$('#postal_index_form_input').data('validation-msg'), true);
+                    this._toggleSubmitButtonDisabled(true);
                 } else {
                     // if Google can't geo-code it, who are we to stop the user!!!, just consider it valid man :)
-                    this._enableSubmitButton();
+                    this._toggleSubmitButtonDisabled(false);
                 }
             }.bind(this)
         });
@@ -197,7 +189,6 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
         if ($('#delivery-modal').hasClass('in')) {
             return;
         }
-        this._disableSubmitButton();
 
         this._hideTooltip();
 
@@ -209,14 +200,14 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
         this.deliveryCheck.isValid(deliveryCheckData)
             .done(function (resultData) {
                 if (resultData.result === true) {
-                    this._enableSubmitButton();
                     if (this.$('#postal_index_form_input').data('is-blocking-popup')) {
                         this._hideTooltip();
                     }
-                    this._validateAddressFields();
                 } else {
                     this._showInputPopup(this.$('#postal_index_form_input').data('validation-msg'), true);
                 }
+
+                this._toggleSubmitButtonDisabled(!this._validateAddressFields());
             }.bind(this));
     }
 });
