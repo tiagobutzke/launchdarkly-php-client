@@ -32,9 +32,10 @@
             </div>
 
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" class="form-control" id="store_credit_card" checked="checked">
+                <div class="form-group sprite-form">
+                    <input type="checkbox" class="form-control sprite-form__checkbox" id="store_credit_card" checked="checked">
+                    <div class="sprite-form__sprite"></div>
+                    <label class="sprite-form__label" for="store_credit_card">
                         {% trans %}form.label.store_credit_card{% endtrans %}
                     </label>
                 </div>

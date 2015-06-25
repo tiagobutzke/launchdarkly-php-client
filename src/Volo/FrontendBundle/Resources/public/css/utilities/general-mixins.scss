@@ -96,26 +96,54 @@
 }
 // ----------- ASPECT RATIO START END ----------
 
-// ----------- RADIO BUTTON SPRITE START ----------
-// mixin should be applied to input type radio followed by label with no content
-//<input type="radio">
-//<label></label>
-@mixin make-sprite-radiobutton($spriteGroupUnselected, $spriteGroupSelected, $spriteGroupHeight) {
-  margin  : 0;
+// ----------- RADIO BUTTON AND CHECKBOX SPRITE START ----------
+// mixin should be applied with the following HTML structure:
+//<input class="sprite-form__radio-button" type="radio">
+//or
+//<input class="sprite-form__checkbox" type="checkbox">
+//followed by
+//<div class="sprite-form__sprite"></div>
+//<label class="sprite-form__label"></label>
+@mixin make-sprite-list-element($spriteGroupUnselected, $spriteGroupSelected, $spriteGroupHeight) {
+  margin  : 0 !important;
   padding : 0;
   opacity : 0;
   cursor: pointer;
-  & + label{
+  height: 20px !important;
+  width: 20px;
+  position: absolute;
+  z-index: 2;
+  & + .sprite-form__sprite {
+    z-index: 1;
     display: inline-block;
-    vertical-align: middle;
     @include retina-sprite($spriteGroupUnselected);
     min-height: $spriteGroupHeight;
+    cursor: pointer;
+    margin-right: $space-xs;
+    @include vertical-center-absolute();
   }
-  &:checked + label{
+  &:checked + .sprite-form__sprite{
     @include retina-sprite($spriteGroupSelected);
   }
 }
-// ----------- RADIO BUTTON SPRITE END ----------
+
+@mixin make-sprite-radio-button() {
+  @include make-sprite-list-element(
+          $radiobutton-simple-unselected-group,
+          $radiobutton-simple-selected-group,
+          $radiobutton-simple-unselected-height
+  );
+}
+
+@mixin make-sprite-checkbox() {
+  @include make-sprite-list-element(
+          $checkbox-unselected-group,
+          $checkbox-selected-group,
+          $checkbox-unselected-height
+  );
+}
+
+// ----------- RADIO BUTTON AND CHECKBOX SPRITE END ----------
 
 @mixin use-iconmoon-font() {
   font-family: 'icomoon';
