@@ -346,11 +346,14 @@
 }
 
 .menu__bottom-info {
+  overflow: auto;
   font-size: 0.875em;
-  @include make-md-column(8);
-  @include make-lg-column(9);
-  padding: 0;
-  padding-bottom: $space-lg;
+  padding: $space-xs $space-lg $space-lg $space-lg;
+  @include respond-from("screen-md") {
+    @include make-row();
+    margin-top: 0;
+    padding: 0 0 $space-lg 0;
+  }
 }
 
 .menu__bottom-info__title {
@@ -365,6 +368,9 @@
 }
 
 .menu__bottom-info__openings {
+  @include make-xs-column(12);
+  @include make-md-column(8, 0);
+  @include make-lg-column(9, 0);
   width: 100%;
   text-align: center;
 
@@ -386,6 +392,12 @@
     }
   }
 
+}
+
+.menu__bottom-info__restaurant-description {
+  @include make-xs-column(12);
+  @include make-md-column(8, 0);
+  @include make-lg-column(9, 0);
 }
 
 .allergy-modal {

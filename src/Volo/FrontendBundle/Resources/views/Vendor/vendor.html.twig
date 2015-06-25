@@ -135,6 +135,14 @@
                 {% endfor %}
             </ul>
         </div>
+        <div class="menu__bottom-info__restaurant-description">
+            {% set restaurantSpecificDescription = cms('restaurant-description-' ~ vendor.code) %}
+            {% if restaurantSpecificDescription is not empty %}
+                {{ restaurantSpecificDescription }}
+            {% else  %}
+                {{ cms('restaurant-description') }}
+            {% endif  %}
+        </div>
     </div>
 </div>
 <div class="bottom-cart">
