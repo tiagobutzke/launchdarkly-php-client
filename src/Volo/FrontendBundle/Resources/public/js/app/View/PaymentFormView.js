@@ -9,7 +9,8 @@ var PaymentFormView = Backbone.View.extend({
 
     events: {
         'keyup #form-expiry': '_fillExpiryForms',
-        'keyup input': '_fillEncryptedData'
+        'keyup input': '_fillEncryptedData',
+        'change #store_credit_card': '_changeIsCreditCardStored'
     },
 
     _initPaymentFormating: function() {
@@ -30,6 +31,10 @@ var PaymentFormView = Backbone.View.extend({
         }).length;
 
         this.model.set('adyen_encrypted_data', isComplete ? encryptedForm.encrypt() : null);
+    },
+
+    _changeIsCreditCardStored: function () {
+        this.model.set('is_credit_card_store_active', this.$("#store_credit_card").is(':checked'));
     },
 
     _fillName: function() {

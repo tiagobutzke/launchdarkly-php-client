@@ -22,6 +22,7 @@
         <parameter key="volo_frontend.provider.cms.class">Foodpanda\ApiSdk\Provider\CmsProvider</parameter>
         <parameter key="volo_frontend.provider.configuration.class">Foodpanda\ApiSdk\Provider\ConfigurationProvider</parameter>
         <parameter key="volo_frontend.provider.order.class">Foodpanda\ApiSdk\Provider\OrderProvider</parameter>
+        <parameter key="volo_frontend.provider.newsletter.class">Foodpanda\ApiSdk\Provider\NewsletterProvider</parameter>
     </parameters>
 
     <services>
@@ -46,5 +47,6 @@
         <service id="volo_frontend.provider.cms" class="%volo_frontend.provider.cms.class%" parent="volo_frontend.provider.abstract" />
         <service id="volo_frontend.provider.configuration" class="%volo_frontend.provider.configuration.class%" parent="volo_frontend.provider.abstract" />
         <service id="volo_frontend.provider.order" class="%volo_frontend.provider.order.class%" parent="volo_frontend.provider.abstract" />
+        <service id="volo_frontend.provider.newsletter" class="%volo_frontend.provider.newsletter.class%" parent="volo_frontend.provider.abstract" />
     </services>
 </container>

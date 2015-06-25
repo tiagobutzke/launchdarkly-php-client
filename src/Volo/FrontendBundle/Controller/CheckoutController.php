@@ -127,6 +127,18 @@ class CheckoutController extends Controller
                         $customerData,
                         $session->get(sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendor->getCode()))
                     );
+
+                    try {
+                        if (array_key_exists('newsletter_checkbox', $customerData)) {
+                            $this->get('volo_frontend.provider.newsletter')->subscribe(
+                                $username,
+                                $vendor->getCity()->getId()
+                            );
+                        }
+                    } catch (ApiErrorException $exception) {
+                        // this endpoint is throwing an exception if you try to subscribe while being subscribed
+                    }
+
                     $session->set(OrderController::SESSION_GUEST_ORDER_ACCESS_TOKEN, $guestCustomer->getAccessToken());
                     $session->set(static::SESSION_GUEST_CUSTOMER_KEY_TEMPLATE, $guestCustomer);
                 }
@@ -300,7 +312,7 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @Route("/edit_contact_information", name="checkout_edit_contact_information", options={"expose"=true})
+     * @Route("/edit_contact_information/{vendorCode}", name="checkout_edit_contact_information", options={"expose"=true})
      * @Method({"POST"})
      * @Template("VoloFrontendBundle:Checkout/Partial:contact_information_edit.html.twig")
      *
@@ -308,10 +320,37 @@ class CheckoutController extends Controller
      *
      * @return array
      */
-    public function editContactInformationAction(Request $request)
+    public function editContactInformationAction(Request $request, $vendorCode)
     {
         try {
-            $customer = $this->get('volo_frontend.service.customer')->updateCustomer($request->request->get('customer'));
+            $vendor = $this->get('volo_frontend.provider.vendor')->find($vendorCode);
+        } catch (ApiErrorException $exception) {
+            throw new NotFoundHttpException('Vendor invalid', $exception);
+        }
+        
+        try {
+            $data = $request->request->get('customer');
+            
+            $customer = $this->get('volo_frontend.service.customer')->updateCustomer($data);
+
+            /** @var \Volo\FrontendBundle\Security\Token $token */
+            $token = $this->get('security.token_storage')->getToken();
+            
+            try {
+                if (array_key_exists('newsletter_checkbox', $data)) {
+                    $this->get('volo_frontend.provider.newsletter')->subscribe(
+                        $customer->getEmail(),
+                        $vendor->getCity()->getId(),
+                        $token->getAccessToken()
+                    );
+                } else {
+                    $this->get('volo_frontend.provider.newsletter')->unsubscribe($token->getAccessToken());
+                }                
+            } catch (ApiErrorException $exception) {
+                // these endpoints are throwing exceptions if you try to unsubscribe while not being subscribed
+                // or the other way around, we simply ignore that.
+            }
+
 
             return new JsonResponse([
                 'html' => $this->render(

@@ -5,6 +5,7 @@ var CheckoutModel = Backbone.Model.extend({
         "cart_dirty": false,
         "address_id": null,
         "credit_card_id": null,
+        "is_credit_card_store_active": true,
         "payment_type_id": null,
         "payment_type_code": null,
         "adyen_encrypted_data": null,
@@ -74,6 +75,7 @@ var CheckoutModel = Backbone.Model.extend({
 
         if (!this.get('is_guest_user')) {
             data.customer_address_id = this.get('address_id');
+            data.is_credit_card_store_active = this.get('is_credit_card_store_active');
         }
 
         var requestSettings = {

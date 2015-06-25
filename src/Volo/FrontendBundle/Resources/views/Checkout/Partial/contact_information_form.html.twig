@@ -24,6 +24,13 @@
                 <span class="error_msg invalid_number">{{ phoneNumberError|trans|raw }}</span>
             {% endif %}
         </div>
+        <div class="form-group newsletter-form-group">
+            <input type="checkbox" class="form-control checkout__checkbox" name="customer[newsletter_checkbox]" id="newsletter_checkbox" checked="checked">
+            <label></label>
+            <label class="checkout__list__text" for="newsletter_checkbox">
+                {% trans %}form.label.newsletter{% endtrans %}
+            </label>
+        </div>
         <button class="button">{% trans %}button.continue{% endtrans %}</button>
     </div>
 </form>

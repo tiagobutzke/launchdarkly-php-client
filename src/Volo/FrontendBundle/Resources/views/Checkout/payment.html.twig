@@ -206,7 +206,7 @@
     
             $('#contact_information_form').on('submit', function (event) {
                 $.post(
-                        Routing.generate('checkout_edit_contact_information'),
+                        Routing.generate('checkout_edit_contact_information', {vendorCode: '{{ vendor.code}}'}),
                         $('#contact_information_form').serialize()
                 ).done(function (data) {
                     var mobileNumberWrap = $('#mobile_number_wrap');
