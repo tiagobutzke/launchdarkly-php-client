@@ -201,12 +201,8 @@
 }
 
 .menu__items  {
-  padding-top: $header-height-extra-small;
-  @include respond-from("screen-md") {
-    @include make-md-column(12);
-    @include make-lg-column(9);
-    padding-top: 0;
-  }
+  @include make-md-column(12);
+  @include make-lg-column(9);
 }
 
 .menu__items__title {
