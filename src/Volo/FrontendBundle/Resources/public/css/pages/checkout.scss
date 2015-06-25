@@ -212,6 +212,7 @@
 .checkout__add_new_credit_card__text--cancel {
   display: none;
 }
+
 // main fields
 
 .checkout__time-field {
@@ -307,8 +308,10 @@
 
 .checkout__item--step {
   padding-top: $space-sm;
+  border-bottom: $dropdown-border;
   @include respond-from("screen-md") {
     padding-top: 0;
+    border: none;
   }
 }
 
