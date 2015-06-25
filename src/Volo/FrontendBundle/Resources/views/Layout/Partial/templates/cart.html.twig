@@ -125,11 +125,19 @@
         {{ 'cart.delivery'|trans }}
         <span>
             <% if (delivery_fee_discount > delivery_fee) { %>
-                <s><%= VOLO.formatCurrency(delivery_fee_discount) %></s> 
+                <s><%= VOLO.formatCurrency(delivery_fee_discount) %></s>
+                <span class="delivery-fee-after-discount"><%= VOLO.formatCurrency(delivery_fee) %></span>
+            <% } else { %>
+                <%= VOLO.formatCurrency(delivery_fee) %>
             <% } %>
-            <%= VOLO.formatCurrency(delivery_fee) %>
         </span>
     </div>
+    <% if (voucher_total > 0) { %>
+        <div class="desktop-cart__voucher-total">
+            {% trans %}cart.voucher_amount{% endtrans %}
+            <span class="desktop-cart__order-voucher-total"><%= VOLO.formatCurrency(-1 * voucher_total) %></span>
+        </div>
+    <% } %>
     <div class="desktop-cart__order__total">
         {{ 'cart.total'|trans }} <em>{{ 'cart.total_note'|trans }}</em>
         <span class="desktop-cart__order__total__price"><%= VOLO.formatCurrency(total_value) %></span>
