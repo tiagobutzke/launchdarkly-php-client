@@ -358,6 +358,7 @@
 
   .desktop-cart__time {
     @extend .checkout__time;
+    font-size: 0.875em;
   }
 
   .desktop-cart__time__field-date, .desktop-cart__time__field-time {
