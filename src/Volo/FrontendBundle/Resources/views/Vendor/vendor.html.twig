@@ -116,7 +116,7 @@
     </div>
     <div class="menu__bottom-info">
         <div class="menu__bottom-info__openings">
-            <h3 class="menu__bottom-info__title">{% trans %}opening_times.title{% endtrans %}</h3>
+            <h3>{% trans %}opening_times.title{% endtrans %}</h3>
             <ul>
                 {% for weekdayIndex in 1..7 %}
                     {% set openingTimes = getOpeningPeriods(vendor.schedules, weekdayIndex) %}
