@@ -425,3 +425,17 @@
   margin-top: 15px;
   width: 100%;
 }
+
+// custom restaurant styles rely on ".vendor_custom" body class
+
+.menu-page.vendor_custom  {
+
+  .hero-banner:before {
+    background: none;
+    background-color: transparent;
+  }
+
+  .hero-menu__info {
+    display: none;
+  }
+}
