@@ -81,12 +81,16 @@
     margin-bottom: 0;
   }
 
-  .checkout__list{
+  .checkout__list {
     line-height: normal;
     margin-top: $space-xs;
     @include respond-from("screen-md") {
       margin-top: $space-sm;
     }
+  }
+
+  .checkout__list__items {
+    margin-top: 2px;
   }
 }
 
