@@ -623,6 +623,13 @@
       margin-bottom: 0;
     }
   }
+
+  .checkout__subtitle__open {
+    padding: $grid-gutter-width / 2;
+    @include respond-from("screen-md") {
+      padding: 0 $grid-gutter-width $grid-gutter-width / 2;
+    }
+  }
 }
 
 .checkout__disclaimer {
