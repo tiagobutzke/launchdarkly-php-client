@@ -43,14 +43,14 @@
             </h4>
 
             <div class="checkout__item checkout__item--delivery-list">
-                <div id="delivery-information-list-wrapper">
+                <div id="delivery-information-list-wrapper" class="delivery-information-list__wrapper">
                     <div class="selected-address"></div>
                     <div id="delivery-information-list" data-addresses='{{ customer_addresses|to_escaped_json }}'></div>
                     {% include('VoloFrontendBundle:Layout/Partial/templates:checkout_address.html.twig') %}
                     <div class="checkout__subtitle__open">
                         <a id="select_other_address_link" class="checkout__more-feature-link">
-                            <span class="select_other_address_link__text--select">{% trans %}link.select_other_address{% endtrans %}</span>
-                            <span class="select_other_address_link__text--cancel">{% trans %}link.cancel{% endtrans %}</span>
+                            <b class="select_other_address_link__text--select">{% trans %}link.select_other_address{% endtrans %}</b>
+                            <b class="select_other_address_link__text--cancel">{% trans %}link.cancel{% endtrans %}</b>
                         </a>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                 <div id="add_new_address_form" class="hide">
                     {% include 'VoloFrontendBundle:Checkout/Partial:delivery_information_form.html.twig' with {'vendor' : vendor, 'customer_address': default_address} only %}
                 </div></div>
-            
+
         {% else %}
             {% include('VoloFrontendBundle:Checkout/Partial:delivery_information_edit.html.twig') %}
         {% endif %}

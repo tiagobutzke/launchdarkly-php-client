@@ -141,10 +141,10 @@
 
 .checkout__subtitle__open {
   @extend .checkout__title__edit;
-  padding: $grid-gutter-width / 2;
+  padding: 0 $grid-gutter-width / 2;
   float: none;
   @include respond-from("screen-md") {
-    padding: $grid-gutter-width;
+    padding: 0 $grid-gutter-width;
   }
 }
 
@@ -623,6 +623,13 @@
       margin-bottom: 0;
     }
   }
+
+  .checkout__subtitle__open {
+    padding: $grid-gutter-width / 2;
+    @include respond-from("screen-md") {
+      padding: 0 $grid-gutter-width $grid-gutter-width / 2;
+    }
+  }
 }
 
 .checkout__disclaimer {
@@ -721,26 +728,30 @@
 
 .checkout__more-feature-link {
   display: block;
-  margin-top: $space-lg;
+
+  b {
+    font-weight: normal;
+  }
+}
+
+.delivery-information-list__wrapper {
+  margin-top: -15px;
 }
 
 .checkout__address-list {
   line-height: 1.4em;
   padding: $space-xs;
-  border-top: $dropdown-border;
+
   margin: 0;
-  &:last-child {
-    border-bottom: $dropdown-border;
-  }
+
   .delivery_address {
     padding: $space-xs;
-    @include respond-from("screen-md") {
-      padding: $space-sm;
-    }
     background-color: $color-bg-primary;
     cursor: pointer;
-
     @include transition(background-color .1s linear);
+    @include respond-from("screen-md") {
+      padding: $space-md;
+    }
     &:hover {
       background-color: $color-bg-secondary;
     }
@@ -755,7 +766,6 @@
   @include respond-from("screen-md") {
     padding: $grid-gutter-width;
   }
-
 }
 
 .checkout__add-new-wrap {
