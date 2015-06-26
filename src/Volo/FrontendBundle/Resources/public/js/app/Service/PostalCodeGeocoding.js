@@ -14,14 +14,19 @@ _.extend(PostalCodeGeocodingService.prototype, Backbone.Events, {
         }
     },
 
-    geoCodePostalCode: function(options) {
+    geocode: function(options) {
+        var componentRestrictions = {
+            country: this.locale
+        };
+        if (options.city) {
+            componentRestrictions.locality = options.city;
+        }
+        if (options.postalCode) {
+            componentRestrictions.postalCode = options.postalCode;
+        }
         var requestParameters = {
-            address: options.postalCode + ', ' + options.city,
-            componentRestrictions: {
-                country: this.locale,
-                postalCode: options.postalCode,
-                locality: options.city
-            }
+            address: options.address,
+            componentRestrictions: componentRestrictions
         };
 
         if (this.bounds) {
