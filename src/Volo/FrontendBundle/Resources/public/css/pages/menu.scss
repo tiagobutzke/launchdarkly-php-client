@@ -398,6 +398,7 @@
 
 .menu__bottom-info__restaurant-description {
   @extend %menu_bottom_element;
+  padding-bottom: $space-sm;
 }
 
 .allergy-modal {
