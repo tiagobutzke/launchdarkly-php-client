@@ -93,6 +93,7 @@
         <service id="volo_frontend.service.cart_manager" class="%volo_frontend.service.cart_manager.class%">
             <argument type="service" id="volo_frontend.provider.cart" />
             <argument type="service" id="volo_frontend.provider.vendor" />
+            <argument type="service" id="security.token_storage" />
         </service>
 
         <service id="volo_frontend.service.order_manager" class="%volo_frontend.service.order_manager.class%">
