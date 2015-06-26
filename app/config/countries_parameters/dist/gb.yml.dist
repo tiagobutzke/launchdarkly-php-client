@@ -2,7 +2,6 @@ imports:
     - { resource: dist/common.yml }
 
 parameters:
-    country_code: uk
+    country_code: gb
     environment: development
     locale: en_GB
-    foodpanda.api.base_url: 'http://uk.front.fp/api/v4'
