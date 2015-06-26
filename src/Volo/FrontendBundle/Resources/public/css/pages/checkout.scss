@@ -71,8 +71,7 @@
 }
 
 .checkout__title--summary {
-  border-top: 0;
-  background-color: $color-bg-secondary;
+  @include appear-from("screen-md");
 }
 
 .checkout__title--step {
