@@ -218,7 +218,7 @@
 
 .checkout__summary {
   @include clearfix;
-  padding: 0;
+  padding: 0 $space-sm;
   border: none;
   line-height: normal;
   font-size: 1em;
@@ -543,8 +543,11 @@ tr.summary__item__row_mobile {
 }
 
 .desktop-cart__order__subtotal {
-  padding-top: $space-md;
+  padding: $space-md $space-sm 0;
   border-top: $base-border;
+  @include respond-from("screen-md") {
+    padding: $space-md 0 0;
+  }
 }
 
 .desktop-cart__order__voucher {
@@ -553,17 +556,22 @@ tr.summary__item__row_mobile {
 
 .desktop-cart__order__delivery {
   color: $color-text-secondary;
+  padding: 0 $space-sm;
+  @include respond-from("screen-md") {
+    padding: 0;
+  }
   span {
     @extend .desktop-cart__order__total__price;
   }
 }
 
 .desktop-cart__order__total {
-  padding: $space-sm 0;
+  padding: $space-sm;
   font-size: 1.05em;
   font-family: $base-font-family;
   @include respond-from("screen-md") {
     font-family: $bold-font-family;
+    padding: $space-sm 0;
   }
 
   em {
@@ -590,13 +598,11 @@ tr.summary__item__row_mobile {
   float: right;
 }
 
-.desktop-cart__order__subtotal__container {
+.desktop-cart__order__subtotal-container {
   background-color: $color-bg-secondary;
-  padding: 0 $space-sm;
-  margin-bottom: $space-lg;
+  padding: 0;
   @include respond-from("screen-md") {
     background-color: transparent;
-    padding: 0;
     width: 99%;
     margin-left: auto;
     margin-right: auto;
@@ -751,7 +757,26 @@ tr.summary__item__row_mobile {
   }
 
   .desktop-cart__footer {
-    padding: 0 $space-sm;
+    padding: 0 10px;
+    @include respond-from("screen-md") {
+      padding: 0 $space-sm;
+    }
+  }
+
+  .desktop-cart__order__subtotal-container {
+    background-color: transparent;
+  }
+
+  .desktop-cart__order__subtotal {
+    padding: 15px 0 0;
+  }
+
+  .desktop-cart__order__delivery {
+    padding: 0;
+  }
+
+  .desktop-cart__order__total {
+    padding: 10px 0;
   }
 }
 

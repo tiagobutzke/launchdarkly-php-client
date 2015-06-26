@@ -379,7 +379,7 @@ var CartView = Backbone.View.extend({
     },
 
     renderSubTotal: function () {
-        this.$('.desktop-cart__order__subtotal_container').html(
+        this.$('.desktop-cart__order__subtotal-container').html(
             this.templateSubTotal(this.model.getCart(this.vendor_id).attributes)
         );
 
