@@ -84,7 +84,7 @@ var MenuView = Backbone.View.extend({
                 this.$($.attr(event.target, 'href')).offset().top +
                 this.navigateToAnchorBuffer -
                 this.domObjects.$header.outerHeight()
-        }, 500);
+        }, VOLO.configuration.anchorScrollSpeed);
 
         return false;
     },
