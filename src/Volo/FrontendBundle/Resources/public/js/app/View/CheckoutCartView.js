@@ -29,6 +29,14 @@ var CheckoutCartView = CartView.extend({
      * @override
      * @private
      */
+    handleVouchersErrors: function () {
+
+    },
+
+    /**
+     * @override
+     * @private
+     */
     renderCheckoutButton: function() {
 
     }

@@ -260,6 +260,7 @@ var CartView = Backbone.View.extend({
         this.listenTo(vendorCart, 'cart:ready', this.renderCheckoutButton, this);
         this.listenTo(vendorCart, 'cart:ready', this.stopSpinner, this);
 
+        this.listenTo(vendorCart, 'cart:error', this.handleVouchersErrors, this);
         this.listenTo(vendorCart, 'cart:error', this.stopSpinner, this);
         this.listenTo(vendorCart, 'cart:error', this.renderProducts, this);
 
@@ -479,6 +480,33 @@ var CartView = Backbone.View.extend({
 
     _showBelowMinimumAmountMsg: function () {
         this.$('.error-below-minimum-amount').removeClass('hide');
+    },
+
+    handleVouchersErrors: function (data) {
+        var supportedErrors = [
+            'ApiVoucherInactiveException',
+            'ApiVoucherDoesNotExistException',
+            'ApiVoucherInvalidVendorException',
+            'ApiVoucherUsageExceededException',
+            'ApiVoucherTemporaryClosedException',
+            'ApiVoucherCustomerRequiredException',
+            'ApiVoucherInvalidPaymentTypeException',
+            'ApiVoucherNotValidForCustomerException',
+            'ApiVoucherOrderAmountExceededException',
+            'ApiVoucherProductCategoryUsageException',
+            'ApiVoucherIsNotValidForPlatformException',
+            'ApiVoucherLimitedToNewCustomersException',
+            'ApiVoucherOrderAmountNotReachedException',
+            'ApiVoucherUsagePerCustomerExceededException',
+            'ApiVoucherTemporaryClosedWithScheduleException',
+            'ApiVoucherPromotionOrderAmountNotReachedException',
+            'ApiVoucherInvalidPaymentTypeButAnotherOneIsAvailableException'
+        ];
+
+        if (_.isObject(data) && _.indexOf(supportedErrors, _.get(data, 'error.errors.exception_type')) !== -1) {
+            this.model.getCart(this.vendor_id).set('voucher', null);
+            _.defer(this.model.getCart(this.vendor_id).updateCart);
+        }
     }
 });
 
