@@ -30,6 +30,10 @@ class DeliverabilityService
      */
     public function isDeliverableLocation($vendorId, $latitude, $longitude)
     {
+        if (null === $latitude || null === $longitude) {
+            return false;
+        }
+
         $location = new GpsLocation($latitude, $longitude);
 
         try {
