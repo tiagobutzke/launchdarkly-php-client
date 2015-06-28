@@ -16,18 +16,19 @@ framework:
         cache: apc
 
 monolog:
-    channels: ["api"]
     handlers:
         api:
             type:     syslog
             level:    error
             handler:  nested
-            channels: ['api']
+        wit:
+            type:     syslog
+            level:    error
+            handler:  nested
         main:
             type:         fingers_crossed
             action_level: error
             handler:      nested
-            channels:     ['!api']
         nested:
             type:     syslog
             ident:    symfony_volo_%environment%_%country_code%

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "63d5711ea45609d85252fccdd1158e5f",
+    "hash": "88fa9cf110fb4460e079e9a6ef2cc29a",
     "packages": [
         {
             "name": "99designs/phumbor",
@@ -693,31 +693,6 @@
             ],
             "description": "Foodpanda API SDK",
             "time": "2015-06-30 13:43:31"
-        },
-        {
-            "name": "foodpanda/translation-bundle",
-            "version": "v1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/foodpanda/translation-bundle.git",
-                "reference": "7d25f9ed50600b1dddec4f96c42a38e16b56c9e1"
-            },
-            "require": {
-                "doctrine/doctrine-cache-bundle": "1.*",
-                "foodpanda/translation-library": "~1.1"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Foodpanda\\Bundle\\WebTranslateItBundle\\": "."
-                }
-            },
-            "license": [
-                "Private"
-            ],
-            "description": "WebtranslateIt API bundle.",
-            "homepage": "https://github.com/foodpanda/translation-library",
-            "time": "2015-04-16 11:31:45"
         },
         {
             "name": "foodpanda/translation-library",

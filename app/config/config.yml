@@ -56,6 +56,25 @@ assetic:
     debug:          "%kernel.debug%"
     use_controller: false
 
+monolog:
+    channels: ["api", "wit"]
+    handlers:
+        api:
+            type:   stream
+            path:   "%kernel.logs_dir%/api-%kernel.environment%.log"
+            level:  debug
+            channels: ['api']
+        wit:
+            type:   stream
+            path:   "%kernel.logs_dir%/wit-%kernel.environment%.log"
+            level:  debug
+            channels: ['wit']
+        main:
+            type:   stream
+            path:   "%kernel.logs_dir%/app-%kernel.environment%.log"
+            level:  debug
+            channels: ['!api', '!wti']
+
 doctrine_cache:
     providers:
         translator_cache:
@@ -70,12 +89,6 @@ doctrine_cache:
         health_check_redis:
             redis:
                 connection_id: volo_frontend_redis_connection_service
-
-foodpanda_web_translate_it:
-    base_url: %foodpanda_web_translate_it_base_url%
-    public_api_key: %foodpanda_web_translate_it_public_api_key%
-    private_api_key: %foodpanda_web_translate_it_private_api_key%
-    main_translation_label: %foodpanda_web_translate_it_main_translation_label%
 
 jb_phumbor:
     server:

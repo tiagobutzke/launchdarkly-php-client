@@ -21,11 +21,11 @@
         "commerceguys/guzzle-oauth2-plugin": "~2.0",
         "helthe/turbolinks-bundle": "~1.1",
         "foodpanda/translation-library": "~1.1",
-        "foodpanda/translation-bundle": "~1.0",
         "foodpanda/api-sdk": "dev-master#0915d3c",
         "drak/native-session": "^1.0",
         "misd/phone-number-bundle": "~1.0",
-        "jbouzekri/phumbor-bundle": "~1.1"
+        "jbouzekri/phumbor-bundle": "~1.1",
+        "doctrine/doctrine-cache-bundle": "^1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
