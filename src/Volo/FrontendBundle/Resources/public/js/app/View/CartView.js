@@ -218,11 +218,13 @@ var CartView = Backbone.View.extend({
 
     _hideMobileCart: function() {
         this.$('.desktop-cart').addClass('mobile-cart__hidden');
+        $('body').removeClass('body-cart-fix');
     },
 
     _showMobileCart: function() {
         console.log(arguments);
         this.$('.desktop-cart').removeClass('mobile-cart__hidden');
+        $('body').addClass('body-cart-fix');
         window.blazy.revalidate();
     },
 
