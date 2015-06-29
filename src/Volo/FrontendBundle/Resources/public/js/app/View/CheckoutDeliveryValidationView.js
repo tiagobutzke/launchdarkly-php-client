@@ -142,8 +142,8 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
     },
 
     _geocodeAddress: function() {
-        var fullAddress = this.$('#address_line1').val().length > 0 && this.$('#address_line2').val().length > 0
-            && this.$('#postal_index_form_input').val().length > 0 && this.$('#city').val().length > 0;
+        var fullAddress = this.$('#address_line1').val().length > 0 && this.$('#address_line2').val().length > 0 &&
+            this.$('#postal_index_form_input').val().length > 0 && this.$('#city').val().length > 0;
 
         if (!fullAddress) {
             return;
