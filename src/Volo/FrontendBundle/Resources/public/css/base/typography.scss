@@ -67,3 +67,14 @@ h6, .h6 {
 .text-lowercase      { text-transform: lowercase; }
 .text-uppercase      { text-transform: uppercase; }
 .text-capitalize     { text-transform: capitalize; }
+
+// Lists
+ul.dotted {
+  padding: 0;
+  margin: 0;
+
+  li:before {
+    content: "• ";
+    color: $color-text-link;
+  }
+}
