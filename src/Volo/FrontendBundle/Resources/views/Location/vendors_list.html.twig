@@ -94,6 +94,6 @@
 
 {% block footer_bottom %}
     <div class="footer__wrapper__bottom">
-        {{ cms_footer(cityId, 'footer-restaurant-list') }}
+        {{ cms('footer-restaurant-list-' ~ cityId, 'footer-restaurant-list') }}
     </div>
 {% endblock %}

@@ -201,12 +201,8 @@
 }
 
 .menu__items  {
-  padding-top: $header-height-extra-small;
-  @include respond-from("screen-md") {
-    @include make-md-column(12);
-    @include make-lg-column(9);
-    padding-top: 0;
-  }
+  @include make-md-column(12);
+  @include make-lg-column(9);
 }
 
 .menu__items__title {
@@ -350,26 +346,35 @@
 }
 
 .menu__bottom-info {
+  @extend .clearfix;
   font-size: 0.875em;
-  @include make-md-column(8);
-  @include make-lg-column(9);
-  padding: 0;
-  padding-bottom: $space-lg;
-}
+  padding: $space-xs $space-lg $space-lg $space-lg;
+  @include respond-from("screen-md") {
+    @include make-row();
+    margin-top: 0;
+    padding: 0 0 $space-lg 0;
+  }
 
-.menu__bottom-info__title {
-  @extend .menu__items__title;
-  border: none;
-  margin: 0;
-  padding: $space-xs 0;
+  h3, .h3 {
+    @extend .menu__items__title;
+    border: none;
+    margin: 0;
+    padding: $space-xs 0;
 
-  &:first-child {
-    padding-top: $space-lg;
+    &:first-child {
+      padding-top: $space-lg;
+    }
   }
 }
 
+%menu_bottom_element {
+  @include make-xs-column(12);
+  @include make-md-column(8, 0);
+  @include make-lg-column(9, 0);
+}
+
 .menu__bottom-info__openings {
-  width: 100%;
+  @extend %menu_bottom_element;
   text-align: center;
 
   ul {
@@ -389,7 +394,11 @@
       margin-right: $space-lg;
     }
   }
+}
 
+.menu__bottom-info__restaurant-description {
+  @extend %menu_bottom_element;
+  padding-bottom: $space-sm;
 }
 
 .allergy-modal {

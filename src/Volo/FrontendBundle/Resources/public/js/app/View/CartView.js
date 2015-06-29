@@ -479,7 +479,7 @@ var CartView = Backbone.View.extend({
     },
 
     _showBelowMinimumAmountMsg: function () {
-        this.$('.error-below-minimum-amount').removeClass('hide');
+        this.$('.desktop-cart__error__below-minimum-amount').removeClass('hide');
     },
 
     handleVouchersErrors: function (data) {

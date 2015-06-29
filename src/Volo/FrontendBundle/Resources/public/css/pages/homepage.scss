@@ -158,7 +158,10 @@
 .restaurants-home {
   @include make-row(0);
   @include fluid-container();
-  padding-top: 40px;
+  padding-top: $space-lg;
+  @include respond-from('screen-lg') {
+    padding-top: $space-lg * 2;
+  }
 }
 
 .restaurants-home__logos {
@@ -173,6 +176,10 @@
   @include make-xs-column(6);
   @include make-md-column(4);
   @include make-lg-column(2);
+  margin-top: $space-lg;
+  @include respond-from('screen-lg') {
+    margin-top: 0;
+  }
 }
 
 .restaurants-home__logos__logo img {

@@ -91,7 +91,6 @@ class VendorController extends Controller
      *      name="vendor_delivery_validation_by_gps",
      *      options={"expose"=true},
      *      condition="request.isXmlHttpRequest()"
-     *
      * )
      * @Method({"GET"})
      *

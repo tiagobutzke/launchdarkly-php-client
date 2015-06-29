@@ -43,14 +43,14 @@
             </h4>
 
             <div class="checkout__item checkout__item--delivery-list">
-                <div id="delivery-information-list-wrapper">
+                <div id="delivery-information-list-wrapper" class="delivery-information-list__wrapper">
                     <div class="selected-address"></div>
                     <div id="delivery-information-list" data-addresses='{{ customer_addresses|to_escaped_json }}'></div>
                     {% include('VoloFrontendBundle:Layout/Partial/templates:checkout_address.html.twig') %}
                     <div class="checkout__subtitle__open">
                         <a id="select_other_address_link" class="checkout__more-feature-link">
-                            <span class="select_other_address_link__text--select">{% trans %}link.select_other_address{% endtrans %}</span>
-                            <span class="select_other_address_link__text--cancel">{% trans %}link.cancel{% endtrans %}</span>
+                            <b class="select_other_address_link__text--select">{% trans %}link.select_other_address{% endtrans %}</b>
+                            <b class="select_other_address_link__text--cancel">{% trans %}link.cancel{% endtrans %}</b>
                         </a>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                 <div id="add_new_address_form" class="hide">
                     {% include 'VoloFrontendBundle:Checkout/Partial:delivery_information_form.html.twig' with {'vendor' : vendor, 'customer_address': default_address} only %}
                 </div></div>
-            
+
         {% else %}
             {% include('VoloFrontendBundle:Checkout/Partial:delivery_information_edit.html.twig') %}
         {% endif %}
@@ -91,22 +91,23 @@
 
 {% block payment %}
     <h3 class="checkout__title">3. {% trans %}title.payment{% endtrans %}</h3>
-    <div class="checkout__payments">
-        {% for payment in vendor.paymentTypes %}
-            <div class="checkout__payment">
-                <div class="checkout__payment__wrapper"
-                     data-payment_type_id="{{ payment.id }}"
-                     data-payment_type_code="{{ payment.paymentTypeCode }}">
-                    <div class="checkout__payment_img">
-                        {% set label_credit_cart = '' %}
-                        {% if payment.paymentTypeCode == 'paypal' %}
-                            <img class="b-lazy"
-                                 src=data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
-                                 data-src="{{ asset('img/checkout/paypal.png') }}|{{ asset('img/checkout/paypal-2x.png') }}"
-                                 alt="alt-text" />
-                            {% set label_credit_cart = 'payment.label_paypal' %}
-                        {% endif %}
-                        {% if payment.paymentTypeCode == 'adyen' %}
+    <div class="checkout__payments-wrapper">
+        <div class="checkout__payments">
+            {% for payment in vendor.paymentTypes %}
+                <div class="checkout__payment">
+                    <div class="checkout__payment__wrapper {{ payment.paymentTypeCode }}"
+                         data-payment_type_id="{{ payment.id }}"
+                         data-payment_type_code="{{ payment.paymentTypeCode }}">
+                        <div class="checkout__payment_img">
+                            {% set label_credit_cart = '' %}
+                            {% if payment.paymentTypeCode == 'paypal' %}
+                                <img class="b-lazy"
+                                     src=data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+                                     data-src="{{ asset('img/checkout/paypal.png') }}|{{ asset('img/checkout/paypal-2x.png') }}"
+                                     alt="alt-text"/>
+                                {% set label_credit_cart = 'payment.label_paypal' %}
+                            {% endif %}
+                            {% if payment.paymentTypeCode == 'adyen' %}
                                 <img class="b-lazy"
                                      src=data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
                                      data-src="{{ asset('img/checkout/visa.png') }}|{{ asset('img/checkout/visa-2x.png') }}"
@@ -115,28 +116,30 @@
                                      src=data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
                                      data-src="{{ asset('img/checkout/mastercard.png') }}|{{ asset('img/checkout/mastercard-2x.png') }}"
                                      alt="alt-text"/>
-                            {% set label_credit_cart = 'payment.paymentTypeCode' %}
-                        {% endif %}
+                                {% set label_credit_cart = 'payment.paymentTypeCode' %}
+                            {% endif %}
+                        </div>
+                        <div class="checkout__payment_label"><i class="icon-check"></i>{{ label_credit_cart|trans }}
+                        </div>
                     </div>
-                    <div class="checkout__payment_label"><i class="icon-check"></i>{{ label_credit_cart|trans }}</div>
+                </div>
+            {% endfor %}
+            <div class="checkout__payment_paypal_description hide">
+                <div class="checkout__payment_paypal_description__title">
+                    {% trans %}generic.payment_paypal_description_title{% endtrans %}
+                </div>
+                <div class="checkout__payment_paypal_description__text">
+                    {% trans %}generic.payment_paypal_description_text{% endtrans %}
                 </div>
             </div>
-        {% endfor %}
-        <div class="checkout__payment_paypal_description hide">
-            <div class="checkout__payment_paypal_description__title">
-                {% trans %}generic.payment_paypal_description_title{% endtrans %}
-            </div>
-            <div class="checkout__payment_paypal_description__text">
-                {% trans %}generic.payment_paypal_description_text{% endtrans %}
-            </div>
         </div>
-    </div>
 
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-    {% include('VoloFrontendBundle:Checkout/Partial:payment_list.html.twig') %}
-    {% endif %}
-    <div class="checkout__add-new-wrap">
-    {% include('VoloFrontendBundle:Checkout/Partial:payment_form.html.twig') %}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% include('VoloFrontendBundle:Checkout/Partial:payment_list.html.twig') %}
+        {% endif %}
+        <div class="checkout__add-new-wrap">
+        {% include('VoloFrontendBundle:Checkout/Partial:payment_form.html.twig') %}
+        </div>
     </div>
     
     <div class="voucher-component" data-vendor_id="{{ vendor.id }}">
@@ -243,31 +246,5 @@
                 VOLO.checkoutModel.set('adyen_encrypted_data', null);
             });
         {% endif %}
-
-        $('.checkout__payment__wrapper').click(function () {
-            $('.checkout__payment__wrapper--active').removeClass('checkout__payment__wrapper--active');
-            $(this).addClass('checkout__payment__wrapper--active');
-
-            VOLO.checkoutModel.set('payment_type_code', $(this).data('payment_type_code'));
-            VOLO.checkoutModel.set('payment_type_id', $(this).data('payment_type_id'));
-
-            if ($(this).data('payment_type_code') === "paypal") {
-                $('#payment_form').addClass('hide');
-                $('#saved_payment_options').addClass('hide');
-                $('.checkout__list').addClass('hide');
-                $('.checkout__payment_paypal_description').removeClass('hide');
-                $('input[name="credit_card"]').attr("checked", false);
-                VOLO.checkoutModel.set('credit_card_id', null);
-            } else {
-                $('#payment_form').toggleClass('hide', $("input:radio[name='credit_card']").length > 0);
-                $('#saved_payment_options').removeClass('hide');
-                $('.checkout__list').removeClass('hide');
-                $('.checkout__payment_paypal_description').addClass('hide');
-            }
-        });
-
-        $('.checkout__item__card__help-toggle').click(function() {
-            $('.checkout__item__card__help').toggle();
-        });
     </script>
 {% endblock %}

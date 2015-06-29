@@ -4,7 +4,8 @@ $(document).ready(function() {
         cityFlipperAnimation,
         calledActionAnimation,
         plzSelectionAnimation,
-        homeTeaseFullWidth;
+        homeTeaseFullWidth,
+        headerAnimations;
 
     //Attention: this script should go first
     //initialize it before running any other animation script since it changes DOM elements size
@@ -51,6 +52,12 @@ $(document).ready(function() {
         }
     });
     plzSelectionAnimation.init();
+
+    headerAnimations = new VOLO.HeaderAnimations({
+        $window: $(window),
+        $document: $(document)
+    });
+    headerAnimations.init();
 
     function initCityAnimations() {
         var cities = $('.city');

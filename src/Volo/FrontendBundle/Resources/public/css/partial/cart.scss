@@ -479,23 +479,6 @@ tr.summary__item__row_mobile {
     margin: 0 auto;
     padding: 0 $space-sm;
   }
-
-  .dropdown-menu {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    font-size: 14px;
-    text-align: left;
-    background-color: #fff;
-    border: $dropdown-border;
-    border-radius: $input-border-radius;
-    color: $dropdown-color-text;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    background-clip: padding-box;
-    width: 100%;
-    text-align: left;
-  }
 }
 
 .desktop-cart__time__field-date {
@@ -593,6 +576,10 @@ tr.summary__item__row_mobile {
     margin-left: auto;
     margin-right: auto;
   }
+}
+
+.desktop-cart__error__below-minimum-amount {
+  margin-top: $space-xs;
 }
 
 .desktop-cart__header {

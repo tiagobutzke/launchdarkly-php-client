@@ -22,13 +22,8 @@
   padding: 0;
   text-align: center;
   width: 96%;
-  max-height: 170px;
+  max-height: 90px;
   @include absolute-center-box();
-
-  p {
-    font-size:0.875em;
-     margin: 5px;
-  }
 }
 
 .tracking-hero__title {
@@ -43,61 +38,6 @@
   }
   @include respond-from("screen-lg") {
     font-size: 2.2em;
-  }
-}
-
-.tracking-hero__voucher__wrapper {
-  width: 34%;
-  font-size: 0.875em;
-  margin: 0 auto;
-  @include respond-from("screen-sm") {
-    width: 28%;
-  }
-  @include respond-from("screen-md") {
-    width: 22%;
-  }
-  @include respond-from("screen-lg") {
-    width: 17%;
-  }
-}
-
-.tracking-hero__voucher {
-  border-radius: $border-radius-medium;
-  border: $base-border;
-}
-
-.tracking-hero__voucher__header {
-  border-bottom: $base-border;
-  background: rgba($base-border-color, 0.5);
-  font-size: 0.9em;
-}
-
-.tracking-hero__voucher__txt {
-  font-family: $bold-font-family;
-  font-size: 1.1em;
-  text-align: center;
-  margin: 0;
-  padding: $space-xs 0;
-  @include respond-from("screen-sm") {
-    padding: $space-sm 0;
-    font-size: 1.35em;
-  }
-  @include respond-from("screen-md") {
-    font-size: 1.6em;
-  }
-  @include respond-from("screen-lg") {
-    font-size: 1.9em;
-  }
-}
-
-.hero-traking__bottom-text {
-  width: 100%;
-  position: absolute;
-  bottom: -10px;
-  font-size: 0.875em;
-  text-align: center;
-  @include respond-from("screen-sm") {
-    bottom: 0;
   }
 }
 

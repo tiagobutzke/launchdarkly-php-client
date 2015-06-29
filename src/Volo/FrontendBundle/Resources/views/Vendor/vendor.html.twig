@@ -116,7 +116,7 @@
     </div>
     <div class="menu__bottom-info">
         <div class="menu__bottom-info__openings">
-            <h3 class="menu__bottom-info__title">{% trans %}opening_times.title{% endtrans %}</h3>
+            <h3>{% trans %}opening_times.title{% endtrans %}</h3>
             <ul>
                 {% for weekdayIndex in 1..7 %}
                     {% set openingTimes = getOpeningPeriods(vendor.schedules, weekdayIndex) %}
@@ -134,6 +134,9 @@
                     {% endif %}
                 {% endfor %}
             </ul>
+        </div>
+        <div class="menu__bottom-info__restaurant-description">
+            {{ cms('restaurant-description-' ~ vendor.code, 'restaurant-description') }}
         </div>
     </div>
 </div>
@@ -153,6 +156,6 @@
 
 {% block footer_bottom %}
     <div class="footer__wrapper__bottom">
-        {{ cms_footer(vendor.city.id, 'footer-menu') }}
+        {{ cms('footer-menu-' ~ vendor.city.id, 'footer-menu') }}
     </div>
 {% endblock %}

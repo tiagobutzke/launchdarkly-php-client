@@ -231,10 +231,10 @@ input, .form-control {
 .caret {
   @include use-iconmoon-font();
   border: none;
-  right: 20px !important;
-  margin-top: -5px !important;
+  right: 24px !important;
+  margin-top: -8px !important;
   color: $color-text-highlight;
-  font-size: 1.15em;
+  font-size: 1.35em;
 
   &:before {
     content: "\44";
@@ -245,6 +245,19 @@ input, .form-control {
   max-height: 120px !important;
   min-height: inherit !important;
   z-index: 800 !important;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  font-size: 1em;
+  text-align: left;
+  background-color: #fff;
+  border: $dropdown-border;
+  border-radius: $input-border-radius;
+  color: $dropdown-color-text;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  background-clip: padding-box;
+  width: 100%;
 
   li {
     &.selected {

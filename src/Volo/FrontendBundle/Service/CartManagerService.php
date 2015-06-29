@@ -5,6 +5,8 @@ namespace Volo\FrontendBundle\Service;
 use Foodpanda\ApiSdk\Provider\CartProvider;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Foodpanda\ApiSdk\Provider\VendorProvider;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Volo\FrontendBundle\Security\Token;
 
 class CartManagerService
 {
@@ -23,15 +25,22 @@ class CartManagerService
     protected $vendorProvider;
 
     /**
+     * @var TokenStorage
+     */
+    protected $tokenStorage;
+
+    /**
      * @param CartProvider   $cartProvider
      * @param VendorProvider $vendorProvider
      */
     public function __construct(
         CartProvider $cartProvider,
-        VendorProvider $vendorProvider
+        VendorProvider $vendorProvider,
+        TokenStorage $tokenStorage
     ) {
         $this->cartProvider = $cartProvider;
         $this->vendorProvider = $vendorProvider;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -116,7 +125,14 @@ class CartManagerService
         $this->adjustOrderTime($jsonCart);
         $jsonCart['vouchers'] = $this->prepareVouchersForTheApi($jsonCart['vouchers']);
 
-        $response = $this->cartProvider->calculate($jsonCart);
+        /** @var Token $token */
+        $token = $this->tokenStorage->getToken();
+
+        if ($token instanceof Token) {
+            $response = $this->cartProvider->calculate($jsonCart, $token->getAccessToken()); 
+        } else {
+            $response = $this->cartProvider->calculate($jsonCart);
+        }
 
         if (array_key_exists('vendorCart', $response)) {
             $response['order_time'] = $cartOrderTime;
