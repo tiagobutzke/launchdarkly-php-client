@@ -36,22 +36,12 @@
                 <span class="tracking-hero__time">{{ date(status.confirmed_delivery_time.date, status.confirmed_delivery_time.timezone)|formatTime }}</span>
             </h2>
 
-            <p>{% trans %}title.get_free_delivery_next_order{% endtrans %}</p>
-            <div class="tracking-hero__voucher__wrapper">
-                <div class="tracking-hero__voucher">
-                    <div class="tracking-hero__voucher__header">
-                        {% trans %}title.voucher_code{% endtrans %}
-                    </div>
-                    <div class="tracking-hero__voucher__txt">{% trans %}voucher_success_page{% endtrans %}</div>
-                </div>
-            </div>
             {#TODO app - show app info when app is available #}
             {#<div class="tracking-header__app">#}
                 {#<button class="tracking-header__app__button">{% trans %}button.download_app{% endtrans %}</button>#}
                 {#<div class="tracking-header__app__message">{% trans %}general.to_get_real_time_updates_on_your_order{% endtrans %}.</div>#}
             {#</div>#}
         </div>
-        <p class="hero-traking__bottom-text">{% trans %}voucher.success_page_only_once{% endtrans %}</p>
     </div>
     <div class="order-status-wrapper" data-order_code="{{ order.reference }}">
         <div class="order-status-row">
