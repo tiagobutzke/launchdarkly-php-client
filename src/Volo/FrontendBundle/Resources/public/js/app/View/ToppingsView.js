@@ -141,6 +141,47 @@ var ToppingView = Backbone.View.extend({
     }
 });
 
+var ToppingSpecialInstructionsView = Backbone.View.extend({
+    initialize: function() {
+        this.template = _.template($('#topping-special-instructions').html());
+    },
+
+    events: {
+        'click .topping__header': '_toggleInstructions',
+        'click .topping__special_instructions__textarea': '_memorizeInstructions'
+    },
+
+    render: function() {
+        this.$el.html(this.template(this.model.toJSON()));
+        this._validate();
+
+        return this;
+    },
+
+    _memorizeInstructions: function() {
+        this.model.set('specialInstructions', this.$('.topping__special_instructions__textarea').val())
+        this.trigger('specialInstructions:validate');
+    },
+
+    _toggleInstructions: function() {
+        var areInstructionsVisible;
+
+        this.$el.toggleClass('instructionsVisible');
+        areInstructionsVisible = this.$el.hasClass('instructionsVisible');
+        this.$('.topping__options').toggle(areInstructionsVisible);
+        this.$('.topping__header__arrow').toggleClass('icon-down-open-big icon-up-open-big', areInstructionsVisible);
+    },
+
+    _validate: function() {
+        this.trigger('toppings:validate');
+    },
+
+    remove: function() {
+        this.undelegateEvents();
+        Backbone.View.prototype.remove.apply(this, arguments);
+    }
+});
+
 var ToppingsProductQuantityView = Backbone.View.extend({
     className: 'toppings-product-quantity',
 
@@ -179,6 +220,7 @@ var ToppingsView = Backbone.View.extend({
         this.cartModel = options.cartModel;
         this.vendorId = options.vendorId;
         this.subViews = [];
+        this.specialInstructionsView = null;
         this.productToUpdate = options.productToUpdate || null;
         this.gtmService = options.gtmService;
 
@@ -206,6 +248,10 @@ var ToppingsView = Backbone.View.extend({
 
     _initToppings: function() {
         this.model.toppings.map(this._initToppingView, this);
+        this.specialInstructionsView = new ToppingSpecialInstructionsView({
+            model: this.model,
+            el: this.$('.toppings__special_instructions')
+        });
     },
 
     _renderQuantitySelector: function() {
@@ -268,6 +314,7 @@ var ToppingsView = Backbone.View.extend({
     _closeModal: function() {
         this.undelegateEvents(); //stop listening on events, very important!
         _.invoke(this.subViews, 'remove');
+        this.specialInstructionsView.remove();
         this.quantitySelectorView.remove();
         this.$('#choices-toppings-modal').modal('hide');
     }

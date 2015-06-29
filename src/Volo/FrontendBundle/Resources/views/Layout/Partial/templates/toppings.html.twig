@@ -8,6 +8,7 @@
                     <div class="toppings-product__price"><%= VOLO.formatCurrency(total_price) %></div>
                     <div class="toppings-product__description"><%- description %></div>
                     <div class="toppings"></div>
+                    <div class="toppings__special_instructions"></div>
                 </div>
                 <div class="modal-footer">
                     <a class="toppings-add__to__cart button">
@@ -65,6 +66,33 @@
         <% if (price != 0 ) { %>
             (+<%= VOLO.formatCurrency(price) %>)
         <% } %>
+    </div>
+</script>
+
+{#topping special instructions fragment #}
+<script type="text/template" id="topping-special-instructions">
+    <div class="topping__header">
+        <div class="topping__header__name">
+            Eggs
+        </div>
+        <div class="topping__header__info">
+            <div class="topping__header__arrow icon-up-open-big"></div>
+            <div class="topping__header__comment">
+                <div class="topping__comment__help-text" style="display: block;">
+                    {% trans %}topping.select_optional{% endtrans %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="topping__options">
+        <form>
+            <textarea class="toppincg__special_instructions__textarea">
+                <%= specialInstructions %>
+            </textarea>
+            <a class="topping__special_instructions__button button disabled">
+                <span>{% trans %}button.done{% endtrans %}</span>
+            </a>
+        </form>
     </div>
 </script>
 
