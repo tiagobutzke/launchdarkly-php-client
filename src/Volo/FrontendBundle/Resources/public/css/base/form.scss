@@ -292,6 +292,32 @@ input, .form-control {
 
 // ----------------------- INPUT FIELDS END ------------------
 
+// ----------------------- SPRITE FORM ELEMENTS START ------------------
+
+.sprite-form {
+  position: relative;
+}
+
+.sprite-form__radio-button {
+  @include make-sprite-radio-button();
+  @include vertical-center-absolute();
+}
+
+.sprite-form__checkbox {
+  @include make-sprite-checkbox();
+  @include vertical-center-absolute();
+}
+
+.sprite-form__label {
+  padding-left: 30px;
+  margin-bottom: 0;
+  display: inline-block;
+  cursor: pointer;
+  font-weight: normal;
+}
+
+// ----------------------- SPRITE FORM ELEMENTS END ------------------
+
 // ----------------------- ERROR -----------------------------
 
 .error {
