@@ -205,10 +205,14 @@
             });
     
             $('#contact_information_form').on('submit', function (event) {
-                $.post(
-                        Routing.generate('checkout_edit_contact_information', {vendorCode: '{{ vendor.code}}'}),
-                        $('#contact_information_form').serialize()
-                ).done(function (data) {
+                // replace the list with the new list from the POST request
+                event.preventDefault();
+
+                $.ajax({
+                    url: Routing.generate('checkout_edit_contact_information', {email: '{{ customer.email }}', vendorCode: '{{ vendor.code}}'}),
+                    type: 'PUT',
+                    data: $('#contact_information_form').serialize()
+                }).done(function (data) {
                     var mobileNumberWrap = $('#mobile_number_wrap');
                     mobileNumberWrap.find('.invalid_number').remove();
                     if (_.isUndefined(data.invalidPhoneError)) {
@@ -221,10 +225,6 @@
                             '</span>');
                     }
                 });
-
-
-                // replace the list with the new list from the POST request
-                event.preventDefault();
             });
     
             $('#add_new_credit_card_link').click(function () {

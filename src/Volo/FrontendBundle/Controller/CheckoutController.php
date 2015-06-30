@@ -312,7 +312,9 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @Route("/edit_contact_information/{vendorCode}", name="checkout_edit_contact_information", options={"expose"=true})
+     * @deprecated Deprecated route, please remove it in the next release
+     *
+     * @Route("/edit_contact_information", name="checkout_edit_contact_information_deprecated")
      * @Method({"POST"})
      * @Template("VoloFrontendBundle:Checkout/Partial:contact_information_edit.html.twig")
      *
@@ -320,16 +322,50 @@ class CheckoutController extends Controller
      *
      * @return array
      */
+    public function editContactInformationDeprecatedAction(Request $request)
+    {
+        try {
+            $customer = $this->get('volo_frontend.service.customer')->updateCustomer($request->request->get('customer'));
+
+            return new JsonResponse([
+                'html' => $this->render(
+                    'VoloFrontendBundle:Checkout/Partial:contact_information_edit.html.twig',
+                    [
+                        'customer' => $this->get('volo_frontend.api.serializer')->normalize($customer)
+                    ]
+                )->getContent()
+            ]);
+        } catch (PhoneNumberValidationException $e) {
+            return new JsonResponse([
+                'invalidPhoneError' => $e->getMessage()
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/{vendorCode}/customer/{email}", name="checkout_edit_contact_information", options={"expose"=true}, condition="request.isXmlHttpRequest()")
+     * @Method({"PUT"})
+     * @Template("VoloFrontendBundle:Checkout/Partial:contact_information_edit.html.twig")
+     *
+     * @param Request $request
+     * @param $vendorCode
+     *
+     * @return array
+     */
     public function editContactInformationAction(Request $request, $vendorCode)
     {
+        if (!$this->isGranted('ROLE_CUSTOMER')) {
+            return new JsonResponse([], Response::HTTP_FORBIDDEN);
+        }
+
         try {
             $vendor = $this->get('volo_frontend.provider.vendor')->find($vendorCode);
         } catch (ApiErrorException $exception) {
-            throw new NotFoundHttpException('Vendor invalid', $exception);
+            throw new NotFoundHttpException(sprintf('Vendor "%s" invalid', $vendorCode), $exception);
         }
         
         try {
-            $data = $request->request->get('customer');
+            $data = $request->request->get('customer', []);
             
             $customer = $this->get('volo_frontend.service.customer')->updateCustomer($data);
 
@@ -352,13 +388,15 @@ class CheckoutController extends Controller
             }
 
 
+            $viewContent = $this->renderView(
+                'VoloFrontendBundle:Checkout/Partial:contact_information_edit.html.twig',
+                [
+                    'customer' => $this->get('volo_frontend.api.serializer')->normalize($customer)
+                ]
+            );
+
             return new JsonResponse([
-                'html' => $this->render(
-                    'VoloFrontendBundle:Checkout/Partial:contact_information_edit.html.twig',
-                    [
-                        'customer' => $this->get('volo_frontend.api.serializer')->normalize($customer)
-                    ]
-                )->getContent()
+                'html' => $viewContent
             ]);
         } catch (PhoneNumberValidationException $e) {
             return new JsonResponse([
