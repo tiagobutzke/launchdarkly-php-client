@@ -3,7 +3,9 @@
 {% block title %}{{ vendor.name }} | {% trans %}brand{% endtrans %}{% endblock %}
 
 {% block content_wrapper_class %}menu-bg{% endblock content_wrapper_class %}
-{% block body_class %}menu-page{% endblock %}
+{% set customHeadlineImage = cms('restaurant-headline-custom-' ~ vendor.code) is not empty ? true : false %}
+
+{% block body_class %}menu-page {% if customHeadlineImage == true%}vendor_custom{% endif %}{% endblock %}
 {% block google_tag_manager %}
     <script type="text/javascript" data-turbolinks-eval=always>
         dataLayer.push({
