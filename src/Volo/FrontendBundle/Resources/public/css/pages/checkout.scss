@@ -683,30 +683,9 @@
 }
 
 .checkout__list {
-  @extend .radio;
-  line-height: 40px;
   font-size: 0.875em;
   padding: $space-xs $space-md;
   margin: 0;
-  .checkout__list__radio_button {
-    height: 44px;
-    width: 20px;
-    margin-left: 0 !important;
-  }
-}
-
-.checkout__list__radio_button {
-  @include make-sprite-radiobutton(
-    $radiobutton-simple-unselected-group,
-    $radiobutton-simple-selected-group,
-    $radiobutton-simple-unselected-height
-  );
-}
-
-.checkout__list__text {
-  line-height: 40px;
-  padding-left: 0 !important;
-  display: inline-block;
 }
 
 .checkout__list__payment_option_type {
