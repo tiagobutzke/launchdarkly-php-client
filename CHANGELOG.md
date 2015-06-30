@@ -8,7 +8,7 @@ CHANGELOG
   * SGFD-17292 - payment method is highlighted after selection
   * SGFD-17120 - continue button is enabled after back from payment selection
 
-* 1.0.28
+* 1.0.28 (2015-06-30)
 
   * SGFD-17240 Menu Page / Special design for hero image
   * SGFD-17283 Newsletter subscription and Opt-out CC persistence
