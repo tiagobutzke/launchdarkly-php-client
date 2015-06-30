@@ -23,6 +23,7 @@
         <parameter key="volo_frontend.service.cart_manager.class">Volo\FrontendBundle\Service\CartManagerService</parameter>
         <parameter key="volo_frontend.service.order_manager.class">Volo\FrontendBundle\Service\OrderManagerService</parameter>
         <parameter key="volo_frontend.service.deliverability.class">Volo\FrontendBundle\Service\DeliverabilityService</parameter>
+        <parameter key="volo_frontend.service.schedule.class">Volo\FrontendBundle\Service\ScheduleService</parameter>
         <parameter key="volo_frontend.cache_warmer.class">Volo\FrontendBundle\CacheWarmer\VoloCacheWarmer</parameter>
         <parameter key="volo_frontend.translation_cache_warmer.class">Volo\FrontendBundle\CacheWarmer\TranslationCacheWarmer</parameter>
         <parameter key="volo_frontend.cache_migration.class">Volo\FrontendBundle\CacheWarmer\MigrationCacheWarmer</parameter>
@@ -82,7 +83,7 @@
 
         <service id="volo_frontend.twig.vendor_extension" class="%volo_frontend.twig.vendor_extension.class%">
             <argument>%locale%</argument>
-            <argument type="service" id="translator" />
+            <argument type="service" id="volo_frontend.service.schedule" />
             <tag name="twig.extension" />
         </service>
 
@@ -179,5 +180,7 @@
         <service id="volo_frontend.service.api_error_translator" class="%volo_frontend.service.api_error_translator.class%">
             <argument type="service" id="translator" />
         </service>
+
+        <service id="volo_frontend.service.schedule" class="%volo_frontend.service.schedule.class%"></service>
     </services>
 </container>

@@ -36,20 +36,27 @@
         <h4 class="hero-menu__info__description">{{ vendor.description }}</h4>
     </div>
     <div class="hero-menu__info-extra">
-        {% set closingInMinutes = getMinutesTilClosing(vendor.schedules) %}
-        <i class="icon-clock-o"></i>
-        {% if (closingInMinutes <= 0) %}
-            <span class="line-wrapper">{{ 'vendor_closed_preorder_available'|trans }}</span>
-            <span>{{ getNextOpeningWeekDayNumber(vendor.schedules)|dayOfTheWeek }}
-                {{ getNextOpeningHours(vendor.schedules)|formatTime }} - {{ getNextClosingHours(vendor.schedules)|formatTime }}</span>
-        {% elseif (closingInMinutes < 60) %}
-            <span class="line-wrapper">{% trans %}generic.closing_in{% endtrans %} {{ closingInMinutes }} {% trans %}generic.min{% endtrans %}</span>
-            <span>{{ getNextOpeningWeekDayNumber(vendor.schedules)|dayOfTheWeek }}
-                {{ getNextOpeningHours(vendor.schedules)|formatTime }} - {{ getNextClosingHours(vendor.schedules)|formatTime }}</span>
-        {% else %}
-            <span class="green-class">{% trans %}generic.open{% endtrans %}</span>
-            <span>{{ getOpeningTime(vendor.schedules)|formatTime }} – {{ getClosingTime(vendor.schedules)|formatTime }}</span>
+        {% set periods = getNextDayPeriods(vendor, true) %}
+        {% if not periods.isEmpty %}
+            {% set closingIn = ((periods|first|last|date('U') - 'now'|date('U')) / 60)|abs|round %}
+            <i class="icon-clock-o"></i>
+            {% if not isVendorOpen(vendor, date('now')) %}
+                <span class="line-wrapper">{% trans %}vendor_closed_preorder_available{% endtrans %}</span>
+                <span>{{ periods|first|first|localisedDay}}</span>
+            {% elseif (closingIn < 60) %}
+                <span class="line-wrapper">
+                    {% trans with {'%minutes%': closingIn } %}generic.closing_in_minutes %minutes%{% endtrans %}
+                </span>
+            {% else %}
+                <span class="green-class">{% trans %}generic.open{% endtrans %}</span>
+            {% endif %}
         {% endif %}
+        <span>
+            {% for schedule in periods %}
+                {{ schedule|first|formatTime }} - {{ schedule|last|formatTime }}{% if not loop.last %}, {% endif %}
+            {% endfor %}
+        </span>
+
         {% if ('' != vendor.address) %}
             <i class="icon-pin-map"></i> {{ vendor.address }}
         {% endif %}
@@ -121,15 +128,13 @@
             <h3>{% trans %}opening_times.title{% endtrans %}</h3>
             <ul>
                 {% for weekdayIndex in 1..7 %}
-                    {% set openingTimes = getOpeningPeriods(vendor.schedules, weekdayIndex) %}
-                    {% set totalPeriods = openingTimes|length %}
-                    {% if (totalPeriods > 0) %}
+                    {% set schedules = getDailySchedules(vendor.schedules, weekdayIndex) %}
+                    {% if (schedules|length > 0) %}
                         <li>
                             {{ weekdayIndex|dayOfTheWeek }}
                             <span>
-                                {% for i in 0..(totalPeriods-1) %}
-                                    {% set openingTime = openingTimes[i] %}
-                                    {{ openingTime|first|formatTime }} - {{ openingTime|last|formatTime }}{% if i < (totalPeriods-1) %}, {% endif %}
+                                {% for schedule in schedules %}
+                                    {{ schedule.openingTime }} - {{ schedule.closingTime }}{% if not loop.last %}, {% endif %}
                                 {% endfor %}
                             </span>
                         </li>

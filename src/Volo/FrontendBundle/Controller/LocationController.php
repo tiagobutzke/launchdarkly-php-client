@@ -48,7 +48,7 @@ class LocationController extends Controller
             ->filter(function (Vendor $vendor) { // filter restaurant closed
                 return !$vendor->getSchedules()->isEmpty();
             })->partition(function ($key, Vendor $vendor) {
-                return $vendor->getMetadata()->getAvailableIn() === null;
+                return $this->get('volo_frontend.service.schedule')->isVendorOpen($vendor, new \DateTime());
             });
 
         return [
