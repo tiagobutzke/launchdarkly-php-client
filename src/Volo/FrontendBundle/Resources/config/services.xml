@@ -8,6 +8,7 @@
         <import resource="api.xml"/>
         <import resource="converters.xml"/>
         <import resource="redis_cache.xml"/>
+        <import resource="wti.xml"/>
     </imports>
 
     <parameters>
@@ -24,7 +25,6 @@
         <parameter key="volo_frontend.service.order_manager.class">Volo\FrontendBundle\Service\OrderManagerService</parameter>
         <parameter key="volo_frontend.service.deliverability.class">Volo\FrontendBundle\Service\DeliverabilityService</parameter>
         <parameter key="volo_frontend.cache_warmer.class">Volo\FrontendBundle\CacheWarmer\VoloCacheWarmer</parameter>
-        <parameter key="volo_frontend.translation_cache_warmer.class">Volo\FrontendBundle\CacheWarmer\TranslationCacheWarmer</parameter>
         <parameter key="volo_frontend.cache_migration.class">Volo\FrontendBundle\CacheWarmer\MigrationCacheWarmer</parameter>
         <parameter key="volo_frontend.twig.serializer_extension.class">Volo\FrontendBundle\Twig\SerializerExtension</parameter>
         <parameter key="volo_frontend.service.customer_location.class">Volo\FrontendBundle\Service\CustomerLocationService</parameter>
@@ -37,6 +37,7 @@
         <parameter key="volo_frontend.service.api_error_translator.class">Volo\FrontendBundle\Service\ApiErrorTranslator</parameter>
         <parameter key="volo_frontend.twig.customer_location_extension.class">Volo\FrontendBundle\Twig\CustomerLocationExtension</parameter>
         <parameter key="volo_frontend.twig.customer_extension.class">Volo\FrontendBundle\Twig\CustomerExtension</parameter>
+        <parameter key="volo_frontend.service.wti.class">Volo\FrontendBundle\Service\WTIService</parameter>
     </parameters>
 
     <services>
@@ -114,10 +115,10 @@
             <tag name="kernel.cache_warmer" priority="90" />
         </service>
 
-        <service id="volo_frontend.translation_cache_warmer" class="%volo_frontend.translation_cache_warmer.class%">
-            <argument type="service" id="foodpanda.core.web_translate_it.translation_sync_service" />
-            <argument>%foodpanda_web_translate_it.main_translation_label%</argument>
-            <tag name="kernel.cache_warmer" priority="90" />
+        <service id="volo_frontend.service.wti" class="%volo_frontend.service.wti.class%">
+            <argument type="service" id="foodpanda.web_translate_it.service.translation" />
+            <argument type="service" id="file_locator" />
+            <argument>@VoloFrontendBundle</argument>
         </service>
 
         <service id="volo_frontend.cache_migration" class="%volo_frontend.cache_migration.class%">

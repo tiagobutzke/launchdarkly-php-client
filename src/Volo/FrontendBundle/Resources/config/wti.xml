@@ -1,0 +1,52 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <imports>
+        <import resource="api.xml"/>
+        <import resource="converters.xml"/>
+        <import resource="redis_cache.xml"/>
+    </imports>
+
+    <parameters>
+        <parameter key="foodpanda.web_translate_it.service.translation.class">Foodpanda\WebTranslateIt\Services\TranslationService</parameter>
+        <parameter key="foodpanda.web_translate_it.requester.class">Foodpanda\WebTranslateIt\Request\Requester</parameter>
+    </parameters>
+
+    <services>
+        <service id="foodpanda.web_translate_it.service.translation" class="%foodpanda.web_translate_it.service.translation.class%" public="false">
+            <argument type="service" id="foodpanda.web_translate_it.requester" />
+            <call method="setConfig">
+                <argument type="collection">
+                    <argument key="base_url">%foodpanda_web_translate_it_base_url%</argument>
+                    <argument key="private_api_key">%foodpanda_web_translate_it_private_api_key%</argument>
+                    <argument key="public_api_key">%foodpanda_web_translate_it_public_api_key%</argument>
+                </argument>
+            </call>
+        </service>
+
+        <service id="foodpanda.subscriber.log.log_subscriber" class="%guzzle.subscriber.log.log_subscriber.class%" public="false">
+            <argument type="service" id="monolog.logger.wit" />
+            <argument type="string">%guzzle.subscriber.log.formatter.format%</argument>
+        </service>
+
+        <service id="foodpanda.guzzle.event.emitter" class="%guzzle.event.emitter.class%" public="false">
+            <call method="attach">
+                <argument type="service" id="foodpanda.subscriber.log.log_subscriber" />
+            </call>
+        </service>
+
+        <service id="foodpanda.core.web_translate_it.http_client" class="GuzzleHttp\Client" public="false">
+            <argument type="collection">
+                <argument key="emitter" type="service" id="foodpanda.guzzle.event.emitter" />
+                <argument key="debug">true</argument>
+            </argument>
+        </service>
+
+        <service id="foodpanda.web_translate_it.requester" class="%foodpanda.web_translate_it.requester.class%" public="false">
+            <argument type="service" id="foodpanda.core.web_translate_it.http_client" />
+        </service>
+    </services>
+</container>
