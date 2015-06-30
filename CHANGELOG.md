@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-* 1.0.27
+* 1.0.27 (2015-06-30)
 
  * SGFD-17045 Remove the COMEBACK voucher from success page
 
