@@ -5,6 +5,7 @@ CHANGELOG
 
   * SGFD-16165 removed FoodpandaWebTranslateItBundle, added our implementation
   * SGFD-17312 - undelegate events on close toppings menu
+  * SGFD-17292 - payment method is highlighted after selection
   * SGFD-17120 - continue button is enabled after back from payment selection
 
 * 1.0.28
