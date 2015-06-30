@@ -330,12 +330,12 @@
 .city__bottom-info {
   @extend .clearfix;
   font-size: 0.875em;
-  padding: 0 0 $space-lg 0;
+  padding-top: $space-lg;
   @include respond-from("screen-md") {
     @include make-row(0);
   }
 
-  h4, .h4 {
+  h3, .h3 {
     margin: 0;
     font-family: $bold-font-family;
     text-transform: uppercase;
@@ -346,5 +346,4 @@
 
 .city__bottom-info__city-description {
   @include make-xs-column(12);
-  padding-bottom: $space-sm;
 }
