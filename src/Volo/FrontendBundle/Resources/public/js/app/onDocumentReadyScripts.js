@@ -5,6 +5,9 @@ VOLO.documentReadyFunction = function() {
         offset: 400
     });
 
+    // On document.ready we trigger Turbolinks page:load event
+    $(document).trigger('page:load');
+
     var plateAnimation,
         deliveryTimeAnimation,
         cityFlipperAnimation,
@@ -93,6 +96,6 @@ VOLO.documentReadyFunction = function() {
     if (!md.mobile()) {
         plateAnimation.init();
         deliveryTimeAnimation.init();
-        $(document).on('page:load page:restore', initCityAnimations);
+        initCityAnimations();
     }
 };

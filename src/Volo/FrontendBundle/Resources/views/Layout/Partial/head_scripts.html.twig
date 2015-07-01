@@ -28,12 +28,9 @@
         VOLO.configuration.cartBottomMargin = 50;
         VOLO.configuration.itemsOverflowingClassName = 'checkout__summary-overflowing';
         VOLO.configuration.timeZone = '{{ timezone }}';
+        VOLO.configuration.currencySymbol = '{{ config.currency.currency_symbol_iso }}';
         VOLO.configuration.averageDeliveryTime = '{{ average_delivery_time }}';
 
-        VOLO.initIntl(VOLO.configuration.locale.replace('_', '-'), '{{ config.currency.currency_symbol_iso }}');
-    </script>
-
-    <script type="text/javascript">
-        var dataLayer = [];
+        dataLayer = [];
     </script>
 {% endblock %}
