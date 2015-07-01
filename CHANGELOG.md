@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.0.28.1
+
+  * SGFD-17520 Spain Branding: Social footer icons to CMS
+
 * 1.0.28
 
   * SGFD-17240 Menu Page / Special design for hero image
