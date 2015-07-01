@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.0.30
+
+  * SGFD-15802 City page / SEO box
+
 * 1.0.29
 
   * SGFD-16165 removed FoodpandaWebTranslateItBundle, added our implementation
