@@ -1,11 +1,14 @@
 CHANGELOG
 =========
 
+* 1.0.32
+
+  * SGFD-17525 Duplicated GTM tags fix
+
 * 1.0.31
 
   * SGFD-17468: set country specific css variations
   * SGFD-17282 - tooltip on home screen is shown on top for small screens
-  * SGFD-17525 dublicated GTM tags fix
 
 * 1.0.30
 
