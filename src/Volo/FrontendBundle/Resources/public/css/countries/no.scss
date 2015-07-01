@@ -1,0 +1,7 @@
+body.country-no {
+
+  .city {
+    @include make-md-column(6);
+    @extend .col-md-push-3;
+  }
+}
