@@ -23,6 +23,10 @@ CHANGELOG
   * SGFD-17292 - payment method is highlighted after selection
   * SGFD-17120 - continue button is enabled after back from payment selection
 
+* 1.0.28.3
+
+  * SGFD-17520 Spain Branding: Social footer icons to CMS
+
 * 1.0.28 (2015-06-30)
 
   * SGFD-17240 Menu Page / Special design for hero image
