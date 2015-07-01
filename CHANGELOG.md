@@ -4,6 +4,7 @@ CHANGELOG
 * 1.0.30
 
   * SGFD-15802 City page / SEO box
+  * SGFD-17281 Menu Page / Black layer if no postal code
 
 * 1.0.29
 
