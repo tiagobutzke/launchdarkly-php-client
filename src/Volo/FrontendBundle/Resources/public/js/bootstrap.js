@@ -209,10 +209,12 @@ VOLO.initHomeSearch = function() {
     if (VOLO.homeSearchView) {
         VOLO.homeSearchView.unbind();
     }
+
     VOLO.homeSearchView = new HomeSearchView({
         el: '.teaser__form',
         model: VOLO.locationModel,
-        geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1])
+        geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1]),
+        isBelowMediumScreen: VOLO.configuration.isBelowMediumScreen
     });
 };
 

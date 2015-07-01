@@ -10,14 +10,10 @@ var HomeSearchView = Backbone.View.extend({
         this.geocodingService = options.geocodingService;
         this.geocodingService.init(this.$('#postal_index_form_input'));
 
+        this.isBelowMediumScreen = options.isBelowMediumScreen;
+
         this.listenTo(this.geocodingService, 'autocomplete:place_changed', this._applyNewLocationData);
         this.listenTo(this.geocodingService, 'autocomplete:not_found', this._notFound);
-
-        this.$('#postal_index_form_input').tooltip({
-            placement: 'bottom',
-            html: true,
-            trigger: 'manual'
-        });
 
         this.postInit();
     },
@@ -141,24 +137,31 @@ var HomeSearchView = Backbone.View.extend({
     },
 
     _showInputPopup: function (text) {
-        var $postal_index_form_input = this.$('#postal_index_form_input'),
-            newPosition;
+        var $postalIndexFormInput = this.$('#postal_index_form_input'),
+            placement = this.isBelowMediumScreen() ? 'top' : 'bottom',
+            $tooltip;
 
-        if (!$postal_index_form_input.hasClass('hide')) {
+        if (!$postalIndexFormInput.hasClass('hide')) {
             console.log('_showInputPopup ', this.cid);
-            $postal_index_form_input.attr('title', text).tooltip('fixTitle');
-            $postal_index_form_input.tooltip('show');
+            $tooltip = this.$('#postal_index_form_input').tooltip({
+                placement: placement,
+                html: true,
+                trigger: 'manual',
+                title: text,
+                animation: false
+            });
 
-            newPosition = $postal_index_form_input.position().left;
+            $tooltip.on('shown.bs.tooltip', function() {
+                this.$('#postal_index_form_input').data('bs.tooltip').$tip.css('left', 0);
+            }.bind(this));
 
-            this.$('.tooltip').css('left', newPosition + 'px').css('visibility', 'visible');
+            $tooltip.tooltip('show');
         }
     },
 
     _hideTooltip: function () {
         console.log('_hideTooltip');
-
-        this.$('#postal_index_form_input').tooltip('hide');
+        this.$('#postal_index_form_input').tooltip('destroy');
     },
 
     _enableInputNode: function () {
