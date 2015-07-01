@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-* 1.0.28.1
+* 1.0.28.3
 
   * SGFD-17520 Spain Branding: Social footer icons to CMS
 
