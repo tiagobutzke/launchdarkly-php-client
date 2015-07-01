@@ -60,7 +60,7 @@ var HomeSearchView = Backbone.View.extend({
         if (md.mobile()) {
             $('html, body').animate({
                 scrollTop: this.$('#postal_index_form_input').offset().top - ($('.header').height() + 10)
-            });
+            }, VOLO.configuration.anchorScrollSpeed);
         }
     },
 
@@ -141,14 +141,18 @@ var HomeSearchView = Backbone.View.extend({
     },
 
     _showInputPopup: function (text) {
-        console.log('_showInputPopup ', this.cid);
-        this.$('#postal_index_form_input').attr('title', text).tooltip('fixTitle');
-        this.$('#postal_index_form_input').tooltip('show');
+        var $postal_index_form_input = this.$('#postal_index_form_input'),
+            newPosition;
 
-        var newPosition = this.$('#postal_index_form_input').position().left;
+        if (!$postal_index_form_input.hasClass('hide')) {
+            console.log('_showInputPopup ', this.cid);
+            $postal_index_form_input.attr('title', text).tooltip('fixTitle');
+            $postal_index_form_input.tooltip('show');
 
-        $('.tooltip').css('left', newPosition + 'px');
-        $('.tooltip').css('visibility', 'visible');
+            newPosition = $postal_index_form_input.position().left;
+
+            this.$('.tooltip').css('left', newPosition + 'px').css('visibility', 'visible');
+        }
     },
 
     _hideTooltip: function () {

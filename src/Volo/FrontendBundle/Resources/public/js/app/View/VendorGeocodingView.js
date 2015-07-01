@@ -23,6 +23,7 @@ var VendorGeocodingView = HomeSearchView.extend({
     events: {
         'submit': '_submitPressed',
         'focus #postal_index_form_input': '_hideTooltip',
+        'click .postal-index-form-overlay': '_hideTooltip',
         'click #postal_index_form_input': '_scrollToInput',
         'keyup #postal_index_form_input': '_inputChanged'
     },
@@ -62,6 +63,19 @@ var VendorGeocodingView = HomeSearchView.extend({
         this._submitPressed();
     },
 
+    _showInputPopupAndBackground: function () {
+        this.$el.addClass('postal-index-form-overlay--shown');
+        HomeSearchView.prototype._showInputPopup.apply(this, arguments);
+    },
+
+    /**
+     * @override
+     */
+    _hideTooltip: function () {
+        this.$el.removeClass('postal-index-form-overlay--shown');
+        HomeSearchView.prototype._hideTooltip.apply(this, arguments);
+    },
+
     _showFormattedAddress: function() {
         console.log('_showFormattedAddress ', this.cid);
         this.$('.vendor__geocoding__tool-box__title').removeClass('hide');
@@ -94,11 +108,11 @@ var VendorGeocodingView = HomeSearchView.extend({
             if ($body.width() - this.scrollBarSize > this.smallScreenMaxSize) {
                 $body.animate({
                     scrollTop: offset
-                }, 'fast', function() {
-                    this._showInputPopup(_.template($('#template-vendor-supply-postcode').html()));
+                }, VOLO.configuration.anchorScrollSpeed, function() {
+                    this._showInputPopupAndBackground(_.template($('#template-vendor-supply-postcode').html()));
                 }.bind(this));
             } else {
-                this._showInputPopup(_.template($('#template-vendor-supply-postcode').html()));
+                this._showInputPopupAndBackground(_.template($('#template-vendor-supply-postcode').html()));
             }
         }
     },
