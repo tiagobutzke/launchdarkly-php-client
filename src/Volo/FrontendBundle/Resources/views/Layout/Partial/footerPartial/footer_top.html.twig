@@ -17,9 +17,10 @@
     <div class="footer__logo">
         <i class="icon-logo"></i>
     </div>
-    <div class="footer__social">
-        <a href="https://www.facebook.com/foodora.de" target="_blank"><i class="icon-facebook-circled"></i></a>
-        <a href="https://de.pinterest.com/foodora_de" target="_blank"><i class="icon-pinterest-with-circle"></i></a>
-        <a href="https://instagram.com/foodora.de" target="_blank"><i class="icon-instagram-circled"></i></a>
-    </div>
+    {% set footerSocialLinks = cms('footer-social-links') %}
+    {% if footerSocialLinks is not empty %}
+        <div class="footer__social">
+            {{ footerSocialLinks|raw }}
+        </div>
+    {% endif %}
 </div>
