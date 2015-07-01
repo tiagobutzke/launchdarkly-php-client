@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.0.31
+
+  * SGFD-17468: set country specific css variations
+
 * 1.0.30
 
   * SGFD-15802 City page / SEO box
