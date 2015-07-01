@@ -1,10 +1,5 @@
 var VOLO = VOLO || {};
-$(document).ready(function () {
-    window.blazy = new Blazy({
-        breakpoints: volo_thumbor_transformations.breakpoints,
-        offset: 400
-    });
-});
+$(document).ready(VOLO.documentReadyFunction);
 
 VOLO.initCartModel = function (jsonCart) {
     VOLO.cartModel = VOLO.cartModel || new CartModel(jsonCart, {
