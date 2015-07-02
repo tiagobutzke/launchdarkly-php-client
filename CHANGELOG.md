@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.0.34
+
+  * SGFD-17550 Fixed XSS in address form
+
 * 1.0.33
 
   * SGFD-17525 duplicated GTM tags fix (2)
