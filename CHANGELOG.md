@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.0.33
+
+  * SGFD-17525 duplicated GTM tags fix (2)
+
 * 1.0.32
 
   * SGFD-17525 Duplicated GTM tags fix
