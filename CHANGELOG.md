@@ -1,6 +1,16 @@
 CHANGELOG
 =========
 
+* 1.0.34
+
+  * SGFD-17550 Fixed XSS in address form
+  * SGFD-17520 logo-fix
+  * SGFD-17187 profile page returns 403 for anonymous users
+
+* 1.0.33
+
+  * SGFD-17525 duplicated GTM tags fix (2)
+
 * 1.0.32
 
   * SGFD-17525 Duplicated GTM tags fix

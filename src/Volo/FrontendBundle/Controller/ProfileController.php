@@ -6,6 +6,7 @@ use Foodpanda\ApiSdk\Entity\Customer\CustomerPassword;
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Volo\FrontendBundle\Security\Token;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -31,6 +32,10 @@ class ProfileController extends Controller
      */
     public function indexAction(Request $request)
     {
+        if (!$this->isGranted('ROLE_CUSTOMER')) {
+            throw new AccessDeniedHttpException('Access denied for profile page.');
+        }
+
         $errorMessages = $this->get('session')->getFlashBag()->get(static::FLASH_TYPE_ERRORS);
         $serializer       = $this->get('volo_frontend.api.serializer');
         $customerProvider = $this->get('volo_frontend.provider.customer');
@@ -68,6 +73,10 @@ class ProfileController extends Controller
      */
     public function updatePasswordAction(Request $request)
     {
+        if (!$this->isGranted('ROLE_CUSTOMER')) {
+            throw new AccessDeniedHttpException('Access denied for profile page.');
+        }
+
         $customerPassword = $this->get('volo_frontend.api.serializer')->denormalize(
             $request->request->get('password_form'),
             CustomerPassword::class
