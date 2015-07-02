@@ -8,11 +8,13 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
     },
 
     initialize: function (options) {
+        var $postalIndexFormInput = this.$('#postal_index_form_input');
+
         _.bindAll(this);
         // @TODO: re-enable this later when it works better
         //this.geocodingService = options.geocodingService;
         this.postalCodeGeocodingService = options.postalCodeGeocodingService;
-        this.vendorId = this.$('#postal_index_form_input').data('vendor_id');
+        this.vendorId = $postalIndexFormInput.data('vendor_id');
         // @TODO: re-enable this later when it works better
         // this.geocodingService.init(this.$('#formatted_address'), []);
         var locationObject = {
@@ -40,11 +42,12 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
                 }
             }
         });
-        this.$('#postal_index_form_input').tooltip({
+        $postalIndexFormInput.tooltip({
             placement: 'top',
             html: true,
             trigger: 'manual'
         });
+        this.tooltipAlignLeft($postalIndexFormInput);
         // @TODO: re-enable this later when it works better
         //this.listenTo(this.geocodingService, 'autocomplete:place_changed', this.onPlaceChanged);
         this._geoCodeAndValidateDelivery();
@@ -211,3 +214,5 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
             }.bind(this));
     }
 });
+
+_.extend(CheckoutDeliveryValidationView.prototype, VOLO.TooltipAlignMixin);

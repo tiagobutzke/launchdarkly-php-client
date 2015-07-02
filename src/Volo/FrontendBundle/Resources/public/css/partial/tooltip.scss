@@ -1,5 +1,6 @@
-$tooltip-bg: #D70F64;
-$tooltip-arrow-color: $tooltip-bg;
+//
+// Tooltips
+// --------------------------------------------------
 
 .tooltip {
   position: absolute;
@@ -13,11 +14,46 @@ $tooltip-arrow-color: $tooltip-bg;
   @include opacity(0);
 
   &.in     { @include opacity($tooltip-opacity); }
+  &.top    { margin-top: -3px; padding: $tooltip-arrow-width 0; }
   &.bottom { margin-top: 3px; padding: $tooltip-arrow-width 0; }
 
   a {
     color: #fff;
     text-decoration: underline;
+  }
+
+  &.bottom .tooltip-arrow {
+    top: 0;
+    left: 50%;
+    margin-left: -$tooltip-arrow-width;
+    border-width: 0 $tooltip-arrow-width $tooltip-arrow-width;
+    border-bottom-color: $tooltip-arrow-color;
+  }
+
+  &.top .tooltip-arrow {
+    bottom: 0;
+    left: 50%;
+    margin-left: -$tooltip-arrow-width;
+    border-width: $tooltip-arrow-width $tooltip-arrow-width 0;
+    border-top-color: $tooltip-arrow-color;
+  }
+}
+
+.tooltip--align-left {
+  left: 0 !important;
+
+  .tooltip-arrow {
+    left: 10px !important;
+  }
+}
+
+.tooltip--align-right {
+  left: auto !important;
+  right: 0 !important;
+
+  .tooltip-arrow {
+    left: auto !important;
+    right: 10px !important;
   }
 }
 
@@ -38,25 +74,4 @@ $tooltip-arrow-color: $tooltip-bg;
   height: 0;
   border-color: transparent;
   border-style: solid;
-}
-
-.tooltip {
-  &.bottom .tooltip-arrow {
-    top: 0;
-    left: 25px !important;
-    margin-left: -$tooltip-arrow-width;
-    border-width: 0 $tooltip-arrow-width $tooltip-arrow-width;
-    border-bottom-color: $tooltip-arrow-color;
-  }
-
-  &.top {
-    .tooltip-arrow {
-      bottom: -8px;
-      left: 50%;
-      margin-left: -$tooltip-arrow-width;
-      border-left: $tooltip-arrow-width solid transparent;
-      border-right: $tooltip-arrow-width solid transparent;
-      border-top: $tooltip-arrow-width solid $tooltip-arrow-color;
-    }
-  }
 }
