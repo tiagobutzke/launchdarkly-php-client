@@ -163,7 +163,7 @@
   padding-top: $space-xs;
   @include respond-from("screen-md") {
     padding: 0 $space-sm;
-    width: 99%;
+    width: 98%;
     margin: 0 auto;
   }
 
@@ -233,7 +233,6 @@
   line-height: normal;
   font-size: 1em;
   overflow-y: auto;
-  overflow-x: visible;
   min-height: 50px;
   @include respond-from("screen-md") {
     padding: $space-xs 0 $space-sm;
@@ -252,7 +251,7 @@
 .summary__items {
   width: 100%;
   @include respond-from("screen-md") {
-    width: 99%;
+    width: 98%;
     margin-left: auto;
     margin-right: auto;
   }
@@ -471,7 +470,7 @@ tr.summary__item__row_mobile {
   background-image: url("#{$imagepath}cart/bg_delete-toggle-2x.png");
   background-size: 28px 33px;
   color: $color-text-highlight;
-  
+
   i {
     display: block;
     width: 22px;
@@ -510,7 +509,7 @@ tr.summary__item__row_mobile {
 .desktop-cart__time {
   padding: 0;
   @include respond-from("screen-md") {
-    width: 99%;
+    width: 98%;
     margin: 0 auto;
     padding: 0 $space-sm;
   }
@@ -528,8 +527,6 @@ tr.summary__item__row_mobile {
 }
 
 .desktop-cart__order {
-  overflow-y: auto;
-  overflow-x: visible;
   padding: 0;
 }
 
@@ -613,7 +610,7 @@ tr.summary__item__row_mobile {
   padding: 0;
   @include respond-from("screen-md") {
     background-color: transparent;
-    width: 99%;
+    width: 98%;
     margin-left: auto;
     margin-right: auto;
   }
@@ -626,7 +623,7 @@ tr.summary__item__row_mobile {
 .desktop-cart__header {
   overflow: auto;
   @include respond-from("screen-md") {
-    width: 99%;
+    width: 98%;
     margin: 0 auto;
   }
 
@@ -645,7 +642,6 @@ tr.summary__item__row_mobile {
   }
 
   @include respond-from("screen-md") {
-    overflow: auto;
     padding: 0;
     margin: 0;
   }
