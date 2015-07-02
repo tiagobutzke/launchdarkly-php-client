@@ -114,6 +114,7 @@
     font-size: 0.75em;
     color: $color-text-selection;
     display: block;
+    padding-left: 1px;
     @include transition(opacity .5s linear);
     @include respond-from("screen-md") {
       font-size: 0.8em;
