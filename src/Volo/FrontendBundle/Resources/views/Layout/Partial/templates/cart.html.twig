@@ -18,6 +18,9 @@
         <td class="summary__item__name">
             <%- name %>
             <div class="summary__extra__items"></div>
+            <% if (special_instructions !== '') { %>
+                <span class="summary__item__special-instructions"> + <%- special_instructions %></span>
+            <% } %>
         </td>
         <td class="summary__item__price">
             <span class="summary__item__price-wrap"><%= VOLO.formatCurrency(total_price) %></span>
@@ -38,6 +41,9 @@
         <td class="summary__item__name">
             <%- name %>
             <span class="summary__extra__items"></span>
+            <% if (special_instructions !== '') { %>
+                <span class="summary__item__special-instructions"> + <%- special_instructions %></span>
+            <% } %>
         </td>
         <td class="summary__item__price">
             <span class="summary__item__price-wrap"><%= VOLO.formatCurrency(total_price) %></span>

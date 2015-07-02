@@ -32,21 +32,29 @@ class OrderManagerService
     protected $apiClientId;
 
     /**
+     * @var VendorService
+     */
+    protected $vendorService;
+
+    /**
      * @param OrderProvider    $orderProvider
      * @param CustomerProvider $customerProvider
      * @param CartProvider     $cartProvider
+     * @param VendorService    $vendorService
      * @param string           $apiClientId
      */
     public function __construct(
         OrderProvider $orderProvider,
         CustomerProvider $customerProvider,
         CartProvider $cartProvider,
+        VendorService $vendorService,
         $apiClientId
     ) {
         $this->orderProvider    = $orderProvider;
         $this->customerProvider = $customerProvider;
         $this->cartProvider     = $cartProvider;
         $this->apiClientId      = $apiClientId;
+        $this->vendorService    = $vendorService;
     }
 
     /**
@@ -71,7 +79,7 @@ class OrderManagerService
             'customer_address_id'                  => $guestCustomer->getCustomerAddress()->getId(),
             'customer_id'                          => $guestCustomer->getCustomer()->getId(),
             'customer_mail'                        => $guestCustomer->getCustomer()->getEmail(),
-            'customer_comment'                     => '',
+            'customer_comment'                     => $this->buildCustomerComment($cart),
             'expected_total_amount'                => $expectedAmount,
             'source'                               => $this->apiClientId,
             'trigger_hosted_payment_page_handling' => true,
@@ -127,7 +135,7 @@ class OrderManagerService
             'expedition_type'                      => 'delivery',
             'payment_type_id'                      => $paymentTypeId,
             'customer_address_id'                  => $addressId,
-            'customer_comment'                     => '',
+            'customer_comment'                     => $this->buildCustomerComment($cart),
             'expected_total_amount'                => $expectedAmount,
             'source'                               => $this->apiClientId,
             'trigger_hosted_payment_page_handling' => true,
@@ -187,5 +195,37 @@ class OrderManagerService
         }
 
         return $this->orderProvider->payment($accessToken, $paymentRequest);
+    }
+
+    /**
+     * @param array $cart
+     *
+     * @return string
+     */
+    protected function buildCustomerComment(array $cart)
+    {
+        $customerComment = '';
+
+        foreach ($cart['products'] as $cartProduct) {
+            if ($cartProduct['special_instructions'] === '') {
+                continue;
+            }
+
+            try {
+                $product = $this->vendorService->getProduct($cartProduct['vendor_id'], $cartProduct['variation_id']);
+            } catch (\RuntimeException $exception) {
+                continue;
+            }
+
+            $customerComment .= sprintf(
+                '%s, %s: "%s"%s',
+                $product->getName(),
+                implode(', ', array_column($cartProduct['toppings'], 'name')),
+                $cartProduct['special_instructions'],
+                PHP_EOL
+            );
+        }
+
+        return $customerComment;
     }
 }

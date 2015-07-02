@@ -148,32 +148,32 @@ var ToppingSpecialInstructionsView = Backbone.View.extend({
 
     events: {
         'click .topping__header': '_toggleInstructions',
-        'click .topping__special_instructions__textarea': '_memorizeInstructions'
+        'change .topping__special-instructions__textarea': '_memorizeInstructions'
     },
 
     render: function() {
         this.$el.html(this.template(this.model.toJSON()));
-        this._validate();
 
         return this;
     },
 
     _memorizeInstructions: function() {
-        this.model.set('specialInstructions', this.$('.topping__special_instructions__textarea').val())
-        this.trigger('specialInstructions:validate');
+        this.model.set('special_instructions', this.$('.topping__special-instructions__textarea').val());
+        this.trigger('special_instructions:validate');
     },
 
     _toggleInstructions: function() {
-        var areInstructionsVisible;
+        var areInstructionsVisible, hasText;
 
-        this.$el.toggleClass('instructionsVisible');
-        areInstructionsVisible = this.$el.hasClass('instructionsVisible');
-        this.$('.topping__options').toggle(areInstructionsVisible);
-        this.$('.topping__header__arrow').toggleClass('icon-down-open-big icon-up-open-big', areInstructionsVisible);
-    },
+        this.$('.topping__options').toggleClass('hide');
+        areInstructionsVisible = this.$('.topping__options').hasClass('hide');
+        this.$('.topping__header__arrow').toggleClass('icon-up-open-big', areInstructionsVisible);
+        this.$('.topping__header__arrow').toggleClass('icon-down-open-big', !areInstructionsVisible);
 
-    _validate: function() {
-        this.trigger('toppings:validate');
+        hasText = this.model.get('special_instructions') !== '';
+        this.$('.topping__comment__help-text').toggleClass('hide', hasText);
+        this.$('.topping__comment__special-instructions').toggleClass('hide', !hasText);
+        this.$('.topping__comment__special-instructions').html(this.model.get('special_instructions'));
     },
 
     remove: function() {
@@ -238,6 +238,7 @@ var ToppingsView = Backbone.View.extend({
         this._initToppings();
         this._renderQuantitySelector();
         this._validateToppings();
+        this._initSpecialInstructions();
 
         if (this.subViews.length > 0) {
             this.subViews[0].setOptionsVisibility(true);
@@ -248,10 +249,15 @@ var ToppingsView = Backbone.View.extend({
 
     _initToppings: function() {
         this.model.toppings.map(this._initToppingView, this);
+    },
+
+    _initSpecialInstructions: function () {
         this.specialInstructionsView = new ToppingSpecialInstructionsView({
             model: this.model,
-            el: this.$('.toppings__special_instructions')
+            className: 'topping__container'
         });
+
+        this.$('.toppings__special-instructions').html(this.specialInstructionsView.render().el);
     },
 
     _renderQuantitySelector: function() {

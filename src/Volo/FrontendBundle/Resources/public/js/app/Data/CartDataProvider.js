@@ -19,6 +19,7 @@ var CartDataProvider = function() {
                     "vendor_id": data.vendor_id,
                     "variation_id": item.product_variation_id,
                     "quantity": item.quantity,
+                    "special_instructions": item.special_instructions,
                     "groupOrderUserName": "",
                     "toppings": _.cloneDeep(item.toppings),
                     "choices": _.cloneDeep(item.choices)
