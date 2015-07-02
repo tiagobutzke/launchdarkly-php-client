@@ -5,6 +5,7 @@ CHANGELOG
 
   * SGFD-17550 Fixed XSS in address form
   * SGFD-17520 logo-fix
+  * SGFD-17187 profile page returns 403 for anonymous users
 
 * 1.0.33
 
