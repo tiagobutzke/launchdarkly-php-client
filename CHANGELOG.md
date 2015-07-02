@@ -4,6 +4,7 @@ CHANGELOG
 * 1.0.34
 
   * SGFD-17550 Fixed XSS in address form
+  * SGFD-17520 logo-fix
 
 * 1.0.33
 
