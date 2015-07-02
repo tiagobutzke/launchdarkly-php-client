@@ -32,10 +32,10 @@ class OrderController extends Controller
         $accessToken = $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')
             ? $this->get('security.token_storage')->getToken()->getAccessToken()
             : new AccessToken($session->get(static::SESSION_GUEST_ORDER_ACCESS_TOKEN), 'bearer');
-
+        $orderProvider = $this->get('volo_frontend.provider.order');
         try {
-            $order = $this->get('volo_frontend.provider.order')->orderPaymentInformation($orderCode, $accessToken);
-            $status = $this->get('volo_frontend.provider.order')->fetchOrderStatus($orderCode, $accessToken);
+            $orderPayment = $orderProvider->fetchOrderPaymentInformation($orderCode, $accessToken);
+            $status = $orderProvider->fetchOrderStatus($orderCode, $accessToken);
         } catch (OrderNotFoundException $e) {
             throw $this->createNotFoundException('Order not found.', $e);
         }
@@ -45,11 +45,13 @@ class OrderController extends Controller
             $viewName = 'VoloFrontendBundle:Order:tracking_steps.html.twig';
         }
         /** @var GuestCustomer $guestCustomer */
-        $guestCustomer = $session->get(CheckoutController::SESSION_GUEST_CUSTOMER_KEY_TEMPLATE);
+        $guestCustomer = $session->get(
+            sprintf(CheckoutController::SESSION_GUEST_CUSTOMER_KEY_TEMPLATE, $orderPayment->getVendorCode())
+        );
         $customer = $guestCustomer ? $guestCustomer->getCustomer() : new GuestCustomer();
 
         $content = $this->renderView($viewName, [
-            'order' => $order,
+            'order' => $orderPayment,
             'status' => $status,
             'customer' => $customer,
         ]);

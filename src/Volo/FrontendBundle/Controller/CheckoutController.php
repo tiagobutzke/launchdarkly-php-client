@@ -3,6 +3,7 @@
 namespace Volo\FrontendBundle\Controller;
 
 use Foodpanda\ApiSdk\Entity\Address\Address;
+use Foodpanda\ApiSdk\Entity\Address\AddressesCollection;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Foodpanda\ApiSdk\Exception\ApiException;
@@ -26,7 +27,7 @@ class CheckoutController extends Controller
 {
     const SESSION_DELIVERY_KEY_TEMPLATE = 'checkout-%s-delivery';
     const SESSION_CONTACT_KEY_TEMPLATE  = 'checkout-%s-contact';
-    const SESSION_GUEST_CUSTOMER_KEY_TEMPLATE = 'checkout-guest';
+    const SESSION_GUEST_CUSTOMER_KEY_TEMPLATE = 'checkout-%s-guest';
 
     /**
      * @Route("/{vendorCode}/delivery", name="checkout_delivery_information", options={"expose"=true})
@@ -40,9 +41,10 @@ class CheckoutController extends Controller
      */
     public function deliveryInformationAction(Request $request, $vendorCode)
     {
-        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirectToRoute('checkout_payment', ['vendorCode' => $vendorCode]);
-        }
+        // @TODO: change the logic here to be able to validate any select address for delivery without a form.
+//        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+//            return $this->redirectToRoute('checkout_payment', ['vendorCode' => $vendorCode]);
+//        }
 
         $sessionDeliveryKey = sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendorCode);
 
@@ -141,7 +143,7 @@ class CheckoutController extends Controller
                     }
 
                     $session->set(OrderController::SESSION_GUEST_ORDER_ACCESS_TOKEN, $guestCustomer->getAccessToken());
-                    $session->set(static::SESSION_GUEST_CUSTOMER_KEY_TEMPLATE, $guestCustomer);
+                    $session->set($this->createGuestCustomerKey($vendor->getCode()), $guestCustomer);
                 }
             } catch (PhoneNumberValidationException $e) {
                 $phoneNumberError = $e->getMessage();
@@ -224,19 +226,38 @@ class CheckoutController extends Controller
             $serializer       = $this->get('volo_frontend.api.serializer');
             $customerProvider = $this->get('volo_frontend.provider.customer');
 
-            $addresses = $customerProvider->getAddresses($token->getAccessToken());
+            $addresses = $customerProvider->getAddresses($token->getAccessToken(), $vendor->getId());
 
-            $customerLocationService = $this->get('volo_frontend.service.customer_location');
-            $viewData['default_address'] = [
-                'postcode' => $customerLocationService->get($session)[CustomerLocationService::KEY_PLZ],
-                'city' => $vendor->getCity()->getName()
+            $city = $location['city'];
+            /** @var AddressesCollection $customerAddresses */
+            $customerAddresses = $addresses->getItems();
+
+            /** @var AddressesCollection $addressCollection */
+            $addressCollection = $customerAddresses->filter(function (Address $address) use ($city) {
+                $sameCity = $city === $address->getCity();
+
+                return (bool) $address->isIsDeliveryAvailable() || $sameCity;
+            });
+
+            $customerLocation = $this->get('volo_frontend.service.customer_location')->get($session);
+            $customerAddress = [
+                'city'      => $vendor->getCity()->getName(),
+                'postcode'  => $customerLocation[CustomerLocationService::KEY_PLZ]
             ];
-            $viewData['customer_addresses'] = $serializer->normalize($addresses)['items'];
+
+            if (!$addressCollection->isEmpty()) {
+                /** @var Address $lastUsedAddress */
+                $lastUsedAddress = $addressCollection->last();
+                $customerAddress = $serializer->normalize($lastUsedAddress);
+            }
+
+            $viewData['default_address']    = $customerAddress;
+            $viewData['customer_addresses'] = $serializer->normalize($addressCollection);
             $viewData['customer']           = $serializer->normalize($token->getAttributes()['customer']);
             $viewData['customer_cards']     = $customerProvider->getAdyenCards($token->getAccessToken())['items'];
         } else {
-            $viewData['customer_address'] = $session->get($sessionDeliveryKey);
-            $viewData['customer']         = $session->get($sessionContactKey);
+            $viewData['customer_address']   = $session->get($sessionDeliveryKey);
+            $viewData['customer']           = $session->get($sessionContactKey);
         }
 
         return $viewData;
@@ -305,6 +326,7 @@ class CheckoutController extends Controller
      */
     public function createAddressAction(Request $request)
     {
+        $vendorId    = $request->request->get('vendor_id');
         $serializer  = $this->get('volo_frontend.api.serializer');
         $accessToken = $this->get('security.token_storage')->getToken()->getAccessToken();
 
@@ -312,7 +334,7 @@ class CheckoutController extends Controller
         $address = $serializer->denormalize($data, Address::class);
 
         $this->get('volo_frontend.provider.customer')->createAddress($accessToken, $address);
-        $addresses = $this->get('volo_frontend.provider.customer')->getAddresses($accessToken);
+        $addresses = $this->get('volo_frontend.provider.customer')->getAddresses($accessToken, $vendorId);
 
         return new JsonResponse($serializer->normalize($addresses)['items']);
     }
@@ -460,7 +482,7 @@ class CheckoutController extends Controller
             }
         } else {
             $session = $this->get('session');
-            $guestCustomer = $session->get(static::SESSION_GUEST_CUSTOMER_KEY_TEMPLATE);
+            $guestCustomer = $session->get($this->createGuestCustomerKey($vendor->getCode()));
             $session->set(OrderController::SESSION_GUEST_ORDER_ACCESS_TOKEN, $guestCustomer->getAccessToken());
 
             $order = $orderManager->placeGuestOrder(
@@ -481,6 +503,16 @@ class CheckoutController extends Controller
         }
 
         return $order;
+    }
+
+    /**
+     * @param string $vendorCode
+     *
+     * @return string
+     */
+    protected function createGuestCustomerKey($vendorCode)
+    {
+        return sprintf(static::SESSION_GUEST_CUSTOMER_KEY_TEMPLATE, $vendorCode);
     }
 
     /**
