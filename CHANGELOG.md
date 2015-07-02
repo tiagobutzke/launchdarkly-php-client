@@ -1,7 +1,33 @@
 CHANGELOG
 =========
 
-* 1.0.28
+* 1.0.32
+
+  * SGFD-17525 Duplicated GTM tags fix
+
+* 1.0.31
+
+  * SGFD-17468: set country specific css variations
+  * SGFD-17282 - tooltip on home screen is shown on top for small screens
+
+* 1.0.30
+
+  * SGFD-15802 City page / SEO box
+  * SGFD-17281 Menu Page / Black layer if no postal code
+  * SGFD-17438 - toppings javascript cleanup
+
+* 1.0.29
+
+  * SGFD-16165 removed FoodpandaWebTranslateItBundle, added our implementation
+  * SGFD-17312 - undelegate events on close toppings menu
+  * SGFD-17292 - payment method is highlighted after selection
+  * SGFD-17120 - continue button is enabled after back from payment selection
+
+* 1.0.28.3
+
+  * SGFD-17520 Spain Branding: Social footer icons to CMS
+
+* 1.0.28 (2015-06-30)
 
   * SGFD-17240 Menu Page / Special design for hero image
   * SGFD-17283 Newsletter subscription and Opt-out CC persistence

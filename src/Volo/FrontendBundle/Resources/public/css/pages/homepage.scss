@@ -116,8 +116,13 @@
   text-align: center;
 
   .tooltip {
-    visibility: hidden;
-    z-index: 800;
+    &.top {
+      margin-top: -5px;
+
+      .tooltip-arrow {
+        left: 25px !important;
+      }
+    }
   }
 }
 

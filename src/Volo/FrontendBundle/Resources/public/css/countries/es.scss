@@ -1,0 +1,8 @@
+body.country-es {
+
+  .icon-logo {
+    &:before {
+      content: "\e61a" !important;
+    }
+  }
+}

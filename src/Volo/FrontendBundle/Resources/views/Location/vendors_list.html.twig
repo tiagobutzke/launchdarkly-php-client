@@ -89,6 +89,14 @@
                 {% endfor %}
             </div>
         {% endif %}
+        {% set citySeoText = cms('city-description-' ~ cityId, 'city-description') %}
+        {% if citySeoText is not empty %}
+            <div class="city__bottom-info">
+                <div class="city__bottom-info__city-description">
+                    {{ citySeoText|raw }}
+                </div>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
 

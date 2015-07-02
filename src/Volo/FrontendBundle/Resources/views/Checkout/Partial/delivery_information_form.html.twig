@@ -60,7 +60,7 @@
         <input id="address_longitude" name="customer_address[longitude]" type="hidden"
                value="{{ customer_address.longitude|default('') }}">
         <input type="hidden" name="customer_address[city_id]" value="{{ vendor.city.id }}">
-        <button id="delivery_information_form_button" class="button">{% trans %}button.continue{% endtrans %}</button>
+        <button id="delivery_information_form_button" class="button" disabled="disabled">{% trans %}button.continue{% endtrans %}</button>
     </div>
 </form>
 <script type="text/template" id="template-delivery-modal">

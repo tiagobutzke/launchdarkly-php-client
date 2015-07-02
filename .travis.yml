@@ -22,6 +22,7 @@ install:
     - php app/console assets:install web --env=test
     - php app/console fos:js-routing:dump --env=test
     - php app/console volo:thumbor:dump --env=test
+    - php app/console foodora:translations:sync --env=test
     - npm install
     - grunt deploy --env=prod
 
@@ -41,7 +42,6 @@ before_script:
 script:
     - phpunit -c $TRAVIS_BUILD_DIR/app/
     - grunt test --env=prod
-    - app/console foodpanda:translations:sync
 
 notifications:
   slack:

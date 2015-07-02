@@ -12,7 +12,7 @@
     {% endif %}
     {% for card in customer_cards %}
     <div class="checkout__list sprite-form">
-        <input id="savedPlaymentOption{{ card.id }}" class="sprite-form__radio-button" type="radio" name="credit_card" value="{{ card.id }}"/>
+        <input id="savedPlaymentOption{{ card.id }}" class="sprite-form__radio-button credit-card--radio" type="radio" name="credit_card" value="{{ card.id }}"/>
         <div class="sprite-form__sprite"></div>
         <label class="sprite-form__label" for="savedPlaymentOption{{ card.id }}">
             **** {{ card.number }} {{ card.holder_name }}, {{ card.expiry_month }}/{{ card.expiry_year }}
