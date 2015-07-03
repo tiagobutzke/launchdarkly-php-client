@@ -67,6 +67,16 @@
 
 // cart
 
+// this class is applied to body only when mobile cart is visible
+// to fix scrolling issues of mobile cart on IOS
+.body-cart-fix {
+  position: fixed;
+  @include respond-from("screen-md") {
+    position: static;
+  }
+}
+
+
 .menu-page .desktop-cart {
   z-index: 1017;
   @include respond-from("screen-md") {
@@ -85,8 +95,8 @@
   background-color: $color-bg-primary;
   font-size: 0.875em;
   padding: $space-xs;
-  overflow: scroll;
   z-index: 900;
+  overflow-y: scroll;
 
   &.mobile-cart__hidden {
     display: none;
