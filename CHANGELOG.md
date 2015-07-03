@@ -1,9 +1,11 @@
 CHANGELOG
 =========
 
-* 1.0.28.3
+* 1.0.28.5
 
   * SGFD-17520 Spain Branding: Social footer icons to CMS
+  * SGFD-17242 Special days
+  * SGFD-17550 XSS sanitize
 
 * 1.0.28
 
