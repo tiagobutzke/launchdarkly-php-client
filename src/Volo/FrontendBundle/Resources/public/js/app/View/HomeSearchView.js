@@ -10,8 +10,6 @@ var HomeSearchView = Backbone.View.extend({
         this.geocodingService = options.geocodingService;
         this.geocodingService.init(this.$('#postal_index_form_input'));
 
-        this.isBelowMediumScreen = options.isBelowMediumScreen;
-
         this.listenTo(this.geocodingService, 'autocomplete:place_changed', this._applyNewLocationData);
         this.listenTo(this.geocodingService, 'autocomplete:not_found', this._notFound);
 
@@ -138,24 +136,19 @@ var HomeSearchView = Backbone.View.extend({
 
     _showInputPopup: function (text) {
         var $postalIndexFormInput = this.$('#postal_index_form_input'),
-            placement = this.isBelowMediumScreen() ? 'top' : 'bottom',
-            $tooltip;
+            placement = this.isBelowMediumScreen() ? 'top' : 'bottom';
 
         if (!$postalIndexFormInput.hasClass('hide')) {
             console.log('_showInputPopup ', this.cid);
-            $tooltip = this.$('#postal_index_form_input').tooltip({
+            $postalIndexFormInput.tooltip({
                 placement: placement,
                 html: true,
                 trigger: 'manual',
                 title: text,
                 animation: false
             });
-
-            $tooltip.on('shown.bs.tooltip', function() {
-                this.$('#postal_index_form_input').data('bs.tooltip').$tip.css('left', 0);
-            }.bind(this));
-
-            $tooltip.tooltip('show');
+            this.tooltipAlignLeft($postalIndexFormInput);
+            $postalIndexFormInput.tooltip('show');
         }
     },
 
@@ -172,3 +165,6 @@ var HomeSearchView = Backbone.View.extend({
         this.$('#postal_index_form_input').css('opacity', '.4').attr('disabled', 'true');
     }
 });
+
+_.extend(HomeSearchView.prototype, VOLO.TooltipAlignMixin);
+_.extend(HomeSearchView.prototype, VOLO.DetectScreenSizeMixin);

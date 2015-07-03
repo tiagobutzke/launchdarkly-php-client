@@ -417,7 +417,7 @@ var CartView = Backbone.View.extend({
             additionalElementsHeight,
             fixedCartElementsHeight;
 
-        if (VOLO.configuration.isBelowMediumScreen()) {
+        if (this.isBelowMediumScreen()) {
             // disabling cart resizing on small screens
             $checkoutSummary.css({
                 'max-height': ''
@@ -509,6 +509,8 @@ var CartView = Backbone.View.extend({
         }
     }
 });
+
+_.extend(CartView.prototype, VOLO.DetectScreenSizeMixin);
 
 var VendorCartIconView = Backbone.View.extend({
     events: {

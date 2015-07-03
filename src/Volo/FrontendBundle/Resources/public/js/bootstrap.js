@@ -214,7 +214,6 @@ VOLO.initHomeSearch = function() {
         el: '.teaser__form',
         model: VOLO.locationModel,
         geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1]),
-        isBelowMediumScreen: VOLO.configuration.isBelowMediumScreen
     });
 };
 
