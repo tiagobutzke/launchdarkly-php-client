@@ -320,7 +320,8 @@ $(document).on('page:load page:restore', function () {
         dataLayer: dataLayer,
         checkoutModel: VOLO.checkoutModel,
         sessionId: VOLO.configuration.sessionId,
-        checkoutDeliveryValidationView: VOLO.checkoutDeliveryValidationView
+        checkoutDeliveryValidationView: VOLO.checkoutDeliveryValidationView,
+        checkoutInformationValidationFormView: VOLO.checkoutInformationValidationFormView
     });
     if (_.isObject(VOLO.menu)) {
         VOLO.menu.setGtmService(VOLO.GTMServiceInstance);

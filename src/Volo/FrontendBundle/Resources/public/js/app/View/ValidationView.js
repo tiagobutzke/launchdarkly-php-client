@@ -50,6 +50,10 @@ var ValidationView = Backbone.View.extend({
             }, this);
         }
 
+        this.trigger('validationView:validateSuccessful', {
+            newsletterSignup: this.$('#newsletter_checkbox').is(':checked')
+        });
+
         return true;
     },
 

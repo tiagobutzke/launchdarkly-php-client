@@ -1,14 +1,12 @@
 {% extends 'VoloFrontendBundle:Checkout:base.html.twig' %}
-
-{% block google_tag_manager %}
-    <script type="text/javascript" data-turbolinks-eval=always>
+{% block gtm_checkout_extension %}
+    {% if is_customer_authenticated_fully() %}
         dataLayer.push({
             'event': 'checkout',
-            'checkoutStep': '3 - Contact Info Provided',
-            'newsletterSignup': false,
+            'checkoutStep': '1 - Checkout Started',
             'sessionId': VOLO.configuration.sessionId
         });
-    </script>
+    {% endif %}
 {% endblock %}
 
 {% block delivery_information %}

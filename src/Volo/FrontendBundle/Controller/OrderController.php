@@ -51,7 +51,7 @@ class OrderController extends Controller
         $content = $this->renderView($viewName, [
             'order' => $order,
             'status' => $status,
-            'customer' => $customer,
+            'customer' => $customer
         ]);
 
         return new Response($content);

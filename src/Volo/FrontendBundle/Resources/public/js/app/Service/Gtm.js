@@ -4,6 +4,7 @@ VOLO.GTMService = function (options) {
     this.sessionId = options.sessionId;
     this.checkoutModel = options.checkoutModel || null;
     this.checkoutDeliveryValidationView = options.checkoutDeliveryValidationView;
+    this.checkoutInformationValidationFormView = options.checkoutInformationValidationFormView;
 
     this.initialize();
 };
@@ -24,10 +25,31 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
                 this.fireCheckoutDeliveryDetailsSet(data.deliveryTime);
             }, this));
         }
+
+        if (_.isObject(this.checkoutInformationValidationFormView)) {
+            this.listenTo(
+                this.checkoutInformationValidationFormView,
+                'validationView:validateSuccessful',
+                this.fireCheckoutContactDetailsSet
+            );
+        }
     },
 
     unbind: function () {
         this.stopListening();
+    },
+
+    fireOrderStatus: function(data) {
+        if (!this._hasCookie('orderPay')) {
+            return;
+        }
+
+        this._deleteCookie('orderPay');
+
+        data.event = 'transaction';
+        data.sessionId = this.sessionId;
+
+        dataLayer.push(data);
     },
 
     fireAddProduct: function (vendorId, data) {
@@ -49,6 +71,15 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
             'event': 'checkout',
             'checkoutStep': '2 - Delivery Details Set',
             'deliveryTime': deliveryTime,
+            'sessionId': this.sessionId
+        });
+    },
+
+    fireCheckoutContactDetailsSet: function (data) {
+        dataLayer.push({
+            'event': 'checkout',
+            'checkoutStep': '3 - Contact Info Provided',
+            'newsletterSignup': data.newsletterSignup,
             'sessionId': this.sessionId
         });
     },
@@ -82,6 +113,7 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
     _getCookie: function (name) {
         var formattedName = name + "=";
         var cookies = document.cookie.split(';');
+        console.log(cookies);
 
         for (var i = 0; i < cookies.length; i++) {
             var c = cookies[i];
@@ -97,8 +129,12 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
     },
 
     _hasCookie: function (name) {
-        var username = this._getCookie(name);
+        var cookie = this._getCookie(name);
 
-        return username !== '';
+        return cookie !== '';
+    },
+
+    _deleteCookie: function (name) {
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
 });

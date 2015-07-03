@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -287,7 +288,10 @@ class CheckoutController extends Controller
             return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
         }
 
-        return new JsonResponse($apiResult);
+        $response = new JsonResponse($apiResult);
+        $response->headers->setCookie(new Cookie('orderPay', 'true'));
+
+        return $response;
     }
 
     /**
