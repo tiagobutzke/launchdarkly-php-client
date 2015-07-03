@@ -124,6 +124,10 @@ input, .form-control {
   -moz-transition: none;
   -webkit-transition: none;
 
+  -webkit-appearance: none;
+  -moz-appearance:    none;
+  appearance:         none;
+
   &:focus {
     outline: none;
     border: $input-border-active;
@@ -137,6 +141,12 @@ input, .form-control {
   &[type="radio"], &[type="checkbox"] {
     height: auto;
   }
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance:    none;
+  appearance:         none;
 }
 
 .form-group {
