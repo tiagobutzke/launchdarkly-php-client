@@ -52,7 +52,7 @@ class CheckoutController extends Controller
         }
 
         if ($request->getMethod() === Request::METHOD_POST) {
-            $address = $request->request->get('customer_address');
+            $address = $this->sanitizeInputData($request->request->get('customer_address', []));
 
             $request->getSession()->set($sessionDeliveryKey, $address);
             
@@ -112,7 +112,7 @@ class CheckoutController extends Controller
         $customerData = $session->get(sprintf(static::SESSION_CONTACT_KEY_TEMPLATE, $vendorCode));
         if ($request->getMethod() === Request::METHOD_POST) {
             // Here override it to handle the form/post with validation case
-            $customerData = $request->request->get('customer');
+            $customerData = $this->sanitizeInputData($request->request->get('customer', []));
             $username = $customerData['email'];
             try {
                 $phoneNumberService = $this->get('volo_frontend.service.phone_number');
@@ -303,7 +303,9 @@ class CheckoutController extends Controller
     {
         $serializer  = $this->get('volo_frontend.api.serializer');
         $accessToken = $this->get('security.token_storage')->getToken()->getAccessToken();
-        $address     = $serializer->denormalize($request->request->get('customer_address'), Address::class);
+
+        $data = $this->sanitizeInputData($request->request->get('customer_address', []));
+        $address = $serializer->denormalize($data, Address::class);
 
         $this->get('volo_frontend.provider.customer')->createAddress($accessToken, $address);
         $addresses = $this->get('volo_frontend.provider.customer')->getAddresses($accessToken);
@@ -325,7 +327,8 @@ class CheckoutController extends Controller
     public function editContactInformationDeprecatedAction(Request $request)
     {
         try {
-            $customer = $this->get('volo_frontend.service.customer')->updateCustomer($request->request->get('customer'));
+            $customerParameters = $this->sanitizeInputData($request->request->get('customer', []));
+            $customer = $this->get('volo_frontend.service.customer')->updateCustomer($customerParameters);
 
             return new JsonResponse([
                 'html' => $this->render(
@@ -365,8 +368,8 @@ class CheckoutController extends Controller
         }
         
         try {
-            $data = $request->request->get('customer', []);
-            
+            $data = $this->sanitizeInputData($request->request->get('customer', []));
+
             $customer = $this->get('volo_frontend.service.customer')->updateCustomer($data);
 
             /** @var \Volo\FrontendBundle\Security\Token $token */
@@ -474,5 +477,19 @@ class CheckoutController extends Controller
         }
 
         return $order;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    private function sanitizeInputData($data)
+    {
+        array_walk($data, function(&$value) {
+            $value = filter_var($value, FILTER_SANITIZE_STRING);
+        });
+
+        return $data;
     }
 }
