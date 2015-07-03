@@ -1,0 +1,17 @@
+{% set closingInMinutes = getMinutesTilClosing(vendor.schedules) %}
+<span class="time-info">
+<i class="icon-clock-o"></i>
+    {% if (closingInMinutes <= 0) %}
+        <span class="line-wrapper">{{ 'vendor_closed_preorder_available'|trans }}</span>
+        {{ getNextOpeningWeekDayNumber(vendor.schedules)|dayOfTheWeek }} {{ getNextOpeningHours(vendor.schedules)|formatTime }} - {{ getNextClosingHours(vendor.schedules)|formatTime }}
+    {% elseif (closingInMinutes < 60) %}
+        <span class="time-info__remaining-time">
+            {{ getNextOpeningWeekDayNumber(vendor.schedules)|dayOfTheWeek }} {{ getNextOpeningHours(vendor.schedules)|formatTime }} - {{ getNextClosingHours(vendor.schedules)|formatTime }}
+        </span>
+    {% else %}
+        <span class="green-class">{% trans %}generic.open{% endtrans %}</span>
+        {{ getOpeningTime(vendor.schedules)|formatTime }} – {{ getClosingTime(vendor.schedules)|formatTime }}
+    {% endif %}
+</span>
+
+

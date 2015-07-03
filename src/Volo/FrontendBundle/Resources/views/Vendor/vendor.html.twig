@@ -4,6 +4,7 @@
 
 {% block content_wrapper_class %}menu-bg{% endblock content_wrapper_class %}
 {% set customHeadlineImage = cms('restaurant-headline-custom-' ~ vendor.code) is not empty ? true : false %}
+{% set richDescription = cms('restaurant-rich-description-' ~ vendor.code) %}
 
 {% block body_class %}menu-page {% if customHeadlineImage == true%}vendor_custom{% endif %}{% endblock %}
 {% block google_tag_manager %}
@@ -32,30 +33,24 @@
 <div class="hero-banner-wrapper">
     {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {type: 'hero', 'vendorCode' : vendor.code, 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
     <div class="hero-menu__info">
-        <h2 class="hero-menu__info__headline">{{ vendor.name }}</h2>
+        <h2 class="hero-menu__info__headline">
+            {% if  richDescription is not empty %}
+                <a data-toggle="modal" data-target="#rich-description" class="hero-menu__headline__icon icon-info-circled"></a>
+            {%  endif %}
+            {{ vendor.name }}</h2>
         <h4 class="hero-menu__info__description">{{ vendor.description }}</h4>
     </div>
     <div class="hero-menu__info-extra">
-        {% set closingInMinutes = getMinutesTilClosing(vendor.schedules) %}
-        <i class="icon-clock-o"></i>
-        {% if (closingInMinutes <= 0) %}
-            <span class="line-wrapper">{{ 'vendor_closed_preorder_available'|trans }}</span>
-            <span>{{ getNextOpeningWeekDayNumber(vendor.schedules)|dayOfTheWeek }}
-                {{ getNextOpeningHours(vendor.schedules)|formatTime }} - {{ getNextClosingHours(vendor.schedules)|formatTime }}</span>
-        {% elseif (closingInMinutes < 60) %}
-            <span class="line-wrapper">{% trans %}generic.closing_in{% endtrans %} {{ closingInMinutes }} {% trans %}generic.min{% endtrans %}</span>
-            <span>{{ getNextOpeningWeekDayNumber(vendor.schedules)|dayOfTheWeek }}
-                {{ getNextOpeningHours(vendor.schedules)|formatTime }} - {{ getNextClosingHours(vendor.schedules)|formatTime }}</span>
-        {% else %}
-            <span class="green-class">{% trans %}generic.open{% endtrans %}</span>
-            <span>{{ getOpeningTime(vendor.schedules)|formatTime }} – {{ getClosingTime(vendor.schedules)|formatTime }}</span>
-        {% endif %}
-        {% if ('' != vendor.address) %}
+        {{ include('VoloFrontendBundle:Vendor/Partial:time_info.html.twig') }}
+        {% if vendor.address is not empty %}
             <i class="icon-pin-map"></i> {{ vendor.address }}
         {% endif %}
-        {% if ('' != vendor.customerPhone) %}
-        <i class="icon-call-phone"></i> {{ vendor.customerPhone }}
+        {% if vendor.customerPhone is not empty %}
+            <i class="icon-call-phone"></i> {{ vendor.customerPhone }}
         {% endif %}
+        {% if  richDescription is not empty %}
+            <a data-toggle="modal" data-target="#rich-description" class="hero-menu__info-extra__rich-description">{% trans %}link.rich_description{% endtrans %}</a>
+        {%  endif %}
     </div>
 </div>
 <div class="menu-wrapper">
@@ -153,7 +148,9 @@
     {{ include('VoloFrontendBundle:Layout/Partial/templates:cart.html.twig') }}
     {{ include('VoloFrontendBundle:Layout/Partial/templates:toppings.html.twig') }}
     {{ include('VoloFrontendBundle:Layout/Partial/templates/popups:vendor.html.twig') }}
-
+    {% if  richDescription is not empty %}
+        {{ include('VoloFrontendBundle:Vendor/Partial:rich_description.html.twig') }}
+    {% endif %}
 {% endblock %}
 
 {% block footer_bottom %}

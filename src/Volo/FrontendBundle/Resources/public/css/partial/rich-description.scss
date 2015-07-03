@@ -1,0 +1,67 @@
+.hero-menu__info-extra__rich-description {
+  margin-left: 15px;
+}
+
+.rich-description {
+  .modal-dialog {
+    .modal-body {
+      padding-top: 7px;
+      margin-left: 14px;
+      margin-right: 14px;
+    }
+
+    @include respond-from('screen-md') {
+      width: 556px;
+    }
+  }
+}
+
+.rich-description__restaurant-title {
+  margin: 0;
+  padding: 0;
+  font-family: $bold-font-family;
+  font-size: 1.5em;
+  line-height: normal;
+  text-transform: uppercase;
+  text-align: center;
+  @include respond-from('screen-md') {
+    font-size: 1.93em;
+  }
+}
+
+.rich-description__restaurant-type {
+  padding: 0;
+  margin: 0 0 10px;
+  font-size: 0.8em;
+  text-transform: uppercase;
+  text-align: center;
+  @include respond-from('screen-md') {
+    font-size: 1em;
+  }
+}
+
+.rich-description__time, .rich-description__contact {
+  text-align: center;
+  font-size: 0.9em;
+  line-height: 1.9em;
+}
+
+.time-info__remaining-time, .rich-description__contact__address {
+  display: inline-block;
+  padding-right: 15px;
+}
+
+.rich-description__content {
+  line-height: 1.6em;
+  font-size: 0.87em;
+  margin-top: 25px;
+
+  ul {
+    @extend ul.dotted;
+    margin-top: 15px;
+
+    li:before {
+        padding-right: 5px;
+    }
+  }
+}

@@ -1,0 +1,23 @@
+<div class="modal fade rich-description" id="rich-description" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h3 class="rich-description__restaurant-title">{{ vendor.name }}</h3>
+                <h4 class="rich-description__restaurant-type">{{ vendor.description }}</h4>
+                <div class="rich-description__time">
+                    {{ include('VoloFrontendBundle:Vendor/Partial:time_info.html.twig') }}
+                </div>
+                <div class="rich-description__contact">
+                    {% if vendor.address is not empty %}
+                        <span class="rich-description__contact__address"><i class="icon-pin-map"></i> {{ vendor.address }}</span>
+                    {% endif %}
+                    {% if vendor.customerPhone is not empty %}
+                        <i class="icon-call-phone"></i> {{ vendor.customerPhone }}
+                    {% endif %}
+                </div>
+                <div class="rich-description__content">{{ richDescription|raw }}   </div>
+            </div>
+            <div class="modal-close-button" data-dismiss="modal"></div>
+        </div>
+    </div>
+</div>

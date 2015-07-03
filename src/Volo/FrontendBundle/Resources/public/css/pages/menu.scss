@@ -60,6 +60,13 @@
   }
 }
 
+a.hero-menu__headline__icon {
+  @include make-link($color-text-selection, $color-text-selection);
+  @include respond-from("screen-md") {
+    display: none;
+  }
+}
+
 .hero-menu__info__description {
   font-family: $base-font-family;
   display: block;
