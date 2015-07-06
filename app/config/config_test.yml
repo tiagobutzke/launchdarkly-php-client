@@ -14,3 +14,4 @@ web_profiler:
 
 parameters:
     foodpanda.api.handler: guzzle.ring.client.mock_handler
+    average_delivery_time: 30

@@ -1,3 +1,4 @@
 parameters:
     locale: es_ES
     timezone: "Europe/Berlin"
+    average_delivery_time: 38

@@ -1,12 +1,12 @@
 <div class="footer__wrapper__middle">
     <nav class="footer__nav">
         <ul>
-            <li><a href="{{ path('cms', {code: 'terms-and-conditions.htm'}) }}">{% trans %}terms_and_conditions{% endtrans %}</a></li>
-            <li><a href="{{ path('cms', {code: 'privacy.htm'}) }}">{% trans %}privacy_policy{% endtrans %}</a></li>
-            <li><a href="{{ path('cms', {code: 'imprint.htm'}) }}">{% trans %}imprint{% endtrans %}</a></li>
-            <li><a href="{{ path('cms', {code: 'contact.htm'}) }}">{% trans %}contact{% endtrans %}</a></li>
-            <li><a href="{{ path('cms', {code: 'press.htm'}) }}">{% trans %}press{% endtrans %}</a></li>
-            <li><a href="{{ path('cms', {code: 'drivers-and-restaurants.htm'}) }}">{% trans %}for_restaurant_drivers{% endtrans %}</a></li>
+            <li class="footer__nav__terms-and-conditions.htm"><a href="{{ path('cms', {code: 'terms-and-conditions.htm'}) }}">{% trans %}terms_and_conditions{% endtrans %}</a></li>
+            <li class="footer__nav__privacy"><a href="{{ path('cms', {code: 'privacy.htm'}) }}">{% trans %}privacy_policy{% endtrans %}</a></li>
+            <li class="footer__nav__imprint"><a href="{{ path('cms', {code: 'imprint.htm'}) }}">{% trans %}imprint{% endtrans %}</a></li>
+            <li class="footer__nav__contact"><a href="{{ path('cms', {code: 'contact.htm'}) }}">{% trans %}contact{% endtrans %}</a></li>
+            <li class="footer__nav__press"><a href="{{ path('cms', {code: 'press.htm'}) }}">{% trans %}press{% endtrans %}</a></li>
+            <li class="footer__nav__drivers-and-restaurants"><a href="{{ path('cms', {code: 'drivers-and-restaurants.htm'}) }}">{% trans %}for_restaurant_drivers{% endtrans %}</a></li>
         </ul>
     </nav>
     <div class="footer__disclaimer">{% trans %}disclamer{% endtrans %}</div>
