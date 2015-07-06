@@ -1,10 +1,17 @@
 CHANGELOG
 =========
 
+* 1.0.28.7
+
+  * SGFD-17242 Special days ( + vendor listing fix )
+
+* 1.0.28.6
+
+  * SGFD-17242 Special days
+
 * 1.0.28.5
 
   * SGFD-17520 Spain Branding: Social footer icons to CMS
-  * SGFD-17242 Special days
   * SGFD-17550 XSS sanitize
 
 * 1.0.28
