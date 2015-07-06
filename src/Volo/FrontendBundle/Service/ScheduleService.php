@@ -88,8 +88,8 @@ class ScheduleService
         return $collection->filter(function(\DateTime $time) use ($vendor) {
             $after  = clone $time;
             $before = clone $time;
-            $after->modify('+30 minutes');
-            $before->modify('-30 minutes');
+            $after->modify('+15 minutes');
+            $before->modify('-15 minutes');
 
             $closedBefore = !$this->isVendorOpen($vendor, $before);
             $closedAfter  = !$this->isVendorOpen($vendor, $after);
@@ -100,27 +100,26 @@ class ScheduleService
 
     /**
      * @param Vendor    $vendor
-     * @param \DateTime $dateTime
+     * @param \DateTime $time
      * @param int       $openingOffset
      * @param int       $closingOffset
      *
      * @return bool
      */
-    public function isVendorOpen(Vendor $vendor, \DateTime $dateTime, $openingOffset = 0, $closingOffset = 0)
+    public function isVendorOpen(Vendor $vendor, \DateTime $time, $openingOffset = 0, $closingOffset = 0)
     {
-        $time = (int)$dateTime->format('Hi' );
-        $dailySpecialDays = $this->getDailySpecialsDays($vendor->getSpecialDays(), $dateTime);
-        $dailySchedules = $this->getDailySchedules($vendor->getSchedules(), $dateTime->format('N'));
+        $dailySpecialDays = $this->getDailySpecialsDays($vendor->getSpecialDays(), $time);
+        $dailySchedules = $this->getDailySchedules($vendor->getSchedules(), $time->format('N'));
 
         // special days have higher priority than normal schedules
-        /** @var SpecialDay $specialDay */
+        /** @var SpecialDay $day */
         foreach ($dailySpecialDays as $day) {
-            $openingTime = (int)str_replace(':', '', $day->getOpeningTime()) + $openingOffset;
-            $closingTime = (int)str_replace(':', '', $day->getClosingTime()) + $closingOffset;
-            if ($openingTime <= $time && $time <= $closingTime && $day->getOpeningType() === 'closed') {
+            list($opening, $closing) = $this->getOpeningAndClosingTimes($time, $day, $openingOffset, $closingOffset);
+            
+            if ($opening <= $time && $time <= $closing && $day->getOpeningType() === 'closed') {
                 return false;
             }
-            if ($openingTime <= $time && $time <= $closingTime && $day->getOpeningType() === 'delivering') {
+            if ($opening <= $time && $time <= $closing && $day->getOpeningType() === 'delivering') {
                 return true;
             }
         }
@@ -128,9 +127,9 @@ class ScheduleService
         // otherwise, start checking the schedules.
         /** @var Schedule $schedule */
         foreach ($dailySchedules as $schedule) {
-            $openingTime = (int)str_replace(':', '', $schedule->getOpeningTime()) + $openingOffset;
-            $closingTime = (int)str_replace(':', '', $schedule->getClosingTime()) + $closingOffset;
-            if ($openingTime <= $time && $time <= $closingTime) {
+            list($opening, $closing) = $this->getOpeningAndClosingTimes($time, $schedule, $openingOffset, $closingOffset);
+
+            if ($opening <= $time && $time <= $closing) {
                 return true;
             }
         }
@@ -176,5 +175,25 @@ class ScheduleService
         }
 
         return $results;
+    }
+
+    /**
+     * @param \DateTime           $time
+     * @param int                 $openingOffset
+     * @param int                 $closingOffset
+     * @param SpecialDay|Schedule $schedule
+     *
+     * @return array
+     */
+    protected function getOpeningAndClosingTimes(\DateTime $time, $schedule, $openingOffset = 0, $closingOffset = 0)
+    {
+        $openingTime = clone $time;
+        $closingTime = clone $time;
+        call_user_func_array([$openingTime, 'setTime'], explode(':', $schedule->getOpeningTime()));
+        $openingTime->modify(sprintf('+%s minutes', $openingOffset));
+        call_user_func_array([$closingTime, 'setTime'], explode(':', $schedule->getClosingTime()));
+        $closingTime->modify(sprintf('+%s minutes', $closingOffset));
+
+        return array($openingTime, $closingTime);
     }
 }

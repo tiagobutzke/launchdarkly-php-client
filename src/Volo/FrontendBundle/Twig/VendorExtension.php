@@ -61,10 +61,11 @@ class VendorExtension extends \Twig_Extension
 
         $results = [];
         foreach ($times as $time) {
+            $endTime = clone $time;
             $results[$time->format('H:i')] = sprintf(
                 '%s - %s',
                 $intl->format($time),
-                $intl->format($time->modify('+30 minutes'))
+                $intl->format($endTime->modify('+30 minutes'))
             );
         }
 
@@ -90,9 +91,10 @@ class VendorExtension extends \Twig_Extension
         // Prune the elements in the past.
         $firstPeriod = current($openingPeriods->slice(0, 1));
         if ($firstPeriod->first()->format('Y-m-d') === date('Y-m-d')) {
-            $start->modify(sprintf('+%s minutes', $vendor->getMinimumDeliveryTime()));
-            $firstPeriod = $firstPeriod->filter(function (\DateTime $time) use ($start) {
-                return $time > $start;
+            $startPlusDelivery = clone $start;
+            $startPlusDelivery->modify(sprintf('+%s minutes', $vendor->getMinimumDeliveryTime()));
+            $firstPeriod = $firstPeriod->filter(function (\DateTime $time) use ($startPlusDelivery) {
+                return $time > $startPlusDelivery;
             });
         }
 
