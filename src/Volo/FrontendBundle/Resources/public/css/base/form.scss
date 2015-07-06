@@ -260,7 +260,7 @@ select {
   list-style: none;
   font-size: 1em;
   text-align: left;
-  background-color: #fff;
+  background-color: $dropdown-color-bg-1;
   border: $dropdown-border;
   border-radius: $input-border-radius;
   color: $dropdown-color-text;
@@ -270,15 +270,22 @@ select {
   width: 100%;
 
   li {
-    &.selected {
-        background-color: $color-bg-secondary;
-    }
+    border-bottom: $input-border;
+
     a {
-      padding: 10px;
-      border-bottom: $input-border;
+      padding: $dropdown-link-padding;
+
       &:hover {
         background-color: $color-bg-secondary;
       }
+    }
+
+    &.selected {
+      background-color: $color-bg-secondary;
+    }
+
+    &:last-child {
+        border: none;
     }
   }
 }
