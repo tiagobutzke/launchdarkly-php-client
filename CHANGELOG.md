@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.3.0
+
+  * SGFD-17698 Additional changes requested for Spain Rebranding
+
 * 1.2.0
 
   * SGFD-17603 asset version for thumbor images is the deploy timestamp
