@@ -38,7 +38,7 @@ VOLO.documentReadyFunction = function() {
         $document: $(document),
         scrollersSelector: '.numbers__scroller',
         fromNumber: 60,
-        toNumber: 30,
+        toNumber: VOLO.configuration.averageDeliveryTime,
         transition: 'cubic-bezier(0.270, 1.170, 1.000, 1.000)',
         startingPointGetter: function() {
             return $('.numbers__scroller').offset().top;

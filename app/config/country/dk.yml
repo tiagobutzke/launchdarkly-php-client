@@ -1,3 +1,4 @@
 parameters:
     locale: da_DK
     timezone: "Europe/Berlin"
+    average_delivery_time: 30

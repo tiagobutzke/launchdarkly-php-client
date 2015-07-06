@@ -5,19 +5,26 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <title>{% block title %}{{ 'general.default_page_title'|trans }}{% endblock %}</title>
-        <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('img/favicon/apple-touch-icon-57x57.png') }}">
-        <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('img/favicon/apple-touch-icon-60x60.png') }}">
-        <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('img/favicon/apple-touch-icon-72x72.png') }}">
-        <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('img/favicon/apple-touch-icon-76x76.png') }}">
-        <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('img/favicon/apple-touch-icon-114x114.png') }}">
-        <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('img/favicon/apple-touch-icon-120x120.png') }}">
-        <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('img/favicon/apple-touch-icon-144x144.png') }}">
-        <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('img/favicon/apple-touch-icon-152x152.png') }}">
-        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('img/favicon/apple-touch-icon-180x180.png') }}">
-        <link rel="icon" type="image/png" sizes="196x196" href="{{ asset('img/favicon/android-chrome-192x192.png') }}">
-        <meta name="msapplication-config" content="ieconfig.xml" />
-        <meta name="msapplication-TileColor" content="#D70F64">
-        <meta name="msapplication-TileImage" content="{{ asset('img/favicon/mediumtile.png') }}">
+
+        {% set faviconCountry = "es" == country_code ? country_code : 'default' %}
+        <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('/img/favicon/'~ faviconCountry ~'/apple-touch-icon-57x57.png') }}">
+        <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('/img/favicon/'~ faviconCountry ~'/apple-touch-icon-60x60.png') }}">
+        <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('/img/favicon/'~ faviconCountry ~'/apple-touch-icon-72x72.png') }}">
+        <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('/img/favicon/'~ faviconCountry ~'/apple-touch-icon-76x76.png') }}">
+        <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('/img/favicon/'~ faviconCountry ~'/apple-touch-icon-114x114.png') }}">
+        <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('/img/favicon/'~ faviconCountry ~'/apple-touch-icon-120x120.png') }}">
+        <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('/img/favicon/'~ faviconCountry ~'/apple-touch-icon-144x144.png') }}">
+        <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('/img/favicon/'~ faviconCountry ~'/apple-touch-icon-152x152.png') }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/img/favicon/'~ faviconCountry ~'/apple-touch-icon-180x180.png') }}">
+        <link rel="icon" type="image/png" sizes="196x196" href="{{ asset('/img/favicon/'~ faviconCountry ~'/android-chrome-192x192.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/img/favicon/'~ faviconCountry ~'/favicon-16x16.png') }}">
+        <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('/img/favicon/'~ faviconCountry ~'/favicon-96x96.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/img/favicon/'~ faviconCountry ~'/favicon-32x32.png') }}">
+        <meta name="msapplication-TileColor" content="{{ 'default' == faviconCountry ? '#D70F64' : '#FFFFFF' }} ">
+        <meta name="msapplication-square70x70logo" content="{{ asset('/img/favicon/'~ faviconCountry ~'/smalltile.png') }}">
+        <meta name="msapplication-square150x150logo" content="{{ asset('/img/favicon/'~ faviconCountry ~'/mediumtile.png') }}">
+        <meta name="msapplication-square310x310logo" content="{{ asset('/img/favicon/'~ faviconCountry ~'/largetile.png') }}">
+        <meta name="msapplication-wide310x150logo" content="{{ asset('/img/favicon/'~ faviconCountry ~'/widetile.png') }}">
 
         {% block head_meta_seo %}
             <meta name="robots" content="noindex, follow">
