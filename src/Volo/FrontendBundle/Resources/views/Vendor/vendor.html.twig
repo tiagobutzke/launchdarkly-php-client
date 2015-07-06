@@ -116,15 +116,13 @@
             <h3>{% trans %}opening_times.title{% endtrans %}</h3>
             <ul>
                 {% for weekdayIndex in 1..7 %}
-                    {% set openingTimes = getOpeningPeriods(vendor.schedules, weekdayIndex) %}
-                    {% set totalPeriods = openingTimes|length %}
-                    {% if (totalPeriods > 0) %}
+                    {% set schedules = getDailySchedules(vendor.schedules, weekdayIndex) %}
+                    {% if (schedules|length > 0) %}
                         <li>
                             {{ weekdayIndex|dayOfTheWeek }}
                             <span>
-                                {% for i in 0..(totalPeriods-1) %}
-                                    {% set openingTime = openingTimes[i] %}
-                                    {{ openingTime|first|formatTime }} - {{ openingTime|last|formatTime }}{% if i < (totalPeriods-1) %}, {% endif %}
+                                {% for schedule in schedules %}
+                                    {{ schedule.openingTime }} - {{ schedule.closingTime }}{% if not loop.last %}, {% endif %}
                                 {% endfor %}
                             </span>
                         </li>
