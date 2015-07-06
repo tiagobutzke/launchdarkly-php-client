@@ -128,35 +128,8 @@ VOLO.initCheckoutViews = function (cartModel, checkoutModel, deliveryCheck, loca
     }
 
     if ($('#contact_information_form').length > 0 ) {
-        var View = ValidationView.extend({
-            events: function(){
-                return _.extend({},ValidationView.prototype.events,{
-                    'keydown #mobile_number': '_hideErrorMsg'
-                });
-            },
-
-            _hideErrorMsg: function() {
-                this.$('.invalid_number').hide();
-            }
-        });
-
-        VOLO.checkoutInformationValidationFormView = new View({
-            el: '#contact_information_form',
-            constraints: {
-                "customer[first_name]": {
-                    presence: true
-                },
-                "customer[last_name]": {
-                    presence: true
-                },
-                "customer[email]": {
-                    presence: true,
-                    email: true
-                },
-                "customer[mobile_number]": {
-                    presence: true
-                }
-            }
+        VOLO.checkoutInformationValidationFormView = new VOLO.CheckoutContactInformationView({
+            el: '#contact_information_form'
         });
     }
 
@@ -253,6 +226,22 @@ VOLO.initVendorsListSearch = function() {
     });
 };
 
+VOLO.initGTMService = function(checkoutModel, configuration, checkoutDeliveryValidationView, checkoutInformationValidationFormView) {
+    if (_.isObject(VOLO.GTMServiceInstance)) {
+        VOLO.GTMServiceInstance.unbind();
+    }
+
+    VOLO.GTMServiceInstance = new VOLO.GTMService({
+        dataLayer: dataLayer,
+        checkoutModel: checkoutModel,
+        sessionId: configuration.sessionId,
+        checkoutDeliveryValidationView: checkoutDeliveryValidationView,
+        checkoutInformationValidationFormView: checkoutInformationValidationFormView
+    });
+
+    return VOLO.GTMServiceInstance;
+};
+
 VOLO.OrderTracking = function() {
     var $statusWrapper = $('.order-status-wrapper'),
         code;
@@ -290,12 +279,6 @@ $(document).on('page:load page:restore', function () {
     VOLO.locationModel = VOLO.locationModel || new LocationModel(VOLO.jsonLocation);
     console.log('locationModel', VOLO.locationModel);
 
-    if ($('.menu__main').length > 0) {
-        VOLO.initCartModel(VOLO.jsonCart);
-        VOLO.initCartViews(VOLO.cartModel, VOLO.locationModel, VOLO.GTMServiceInstance);
-        VOLO.cartView.render();
-    }
-
     if ($('.checkout__main').length > 0) {
         VOLO.initCartModel(VOLO.jsonCart);
         VOLO.initCheckoutModel(VOLO.cartModel, VOLO.locationModel, $('.checkout__main').data('vendor_id'));
@@ -316,19 +299,25 @@ $(document).on('page:load page:restore', function () {
         }
     }
 
-    VOLO.GTMServiceInstance = new VOLO.GTMService({
-        dataLayer: dataLayer,
-        checkoutModel: VOLO.checkoutModel,
-        sessionId: VOLO.configuration.sessionId,
-        checkoutDeliveryValidationView: VOLO.checkoutDeliveryValidationView,
-        checkoutInformationValidationFormView: VOLO.checkoutInformationValidationFormView
-    });
+    var GTMServiceInstance = VOLO.initGTMService(
+        VOLO.checkoutModel,
+        VOLO.configuration,
+        VOLO.checkoutDeliveryValidationView,
+        VOLO.checkoutInformationValidationFormView
+    );
+
+    if ($('.menu__main').length > 0) {
+        VOLO.initCartModel(VOLO.jsonCart);
+        VOLO.initCartViews(VOLO.cartModel, VOLO.locationModel, GTMServiceInstance);
+        VOLO.cartView.render();
+    }
+
     if (_.isObject(VOLO.menu)) {
-        VOLO.menu.setGtmService(VOLO.GTMServiceInstance);
+        VOLO.menu.setGtmService(GTMServiceInstance);
     }
 
     if (_.isObject(VOLO.cartView)) {
-        VOLO.cartView.setGtmService(VOLO.GTMServiceInstance);
+        VOLO.cartView.setGtmService(GTMServiceInstance);
     }
 
     if ($('.teaser__form').length > 0) {
@@ -436,6 +425,7 @@ $(document).on('page:before-unload', function () {
     }
 
     if (_.isObject(VOLO.GTMServiceInstance)) {
+        VOLO.GTMServiceInstance.unbind();
         delete VOLO.GTMServiceInstance;
     }
 

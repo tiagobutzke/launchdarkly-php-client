@@ -6,8 +6,8 @@
 
 {% block google_tag_manager %}
     <script type="text/javascript" data-turbolinks-eval=always>
-        $(function(){
-            VOLO.GTMServiceInstance.fireOrderStatus({
+        $(document).ready(function() {
+            VOLO.GTMService.prototype.fireOrderStatus({
                 'deliveryDay': '{{ gtm_delivery_day(status.ordered_at.date, status.confirmed_delivery_time.date) }}',
                 'deliveryDayWeek': '{{ gtm_delivery_weekday(status.confirmed_delivery_time.date) }}',
                 'checkoutType': '{{ is_customer_authenticated_fully() ? 'registered' : 'guest' }}',

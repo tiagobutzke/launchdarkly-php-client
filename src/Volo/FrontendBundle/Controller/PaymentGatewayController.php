@@ -55,11 +55,8 @@ class PaymentGatewayController extends Controller
                 $vendor->getId()
             );
 
-            $response = new RedirectResponse(
-                $this->generateUrl('order_tracking', ['orderCode' => $orderCode]),
-                HTTP_REDIRECT_FOUND
-            );
-            $response->headers->setCookie(new Cookie('orderPay', 'true'));
+            $response = $this->redirectToRoute('order_tracking', ['orderCode' => $orderCode]);
+            $response->headers->setCookie(new Cookie('orderPay', 'true', 0, '/', null, $request->isSecure(), false));
 
             return $response;
         } else {

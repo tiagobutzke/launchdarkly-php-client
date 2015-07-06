@@ -25,8 +25,8 @@
                 'loggedIn': '{{ is_customer_authenticated_fully() ? 'true' : 'false' }}',
                 'customerId': '{{ is_customer_authenticated_fully() ? get_authenticated_customer().id }}'
             });
-            {% block gtm_checkout_extension %}{% endblock %}
         </script>
+        {% block gtm_checkout_extension %}{% endblock %}
     {% endblock %}
 {% endblock footer_scripts %}
 

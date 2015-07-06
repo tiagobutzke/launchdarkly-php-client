@@ -289,7 +289,7 @@ class CheckoutController extends Controller
         }
 
         $response = new JsonResponse($apiResult);
-        $response->headers->setCookie(new Cookie('orderPay', 'true'));
+        $response->headers->setCookie(new Cookie('orderPay', 'true', 0, '/', null, $request->isSecure(), false));
 
         return $response;
     }
