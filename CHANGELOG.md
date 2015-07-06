@@ -4,10 +4,11 @@ CHANGELOG
 * 1.2.0
 
   * SGFD-17603 asset version for thumbor images is the deploy timestamp
-  * SGFD-17376: rich description
+  * SGFD-17376 rich description
   * SGFD-17370 iPAD / Cart superimposed with the menu page
-  * SGFD-17515-Tooltips-script-refactor
+  * SGFD-17515 Tooltips-script-refactor
   * SGFD-17339: IOS improvements
+  * SGFD-17565: Remove Cart horizontal scroll bar on Windows system
 
 * 1.1.0
 
