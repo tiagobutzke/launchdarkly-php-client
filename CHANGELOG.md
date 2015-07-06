@@ -41,7 +41,7 @@ CHANGELOG
   * SGFD-17292 - payment method is highlighted after selection
   * SGFD-17120 - continue button is enabled after back from payment selection
 
-* 1.0.28.7
+* 1.0.28.7 (2015-07-06)
 
   * SGFD-17242 Special days ( + vendor listing fix )
 
