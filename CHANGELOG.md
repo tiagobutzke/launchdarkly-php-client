@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.4.0
+
+  * SGFD-17596 GTM QA Fixes
+
 * 1.3.0
 
   * SGFD-17698 Additional changes requested for Spain Rebranding
