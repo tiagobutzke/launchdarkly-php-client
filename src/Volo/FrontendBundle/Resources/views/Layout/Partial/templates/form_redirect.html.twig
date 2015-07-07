@@ -1,0 +1,8 @@
+{# cart summary extra item #}
+<script type="text/template" id="template__form__redirect">
+    <form action="<%- location %>" method="POST" id="form__redirect">
+        <% _.each(args, function (value, key) { %>
+            <input type="hidden" name="<%- key %>" value="<%- value %>">
+        <% }); %>
+    </form>
+</script>

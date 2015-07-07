@@ -5,6 +5,7 @@ namespace Volo\FrontendBundle\Controller;
 use CommerceGuys\Guzzle\Oauth2\AccessToken;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Validator;
 use Symfony\Component\HttpFoundation\Request;
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
@@ -21,8 +22,8 @@ class PaymentGatewayController extends Controller
     /**
      * @Method({"GET", "POST"})
      * @Route(
-     *      "/handle-payment/{orderCode}", name="paypal_handle_payment", methods={"get"},
-     *      requirements={"code": "([A-Za-z][A-Za-z0-9]{3})-([A-Za-z][A-Za-z0-9]{3})"}
+     *      "/handle-payment/{orderCode}", name="handle_payment", methods={"get"}, options={"expose"=true},
+     *      requirements={"orderCode": "([A-Za-z][A-Za-z0-9]{3})-([A-Za-z][A-Za-z0-9]{3})"}
      * )
      * @param Request $request
      * @param string  $orderCode
@@ -49,7 +50,7 @@ class PaymentGatewayController extends Controller
             $request->request->all()
         );
 
-        if ($request->query->get('success')) {
+        if ($this->isPaymentSucessful($request)) {
             $this->get('volo_frontend.service.cart_manager')->deleteCart(
                 $request->getSession(),
                 $vendor->getId()
@@ -60,9 +61,47 @@ class PaymentGatewayController extends Controller
 
             return $response;
         } else {
-            $this->addFlash('paypal-error', 'paypal.payment_error');
+            $this->addFlash('payment_error', $this->getErrorMessage($request));
 
             return $this->redirectToRoute('checkout_payment', ['vendorCode' => $vendor->getCode()]);
+        }
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    protected function isPaymentSucessful(Request $request)
+    {
+        switch (true) {
+            case $request->query->has('success'): // paypal
+                return $request->query->get('success');
+                break;
+            case $request->query->has('paymentMethod') && $request->query->has('authResult'): // adyen hpp
+                return $request->query->get('authResult') === 'AUTHORISED';
+                break;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    protected function getErrorMessage(Request $request)
+    {
+        switch (true) {
+            case $request->query->has('success'): // paypal
+                return 'paypal.payment_error';
+                break;
+            case $request->query->has('paymentMethod') && $request->query->has('authResult'): // adyen hpp
+                return sprintf('%s.payment_error', $request->query->get('paymentMethod'));
+                break;
+            default:
+                throw new BadRequestHttpException('Payment method not recognized');
         }
     }
 }

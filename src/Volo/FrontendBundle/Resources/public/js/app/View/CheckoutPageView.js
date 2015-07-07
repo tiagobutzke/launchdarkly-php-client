@@ -72,7 +72,16 @@ var CheckoutPageView = Backbone.View.extend({
             this.model.cartModel.emptyCart(this.vendorId);
             Turbolinks.visit(Routing.generate('order_tracking', {orderCode: data.code}));
         } else {
-            window.location.replace(data.hosted_payment_page_redirect.url);
+            if (data.hosted_payment_page_redirect.method === 'post') { // adyen hpp
+                var params = data.hosted_payment_page_redirect.parameters,
+                    url = "https://" + window.location.hostname + Routing.generate('handle_payment', {'orderCode': data.code});
+
+                params.countryCode = VOLO.configuration.countryCode.toUpperCase();
+                params.resURL = url;
+                this.redirectPost(data.hosted_payment_page_redirect.url, params);
+            } else {
+                window.location.replace(data.hosted_payment_page_redirect.url); // paypal
+            }
         }
         this.spinner.stop();
     },
@@ -84,5 +93,13 @@ var CheckoutPageView = Backbone.View.extend({
             this.$('.error_msg').html(data.error.errors.message);
         }
         this.spinner.stop();
+    },
+
+    redirectPost: function (location, args) {
+        var compiled = _.template(this.$('#template__form__redirect').html()),
+            view = compiled({location: location, args: args});
+
+        this.$el.append(view);
+        this.$('#form__redirect').submit();
     }
 });

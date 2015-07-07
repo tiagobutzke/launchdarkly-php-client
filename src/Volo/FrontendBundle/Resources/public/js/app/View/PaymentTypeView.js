@@ -8,6 +8,7 @@ var PaymentTypeView = Backbone.View.extend({
     events: {
         'click .paypal': '_displayPayPal',
         'click .adyen': '_displayCreditCard',
+        'click .adyen_hpp': '_displayAdyenHpp',
         'click .checkout__item__card__help-toggle': '_toggleCreditCardHelp',
         'click #add_new_credit_card_link': '_toggleNewCreditCard',
         'click .credit-card--radio': '_selectSavedCreditCard'
@@ -33,6 +34,20 @@ var PaymentTypeView = Backbone.View.extend({
         this.$('.checkout__list').removeClass('hide');
 
         this._activatePaymentMethod($creditCardNode);
+    },
+
+    _displayAdyenHpp: function() {
+        var $node = this.$('.adyen_hpp');
+
+        this.checkoutModel.set('payment_type_code', $node.data('payment_type_code'));
+        this.checkoutModel.set('payment_type_id', $node.data('payment_type_id'));
+
+        this.$('.checkout__payment_adyen_hpp_description').removeClass('hide');
+        this.$('#saved_payment_options').addClass('hide');
+        this.$('.checkout__list').addClass('hide');
+        this.$('#payment_form').addClass('hide');
+
+        this._activatePaymentMethod($node);
     },
 
     _displayPayPal: function() {
