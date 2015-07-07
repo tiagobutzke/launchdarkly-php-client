@@ -42,16 +42,16 @@ class ScheduleService
     }
 
     /**
-     * @param Vendor $vendor
-     * @param bool   $prunePastPeriods
+     * @param Vendor    $vendor
+     * @param \DateTime $date
      *
      * @return ArrayCollection
      */
-    public function getNextDayPeriods(Vendor $vendor, $prunePastPeriods = false)
+    public function getNextDayPeriods(Vendor $vendor, \DateTime $date)
     {
         /** @var ArrayCollection $fourDaysPeriod */
         /** @var ArrayCollection $openingAndClosingHours */
-        $fourDaysPeriod         = $this->getNextFourDaysOpenings($vendor, new \DateTime());
+        $fourDaysPeriod = $this->getNextFourDaysOpenings($vendor, $date);
 
         if ($fourDaysPeriod->isEmpty()) {
             return new ArrayCollection();
@@ -61,17 +61,14 @@ class ScheduleService
 
         $periods = new ArrayCollection(array_chunk($openingAndClosingHours->toArray(), 2));
 
-        if ($prunePastPeriods) {
-            $time = \DateTime::createFromFormat('U', time() + $vendor->getMinimumDeliveryTime() * 60);
-            $periods = $periods->filter(function (array $periods) use ($time) {
-                return $periods[1] > $time;
-            });
+        $periods = $periods->filter(function (array $periods) use ($date) {
+            return $periods[1] > $date;
+        });
 
-            if ($periods->count() === 0) {
-                return new ArrayCollection(
-                    array_chunk($this->filterOpeningAndClosingHours($vendor, $fourDaysPeriod[1])->toArray(), 2)
-                );
-            }
+        if ($periods->count() === 0) {
+            return new ArrayCollection(
+                array_chunk($this->filterOpeningAndClosingHours($vendor, $fourDaysPeriod[1])->toArray(), 2)
+            );
         }
 
         return $periods;

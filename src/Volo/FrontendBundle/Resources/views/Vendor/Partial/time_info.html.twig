@@ -1,4 +1,4 @@
-{% set periods = getNextDayPeriods(vendor, true) %}
+{% set periods = getNextDayPeriods(vendor, date('now')) %}
 {% if not periods.isEmpty %}
     {% set closingIn = ((periods|first|last|date('U') - 'now'|date('U')) / 60)|abs|round %}
     <i class="icon-clock-o"></i>
