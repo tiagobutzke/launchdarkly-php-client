@@ -4,6 +4,7 @@ VOLO.GTMService = function (options) {
     this.sessionId = options.sessionId;
     this.checkoutModel = options.checkoutModel || null;
     this.checkoutDeliveryValidationView = options.checkoutDeliveryValidationView;
+    this.checkoutInformationValidationFormView = options.checkoutInformationValidationFormView;
 
     this.initialize();
 };
@@ -11,23 +12,42 @@ VOLO.GTMService = function (options) {
 _.extend(VOLO.GTMService.prototype, Backbone.Events, {
     initialize: function () {
         if (_.isObject(this.checkoutModel)) {
-            this.listenTo(this.checkoutModel, 'payment:attempt_to_pay', $.proxy(function (data) {
-                this.fireCheckoutPaymentDetailsSet(data.paymentMethod);
-            }, this));
-            this.listenTo(this.checkoutModel, 'payment:error', $.proxy(function (data) {
-                this.fireCheckoutPaymentFailed(data.paymentMethod);
-            }, this));
+            this.listenTo(this.checkoutModel, 'payment:attempt_to_pay', this.fireCheckoutPaymentDetailsSet);
+            this.listenTo(this.checkoutModel, 'payment:error', this.fireCheckoutPaymentFailed);
         }
 
         if (_.isObject(this.checkoutDeliveryValidationView)) {
-            this.listenTo(this.checkoutDeliveryValidationView, 'submit:successful_before', $.proxy(function (data) {
-                this.fireCheckoutDeliveryDetailsSet(data.deliveryTime);
-            }, this));
+            this.listenTo(
+                this.checkoutDeliveryValidationView,
+                'submit:successful_before',
+                this.fireCheckoutDeliveryDetailsSet
+            );
+        }
+
+        if (_.isObject(this.checkoutInformationValidationFormView)) {
+            this.listenTo(
+                this.checkoutInformationValidationFormView,
+                'validationView:validateSuccessful',
+                this.fireCheckoutContactDetailsSet
+            );
         }
     },
 
     unbind: function () {
         this.stopListening();
+    },
+
+    fireOrderStatus: function(data) {
+        if (!this._hasCookie('orderPay')) {
+            return;
+        }
+
+        Cookies.expire('orderPay');
+
+        data.event = 'transaction';
+        data.sessionId = this.sessionId;
+
+        dataLayer.push(data);
     },
 
     fireAddProduct: function (vendorId, data) {
@@ -44,28 +64,37 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
         }
     },
 
-    fireCheckoutDeliveryDetailsSet: function (deliveryTime) {
+    fireCheckoutDeliveryDetailsSet: function (data) {
         dataLayer.push({
             'event': 'checkout',
             'checkoutStep': '2 - Delivery Details Set',
-            'deliveryTime': deliveryTime,
+            'deliveryTime': data.deliveryTime,
             'sessionId': this.sessionId
         });
     },
 
-    fireCheckoutPaymentDetailsSet: function (paymentMethod) {
+    fireCheckoutContactDetailsSet: function (data) {
+        dataLayer.push({
+            'event': 'checkout',
+            'checkoutStep': '3 - Contact Info Provided',
+            'newsletterSignup': data.newsletterSignup,
+            'sessionId': this.sessionId
+        });
+    },
+
+    fireCheckoutPaymentDetailsSet: function (data) {
         this.dataLayer.push({
             'event': 'checkout',
             'checkoutStep': '4 - Payment Details Set',
-            'paymentMethod': paymentMethod,
+            'paymentMethod': data.paymentMethod,
             'sessionId': this.sessionId
         });
     },
 
-    fireCheckoutPaymentFailed: function (paymentMethod) {
+    fireCheckoutPaymentFailed: function (data) {
         this.dataLayer.push({
             'event': 'paymentFailed',
-            'paymentMethod': paymentMethod,
+            'paymentMethod': data.paymentMethod,
             'sessionId': this.sessionId
         });
     },
@@ -75,30 +104,10 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
     },
 
     _setCookie: function (name, value) {
-        var expires = "expires=0";
-        document.cookie = name + "=" + value + "; " + expires;
-    },
-
-    _getCookie: function (name) {
-        var formattedName = name + "=";
-        var cookies = document.cookie.split(';');
-
-        for (var i = 0; i < cookies.length; i++) {
-            var c = cookies[i];
-            while (c.charAt(0) === ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(formattedName) === 0) {
-                return c.substring(formattedName.length, c.length);
-            }
-        }
-
-        return '';
+        Cookies.set(name, value, { expires: Infinity });
     },
 
     _hasCookie: function (name) {
-        var username = this._getCookie(name);
-
-        return username !== '';
+        return !_.isUndefined(Cookies.get(name));
     }
 });

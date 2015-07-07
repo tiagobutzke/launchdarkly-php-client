@@ -14,6 +14,20 @@
         VOLO.jsonCart = {{ cart|to_escaped_json }};
         VOLO.jsonLocation = {{ location|to_escaped_json }};
     </script>
+
+    {% block google_tag_manager %}
+        <script type="text/javascript" data-turbolinks-eval=always>
+            dataLayer.push({
+                'pageType': 'Checkout',
+                'zipcode': '{{ customer_location().postcode }}',
+                'city': '{{ customer_location().city }}',
+                'country': 'Germany',
+                'loggedIn': '{{ is_customer_authenticated_fully() ? 'true' : 'false' }}',
+                'customerId': '{{ is_customer_authenticated_fully() ? get_authenticated_customer().id }}'
+            });
+        </script>
+        {% block gtm_checkout_extension %}{% endblock %}
+    {% endblock %}
 {% endblock footer_scripts %}
 
 {% block content %}

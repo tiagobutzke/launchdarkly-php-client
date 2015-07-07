@@ -4,6 +4,7 @@ namespace Volo\FrontendBundle\Controller;
 
 use CommerceGuys\Guzzle\Oauth2\AccessToken;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\Validator\Validator;
 use Symfony\Component\HttpFoundation\Request;
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
@@ -54,7 +55,10 @@ class PaymentGatewayController extends Controller
                 $vendor->getId()
             );
 
-            return $this->redirectToRoute('order_tracking', ['orderCode' => $orderCode]);
+            $response = $this->redirectToRoute('order_tracking', ['orderCode' => $orderCode]);
+            $response->headers->setCookie(new Cookie('orderPay', 'true', 0, '/', null, $request->isSecure(), false));
+
+            return $response;
         } else {
             $this->addFlash('paypal-error', 'paypal.payment_error');
 

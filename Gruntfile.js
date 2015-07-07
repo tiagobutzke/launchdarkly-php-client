@@ -68,7 +68,8 @@ module.exports = function (grunt) {
         'web/bower_components/jquery.payment/lib/jquery.payment.js',
         'web/bower_components/moment/moment.js',
         'web/bower_components/bootstrap-select/dist/js/bootstrap-select.js',
-        'web/bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js'
+        'web/bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js',
+        'web/bower_components/cookies-js/dist/cookies.js'
     ]);
 
     jsSources.head = jsSources.allLibs.concat([
