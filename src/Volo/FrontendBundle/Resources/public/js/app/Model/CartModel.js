@@ -32,15 +32,73 @@ var CartItemModel = Backbone.Model.extend({
         json.toppings = this.toppings.toJSON();
 
         return json;
+    },
+
+    transformToppingsToServerFormat: function() {
+        var selectedToppings = this.getSelectedToppings();
+
+        this.toppings = new ToppingCollection(selectedToppings);
+    },
+
+    transformToppingsToMenuFormat: function(menuToppings) {
+        var clone = _.cloneDeep(menuToppings),
+            newToppings = _.each(clone, function (topping) {
+                _.each(topping.options, function (option) {
+                    if (_.findWhere(this.toppings.toJSON(), {id: option.id})) {
+                        option.selected = true;
+                    }
+                }.bind(this));
+
+                return topping;
+            }.bind(this));
+
+        this.toppings = new ToppingCollection(newToppings);
+    },
+
+    getSelectedToppings: function() {
+        return _.chain(this.toppings.toJSON())
+            .map(function(item) {
+                return item.options || [];
+            })
+            .reduce(function(memo, item) {
+                return memo.concat(item);
+            }, [])
+            .where({selected: true})
+            .map(function(option) {
+                return {
+                    id: option.id,
+                    type: 'full',
+                    name: option.name
+                };
+            })
+            .value();
+    },
+
+    isSimilar: function(objectToCompare) {
+        var compareArrays = function(arr1, arr2) {
+                return _.isMatch(arr1, arr2) && _.isMatch(arr2, arr1);
+            },
+            sameVariation = this.get('product_variation_id') === objectToCompare.get('product_variation_id'),
+            sameToppings = compareArrays(this.toppings.toJSON(), objectToCompare.toppings.toJSON()),
+            sameInstructions = this.get('special_instructions') === objectToCompare.get('special_instructions');
+
+        return sameVariation && sameToppings && sameInstructions;
+    },
+
+    clone: function() {
+        var clone = Backbone.Model.prototype.clone.call(this);
+        clone.toppings = new ToppingCollection(this.toppings.toJSON());
+
+        return clone;
     }
 });
 
-CartItemModel.createFromMenuItem = function(cartItemJSON) {
-    var productVariation = cartItemJSON.product_variations[0];
+CartItemModel.createFromMenuItem = function(menuItem) {
+    var productVariation = menuItem.product_variations[0];
 
     return new CartItemModel({
         product_variation_id: productVariation.id,
-        name: cartItemJSON.name,
+        name: menuItem.name,
         variation_name: productVariation.name,
         total_price_before_discount: productVariation.price_before_discount,
         total_price: productVariation.price,
@@ -49,7 +107,7 @@ CartItemModel.createFromMenuItem = function(cartItemJSON) {
         choices: productVariation.choices,
         group_order_user_name: null,
         group_order_user_code: null,
-        description: cartItemJSON.description
+        description: menuItem.description
     });
 };
 
@@ -181,44 +239,38 @@ var VendorCartModel = Backbone.Model.extend({
         }.bind(this));
     },
 
-    addItem: function(newProduct, quantity) {
-        var clone = _.cloneDeep(newProduct);
+    addItem: function(newProduct) {
+        var clone = newProduct.clone(),
+            similarProduct;
 
-        clone.toppings = new ToppingCollection(this.getSelectedToppingsFromProduct(clone)).toJSON();
+        clone.transformToppingsToServerFormat();
+        similarProduct = this.findSimilarProduct(clone);
 
-        var foundProduct = this.findSimilarProduct(clone);
-        if (_.isObject(foundProduct)) {
-            foundProduct.set('quantity', parseInt(foundProduct.get('quantity') + quantity), 10);
-        }
-
-        if (_.isUndefined(foundProduct)) {
-            clone.quantity = quantity;
-
+        if (_.isObject(similarProduct)) {
+            similarProduct.set('quantity', parseInt(similarProduct.get('quantity') + newProduct.get('quantity'), 10));
+        } else {
             this.products.unshift(clone);
         }
 
         this.updateCart();
     },
 
-    updateItem: function(cartItemToUpdate, newSelection) {
-        if (newSelection.quantity === 0) {
-            this.removeItem(cartItemToUpdate);
+    updateItem: function(itemToUpdate, updatedItem) {
+        var clone = updatedItem.clone();
+        clone.transformToppingsToServerFormat();
+
+        if (updatedItem.get('quantity') === 0) {
+            this.removeItem(itemToUpdate);
         } else {
-            var newToppings = this.getSelectedToppingsFromProduct(newSelection),
-                clone = cartItemToUpdate.toJSON(),
-                productFromCart;
+            var productFromCart = this.findSimilarProduct(clone);
 
-            clone.toppings = new ToppingCollection(newToppings).toJSON();
-            productFromCart = this.findSimilarProduct(clone);
-
-            if (productFromCart && productFromCart.cid !== cartItemToUpdate.cid) {
-                this.removeItem(cartItemToUpdate);
-                productFromCart.set('quantity', productFromCart.get('quantity') + newSelection.quantity);
-                productFromCart.set('special_instructions', newSelection.special_instructions);
+            if (productFromCart && productFromCart.cid !== itemToUpdate.cid) {
+                this.removeItem(itemToUpdate);
+                productFromCart.set('quantity', productFromCart.get('quantity') + updatedItem.get('quantity'));
             } else {
-                cartItemToUpdate.toppings.set(newToppings);
-                cartItemToUpdate.set('quantity', newSelection.quantity);
-                cartItemToUpdate.set('special_instructions', newSelection.special_instructions);
+                itemToUpdate.toppings.set(updatedItem.getSelectedToppings());
+                itemToUpdate.set('quantity', updatedItem.get('quantity'));
+                itemToUpdate.set('special_instructions', updatedItem.get('special_instructions'));
             }
         }
 
@@ -243,39 +295,9 @@ var VendorCartModel = Backbone.Model.extend({
         this.updateCart();
     },
 
-    getSelectedToppingsFromProduct: function(product) {
-        return _.chain(product.toppings)
-            .map(function (item) {
-                return item.options || [];
-            })
-            .reduce(function (memo, item) {
-                return memo.concat(item);
-            }, [])
-            .where({selected: true})
-            .map(function(option) {
-                return {
-                    id: option.id,
-                    type: 'full',
-                    name: option.name
-                };
-            })
-            .value();
-    },
-
     findSimilarProduct: function(productToSearch) {
-        var compareArrays = function(arr1, arr2) {
-            return _.isMatch(arr1, arr2) && _.isMatch(arr2, arr1);
-        };
-
         return this.products.find(function(product) {
-            product = product.toJSON();
-
-            var sameVariation = product.product_variation_id === productToSearch.product_variation_id,
-                sameToppings = compareArrays(product.toppings, productToSearch.toppings),
-                sameInstructions = compareArrays(product.special_instructions, productToSearch.special_instructions),
-                sameChoices = compareArrays(product.choices, productToSearch.choices);
-
-            return sameVariation && sameChoices && sameToppings && sameInstructions;
+            return product.isSimilar(productToSearch);
         });
     }
 });

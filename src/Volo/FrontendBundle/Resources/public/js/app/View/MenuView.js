@@ -121,7 +121,7 @@ var MenuItemView = Backbone.View.extend({
                     id: model.get('product_variation_id'),
                     name: model.get('name')
                 });
-                this.cartModel.getCart(this.vendor_id).addItem(model.toJSON(), 1);
+                this.cartModel.getCart(this.vendor_id).addItem(model);
             }
         }
     },

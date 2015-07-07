@@ -392,7 +392,7 @@ describe('topping model _isToppingSelectable', function() {
 });
 
 describe('topping model _isToppingUnselectable', function() {
-    var toppingModel, isCheckBoxList;
+    var toppingModel;
 
     beforeEach(function() {
         toppingModel = new ToppingModel({
@@ -504,5 +504,87 @@ describe('topping option model', function() {
 
         optionModel.setSelection(false);
         expect(optionModel.isSelected()).toEqual(false);
+    });
+});
+
+describe('topping model initial _setInitialSelection', function() {
+    var toppingModel;
+
+    beforeEach(function() {
+        toppingModel = new ToppingModel({
+            quantity_maximum: null,
+            quantity_minimum: null,
+            id: 10,
+            name: 'topping 1',
+            options: [
+                {
+                    id: 1,
+                    selected: false,
+                    name: 'option 1'
+                },
+                {
+                    id: 2,
+                    selected: false,
+                    name: 'option 2'
+                },
+                {
+                    id: 3,
+                    selected: false,
+                    name: 'option 3'
+                }
+            ]
+        });
+    });
+
+    it('should select all options, if minimum is heigher than options length and selected items', function() {
+        toppingModel.set('quantity_minimum', 4);
+        _.each(toppingModel.options.models, toppingModel._setInitialSelection, this);
+        expect(toppingModel._getSelectedItems().length).toEqual(3);
+    });
+
+    it('should select nothing, if minimum is below options count', function() {
+        toppingModel.set('quantity_minimum', 1);
+        _.each(toppingModel.options.models, toppingModel._setInitialSelection, this);
+        expect(toppingModel._getSelectedItems().length).toEqual(0);
+    });
+});
+
+describe('topping model _getSelectedItems', function() {
+    var toppingModel;
+
+    beforeEach(function() {
+        toppingModel = new ToppingModel({
+            quantity_maximum: null,
+            quantity_minimum: null,
+            id: 10,
+            name: 'topping 1',
+            options: [
+                {
+                    id: 1,
+                    selected: false,
+                    name: 'option 1'
+                },
+                {
+                    id: 2,
+                    selected: false,
+                    name: 'option 2'
+                },
+                {
+                    id: 3,
+                    selected: false,
+                    name: 'option 3'
+                }
+            ]
+        });
+    });
+
+    it('should return selected items', function() {
+        toppingModel.options.at('1').setSelection(true);
+        expect(toppingModel._getSelectedItems().length).toEqual(1);
+        expect(toppingModel._getSelectedItems()[0].get('id')).toEqual(2);
+    });
+
+    it('should return empty array, if nothing is selected', function() {
+        expect(toppingModel._getSelectedItems().length).toEqual(0);
     });
 });
