@@ -9,7 +9,7 @@ CHANGELOG
 
   * SGFD-17596 GTM QA Fixes
 
-* 1.3.0
+* 1.3.0 (2015-07-07)
 
   * SGFD-17698 Additional changes requested for Spain Rebranding
 
