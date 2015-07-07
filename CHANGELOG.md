@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.4.2
+
+  * SGFD-17424: Closing in X minutes - fix
+
 * 1.4.1
 
   * SGFD-17242: Special days - offset fix
