@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.5.0
+
+  * SGFD-17725: Error pages - reduce font size
+
 * 1.4.3
 
   * SGFD-17242 Changed opening/closing hours calculation
