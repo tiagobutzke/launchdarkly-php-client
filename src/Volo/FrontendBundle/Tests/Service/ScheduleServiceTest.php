@@ -70,7 +70,7 @@ class ScheduleServiceTest extends VoloTestCase
         $testCases[] = [$serializer->denormalizeVendor($data), $now, true, 30];
 
         $data = ['schedules' => [['weekday' => (int)$now->format('N'), 'opening_type' => 'delivering', 'opening_time' => '15:30', 'closing_time' => '17:00']]];
-        $testCases[] = [$serializer->denormalizeVendor($data), $now, true, 45];
+        $testCases[] = [$serializer->denormalizeVendor($data), $now, false, 45];
 
         $data = ['schedules' => [['weekday' => (int)$now->format('N'), 'opening_type' => 'delivering', 'opening_time' => '15:30', 'closing_time' => '16:00']]];
         $testCases[] = [$serializer->denormalizeVendor($data), $now, false, 0, -1];
