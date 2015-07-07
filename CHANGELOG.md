@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.4.1
+
+  * SGFD-17242: Special days - offset fix
+
 * 1.4.0
 
   * SGFD-17596 GTM QA Fixes
