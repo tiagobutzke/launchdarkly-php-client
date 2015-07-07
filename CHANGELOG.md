@@ -3,7 +3,8 @@ CHANGELOG
 
 * 1.5.0
 
-  * SGFD-17725: Error pages - reduce font size
+  * SGFD-17725 Error pages - reduce font size
+  * SGFD-17529 bootstrap.js cleanup
 
 * 1.4.3
 
