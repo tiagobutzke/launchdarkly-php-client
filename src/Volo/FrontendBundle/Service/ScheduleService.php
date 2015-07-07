@@ -85,8 +85,8 @@ class ScheduleService
         return $collection->filter(function(\DateTime $time) use ($vendor) {
             $after  = clone $time;
             $before = clone $time;
-            $after->modify('+15 minutes');
-            $before->modify('-15 minutes');
+            $after->modify('+16 minutes');
+            $before->modify('-16 minutes');
 
             $closedBefore = !$this->isVendorOpen($vendor, $before);
             $closedAfter  = !$this->isVendorOpen($vendor, $after);
@@ -112,7 +112,7 @@ class ScheduleService
         /** @var SpecialDay $day */
         foreach ($dailySpecialDays as $day) {
             list($opening, $closing) = $this->getOpeningAndClosingTimes($time, $day, $openingOffset, $closingOffset);
-            
+
             if ($opening <= $time && $time <= $closing && $day->getOpeningType() === 'closed') {
                 return false;
             }
