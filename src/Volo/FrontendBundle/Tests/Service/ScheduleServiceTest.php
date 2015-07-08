@@ -135,7 +135,7 @@ class ScheduleServiceTest extends VoloTestCase
      */
     public function testGetNextFourOpeningDays($vendor, $dateTime, $nbDays)
     {
-        $this->assertEquals($nbDays, $this->scheduleService->getNextFourDaysOpenings($vendor, $dateTime)->count());
+        $this->assertEquals($nbDays, $this->scheduleService->getNextFourDaysOpenings($vendor, $dateTime, new \DateInterval('PT30M'))->count());
     }
     
     public function getNextFourOpeningDaysTestdataProvider()
