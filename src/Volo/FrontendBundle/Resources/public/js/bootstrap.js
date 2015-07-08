@@ -263,7 +263,7 @@ VOLO.createRegistrationEvent = function ($button, loginButtonView) {
         loginButtonView.showRegistrationModal(customerData);
     });
 
-    views.push(registerClick);
+    VOLO.views.push(registerClick);
     return registerClick;
 };
 
