@@ -47,13 +47,13 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
         data.event = 'transaction';
         data.sessionId = this.sessionId;
 
-        dataLayer.push(data);
+        this._push(data);
     },
 
     fireAddProduct: function (vendorId, data) {
         var cookieName = this._createCookieName(vendorId);
         if (!this._hasCookie(cookieName)) {
-            this.dataLayer.push({
+            this._push({
                 'event': 'addToCart',
                 'productName': data.name,
                 'productId': data.id,
@@ -65,7 +65,7 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
     },
 
     fireCheckoutDeliveryDetailsSet: function (data) {
-        dataLayer.push({
+        this._push({
             'event': 'checkout',
             'checkoutStep': '2 - Delivery Details Set',
             'deliveryTime': data.deliveryTime,
@@ -74,7 +74,7 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
     },
 
     fireCheckoutContactDetailsSet: function (data) {
-        dataLayer.push({
+        this._push({
             'event': 'checkout',
             'checkoutStep': '3 - Contact Info Provided',
             'newsletterSignup': data.newsletterSignup,
@@ -83,7 +83,7 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
     },
 
     fireCheckoutPaymentDetailsSet: function (data) {
-        this.dataLayer.push({
+        this._push({
             'event': 'checkout',
             'checkoutStep': '4 - Payment Details Set',
             'paymentMethod': data.paymentMethod,
@@ -92,7 +92,7 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
     },
 
     fireCheckoutPaymentFailed: function (data) {
-        this.dataLayer.push({
+        this._push({
             'event': 'paymentFailed',
             'paymentMethod': data.paymentMethod,
             'sessionId': this.sessionId
@@ -109,5 +109,10 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
 
     _hasCookie: function (name) {
         return !_.isUndefined(Cookies.get(name));
+    },
+
+    _push: function(data) {
+        dataLayer.push(data);
+        _.invoke(ga.getAll(), 'send', 'event');
     }
 });
