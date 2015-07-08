@@ -156,8 +156,10 @@ VOLO.renderCheckoutViews = function (checkoutViews) {
     }
 };
 
-VOLO.initIntl = function (locale, currency_symbol) {
-    var deferred = $.Deferred();
+VOLO.initIntl = function (configuration) {
+    var deferred = $.Deferred(),
+        locale = configuration.locale.replace('_', '-'),
+        currencySymbol = configuration.currencySymbol;
 
     if (_.isUndefined(window.Intl)) {
         $.ajax({
@@ -168,14 +170,14 @@ VOLO.initIntl = function (locale, currency_symbol) {
                 dataType: 'json'
             }).done(function (data) {
                 IntlPolyfill.__addLocaleData(data);
-                VOLO.initCurrencyFormat(locale, currency_symbol);
+                VOLO.initCurrencyFormat(locale, currencySymbol);
                 console.log('INTL polyfill loaded');
-                deferred.resolve();
+                deferred.resolve(configuration);
             });
         });
     } else {
-        VOLO.initCurrencyFormat(locale, currency_symbol);
-        deferred.resolve();
+        VOLO.initCurrencyFormat(locale, currencySymbol);
+        deferred.resolve(configuration);
     }
 
     return deferred;
@@ -357,7 +359,7 @@ $(document).on('page:load page:restore', function () {
     console.log('page:load');
     window.blazy.revalidate();
 
-    VOLO.initIntl(VOLO.configuration.locale.replace('_', '-'), VOLO.configuration.currencySymbol).done(VOLO.doBootstrap(VOLO.configuration));
+    VOLO.initIntl(VOLO.configuration).done(VOLO.doBootstrap);
 });
 
 $(document).on('page:before-unload', function () {
