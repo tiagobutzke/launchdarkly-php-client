@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.4.4
+
+  * SGFD-17850 - geocode returns only postal_code result
+
 * 1.4.3
 
   * SGFD-17242 Changed opening/closing hours calculation
