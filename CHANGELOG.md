@@ -6,6 +6,10 @@ CHANGELOG
   * SGFD-17725 Error pages - reduce font size
   * SGFD-17529 bootstrap.js cleanup
 
+* 1.4.4
+
+  * SGFD-17850 - geocode returns only postal_code result
+
 * 1.4.3
 
   * SGFD-17242 Changed opening/closing hours calculation

@@ -23,6 +23,7 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
         };
         //this.geocodingService.setLocation(locationObject);
 
+        this.locationModel = options.locationModel;
         this.postalCodeGeocodingService.setLocation(locationObject);
         this.deliveryCheck = options.deliveryCheck;
         this._jsValidationView = new ValidationView({
@@ -177,12 +178,21 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
             }.bind(this),
 
             error: function (results, status) {
+                var postalCode;
+                if (results.length > 0) {
+                    postalCode = _.findWhere(results[0].address_components, {types: ['postal_code']});
+                }
+
                 if (_.isString(status) && status === 'ZERO_RESULTS') {
                     this._showInputPopup(this.$('#postal_index_form_input').data('validation-msg'), true);
                     this._toggleSubmitButtonDisabled(true);
+                } else if (_.get(postalCode, 'long_name') === this.locationModel.get('postcode')) {
+                    this._validateDelivery({lat: this.locationModel.get('latitude'), lng: this.locationModel.get('longitude')});
                 } else {
+                    this._validateDelivery({lat: result.lat(), lng: result.lng()});
                     // if Google can't geo-code it, who are we to stop the user!!!, just consider it valid man :)
                     this._toggleSubmitButtonDisabled(false);
+
                 }
             }.bind(this)
         });
