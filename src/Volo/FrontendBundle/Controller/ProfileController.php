@@ -2,9 +2,8 @@
 
 namespace Volo\FrontendBundle\Controller;
 
-use Foodpanda\ApiSdk\Entity\Customer\CustomerPassword;
-use Foodpanda\ApiSdk\Exception\ApiErrorException;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Foodpanda\ApiSdk\Exception\ChangePasswordCustomerException;
+use Foodpanda\ApiSdk\Exception\ValidationEntityException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Volo\FrontendBundle\Security\Token;
@@ -20,8 +19,6 @@ use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
  */
 class ProfileController extends Controller
 {
-    const FLASH_TYPE_ERRORS = 'errors';
-
     /**
      * @Route("", name="profile_index")
      * @Method({"GET", "POST"})
@@ -36,15 +33,29 @@ class ProfileController extends Controller
             throw new AccessDeniedHttpException('Access denied for profile page.');
         }
 
-        $errorMessages = $this->get('session')->getFlashBag()->get(static::FLASH_TYPE_ERRORS);
         $serializer       = $this->get('volo_frontend.api.serializer');
         $customerProvider = $this->get('volo_frontend.provider.customer');
+        $errorMessage     = '';
         $phoneNumberError = '';
+        $isChangePasswordSuccess = false;
+        $passwordFormErrorMessages = [];
         if ($request->getMethod() === Request::METHOD_POST) {
-            try {
-                $this->get('volo_frontend.service.customer')->updateCustomer($request->request->get('customer'));
-            } catch (PhoneNumberValidationException $e) {
-                $phoneNumberError = $e->getMessage();
+            if ($request->request->has('customer')) {
+                try {
+                    $this->get('volo_frontend.service.customer')->updateCustomer($request->request->get('customer', []));
+                } catch (PhoneNumberValidationException $e) {
+                    $phoneNumberError = $e->getMessage();
+                }
+            }
+            if ($request->request->has('password_form')) {
+                try {
+                    $this->updatePassword($request);
+                    $isChangePasswordSuccess = true;
+                } catch (ChangePasswordCustomerException $e) {
+                    $errorMessage = $e->getValidationMessage();
+                } catch (ValidationEntityException $e) {
+                    $passwordFormErrorMessages = $e->getValidationMessages();
+                }
             }
         }
 
@@ -56,8 +67,10 @@ class ProfileController extends Controller
         $creditCards = $customerProvider->getAdyenCards($accessToken);
 
         return [
+            'isChangePasswordSuccess'   => $isChangePasswordSuccess,
+            'passwordFormErrorMessages' => $passwordFormErrorMessages,
             'phoneNumberError'   => $phoneNumberError,
-            'errorMessages'      => $errorMessages,
+            'errorMessage'       => $errorMessage,
             'customer'           => $serializer->normalize($customer),
             'customer_addresses' => $serializer->normalize($addresses->getItems()),
             'customer_cards'     => $creditCards['items'],
@@ -65,29 +78,12 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route("/update_password", name="profile_update_password")
-     * @Method({"POST"})
      * @param Request $request
-     *
-     * @return RedirectResponse
      */
-    public function updatePasswordAction(Request $request)
+    private function updatePassword(Request $request)
     {
-        if (!$this->isGranted('ROLE_CUSTOMER')) {
-            throw new AccessDeniedHttpException('Access denied for profile page.');
-        }
-
-        $customerPassword = $this->get('volo_frontend.api.serializer')->denormalize(
-            $request->request->get('password_form'),
-            CustomerPassword::class
-        );
-
-        try {
-            $this->get('volo_frontend.service.customer')->updateCustomerPassword($customerPassword);
-        } catch (ApiErrorException $e) {
-            $this->addFlash(static::FLASH_TYPE_ERRORS, $e->getMessage());
-        }
-
-        return $this->redirectToRoute('profile_index');
+        $data = $request->request->get('password_form', []);
+        $customerPassword = $this->get('volo_frontend.api.serializer')->denormalizeCustomerPassword($data);
+        $this->get('volo_frontend.service.customer')->updateCustomerPassword($customerPassword);
     }
 }

@@ -41,14 +41,4 @@ class ProfileControllerTest extends VoloTestCase
         $this->isSuccessful($client->getResponse(), false);
         $this->assertEquals(Response::HTTP_FORBIDDEN, $client->getResponse()->getStatusCode());
     }
-
-    public function testUpdatePasswordAsAnonymous()
-    {
-        $client = static::createClient();
-
-        $client->request('POST', '/profile/update_password', [], [], ['HTTP_X-Requested-With' => 'XMLHttpRequest']);
-
-        $this->isSuccessful($client->getResponse(), false);
-        $this->assertEquals(Response::HTTP_FORBIDDEN, $client->getResponse()->getStatusCode());
-    }
 }
