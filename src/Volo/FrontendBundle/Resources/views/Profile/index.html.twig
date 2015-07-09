@@ -33,10 +33,10 @@
                 <h3 class="profile__title">{% trans %}title.my_password{% endtrans %}</h3>
                 <div class="checkout__item">
                     {% if errorMessage is not empty %}
-                        <div class="error_msg">{{ errorMessage }}</div>
+                        <div class="error_msg error-msg--above-form">{{ errorMessage|trans|raw }}</div>
                     {% endif %}
                     {% if isChangePasswordSuccess == true %}
-                        <div class="success_msg">{% trans %}customer.change_password.success{% endtrans %}</div>
+                        <div class="success-msg success-msg--above-form">{% trans %}customer.change_password.success{% endtrans %}</div>
                     {% endif %}
                     <form action="{{ path('profile_index') }}" id="contact_information_form" method="post" role="form">
                         <div class="form-group">

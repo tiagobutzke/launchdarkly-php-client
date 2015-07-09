@@ -335,7 +335,14 @@ select {
 
 // ----------------------- SPRITE FORM ELEMENTS END ------------------
 
-// ----------------------- ERROR -----------------------------
+// ----------------------- ERROR SUCCESS MESSAGE -----------------------------
+
+%form-message {
+  display: block;
+  font-size: $error-msg-font-size;
+  line-height: $error-msg-line-height;
+  padding: $space-xs $input-padding-left;
+}
 
 .error {
   color: $input-color-text-error;
@@ -344,11 +351,18 @@ select {
 }
 
 .error_msg {
-  display: block;
+  @extend %form-message;
   color: $error-msg-color-text;
   background-color: $error-msg-color-bg;
-  font-size: $error-msg-font-size;
-  line-height: $error-msg-line-height;
-  padding: $space-xs $input-padding-left;
   margin-top: -1px;
+}
+
+.error-msg--above-form, .success-msg--above-form {
+  margin-bottom: $space-md;
+}
+
+.success-msg {
+  @extend %form-message;
+  color: $success-msg-color-text;
+  background-color: $success-msg-color-bg;
 }
