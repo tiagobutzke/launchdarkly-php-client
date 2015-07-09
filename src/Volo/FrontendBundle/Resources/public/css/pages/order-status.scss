@@ -245,21 +245,23 @@
   @include make-md-column(8);
   @include make-md-column-offset(2);
   background-color: $color-bg-primary;
-  padding: 0 $space-md $space-md $space-md;
+  padding: $space-sm $space-md;
   border-top: $base-border;
   @include respond-from("screen-sm") {
+    padding: $space-md;
     display: table;
   }
 }
 
 .create_account__message {
   @include make-xs-column(12, 0);
-  @include make-sm-column(7, 0);
   padding-bottom: $space-sm;
   @include respond-from("screen-sm") {
     display: table-cell;
+    vertical-align: middle;
     float: none;
     padding-bottom: 0;
+    width: 58%;
   }
 }
 
@@ -267,6 +269,7 @@
   font-size: 0.8em;
   line-height: 1.4em;
   text-transform: uppercase;
+  margin-top: 0;
   margin-bottom: $space-xs;
   @include respond-from("screen-sm") {
     font-size: 1em;
@@ -295,25 +298,19 @@
 
 .create_account__login {
   @include make-xs-column(12);
-  @include make-sm-column(5);
+  padding: 0;
   @include respond-from("screen-sm") {
     display: table-cell;
+    vertical-align: middle;
     float: none;
+    width: 42%;
+    padding-top: $space-sm;
+    padding-left: $space-md;
   }
-  padding-right: $space-md;
-  padding-left: $space-md;
-  overflow: auto;
-  min-height: $form-element-height-default;
 }
 
 .create_account__login__button {
   @include make-xs-column(12);
-  @include make-md-column(10);
-  @include make-md-column-offset(1);
   @extend .button-secondary;
-  @include absolute-center-box();
-  @include respond-from("screen-sm") {
-    top: $space-sm;
-  }
 }
 
