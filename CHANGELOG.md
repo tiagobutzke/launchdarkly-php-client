@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.6.1
+
+  * SGFD-17203 city redirects fix (muenchen, koeln, duesseldorf)
+
 * 1.6.0
   * SGFD-17615 Profile dropdown styling
   * SGFD-17760 IE - Input field description is shifted down a bit
