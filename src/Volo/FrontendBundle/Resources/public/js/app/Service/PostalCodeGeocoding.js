@@ -34,9 +34,13 @@ _.extend(PostalCodeGeocodingService.prototype, Backbone.Events, {
         }
 
         this.geocoder.geocode(requestParameters, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                var result = results[0];
-                options.success(result.geometry.location);
+            if (status === google.maps.GeocoderStatus.OK) {
+                var result = _.findWhere(results, {types: ['postal_code']});
+                if (result) {
+                    options.success(result.geometry.location);
+                } else {
+                    options.error(results, status);
+                }
             } else {
                 options.error(results, status);
             }
