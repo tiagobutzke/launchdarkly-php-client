@@ -1,5 +1,6 @@
 var VOLO = VOLO || {};
 VOLO.documentReadyFunction = function() {
+    console.log('document:ready');
     window.blazy = new Blazy({
         breakpoints: volo_thumbor_transformations.breakpoints,
         offset: 400
@@ -96,6 +97,8 @@ VOLO.documentReadyFunction = function() {
     if (!md.mobile()) {
         plateAnimation.init();
         deliveryTimeAnimation.init();
+
         initCityAnimations();
+        $(document).on('page:load page:restore', initCityAnimations);
     }
 };
