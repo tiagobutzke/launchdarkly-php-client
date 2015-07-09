@@ -58,7 +58,12 @@
     <div class="vendor__geocoding__tool-box">
         <form>
             <div class="form-group">
-                <input id="postal_index_form_input" type="text" class="form-control menu__input__postcode input__postcode{{ isDeliverable ? ' hide' }}" autofocus="">
+                <input id="postal_index_form_input"
+                       type="text"
+                       class="form-control menu__input__postcode input__postcode{{ isDeliverable ? ' hide' }}"
+                       autofocus=""
+                       placeholder="{% trans %}postal_code.your_postal_code{% endtrans %}"
+                >
             </div>
         </form>
         <div class="vendor__geocoding__tool-box__title{{ isDeliverable ? '' : ' hide' }}">
