@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+* 1.6.0
+  * SGFD-17615 Profile dropdown styling
+  * SGFD-17760 IE - Input field description is shifted down a bit
+  * SGFD-17133 IE Registration button cut off
+  * SGFD-17787 animations on home page are loaded on page:load
+  * SGFD-17862 Menu Page / Label in the postal code field
+
 * 1.5.1
 
   * SGFD-17837 - intl fix
