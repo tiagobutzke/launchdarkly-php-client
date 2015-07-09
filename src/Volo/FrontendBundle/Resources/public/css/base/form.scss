@@ -114,7 +114,7 @@ input, .form-control {
   padding-right: $input-padding-right;
   border-radius: $input-border-radius;
   height: $input-height;
-  line-height: $input-height;
+  line-height: inherit;
   border: $input-border;
   color: $input-color-text;
 
