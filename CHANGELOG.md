@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.5.1
+
+  * SGFD-17837 - intl fix
+
 * 1.5.0
 
   * SGFD-17725 Error pages - reduce font size
