@@ -33,11 +33,11 @@ var CheckoutPageView = Backbone.View.extend({
         console.log('CheckoutPageView:render', this.model.isValid());
 
         if (this.model.isValid() && !this.model.get('cart_dirty') && !this.model.get('placing_order')) {
-            this.$(".button").prop('disabled', '');
-            this.$(".button").css({opacity: 1});
+            this.$("#finish-and-pay").prop('disabled', '');
+            this.$("#finish-and-pay").css({opacity: 1});
         } else {
-            this.$(".button").prop('disabled', 'disabled');
-            this.$(".button").css({opacity: 0.5});
+            this.$("#finish-and-pay").prop('disabled', 'disabled');
+            this.$("#finish-and-pay").css({opacity: 0.5});
         }
     },
 
@@ -48,12 +48,13 @@ var CheckoutPageView = Backbone.View.extend({
 
     placeOrder: function () {
         var paddingFromHeader = 16,
-            scrollToOffset = this.$('#checkout-delivery-information-address').offset().top -
-                paddingFromHeader -
-                this.domObjects.$header.outerHeight();
+            scrollToOffset;
 
         if (this.$('#delivery_information_form_button').is(':visible')) {
             this.$('#error_msg_delivery_not_saved').removeClass('hide');
+            scrollToOffset = this.$('#checkout-delivery-information-address').offset().top -
+                            paddingFromHeader -
+                            this.domObjects.$header.outerHeight();
             $('html, body').animate({
                 scrollTop: scrollToOffset
             }, VOLO.configuration.anchorScrollSpeed);
