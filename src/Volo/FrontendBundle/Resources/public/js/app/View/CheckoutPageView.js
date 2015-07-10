@@ -1,15 +1,17 @@
-var CheckoutButtonView = Backbone.View.extend({
+var CheckoutPageView = Backbone.View.extend({
     events: {
         "click #finish-and-pay": "placeOrder"
     },
 
-    initialize: function () {
+    initialize: function (options) {
         _.bindAll(this);
 
         this.vendorCode = this.$el.data().vendor_code;
         this.vendorId = this.$el.data().vendor_id;
 
         this.spinner = new Spinner();
+        this.domObjects = {};
+        this.domObjects.$header = options.$header;
 
         console.log('is guest user', this.$el.data().is_guest_user);
 
@@ -28,7 +30,7 @@ var CheckoutButtonView = Backbone.View.extend({
     },
 
     render: function () {
-        console.log('CheckoutButtonView:render', this.model.isValid());
+        console.log('CheckoutPageView:render', this.model.isValid());
 
         if (this.model.isValid() && !this.model.get('cart_dirty') && !this.model.get('placing_order')) {
             this.$(".button").prop('disabled', '');
@@ -45,6 +47,20 @@ var CheckoutButtonView = Backbone.View.extend({
     },
 
     placeOrder: function () {
+        var paddingFromHeader = 16,
+            scrollToOffset = this.$('#checkout-delivery-information-address').offset().top -
+                paddingFromHeader -
+                this.domObjects.$header.outerHeight();
+
+        if (this.$('#delivery_information_form_button').is(':visible')) {
+            this.$('#error_msg_delivery_not_saved').removeClass('hide');
+            $('html, body').animate({
+                scrollTop: scrollToOffset
+            }, VOLO.configuration.anchorScrollSpeed);
+
+            return;
+        }
+        this.$('#error_msg_delivery_not_saved').addClass('hide');
         this.spinner.spin(this.$('#finish-and-pay')[0]);
         this.model.placeOrder(this.vendorCode, this.vendorId);
         this.$('.error_msg').addClass('hide');

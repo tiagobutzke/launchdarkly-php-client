@@ -58,6 +58,8 @@ VOLO.initCartViews = function (cartModel, locationModel, gtmService) {
 };
 
 VOLO.initCheckoutViews = function (cartModel, checkoutModel, deliveryCheck, locationModel) {
+    var $header = $('.header');
+
     if (_.isObject(VOLO.CheckoutCartView)) {
         VOLO.CheckoutCartView.unbind();
     }
@@ -73,7 +75,7 @@ VOLO.initCheckoutViews = function (cartModel, checkoutModel, deliveryCheck, loca
     VOLO.CheckoutCartView = new CheckoutCartView({
         el: '#cart',
         model: cartModel,
-        $header: $('.header'),
+        $header: $header,
         locationModel: locationModel,
         $menuMain: $('.checkout__main'),
         $window: $(window)
@@ -92,8 +94,9 @@ VOLO.initCheckoutViews = function (cartModel, checkoutModel, deliveryCheck, loca
         });
     }
     if ($('#finish-and-pay').length > 0) {
-        VOLO.checkoutButtonView = new CheckoutButtonView({
-            el: '.checkout-button',
+        VOLO.CheckoutPageView = new CheckoutPageView({
+            el: '.checkout__main',
+            $header: $header,
             model: checkoutModel
         });
     }
@@ -291,8 +294,8 @@ $(document).on('page:load page:restore', function () {
         if (_.isObject(VOLO.voucherView)) {
             VOLO.voucherView.render();
         }
-        if (_.isObject(VOLO.checkoutButtonView)) {
-            VOLO.checkoutButtonView.render();
+        if (_.isObject(VOLO.CheckoutPageView)) {
+            VOLO.CheckoutPageView.render();
         }
         if (_.isObject(VOLO.checkoutDeliveryInformationView)) {
             VOLO.checkoutDeliveryInformationView.render();
@@ -395,8 +398,8 @@ $(document).on('page:before-unload', function () {
     if (_.isObject(VOLO.vendorSearchView)) {
         VOLO.vendorSearchView.unbind();
     }
-    if (_.isObject(VOLO.checkoutButtonView)) {
-        VOLO.checkoutButtonView.unbind();
+    if (_.isObject(VOLO.CheckoutPageView)) {
+        VOLO.CheckoutPageView.unbind();
     }
     if (_.isObject(VOLO.checkoutDeliveryInformationView)) {
         VOLO.checkoutDeliveryInformationView.unbind();
