@@ -5,6 +5,8 @@ VOLO.GTMService = function (options) {
     this.checkoutModel = options.checkoutModel || null;
     this.checkoutDeliveryValidationView = options.checkoutDeliveryValidationView;
     this.checkoutInformationValidationFormView = options.checkoutInformationValidationFormView;
+    this.loginButtonView = options.loginButtonView;
+    this.existingUserLoginView = options.existingUserLoginView;
 
     this.initialize();
 };
@@ -31,10 +33,34 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
                 this.fireCheckoutContactDetailsSet
             );
         }
+
+        if (_.isObject(this.loginButtonView)) {
+            this._bindLoginRegistrationEvents();
+        }
+
+        if (_.isObject(this.existingUserLoginView)) {
+            this._bindLoginRegistrationEvents();
+        }
     },
 
     unbind: function () {
         this.stopListening();
+    },
+
+    fireLogin: function (data) {
+        this._push({
+            'event': 'login',
+            'method': data.method,
+            'result': data.result
+        });
+    },
+
+    fireRegistration: function (data) {
+        this._push({
+            'event': 'register',
+            'method': data.method,
+            'result': data.result
+        });
     },
 
     fireOrderStatus: function(data) {
@@ -109,6 +135,19 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
 
     _hasCookie: function (name) {
         return !_.isUndefined(Cookies.get(name));
+    },
+
+    _bindLoginRegistrationEvents: function () {
+        this.listenTo(
+            this.loginButtonView,
+            'loginRegistrationView:login',
+            this.fireLogin
+        );
+        this.listenTo(
+            this.loginButtonView,
+            'loginRegistrationView:registration',
+            this.fireRegistration
+        );
     },
 
     _push: function(data) {

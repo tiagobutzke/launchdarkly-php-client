@@ -133,13 +133,31 @@ var LoginRegistrationView = Backbone.View.extend({
             },
             success: function() {
                 Turbolinks.visit(window.location.href);
-            },
+
+                this._fireFormSubmit($form, true);
+            }.bind(this),
             error: function (data) {
                 spinner.stop();
                 $(target).removeClass('modal-content--loading');
                 $modalContent.html(data.responseText);
                 $form.find('button').prop("disabled", false);
-            }
+
+                this._fireFormSubmit($form, false);
+            }.bind(this)
         });
+    },
+
+    _fireFormSubmit: function ($form, isSuccess) {
+        if ($form.attr('id') === 'login-form') {
+            this.trigger('loginRegistrationView:login', {
+                'method': 'email',
+                'result': isSuccess ? 'success' : 'fail'
+            });
+        } else {
+            this.trigger('loginRegistrationView:registration', {
+                'method': 'email',
+                'result': isSuccess ? 'success' : 'fail'
+            });
+        }
     }
 });
