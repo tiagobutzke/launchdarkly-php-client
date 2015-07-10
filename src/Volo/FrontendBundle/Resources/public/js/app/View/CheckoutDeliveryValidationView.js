@@ -4,7 +4,8 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
         'focus #postal_index_form_input': '_hideTooltip',
         'click': '_hideTooltip',
         'change #city, #postal_index_form_input': '_geoCodeAndValidateDelivery',
-        "blur #address_line1, #address_line2": '_geoCodeAndValidateDelivery'
+        "blur #address_line1, #address_line2": '_geoCodeAndValidateDelivery',
+        "keyup #address_line1, #address_line2":'_validateForm'
     },
 
     initialize: function (options) {
@@ -144,6 +145,10 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
     isValidForm: function() {
         return this.$('#address_line1').val().length > 0 && this.$('#address_line2').val().length > 0 &&
             this.$('#postal_index_form_input').val().length > 0 && this.$('#city').val().length > 0;
+    },
+
+    _validateForm: function() {
+        this._toggleSubmitButtonDisabled(!this.isValidForm());
     },
 
     _geocodeAddress: function() {
