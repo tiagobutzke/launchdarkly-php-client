@@ -42,7 +42,7 @@ var ToppingModel = Backbone.Model.extend({
 
         quantity_minimum = this.get('quantity_minimum');
         if (this.options.length <= quantity_minimum && this._getSelectedItems().length < quantity_minimum) {
-            optionModel.setSelection(false);
+            optionModel.setSelection(true);
         }
     },
 
