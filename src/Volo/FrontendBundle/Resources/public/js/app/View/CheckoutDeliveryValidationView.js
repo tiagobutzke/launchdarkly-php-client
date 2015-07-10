@@ -74,6 +74,8 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
             !this.$("#delivery_information_form_button").attr('disabled');
 
         if (submitAllowed) {
+            this.$('#error_msg_delivery_not_saved').addClass('hide');
+
             this.trigger('submit:successful_before', {
                 deliveryTime: $('#order-delivery-time').val()
             });

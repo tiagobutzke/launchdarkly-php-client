@@ -1,5 +1,8 @@
 <form action="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}" id="delivery_information_form" method="post" role="form" novalidate>
     <div class="checkout__item checkout__item--step">
+        <span class="error_msg error-msg--above-form hide" id="error_msg_delivery_not_saved" style="margin-bottom: 15px;">
+            {% trans %}delivery_information.needs_to_be_saved{% endtrans %}
+        </span>
         <div class="form-group hide">
             <input
                     type="hidden"
