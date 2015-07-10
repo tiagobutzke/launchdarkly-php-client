@@ -1,0 +1,4 @@
+parameters:
+    locale: en_HK
+    timezone: "Asia/Hong_Kong"
+    average_delivery_time: 30

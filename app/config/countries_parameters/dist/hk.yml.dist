@@ -2,6 +2,6 @@ imports:
     - { resource: dist/common.yml }
 
 parameters:
-    country_code: gb
+    country_code: hk
     environment: development
-    locale: en_GB
+    locale: en_HK
