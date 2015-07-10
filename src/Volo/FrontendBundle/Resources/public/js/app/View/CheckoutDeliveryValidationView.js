@@ -4,7 +4,7 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
         'focus #postal_index_form_input': '_hideTooltip',
         'click': '_hideTooltip',
         'change #city, #postal_index_form_input': '_geoCodeAndValidateDelivery',
-        "keydown #address_line1, #address_line2": '_geoCodeAndValidateDelivery'
+        "blur #address_line1, #address_line2": '_geoCodeAndValidateDelivery'
     },
 
     initialize: function (options) {
@@ -128,6 +128,7 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
     },
 
     _toggleSubmitButtonDisabled: function(disabledState) {
+        console.log('_toggleSubmitButtonDisabled ', disabledState);
         this.$("#delivery_information_form_button").attr('disabled', disabledState);
     },
 
@@ -140,16 +141,18 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
         return streetValid && houseNumValid;
     },
 
-    _geocodeAddress: function() {
-        var fullAddress = this.$('#address_line1').val().length > 0 && this.$('#address_line2').val().length > 0 &&
+    isValidForm: function() {
+        return this.$('#address_line1').val().length > 0 && this.$('#address_line2').val().length > 0 &&
             this.$('#postal_index_form_input').val().length > 0 && this.$('#city').val().length > 0;
+    },
 
+    _geocodeAddress: function() {
         this._toggleSubmitButtonDisabled(true);
-        if (!fullAddress) {
+        if (!this.isValidForm()) {
             return;
         }
 
-        this.postalCodeGeocodingService.geocode({
+        this.postalCodeGeocodingService.geocodeAddress({
             address: this.$('#address_line1').val() + ' ' + this.$('#address_line2').val() + ', ' + this.$('#postal_index_form_input').val() + ', ' + this.$('#city').val(),
 
             success: function (result) {
@@ -166,9 +169,10 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
     },
 
     _geocodePostalCode: function (locationData) {
+        console.log('_geocodePostalCode ', this.cid, locationData);
         this._geocodeAddress();
 
-        this.postalCodeGeocodingService.geocode({
+        this.postalCodeGeocodingService.geocodeCenterPostalcode({
             address: locationData.postcode + ", " + locationData.city,
             postalCode: locationData.postcode,
             city: locationData.city,
@@ -179,7 +183,7 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
 
             error: function (results, status) {
                 var postalCode;
-                if (results.length > 0) {
+                if (results && results.length > 0) {
                     postalCode = _.findWhere(results[0].address_components, {types: ['postal_code']});
                 }
 
@@ -189,10 +193,7 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
                 } else if (_.get(postalCode, 'long_name') === this.locationModel.get('postcode')) {
                     this._validateDelivery({lat: this.locationModel.get('latitude'), lng: this.locationModel.get('longitude')});
                 } else {
-                    this._validateDelivery({lat: result.lat(), lng: result.lng()});
-                    // if Google can't geo-code it, who are we to stop the user!!!, just consider it valid man :)
-                    this._toggleSubmitButtonDisabled(false);
-
+                    this._toggleSubmitButtonDisabled(!this.isValidForm());
                 }
             }.bind(this)
         });
@@ -220,7 +221,7 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
                     this._showInputPopup(this.$('#postal_index_form_input').data('validation-msg'), true);
                 }
 
-                this._toggleSubmitButtonDisabled(!this._validateAddressFields());
+                this._toggleSubmitButtonDisabled(!resultData.result && !this._validateAddressFields());
             }.bind(this));
     }
 });
