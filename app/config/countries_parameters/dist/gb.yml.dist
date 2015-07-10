@@ -1,0 +1,7 @@
+imports:
+    - { resource: dist/common.yml }
+
+parameters:
+    country_code: gb
+    environment: development
+    locale: en_GB
