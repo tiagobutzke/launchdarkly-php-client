@@ -288,6 +288,8 @@ VOLO.OrderTracking = function () {
 };
 
 VOLO.doBootstrap = function(configuration) {
+    window.blazy.revalidate();
+
     var locationModel = VOLO.createLocationModel(VOLO.jsonLocation),
         gtmCheckoutValidationView, cartModel, checkoutModel, checkoutInformationValidationFormView;
 
@@ -357,7 +359,6 @@ VOLO.doBootstrap = function(configuration) {
 
 $(document).on('page:load page:restore', function () {
     console.log('page:load');
-    window.blazy.revalidate();
 
     VOLO.initIntl(VOLO.configuration).done(VOLO.doBootstrap);
 });
