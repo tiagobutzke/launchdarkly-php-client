@@ -217,11 +217,12 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
                     if (this.$('#postal_index_form_input').data('is-blocking-popup')) {
                         this._hideTooltip();
                     }
+                    this._toggleSubmitButtonDisabled(!this._validateAddressFields());
                 } else {
                     this._showInputPopup(this.$('#postal_index_form_input').data('validation-msg'), true);
+                    this._toggleSubmitButtonDisabled(true);
                 }
 
-                this._toggleSubmitButtonDisabled(!resultData.result && !this._validateAddressFields());
             }.bind(this));
     }
 });
