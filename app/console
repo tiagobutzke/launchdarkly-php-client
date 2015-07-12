@@ -22,7 +22,8 @@ if (empty(AppKernel::getCountryCodeEnvironmentVariable())) {
             array_merge(
                 [getPhp()],
                 array_map('escapeshellarg', getPhpArguments()),
-                array_map('escapeshellarg', $argv)
+                array_map('escapeshellarg', $argv),
+                ['--ansi']
             )
         );
 
