@@ -17,6 +17,7 @@
         <parameter key="volo_frontend.security.authenticator.class">Volo\FrontendBundle\Security\ApiAuthenticator</parameter>
         <parameter key="volo_frontend.twig.cms_extension.class">Volo\FrontendBundle\Twig\CmsExtension</parameter>
         <parameter key="volo_frontend.twig.vendor_extension.class">Volo\FrontendBundle\Twig\VendorExtension</parameter>
+        <parameter key="volo_frontend.twig.gtmextension.class">Volo\FrontendBundle\Twig\GTMExtension</parameter>
         <parameter key="volo_frontend.service.configuration.class">Volo\FrontendBundle\Service\ConfigurationService</parameter>
         <parameter key="volo_frontend.service.customer.class">Volo\FrontendBundle\Service\CustomerService</parameter>
         <parameter key="volo_frontend.service.phone_number.class">Volo\FrontendBundle\Service\PhoneNumberService</parameter>
@@ -89,6 +90,11 @@
 
         <service id="volo_frontend.twig.order_extension" class="%volo_frontend.twig.order_extension.class%">
             <tag name="twig.extension" />
+        </service>
+
+        <service id="volo_frontend.twig.gtmextension" class="%volo_frontend.twig.gtmextension.class%">
+            <argument>%country_code%</argument>
+            <tag name="twig.extension"/>
         </service>
 
         <service id="volo_frontend.service.cart_manager" class="%volo_frontend.service.cart_manager.class%">
