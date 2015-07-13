@@ -94,6 +94,15 @@
   color: $color-text-inactive;
 }
 
+.topping__special-instructions__textarea {
+  margin-top: $space-md;
+}
+
+.topping__comment__special-instructions {
+  text-overflow: ellipsis;
+  color: $color-text-inactive
+}
+
 .topping__header__arrow {
   padding: 6px;
   float: right;

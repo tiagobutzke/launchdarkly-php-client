@@ -10,6 +10,7 @@ var CartItemModel = Backbone.Model.extend({
         choices: [],
         group_order_user_name: null,
         group_order_user_code: null,
+        special_instructions: '',
         description: ""
     },
 
@@ -213,9 +214,11 @@ var VendorCartModel = Backbone.Model.extend({
             if (productFromCart && productFromCart.cid !== cartItemToUpdate.cid) {
                 this.removeItem(cartItemToUpdate);
                 productFromCart.set('quantity', productFromCart.get('quantity') + newSelection.quantity);
+                productFromCart.set('special_instructions', newSelection.special_instructions);
             } else {
                 cartItemToUpdate.toppings.set(newToppings);
                 cartItemToUpdate.set('quantity', newSelection.quantity);
+                cartItemToUpdate.set('special_instructions', newSelection.special_instructions);
             }
         }
 
@@ -269,9 +272,10 @@ var VendorCartModel = Backbone.Model.extend({
 
             var sameVariation = product.product_variation_id === productToSearch.product_variation_id,
                 sameToppings = compareArrays(product.toppings, productToSearch.toppings),
+                sameInstructions = compareArrays(product.special_instructions, productToSearch.special_instructions),
                 sameChoices = compareArrays(product.choices, productToSearch.choices);
 
-            return sameVariation && sameChoices && sameToppings;
+            return sameVariation && sameChoices && sameToppings && sameInstructions;
         });
     }
 });

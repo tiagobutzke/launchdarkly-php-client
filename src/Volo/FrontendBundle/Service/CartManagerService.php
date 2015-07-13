@@ -136,6 +136,8 @@ class CartManagerService
 
         if (array_key_exists('vendorCart', $response)) {
             $response['order_time'] = $cartOrderTime;
+
+            $response = $this->repopulateSpecialInstructions($jsonCart, $response);
         }
 
         return $this->fixMinDeliveryFeeDiscount($jsonCart['vendor_id'], $response);
@@ -240,5 +242,28 @@ class CartManagerService
         }
 
         return $apiResult;
+    }
+
+    /**
+     * @param array $jsonCart
+     * @param       $response
+     *
+     * @return array
+     */
+    protected function repopulateSpecialInstructions(array $jsonCart, $response)
+    {
+        foreach ($jsonCart['products'] as $product) {
+            foreach ($response['vendorCart'] as &$vendorCart) {
+                if ($vendorCart['vendor_id'] === $jsonCart['vendor_id']) {
+                    foreach ($vendorCart['products'] as &$responseProduct) {
+                        if ($product['variation_id'] === $responseProduct['product_variation_id']) {
+                            $responseProduct['special_instructions'] = $product['special_instructions'];
+                        }
+                    }
+                }
+            }
+        }
+
+        return $response;
     }
 }

@@ -3,7 +3,9 @@
 namespace Volo\FrontendBundle\Service;
 
 use Doctrine\Common\Cache\Cache;
+use Foodpanda\ApiSdk\Entity\Product\Product;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
+use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Foodpanda\ApiSdk\Provider\CityProvider;
 use Foodpanda\ApiSdk\Provider\VendorProvider;
 
@@ -109,4 +111,34 @@ class VendorService
         }
     }
 
+    /**
+     * @param $vendorId
+     * @param $variationId
+     *
+     * @throws \RuntimeException
+     * @return Product
+     */
+    public function getProduct($vendorId, $variationId)
+    {
+        try {
+            $vendor = $this->vendorProvider->find($vendorId);
+        } catch (ApiErrorException $exception) {
+            throw new \RuntimeException(sprintf('Vendor %s not found!', $vendorId));
+        }
+
+        foreach ($vendor->getMenus() as $menu) {
+            foreach ($menu->getMenuCategories() as $category) {
+                /** @var Product $product */
+                foreach ($category->getProducts() as $product) {
+                    foreach ($product->getProductVariations() as $variation) {
+                        if ($variation->getId() === $variationId) {
+                            return $product;
+                        }
+                    }
+                }
+            }
+        }
+
+        throw new \RuntimeException(sprintf('Product with variation %s not found!', $variationId));
+    }
 }

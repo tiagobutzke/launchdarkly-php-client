@@ -84,7 +84,8 @@ describe("A cart", function() {
                     "choices": _.cloneDeep(product.choices),
                     "group_order_user_name": null,
                     "group_order_user_code": null,
-                    description: ""
+                    description: "",
+                    "special_instructions": ''
                 };
             });
 
@@ -111,6 +112,7 @@ describe("A cart", function() {
             "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
             "file_path": null,
             "half_type": null,
+            "special_instructions": '',
             "product_variations": [{
                 "id": 859,
                 "code": null,
@@ -144,6 +146,7 @@ describe("A cart", function() {
             "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
             "file_path": null,
             "half_type": null,
+            "special_instructions": '',
             "product_variations": [{
                 "id": 859,
                 "code": null,
@@ -197,6 +200,7 @@ describe("A cart", function() {
             "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
             "file_path": null,
             "half_type": null,
+            "special_instructions": '',
             "product_variations": [{
                 "id": 859,
                 "code": null,
@@ -233,6 +237,7 @@ describe("A cart", function() {
             total_price_before_discount: null,
             total_price: 7.9,
             quantity: 3,
+            "special_instructions": '',
             toppings: [{
                 id: 1,
                 type: 'full',
@@ -259,6 +264,7 @@ describe("A cart", function() {
             "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
             "file_path": null,
             "half_type": null,
+            "special_instructions": '',
             "product_variations": [{
                 "id": 859,
                 "code": null,
@@ -303,6 +309,7 @@ describe("A cart", function() {
             "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
             "file_path": null,
             "half_type": null,
+            "special_instructions": '',
             "product_variations": [{
                 "id": 859,
                 "code": null,
@@ -343,6 +350,7 @@ describe("A cart", function() {
             "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
             "file_path": null,
             "half_type": null,
+            "special_instructions": '',
             "product_variations": [{
                 "id": 859,
                 "code": null,
@@ -394,6 +402,7 @@ describe("A cart", function() {
             "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
             "file_path": null,
             "half_type": null,
+            "special_instructions": '',
             "product_variations": [{
                 "id": 859,
                 "code": null,
@@ -427,6 +436,7 @@ describe("A cart", function() {
             "description": "",
             "file_path": null,
             "half_type": null,
+            "special_instructions": '',
             "product_variations": [{
                 "id": 8545,
                 "code": null,
@@ -450,6 +460,7 @@ describe("A cart", function() {
             "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
             "file_path": null,
             "half_type": null,
+            "special_instructions": '',
             "product_variations": [{
                 "id": 859,
                 "code": null,
@@ -479,6 +490,7 @@ describe("A cart", function() {
             "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
             "file_path": null,
             "half_type": null,
+            "special_instructions": '',
             "product_variations": [{
                 "id": 859,
                 "code": null,
@@ -512,6 +524,7 @@ describe("A cart", function() {
             "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
             "file_path": null,
             "half_type": null,
+            "special_instructions": '',
             "product_variations": [{
                 "id": 859,
                 "code": null,
@@ -547,6 +560,7 @@ describe("A cart", function() {
             "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
             "file_path": null,
             "half_type": null,
+            "special_instructions": '',
             "product_variations": [{
                 "id": 859,
                 "code": null,
@@ -597,6 +611,7 @@ describe("A cart", function() {
             "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
             "file_path": null,
             "half_type": null,
+            "special_instructions": '',
             "product_variations": [{
                 "id": 859,
                 "code": null,
@@ -639,6 +654,7 @@ describe("A cart", function() {
             "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
             "file_path": null,
             "half_type": null,
+            "special_instructions": '',
             "product_variations": [{
                 "id": 859,
                 "code": null,
@@ -691,6 +707,7 @@ describe("A cart", function() {
             "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
             "file_path": null,
             "half_type": null,
+            "special_instructions": '',
             "product_variations": [{
                 "id": 859,
                 "code": null,
@@ -733,6 +750,7 @@ describe("A cart", function() {
             "description": "Saftig-zartes Hühnerbrustfilet in unserer würzigen Kräuter-Marinade mit mediterranem Nudelsalat und Salsa Rossa Piccante Dip oder Kräuterbutter",
             "file_path": null,
             "half_type": null,
+            "special_instructions": '',
             "product_variations": [{
                 "id": 859,
                 "code": null,

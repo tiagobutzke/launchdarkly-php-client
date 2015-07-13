@@ -333,6 +333,15 @@ td.summary__item__name {
   }
 }
 
+.summary__item__special-instructions {
+  line-height: 1.15em;
+  display: block;
+  color: $color-text-secondary;
+  margin-top: 3px;
+  font-weight: normal;
+  text-overflow: ellipsis;
+}
+
 td.summary__item__price {
   position: relative;
   padding-right: 0;
