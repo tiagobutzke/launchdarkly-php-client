@@ -82,7 +82,7 @@ class VendorExtension extends \Twig_Extension
     {
         /** @var ArrayCollection $openingPeriods */
         // We exclude the last closing interval of all periods by adding a 1 min offset.
-        $openingPeriods = $this->scheduleService->getNextFourDaysOpenings($vendor, $start, $vendor->getMinimumDeliveryTime(), -1);
+        $openingPeriods = $this->scheduleService->getNextFourDaysOpenings($vendor, $start, new \DateInterval('PT30M'), $vendor->getMinimumDeliveryTime(), -1);
 
         if ($openingPeriods->isEmpty()) {
             return new ArrayCollection();

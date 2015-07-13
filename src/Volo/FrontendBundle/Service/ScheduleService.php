@@ -51,7 +51,7 @@ class ScheduleService
     {
         /** @var ArrayCollection $fourDaysPeriod */
         /** @var ArrayCollection $openingAndClosingHours */
-        $fourDaysPeriod = $this->getNextFourDaysOpenings($vendor, $date);
+        $fourDaysPeriod = $this->getNextFourDaysOpenings($vendor, $date, new \DateInterval('PT1M'));
 
         if ($fourDaysPeriod->isEmpty()) {
             return new ArrayCollection();
@@ -83,10 +83,14 @@ class ScheduleService
     protected function filterOpeningAndClosingHours(Vendor $vendor, ArrayCollection $collection)
     {
         return $collection->filter(function(\DateTime $time) use ($vendor) {
+            if (in_array($time->format('H:i'), ['00:00', '23:59'])) {
+                return true;
+            }
+
             $after  = clone $time;
             $before = clone $time;
-            $after->modify('+16 minutes');
-            $before->modify('-16 minutes');
+            $after->modify('+1 minutes');
+            $before->modify('-1 minutes');
 
             $closedBefore = !$this->isVendorOpen($vendor, $before);
             $closedAfter  = !$this->isVendorOpen($vendor, $after);
@@ -108,17 +112,26 @@ class ScheduleService
         $dailySpecialDays = $this->getDailySpecialsDays($vendor->getSpecialDays(), $time);
         $dailySchedules = $this->getDailySchedules($vendor->getSchedules(), $time->format('N'));
 
+        $isSpecialClose = false;
+        $isSpecialOpen = false;
         // special days have higher priority than normal schedules
         /** @var SpecialDay $day */
         foreach ($dailySpecialDays as $day) {
             list($opening, $closing) = $this->getOpeningAndClosingTimes($time, $day, $openingOffset, $closingOffset);
 
-            if ($opening <= $time && $time <= $closing && $day->getOpeningType() === 'closed') {
-                return false;
+            if ($opening <= $time && $time <= $closing && in_array($day->getOpeningType(), ['closed', 'unavailable'])) {
+                $isSpecialClose = true;
             }
             if ($opening <= $time && $time <= $closing && $day->getOpeningType() === 'delivering') {
-                return true;
+                $isSpecialOpen = true;
             }
+        }
+
+        if ($isSpecialClose) {
+            return false;
+        }
+        if ($isSpecialOpen) {
+            return true;
         }
 
         // otherwise, start checking the schedules.
@@ -142,8 +155,13 @@ class ScheduleService
      *
      * @return ArrayCollection [ArrayCollection]
      */
-    public function getNextFourDaysOpenings(Vendor $vendor, \DateTime $start, $openingOffset = 0, $closingOffset = 0)
-    {
+    public function getNextFourDaysOpenings(
+        Vendor $vendor,
+        \DateTime $start,
+        \DateInterval $interval,
+        $openingOffset = 0,
+        $closingOffset = 0
+    ) {
         $results = new ArrayCollection();
 
         $end = clone $start;
@@ -156,7 +174,7 @@ class ScheduleService
             $endDay = clone $day;
             $endDay->setTime(23, 59, 59);
             /** @var \DateTime $time */
-            foreach (new \DatePeriod($day, new \DateInterval('PT30M'), $endDay) as $time) {
+            foreach (new \DatePeriod($day, $interval, $endDay) as $time) {
                 if ($this->isVendorOpen($vendor, $time, $openingOffset, $closingOffset)) {
                     $dailyResults->add($time);
                 }
