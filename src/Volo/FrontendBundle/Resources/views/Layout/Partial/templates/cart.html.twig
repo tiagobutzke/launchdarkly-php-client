@@ -80,6 +80,12 @@
             <p class="desktop-cart_order__message">
                 {{ 'cart.order_message'|trans }}
             </p>
+            {% if showSpecialInstructionsTutorial %}
+                <div class="desktop-cart__special-instructions-tutorial">
+                    <div class="desktop-cart__special-instructions-tutorial__text">{% trans %}cart.special_instructions_tutorial{% endtrans %}</div>
+                    <button class="desktop-cart__special-instructions-tutorial__dismiss button">{% trans %}button.dismiss{% endtrans %}</button>
+                </div>
+            {% endif %}
         </div>
         <!-- Actual Cart -->
         {#<h3 class="desktop-cart__title">{{ 'My Order'|trans }}</h3>#}

@@ -170,6 +170,7 @@ class CheckoutController extends BaseController
             'default_address'    => $restaurantLocation,
             'customer'           => $serializer->normalize(new Customer()),
             'customer_addresses' => [],
+            'showSpecialInstructionsTutorial' => false
         ];
 
         $viewData = $this->addViewDataForAuthenticatedUser($vendor, $viewData);

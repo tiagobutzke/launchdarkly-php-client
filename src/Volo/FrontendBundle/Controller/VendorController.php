@@ -72,12 +72,26 @@ class VendorController extends BaseController
             }
         }
 
+        $specialInstructionsService = $this->get('volo_frontend.service.special_instructions_tutorial');
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $customer = $this->getToken()->getAttribute('customer');
+            $specialInstructionsTutorialEnabled = $specialInstructionsService->isTutorialEnabledForCustomer($customer);
+            if ($specialInstructionsTutorialEnabled
+                && !$specialInstructionsService->isTutorialEnabledForGuest($request)) {
+                $specialInstructionsService->disableTutorialForCustomer($customer);
+                $specialInstructionsTutorialEnabled = false;
+            }
+        } else {
+            $specialInstructionsTutorialEnabled = $specialInstructionsService->isTutorialEnabledForGuest($request);
+        }
+
         return [
             'vendor'        => $vendor,
             'cart'          => $cart,
             'address'       => is_array($customerLocation) ? $customerLocation[CustomerLocationService::KEY_PLZ] : '',
             'location'      => $customerLocation,
             'isDeliverable' => $isDeliverable,
+            'showSpecialInstructionsTutorial' => $specialInstructionsTutorialEnabled
         ];
     }
 
