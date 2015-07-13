@@ -118,6 +118,13 @@
                                      alt="alt-text"/>
                                 {% set label_credit_cart = 'payment.paymentTypeCode' %}
                             {% endif %}
+                            {% if payment.paymentTypeCode == 'adyen_hpp' %}
+                                <img class="b-lazy"
+                                     src=data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+                                     data-src="{{ asset('img/checkout/ideal.png') }}|{{ asset('img/checkout/ideal-2x.png') }}"
+                                     alt="alt-text"/>
+                                {% set label_credit_cart = 'payment.label_adyen_hpp' %}
+                            {% endif %}
                         </div>
                         <div class="checkout__payment_label"><i class="icon-check"></i>{{ label_credit_cart|trans }}
                         </div>
@@ -130,6 +137,14 @@
                 </div>
                 <div class="checkout__payment_paypal_description__text">
                     {% trans %}generic.payment_paypal_description_text{% endtrans %}
+                </div>
+            </div>
+            <div class="checkout__payment_adyen_hpp_description hide">
+                <div class="checkout__payment_adyen_hpp_description__title">
+                    {% trans %}generic.payment__adyen_hpp_description_title{% endtrans %}
+                </div>
+                <div class="checkout__payment_adyen_hpp_description__text">
+                    {% trans %}generic.payment_adyen_hpp_description_text{% endtrans %}
                 </div>
             </div>
         </div>
@@ -170,15 +185,16 @@
 
     <div class="clearfix"></div>
     <div class="checkout-button">
-        {% set paypalError = app.session.flashbag.get('paypal-error') %}
-        <span class="error_msg {{ paypalError|length > 0 ? '' : 'hide' }}">
-            {% if paypalError|length > 0 %}{% trans %}paypal.payment_error{% endtrans %}{% endif %}
+        {% set hostedPaymentError = app.session.flashbag.get('payment_error') %}
+        <span class="error_msg {{ hostedPaymentError|length > 0 ? '' : 'hide' }}">
+            {% if hostedPaymentError|length > 0 %}{{ hostedPaymentError|first|trans }}{% endif %}
         </span>
         <div class="checkout__submit">
             <button id="finish-and-pay" class="button">{% trans %}button.finish_and_pay{% endtrans %}</button>
         </div>
         <div class="checkout__disclaimer">{% trans %}checkout.disclamer{% endtrans %}</div>
         <div class="clearfix"></div>
+        {% include('VoloFrontendBundle:Layout/Partial/templates:form_redirect.html.twig') %}
     </div>
 
     <div class="checkout__legal">
