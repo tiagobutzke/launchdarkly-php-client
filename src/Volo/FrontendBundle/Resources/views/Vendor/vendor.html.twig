@@ -102,7 +102,9 @@
                         {% endfor %}
                     {% endfor %}
                     <div class="menu__icon-legend"><i class="icon-info-circled"></i><a class="btn-allergy">{% trans %}allergy.headline{% endtrans %}</a></div>
-                    <div class="menu__legal"><span>{% trans with {'%legal_name%': vendor.addressLine2 }%}vendor.sold_by %legal_name%{% endtrans %}</span></div>
+                    {% if vendor.addressLine2 is not empty %}
+                        <div class="menu__legal"><span>{% trans with {'%legal_name%': vendor.addressLine2 }%}vendor.sold_by %legal_name%{% endtrans %}</span></div>
+                    {% endif %}
                 </div>
 
             </div>
