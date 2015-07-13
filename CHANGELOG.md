@@ -1,6 +1,25 @@
 CHANGELOG
 =========
 
+* 1.7.1
+
+  * SGFD-18006: Postalcode validation
+
+* 1.7.0
+
+  * SGFD-17861: Homepage / France / 29 minutes avg. delivery time
+  * SGFD-17942: Legal name hidden if empty
+  * SGFD-17837: Animation fixes
+  * SGFD-17765: Clean cart on logout
+  * SGFD-17635: Fix hardcoded GTM country
+  * SGFD-17986: GTM GA Fixes (conversions, instances)
+  * SGFD-17892: Topping overlay improvements
+  * SGFD-17860: Restaurant special note
+  * SGFD-17709: Ideal payment
+  * SGFD-17866: Footer / Cms links should be a CMS block
+  * SGFD-17280: Special instructions
+  * SGFD-17242: Special closing, race condition fix, opening/closing hours fix
+
 * 1.6.1
 
   * SGFD-17203 city redirects fix (muenchen, koeln, duesseldorf)
