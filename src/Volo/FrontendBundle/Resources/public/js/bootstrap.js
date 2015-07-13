@@ -287,6 +287,16 @@ VOLO.OrderTracking = function () {
     });
 };
 
+VOLO.createLogoutLinkView = function(cartModel) {
+    var view = new VOLO.LogoutLinkView({
+        el: '.logout-link',
+        model: cartModel
+    });
+
+    VOLO.views.push(view);
+    return view;
+};
+
 VOLO.doBootstrap = function(configuration) {
     window.blazy.revalidate();
 
@@ -345,6 +355,10 @@ VOLO.doBootstrap = function(configuration) {
     if ($('#show-login-overlay').length > 0) {
         var existingUserLoginView = VOLO.createExistingUserLoginView();
         existingUserLoginView.render();
+    }
+
+    if ($('.logout-link').length > 0) {
+        VOLO.createLogoutLinkView(cartModel);
     }
 
     var GTMServiceInstance = VOLO.initGTMService(
