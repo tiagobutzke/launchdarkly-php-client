@@ -5,7 +5,8 @@
 
   .login-registration-link {
     margin-top: $space-sm;
-    font-size: 0.875em;
+    font-size: $font-size-1_4rem;
+    line-height: 1.83;
   }
 
   .modal-error-message {

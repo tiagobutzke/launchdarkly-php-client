@@ -45,55 +45,54 @@
   rgba(100, 100, 0, 0.0470588) -18px -16px 10px,
   rgba(100, 100, 0, 0.0470588) -30px -27px 15px,
   rgba(100, 100, 0, 0.0470588) -45px -41px 21px;
-  font-size: 8.2em;
+  font-size: $font-size-13rem;
   @include respond-from("screen-sm") {
     display: none;
   }
 }
 .error-page__blocks--general .error-page__block__error-code--shadowed-static {
-  font-size: 4em;
+  font-size: $font-size-6_4rem;
 }
 .error-page__block__error-code--shadowed-dynamic {
-  font-size: 14em;
+  font-size: $font-size-22_4rem;
   @include appear-from("screen-sm");
 }
 .error-page__blocks--general .error-page__block__error-code--shadowed-dynamic {
    @include respond-from("screen-sm") {
-     font-size: 6em;
+     font-size: $font-size-9_6rem;
    }
    @include respond-from("screen-md") {
-     font-size: 7.4em;
+     font-size: $font-size-11_8rem;
    }
    @include respond-from("screen-lg") {
-     font-size: 9em;
+     font-size: $font-size-14_4rem;
    }
  }
-
 
 .error-page__block__error-title {
   font-family: $satisfy-font-family;
   color: $color-text-highlight;
-  font-size: 1.5em;
+  font-size: $font-size-2_4rem;
   font-weight: normal;
   margin: 0;
   line-height: normal;
   @include respond-from("screen-sm") {
-    font-size: 1.7em;
+    font-size: $font-size-2_8rem;
   }
 }
 
-
 .error-page__block__error-message {
   font-family: $base-font-family;
-  font-size: 0.9em;
+  font-size: $font-size-1_6rem;
   font-weight: normal;
   line-height: normal;
   margin: 0;
   padding-bottom: 60px;
   @include respond-from("screen-sm") {
-    font-size: 1.15em;
+    font-size: $font-size-2_4rem;
   }
 }
+
 .error-page__blocks--general .error-page__block__error-message {
   width: 80%;
   margin: 0 auto;

@@ -21,8 +21,8 @@
   background-color: $color-bg-primary;
   @include make-md-column(10);
   @extend .col-md-push-1;
-  font-size: 0.875em;
-  line-height: 1.4em;
+  font-size: $font-size-1_4rem;
+  line-height: 1.36;
   @include respond-from("screen-md") {
     padding: $grid-gutter-width;
     margin-bottom: $space-md * 2;
@@ -31,7 +31,7 @@
 
 // Style is used in CMS. Never change or delete the corresponding css selector
 .static-page__block h2 {
-  font-size: 0.875em;
+  font-size: $font-size-1_2rem;
   margin: 0;
   padding: 0;
   line-height: normal;

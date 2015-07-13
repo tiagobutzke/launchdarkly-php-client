@@ -34,20 +34,20 @@
 
 .hero-menu__info__headline {
   font-family: $bold-font-family;
-  font-size: 1em;
+  font-size: $font-size-1_6rem;
   text-transform: uppercase;
   line-height: normal;
   margin: 0;
   padding: $space-xs;
   @include text-overflow();
   @include respond-from("screen-sm") {
-    font-size: 1.4em;
+    font-size: $font-size-2_2rem;
   }
   @include respond-from("screen-md") {
-    font-size: 1.6em;
+    font-size: $font-size-2_4rem;
   }
   @include respond-from("screen-lg") {
-    font-size: 2em;
+    font-size: $font-size-3_2rem;
     padding: $space-sm;
   }
 }
@@ -63,17 +63,17 @@
   font-family: $base-font-family;
   display: block;
   @include text-overflow();
-  font-size: 1.4em;
+  font-size: $font-size-2_2rem;
   line-height: normal;
   margin: 0;
   @include appear-from("screen-md");
   @include respond-from("screen-lg") {
-    font-size: 1.3em;
+    font-size: $font-size-2_2rem;
   }
 }
 
 .hero-menu__info-extra {
-  font-size: 0.835em;
+  font-size: $font-size-1_4rem;
   width: 100%;
   @include centerTextVerticallyByHeight(40px);
   padding: 0;
@@ -152,7 +152,7 @@
 
 .menu__categories__list-item {
    @include make-link($color-text-primary, $color-text-highlight);
-   font-size: 0.875em;
+   font-size: $font-size-1_4rem;
  }
 
 .menu__items {
@@ -163,7 +163,7 @@
 
 .menu__items__title {
   font-family: $bold-font-family;
-  font-size: 0.750em;
+  font-size: $font-size-1_2rem;
   @extend .text-center;
   border-bottom: $base-border;
   padding: 35px 0 15px;
@@ -171,7 +171,7 @@
   text-transform: uppercase;
   line-height: normal;
   @include respond-from("screen-md") {
-    font-size: 0.875em;
+    font-size: $font-size-1_4rem;
     padding: 55px 0 25px;
   }
 }
@@ -186,7 +186,7 @@
 .menu__item {
   border-bottom: $base-border;
   line-height: normal;
-  font-size: 0.813em;
+  font-size: $font-size-1_4rem;
   padding: 0 $space-sm;
   float: left;
   width: 100%;
@@ -194,7 +194,7 @@
   min-height: 60px;
   @include transition(background-color .1s linear);
   @include respond-from("screen-md") {
-    font-size: 0.875em;
+    font-size: $font-size-1_4rem;
     min-height: 96px;
     padding: 0 $space-xs 0 $space-lg;
   }
@@ -253,7 +253,7 @@
 }
 
 .menu__item__price-button-icon {
-  font-size: 1.7em;
+  font-size: $font-size-2_2rem;
   display: inline-block;
   vertical-align: middle;
   margin-top: -1px;
@@ -262,10 +262,11 @@
 
 .menu__icon-legend {
   text-align:  center;
-  font-size: 0.875em;
+  font-size: $font-size-1_4rem;
   color: $color-text-light;
   padding-top: $space-sm * 3;
   padding-bottom: $space-sm;
+  line-height: 1.83;
 }
 
 .menu__icon-legend__info-icon {
@@ -280,9 +281,10 @@
 
 .menu__legal {
   text-align:  center;
-  font-size: 0.875em;
+  font-size: $font-size-1_4rem;
   color: $color-text-light;
   padding: 0 $space-sm $space-lg;
+  line-height: 1.83;
 }
 
 .menu__legal__vendor-name {
@@ -292,8 +294,9 @@
 
 .menu__bottom-info {
   @extend .clearfix;
-  font-size: 0.875em;
+  font-size: $font-size-1_4rem;
   padding: $space-xs $space-lg $space-lg $space-lg;
+  line-height: 1.83;
   @include respond-from("screen-md") {
     @include make-row();
     margin-top: 0;
@@ -331,7 +334,7 @@
 
 .menu__bottom-info__openings-day {
   text-align: left;
-  font-size: 0.875em;
+  font-size: $font-size-1_2rem;
   color: $color-text-secondary;
   display: inline-block;
 }
@@ -372,18 +375,18 @@
 
 .menu__allergy-modal__items {
   @include make-sm-column(6);
-  font-size: 0.875em;
+  font-size: $font-size-1_4rem;
 }
 
 .menu__allergy-modal__item {
   padding-left: 30px;
-  line-height: 20px;
+  line-height: 1.5;
   padding-bottom: 5px;
 }
 
 .menu__allergy-modal__item-icon {
   color: $color-text-light;
-  font-size: 1.2em;
+  font-size: 1.7rem;
   display: inline-block;
   width: 30px;
   margin-left: -30px;

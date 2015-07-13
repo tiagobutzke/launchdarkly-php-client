@@ -27,17 +27,17 @@
 }
 
 .tracking-hero__title {
-  font-size: 1em;
-  line-height: 1.2em;
+  font-size: $font-size-1_6rem;
+  line-height: 1.2;
   margin: 0;
   @include respond-from("screen-sm") {
-    font-size: 1.35em;
+    font-size: $font-size-2_2rem;
   }
   @include respond-from("screen-md") {
-    font-size: 1.8em;
+    font-size: $font-size-2_8rem;
   }
   @include respond-from("screen-lg") {
-    font-size: 2.2em;
+    font-size: $font-size-3_2rem;
   }
 }
 
@@ -57,11 +57,11 @@
 .tracking-header__app__message {
   @extend .pull-left;
   text-align: left;
-  line-height: 1.2em;
+  line-height: 1.21;
   padding-left: $space-sm;
   padding-top: $space-xs;
   width: 50%;
-  font-size: 0.9em;
+  font-size: $font-size-1_4rem;
 }
 
 .tracking-header__app__button {
@@ -125,7 +125,7 @@
 
 .tracking-step-last .tracking-step__image {
   padding-top: 1px;
-  font-size: 0.8em;
+  font-size: $font-size-1_6rem;
 }
 
 .tracking-step-active.tracking-step-last .tracking-step__image {
@@ -162,7 +162,7 @@
   position: relative;
   top: 9px;
   text-align: center;
-  font-size: 1em;
+  font-size: $font-size-1_6rem;
   color: white;
 }
 
@@ -176,49 +176,37 @@
   padding-right: 0;
 }
 
-@mixin tracking-step-title-text-xs {
-  padding-top: 43px;
-  font-size: 0.8em;
-  line-height: 1.4em;
-}
-
-@mixin tracking-step-title-text-sm {
-  font-size: 1em;
-}
-
-@mixin tracking-step-title-text-md {
-  font-size: 1.1em;
-}
-
 .tracking-step__message__title {
-  @include tracking-step-title-text-xs;
+  padding-top: 43px;
+  font-size: $font-size-1_4rem;
+  line-height: 1.36;
   width: 100%;
   margin: 0;
   text-transform: uppercase;
   @include respond-from("screen-sm") {
-    @include tracking-step-title-text-sm;
+    font-size: $font-size-1_6rem;
   }
   @include respond-from("screen-md") {
-    @include tracking-step-title-text-md;
+    font-size: $font-size-1_9rem;
   }
 }
 
 .tracking-step__message__text {
   display: none;
-  font-size: 0.8em;
-  line-height: 1.2em;
+  font-size: $font-size-1_4rem;
+  line-height: 1.21;
   color: $color-text-secondary;
   @include respond-from("screen-sm") {
-    font-size: 0.9em;
-    line-height: 1.3em;
+    font-size: $font-size-1_4rem;
+    line-height: 1.28;
   }
   @include respond-from("screen-md") {
-    font-size: 1em;
-    line-height: 1.4em;
+    font-size: $font-size-1_6rem;
+    line-height: 1.37;
   }
   @include respond-from("screen-lg") {
-    font-size: 1.1em;
-    line-height: 1.5em;
+    font-size: $font-size-1_9rem;
+    line-height: 1.4;
     width: 75%;
   }
 }
@@ -229,14 +217,16 @@
 
 .tracking-step__time {
   @extend .pull-left;
-  @include tracking-step-title-text-xs;
+  padding-top: 43px;
+  font-size: $font-size-1_4rem;
+  line-height: 1;
   width: 25%;
   text-align: right;
   @include respond-from("screen-sm") {
-    @include tracking-step-title-text-sm;
+    font-size: $font-size-1_6rem;
   }
   @include respond-from("screen-md") {
-    @include tracking-step-title-text-md;
+    font-size: $font-size-1_9rem;
   }
 }
 
@@ -266,33 +256,33 @@
 }
 
 .create_account__message__title {
-  font-size: 0.8em;
-  line-height: 1.4em;
+  font-size: $font-size-1_4rem;
+  line-height: 1.3;
   text-transform: uppercase;
   margin-top: 0;
   margin-bottom: $space-xs;
   @include respond-from("screen-sm") {
-    font-size: 1em;
+    font-size: $font-size-1_6rem;
   }
   @include respond-from("screen-md") {
-    font-size: 1.2em;
+    font-size: $font-size-1_9rem;
   }
 }
 
 .create_account__message__text {
-  font-size: 0.8em;
-  line-height: 1.2em;
+  font-size: $font-size-1_4rem;
+  line-height: 1.21;
   @include respond-from("screen-sm") {
-    font-size: 0.9em;
-    line-height: 1.3em;
+    font-size: $font-size-1_4rem;
+    line-height: 1.28;
   }
   @include respond-from("screen-md") {
-    font-size: 1em;
-    line-height: 1.4em;
+    font-size: $font-size-1_6rem;
+    line-height: 1.37;
   }
   @include respond-from("screen-lg") {
-    font-size: 1.1em;
-    line-height: 1.5em;
+    font-size: $font-size-1_9rem;
+    line-height: 1.42;
   }
 }
 

@@ -28,11 +28,11 @@
 }
 
 .country-se .header__logo__a  i {
-  font-size: 0.65em;
+  font-size: 2.3rem;
   @include respond-from("screen-md") {
-    font-size: 0.7em;
+    font-size: 2.5rem;
   }
   @include respond-from("screen-lg") {
-    font-size: 0.85em;
+    font-size: 3.1rem;
   }
 }
