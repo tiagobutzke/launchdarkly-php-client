@@ -11,6 +11,7 @@ VOLO.createCartModel = function (jsonCart) {
         parse: true
     });
 
+
     return VOLO.cartModel;
 };
 
@@ -88,8 +89,9 @@ VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel) {
         });
     }
     if ($('#finish-and-pay').length > 0) {
-        views.checkoutButtonView = new CheckoutButtonView({
-            el: '.checkout-button',
+        views.checkoutPageView = new CheckoutPageView({
+            el: '.checkout__main',
+            $header: $('.header'),
             model: checkoutModel
         });
     }
@@ -148,8 +150,8 @@ VOLO.renderCheckoutViews = function (checkoutViews) {
     if (checkoutViews.voucherView) {
         checkoutViews.voucherView.render();
     }
-    if (checkoutViews.checkoutButtonView) {
-        checkoutViews.checkoutButtonView.render();
+    if (checkoutViews.checkoutPageView) {
+        checkoutViews.checkoutPageView.render();
     }
     if (checkoutViews.checkoutDeliveryInformationView) {
         checkoutViews.checkoutDeliveryInformationView.render();

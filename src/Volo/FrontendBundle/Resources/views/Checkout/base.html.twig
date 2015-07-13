@@ -33,7 +33,7 @@
 {% block content %}
 <div class="checkout-wrapper">
     <div class="checkout">
-        <div class="checkout__main" data-vendor_id="{{ vendor.id }}">
+        <div class="checkout__main" data-vendor_id="{{ vendor.id }}" data-vendor_code="{{ vendor.code }}" data-vendor_id="{{ vendor.id}}" data-is_guest_user="{{ is_granted('IS_AUTHENTICATED_FULLY') ? 'false' : 'true'}}">
 
             {# delivery information #}
             {{ block('delivery_information') }}

@@ -1,5 +1,8 @@
 <form action="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}" id="delivery_information_form" method="post" role="form" novalidate>
     <div class="checkout__item checkout__item--step">
+        <span class="error_msg error-msg--above-form hide" id="error_msg_delivery_not_saved" style="margin-bottom: 15px;">
+            {% trans %}delivery_information.needs_to_be_saved{% endtrans %}
+        </span>
         <div class="form-group hide">
             <input
                     type="hidden"
@@ -60,7 +63,13 @@
         <input id="address_longitude" name="customer_address[longitude]" type="hidden"
                value="{{ customer_address.longitude|default('') }}">
         <input type="hidden" name="customer_address[city_id]" value="{{ vendor.city.id }}">
-        <button id="delivery_information_form_button" class="button" disabled="disabled">{% trans %}button.continue{% endtrans %}</button>
+        <button id="delivery_information_form_button" class="button" disabled="disabled">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% trans %}button.save{% endtrans %}
+            {% else %}
+                {% trans %}button.continue{% endtrans %}
+            {% endif %}
+        </button>
     </div>
 </form>
 <script type="text/template" id="template-delivery-modal">

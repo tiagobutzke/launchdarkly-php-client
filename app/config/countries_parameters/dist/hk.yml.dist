@@ -1,0 +1,7 @@
+imports:
+    - { resource: dist/common.yml }
+
+parameters:
+    country_code: hk
+    environment: development
+    locale: en_HK

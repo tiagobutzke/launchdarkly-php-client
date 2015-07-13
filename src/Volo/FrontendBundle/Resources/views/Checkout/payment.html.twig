@@ -32,7 +32,7 @@
         {% endif %}
 
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <h4 class="checkout__subtitle">{% trans %}title.delivery_address{% endtrans %}
+            <h4 class="checkout__subtitle" id="checkout-delivery-information-address">{% trans %}title.delivery_address{% endtrans %}
                 <span class="checkout__subtitle__edit">
                     <a id="add_new_address_link" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">
                         <i class="icon-plus"></i>
@@ -169,7 +169,7 @@
     </div>
 
     <div class="clearfix"></div>
-    <div class="checkout-button" data-vendor_code="{{ vendor.code }}" data-vendor_id="{{ vendor.id}}" data-is_guest_user="{{ is_granted('IS_AUTHENTICATED_FULLY') ? 'false' : 'true'}}">
+    <div class="checkout-button">
         {% set paypalError = app.session.flashbag.get('paypal-error') %}
         <span class="error_msg {{ paypalError|length > 0 ? '' : 'hide' }}">
             {% if paypalError|length > 0 %}{% trans %}paypal.payment_error{% endtrans %}{% endif %}

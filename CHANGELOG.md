@@ -21,9 +21,37 @@ CHANGELOG
   * SGFD-17725 Error pages - reduce font size
   * SGFD-17529 bootstrap.js cleanup
 
+* 1.4.11
+
+  * SGFD-17933: change continue to save for logged user on checkout contact form
+
+* 1.4.10
+
+  * SGFD-17837: Intl fix ( backported from 1.5.1 )
+
+* 1.4.9
+
+  * SGFD-17933: Checkout address bug (fix)
+
+* 1.4.8
+
+  * SGFD-17933: Checkout address bug
+
+* 1.4.7
+
+  * SGFD-17932: Checkout delivery validation bug
+
+* 1.4.6
+
+  * SGFD-17850: Cannot Deliver to Postal Code (fix)
+
+* 1.4.5
+
+  * SGFD-17850: Cannot Deliver to Postal Code (fix)
+
 * 1.4.4
 
-  * SGFD-17850 - geocode returns only postal_code result
+  * SGFD-17850: Cannot Deliver to Postal Code
 
 * 1.4.3
 
