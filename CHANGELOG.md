@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.4.10
+
+  * SGFD-17837: Intl fix ( backported from 1.5.1 )
+
 * 1.4.9
 
   * SGFD-17933: Checkout address bug (fix)
