@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.4.11
+
+  * SGFD-17933: change continue to save for logged user on checkout contact form
+
 * 1.4.10
 
   * SGFD-17837: Intl fix ( backported from 1.5.1 )
