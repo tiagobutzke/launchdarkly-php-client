@@ -243,18 +243,11 @@ VOLO.createVendorsListSearchView = function () {
     return vendorSearchView;
 };
 
-VOLO.initGTMService = function(checkoutModel, configuration, checkoutDeliveryValidationView, checkoutInformationValidationFormView) {
+VOLO.initGTMService = function(options) {
     if (_.isObject(VOLO.GTMServiceInstance)) {
         VOLO.GTMServiceInstance.unbind();
     }
-
-    VOLO.GTMServiceInstance = new VOLO.GTMService({
-        dataLayer: dataLayer,
-        checkoutModel: checkoutModel,
-        sessionId: configuration.sessionId,
-        checkoutDeliveryValidationView: checkoutDeliveryValidationView,
-        checkoutInformationValidationFormView: checkoutInformationValidationFormView
-    });
+    VOLO.GTMServiceInstance = new VOLO.GTMService(options);
 
     return VOLO.GTMServiceInstance;
 };
@@ -303,7 +296,13 @@ VOLO.doBootstrap = function(configuration) {
     window.blazy.revalidate();
 
     var locationModel = VOLO.createLocationModel(VOLO.jsonLocation),
-        gtmCheckoutValidationView, cartModel, checkoutModel, checkoutInformationValidationFormView;
+        gtmCheckoutValidationView,
+        cartModel,
+        checkoutModel,
+        checkoutInformationValidationFormView,
+        loginButtonView,
+        existingUserLoginView
+    ;
 
     if ($('.menu__main').length > 0) {
         cartModel = VOLO.createCartModel(VOLO.jsonCart);
@@ -329,8 +328,8 @@ VOLO.doBootstrap = function(configuration) {
     }
 
     if ($('.header__account').length > 0) {
-        var loginButtonView = VOLO.createLoginButtonView(),
-            $registerButton = $('.create_account__login__button');
+        loginButtonView = VOLO.createLoginButtonView();
+        var $registerButton = $('.create_account__login__button');
 
         if ($registerButton.length > 0) {
             VOLO.createRegistrationEvent($registerButton, loginButtonView);
@@ -355,7 +354,7 @@ VOLO.doBootstrap = function(configuration) {
     }
 
     if ($('#show-login-overlay').length > 0) {
-        var existingUserLoginView = VOLO.createExistingUserLoginView();
+        existingUserLoginView = VOLO.createExistingUserLoginView();
         existingUserLoginView.render();
     }
 
@@ -363,12 +362,14 @@ VOLO.doBootstrap = function(configuration) {
         VOLO.createLogoutLinkView(cartModel);
     }
 
-    var GTMServiceInstance = VOLO.initGTMService(
-        checkoutModel,
-        configuration,
-        gtmCheckoutValidationView,
-        checkoutInformationValidationFormView
-    );
+    var GTMServiceInstance = VOLO.initGTMService({
+        checkoutModel: checkoutModel,
+        sessionId: configuration.sessionId,
+        checkoutDeliveryValidationView: gtmCheckoutValidationView,
+        checkoutInformationValidationFormView: checkoutInformationValidationFormView,
+        loginButtonView: loginButtonView,
+        existingUserLoginView: existingUserLoginView
+    });
 
     _.invoke(VOLO.gtmViews, 'setGtmService', GTMServiceInstance);
 };

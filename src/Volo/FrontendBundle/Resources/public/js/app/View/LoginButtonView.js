@@ -6,6 +6,13 @@ var LoginButtonView = Backbone.View.extend({
         this.loginRegistrationView = new LoginRegistrationView({
             el:'#login-registration-modal'
         });
+
+        this.listenTo(this.loginRegistrationView, 'loginRegistrationView:login', function(data) {
+            this.trigger('loginRegistrationView:login', data);
+        }.bind(this));
+        this.listenTo(this.loginRegistrationView, 'loginRegistrationView:registration', function(data) {
+            this.trigger('loginRegistrationView:registration', data);
+        }.bind(this));
     },
 
     events: {

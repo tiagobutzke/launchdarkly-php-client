@@ -12,6 +12,13 @@ var ExistingUserLoginView = Backbone.View.extend({
             el: '#login-registration-modal',
             queryParams: queryParams
         });
+
+        this.listenTo(this.loginRegistrationView, 'loginRegistrationView:login', function(data) {
+            this.trigger('loginRegistrationView:login', data);
+        }.bind(this));
+        this.listenTo(this.loginRegistrationView, 'loginRegistrationView:registration', function(data) {
+            this.trigger('loginRegistrationView:registration', data);
+        }.bind(this));
     },
 
     render: function () {

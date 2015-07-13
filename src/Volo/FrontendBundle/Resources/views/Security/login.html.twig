@@ -8,7 +8,7 @@
             </div>
         {% endif %}
 
-        <form class="login-form" action="{{ path('login_check') }}" method="post" role="form" novalidate>
+        <form class="login-form" action="{{ path('login_check') }}" method="post" role="form" id="login-form" novalidate>
             <div class="form-group">
                 <input type="text" class="form-control" id="username" name="_username"
                        value="{{ last_username }}" required="true" placeholder="{% trans %}form.placeholder.username{% endtrans %}"
