@@ -12,7 +12,7 @@
             'pageType': 'User Account',
             'zipcode': '{{ customer_location().postcode }}',
             'city': '{{ customer_location().city }}',
-            'country': 'Germany',
+            'country': '{{ gtm_get_country() }}',
             'loggedIn': '{{ is_customer_authenticated_fully() ? 'true' : 'false' }}',
             'customerId': '{{ is_customer_authenticated_fully() ? get_authenticated_customer().id }}'
         });
