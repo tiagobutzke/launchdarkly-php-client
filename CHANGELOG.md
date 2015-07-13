@@ -1,6 +1,30 @@
 CHANGELOG
 =========
 
+* 1.4.9
+
+  * SGFD-17933: Checkout address bug (fix)
+
+* 1.4.8
+
+  * SGFD-17933: Checkout address bug
+
+* 1.4.7
+
+  * SGFD-17932: Checkout delivery validation bug
+
+* 1.4.6
+
+  * SGFD-17850: Cannot Deliver to Postal Code (fix)
+
+* 1.4.5
+
+  * SGFD-17850: Cannot Deliver to Postal Code (fix)
+
+* 1.4.4
+
+  * SGFD-17850: Cannot Deliver to Postal Code
+
 * 1.4.3
 
   * SGFD-17242 Changed opening/closing hours calculation
