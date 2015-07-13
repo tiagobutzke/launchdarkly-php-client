@@ -26,7 +26,7 @@ class LocationController extends Controller
      *      requirements={
      *          "latitude"="-?(\d*[.])?\d+",
      *          "longitude"="-?(\d*[.])?\d+",
-     *          "postcode"="\d+"
+     *          "postcode"="[a-zA-Z0-9\s]+"
      *      }
      * )
      * @Method({"GET"})
