@@ -328,6 +328,7 @@ a.hero-menu__headline__icon {
   font-size: 0.875em;
   color: $color-text-light;
   padding-top: $space-sm * 3;
+  padding-bottom: $space-sm;
 
   span {
     display: inline-block;
@@ -344,12 +345,17 @@ a.hero-menu__headline__icon {
   text-align:  center;
   font-size: 0.875em;
   color: $color-text-light;
-  padding: $space-sm;
+  padding: 0 $space-sm $space-lg;
 
   span {
     display: inline-block;
     margin-right: 14px;
   }
+}
+
+.menu__special-note {
+  @extend .menu__legal;
+  padding: 0 $space-sm $space-sm;
 }
 
 .menu__bottom-info {
