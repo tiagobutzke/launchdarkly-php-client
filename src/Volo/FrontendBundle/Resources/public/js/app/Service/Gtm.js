@@ -152,6 +152,9 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
 
     _push: function(data) {
         dataLayer.push(data);
-        _.invoke(ga.getAll(), 'send', 'event');
+
+        if (typeof(ga) !== 'undefined') {
+            _.invoke(ga.getAll(), 'send', 'event');
+        }
     }
 });

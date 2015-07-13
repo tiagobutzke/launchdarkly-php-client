@@ -377,7 +377,7 @@ VOLO.doBootstrap = function(configuration) {
 $(document).on('page:load page:restore', function () {
     console.log('page:load');
 
-    if (VOLO.firstQuery === false) {
+    if (VOLO.firstQuery === false && typeof(ga) !== 'undefined') {
         _.each(ga.getAll(), function(tracker){
             tracker.set('page', '/' + (location.pathname+location.search).substr(1));
             tracker.send('pageview');
