@@ -301,7 +301,8 @@ VOLO.doBootstrap = function(configuration) {
         checkoutModel,
         checkoutInformationValidationFormView,
         loginButtonView,
-        existingUserLoginView
+        existingUserLoginView,
+        cartIconView
     ;
 
     if ($('.menu__main').length > 0) {
@@ -327,7 +328,7 @@ VOLO.doBootstrap = function(configuration) {
         homeSearchView.render();
 
         if ($('.header__cart').length > 0) {
-            var cartIconView = VOLO.createCartIconView();
+            cartIconView = VOLO.createCartIconView();
             cartIconView.render();
         }
     }
@@ -346,7 +347,7 @@ VOLO.doBootstrap = function(configuration) {
         vendorSearchView.render();
 
         if ($('.header__cart').length > 0) {
-            var cartIconView = VOLO.createCartIconView();
+            cartIconView = VOLO.createCartIconView();
             cartIconView.render();
         }
     }
