@@ -99,7 +99,7 @@
 }
 
 .topping__comment__special-instructions {
-  text-overflow: ellipsis;
+  @include text-overflow();
   color: $color-text-inactive
 }
 
