@@ -120,7 +120,7 @@
     </div>
     <% if (selectedOptions.length > 0) { %>
         <% if (selectedOptions.length < quantity_minimum && options.length > quantity_minimum) { %>
-            <div class="topping__comment__help-text">
+            <div id="topping-comment-select-more-text" class="topping__comment__help-text">
                 {% trans with {'%missingQuantity%': '<%- (quantity_minimum - selectedOptions.length) %>'} %}topping.select_more %missingQuantity%{% endtrans %}
             </div>
         <% } %>
