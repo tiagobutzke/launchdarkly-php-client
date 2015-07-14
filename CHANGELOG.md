@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+* 1.7.3
+
+  * SGFD-18067: mobile cart fix
+  * SGFD-17892: Topping Overlay (ellipsis fix)
+
 * 1.7.2
 
   * SGFD-17942: Legal name in SE and NO (fix)
