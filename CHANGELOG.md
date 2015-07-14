@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.7.5
+
+  * SGFD-17861: Homepage / France / 29 minutes avg. delivery time (reverted)
+
 * 1.7.4
 
   * SGFD-18067: mobile cart fix
