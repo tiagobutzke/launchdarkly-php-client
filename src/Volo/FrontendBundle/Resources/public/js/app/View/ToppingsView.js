@@ -10,6 +10,7 @@ var ToppingOptionCommentView = Backbone.View.extend({
 
         this.$el.html(this.template(this.model.toJSON()));
         this.$('#topping-comment-help-text').toggle(optionsVisible || this.model._getSelectedItems().length === 0);
+        this.$('#topping-comment-select-more-text').toggle(!optionsVisible);
         this.$('#topping-comment-selected-items-list').toggle(!optionsVisible);
 
         return this;

@@ -100,6 +100,9 @@ class PaymentGatewayController extends Controller
             case $request->query->has('paymentMethod') && $request->query->has('authResult'): // adyen hpp
                 return sprintf('%s.payment_error', $request->query->get('paymentMethod'));
                 break;
+            case $request->query->has('authResult'): // adyen hpp cancel doesn't provide payment method field
+                return 'general.payment_error';
+                break;
             default:
                 throw new BadRequestHttpException('Payment method not recognized');
         }

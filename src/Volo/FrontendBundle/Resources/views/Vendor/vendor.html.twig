@@ -106,7 +106,7 @@
                     {% if specialNote is not empty %}
                         <div class="menu__special-note"><span>{{ specialNote }}</span></div>
                     {% endif %}
-                    {% if vendor.addressLine2 is not empty %}
+                    {% if country_code not in ['se', 'no'] %}
                         <div class="menu__legal"><span>{% trans with {'%legal_name%': vendor.addressLine2 }%}vendor.sold_by %legal_name%{% endtrans %}</span></div>
                     {% endif %}
                 </div>

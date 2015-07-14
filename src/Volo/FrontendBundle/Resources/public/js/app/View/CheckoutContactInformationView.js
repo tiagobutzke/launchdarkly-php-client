@@ -45,10 +45,8 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
     },
 
     _submit: function() {
-        if (this.$('#newsletter_checkbox').lenght > 0) {
-            this.trigger('validationView:validateSuccessful', {
-                newsletterSignup: this.$('#newsletter_checkbox').is(':checked')
-            });
-        }
+        this.trigger('validationView:validateSuccessful', {
+            newsletterSignup: this.$('#newsletter_checkbox').is(':checked')
+        });
     }
 });
