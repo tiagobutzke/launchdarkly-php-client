@@ -1,9 +1,12 @@
 CHANGELOG
 =========
 
-* 1.7.3
+* 1.7.4
 
   * SGFD-18067: mobile cart fix
+
+* 1.7.3
+
   * SGFD-17892: Topping Overlay (ellipsis fix)
 
 * 1.7.2
