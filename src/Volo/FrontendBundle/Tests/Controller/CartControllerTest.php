@@ -32,6 +32,7 @@ class CartControllerTest extends VoloTestCase
                         ],
                     ],
                     'choices' => [],
+                    'special_instructions' => '',
                 ]
             ],
             'location' => [
