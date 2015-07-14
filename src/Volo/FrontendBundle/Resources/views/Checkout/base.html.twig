@@ -7,6 +7,20 @@
 
 {% block headerClass %}header--white header-small{% endblock headerClass %}
 
+{% block google_tag_manager %}
+    <script type="text/javascript" data-turbolinks-eval=always>
+        dataLayer.push({
+            'pageType': 'Checkout',
+            'zipcode': '{{ customer_location().postcode }}',
+            'city': '{{ customer_location().city }}',
+            'country': '{{ gtm_get_country() }}',
+            'loggedIn': '{{ is_customer_authenticated_fully() ? 'true' : 'false' }}',
+            'customerId': '{{ is_customer_authenticated_fully() ? get_authenticated_customer().id }}'
+        });
+    </script>
+    {% block gtm_checkout_extension %}{% endblock %}
+{% endblock %}
+
 {% block footer_scripts %}
 
     <script data-turbolinks-eval=always>
@@ -15,19 +29,6 @@
         VOLO.jsonLocation = {{ location|to_escaped_json }};
     </script>
 
-    {% block google_tag_manager %}
-        <script type="text/javascript" data-turbolinks-eval=always>
-            dataLayer.push({
-                'pageType': 'Checkout',
-                'zipcode': '{{ customer_location().postcode }}',
-                'city': '{{ customer_location().city }}',
-                'country': '{{ gtm_get_country() }}',
-                'loggedIn': '{{ is_customer_authenticated_fully() ? 'true' : 'false' }}',
-                'customerId': '{{ is_customer_authenticated_fully() ? get_authenticated_customer().id }}'
-            });
-        </script>
-        {% block gtm_checkout_extension %}{% endblock %}
-    {% endblock %}
 {% endblock footer_scripts %}
 
 {% block content %}
