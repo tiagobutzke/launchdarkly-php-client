@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+* 1.7.2
+
+  * SGFD-17942: Legal name in SE and NO (fix)
+  * SGFD-17892: Topping Overlay / 2 Improvements (fix)
+  * SGFD-18032: GA check & checkout double tags
+
 * 1.7.1
 
   * SGFD-18006: Postalcode validation
