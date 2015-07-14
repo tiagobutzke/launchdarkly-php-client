@@ -152,8 +152,7 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
 
     _push: function(data) {
         dataLayer.push(data);
-
-        if (typeof(ga) !== 'undefined') {
+        if (_.isObject(window.ga)) {
             _.invoke(ga.getAll(), 'send', 'event');
         }
     }
