@@ -14,7 +14,7 @@ var CartToppingView = Backbone.View.extend({
 });
 
 var CartItemView = Backbone.View.extend({
-    tagName: 'tr',
+    tagName: 'tbody',
     className: 'cart__item',
     events: {
         'click .summary__item__name': '_editItem',
@@ -31,13 +31,13 @@ var CartItemView = Backbone.View.extend({
         this.template = _.template($('#template-cart-item').html());
         this.cartModel = options.cartModel;
         this.vendorId = options.vendorId;
-        this.listenTo(this.model.toppings, 'change', this.render);
+        this.listenTo(this.model.toppings, 'update', this.render);
         this.listenTo(this.model, 'change:quantity', this._updateItemQuantity);
     },
 
     render: function() {
         this.$el.html(this.template(this.model.toJSON()));
-        this._renderToppingViews(this.model.get('toppings'));
+        this._renderToppingViews(this.model.toppings.toJSON());
         this._toggleMinusAvailabilty(this.model.get('quantity'));
         this._toggleRemoveAvailabilty(this.model.get('quantity'));
 
@@ -57,12 +57,12 @@ var CartItemView = Backbone.View.extend({
     },
 
     _editItem: function() {
-        var menuItemData = this._getMenuItemData(),
-            menuToppings = this._getMenuItemToppings(menuItemData),
-            allToppingsWithSelection = this._getAllToppingsWithSelection(this.model.toppings.toJSON(), menuToppings);
+        var variationId = this.model.get('product_variation_id'),
+            menuItemData = $('[data-variation-id="' + variationId +'"]').data('object'),
+            menuToppings = menuItemData.product_variations[0].toppings;
 
-        var clone = new CartItemModel(this.model.toJSON());
-        clone.toppings = new ToppingCollection(allToppingsWithSelection);
+        var clone = this.model.clone();
+        clone.transformToppingsToMenuFormat(menuToppings);
 
         var view = new ToppingsView({
             el: '.modal-dialogs',
@@ -101,38 +101,6 @@ var CartItemView = Backbone.View.extend({
 
     _toggleRemoveAvailabilty: function(quantity) {
         this.$('.icon-cancel-circled').toggleClass('hide', quantity > 1);
-    },
-
-    _getAllToppingsWithSelection: function(cartToppings, menuToppings) {
-        var menuToppingsClone = _.cloneDeep(menuToppings);
-        return _.each(menuToppingsClone, function(menuTopping) {
-            _.each(menuTopping.options, function(option) {
-                if (_.findWhere(cartToppings, {id: option.id})) {
-                    option.selected = true;
-                }
-            });
-
-            return menuTopping;
-        });
-    },
-
-    _getMenuItemToppings: function(menuItemData) {
-        return menuItemData.product_variations[0].toppings;
-    },
-
-    _getMenuItemData: function() {
-        var $menuItems = $('.menu__item'),
-            variationId = this.model.get('product_variation_id'),
-            menuItem;
-
-        menuItem = _.find($menuItems, function(menuItem) {
-            var productVariations = $(menuItem).data().object.product_variations,
-                productVariation = productVariations ? productVariations[0] : {};
-
-            return productVariation.id === variationId;
-        }, this);
-
-        return menuItem ? $(menuItem).data().object : null;
     },
 
     unbind: function() {

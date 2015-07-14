@@ -311,9 +311,9 @@ var ToppingsView = Backbone.View.extend({
         }
 
         if (this.productToUpdate) {
-            this.cartModel.getCart(this.vendorId).updateItem(this.productToUpdate, this.model.toJSON()); //modify product
+            this.cartModel.getCart(this.vendorId).updateItem(this.productToUpdate, this.model); //modify product
         } else {
-            this.cartModel.getCart(this.vendorId).addItem(this.model.toJSON(), this.model.get('quantity')); //add product
+            this.cartModel.getCart(this.vendorId).addItem(this.model); //add product
         }
         this._closeModal();
     },

@@ -81,7 +81,7 @@
                         <h3 class="menu__items__title" id="menu__category-id-{{ menuCategory.id }}">{{ menuCategory.name }}</h3>
                         {% for product in menuCategory.products %}
                             {# ------ Please toggle "menu__item--selected" class on click to style selected item  #}
-                            <div class="menu__item" data-object='{{ serialize(product) }}'>
+                            <div class="menu__item" data-object='{{ serialize(product) }}' data-variation-id='{{ product.productVariations.first.id }}'>
                                 <div class="menu__item__wrapper">
                                     <div class="menu__item__name">
                                         {{ product.name }}
