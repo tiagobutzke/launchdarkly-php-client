@@ -16,7 +16,7 @@ VOLO.HeaderAnimations = (function() {
 
     HeaderAnimations.prototype.registerEvents = function() {
         if ($('.menu-page').length) {
-            $('.header__logo__restaurant-name').append($('.hero-menu__info__headline').text());
+            $('.header__logo__restaurant-name').text($('.hero-menu__info__headline').text());
             //only on menu page change logo to restaurant name
             this.$window.off('resize', this._changeLogoToRestaurantName).on('resize', this._changeLogoToRestaurantName);
             this.$window.off('scroll', this._changeLogoToRestaurantName).on('scroll', this._changeLogoToRestaurantName);
