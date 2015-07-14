@@ -198,7 +198,9 @@
     </div>
 
     <div class="checkout__legal">
-        <span>{% trans with {'%legal_name%': vendor.addressLine2 }%}vendor.sold_by %legal_name%{% endtrans %}</span>
+        {% if country_code not in ['se', 'no'] %}
+            <span>{% trans with {'%legal_name%': vendor.addressLine2 }%}vendor.sold_by %legal_name%{% endtrans %}</span>
+        {% endif %}
         <span>{% trans %}checkout.legal_disclamer{% endtrans %}</span>
     </div>
 {% endblock %}
