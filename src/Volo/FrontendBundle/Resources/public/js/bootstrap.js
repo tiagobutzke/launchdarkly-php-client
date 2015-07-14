@@ -325,6 +325,11 @@ VOLO.doBootstrap = function(configuration) {
     if ($('.teaser__form').length > 0) {
         var homeSearchView = VOLO.createHomeSearchView(locationModel);
         homeSearchView.render();
+
+        if ($('.header__cart').length > 0) {
+            var cartIconView = VOLO.createCartIconView();
+            cartIconView.render();
+        }
     }
 
     if ($('.header__account').length > 0) {
@@ -336,14 +341,14 @@ VOLO.doBootstrap = function(configuration) {
         }
     }
 
-    if ($('.header__cart').length > 0) {
-        var cartIconView = VOLO.createCartIconView();
-        cartIconView.render();
-    }
-
     if ($('.restaurants__tool-box').length > 0) {
         var vendorSearchView = VOLO.createVendorsListSearchView();
         vendorSearchView.render();
+
+        if ($('.header__cart').length > 0) {
+            var cartIconView = VOLO.createCartIconView();
+            cartIconView.render();
+        }
     }
 
     if ($('.order-status-wrapper').length > 0) {
