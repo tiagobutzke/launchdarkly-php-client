@@ -29,7 +29,7 @@ class CheckoutController extends Controller
     const SESSION_GUEST_CUSTOMER_KEY_TEMPLATE = 'checkout-guest';
 
     /**
-     * @Route("/{vendorCode}/delivery", name="checkout_delivery_information")
+     * @Route("/{vendorCode}/delivery", name="checkout_delivery_information", options={"expose"=true})
      * @Method({"GET", "POST"})
      * @Template()
      *
@@ -177,7 +177,7 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @Route("/{vendorCode}/payment", name="checkout_payment")
+     * @Route("/{vendorCode}/payment", name="checkout_payment", options={"expose"=true})
      * @Method({"GET", "POST"})
      * @Template()
      *

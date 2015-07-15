@@ -111,12 +111,13 @@
 </script>
 
 <script type="text/template" id="template-cart-checkout-button">
+    {% set is_guest_user = is_granted('IS_AUTHENTICATED_FULLY') ? 'false' : 'true' %}
     <% if (subtotal >= minimum_order_amount && subtotal > 0) { %>
-        <a class="button btn-checkout" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">
+        <button class="button btn-checkout button--full-width" data-vendor-code="{{ vendor.code }}" data-is-guest-user="{{ is_guest_user }}">
             <span>{% trans %}cart.checkout_link{% endtrans %}</span>
-        </a>
+        </button>
     <% } else { %>
-        <a class="button btn-below-minimum-amount button--disabled btn-checkout disabled">
+        <button class="button btn-below-minimum-amount button--disabled btn-checkout disabled button--full-width" data-is-guest-user="{{ is_guest_user }}">
             <span>
             <% if (subtotal > 0) { %>
                 {% trans with {'%min%': vendor.minimumOrderAmount|price} %}cart.cart_below_mininum_total_amount %min%{% endtrans %}
@@ -124,7 +125,7 @@
                 {% trans %}cart.cart_below_mininum_total_amount{% endtrans %}
             <% }; %>
             </span>
-        </a>
+        </button>
         <span class="desktop-cart__error__below-minimum-amount error_msg hide">{% trans %}cart.need_add_more_products_to_place_order{% endtrans %}</span>
     <% }; %>
 </script>
