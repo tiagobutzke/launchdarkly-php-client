@@ -4,7 +4,8 @@
         {% set normalImage = thumbor(asset(imageName, 'cdn_s3'), transformer.normal.key) %}
         {# @TODO: check if the retina key exists #}
         {% set retinaImage = thumbor(asset(imageName, 'cdn_s3'), transformer.retina.key) %}
+        {% set dataSourceAttribute =  'default' in transformer.normal.key ?  'data-src' : 'data-src-' ~ transformer.normal.key %}
 
-        data-src-{{ transformer.normal.key }}="{{ normalImage }}|{{ retinaImage }}"
+        {{ dataSourceAttribute }}="{{ normalImage }}|{{ retinaImage }}"
     {% endfor %}>
 </div>

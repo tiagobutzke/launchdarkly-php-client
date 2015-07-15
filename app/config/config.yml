@@ -98,6 +98,14 @@ jb_phumbor:
     # by convention all the trasnformations starting with "bp_" define the breakpoints
     transformations:
         # start of the breakpoints definition
+        bp_default:
+            resize: { width: 2000, height: 0 }
+            filters:
+                - { name: "quality", arguments: [60] }
+        bp_default_retina:
+            resize: { width: 4000, height: 0 }
+            filters:
+                - { name: "quality", arguments: [40] }
         bp_300:
             resize: { width: 300, height: 0 }
             filters:
