@@ -50,7 +50,7 @@ VOLO.documentReadyFunction = function() {
         $window: $(window),
         $document: $(document),
         targetSelector: '.restaurants__tool-box, .header',
-        className: 'restaurants__tool-box-sticking',
+        className: 'restaurants__tool-box--sticking',
         isActiveGetter: function() {
             return $('.restaurants').length && $('.header').length;
         },

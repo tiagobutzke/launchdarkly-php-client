@@ -2,22 +2,22 @@
     <a href="{{ path('vendor', {code: vendor.code, urlKey: vendor.urlKey}) }}">
         <div class="restaurants__item">
             <div class="restaurants__item__wrapper">
-                <div class="restaurants__item__wrapper__picture">
+                <div class="restaurants__item__image-wrapper">
                     <div class="restaurants__item__preorder">
-                        <i class="icon-preorder"></i>
-                        <span class="item__preorder__label">{% trans %}vendor_closed_preorder_available{% endtrans %}</span>
+                        <i class="restaurants__item__preorder-icon icon-preorder"></i>
+                        <span class="restaurants__item__preorder-label">{% trans %}vendor_closed_preorder_available{% endtrans %}</span>
                     </div>
                     {% set imageUrl = asset(vendor.code  ~ '-listing.jpg', 'cdn_s3') %}
-                    <div class="b-lazy restaurant__image aspect-ratio-100-52"
+                    <div class="b-lazy restaurants__item__image aspect-ratio-100-52"
                          src="{{ blazy_placeholder }}"
                          data-src="{{ thumbor(imageUrl, '500' )}}|{{ thumbor(imageUrl, '500_retina' )}}">
-                     </div>
+                    </div>
                 </div>
-                <h3 class="restaurants__item__wrapper__name">
+                <h3 class="restaurants__item__name">
                         {{ vendor.name }}
                 </h3>
-                <h4 class="restaurants__item__wrapper__desc">{{ vendor.description }}</h4>
-                <div class="restaurants__item__wrapper__time">
+                <h4 class="restaurants__item__description">{{ vendor.description }}</h4>
+                <div class="restaurants__item__time">
                     <i class="icon-clock-o"></i>
                     {% set availableIn = date(vendor.metadata.availableIn) %}
                     {% if (availableIn|date('d-m-Y') == 'now'|date('d-m-Y')) %}

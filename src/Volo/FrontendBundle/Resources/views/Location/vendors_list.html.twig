@@ -73,9 +73,9 @@
             </div>
         </div>
         {% if openVendors|length == 0 and closedVendors|length == 0 %}
-            <div class="restaurants__not__available">
-                <p>{% trans %}restaurant.not_available.title{% endtrans %}</p>
-                <h2>{% trans %}restaurants.not_available{% endtrans %}</h2>
+            <div class="restaurants-not-available">
+                <div class="restaurants-not-available__title">{% trans %}restaurant.not_available.title{% endtrans %}</div>
+                <div class="restaurants-not-available__message">{% trans %}restaurants.not_available{% endtrans %}</div>
             </div>
         {% else %}
             <div class="restaurants">
@@ -91,8 +91,8 @@
         {% endif %}
         {% set citySeoText = cms('city-description-' ~ cityId, 'city-description') %}
         {% if citySeoText is not empty %}
-            <div class="city__bottom-info">
-                <div class="city__bottom-info__city-description">
+            <div class="restaurants__city-bottom-info">
+                <div class="restaurants__city-bottom-info__description">
                     {{ citySeoText|raw }}
                 </div>
             </div>
