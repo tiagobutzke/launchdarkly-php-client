@@ -218,7 +218,8 @@ class OrderManagerService
             }
 
             $customerComment .= sprintf(
-                '%s, %s: "%s"%s',
+                'Comment for %s %s, %s: "%s"%s',
+                $cartProduct['quantity'],
                 $product->getName(),
                 implode(', ', array_column($cartProduct['toppings'], 'name')),
                 $cartProduct['special_instructions'],

@@ -2,6 +2,7 @@
 
 namespace Volo\FrontendBundle\Service;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Foodpanda\ApiSdk\Provider\CartProvider;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Foodpanda\ApiSdk\Provider\VendorProvider;
@@ -252,18 +253,42 @@ class CartManagerService
      */
     protected function repopulateSpecialInstructions(array $jsonCart, $response)
     {
+        $instructions = new ArrayCollection();
         foreach ($jsonCart['products'] as $product) {
-            foreach ($response['vendorCart'] as &$vendorCart) {
-                if ($vendorCart['vendor_id'] === $jsonCart['vendor_id']) {
-                    foreach ($vendorCart['products'] as &$responseProduct) {
-                        if ($product['variation_id'] === $responseProduct['product_variation_id']) {
-                            $responseProduct['special_instructions'] = $product['special_instructions'];
-                        }
-                    }
+            $key = $this->createSpecialInstructionsKey($product);
+            
+            $data = $instructions->containsKey($key) ? $instructions[$key] : [];
+            $data[] = $product['special_instructions'];
+            
+            $instructions->set($key, $data);
+        }
+
+        foreach ($response['vendorCart'] as &$vendorCart) {
+            foreach ($vendorCart['products'] as &$responseProduct) {
+                $key = $this->createSpecialInstructionsKey($responseProduct);
+                if ($instructions->containsKey($key)) {
+                    $data = $instructions[$key];
+                    $responseProduct['special_instructions'] = array_shift($data);
+                    
+                    count($data) === 0 ? $instructions->remove($key) : $instructions->set($key, $data);
                 }
             }
         }
 
         return $response;
+    }
+
+    /**
+     * @param array $product
+     *
+     * @return string
+     */
+    protected function createSpecialInstructionsKey(array $product)
+    {
+        return sprintf('%s_%s_%s',
+            array_key_exists('variation_id', $product) ? $product['variation_id'] : $product['product_variation_id'],
+            $product['quantity'],
+            implode('_', array_column($product['toppings'], 'id'))
+        );
     }
 }

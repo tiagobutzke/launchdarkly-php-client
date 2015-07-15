@@ -60,6 +60,7 @@ class CheckoutControllerTest extends VoloTestCase
                         ],
                     ],
                     'choices' => [],
+                    'special_instructions' => '',
                 ]
             ],
             'location' => [
