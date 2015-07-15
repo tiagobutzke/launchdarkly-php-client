@@ -400,13 +400,19 @@ a.hero-menu__headline__icon {
       color: $color-text-secondary;
       display: inline-block;
     }
-
-    span {
-      color: $color-text-primary;
-      display: inline-block;
-      margin-right: $space-lg;
-    }
   }
+}
+
+.menu__bottom-info__openings-day {
+  float: left;
+  display: inline-block;
+  margin-right: $space-xs;
+}
+
+.menu__bottom-info__openings-time {
+  color: $color-text-primary;
+  display: inline-block;
+  margin-right: $space-lg;
 }
 
 .menu__bottom-info__restaurant-description {

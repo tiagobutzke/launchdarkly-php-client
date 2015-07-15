@@ -125,8 +125,8 @@
                     {% set schedules = getDailySchedules(vendor.schedules, weekdayIndex) %}
                     {% if (schedules|length > 0) %}
                         <li>
-                            {{ weekdayIndex|dayOfTheWeek }}
-                            <span>
+                            <span class="menu__bottom-info__openings-day">{{ weekdayIndex|dayOfTheWeek }}</span>
+                            <span class="menu__bottom-info__openings-time">
                                 {% for schedule in schedules %}
                                     {{ schedule.openingTime }} - {{ schedule.closingTime }}{% if not loop.last %}, {% endif %}
                                 {% endfor %}
