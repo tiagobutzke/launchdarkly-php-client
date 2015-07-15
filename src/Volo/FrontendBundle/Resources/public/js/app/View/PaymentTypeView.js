@@ -29,6 +29,7 @@ var PaymentTypeView = Backbone.View.extend({
         this.checkoutModel.set('payment_type_id', $creditCardNode.data('payment_type_id'));
 
         this.$('.checkout__payment_paypal_description').addClass('hide');
+        this.$('.checkout__payment_adyen_hpp_description').addClass('hide');
         this.$('#payment_form').toggleClass('hide', this.$(".credit-card--radio").length > 0);
         this.$('#saved_payment_options').removeClass('hide');
         this.$('.checkout__list').removeClass('hide');
@@ -43,6 +44,7 @@ var PaymentTypeView = Backbone.View.extend({
         this.checkoutModel.set('payment_type_id', $node.data('payment_type_id'));
 
         this.$('.checkout__payment_adyen_hpp_description').removeClass('hide');
+        this.$('.checkout__payment_paypal_description').addClass('hide');
         this.$('#saved_payment_options').addClass('hide');
         this.$('.checkout__list').addClass('hide');
         this.$('#payment_form').addClass('hide');
@@ -58,6 +60,7 @@ var PaymentTypeView = Backbone.View.extend({
         this.checkoutModel.set('credit_card_id', null);
 
         this.$('.checkout__payment_paypal_description').removeClass('hide');
+        this.$('.checkout__payment_adyen_hpp_description').addClass('hide');
         this.$('#payment_form').addClass('hide');
         this.$('#saved_payment_options').addClass('hide');
         this.$('.checkout__list').addClass('hide');

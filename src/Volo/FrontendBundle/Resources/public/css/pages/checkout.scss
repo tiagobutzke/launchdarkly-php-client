@@ -546,7 +546,7 @@
   }
 }
 
-.checkout__payment_paypal_description {
+.checkout__payment_paypal_description, .checkout__payment_adyen_hpp_description {
   clear: both;
   font-size: 0.8em;
   padding-left: $grid-gutter-width / 2;
@@ -556,7 +556,7 @@
   }
 }
 
-.checkout__payment_paypal_description__title {
+.checkout__payment_paypal_description__title, .checkout__payment_adyen_hpp_description__title {
   font-family: $bold-font-family;
   padding-top: $space-sm;
   padding-bottom: $space-sm;
@@ -565,7 +565,7 @@
   }
 }
 
-.checkout__payment_paypal_description__text {
+.checkout__payment_paypal_description__text, .checkout__payment_adyen_hpp_description__text {
   line-height: $base-line-height;
 }
 
