@@ -190,7 +190,7 @@
   background-color: $color-bg-secondary;
   overflow: visible;
   margin-top: 50px;
-  @include respond-from('screen-md') {
+  @include respond-from('screen-sm') {
     margin-top: 75px;
   }
 }
@@ -266,7 +266,13 @@
   @extend .img-responsive;
   @extend .center-block;
   position: relative;
-  top: -30px;
+  top: -20px;
+  @include respond-from('screen-sm') {
+    top: -40px;
+  }
+  @include respond-from('screen-md') {
+    top: -60px;
+  }
 }
 
 .stats__dish {
@@ -275,7 +281,7 @@
   width: 80%;
   margin-right: 10%;
   margin-left: 10%;
-  top: 20px;
+  top: 0;
 }
 
 // -------------------------- STATS END --------------------------
