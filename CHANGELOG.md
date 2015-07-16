@@ -10,6 +10,10 @@ CHANGELOG
   * SGFD-17753: cart model refactor + unit tests
   * SGFD-17527: Mobile / Name in header gets doubled
 
+* 1.7.6
+
+  * SGFD-18180 GA to vanilla
+
 * 1.7.5
 
   * SGFD-17861: Homepage / France / 29 minutes avg. delivery time (reverted)

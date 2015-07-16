@@ -383,16 +383,7 @@ VOLO.doBootstrap = function(configuration) {
 $(document).on('page:load page:restore', function () {
     console.log('page:load');
 
-    if (VOLO.firstQuery === false && _.isObject(window.ga)) {
-        _.each(ga.getAll(), function(tracker){
-            tracker.set('page', '/' + (location.pathname+location.search).substr(1));
-            tracker.send('pageview');
-        });
-    }
-
     VOLO.initIntl(VOLO.configuration).done(VOLO.doBootstrap);
-
-    VOLO.firstQuery = false;
 });
 
 $(document).on('page:before-unload', function () {
@@ -410,7 +401,7 @@ $(document).on('page:before-unload', function () {
         delete VOLO.GTMServiceInstance;
     }
 
-    dataLayer = [];
+    dataLayer.length = 0;
 });
 
 Turbolinks.pagesCached(10);
