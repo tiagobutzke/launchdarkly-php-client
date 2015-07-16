@@ -1,0 +1,24 @@
+{% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
+
+{% block title %}{% trans %}brand{% endtrans %} | {% trans %}meta_title.home_page{% endtrans %}{% endblock %}
+
+{% block body_class %}coming-soon{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+    <section class="coming-soon__container fullWindowHeight b-lazy"
+             data-src="{{ asset('img/homepage/teaser_2400.jpg') }}"
+             data-src-1400="{{ asset('img/homepage/teaser_2800.jpg') }}"
+             data-src-biggest="{{ asset('img/homepage/teaser_4000.jpg') }}">
+        <div class="coming-soon__logo">
+            <i class="coming-soon__logo__icon icon-logo"></i>
+        </div>
+        <div class="coming-soon__slogan">
+            <div class="coming-soon__slogan__coming-soon">{% trans %}general.coming_soon_to{% endtrans %}</div>
+            <div class="coming-soon__slogan__country">{{ gtm_get_country() }}</div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block footer %}{% endblock %}
