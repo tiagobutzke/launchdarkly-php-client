@@ -1,15 +1,15 @@
 var CheckoutModel = Backbone.Model.extend({
     defaults: {
-        "placing_order": false,
-        "is_guest_user": false,
-        "cart_dirty": false,
-        "address_id": null,
-        "credit_card_id": null,
-        "is_credit_card_store_active": true,
-        "payment_type_id": null,
-        "payment_type_code": null,
-        "adyen_encrypted_data": null,
-        "subtotal_before_discount": 0
+        placing_order: false,
+        is_guest_user: false,
+        cart_dirty: false,
+        address_id: null,
+        credit_card_id: null,
+        is_credit_card_store_active: true,
+        payment_type_id: null,
+        payment_type_code: null,
+        adyen_encrypted_data: null,
+        subtotal_before_discount: 0
     },
 
     initialize: function (data, options) {
@@ -53,6 +53,10 @@ var CheckoutModel = Backbone.Model.extend({
         }
 
         return true;
+    },
+
+    canBeSubmitted: function() {
+        return this.isValid() && !this.get('placing_order');
     },
 
     placeOrder: function (vendorCode, vendorId) {

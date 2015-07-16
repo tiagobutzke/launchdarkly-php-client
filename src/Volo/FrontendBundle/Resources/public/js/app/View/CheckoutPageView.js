@@ -1,6 +1,6 @@
 var CheckoutPageView = Backbone.View.extend({
     events: {
-        "click #finish-and-pay": "placeOrder"
+        'click #finish-and-pay': '_submitOrder'
     },
 
     initialize: function (options) {
@@ -12,6 +12,7 @@ var CheckoutPageView = Backbone.View.extend({
         this.spinner = new Spinner();
         this.domObjects = {};
         this.domObjects.$header = options.$header;
+        this.configuration = options.configuration;
 
         console.log('is guest user', this.$el.data().is_guest_user);
 
@@ -31,14 +32,7 @@ var CheckoutPageView = Backbone.View.extend({
 
     render: function () {
         console.log('CheckoutPageView:render', this.model.isValid());
-
-        if (this.model.isValid() && !this.model.get('cart_dirty') && !this.model.get('placing_order')) {
-            this.$("#finish-and-pay").prop('disabled', '');
-            this.$("#finish-and-pay").css({opacity: 1});
-        } else {
-            this.$("#finish-and-pay").prop('disabled', 'disabled');
-            this.$("#finish-and-pay").css({opacity: 0.5});
-        }
+        this.$('#finish-and-pay').toggleClass('button--disabled', !this.model.canBeSubmitted());
     },
 
     unbind: function () {
@@ -46,21 +40,25 @@ var CheckoutPageView = Backbone.View.extend({
         this.undelegateEvents();
     },
 
-    placeOrder: function () {
+    _submitOrder: function () {
         var paddingFromHeader = 16,
-            scrollToOffset;
+            scrollToOffset, msgOffset;
 
         if (this.$('#delivery_information_form_button').is(':visible')) {
             this.$('#error_msg_delivery_not_saved').removeClass('hide');
-            scrollToOffset = this.$('#checkout-delivery-information-address').offset().top -
-                            paddingFromHeader -
-                            this.domObjects.$header.outerHeight();
-            $('html, body').animate({
-                scrollTop: scrollToOffset
-            }, VOLO.configuration.anchorScrollSpeed);
+            msgOffset = this.$('#checkout-delivery-information-address').offset().top;
+            scrollToOffset =  msgOffset - paddingFromHeader - this.domObjects.$header.outerHeight();
 
-            return;
+            $('body').animate({
+                scrollTop: scrollToOffset
+            }, this.configuration.anchorScrollSpeed);
+            return false;
         }
+
+        if (!this.model.canBeSubmitted()) {
+            return false;
+        }
+
         this.$('#error_msg_delivery_not_saved').addClass('hide');
         this.spinner.spin(this.$('#finish-and-pay')[0]);
         this.model.placeOrder(this.vendorCode, this.vendorId);
@@ -76,7 +74,7 @@ var CheckoutPageView = Backbone.View.extend({
                 var params = data.hosted_payment_page_redirect.parameters,
                     url = "https://" + window.location.hostname + Routing.generate('handle_payment', {'orderCode': data.code});
 
-                params.countryCode = VOLO.configuration.countryCode.toUpperCase();
+                params.countryCode = this.configuration.countryCode.toUpperCase();
                 params.resURL = url;
                 this.redirectPost(data.hosted_payment_page_redirect.url, params);
             } else {
