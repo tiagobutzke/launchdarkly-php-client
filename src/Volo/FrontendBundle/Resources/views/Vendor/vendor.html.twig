@@ -10,6 +10,7 @@
 {% block google_tag_manager %}
     <script type="text/javascript" data-turbolinks-eval=always>
         dataLayer.push({
+            'event': 'virtualPageView',
             'pageType': 'Restaurant Detail Page',
             'zipcode': '{{ customer_location().postcode }}',
             'city': '{{ customer_location().city }}',

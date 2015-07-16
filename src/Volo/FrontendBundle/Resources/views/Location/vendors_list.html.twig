@@ -12,6 +12,7 @@
         'serviceArea': '{% if (openVendors.count() > 0) or (closedVendors.count() > 0) %}True{% else %}False{% endif %}'
     });
     dataLayer.push({
+        'event': 'virtualPageView',
         'pageType': 'Restaurant List Page',
         'zipcode': '{{ customer_location().postcode }}',
         'city': '{{ customer_location().city }}',

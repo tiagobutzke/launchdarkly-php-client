@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.7.6
+
+  * SGFD-18180 GA to vanilla
+
 * 1.7.4
 
   * SGFD-18067: mobile cart fix
