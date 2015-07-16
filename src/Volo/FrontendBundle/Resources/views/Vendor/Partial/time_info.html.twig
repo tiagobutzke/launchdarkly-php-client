@@ -1,7 +1,7 @@
 {% set periods = getNextDayPeriods(vendor, date('now')) %}
 {% if not periods.isEmpty %}
     {% set closingIn = ((periods|first|last|date('U') - 'now'|date('U')) / 60)|abs|round %}
-    <i class="icon-clock-o"></i>
+    <i class="hero-menu__info-extra__icon icon-clock-o"></i>
     {% if not isVendorOpen(vendor, date('now')) %}
         <span class="line-wrapper">{% trans %}vendor_closed_preorder_available{% endtrans %}</span>
         <span>{{ periods|first|first|localisedDay}}</span>

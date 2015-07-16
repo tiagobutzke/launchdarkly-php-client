@@ -77,7 +77,7 @@
 }
 
 
-.menu-page .desktop-cart {
+.menu .desktop-cart {
   z-index: 1017;
   @include respond-from("screen-md") {
    z-index: 900;

@@ -15,7 +15,7 @@ VOLO.HeaderAnimations = (function() {
     };
 
     HeaderAnimations.prototype.registerEvents = function() {
-        if ($('.menu-page').length) {
+        if ($('.menu').length) {
             $('.header__logo__restaurant-name').text($('.hero-menu__info__headline').text());
             //only on menu page change logo to restaurant name
             this.$window.off('resize', this._changeLogoToRestaurantName).on('resize', this._changeLogoToRestaurantName);
@@ -108,7 +108,7 @@ VOLO.HeaderAnimations = (function() {
             positionOfHeadline = $heroMenuInfoheadline.offset().top + $heroMenuInfoheadline.height() - $header.height();
 
         //if the Restaurant name is under the header switch the logo to restaurant name
-        if ((positionOfHeadline <= this.$document.scrollTop()) && (this.$window.width() <= VOLO.configuration.smallScreenMaxSize && $('.menu-page').length)) {
+        if ((positionOfHeadline <= this.$document.scrollTop()) && (this.$window.width() <= VOLO.configuration.smallScreenMaxSize && $('.menu').length)) {
             $header.addClass('header--logo-change');
         } else {
             $header.removeClass('header--logo-change');

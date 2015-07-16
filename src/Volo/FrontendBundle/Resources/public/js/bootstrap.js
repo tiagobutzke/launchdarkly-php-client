@@ -32,7 +32,7 @@ VOLO.createCheckoutModel = function (cartModel, locationModel, vendorId) {
 VOLO.createCartViews = function (cartModel, locationModel, gtmService) {
     var $header = $('.header'),
         menuView = new MenuView({
-            el: '.menu__main',
+            el: '.menu__list-wrapper',
             cartModel: cartModel,
             locationModel: locationModel,
             $header: $header,
@@ -43,7 +43,7 @@ VOLO.createCartViews = function (cartModel, locationModel, gtmService) {
             model: cartModel,
             locationModel: locationModel,
             $header: $header,
-            $menuMain: $('.menu__main'),
+            $menuMain: $('.menu__list-wrapper'),
             $window: $(window),
             gtmService: gtmService,
             smallScreenMaxSize: VOLO.configuration.smallScreenMaxSize
@@ -305,7 +305,7 @@ VOLO.doBootstrap = function(configuration) {
         cartIconView
     ;
 
-    if ($('.menu__main').length > 0) {
+    if ($('.menu__list-wrapper').length > 0) {
         cartModel = VOLO.createCartModel(VOLO.jsonCart);
 
         var cartViews = VOLO.createCartViews(cartModel, locationModel, VOLO.GTMServiceInstance);
