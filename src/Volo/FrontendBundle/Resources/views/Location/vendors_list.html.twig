@@ -2,7 +2,7 @@
 {% use 'VoloFrontendBundle:Location:Partial/vendor_description.html.twig' %}
 
 {% block title %}{{ formattedLocation.city }} | {% trans %}brand{% endtrans %}{% endblock %}
-{% block body_class %}restaurant-list{% endblock %}
+{% block body_class %}restaurants{% endblock %}
 {% block google_tag_manager %}
 <script type="text/javascript" data-turbolinks-eval=always>
     dataLayer.push({
@@ -73,17 +73,17 @@
             </div>
         </div>
         {% if openVendors|length == 0 and closedVendors|length == 0 %}
-            <div class="restaurants-not-available">
-                <div class="restaurants-not-available__title">{% trans %}restaurant.not_available.title{% endtrans %}</div>
-                <div class="restaurants-not-available__message">{% trans %}restaurants.not_available{% endtrans %}</div>
+            <div class="restaurants__not-available-message">
+                <div class="restaurants__not-available-message__title">{% trans %}restaurant.not_available.title{% endtrans %}</div>
+                <div class="restaurants__not-available-message__text">{% trans %}restaurants.not_available{% endtrans %}</div>
             </div>
         {% else %}
-            <div class="restaurants">
+            <div class="restaurants__list">
                 {% for vendor in openVendors %}
                     {{ block('vendor_description') }}
                 {% endfor %}
             </div>
-            <div class="restaurants restaurants--closed">
+            <div class="restaurants__list restaurants__list--closed">
                 {% for vendor in closedVendors %}
                     {{ block('vendor_description') }}
                 {% endfor %}

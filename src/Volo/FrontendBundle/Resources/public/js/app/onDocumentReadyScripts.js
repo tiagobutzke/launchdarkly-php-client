@@ -52,10 +52,10 @@ VOLO.documentReadyFunction = function() {
         targetSelector: '.restaurants__tool-box, .header',
         className: 'restaurants__tool-box--sticking',
         isActiveGetter: function() {
-            return $('.restaurants').length && $('.header').length;
+            return $('.restaurants__list').length && $('.header').length;
         },
         startingPointGetter: function() {
-            return $('.restaurants').offset().top - $('.header').height() + 30;
+            return $('.restaurants__list').offset().top - $('.header').height() + 30;
         }
     });
     plzSelectionAnimation.init();
