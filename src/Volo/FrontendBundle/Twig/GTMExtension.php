@@ -2,8 +2,9 @@
 
 namespace Volo\FrontendBundle\Twig;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Twig_Extensions_Extension_Intl;
-use Volo\FrontendBundle\Service\GTMService;
 
 class GTMExtension extends Twig_Extensions_Extension_Intl
 {
@@ -13,13 +14,20 @@ class GTMExtension extends Twig_Extensions_Extension_Intl
     private $countryCode;
 
     /**
-     * @param string $countryCode
+     * @var Request
      */
-    public function __construct($countryCode)
+    private $request;
+
+    /**
+     * @param string $countryCode
+     * @param RequestStack $requestStack
+     */
+    public function __construct($countryCode, RequestStack $requestStack)
     {
         parent::__construct();
 
         $this->countryCode = $countryCode;
+        $this->request = $requestStack->getCurrentRequest();
     }
 
     /**
@@ -29,6 +37,7 @@ class GTMExtension extends Twig_Extensions_Extension_Intl
     {
         return [
             new \Twig_SimpleFunction('gtm_get_country', array($this, 'getCountry')),
+            new \Twig_SimpleFunction('gtm_get_referrer', array($this, 'getReferrer')),
         ];
     }
 
@@ -38,5 +47,15 @@ class GTMExtension extends Twig_Extensions_Extension_Intl
     public function getCountry()
     {
         return \Locale::getDisplayRegion('-' . $this->countryCode);
+    }
+
+    /**
+     * @return string
+     */
+    public function getReferrer()
+    {
+        $headers = $this->request->headers;
+
+        return $headers->get('referer');
     }
 }

@@ -35,6 +35,9 @@
     </head>
     <body class="country-{{ country_code }} {% block body_class %}{% endblock %}">
         {% if google_tag_manager_container_id %}
+            <script type="text/javascript">
+                VOLO.gtmReferrer = '{{ gtm_get_referrer() }}';
+            </script>
             <!-- Google Tag Manager -->
             {% block google_tag_manager %}{% endblock %}
             <script type="text/javascript" data-turbolinks-eval=false>

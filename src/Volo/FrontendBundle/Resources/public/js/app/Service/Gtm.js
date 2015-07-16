@@ -7,6 +7,7 @@ VOLO.GTMService = function (options) {
     this.checkoutInformationValidationFormView = options.checkoutInformationValidationFormView;
     this.loginButtonView = options.loginButtonView;
     this.existingUserLoginView = options.existingUserLoginView;
+    this.referrer = options.referrer;
 
     this.initialize();
 };
@@ -151,6 +152,7 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
     },
 
     _push: function(data) {
+        data.referrer = this.referrer;
         dataLayer.push(data);
     }
 });
