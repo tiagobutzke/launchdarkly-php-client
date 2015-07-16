@@ -1,6 +1,15 @@
 CHANGELOG
 =========
 
+* 1.8.0
+
+  * SGFD-17535: timetable mobile layout fix
+  * SGFD-18143: Home / Style fixes - plate knife fork
+  * SGFD-18027: Hero-Banner images are not loaded
+  * SGFD-18090: Special instructions duplicate fix
+  * SGFD-17753: cart model refactor + unit tests
+  * SGFD-17527: Mobile / Name in header gets doubled
+
 * 1.7.5
 
   * SGFD-17861: Homepage / France / 29 minutes avg. delivery time (reverted)
