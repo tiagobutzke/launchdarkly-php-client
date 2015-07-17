@@ -87,7 +87,9 @@
     </div>
     <div class="topping__options hide">
         <form>
-            <textarea class="form-control topping__special-instructions__textarea"><%- special_instructions %></textarea>
+            <textarea class="form-control topping__special-instructions__textarea"
+                placeholder="{% trans %}topping.placeholder.special_instructions{% endtrans %}"
+                ><%- special_instructions %></textarea>
         </form>
     </div>
 </script>
