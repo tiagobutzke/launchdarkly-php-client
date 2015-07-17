@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.8.3
+
+  * SGFD-18261: Placeholder special instructions
+
 * 1.8.2
 
   * SGFD-18206: XSS special instructions
