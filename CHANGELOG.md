@@ -1,7 +1,13 @@
 CHANGELOG
 =========
 
-* 1.8.0
+* 1.8.2
+
+  * SGFD-18206: XSS special instructions
+  * SGFD-17535: Safari ipad fix
+  * SGFD-18180: Adding the referrer to the data layer
+
+* 1.8.0-1.8.1
 
   * SGFD-17535: timetable mobile layout fix
   * SGFD-18143: Home / Style fixes - plate knife fork
