@@ -174,7 +174,7 @@ var ToppingSpecialInstructionsView = Backbone.View.extend({
         hasText = this.model.get('special_instructions') !== '';
         this.$('.topping__comment__help-text').toggleClass('hide', hasText);
         this.$('.topping__comment__special-instructions').toggleClass('hide', !hasText);
-        this.$('.topping__comment__special-instructions').html(this.model.get('special_instructions'));
+        this.$('.topping__comment__special-instructions').html(_.escape(this.model.get('special_instructions')));
     },
 
     remove: function() {
