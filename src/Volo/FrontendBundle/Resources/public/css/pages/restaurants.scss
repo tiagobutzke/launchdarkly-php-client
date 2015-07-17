@@ -366,7 +366,7 @@
   @include make-xs-column(12);
 }
 
-// BEM Refactor : style from CMS (can not refactor the class definition)
+// Style is used in CMS. Never change or delete the corresponding css selector
 .restaurants__city-bottom-info__description h3,
 .restaurants__city-bottom-info__description .h3 {
   margin: 0;
