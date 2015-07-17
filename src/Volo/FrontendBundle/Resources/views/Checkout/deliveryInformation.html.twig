@@ -5,7 +5,8 @@
         dataLayer.push({
             'event': 'checkout',
             'checkoutStep': '1 - Checkout Started',
-            'sessionId': VOLO.configuration.sessionId
+            'sessionId': VOLO.configuration.sessionId,
+            'referrer': VOLO.gtmReferrer
         });
     </script>
 {% endblock %}

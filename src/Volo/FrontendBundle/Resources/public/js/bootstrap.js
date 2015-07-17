@@ -374,7 +374,8 @@ VOLO.doBootstrap = function(configuration) {
         checkoutDeliveryValidationView: gtmCheckoutValidationView,
         checkoutInformationValidationFormView: checkoutInformationValidationFormView,
         loginButtonView: loginButtonView,
-        existingUserLoginView: existingUserLoginView
+        existingUserLoginView: existingUserLoginView,
+        referrer: VOLO.gtmReferrer
     });
 
     _.invoke(VOLO.gtmViews, 'setGtmService', GTMServiceInstance);

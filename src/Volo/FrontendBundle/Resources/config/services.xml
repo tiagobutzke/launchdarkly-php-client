@@ -94,6 +94,7 @@
 
         <service id="volo_frontend.twig.gtmextension" class="%volo_frontend.twig.gtmextension.class%">
             <argument>%country_code%</argument>
+            <argument id="request_stack" type="service"/>
             <tag name="twig.extension"/>
         </service>
 

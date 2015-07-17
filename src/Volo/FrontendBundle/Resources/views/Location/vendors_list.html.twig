@@ -6,19 +6,21 @@
 {% block google_tag_manager %}
 <script type="text/javascript" data-turbolinks-eval=always>
     dataLayer.push({
-        'event': 'enterZipcode',
-        'zipcode': '{{ formattedLocation['postcode'] }}',
-        'city': '{{ formattedLocation['city'] }}',
-        'serviceArea': '{% if (openVendors.count() > 0) or (closedVendors.count() > 0) %}True{% else %}False{% endif %}'
-    });
-    dataLayer.push({
         'event': 'virtualPageView',
         'pageType': 'Restaurant List Page',
         'zipcode': '{{ customer_location().postcode }}',
         'city': '{{ customer_location().city }}',
         'country': '{{ gtm_get_country() }}',
         'loggedIn': '{{ is_customer_authenticated_fully() ? 'true' : 'false' }}',
-        'customerId': '{{ is_customer_authenticated_fully() ? get_authenticated_customer().id }}'
+        'customerId': '{{ is_customer_authenticated_fully() ? get_authenticated_customer().id }}',
+        'referrer': VOLO.gtmReferrer
+    });
+    dataLayer.push({
+        'event': 'enterZipcode',
+        'zipcode': '{{ formattedLocation['postcode'] }}',
+        'city': '{{ formattedLocation['city'] }}',
+        'referrer': VOLO.gtmReferrer,
+        'serviceArea': '{% if (openVendors.count() > 0) or (closedVendors.count() > 0) %}True{% else %}False{% endif %}'
     });
 </script>
 {% endblock %}
