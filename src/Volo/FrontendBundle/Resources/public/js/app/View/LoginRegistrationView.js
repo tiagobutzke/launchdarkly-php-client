@@ -44,10 +44,7 @@ var LoginRegistrationView = Backbone.View.extend({
     render: function() {
         this.$('.modal-content').load(Routing.generate('login', this.queryParams), function(){
             this.$el.modal();
-            this._loginValidationView = new ValidationView({
-                el: this.$('.login-form'),
-                constraints: this._loginConstraints
-            });
+            this._bindLoginView();
         }.bind(this));
 
         return this;
@@ -56,10 +53,7 @@ var LoginRegistrationView = Backbone.View.extend({
     renderRegistration: function(data) {
         this.$('.modal-content').load(Routing.generate('customer.create'), function(){
             this.$el.modal();
-            this._registerValidationView = new ValidationView({
-                el: this.$('.registration-form'),
-                constraints: this._registrationConstraints
-            });
+            this._bindRegisterValidationView();
 
             if (data) {
                 this.$('#first_name').val(data.first_name);
@@ -81,24 +75,14 @@ var LoginRegistrationView = Backbone.View.extend({
     },
 
     unbind: function() {
-        if (this._loginValidationView) {
-            this._loginValidationView.unbind();
-        }
-        if (this._registerValidationView) {
-            this._registerValidationView.unbind();
-        }
-
+        this._unbindLoginView();
+        this._unbindRegisterValidationView();
         this.stopListening();
         this.undelegateEvents();
     },
 
     _loadRegistrationFormIntoLoginModal: function() {
-        this.$('.modal-content').load(Routing.generate('customer.create'), function() {
-            this._registerValidationView = new ValidationView({
-                el: this.$('.registration-form'),
-                constraints: this._registrationConstraints
-            });
-        }.bind(this));
+        this.$('.modal-content').load(Routing.generate('customer.create'), this._bindRegisterValidationView);
     },
 
     _handingSubmitOfLoginForm: function(event) {
@@ -132,6 +116,9 @@ var LoginRegistrationView = Backbone.View.extend({
                 $form.find('button').prop("disabled", true);
             },
             success: function() {
+                this._unbindLoginView();
+                this._unbindRegisterValidationView();
+
                 Turbolinks.visit(window.location.href);
 
                 this._fireFormSubmit($form, true);
@@ -140,11 +127,51 @@ var LoginRegistrationView = Backbone.View.extend({
                 spinner.stop();
                 $(target).removeClass('modal-content--loading');
                 $modalContent.html(data.responseText);
+                this._rebindValidations($form);
                 $form.find('button').prop("disabled", false);
 
                 this._fireFormSubmit($form, false);
             }.bind(this)
         });
+    },
+
+
+    _rebindValidations: function($form) {
+        if ($form.attr('id') === 'login-form') {
+            this._bindLoginView();
+        } else {
+            this._bindRegisterValidationView();
+        }
+    },
+
+    _bindLoginView: function() {
+        this._unbindLoginView();
+        this._loginValidationView = new ValidationView({
+            el: this.$('.login-form'),
+            constraints: this._loginConstraints
+        });
+    },
+
+    _bindRegisterValidationView: function() {
+        this._unbindRegisterValidationView();
+        this._registerValidationView = new ValidationView({
+            el: this.$('.registration-form'),
+            constraints: this._registrationConstraints
+        });
+    },
+
+    _unbindLoginView: function() {
+        if (this._loginValidationView) {
+            console.log('unbind login validation view');
+            this._loginValidationView.unbind();
+        }
+    },
+
+    _unbindRegisterValidationView: function() {
+        if (this._registerValidationView) {
+            console.log('unbind register validation view');
+            this._registerValidationView.unbind();
+        }
     },
 
     _fireFormSubmit: function ($form, isSuccess) {
