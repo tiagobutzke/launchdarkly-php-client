@@ -2,7 +2,7 @@
 
 {% block title %}{% trans %}meta_title.error_page_generic{% endtrans %} | {% trans %}brand{% endtrans %}{% endblock %}
 
-{% block body_class %}general-error-page{% endblock %}
+{% block body_class %}error-page{% endblock %}
 
 {% block headerClass %}header--white header-small{% endblock headerClass %}
 {% block head_scripts %}
@@ -10,19 +10,19 @@
 {% endblock head_scripts %}
 
 {% block content %}
-    <div class="error-page-wrapper">
-        <div class="error-page error-page__main--general">
-            <div class="error-page__main">
-                <h1 class="shadowed-static">{% trans %}error.general_title_main{% endtrans %}</h1>
-                <h1 class="shadowed-dynamic">{% trans %}error.general_title_main{% endtrans %}</h1>
-                <p>{% trans %}error.general_text_italic{% endtrans %}</p>
-                <h2>{% trans %}error.general_text_main{% endtrans %}</h2>
+    <div class="error-page__blocks-wrapper">
+        <div class="error-page__blocks error-page__blocks--general">
+            <div class="error-page__block">
+                <h1 class="error-page__block__error-code error-page__block__error-code--shadowed-static">{% trans %}error.general_title_main{% endtrans %}</h1>
+                <h1 class="error-page__block__error-code error-page__block__error-code--shadowed-dynamic">{% trans %}error.general_title_main{% endtrans %}</h1>
+                <div class="error-page__block__error-title">{% trans %}error.general_text_italic{% endtrans %}</div>
+                <div class="error-page__block__error-message">{% trans %}error.general_text_main{% endtrans %}</div>
             </div>
         </div>
     </div>
     <script type="text/javascript">
     $(document).ready(function() {
-        $('h1.shadowed-dynamic').realshadow({
+        $('.error-page__block__error-code--shadowed-dynamic').realshadow({
             color: '100,100,0',
             type: 'text'
         });

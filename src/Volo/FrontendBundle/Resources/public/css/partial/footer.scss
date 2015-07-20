@@ -2,6 +2,7 @@
 * footer declarations
 */
 
+
 .footer {
   margin-top: $space-lg * 2;
   overflow: auto;
@@ -12,6 +13,10 @@
     @include fluid-container();
   }
 }
+.error-page .footer {
+  overflow: visible;
+}
+
 
 %footer__wrapper {
   @include make-row();
