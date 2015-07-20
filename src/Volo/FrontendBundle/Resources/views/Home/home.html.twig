@@ -16,7 +16,7 @@
     </script>
 {% endblock %}
 
-{% block body_class %}home-page{% endblock %}
+{% block body_class %}home{% endblock %}
 
 {% block head_meta_seo %}
     <meta name="robots" content="index, follow">
@@ -24,16 +24,16 @@
 {% endblock %}
 
 {% block content %}
-    <section class="home-section teaser__home-section fullWindowHeight teaser b-lazy"
+    <section class="home__teaser fullWindowHeight b-lazy"
          data-src="{{ asset('img/homepage/teaser_2400.jpg') }}"
          data-src-1400="{{ asset('img/homepage/teaser_2800.jpg') }}"
          data-src-biggest="{{ asset('img/homepage/teaser_4000.jpg') }}">
-        <div class="teaser__slogan">
-            <h2 class="teaser__slogan__h2">{{ 'general.slogan'|trans }}</h2>
+        <div class="home__teaser__slogan">
+            <h2 class="home__teaser__slogan-text">{{ 'general.slogan'|trans }}</h2>
         </div>
-        <form class="teaser__form" id="postal_index_form" method="GET">
-            <div class="teaser__form__input__wrapper">
-                <input type="text" class="teaser__form__input"
+        <form class="home__teaser__form" id="postal_index_form" method="GET">
+            <div class="home__teaser__form-input-wrapper">
+                <input type="text" class="home__teaser__form-input"
                        id="postal_index_form_input"
                        value="{{ postalCode }}"
                        autofocus=""
@@ -43,36 +43,36 @@
                        data-msg_error_empty="{% trans %}postal_code.empty{% endtrans %}"
                        >
             </div>
-            <input class="teaser__button button button--inline" type="submit" value="{{ 'buttons.find_food'|trans }}">
+            <input class="home__teaser__button button button--inline" type="submit" value="{{ 'buttons.find_food'|trans }}">
         </form>
     </section>
 
-    <div class="titles restaurants__titles">
-        <div class="titles__title">
+    <div class="home__titles">
+        <div class="home__titles__main-title">
             {{ 'title.only_the_best'|trans }}
         </div>
-        <div class="titles__subtitle">
+        <div class="home__titles__subtitle">
             {{ 'title.carefully_selected'|trans }}
         </div>
     </div>
-    <section class="home-section restaurants-home">
+    <section class="home__restaurants">
         {{ cms('homepage-restaurants') }}
     </section>
 
-    <div class="titles">
-        <div class="titles__title">
+    <div class="home__titles">
+        <div class="home__titles__main-title">
             {{ 'title.no_long_wait'|trans }}
         </div>
-        <div class="titles__subtitle">
+        <div class="home__titles__subtitle">
             {{ 'title.get_your_meals_fast'|trans }}
         </div>
     </div>
-    <section class="home-section stats">
-        <div class="stats__container">
-            <div class="stats__content" >
-                <img class="stats__fork-knife b-lazy" alt="" data-src="{{ asset('img/fork-knife.png') }}"  src="{{ blazy_placeholder }}" />
-                <div class="stats__numbers">
-                    <div class="stats__numbers__first">
+    <section class="home__stats">
+        <div class="home__stats__container">
+            <div class="home__stats__content" >
+                <img class="home__stats__fork-knife b-lazy" alt="" data-src="{{ asset('img/fork-knife.png') }}"  src="{{ blazy_placeholder }}" />
+                <div class="home__stats__numbers">
+                    <div class="home__stats__first-number">
                         <div class="numbers__scroller">
                             <div class="numbers__sprite number6"></div>
                             <div class="numbers__sprite number5"></div>
@@ -127,7 +127,7 @@
                             <div class="numbers__sprite number1"></div>
                         </div>
                     </div>
-                    <div class="stats__numbers__second">
+                    <div class="home__stats__second-number">
                         <div class="numbers__scroller">
                             <div class="numbers__sprite number0"></div>
                             <img class="number__spacer b-lazy" alt="" data-src="{{ asset('img/numbers/numbers-sprite.jpg') }}" src="{{ blazy_placeholder }}">
@@ -136,41 +136,41 @@
                             <img class="number__spacer b-lazy" alt="" data-src="{{ asset('img/numbers/numbers-sprite.jpg') }}" src="{{ blazy_placeholder }}">
                         </div>
                     </div>
-                    <div class="stats__comment__minutes">
+                    <div class="home__stats__comment-minutes">
                         {{ 'minutes'|trans }}
                     </div>
-                    <div class="stats__comment">
+                    <div class="home__stats__comment">
                         {{ 'average_time_per_order'|trans }}
                     </div>
-                    <img class="stats__dish" alt=""  src="{{ asset('img/dish.png') }}" />
+                    <img class="home__stats__dish" alt=""  src="{{ asset('img/dish.png') }}" />
                 </div>
             </div>
         </div>
     </section>
 
-    <div class="titles">
-        <div class="titles__title">
+    <div class="home__titles">
+        <div class="home__titles__main-title">
             {{ 'title.were_in_your_city'|trans }}
         </div>
-        <div class="titles__subtitle">
+        <div class="home__titles__subtitle">
             {{ 'title.find_your_favorites'|trans }}
         </div>
     </div>
-    <section class="home-section cities">
-        <div class="cities__container">
+    <section class="home__cities">
+        <div class="home__cities__container">
             {{ cms('homepage-cities') }}
         </div>
     </section>
     {#TODO app - show app info when app is available #}
-    {#<div class="titles">#}
-        {#<div class="titles__title">#}
+    {#<div class="home__titles">#}
+        {#<div class="home__titles__main-title">#}
             {#{{ 'title.take_volo_where_you_go'|trans }}#}
         {#</div>#}
-        {#<div class="titles__subtitle">#}
+        {#<div class="home__titles__subtitle">#}
             {#{{ 'title.download_free_app'|trans }}#}
         {#</div>#}
     {#</div>#}
-    {#<section class="home-section app">#}
+    {#<section class="home__app">#}
         {#{% include('VoloFrontendBundle:Home/Partial:app-section.html.twig') %}#}
     {#</section>#}
 {% endblock %}

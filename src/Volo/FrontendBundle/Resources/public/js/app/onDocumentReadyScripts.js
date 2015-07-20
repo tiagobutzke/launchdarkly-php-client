@@ -26,8 +26,8 @@ VOLO.documentReadyFunction = function() {
     plateAnimation = new VOLO.RevealOnScroll({
         $window: $(window),
         $document: $(document),
-        containerSelector: '.stats',
-        targetSelector: '.stats__dish',
+        containerSelector: '.home__stats',
+        targetSelector: '.home__stats__dish',
         smoothness: 5,
         startAtViewPercentage: 0.3,
         endAtViewPercentage: 0.07,
@@ -72,7 +72,7 @@ VOLO.documentReadyFunction = function() {
             cities.each(function (index) {
                 calledActionAnimation = new VOLO.ToggleClassOnHover({
                     $document: $(document),
-                    containerSelector: '.home-section.cities .city:eq(' + index + ')',
+                    containerSelector: '.home__cities .city:eq(' + index + ')',
                     targetSelector: '.city__called-action',
                     hoverClassName: 'city__called-action-show'
                 });
@@ -80,7 +80,7 @@ VOLO.documentReadyFunction = function() {
 
                 cityFlipperAnimation = new VOLO.ToggleClassOnHover({
                     $document: $(document),
-                    containerSelector: '.home-section.cities .city:eq(' + index + ')',
+                    containerSelector: '.home__cities .city:eq(' + index + ')',
                     targetSelector: '.flipper',
                     hoverClassName: 'flipper--flipped'
                 });

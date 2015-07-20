@@ -25,7 +25,7 @@ VOLO.HeaderAnimations = (function() {
         this.$window.off('scroll', this._changeHeaderBackground).on('scroll', this._changeHeaderBackground);
         this._changeHeader();
         this._changeHeaderBackground();
-        if ($('body').hasClass('home-page')) {
+        if ($('body').hasClass('home')) {
             $('.header').removeClass('header--mobile');
         }
     };
@@ -51,7 +51,7 @@ VOLO.HeaderAnimations = (function() {
                 $header.removeClass('header--white');
             }
             //remove white header on homepage
-            if (headerHasClassWhite && $('body').hasClass('home-page')) {
+            if (headerHasClassWhite && $('body').hasClass('home')) {
                 $header.removeClass('header--white');
             }
         }
@@ -66,7 +66,7 @@ VOLO.HeaderAnimations = (function() {
 
         //change header to mobile when screen smaller that 800
         if (windowWidth <= VOLO.configuration.smallScreenMaxSize) {
-            bodyHasClassHome = $body.hasClass('home-page');
+            bodyHasClassHome = $body.hasClass('home');
             $header.addClass('header--white header--mobile header-small');
             //Don't show the white header on home page
             if (bodyHasClassHome && !this.pageScrolledDownForHeaderChange()) {

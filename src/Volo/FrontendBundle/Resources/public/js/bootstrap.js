@@ -196,7 +196,7 @@ VOLO.initCurrencyFormat = function (locale, currency_symbol) {
 
 VOLO.createHomeSearchView = function (locationModel) {
     var homeSearchView = new HomeSearchView({
-        el: '.teaser__form',
+        el: '.home__teaser__form',
         model: locationModel,
         geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1])
     });
@@ -323,7 +323,7 @@ VOLO.doBootstrap = function(configuration) {
         VOLO.renderCheckoutViews(checkoutViews);
     }
 
-    if ($('.teaser__form').length > 0) {
+    if ($('.home__teaser__form').length > 0) {
         var homeSearchView = VOLO.createHomeSearchView(locationModel);
         homeSearchView.render();
 

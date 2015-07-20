@@ -17,7 +17,7 @@ var HomeSearchView = Backbone.View.extend({
     },
 
     events: {
-        'click .teaser__button': '_submitPressed',
+        'click .home__teaser__button': '_submitPressed',
         'submit': '_submitPressed',
         'focus #postal_index_form_input': '_hideTooltip',
         'blur #postal_index_form_input': '_hideTooltip',
