@@ -42,10 +42,33 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
         if (_.isObject(this.existingUserLoginView)) {
             this._bindLoginRegistrationEvents();
         }
+
+        this._push(this.doMobileDetection(window.navigator.userAgent));
     },
 
     unbind: function () {
         this.stopListening();
+    },
+
+    doMobileDetection: function (userAgent) {
+        var md = new MobileDetect(userAgent);
+
+        var detectionResult = {
+            deviceType: 'desktop',
+            deviceName: null
+        };
+
+        if (md.phone()) {
+            detectionResult.deviceType = 'mobile';
+            detectionResult.deviceName = md.phone();
+        }
+
+        if (md.tablet()) {
+            detectionResult.deviceType = 'tablet';
+            detectionResult.deviceName = md.tablet();
+        }
+
+        return detectionResult;
     },
 
     fireLogin: function (data) {

@@ -60,6 +60,8 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
         return [
             new \Twig_SimpleFunction('get_configuration', array($this, 'getConfiguration')),
             new \Twig_SimpleFunction('get_default_cart_count', array($this, 'getDefaultCartCount')),
+            new \Twig_SimpleFunction('get_default_cart_variations_ids', array($this, 'getDefaultCartVariationsIds')),
+            new \Twig_SimpleFunction('get_default_cart_value', array($this, 'getDefaultCartValue')),
             new \Twig_SimpleFunction('get_default_cart_vendor_id', array($this, 'getDefaultCartVendorId')),
 
             new \Twig_SimpleFunction('gtm_delivery_day', array($this, 'createDeliveryDay')),
@@ -106,6 +108,40 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
         $cart = $this->cartManager->getDefaultCart($session);
 
         return $cart === null ? 0 : array_sum(array_column($cart['products'], 'quantity'));
+    }
+
+    /**
+     * @param SessionInterface $session
+     *
+     * @return string
+     */
+    public function getDefaultCartVariationsIds(SessionInterface $session)
+    {
+        $cart = $this->cartManager->getDefaultCart($session);
+
+        if ($cart !== null) {
+            $ids = array_column($cart['products'], 'variation_id');
+
+            return implode(',', $ids);
+        }
+
+        return '';
+    }
+
+    /**
+     * @param SessionInterface $session
+     *
+     * @return float
+     */
+    public function getDefaultCartValue(SessionInterface $session)
+    {
+        $cart = $this->cartManager->getDefaultCart($session);
+
+        if ($cart !== null) {
+            return $this->cartManager->calculateCart($cart)['total_value'];
+        }
+
+        return .0;
     }
 
     /**

@@ -25,12 +25,16 @@
             dataLayer.push({
                 'event': 'virtualPageView',
                 'pageType': 'Success Page',
+                'referralKeyword': '{{ gtm_get_referral_keyword() }}',
                 'zipcode': '{{ customer_location().postcode }}',
                 'city': '{{ customer_location().city }}',
                 'country': '{{ gtm_get_country() }}',
                 'loggedIn': '{{ is_customer_authenticated_fully() ? 'true' : 'false' }}',
                 'customerId': '{{ is_customer_authenticated_fully() ? get_authenticated_customer().id }}',
-                'referrer': VOLO.gtmReferrer
+                'referrer': VOLO.gtmReferrer,
+                'cartValue': '{{ get_default_cart_value(app.session) }}',
+                'cartContents': '{{ get_default_cart_variations_ids(app.session) }}',
+                'cartQuantity': '{{ get_default_cart_count(app.session) }}'
             });
         });
     </script>

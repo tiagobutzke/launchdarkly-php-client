@@ -9,15 +9,21 @@
 
 {% block google_tag_manager %}
     <script type="text/javascript" data-turbolinks-eval=always>
-        dataLayer.push({
-            'event': 'virtualPageView',
-            'pageType': 'Checkout',
-            'zipcode': '{{ customer_location().postcode }}',
-            'city': '{{ customer_location().city }}',
-            'country': '{{ gtm_get_country() }}',
-            'loggedIn': '{{ is_customer_authenticated_fully() ? 'true' : 'false' }}',
-            'customerId': '{{ is_customer_authenticated_fully() ? get_authenticated_customer().id }}',
-            'referrer': VOLO.gtmReferrer
+        $(document).ready(function() {
+            dataLayer.push({
+                'event': 'virtualPageView',
+                'pageType': 'Checkout',
+                'referralKeyword': '{{ gtm_get_referral_keyword() }}',
+                'zipcode': '{{ customer_location().postcode }}',
+                'city': '{{ customer_location().city }}',
+                'country': '{{ gtm_get_country() }}',
+                'loggedIn': '{{ is_customer_authenticated_fully() ? 'true' : 'false' }}',
+                'customerId': '{{ is_customer_authenticated_fully() ? get_authenticated_customer().id }}',
+                'referrer': VOLO.gtmReferrer,
+                'cartValue': '{{ get_default_cart_value(app.session) }}',
+                'cartContents': '{{ get_default_cart_variations_ids(app.session) }}',
+                'cartQuantity': '{{ get_default_cart_count(app.session) }}'
+            });
         });
     </script>
     {% block gtm_checkout_extension %}{% endblock %}
