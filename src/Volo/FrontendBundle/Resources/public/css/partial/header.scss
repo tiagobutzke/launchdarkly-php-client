@@ -83,7 +83,7 @@
   left: 0;
   bottom: 0;
   right: 0;
-  .restaurants__tool-box-sticking & {
+  .restaurants__tool-box--sticking & {
     display: none;
   }
   @include respond-from("screen-md") {
@@ -91,7 +91,7 @@
     margin-top: 15px;
     position: static;
     display: inline-block;
-    .restaurants__tool-box-sticking & {
+    .restaurants__tool-box--sticking & {
       display: inline-block;
     }
   }
