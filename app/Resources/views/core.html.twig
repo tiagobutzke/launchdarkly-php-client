@@ -6,7 +6,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <title>{% block title %}{{ 'general.default_page_title'|trans }}{% endblock %}</title>
 
-        {% set faviconCountry = "es" == country_code ? country_code : 'default' %}
+        {% if "es" == country_code or "se" == country_code %}
+            {% set faviconCountry = country_code %}
+        {% else %}
+            {% set faviconCountry = 'default' %}
+        {% endif %}
         <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('/img/favicon/'~ faviconCountry ~'/apple-touch-icon-57x57.png') }}">
         <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('/img/favicon/'~ faviconCountry ~'/apple-touch-icon-60x60.png') }}">
         <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('/img/favicon/'~ faviconCountry ~'/apple-touch-icon-72x72.png') }}">
