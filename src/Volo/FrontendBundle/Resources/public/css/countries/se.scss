@@ -1,38 +1,38 @@
-.country-se {
-  .icon-logo:before {
-    content: "\e61c" !important;
-  }
+.country-se .icon-logo:before {
+  content: "\e61c" !important;
+}
 
-  .header__logo {
-    margin-top: 11px;
-    @include respond-from("screen-md") {
-      margin-top: 16px;
-    }
-    @include respond-from("screen-lg") {
-      margin-top: 20px;
-    }
-  }
-  .header--white .header__logo {
-    margin-top: 11px;
-    @include respond-from("screen-md") {
-      margin-top: 16px;
-    }
-    @include respond-from("screen-lg") {
-      margin-top: 16px;
-    }
-  }
 
-  .header__logo__a {
-    padding-top: 1px;
+.country-se .header__logo {
+  margin-top: 11px;
+  @include respond-from("screen-md") {
+    margin-top: 16px;
   }
+  @include respond-from("screen-lg") {
+    margin-top: 20px;
+  }
+}
+.country-se .header--white .header__logo {
+  margin-top: 11px;
+  @include respond-from("screen-md") {
+    margin-top: 16px;
+  }
+  @include respond-from("screen-lg") {
+    margin-top: 16px;
+  }
+}
 
-  .header__logo__a  i {
-    font-size: 0.65em;
-    @include respond-from("screen-md") {
-      font-size: 0.7em;
-    }
-    @include respond-from("screen-lg") {
-      font-size: 0.85em;
-    }
+
+.country-se .header__logo__a {
+  padding-top: 1px;
+}
+
+.country-se .header__logo__a  i {
+  font-size: 0.65em;
+  @include respond-from("screen-md") {
+    font-size: 0.7em;
+  }
+  @include respond-from("screen-lg") {
+    font-size: 0.85em;
   }
 }
