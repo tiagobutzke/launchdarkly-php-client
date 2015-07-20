@@ -1,4 +1,9 @@
-.profile-wrapper {
+/*
+* profile-page declarations
+*/
+
+
+.profile__blocks-wrapper {
   margin-top:  $header-height-small;
   padding-bottom: 0;
   @include respond-from("screen-md") {
@@ -7,22 +12,15 @@
   }
 }
 
-.profile {
+.profile__blocks {
   @include respond-from("screen-md") {
     @include make-row();
     margin-top: 0;
   }
-
-  .checkout__item {
-    border: none;
-  }
-  
-  .newsletter-form-group {
-    display: none;
-  }
 }
 
-.profile__main {
+
+.profile__block {
   @include make-md-column(6);
   @extend .col-md-push-3;
   clear: both;
@@ -31,14 +29,21 @@
   @include respond-from("screen-md") {
     margin-bottom: $space-sm;
     border-radius: $border-radius-default;
-
-    &:first-child {
-      margin-top: $space-lg;
-    }
+  }
+}
+.profile__block:first-child {
+  @include respond-from("screen-md") {
+    margin-top: $space-lg;
+  }
+}
+.profile__block--list {
+  @include respond-from("screen-md") {
+    padding-bottom: $space-sm;
   }
 }
 
-.profile__title {
+
+.profile__block__title {
   background-color: $color-bg-primary;
   font-family: $bold-font-family;
   font-size: 0.9em;
@@ -51,52 +56,6 @@
   text-align: center;
   border-bottom: $dropdown-border;
 }
-
-.profile__title__edit {
-  display: inline-block;
-  @include vertical-center-absolute();
-  right: $grid-gutter-width / 2;
-  text-transform: none;
-  font-family: $base-font-family;
+.profile__block--list .profile__block__title {
+  margin-bottom: 0;
 }
-
-.profile__item {
-  background-color: $color-bg-primary;
-  @include clearfix;
-  line-height: 1.4em;
-  font-size: 0.875em;
-  padding: 0 $space-sm $space-sm;
-
-  i {
-    display: inline-block;
-    margin-right: $space-xs;
-    color: $color-text-highlight;
-  }
-}
-
-// address box
-
-.profile__main--list {
-  @include respond-from("screen-md") {
-    padding-bottom: $space-sm;
-  }
-
-  .profile__title {
-    margin-bottom: 0;
-  }
-
-  .checkout__list {
-    line-height: normal;
-    margin-top: $space-xs;
-    @include respond-from("screen-md") {
-      margin-top: $space-sm;
-    }
-  }
-
-  .checkout__list__items {
-    margin-top: 2px;
-  }
-}
-
-
-
