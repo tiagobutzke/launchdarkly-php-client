@@ -52,7 +52,7 @@ class ProfileController extends Controller
                     $this->updatePassword($request);
                     $isChangePasswordSuccess = true;
                 } catch (ChangePasswordCustomerException $e) {
-                    $errorMessage = $e->getValidationMessage();
+                    $errorMessage = $e->getExceptionType();
                 } catch (ValidationEntityException $e) {
                     $passwordFormErrorMessages = $e->getValidationMessages();
                 }

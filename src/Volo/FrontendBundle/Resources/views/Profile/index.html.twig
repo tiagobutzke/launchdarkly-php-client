@@ -38,9 +38,12 @@
                     {% if isChangePasswordSuccess == true %}
                         <div class="success-msg success-msg--above-form">{% trans %}customer.change_password.success{% endtrans %}</div>
                     {% endif %}
-                    <form action="{{ path('profile_index') }}" id="contact_information_form" method="post" role="form">
+                    <form action="{{ path('profile_index') }}" id="profile-password-form" method="post" role="form">
                         <div class="form-group">
-                            <input type="password" class="form-control" id="old_password" name="password_form[old_password]" value="" required="true" placeholder="{% trans %}form.label.current_password{% endtrans %}">
+                            <input type="password" class="form-control" id="old_password"
+                                   name="password_form[old_password]" value="" required="true"
+                                   placeholder="{% trans %}form.label.current_password{% endtrans %}"
+                                   data-validation-msg="{% trans %}customer.validation.password.not_blank{% endtrans %}">
                             {% if passwordFormErrorMessages.old_password is defined %}
                                 {% for message in passwordFormErrorMessages.old_password %}
                                     <span class="error_msg">{{ message|trans|raw }}</span>
@@ -48,7 +51,10 @@
                             {% endif %}
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" id="new_password" name="password_form[new_password]" value="" required="true" placeholder="{% trans %}form.label.newpassword{% endtrans %}">
+                            <input type="password" class="form-control" id="new_password"
+                                   name="password_form[new_password]" value="" required="true"
+                                   placeholder="{% trans %}form.label.newpassword{% endtrans %}"
+                                   data-validation-msg="{% trans %}customer.validation.password.password_too_short{% endtrans %}">
                             {% if passwordFormErrorMessages.new_password is defined %}
                                 {% for message in passwordFormErrorMessages.new_password %}
                                     <span class="error_msg">{{ message|trans|raw }}</span>
