@@ -1,18 +1,23 @@
-.static-pages-wrapper {
+/*
+* static-page declarations
+*/
+
+
+.static-page__blocks-wrapper {
   @include respond-from("screen-md") {
     @include fluid-container();
     @include clearfix();
   }
 }
 
-.static-pages {
+.static-page__blocks {
   @include respond-from("screen-md") {
     @include make-row();
     margin-top: $space-md * 2;
   }
 }
 
-.static-pages__main {
+.static-page__block {
   background-color: $color-bg-primary;
   @include make-md-column(10);
   @extend .col-md-push-1;
@@ -22,37 +27,43 @@
     padding: $grid-gutter-width;
     margin-bottom: $space-md * 2;
   }
+}
 
-  h2 {
-    font-size: 0.875em;
-    margin: 0;
-    padding: 0;
-    line-height: normal;
-    text-transform: uppercase;
-  }
+// Style is used in CMS. Never change or delete the corresponding css selector
+.static-page__block h2 {
+  font-size: 0.875em;
+  margin: 0;
+  padding: 0;
+  line-height: normal;
+  text-transform: uppercase;
+}
 
-  p {
-    margin-bottom: $space-md;
-  }
+// Style is used in CMS. Never change or delete the corresponding css selector
+.static-page__block p {
+  margin-bottom: $space-md;
+}
 
-  ul {
-    padding-left: $space-lg;
-  }
+// Style is used in CMS. Never change or delete the corresponding css selector
+.static-page__block ul {
+  padding-left: $space-lg;
+}
 
-  li {
-    list-style-type: disc;
-    margin-bottom: $space-md;
+// Style is used in CMS. Never change or delete the corresponding css selector
+.static-page__block li {
+  list-style-type: disc;
+  margin-bottom: $space-md;
+}
 
-    li {
-      list-style-type: circle;
-      &:first-child {
-        margin-top: $space-md;
-      }
-    }
-  }
+// Style is used in CMS. Never change or delete the corresponding css selector
+.static-page__block li li {
+  list-style-type: circle;
+}
+.static-page__block li li:first-child {
+  margin-top: $space-md;
+}
 
-  strong {
-    font-weight: normal;
-    font-family: $bold-font-family;
-  }
+// Style is used in CMS. Never change or delete the corresponding css selector
+.static-page__block strong {
+  font-weight: normal;
+  font-family: $bold-font-family;
 }
