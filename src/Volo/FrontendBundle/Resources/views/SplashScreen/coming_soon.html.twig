@@ -6,11 +6,57 @@
 
 {% block header %}{% endblock %}
 
+{% block head_scripts %}
+    <script src="{{ asset('js/dist/coming-soon.js') }}"></script>
+    <script type="text/javascript">
+        VOLO = VOLO || {};
+        VOLO.configuration = VOLO.configuration || {};
+        VOLO.configuration.averageDeliveryTime = '30';
+        window.volo_thumbor_transformations = {};
+        window.volo_thumbor_transformations.breakpoints = [
+            {
+                "width": 1400,
+                "src": "data-src-bp_1400",
+                "mode": "viewport"
+            },
+            {
+                "width": 2000,
+                "src": "data-src-bp_biggest",
+                "mode": "viewport"
+            }
+        ];
+
+        $(document).ready(function() {
+            window.blazy = new Blazy({
+                breakpoints: [
+                    {
+                        "width": 1400,
+                        "src": "data-src-bp_1400",
+                        "mode": "viewport"
+                    },
+                    {
+                        "width": 2000,
+                        "src": "data-src-bp_biggest",
+                        "mode": "viewport"
+                    }
+                ],
+                offset: 400
+            });
+            var homeTeaseFullWidth = new VOLO.FullWindowHeight({
+                $window: $(window),
+                $document: $(document),
+                targetSelector: '.fullWindowHeight'
+            });
+            homeTeaseFullWidth.init();
+        });
+    </script>
+{% endblock head_scripts %}
+
 {% block content %}
     <section class="coming-soon__container fullWindowHeight b-lazy"
-             data-src="{{ asset('img/homepage/teaser_2400.jpg') }}"
-             data-src-1400="{{ asset('img/homepage/teaser_2800.jpg') }}"
-             data-src-biggest="{{ asset('img/homepage/teaser_4000.jpg') }}">
+             data-src="{{ asset('img/homepage/teaser_4000.jpg') }}"
+             data-src-bp_1400="{{ asset('img/homepage/teaser_2800.jpg') }}"
+             data-src-bp_biggest="{{ asset('img/homepage/teaser_4000.jpg') }}">
         <div class="coming-soon__logo">
             <i class="coming-soon__logo__icon icon-logo"></i>
         </div>
