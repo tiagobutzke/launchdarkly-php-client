@@ -1,6 +1,15 @@
 CHANGELOG
 =========
 
+* 1.9.0
+
+  * SGFD-18074: Home Refactor SASS to BEM
+  * SGFD-18116: Restaurants Refactor SASS to BEM
+  * SGFD-17695: Logo Change Sweden
+  * SGFD-18332: virtualPageView dataLayer at success page
+  * SGFD-18270: User can procede with geocomplete result without city
+  * SGFD-18211: Coming soon page
+
 * 1.8.3
 
   * SGFD-18261: Placeholder special instructions
