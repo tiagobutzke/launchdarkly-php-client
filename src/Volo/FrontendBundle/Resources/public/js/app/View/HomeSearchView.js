@@ -69,7 +69,7 @@ var HomeSearchView = Backbone.View.extend({
     _submitPressed: function() {
         console.log('_submitPressed ', this.cid);
         console.log(this.model.toJSON());
-        if (this.model.get('postcode') && this.model.get('city')) {
+        if (this.model.get('postcode')) {
             this._afterSubmit();
         }
 

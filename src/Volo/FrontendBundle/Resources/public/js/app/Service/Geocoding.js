@@ -142,13 +142,13 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
     _getLocationMetaFromGeocode: function (place) {
         return {
             formattedAddress: place.formatted_address,
-            city: this._findLocalityInAddressComponents(place.address_components),
+            city: this._findCityInAddressComponents(place.address_components),
             postalCode: {
                 value: this._findPostalCodeInAddressComponents(place.address_components),
                 isReversed: false
             },
-            street: this._findStreetNameInAddressComponents(place.address_components),
-            building: this._findBuildingNumberInAddressComponents(place.address_components),
+            street: this._findFieldInAddressComponents(place.address_components, 'route'),
+            building: this._findFieldInAddressComponents(place.address_components, 'street_number'),
             lat: place.geometry.location.lat(),
             lng: place.geometry.location.lng()
         };
@@ -193,24 +193,21 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
         return _.pluck(_.where(addressComponents, {'types': ['postal_code']}), 'short_name')[0];
     },
 
-    _findLocalityInAddressComponents: function (addressComponents) {
-        return _.pluck(_.where(addressComponents, {'types': ['locality']}), 'long_name')[0];
+    _findCityInAddressComponents: function (addressComponents) {
+        var cityName = null;
+
+        _.each(['locality', 'administrative_area_level_2', 'administrative_area_level_3'], function(type) {
+            if (!cityName) {
+                cityName = this._findFieldInAddressComponents(addressComponents, type);
+            }
+        }, this);
+
+        return cityName || '-';
     },
 
-    _findStreetNameInAddressComponents: function (addressComponents) {
+    _findFieldInAddressComponents: function(addressComponents, fieldName) {
         return _.chain(addressComponents)
-            .where({'types': ['route']})
-            .pluck('long_name')
-            .first()
-            .thru(function(first) {
-                return first || '';
-            })
-            .value();
-    },
-
-    _findBuildingNumberInAddressComponents: function (addressComponents) {
-        return _.chain(addressComponents)
-            .where({'types': ['street_number']})
+            .where({types: [fieldName]})
             .pluck('long_name')
             .first()
             .thru(function(first) {
