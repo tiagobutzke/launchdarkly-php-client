@@ -1,0 +1,87 @@
+/*
+* coming-soon splash page declarations
+*/
+
+// -------------------------- COMING SOON START --------------------------
+
+.coming-soon__container {
+  @include make-row(0);
+  background-color: $color-text-primary;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  height: 500px;
+}
+
+.coming-soon__logo {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  color: #fff;
+  text-align: center;
+  padding-bottom: 20px;
+  padding-top: 50px;
+  @include respond-from('screen-sm') {
+    padding-top: 60px;
+  }
+  @include respond-from('screen-md') {
+    padding-top: 70px;
+  }
+  @include respond-from('screen-lg') {
+    padding-top: 80px;
+    width: 70%;
+  }
+}
+
+.coming-soon__logo__icon {
+  font-size: 2.2em;
+  @include respond-from('screen-sm') {
+    font-size: 3em;
+  }
+  @include respond-from('screen-md') {
+    font-size: 3.6em;
+  }
+  @include respond-from('screen-lg') {
+    font-size: 4em;
+  }
+}
+
+.coming-soon__slogan {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  color: #fff;
+  text-align: center;
+  padding-bottom: 30px;
+  padding-top: 20px;
+  font-size: 1.4em;
+  line-height: 1em;
+  @include respond-from('screen-sm') {
+    padding-top: 40px;
+    font-size: 2.4em;
+  }
+  @include respond-from('screen-md') {
+    width: 86%;
+    padding-top: 60px;
+    font-size: 3.6em;
+  }
+  @include respond-from('screen-lg') {
+    width: 70%;
+    padding-top: 70px;
+    font-size: 4.2em;
+  }
+}
+
+.coming-soon__slogan__coming-soon {
+  font-family: $base-font-family;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.coming-soon__slogan__country {
+  font-family: $base-font-family;
+  text-transform: uppercase;
+}
+
+// -------------------------- COMING SOON END --------------------------

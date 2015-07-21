@@ -62,9 +62,7 @@
                 {% block content %}{% endblock %}
             </main>
             </div>
-            <footer class="footer {% block footer_size_class %}footer-full{% endblock %}">
-                {% block footer %}{% endblock %}
-            </footer>
+            {% block footer %}{% endblock %}
         </div>
         {% block footer_scripts %}{% endblock %}
     </body>

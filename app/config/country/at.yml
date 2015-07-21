@@ -1,3 +1,5 @@
+imports:
+    - { resource: common.yml }
 parameters:
     locale: de_AT
     timezone: "Europe/Berlin"

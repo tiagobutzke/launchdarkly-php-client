@@ -10,3 +10,5 @@ parameters:
     # 'guzzle.ring.client.curl_handler' or 'guzzle.ring.client.mock_handler'
     foodpanda.api.handler: guzzle.ring.client.mock_handler
     foodpanda.api.base_url: http://localhost/api/v4
+
+    is_coming_soon_enabled: false

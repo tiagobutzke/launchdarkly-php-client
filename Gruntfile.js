@@ -46,12 +46,18 @@ module.exports = function (grunt) {
 
     jsSources.libs = [
         'web/bower_components/jquery/dist/jquery.js',
-        'web/bower_components/real-shadow/realshadow.js'
+        'web/bower_components/real-shadow/realshadow.js',
+        'web/js/lib/andr3pt-blazy.js'
+    ];
+
+    jsSources.comingSoon = [
+        'web/bower_components/jquery/dist/jquery.js',
+        'web/js/lib/andr3pt-blazy.js',
+        frontendAssetPath('/js/app/Animation/*.js')
     ];
 
     jsSources.allLibs = jsSources.libs.concat([
         'web/bundles/heltheturbolinks/js/turbolinks.js',
-        'web/js/lib/andr3pt-blazy.js',
         'web/bundles/fosjsrouting/js/router.js',
         'web/js/fos_js_routes.js',
         'web/thumbor/configuration.js',
@@ -155,6 +161,10 @@ module.exports = function (grunt) {
         intl: {
             src: 'web/bower_components/intl/Intl.js',
             dest: frontendWebPath('/js/dist/intl.js')
+        },
+        commingSoon: {
+            src: jsSources.comingSoon,
+            dest: frontendWebPath('/js/dist/coming-soon.js')
         }
     };
 

@@ -1,4 +1,8 @@
+imports:
+    - { resource: common.yml }
 parameters:
     locale: en_HK
     timezone: "Asia/Hong_Kong"
     average_delivery_time: 30
+
+    is_coming_soon_enabled: true

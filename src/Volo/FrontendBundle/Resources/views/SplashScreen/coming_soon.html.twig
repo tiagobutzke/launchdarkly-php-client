@@ -1,0 +1,70 @@
+{% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
+
+{% block title %}{% trans %}brand{% endtrans %} | {% trans %}meta_title.home_page{% endtrans %}{% endblock %}
+
+{% block body_class %}coming-soon{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block head_scripts %}
+    <script src="{{ asset('js/dist/coming-soon.js') }}"></script>
+    <script type="text/javascript">
+        VOLO = VOLO || {};
+        VOLO.configuration = VOLO.configuration || {};
+        VOLO.configuration.averageDeliveryTime = '30';
+        window.volo_thumbor_transformations = {};
+        window.volo_thumbor_transformations.breakpoints = [
+            {
+                "width": 1400,
+                "src": "data-src-bp_1400",
+                "mode": "viewport"
+            },
+            {
+                "width": 2000,
+                "src": "data-src-bp_biggest",
+                "mode": "viewport"
+            }
+        ];
+
+        $(document).ready(function() {
+            window.blazy = new Blazy({
+                breakpoints: [
+                    {
+                        "width": 1400,
+                        "src": "data-src-bp_1400",
+                        "mode": "viewport"
+                    },
+                    {
+                        "width": 2000,
+                        "src": "data-src-bp_biggest",
+                        "mode": "viewport"
+                    }
+                ],
+                offset: 400
+            });
+            var homeTeaseFullWidth = new VOLO.FullWindowHeight({
+                $window: $(window),
+                $document: $(document),
+                targetSelector: '.fullWindowHeight'
+            });
+            homeTeaseFullWidth.init();
+        });
+    </script>
+{% endblock head_scripts %}
+
+{% block content %}
+    <section class="coming-soon__container fullWindowHeight b-lazy"
+             data-src="{{ asset('img/homepage/teaser_4000.jpg') }}"
+             data-src-bp_1400="{{ asset('img/homepage/teaser_2800.jpg') }}"
+             data-src-bp_biggest="{{ asset('img/homepage/teaser_4000.jpg') }}">
+        <div class="coming-soon__logo">
+            <i class="coming-soon__logo__icon icon-logo"></i>
+        </div>
+        <div class="coming-soon__slogan">
+            <div class="coming-soon__slogan__coming-soon">{% trans %}general.coming_soon_to{% endtrans %}</div>
+            <div class="coming-soon__slogan__country">{{ gtm_get_country() }}</div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block footer %}{% endblock %}
