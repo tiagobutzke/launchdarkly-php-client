@@ -15,6 +15,11 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
     private $locale;
 
     /**
+     * @var string
+     */
+    private $timePickerDateFormat;
+
+    /**
      * @var CartManagerService
      */
     private $cartManager;
@@ -23,12 +28,13 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
      * @param string $locale
      * @param CartManagerService $cartManager
      */
-    public function __construct($locale, CartManagerService $cartManager)
+    public function __construct($locale, CartManagerService $cartManager, $datePickerDateFormat)
     {
         parent::__construct();
 
         $this->locale = $locale;
         $this->cartManager = $cartManager;
+        $this->timePickerDateFormat = $datePickerDateFormat;
     }
 
     /**
@@ -177,7 +183,7 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
         $formatter = \IntlDateFormatter::create($this->locale, \IntlDateFormatter::GREGORIAN, \IntlDateFormatter::NONE);
 
         // @see http://userguide.icu-project.org/formatparse/datetime for formats
-        $formatter->setPattern('eee MMM d');
+        $formatter->setPattern($this->timePickerDateFormat);
         return $formatter->format($day);
     }
 

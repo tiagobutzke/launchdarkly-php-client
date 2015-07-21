@@ -4,3 +4,4 @@ parameters:
     locale: fi_FI
     timezone: "Europe/Berlin"
     average_delivery_time: 30
+    timepicker_date_format: 'eee d LLL'

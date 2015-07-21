@@ -12,3 +12,4 @@ parameters:
     foodpanda.api.base_url: http://localhost/api/v4
 
     is_coming_soon_enabled: false
+    timepicker_date_format: 'eee MMM d'
