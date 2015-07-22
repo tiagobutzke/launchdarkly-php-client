@@ -12,8 +12,8 @@
         <div class="hero-traking__info">
             <h2 class="tracking-header__title">{% trans %}title.we_have_received_your_order{% endtrans %}!</h2>
             <h2 class="tracking-header__title">
-                {% trans %}title.it_should_arrive_at{% endtrans %}
-                <span class="time_value">{{ date(status.confirmed_delivery_time.date, status.confirmed_delivery_time.timezone)|formatTime }}</span>
+                {% set deliveryTime = date(status.confirmed_delivery_time.date, status.confirmed_delivery_time.timezone)|formatTime %}
+                {% trans with {'%deliveryTime%': deliveryTime }%}title.it_should_arrive_at %deliveryTime%{% endtrans %}
             </h2>
             {#TODO app - show app info when app is available #}
             {#<div class="tracking-header__app">#}
