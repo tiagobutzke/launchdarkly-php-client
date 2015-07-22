@@ -130,6 +130,7 @@
   }
 }
 
+
 .header__cart {
   position: relative;
   @include make-link($link-color-bg-dark, $link-color-bg-dark);
@@ -143,6 +144,11 @@
     margin-top: 31px;
   }
 }
+.error-page .header__cart {
+  display: none;
+}
+
+
 .header__cart__products__count {
   display: block;
   border-radius: 15px;
@@ -171,6 +177,9 @@
   @include respond-from("screen-lg") {
     margin-top: 32px;
   }
+}
+.error-page .header__account {
+  display: none;
 }
 
 .header__account__login-icon {
