@@ -3,6 +3,7 @@ var PaymentTypeView = Backbone.View.extend({
         _.bindAll(this);
 
         this.checkoutModel = options.checkoutModel;
+        this.$('.checkout__payment__wrapper').first().click();
     },
 
     events: {
