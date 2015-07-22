@@ -92,6 +92,7 @@ VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel) {
         views.checkoutPageView = new CheckoutPageView({
             el: '.checkout__main',
             $header: $('.header'),
+            configuration: VOLO.configuration,
             model: checkoutModel
         });
     }
