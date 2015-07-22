@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.9.2
+
+  *  SGFD-18388: Vendor listing opening time fix (reverted)
+
 * 1.9.1
 
   * SGFD-18211 Coming soon page fix
