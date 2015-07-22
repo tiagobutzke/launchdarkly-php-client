@@ -27,20 +27,39 @@
         <div class="profile">
             <div class="profile__main">
                 <h3 class="profile__title">{% trans %}title.my_profile{% endtrans %}</h3>
-                {% for message in errorMessages %}
-                    <div class="error_msg">{{ message }}</div>
-                {% endfor %}
                 {% include 'VoloFrontendBundle:Checkout/Partial:contact_information_form.html.twig' with {action: path('profile_index')} %}
             </div>
             <div class="profile__main">
                 <h3 class="profile__title">{% trans %}title.my_password{% endtrans %}</h3>
                 <div class="checkout__item">
-                    <form action="{{ path('profile_update_password') }}" id="contact_information_form" method="post" role="form">
+                    {% if errorMessage is not empty %}
+                        <div class="error_msg error-msg--above-form">{{ errorMessage|trans|raw }}</div>
+                    {% endif %}
+                    {% if isChangePasswordSuccess == true %}
+                        <div class="success-msg success-msg--above-form">{% trans %}customer.change_password.success{% endtrans %}</div>
+                    {% endif %}
+                    <form action="{{ path('profile_index') }}" id="profile-password-form" method="post" role="form">
                         <div class="form-group">
-                            <input type="password" class="form-control" id="old_password" name="password_form[old_password]" value="" required="true" placeholder="{% trans %}form.label.current_password{% endtrans %}">
+                            <input type="password" class="form-control" id="old_password"
+                                   name="password_form[old_password]" value="" required="true"
+                                   placeholder="{% trans %}form.label.current_password{% endtrans %}"
+                                   data-validation-msg="{% trans %}customer.validation.password.not_blank{% endtrans %}">
+                            {% if passwordFormErrorMessages.old_password is defined %}
+                                {% for message in passwordFormErrorMessages.old_password %}
+                                    <span class="error_msg">{{ message|trans|raw }}</span>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" id="new_password" name="password_form[new_password]" value="" required="true" placeholder="{% trans %}form.label.newpassword{% endtrans %}">
+                            <input type="password" class="form-control" id="new_password"
+                                   name="password_form[new_password]" value="" required="true"
+                                   placeholder="{% trans %}form.label.newpassword{% endtrans %}"
+                                   data-validation-msg="{% trans %}customer.validation.password.password_too_short{% endtrans %}">
+                            {% if passwordFormErrorMessages.new_password is defined %}
+                                {% for message in passwordFormErrorMessages.new_password %}
+                                    <span class="error_msg">{{ message|trans|raw }}</span>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                         <button class="button pull-right">{% trans %}button.label.continue{% endtrans %}</button>
                     </form>

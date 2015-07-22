@@ -292,6 +292,16 @@ VOLO.createLogoutLinkView = function(cartModel) {
     return view;
 };
 
+VOLO.createProfileView = function () {
+    var profilePasswordFormView = new VOLO.ProfilePasswordFormView({
+        el: '#profile-password-form'
+    });
+
+    VOLO.views.push(profilePasswordFormView);
+
+    return profilePasswordFormView;
+};
+
 VOLO.doBootstrap = function(configuration) {
     window.blazy.revalidate();
 
@@ -366,6 +376,10 @@ VOLO.doBootstrap = function(configuration) {
 
     if ($('.logout-link').length > 0) {
         VOLO.createLogoutLinkView(cartModel);
+    }
+
+    if ($('#profile-password-form').length > 0) {
+        VOLO.createProfileView();
     }
 
     var GTMServiceInstance = VOLO.initGTMService({
