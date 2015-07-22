@@ -1,4 +1,14 @@
 <form class="hide" id="saved_payment_options" role="form">
+    {% for card in customer_cards %}
+    <div class="checkout__list sprite-form">
+        <input id="savedPlaymentOption{{ card.id }}" class="sprite-form__radio-button credit-card--radio" type="radio" name="credit_card" value="{{ card.id }}"/>
+        <div class="sprite-form__sprite"></div>
+        <label class="sprite-form__label" for="savedPlaymentOption{{ card.id }}">
+            **** {{ card.number }} {{ card.holder_name }}, {{ card.expiry_month }}/{{ card.expiry_year }}
+            <span class="checkout__list__payment_option_type checkout__list__payment_option_type--{{ card.brand }}"></span>
+        </label>
+    </div>
+    {% endfor %}
     {% if is_granted('IS_AUTHENTICATED_FULLY') and customer_cards is defined and customer_cards|length > 0 %}
     <div class="checkout__add_new_credit_card__container">
         <span class="checkout__subtitle__edit">
@@ -10,14 +20,4 @@
         </span>
     </div>
     {% endif %}
-    {% for card in customer_cards %}
-    <div class="checkout__list sprite-form">
-        <input id="savedPlaymentOption{{ card.id }}" class="sprite-form__radio-button credit-card--radio" type="radio" name="credit_card" value="{{ card.id }}"/>
-        <div class="sprite-form__sprite"></div>
-        <label class="sprite-form__label" for="savedPlaymentOption{{ card.id }}">
-            **** {{ card.number }} {{ card.holder_name }}, {{ card.expiry_month }}/{{ card.expiry_year }}
-            <span class="checkout__list__payment_option_type checkout__list__payment_option_type--{{ card.brand }}"></span>
-        </label>
-    </div>
-    {% endfor %}
 </form>
