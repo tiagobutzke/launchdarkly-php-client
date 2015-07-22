@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+* 1.9.1
+
+  * SGFD-18211 Coming soon page fix
+  * SGFD-18388: Vendor listing opening time fix (edited)
+  * Edited timezones
+
 * 1.9.0
 
   * SGFD-18074: Home Refactor SASS to BEM
