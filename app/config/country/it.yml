@@ -2,5 +2,5 @@ imports:
     - { resource: common.yml }
 parameters:
     locale: it_IT
-    timezone: "Europe/Berlin"
+    timezone: "Europe/Rome"
     average_delivery_time: 30
