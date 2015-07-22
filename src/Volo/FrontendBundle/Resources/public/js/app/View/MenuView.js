@@ -22,7 +22,7 @@ var MenuView = Backbone.View.extend({
                 return this.domObjects.$header.outerHeight();
             }.bind(this),
             startingPointGetter: function() {
-                var vendorLogo = this.$('.menu__vendor-logo'),
+                var vendorLogo = this.$('.menu__categories__vendor-logo'),
                     vendorLogoHeight = vendorLogo.length ? vendorLogo.outerHeight() : 0;
 
                 return this.$el.offset().top + vendorLogoHeight;
@@ -33,7 +33,7 @@ var MenuView = Backbone.View.extend({
         });
         this.stickOnTopMenu.init(this.$('.menu__categories nav'));
         this._boundStickyUpdate = this.stickOnTopMenu.updateCoordinates.bind(this.stickOnTopMenu);
-        this.$('.menu__vendor-logo__img').off('load', this._boundStickyUpdate).on('load', this._boundStickyUpdate);
+        this.$('.menu__categories__vendor-logo-img').off('load', this._boundStickyUpdate).on('load', this._boundStickyUpdate);
     },
 
     setGtmService: function (gtmService) {
@@ -46,14 +46,14 @@ var MenuView = Backbone.View.extend({
     // attaching navigation behaviour to menu links
     events: {
         'click .anchorNavigation': '_navigateToAnchor',
-        'click .btn-allergy': 'showAllergyModal'
+        'click .menu__icon-legend__link': 'showAllergyModal'
     },
 
     unbind: function() {
         console.log('MenuView.unbind', this.cid);
         // unbinding cart sticking behaviour
 
-        this.$('.menu__vendor-logo__img').off('load', this._boundStickyUpdate);
+        this.$('.menu__categories__vendor-logo-img').off('load', this._boundStickyUpdate);
         this.stickOnTopMenu.remove();
 
         _.invoke(this.subViews, 'unbind');

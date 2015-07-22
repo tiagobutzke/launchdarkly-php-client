@@ -103,7 +103,7 @@ var VendorGeocodingView = HomeSearchView.extend({
 
             this._hideFormattedAddress();
             var $body = $('body'),
-                offset = $('.menu').offset().top - $('.header__wrapper').height();
+                offset = $('.menu__blocks').offset().top - $('.header__wrapper').height();
 
             if ($body.width() - this.scrollBarSize > this.smallScreenMaxSize) {
                 $body.animate({

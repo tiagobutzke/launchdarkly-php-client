@@ -6,7 +6,7 @@
 {% set customHeadlineImage = cms('restaurant-headline-custom-' ~ vendor.code) is not empty ? true : false %}
 {% set richDescription = cms('restaurant-rich-description-' ~ vendor.code) %}
 
-{% block body_class %}menu-page {% if customHeadlineImage == true%}vendor_custom{% endif %}{% endblock %}
+{% block body_class %}menu {% if customHeadlineImage == true%}vendor_custom{% endif %}{% endblock %}
 {% block google_tag_manager %}
     <script type="text/javascript" data-turbolinks-eval=always>
         dataLayer.push({
@@ -45,32 +45,32 @@
     <div class="hero-menu__info-extra">
         {{ include('VoloFrontendBundle:Vendor/Partial:time_info.html.twig') }}
         {% if vendor.address is not empty %}
-            <i class="icon-pin-map"></i> {{ vendor.address }}
+            <i class="hero-menu__info-extra__icon icon-pin-map"></i> {{ vendor.address }}
         {% endif %}
         {% if vendor.customerPhone is not empty %}
-            <i class="icon-call-phone"></i> {{ vendor.customerPhone }}
+            <i class="hero-menu__info-extra__icon icon-call-phone"></i> {{ vendor.customerPhone }}
         {% endif %}
         {% if  richDescription is not empty %}
             <a data-toggle="modal" data-target="#rich-description" class="hero-menu__info-extra__rich-description">{% trans %}link.rich_description{% endtrans %}</a>
         {%  endif %}
     </div>
 </div>
-<div class="menu-wrapper">
-    <div class="menu">
-        <div class="menu__main" data-vendor_id="{{ vendor.id }}" >
-            <div class="menu__main__list">
+<div class="menu__blocks-wrapper">
+    <div class="menu__blocks">
+        <div class="menu__list-wrapper" data-vendor_id="{{ vendor.id }}" >
+            <div class="menu__list">
                 {{ include('VoloFrontendBundle:Vendor:allergyLegend.html.twig') }}
                 <div class="menu__categories">
                     {% if vendor.logo is not empty %}
-                        <div class="menu__vendor-logo">
-                            <img class="menu__vendor-logo__img" src="{{ vendor.logo|prepareLogoUrl(logo_image_dimensions) }}" alt="{{ vendor.name }}">
+                        <div class="menu__categories__vendor-logo">
+                            <img class="menu__categories__vendor-logo-img" src="{{ vendor.logo|prepareLogoUrl(logo_image_dimensions) }}" alt="{{ vendor.name }}">
                         </div>
                     {% endif %}
-                    <nav>
+                    <nav class="menu__categories__list-wrapper">
                         <ul>
                             {% for menuCategory in vendor.menus.first.menuCategories %}
                                 <li>
-                                    <a class="anchorNavigation" data-id="{{ menuCategory.id }}" href="#menu__category-id-{{ menuCategory.id }}">
+                                    <a class="menu__categories__list-item anchorNavigation" data-id="{{ menuCategory.id }}" href="#menu__category-id-{{ menuCategory.id }}">
                                         {{ menuCategory.name }}
                                     </a>
                                 </li>
@@ -88,7 +88,7 @@
                                     <div class="menu__item__name">
                                         {{ product.name }}
                                         {% if product.productVariations.first.name %}
-                                                <sup> {{ product.productVariations.first.name }}</sup>
+                                                <sup class="menu__item__product-variation"> {{ product.productVariations.first.name }}</sup>
                                         {% endif %}
                                     </div>
                                     <div class="menu__item__description">
@@ -97,19 +97,26 @@
                                 </div>
                                 <div class="menu__item__price">
                                     {{ product.productVariations.first.price|price }}
-                                    <button><i class="icon-plus"></i></button>
+                                    <button class="menu__item__price-button">
+                                        <i class="menu__item__price-button-icon icon-plus"></i>
+                                    </button>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
                         {% endfor %}
                     {% endfor %}
-                    <div class="menu__icon-legend"><i class="icon-info-circled"></i><a class="btn-allergy">{% trans %}allergy.headline{% endtrans %}</a></div>
+                    <div class="menu__icon-legend">
+                        <i class="menu__icon-legend__info-icon icon-info-circled"></i>
+                        <a class="menu__icon-legend__link">{% trans %}allergy.headline{% endtrans %}</a>
+                    </div>
                     {% set specialNote = cms('vendor-' ~ vendor.code ~ '-special-note') %}
                     {% if specialNote is not empty %}
                         <div class="menu__special-note"><span>{{ specialNote }}</span></div>
                     {% endif %}
                     {% if country_code not in ['se', 'no'] %}
-                        <div class="menu__legal"><span>{% trans with {'%legal_name%': vendor.addressLine2 }%}vendor.sold_by %legal_name%{% endtrans %}</span></div>
+                        <div class="menu__legal">
+                            <span class="menu__legal__vendor-name">{% trans with {'%legal_name%': vendor.addressLine2 }%}vendor.sold_by %legal_name%{% endtrans %}</span>
+                        </div>
                     {% endif %}
                 </div>
 
@@ -121,13 +128,13 @@
     </div>
     <div class="menu__bottom-info">
         <div class="menu__bottom-info__openings">
-            <h3>{% trans %}opening_times.title{% endtrans %}</h3>
-            <ul>
+            <h3 class="menu__bottom-info__openings-title">{% trans %}opening_times.title{% endtrans %}</h3>
+            <ul class="menu__bottom-info__openings-days">
                 {% for weekdayIndex in 1..7 %}
                     {% set schedules = getDailySchedules(vendor.schedules, weekdayIndex) %}
                     {% if (schedules|length > 0) %}
-                        <li>
-                            <span class="menu__bottom-info__openings-day">{{ weekdayIndex|dayOfTheWeek }}</span>
+                        <li class="menu__bottom-info__openings-day">
+                            <span class="menu__bottom-info__openings-day-name">{{ weekdayIndex|dayOfTheWeek }}</span>
                             <span class="menu__bottom-info__openings-time">
                                 {% for schedule in schedules %}
                                     {{ schedule.openingTime }} - {{ schedule.closingTime }}{% if not loop.last %}, {% endif %}
