@@ -183,7 +183,6 @@ var CartView = Backbone.View.extend({
         'click .mobile-close__cart' : '_hideMobileCart'
     },
 
-
     _hideMobileCart: function() {
         this.$('.desktop-cart').addClass('mobile-cart__hidden');
         $('body').removeClass('body-cart-fix');
@@ -309,7 +308,15 @@ var CartView = Backbone.View.extend({
     },
 
     _handleCartSubmit: function() {
-        return !this.$('.btn-checkout').hasClass('disabled');
+        var vendorCode = this.$('.btn-checkout').data('vendor-code'),
+            isGuestUser = this.$('.btn-checkout').data('is-guest-user'),
+            redirectRouteName = isGuestUser ? 'checkout_delivery_information' : 'checkout_payment';
+
+        if (!this.$('.btn-checkout').hasClass('disabled')) {
+            Turbolinks.visit(Routing.generate(redirectRouteName, {vendorCode: vendorCode}));
+        }
+
+        return false;
     },
 
     render: function() {
