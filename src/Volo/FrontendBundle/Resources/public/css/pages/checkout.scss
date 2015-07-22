@@ -265,6 +265,9 @@
     font-size: 1em;
   }
 }
+.profile__blocks .checkout__item {
+  border: none;
+}
 
 .checkout__item--delivery-list {
   padding-left: 0;
@@ -682,11 +685,20 @@
   }
 }
 
+
 .checkout__list {
   font-size: 0.875em;
   padding: $space-xs $space-md;
   margin: 0;
 }
+.profile__block--list .checkout__list {
+  line-height: normal;
+  margin-top: $space-xs;
+  @include respond-from("screen-md") {
+    margin-top: $space-sm;
+  }
+}
+
 
 .checkout__list__payment_option_type {
   vertical-align: middle;

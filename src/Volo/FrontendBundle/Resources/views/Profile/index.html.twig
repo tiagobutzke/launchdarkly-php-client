@@ -4,7 +4,7 @@
 
 {% block content_wrapper_class %}menu-bg{% endblock content_wrapper_class %}
 
-{% block body_class %}profile-page{% endblock %}
+{% block body_class %}profile{% endblock %}
 
 {% block google_tag_manager %}
     <script type="text/javascript" data-turbolinks-eval=always>
@@ -23,14 +23,14 @@
 {% block headerClass %}header--white header-small{% endblock headerClass %}
 
 {% block content %}
-    <div class="profile-wrapper">
-        <div class="profile">
-            <div class="profile__main">
-                <h3 class="profile__title">{% trans %}title.my_profile{% endtrans %}</h3>
+    <div class="profile__blocks-wrapper">
+        <div class="profile__blocks">
+            <div class="profile__block">
+                <h3 class="profile__block__title">{% trans %}title.my_profile{% endtrans %}</h3>
                 {% include 'VoloFrontendBundle:Checkout/Partial:contact_information_form.html.twig' with {action: path('profile_index')} %}
             </div>
-            <div class="profile__main">
-                <h3 class="profile__title">{% trans %}title.my_password{% endtrans %}</h3>
+            <div class="profile__block">
+                <h3 class="profile__block__title">{% trans %}title.my_password{% endtrans %}</h3>
                 <div class="checkout__item">
                     {% if errorMessage is not empty %}
                         <div class="error_msg error-msg--above-form">{{ errorMessage|trans|raw }}</div>
@@ -65,12 +65,12 @@
                     </form>
                 </div>
             </div>
-            <div class="profile__main profile__main--list">
-                <h3 class="profile__title">{% trans %}title.my_addresses{% endtrans %}</h3>
+            <div class="profile__block profile__block--list">
+                <h3 class="profile__block__title">{% trans %}title.my_addresses{% endtrans %}</h3>
                     {% include 'VoloFrontendBundle:Checkout/Partial:delivery_information_list.html.twig' %}
             </div>
-            <div class="profile__main  profile__main--list">
-                <h3 class="profile__title">{% trans %}title.payment_list{% endtrans %}</h3>
+            <div class="profile__block profile__block--list">
+                <h3 class="profile__block__title">{% trans %}title.payment_list{% endtrans %}</h3>
 
 
                     {% include 'VoloFrontendBundle:Checkout/Partial:payment_list.html.twig' %}
