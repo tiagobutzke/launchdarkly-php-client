@@ -3,8 +3,9 @@
 {% block title %}{% trans %}meta_title.status{% endtrans %} | {% trans %}brand{% endtrans %}{% endblock %}
 
 {% block body_class %}order-status-page{% endblock %}
+{% block gtm_page_type %}Success Page{% endblock %}
 
-{% block google_tag_manager %}
+{% block google_tag_manager_before %}
     <script type="text/javascript" data-turbolinks-eval=always>
         $(document).ready(function() {
             VOLO.GTMService.prototype.fireOrderStatus({
@@ -20,21 +21,6 @@
                         }
                     }
                 }
-            });
-
-            dataLayer.push({
-                'event': 'virtualPageView',
-                'pageType': 'Success Page',
-                'referralKeyword': '{{ gtm_get_referral_keyword() }}',
-                'zipcode': '{{ customer_location().postcode }}',
-                'city': '{{ customer_location().city }}',
-                'country': '{{ gtm_get_country() }}',
-                'loggedIn': '{{ is_customer_authenticated_fully() ? 'true' : 'false' }}',
-                'customerId': '{{ is_customer_authenticated_fully() ? get_authenticated_customer().id }}',
-                'referrer': VOLO.gtmReferrer,
-                'cartValue': '{{ get_default_cart_value(app.session) }}',
-                'cartContents': '{{ get_default_cart_variations_ids(app.session) }}',
-                'cartQuantity': '{{ get_default_cart_count(app.session) }}'
             });
         });
     </script>

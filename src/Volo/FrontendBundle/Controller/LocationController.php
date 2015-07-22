@@ -4,6 +4,7 @@ namespace Volo\FrontendBundle\Controller;
 
 use Foodpanda\ApiSdk\Entity\Cart\AbstractLocation;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
+use Foodpanda\ApiSdk\Entity\Vendor\VendorsCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -44,6 +45,8 @@ class LocationController extends Controller
     {
         $vendors = $this->get('volo_frontend.provider.vendor')->findVendorsByLocation($location);
 
+        /** @var $openVendors VendorsCollection */
+        /** @var $closedVendorsWithPreorder VendorsCollection */
         list($openVendors, $closedVendorsWithPreorder) = $vendors->getItems()
             ->filter(function (Vendor $vendor) { // filter restaurant closed
                 return !$vendor->getSchedules()->isEmpty();
@@ -54,6 +57,7 @@ class LocationController extends Controller
         return [
             'gpsSearch' => $location->getLocationType() === 'polygon',
             'formattedLocation' => $formattedLocation,
+            'vendors' => $vendors->getItems(),
             'openVendors' => $openVendors,
             'closedVendors' => $closedVendorsWithPreorder,
             'cityId' => $cityId,

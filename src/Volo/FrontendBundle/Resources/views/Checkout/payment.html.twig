@@ -1,12 +1,12 @@
 {% extends 'VoloFrontendBundle:Checkout:base.html.twig' %}
-{% block gtm_checkout_extension %}
+{% block google_tag_manager_before %}
     {% if is_customer_authenticated_fully() %}
         <script type="text/javascript" data-turbolinks-eval=always>
             dataLayer.push({
                 'event': 'checkout',
                 'checkoutStep': '1 - Checkout Started',
                 'sessionId': VOLO.configuration.sessionId,
-                'referrer': VOLO.gtmReferrer
+                'referrer': VOLO.tagManager.referrer
             });
         </script>
     {% endif %}

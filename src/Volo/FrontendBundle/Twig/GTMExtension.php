@@ -50,7 +50,7 @@ class GTMExtension extends Twig_Extensions_Extension_Intl
      */
     public function getCountry()
     {
-        return \Locale::getDisplayRegion('-' . $this->countryCode);
+        return \Locale::getDisplayRegion('-' . $this->countryCode, 'en');
     }
 
     /**

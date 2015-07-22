@@ -40,10 +40,29 @@
     <body class="country-{{ country_code }} {% block body_class %}{% endblock %}">
         {% if google_tag_manager_container_id %}
             <script type="text/javascript">
-                VOLO.gtmReferrer = '{{ gtm_get_referrer() }}';
+                VOLO.tagManager.referrer = '{{ gtm_get_referrer() }}';
+                VOLO.tagManager.pageType = '{% block gtm_page_type %}{% endblock %}';
             </script>
             <!-- Google Tag Manager -->
-            {% block google_tag_manager %}{% endblock %}
+            {% block google_tag_manager_before %}{% endblock %}
+            <script type="text/javascript" data-turbolinks-eval=always>
+                $(document).ready(function() {
+                    dataLayer.push({
+                        'event': 'virtualPageView',
+                        'pageType': VOLO.tagManager.pageType,
+                        'referralKeyword': '{{ gtm_get_referral_keyword() }}',
+                        'zipcode': '{{ customer_location().postcode }}',
+                        'city': '{{ customer_location().city }}',
+                        'country': '{{ gtm_get_country() }}',
+                        'loggedIn': '{{ is_customer_authenticated_fully() ? 'true' : 'false' }}',
+                        'customerId': '{{ is_customer_authenticated_fully() ? get_authenticated_customer().id }}',
+                        'referrer': VOLO.tagManager.referrer,
+                        'cartValue': '{{ get_default_cart_value(app.session) }}',
+                        'cartContents': '{{ get_default_cart_variations_ids(app.session) }}',
+                        'cartQuantity': '{{ get_default_cart_count(app.session) }}'
+                    });
+                });
+            </script>
             <script type="text/javascript" data-turbolinks-eval=false>
                 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
                         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);

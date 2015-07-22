@@ -5,27 +5,8 @@
 {% block content_wrapper_class %}menu-bg{% endblock content_wrapper_class %}
 
 {% block body_class %}profile{% endblock %}
+{% block gtm_page_type %}User Account{% endblock %}
 
-{% block google_tag_manager %}
-    <script type="text/javascript" data-turbolinks-eval=always>
-        $(document).ready(function() {
-            dataLayer.push({
-                'event': 'virtualPageView',
-                'pageType': 'User Account',
-                'referralKeyword': '{{ gtm_get_referral_keyword() }}',
-                'zipcode': '{{ customer_location().postcode }}',
-                'city': '{{ customer_location().city }}',
-                'country': '{{ gtm_get_country() }}',
-                'loggedIn': '{{ is_customer_authenticated_fully() ? 'true' : 'false' }}',
-                'customerId': '{{ is_customer_authenticated_fully() ? get_authenticated_customer().id }}',
-                'referrer': VOLO.gtmReferrer,
-                'cartValue': '{{ get_default_cart_value(app.session) }}',
-                'cartContents': '{{ get_default_cart_variations_ids(app.session) }}',
-                'cartQuantity': '{{ get_default_cart_count(app.session) }}'
-            });
-        });
-    </script>
-{% endblock %}
 {% block headerClass %}header--white header-small{% endblock headerClass %}
 
 {% block content %}
