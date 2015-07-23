@@ -191,7 +191,9 @@
             <argument type="service" id="translator" />
         </service>
 
-        <service id="volo_frontend.service.schedule" class="%volo_frontend.service.schedule.class%"></service>
+        <service id="volo_frontend.service.schedule" class="%volo_frontend.service.schedule.class%">
+            <argument type="service" id="doctrine_cache.providers.schedule_cache" />
+        </service>
 
         <service id="volo_frontend.event_listener.coming_soon_listener" class="%volo_frontend.event_listener.coming_soon_listener.class%">
             <argument id="templating" type="service"/>

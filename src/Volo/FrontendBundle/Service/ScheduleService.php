@@ -2,6 +2,7 @@
 
 namespace Volo\FrontendBundle\Service;
 
+use Doctrine\Common\Cache\Cache;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
 use Foodpanda\ApiSdk\Entity\Schedule\Schedule;
 use Foodpanda\ApiSdk\Entity\SpecialDay\SpecialDay;
@@ -11,6 +12,21 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class ScheduleService
 {
+    const CACHE_TTL = 82800; // 1 day
+
+    /**
+     * @var Cache
+     */
+    protected $cache;
+
+    /**
+     * @param Cache $cache
+     */
+    public function __construct(Cache $cache)
+    {
+        $this->cache = $cache;
+    }
+
     /**
      * @param SchedulesCollection $scheduleCollection
      * @param int                 $dayKey
@@ -82,21 +98,29 @@ class ScheduleService
      */
     protected function filterOpeningAndClosingHours(Vendor $vendor, ArrayCollection $collection)
     {
-        return $collection->filter(function(\DateTime $time) use ($vendor) {
-            if (in_array($time->format('H:i'), ['00:00', '23:59'])) {
-                return true;
-            }
+        $hash = md5(serialize($vendor->getSchedules()) . serialize($vendor->getSpecialDays()) . serialize($collection));
 
-            $after  = clone $time;
-            $before = clone $time;
-            $after->modify('+1 minutes');
-            $before->modify('-1 minutes');
+        if (!$this->cache->contains($hash)) {
+            $results = $collection->filter(function(\DateTime $time) use ($vendor) {
+                if (in_array($time->format('H:i'), ['00:00', '23:59'])) {
+                    return true;
+                }
 
-            $closedBefore = !$this->isVendorOpen($vendor, $before);
-            $closedAfter  = !$this->isVendorOpen($vendor, $after);
+                $after  = clone $time;
+                $before = clone $time;
+                $after->modify('+1 minutes');
+                $before->modify('-1 minutes');
 
-            return $closedBefore || $closedAfter;
-        });
+                $closedBefore = !$this->isVendorOpen($vendor, $before);
+                $closedAfter  = !$this->isVendorOpen($vendor, $after);
+
+                return $closedBefore || $closedAfter;
+            });
+
+            $this->cache->save($hash, serialize($results), static::CACHE_TTL);
+        }
+
+        return unserialize($this->cache->fetch($hash));
     }
 
     /**
@@ -161,6 +185,37 @@ class ScheduleService
         \DateInterval $interval,
         $openingOffset = 0,
         $closingOffset = 0
+    ) {
+        $time = clone $start;
+        $time->setTime(0, 0);
+        $schedules   = serialize($vendor->getSchedules());
+        $specialDays = serialize($vendor->getSpecialDays());
+        $hash = md5($schedules . $specialDays . strval($openingOffset) . strval($closingOffset) . serialize($interval). serialize($time));
+
+        if (!$this->cache->contains($hash)) {
+            $results = $this->calculateOpening($vendor, $time, $interval, $openingOffset, $closingOffset);
+
+            $this->cache->save($hash, serialize($results), static::CACHE_TTL);
+        }
+
+        return unserialize($this->cache->fetch($hash));
+    }
+
+    /**
+     * @param Vendor        $vendor
+     * @param \DateTime     $start
+     * @param \DateInterval $interval
+     * @param int           $openingOffset
+     * @param int           $closingOffset
+     *
+     * @return ArrayCollection
+     */
+    protected function calculateOpening(
+        Vendor $vendor,
+        \DateTime $start,
+        \DateInterval $interval,
+        $openingOffset,
+        $closingOffset
     ) {
         $results = new ArrayCollection();
 
