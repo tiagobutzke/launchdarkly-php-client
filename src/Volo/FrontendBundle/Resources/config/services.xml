@@ -146,6 +146,7 @@
         <service id="volo_frontend.service.vendor" class="%volo_frontend.service.vendor.class%">
             <argument type="service" id="volo_frontend.provider.city" />
             <argument type="service" id="volo_frontend.provider.vendor" />
+            <argument type="service" id="volo_frontend.service.schedule" />
             <argument type="service" id="doctrine_cache.providers.vendor_cache" />
         </service>
 
