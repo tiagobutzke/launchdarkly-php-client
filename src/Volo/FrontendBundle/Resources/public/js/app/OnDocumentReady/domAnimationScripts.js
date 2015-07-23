@@ -1,5 +1,6 @@
 //Attention: function for calling script which animate dom elements
 //should run after dom changing scripts - VOLO.initDomChangingScripts
+var VOLO = VOLO || {};
 VOLO.initDomAnimationScripts = function() {
     var plateAnimation,
         deliveryTimeAnimation,

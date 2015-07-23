@@ -1,5 +1,6 @@
 //Attention: function for calling scripts which change the dom structure
 //should run before dom animations - VOLO.initDomAnimationScripts
+var VOLO = VOLO || {};
 VOLO.initDomChangingScripts = function() {
     var homeTeaseFullWidth,
         headerAnimations,
