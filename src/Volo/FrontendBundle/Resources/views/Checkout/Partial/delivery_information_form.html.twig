@@ -63,7 +63,6 @@
         <input id="address_longitude" name="customer_address[longitude]" type="hidden"
                value="{{ customer_address.longitude|default('') }}">
         <input type="hidden" name="customer_address[city_id]" value="{{ vendor.city.id }}">
-        <input type="hidden" name="vendor_id" id="delivery_vendor_id" value="{{ vendor.id }}">
         <button id="delivery_information_form_button" class="button button--disabled">
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 {% trans %}button.save{% endtrans %}

@@ -40,6 +40,7 @@
         <parameter key="volo_frontend.twig.customer_extension.class">Volo\FrontendBundle\Twig\CustomerExtension</parameter>
         <parameter key="volo_frontend.service.wti.class">Volo\FrontendBundle\Service\WTIService</parameter>
         <parameter key="volo_frontend.event_listener.coming_soon_listener.class">Volo\FrontendBundle\EventListener\ComingSoonListener</parameter>
+        <parameter key="volo_frontend.event_listener.login_listener.class">Volo\FrontendBundle\EventListener\LoginListener</parameter>
     </parameters>
 
     <services>
@@ -61,7 +62,7 @@
         </service>
 
         <service id="volo_frontend.security.authenticator" class="%volo_frontend.security.authenticator.class%">
-            <argument type="service" id="volo_frontend.provider.customer" />
+            <argument type="service" id="volo_frontend.service.customer" />
             <argument type="service" id="volo_frontend.api.authenticator" />
             <argument type="service" id="translator" />
         </service>
@@ -200,6 +201,11 @@
             <argument id="templating" type="service"/>
             <argument>%is_coming_soon_enabled%</argument>
             <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="255" />
+        </service>
+
+        <service id="volo_frontend.event_listener.login_listener" class="%volo_frontend.event_listener.login_listener.class%">
+            <argument type="service" id="volo_frontend.service.customer"/>
+            <tag name="kernel.event_listener" event="security.interactive_login" method="onSecurityInteractiveLogin" priority="255" />
         </service>
     </services>
 </container>

@@ -7,7 +7,6 @@ use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Foodpanda\ApiSdk\Exception\ChangePasswordCustomerException;
 use Foodpanda\ApiSdk\Exception\ValidationEntityException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +17,7 @@ use Volo\FrontendBundle\Exception\Location\MissingKeysException;
 use Volo\FrontendBundle\Service\CustomerLocationService;
 use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
 
-class CustomerController extends Controller
+class CustomerController extends BaseController
 {
     /**
      * @Route("/customer", name="customer.create", options={"expose"=true}, condition="request.isXmlHttpRequest()")
@@ -45,6 +44,8 @@ class CustomerController extends Controller
                 $token = $this->container->get('volo_frontend.security.authenticator')->login($credentials);
 
                 $this->get('security.token_storage')->setToken($token);
+
+                $customerService->saveUserAddressFromSession($request->getSession(), $token->getAccessToken());
 
                 return $this->redirectToRoute('home');
             } catch (PhoneNumberValidationException $e) {
@@ -173,15 +174,7 @@ class CustomerController extends Controller
     {
         $customerLocationService = $this->get('volo_frontend.service.customer_location');
 
-        $content = $request->getContent();
-        if ('' === $content) {
-            throw new BadRequestHttpException('Content is empty.');
-        }
-
-        $data = json_decode($content, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new BadRequestHttpException('Content is not a valid json.');
-        }
+        $data = $this->decodeJsonContent($request);
 
         $gpsLocation = $customerLocationService->create(
             $data[CustomerLocationService::KEY_LAT],

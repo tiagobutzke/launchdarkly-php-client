@@ -739,6 +739,10 @@
 
 .delivery-information-list__wrapper {
   margin-top: -15px;
+
+  .checkout__address-list--active {
+    border: $cta-secondary-border;
+  }
 }
 
 .checkout__address-list {

@@ -2,12 +2,10 @@
 
 namespace Volo\FrontendBundle\Controller;
 
-use Foodpanda\ApiSdk\Entity\Address\Address;
-use Foodpanda\ApiSdk\Entity\Address\AddressesCollection;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Foodpanda\ApiSdk\Exception\ApiException;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Foodpanda\ApiSdk\Provider\CustomerProvider;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -15,16 +13,19 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Volo\FrontendBundle\Service\CustomerLocationService;
+use Volo\FrontendBundle\Service\CustomerService;
 use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
 
 /**
  * @Route("/checkout")
  */
-class CheckoutController extends Controller
+class CheckoutController extends BaseController
 {
+    const SESSION_CURRENT_VENDOR_TEMPLATE = 'checkout-current-vendor';
     const SESSION_DELIVERY_KEY_TEMPLATE = 'checkout-%s-delivery';
     const SESSION_CONTACT_KEY_TEMPLATE  = 'checkout-%s-contact';
     const SESSION_GUEST_CUSTOMER_KEY_TEMPLATE = 'checkout-%s-guest';
@@ -41,10 +42,9 @@ class CheckoutController extends Controller
      */
     public function deliveryInformationAction(Request $request, $vendorCode)
     {
-        // @TODO: change the logic here to be able to validate any select address for delivery without a form.
-//        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-//            return $this->redirectToRoute('checkout_payment', ['vendorCode' => $vendorCode]);
-//        }
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('checkout_payment', ['vendorCode' => $vendorCode]);
+        }
 
         $sessionDeliveryKey = sprintf(static::SESSION_DELIVERY_KEY_TEMPLATE, $vendorCode);
 
@@ -58,7 +58,8 @@ class CheckoutController extends Controller
             $address = $this->sanitizeInputData($request->request->get('customer_address', []));
 
             $request->getSession()->set($sessionDeliveryKey, $address);
-            
+            $request->getSession()->set(static::SESSION_CURRENT_VENDOR_TEMPLATE, $vendorCode);
+
             return $this->redirect($this->generateUrl('checkout_contact_information', ['vendorCode' => $vendorCode]));
         }
 
@@ -216,48 +217,45 @@ class CheckoutController extends Controller
             'adyen_public_key' => $configuration->getAdyenEncryptionPublicKey(),
             'address'          => is_array($location) ? $location[CustomerLocationService::KEY_ADDRESS] : '',
             'location'         => $location,
-
             'isDeliverable'    => is_array($location),
+            'customer_address' => $session->get($sessionDeliveryKey),
+            'customer'         => $session->get($sessionContactKey),
+            'customer_addresses' => [],
         ];
 
+        $viewData = $this->addViewDataForAuthenticatedUser($vendor, $session, $viewData);
+
+        return $viewData;
+    }
+
+    /**
+     * @param Vendor $vendor
+     * @param SessionInterface $session
+     * @param array $viewData
+     *
+     * @return array
+     */
+    private function addViewDataForAuthenticatedUser(Vendor $vendor, SessionInterface $session, array $viewData)
+    {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             /** @var \Volo\FrontendBundle\Security\Token $token */
-            $token            = $this->get('security.token_storage')->getToken();
-            $serializer       = $this->get('volo_frontend.api.serializer');
-            $customerProvider = $this->get('volo_frontend.provider.customer');
+            $token = $this->get('security.token_storage')->getToken();
+            $serializer = $this->get('volo_frontend.api.serializer');
 
-            $addresses = $customerProvider->getAddresses($token->getAccessToken(), $vendor->getId());
-
-            $city = $location['city'];
-            /** @var AddressesCollection $customerAddresses */
-            $customerAddresses = $addresses->getItems();
-
-            /** @var AddressesCollection $addressCollection */
-            $addressCollection = $customerAddresses->filter(function (Address $address) use ($city) {
-                $sameCity = $city === $address->getCity();
-
-                return (bool) $address->isIsDeliveryAvailable() || $sameCity;
-            });
+            $customerAddresses = $this->getCustomerService()->getAddresses($token->getAccessToken(), $vendor->getId());
 
             $customerLocation = $this->get('volo_frontend.service.customer_location')->get($session);
-            $customerAddress = [
-                'city'      => $vendor->getCity()->getName(),
-                'postcode'  => $customerLocation[CustomerLocationService::KEY_PLZ]
+            $restaurantLocation = [
+                'city' => $vendor->getCity()->getName(),
+                'postcode' => $customerLocation[CustomerLocationService::KEY_PLZ]
             ];
 
-            if (!$addressCollection->isEmpty()) {
-                /** @var Address $lastUsedAddress */
-                $lastUsedAddress = $addressCollection->last();
-                $customerAddress = $serializer->normalize($lastUsedAddress);
-            }
-
-            $viewData['default_address']    = $customerAddress;
-            $viewData['customer_addresses'] = $serializer->normalize($addressCollection);
-            $viewData['customer']           = $serializer->normalize($token->getAttributes()['customer']);
-            $viewData['customer_cards']     = $customerProvider->getAdyenCards($token->getAccessToken())['items'];
-        } else {
-            $viewData['customer_address']   = $session->get($sessionDeliveryKey);
-            $viewData['customer']           = $session->get($sessionContactKey);
+            $viewData['default_address'] = $restaurantLocation;
+            $viewData['customer_addresses'] = $serializer->normalize($customerAddresses);
+            $viewData['customer'] = $serializer->normalize($token->getAttributes()['customer']);
+            $viewData['customer_cards'] = $this->getCustomerProvider()->getAdyenCards(
+                $token->getAccessToken()
+            )['items'];
         }
 
         return $viewData;
@@ -313,30 +311,6 @@ class CheckoutController extends Controller
         $response->headers->setCookie(new Cookie('orderPay', 'true', 0, '/', null, $request->isSecure(), false));
 
         return $response;
-    }
-
-    /**
-     * @Route("/checkout/create_address", name="checkout_create_address", options={"expose"=true})
-     * @Method({"POST"})
-     * @Template("VoloFrontendBundle:Checkout/Partial:delivery_information_list.html.twig")
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function createAddressAction(Request $request)
-    {
-        $vendorId    = $request->request->get('vendor_id');
-        $serializer  = $this->get('volo_frontend.api.serializer');
-        $accessToken = $this->get('security.token_storage')->getToken()->getAccessToken();
-
-        $data = $this->sanitizeInputData($request->request->get('customer_address', []));
-        $address = $serializer->denormalize($data, Address::class);
-
-        $this->get('volo_frontend.provider.customer')->createAddress($accessToken, $address);
-        $addresses = $this->get('volo_frontend.provider.customer')->getAddresses($accessToken, $vendorId);
-
-        return new JsonResponse($serializer->normalize($addresses)['items']);
     }
 
     /**
@@ -516,16 +490,19 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @param array $data
-     *
-     * @return array
+     * @return CustomerProvider
      */
-    private function sanitizeInputData($data)
+    private function getCustomerProvider()
     {
-        array_walk($data, function(&$value) {
-            $value = filter_var($value, FILTER_SANITIZE_STRING);
-        });
-
-        return $data;
+        return $this->get('volo_frontend.provider.customer');
     }
+
+    /**
+     * @return CustomerService
+     */
+    private function getCustomerService()
+    {
+        return $this->get('volo_frontend.service.customer');
+    }
+
 }

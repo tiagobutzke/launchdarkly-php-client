@@ -9,6 +9,18 @@ VOLO.gtmViews = []; //all views, which needs GTM should go here
 
 $(document).ready(VOLO.documentReadyFunction);
 
+VOLO.createUserAddressCollection = function (jsonUserAddress) {
+    jsonUserAddress = jsonUserAddress || {};
+
+    VOLO.userAddressCollection = VOLO.userAddressCollection || new VOLO.UserAddressCollection();
+
+    if (jsonUserAddress && jsonUserAddress.length) {
+        VOLO.userAddressCollection.reset(jsonUserAddress);
+    }
+
+    return VOLO.userAddressCollection;
+};
+
 VOLO.createCartModel = function (jsonCart) {
     VOLO.cartModel = VOLO.cartModel || new CartModel(jsonCart, {
         dataProvider: new CartDataProvider(),
@@ -67,7 +79,7 @@ VOLO.createCartViews = function (cartModel, locationModel, gtmService) {
     };
 };
 
-VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel) {
+VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel, userAddressCollection) {
     var views = {},
         deliveryCheck = new DeliveryCheck();
 
@@ -101,9 +113,11 @@ VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel) {
         });
     }
     if ($('.checkout-delivery-component').length > 0) {
-        views.checkoutDeliveryInformationView = new CheckoutDeliveryInformationView({
+        views.checkoutDeliveryInformationView = new VOLO.CheckoutDeliveryInformationView({
             el: '.checkout-delivery-component',
-            model: checkoutModel
+            model: checkoutModel,
+            collection: userAddressCollection,
+            locationModel: locationModel
         });
     }
     if ($('#delivery_information_form').length > 0) {
@@ -328,7 +342,8 @@ VOLO.doBootstrap = function(configuration) {
         loginButtonView,
         existingUserLoginView,
         cartIconView,
-        restaurantsView
+        restaurantsView,
+        userAddressCollection = VOLO.createUserAddressCollection(VOLO.jsonUserAddress)
     ;
 
     if ($('.header__cart').length > 0 && $('#cart').length === 0) {
@@ -357,7 +372,7 @@ VOLO.doBootstrap = function(configuration) {
         cartModel = VOLO.createCartModel(VOLO.jsonCart);
         checkoutModel = VOLO.createCheckoutModel(cartModel, locationModel, $checkoutMain.data('vendor_id'));
 
-        var checkoutViews = VOLO.createCheckoutViews(cartModel, checkoutModel, locationModel);
+        var checkoutViews = VOLO.createCheckoutViews(cartModel, checkoutModel, locationModel, userAddressCollection);
         gtmCheckoutValidationView = checkoutViews.checkoutDeliveryValidationView;
         checkoutInformationValidationFormView = checkoutViews.checkoutInformationValidationFormView;
         VOLO.renderCheckoutViews(checkoutViews);
