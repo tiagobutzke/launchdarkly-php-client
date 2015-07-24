@@ -75,7 +75,8 @@ module.exports = function (grunt) {
         'web/bower_components/moment/moment.js',
         'web/bower_components/bootstrap-select/dist/js/bootstrap-select.js',
         'web/bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js',
-        'web/bower_components/cookies-js/dist/cookies.js'
+        'web/bower_components/cookies-js/dist/cookies.js',
+        'web/bower_components/promise-polyfill/Promise.js'
     ]);
 
     jsSources.head = jsSources.allLibs.concat([
@@ -227,6 +228,7 @@ module.exports = function (grunt) {
 
     config.jasmine = {
         src: [
+            "src/Volo/FrontendBundle/Resources/public/js/**/priority*/**/*.js",
             "src/Volo/FrontendBundle/Resources/public/js/**/*.js",
             "!src/Volo/FrontendBundle/Resources/public/js/bootstrap.js"
         ],

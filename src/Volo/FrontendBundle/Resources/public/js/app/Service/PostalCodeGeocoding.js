@@ -15,24 +15,24 @@ _.extend(PostalCodeGeocodingService.prototype, Backbone.Events, {
     },
 
     geocodeCenterPostalcode: function(options) {
-        var requestParameters = this.createComponentRestrictions(options);
+        var deferred = $.Deferred(),
+            requestParameters = this.createComponentRestrictions(options);
 
         if (this.bounds) {
             requestParameters.bounds = this.bounds;
         }
 
         this.geocoder.geocode(requestParameters, function(results, status) {
-            if (status === google.maps.GeocoderStatus.OK) {
-                var result = _.findWhere(results, {types: ['postal_code']});
-                if (result) {
-                    options.success(result.geometry.location);
-                } else {
-                    options.error(results, status);
-                }
+            var result = _.findWhere(results, {types: ['postal_code']});
+
+            if (result && status === google.maps.GeocoderStatus.OK) {
+                deferred.resolve(result.geometry.location, status);
             } else {
-                options.error(results, status);
+                deferred.reject(results, status);
             }
         });
+
+        return deferred;
     },
 
     geocodeAddress: function(options) {
