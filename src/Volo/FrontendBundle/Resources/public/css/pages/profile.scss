@@ -2,7 +2,6 @@
 * profile-page declarations
 */
 
-
 .profile__blocks-wrapper {
   margin-top:  $header-height-small;
   padding-bottom: 0;
@@ -17,6 +16,13 @@
     @include make-row();
     margin-top: 0;
   }
+}
+.profile__blocks .checkout__step__item-content {
+  border: none;
+}
+
+.profile__blocks .checkout__step__item-form-group--newsletter {
+  display: none;
 }
 
 

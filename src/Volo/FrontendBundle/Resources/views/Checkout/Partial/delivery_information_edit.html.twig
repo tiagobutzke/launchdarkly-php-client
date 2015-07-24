@@ -1,16 +1,16 @@
-<div class="checkout__delivery_information__address">
-    <h4 class="checkout__subtitle">{% trans %}title.delivery_address{% endtrans %}</h4>
-    <div class="checkout__item" id="selected_delivery_address">
-        <span>{{ customer_address.address_line1 }} {{ customer_address.address_line2 }}</span>
-        <span>{{ customer_address.postcode }}, {{ customer_address.city }}</span>
-        <span>{{ customer_address.company }}</span>
-        <span>{{ customer_address.delivery_instructions }}</span>
+<div class="checkout__step__item checkout__delivery-information__address">
+    <h4 class="checkout__step__item-title">{% trans %}title.delivery_address{% endtrans %}</h4>
+    <div class="checkout__step__item-content">
+        <div>{{ customer_address.address_line1 }} {{ customer_address.address_line2 }}</div>
+        <div>{{ customer_address.postcode }}, {{ customer_address.city }}</div>
+        <div>{{ customer_address.company }}</div>
+        <div>{{ customer_address.delivery_instructions }}</div>
     </div>
 </div>
-<div class="checkout__delivery_information__time">
-    <h4 class="checkout__subtitle">{% trans %}title.delivery_time{% endtrans %}</h4>
-    <div class="checkout__item" id="selected_delivery_address">
-        <span>{{ date(cart.order_time)|localizeddate('long', 'none') }}</span>
-        <span>{{date( cart.order_time)|formatTime }} - {{date( cart.order_time)|date_modify('+30 minutes')|formatTime }}</span>
+<div class="checkout__step__item checkout__delivery-information__time">
+    <h4 class="checkout__step__item-title">{% trans %}title.delivery_time{% endtrans %}</h4>
+    <div class="checkout__step__item-content">
+        <div>{{ date(cart.order_time)|localizeddate('long', 'none') }}</div>
+        <div>{{date( cart.order_time)|formatTime }} - {{date( cart.order_time)|date_modify('+30 minutes')|formatTime }}</div>
     </div>
 </div>

@@ -8,7 +8,7 @@ var HomeSearchView = Backbone.View.extend({
         console.log('HomeSearchView.initialize ', this.cid);
         _.bindAll(this);
         this.geocodingService = options.geocodingService;
-        this.geocodingService.init(this.$('#postal_index_form_input'));
+        this.geocodingService.init(this.$('#delivery-information-postal-index'));
 
         this.listenTo(this.geocodingService, 'autocomplete:place_changed', this._applyNewLocationData);
         this.listenTo(this.geocodingService, 'autocomplete:not_found', this._notFound);
@@ -19,18 +19,18 @@ var HomeSearchView = Backbone.View.extend({
     events: {
         'click .home__teaser__button': '_submitPressed',
         'submit': '_submitPressed',
-        'focus #postal_index_form_input': '_hideTooltip',
-        'blur #postal_index_form_input': '_hideTooltip',
-        'click #postal_index_form_input': '_scrollToInput',
-        'keydown #postal_index_form_input': '_inputChanged'
+        'focus #delivery-information-postal-index': '_hideTooltip',
+        'blur #delivery-information-postal-index': '_hideTooltip',
+        'click #delivery-information-postal-index': '_scrollToInput',
+        'keydown #delivery-information-postal-index': '_inputChanged'
     },
 
     unbind: function() {
-        this.$('#postal_index_form_input').tooltip('destroy');
-        this.geocodingService.removeListeners(this.$('#postal_index_form_input'));
+        this.$('#delivery-information-postal-index').tooltip('destroy');
+        this.geocodingService.removeListeners(this.$('#delivery-information-postal-index'));
         this.stopListening();
         this.undelegateEvents();
-        this.$('#postal_index_form_input').val('');
+        this.$('#delivery-information-postal-index').val('');
     },
 
     postInit: function() {
@@ -38,10 +38,10 @@ var HomeSearchView = Backbone.View.extend({
     },
 
     _notFound: function() {
-        var value = this.$('#postal_index_form_input').val() || '';
+        var value = this.$('#delivery-information-postal-index').val() || '';
         if (value !== '') {
             console.log('not found');
-            this._showInputPopup(this.$('#postal_index_form_input').data('msg_error_not_found'));
+            this._showInputPopup(this.$('#delivery-information-postal-index').data('msg_error_not_found'));
         }
 
         this.model.set(this.model.defaults);
@@ -53,13 +53,13 @@ var HomeSearchView = Backbone.View.extend({
         var md = new MobileDetect(window.navigator.userAgent);
         if (md.mobile()) {
             $('html, body').animate({
-                scrollTop: this.$('#postal_index_form_input').offset().top - ($('.header').height() + 10)
+                scrollTop: this.$('#delivery-information-postal-index').offset().top - ($('.header').height() + 10)
             }, VOLO.configuration.anchorScrollSpeed);
         }
     },
 
     _inputChanged: function() {
-        if(this.model.get('formattedAddress') !== this.$('#postal_index_form_input').val()) {
+        if(this.model.get('formattedAddress') !== this.$('#delivery-information-postal-index').val()) {
             this.model.set(this.model.defaults);
         }
 
@@ -73,8 +73,8 @@ var HomeSearchView = Backbone.View.extend({
             this._afterSubmit();
         }
 
-        if (this.$('#postal_index_form_input').val() === '') {
-            this._showInputPopup(this.$('#postal_index_form_input').data('msg_error_empty'));
+        if (this.$('#delivery-information-postal-index').val() === '') {
+            this._showInputPopup(this.$('#delivery-information-postal-index').data('msg_error_empty'));
         }
 
         return false;
@@ -96,11 +96,11 @@ var HomeSearchView = Backbone.View.extend({
 
         this._hideTooltip();
 
-        this.$('#postal_index_form_input').val(data.formattedAddress);
+        this.$('#delivery-information-postal-index').val(data.formattedAddress);
 
         if (locationMeta.postcodeGuessed) {
             console.log('locationMeta.postcodeGuessed ', locationMeta.postcodeGuessed);
-            this._showInputPopup(this.$('#postal_index_form_input').data('msg_you_probably_mean'));
+            this._showInputPopup(this.$('#delivery-information-postal-index').data('msg_you_probably_mean'));
         }
 
         this.model.set({
@@ -135,7 +135,7 @@ var HomeSearchView = Backbone.View.extend({
     },
 
     _showInputPopup: function (text) {
-        var $postalIndexFormInput = this.$('#postal_index_form_input'),
+        var $postalIndexFormInput = this.$('#delivery-information-postal-index'),
             placement = this.isBelowMediumScreen() ? 'top' : 'bottom';
 
         if (!$postalIndexFormInput.hasClass('hide')) {
@@ -154,15 +154,15 @@ var HomeSearchView = Backbone.View.extend({
 
     _hideTooltip: function () {
         console.log('_hideTooltip');
-        this.$('#postal_index_form_input').tooltip('destroy');
+        this.$('#delivery-information-postal-index').tooltip('destroy');
     },
 
     _enableInputNode: function () {
-        this.$('#postal_index_form_input').css('opacity', '1').attr('disabled', false).focus();
+        this.$('#delivery-information-postal-index').css('opacity', '1').attr('disabled', false).focus();
     },
 
     _disableInputNode: function () {
-        this.$('#postal_index_form_input').css('opacity', '.4').attr('disabled', 'true');
+        this.$('#delivery-information-postal-index').css('opacity', '.4').attr('disabled', 'true');
     }
 });
 

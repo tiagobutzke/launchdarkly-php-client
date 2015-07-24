@@ -87,25 +87,25 @@ VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel, us
         model: cartModel,
         $header: $('.header'),
         locationModel: locationModel,
-        $menuMain: $('.checkout__main'),
+        $menuMain: $('.checkout__steps'),
         $window: $(window)
     });
 
-    if ($('.time-picker').length > 0) {
+    if ($('.checkout__time-picker').length > 0) {
         views.timePickerView = new TimePickerView({
-            el: '.time-picker',
+            el: '.checkout__time-picker',
             model: cartModel
         });
     }
-    if ($('.voucher-component').length > 0) {
+    if ($('.checkout__payment__voucher').length > 0) {
         views.voucherView = new VoucherView({
-            el: '.voucher-component',
+            el: '.checkout__payment__voucher',
             model: cartModel
         });
     }
-    if ($('#finish-and-pay').length > 0) {
+    if ($('#checkout-finish-and-pay-button').length > 0) {
         views.checkoutPageView = new CheckoutPageView({
-            el: '.checkout__main',
+            el: '.checkout__steps',
             $header: $('.header'),
             configuration: VOLO.configuration,
             model: checkoutModel
@@ -119,9 +119,9 @@ VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel, us
             locationModel: locationModel
         });
     }
-    if ($('#delivery_information_form').length > 0) {
+    if ($('#delivery-information-form').length > 0) {
         views.checkoutDeliveryValidationView = new VOLO.CheckoutDeliveryValidationView({
-            el: '#delivery_information_form',
+            el: '#delivery-information-form',
             deliveryCheck: deliveryCheck,
             locationModel: locationModel,
             geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1]),
@@ -129,22 +129,22 @@ VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel, us
         });
     }
 
-    if ($('#payment_form').length > 0) {
+    if ($('#checkout-payment-form').length > 0) {
         views.paymentFormView = new PaymentFormView({
-            el: '#payment_form',
+            el: '#checkout-payment-form',
             model: checkoutModel
         });
     }
 
-    if ($('#contact_information_form').length > 0 ) {
+    if ($('#contact-information-form').length > 0 ) {
         views.checkoutInformationValidationFormView = new VOLO.CheckoutContactInformationView({
-            el: '#contact_information_form'
+            el: '#contact-information-form'
         });
     }
 
-    if ($('.checkout__payments-wrapper').length > 0) {
+    if ($('.checkout__payment-options').length > 0) {
         views.paymentTypeView = new PaymentTypeView({
-            el: '.checkout__payments-wrapper',
+            el: '.checkout__payment',
             checkoutModel: checkoutModel
         });
     }
@@ -234,7 +234,7 @@ VOLO.createLoginButtonView = function () {
 
 VOLO.createExistingUserLoginView = function () {
     var existingUserLoginView = new ExistingUserLoginView({
-        el: '#show-login-overlay'
+        el: '#checkout-error-existing-user'
     });
 
     VOLO.views.push(existingUserLoginView);
@@ -356,7 +356,7 @@ VOLO.doBootstrap = function(configuration) {
         restaurantsView = VOLO.createRestaurantsView();
     }
 
-    var $checkoutMain = $('.checkout__main');
+    var $checkoutMain = $('.checkout__steps');
     if ($checkoutMain.length > 0) {
         cartModel = VOLO.createCartModel(VOLO.jsonCart);
         checkoutModel = VOLO.createCheckoutModel(cartModel, locationModel, $checkoutMain.data('vendor_id'));
@@ -397,7 +397,7 @@ VOLO.doBootstrap = function(configuration) {
         VOLO.orderTrackingInterval = setInterval(VOLO.OrderTracking, 60000);
     }
 
-    if ($('#show-login-overlay').length > 0) {
+    if ($('#checkout-error-existing-user').length > 0) {
         existingUserLoginView = VOLO.createExistingUserLoginView();
         existingUserLoginView.render();
     }

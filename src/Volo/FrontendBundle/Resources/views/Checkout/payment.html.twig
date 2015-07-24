@@ -13,198 +13,201 @@
 {% endblock %}
 
 {% block delivery_information %}
-    <div class="checkout__delivery_information {% if is_granted('IS_AUTHENTICATED_FULLY') %}checkout-delivery-component{% endif %}" data-vendor_id="{{ vendor.id }}">
-        <h3 class="checkout__title">1. {% trans %}title.delivery_details{% endtrans %}
-            <span class="checkout__subtitle__edit">
+    <div class="checkout__step checkout__step--first checkout__delivery-information {% if is_granted('IS_AUTHENTICATED_FULLY') %}checkout-delivery-component{% endif %} data-vendor_id="{{ vendor.id }}">
+        <h3 class="checkout__step__title">1. {% trans %}title.delivery_details{% endtrans %}
+            <span class="checkout__title-link">
                 {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <a id="add_new_address_link" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">
-                        <i class="icon-pencil"></i>
+                    <a id="checkout-add-new-address-link" href="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}">
+                        <i class="checkout__title-link__icon icon-pencil"></i>
                         {% trans %}link.edit_delivery_information{% endtrans %}
                     </a>
                 {% endif %}
             </span>
         </h3>
-
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <h4 class="checkout__subtitle">{% trans %}title.delivery_time{% endtrans %}</h4>
-            <div class="time-picker" data-vendor_id="{{ vendor.id }}">
-                {% include('VoloFrontendBundle:Layout/Partial/templates:timepicker.html.twig') %}
-            </div>
-        {% endif %}
-
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <h4 class="checkout__subtitle" id="checkout-delivery-information-address">{% trans %}title.delivery_address{% endtrans %}
-                <span class="checkout__subtitle__edit">
-                    <a id="add_new_address_link">
-                        <i class="icon-plus"></i>
-                        <span class="add_new_address_link__text--add-address">{% trans %}link.add_new_address{% endtrans %}</span>
-                        <span class="add_new_address_link__text--cancel">{% trans %}link.cancel{% endtrans %}</span>
-                    </a>
-                </span>
-            </h4>
-
-            <div class="checkout__item checkout__item--delivery-list">
-                <div id="delivery-information-list-wrapper" class="delivery-information-list__wrapper">
-                    <div id="delivery-information-list"></div>
+        <div class="checkout__step__items">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <div class="checkout__step__item">
+                    <h4 class="checkout__step__item-title">{% trans %}title.delivery_time{% endtrans %}</h4>
+                    <div class="checkout__step__item-content">
+                        <div class="checkout__time-picker" data-vendor_id="{{ vendor.id }}">
+                            {% include('VoloFrontendBundle:Layout/Partial/templates:timepicker.html.twig') %}
+                        </div>
+                    </div>
                 </div>
-
-            </div>
-            <div id="add_new_address_form" class="delivery-information-form hide">
-                {% include 'VoloFrontendBundle:Checkout/Partial:delivery_information_form.html.twig' with {'vendor' : vendor, 'customer_address': default_address} only %}
-            </div>
-
-        {% else %}
-            {% include('VoloFrontendBundle:Checkout/Partial:delivery_information_edit.html.twig') %}
-        {% endif %}
+            {% endif %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <div class="checkout__step__item">
+                    <h4 class="checkout__step__item-title" id="checkout-delivery-information-address">{% trans %}title.delivery_address{% endtrans %}
+                        <span class="checkout__title-link">
+                            <a id="checkout-add-new-address-link">
+                                <i class="checkout__title-link__icon checkout__title-link__icon--plus icon-plus"></i>
+                                <span class="checkout__title-link__text--add-address-delivery">{% trans %}link.add_new_address{% endtrans %}</span>
+                                <span class="checkout__title-link__text--cancel-delivery">{% trans %}link.cancel{% endtrans %}</span>
+                            </a>
+                        </span>
+                    </h4>
+                    <div class="checkout__step__item-content">
+                        <div id="checkout-delivery-information-list"></div>
+                        <div class="hide" id="checkout-add-new-address-form">
+                            {% include 'VoloFrontendBundle:Checkout/Partial:delivery_information_form.html.twig' with {'vendor' : vendor, 'customer_address': default_address} only %}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                {% include('VoloFrontendBundle:Checkout/Partial:delivery_information_edit.html.twig') %}
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
 
 {% block contact_information %}
-    <div class="checkout__contact-information">
-    <h3 class="checkout__title">
-        2. {% trans %}title.contact_information{% endtrans %}
-        <span class="checkout__subtitle__edit">
-        <a id="edit_contact_information_form_link"
-            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-                href="{{ path('checkout_contact_information', {vendorCode: vendor.code}) }}"
-            {% endif %}
-        >
-            <i class="icon-pencil"></i>
-            <span class="edit_contact_information_form_link__text--edit">{% trans %}link.edit_contact_information{% endtrans %}</span>
-            <span class="edit_contact_information_form_link__text--cancel">{% trans %}link.cancel{% endtrans %}</span>
-        </a>
-    </span>
-    </h3>
-
-    <div id="contact_information">
-        {% include('VoloFrontendBundle:Checkout/Partial:contact_information_edit.html.twig') %}
-    </div>
-
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <div id="edit_contact_information_form" class="hide">
-            {% include('VoloFrontendBundle:Checkout/Partial:contact_information_form.html.twig') with {action: '', phoneNumberError: phoneNumberError|default("")} %}
+    <div class="checkout__step checkout__contact-information">
+        <h3 class="checkout__step__title">2. {% trans %}title.contact_information{% endtrans %}
+            <span class="checkout__title-link checkout__contact-information__title-link">
+                <a href="{{ path('checkout_contact_information', {vendorCode: vendor.code}) }}">
+                    <i class="checkout__title-link__icon icon-pencil"></i>
+                    <span class="checkout__title-link__text--edit-contact">{% trans %}link.edit_contact_information{% endtrans %}</span>
+                    <span class="checkout__title-link__text--cancel-contact">{% trans %}link.cancel{% endtrans %}</span>
+                </a>
+            </span>
+        </h3>
+        <div class="checkout__step__items">
+            <div class="checkout__step__item">
+                <div class="checkout__step__item-content">
+                    <div id="checkout-contact-information">
+                        {% include('VoloFrontendBundle:Checkout/Partial:contact_information_edit.html.twig') %}
+                    </div>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <div id="checkout-edit-contact-information" class="hide">
+                            {% include('VoloFrontendBundle:Checkout/Partial:contact_information_form.html.twig') with {action: '', phoneNumberError: phoneNumberError|default("")} %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
         </div>
-    {% endif %}
     </div>
 {% endblock %}
 
 {% block payment %}
-    <h3 class="checkout__title">3. {% trans %}title.payment{% endtrans %}</h3>
-    <div class="checkout__payments-wrapper">
-        <div class="checkout__payments">
-            {% for payment in vendor.paymentTypes %}
-                <div class="checkout__payment">
-                    <div class="checkout__payment__wrapper {{ payment.paymentTypeCode }}"
-                         data-payment_type_id="{{ payment.id }}"
-                         data-payment_type_code="{{ payment.paymentTypeCode }}">
-                        <div class="checkout__payment_img">
-                            {% set label_credit_cart = '' %}
-                            {% if payment.paymentTypeCode == 'paypal' %}
-                                <img class="b-lazy"
-                                     src={{ blazy_placeholder }}
-                                     data-src="{{ asset('img/checkout/paypal.png') }}|{{ asset('img/checkout/paypal-2x.png') }}"
-                                     alt="paypal"/>
-                                {% set label_credit_cart = 'payment.label_paypal' %}
-                            {% endif %}
-                            {% if payment.paymentTypeCode == 'adyen' %}
-                                <img class="b-lazy"
-                                     src={{ blazy_placeholder }}
-                                     data-src="{{ asset('img/checkout/visa.png') }}|{{ asset('img/checkout/visa-2x.png') }}"
-                                     alt="visa"/>
-                                <img class="b-lazy"
-                                     src={{ blazy_placeholder }}
-                                     data-src="{{ asset('img/checkout/mastercard.png') }}|{{ asset('img/checkout/mastercard-2x.png') }}"
-                                     alt="mastercard"/>
-                                <img class="b-lazy"
-                                     src={{ blazy_placeholder }}
-                                     data-src="{{ asset('img/checkout/amex.png') }}|{{ asset('img/checkout/amex-2x.png') }}"
-                                     alt="amex"/>
-                                {% set label_credit_cart = 'payment.paymentTypeCode' %}
-                            {% endif %}
-                            {% if payment.paymentTypeCode == 'adyen_hpp' %}
-                                <img class="b-lazy"
-                                     src={{ blazy_placeholder }}
-                                     data-src="{{ asset('img/checkout/ideal.png') }}|{{ asset('img/checkout/ideal-2x.png') }}"
-                                     alt="ideal"/>
-                                {% set label_credit_cart = 'payment.label_adyen_hpp' %}
-                            {% endif %}
+    <div class="checkout__step checkout__payment checkout__step--active">
+        <h3 class="checkout__step__title">3. {% trans %}title.payment{% endtrans %}</h3>
+        <div class="checkout__step__items">
+            <div class="checkout__step__item checkout__payment-options">
+                <div class="checkout__step__item-content checkout__payment-options-list">
+                    {% for payment in vendor.paymentTypes %}
+                        <div class="checkout__payment-option">
+                            <div class="checkout__payment-option__wrapper {{ payment.paymentTypeCode }}"
+                                 data-payment_type_id="{{ payment.id }}"
+                                 data-payment_type_code="{{ payment.paymentTypeCode }}">
+                                <div class="checkout__payment-option__image-wrapper">
+                                    {% set label_credit_cart = '' %}
+                                    {% if payment.paymentTypeCode == 'paypal' %}
+                                        <img class="checkout__payment-option__image b-lazy"
+                                             src="{{ blazy_placeholder }}"
+                                             data-src="{{ asset('img/checkout/paypal.png') }}|{{ asset('img/checkout/paypal-2x.png') }}"
+                                             alt="paypal"/>
+                                        {% set label_credit_cart = 'payment.label_paypal' %}
+                                    {% endif %}
+                                    {% if payment.paymentTypeCode == 'adyen' %}
+                                        <img class="checkout__payment-option__image b-lazy"
+                                             src="{{ blazy_placeholder }}"
+                                             data-src="{{ asset('img/checkout/visa.png') }}|{{ asset('img/checkout/visa-2x.png') }}"
+                                             alt="visa"/>
+                                        <img class="checkout__payment-option__image b-lazy"
+                                             src="{{ blazy_placeholder }}"
+                                             data-src="{{ asset('img/checkout/mastercard.png') }}|{{ asset('img/checkout/mastercard-2x.png') }}"
+                                             alt="mastercard"/>
+                                        {% set label_credit_cart = 'payment.paymentTypeCode' %}
+                                    {% endif %}
+                                    {% if payment.paymentTypeCode == 'adyen_hpp' %}
+                                        <img class="checkout__payment-option__image b-lazy"
+                                             src="{{ blazy_placeholder }}"
+                                             data-src="{{ asset('img/checkout/ideal.png') }}|{{ asset('img/checkout/ideal-2x.png') }}"
+                                             alt="ideal"/>
+                                        {% set label_credit_cart = 'payment.label_adyen_hpp' %}
+                                    {% endif %}
+                                </div>
+                                <div class="checkout__payment-option__label">
+                                    <i class="checkout__payment-option__label-icon icon-check"></i>{{ label_credit_cart|trans }}
+                                </div>
+                            </div>
                         </div>
-                        <div class="checkout__payment_label"><i class="icon-check"></i>{{ label_credit_cart|trans }}
+                    {% endfor %}
+                    <div class="checkout__payment-options__option-description checkout__payment-options__option-description--paypal hide">
+                        <div class="checkout__payment-options__option-description-title">
+                            {% trans %}generic.payment_paypal_description_title{% endtrans %}
+                        </div>
+                        <div class="checkout__payment-options__option-description-text">
+                            {% trans %}generic.payment_paypal_description_text{% endtrans %}
+                        </div>
+                    </div>
+                    <div class="checkout__payment-options__option-description checkout__payment-options__option-description--adyen hide">
+                        <div class="checkout__payment-options__option-description-title">
+                            {% trans %}generic.payment__adyen_hpp_description_title{% endtrans %}
+                        </div>
+                        <div class="checkout__payment-options__option-description-text">
+                            {% trans %}generic.payment_adyen_hpp_description_text{% endtrans %}
                         </div>
                     </div>
                 </div>
-            {% endfor %}
-            <div class="checkout__payment_paypal_description hide">
-                <div class="checkout__payment_paypal_description__title">
-                    {% trans %}generic.payment_paypal_description_title{% endtrans %}
+            </div>
+
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% include('VoloFrontendBundle:Checkout/Partial:payment_list.html.twig') %}
+            {% endif %}
+
+            {% include('VoloFrontendBundle:Checkout/Partial:payment_form.html.twig') %}
+
+            <div class="checkout__step__item checkout__payment__voucher" data-vendor_id="{{ vendor.id }}">
+                <div class="checkout__title-link checkout__title-link--open">
+                    <a id="checkout-add-voucher-link">
+                        {% trans %}link.have_voucher{% endtrans %}
+                    </a>
                 </div>
-                <div class="checkout__payment_paypal_description__text">
-                    {% trans %}generic.payment_paypal_description_text{% endtrans %}
+                <div class="checkout__step__item-content">
+                    <form class="checkout__payment__voucher-form" action="#" id="checkout-voucher-form" role="form" novalidate>
+                        <div class="form-group checkout__payment__voucher-code">
+                            <input type="text" class="form-control" id="checkout-voucher-input" name="voucher"
+                                   required="true" placeholder="{% trans %}form.label.enter_voucher{% endtrans %}">
+                            <span class="checkout__step__item-content-row form__error-message form__error-message--invalid-voucher"></span>
+                            <span class="checkout__step__item-content-row form__error-message checkout__error-empty-voucher hide">{% trans %}error.please_insert_voucher_code{% endtrans %}</span>
+                        </div>
+                        <div class="form-group checkout__payment__voucher-apply">
+                            <button id="checkout__step__item-button" class="checkout__payment__voucher-apply-button button pull-left">{% trans %}button.apply{% endtrans %}</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="checkout__payment__voucher-selected checkout__step__item-content" id="checkout-selected-voucher">{% trans %}voucher{% endtrans %}
+                    <b id="checkout-selected-voucher-text"></b>
+                    <a id="checkout-remove-selected-voucher-link">{% trans %}link.remove_voucher{% endtrans %}</a>
                 </div>
             </div>
-            <div class="checkout__payment_adyen_hpp_description hide">
-                <div class="checkout__payment_adyen_hpp_description__title">
-                    {% trans %}generic.payment__adyen_hpp_description_title{% endtrans %}
+
+            <div class="clearfix"></div>
+            <div class="checkout__step__item checkout__payment__finish-and-pay">
+                <div class="checkout__step__item-content">
+                    {% set hostedPaymentError = app.session.flashbag.get('payment_error') %}
+                    <span class="checkout__step__item-content-row form__error-message {{ hostedPaymentError|length > 0 ? '' : 'hide' }}">
+                        {% if hostedPaymentError|length > 0 %}{{ hostedPaymentError|first|trans }}{% endif %}
+                    </span>
+                    <div class="checkout__payment__finish-and-pay-submit">
+                        <button id="checkout-finish-and-pay-button" class="checkout__payment__finish-and-pay-submit-button button">{% trans %}button.finish_and_pay{% endtrans %}</button>
+                    </div>
+                    <div class="checkout__payment__finish-and-pay-disclaimer">{% trans %}checkout.disclamer{% endtrans %}</div>
+                    <div class="clearfix"></div>
+                    {% include('VoloFrontendBundle:Layout/Partial/templates:form_redirect.html.twig') %}
                 </div>
-                <div class="checkout__payment_adyen_hpp_description__text">
-                    {% trans %}generic.payment_adyen_hpp_description_text{% endtrans %}
+            </div>
+
+            <div class="checkout__step__item checkout__payment__legal">
+                <div class="checkout__step__item-content">
+                    {% if country_code not in ['se', 'no'] %}
+                        <span class="checkout__step__item-content-row checkout__payment__legal-item">{% trans with {'%legal_name%': vendor.addressLine2 }%}vendor.sold_by %legal_name%{% endtrans %}</span>
+                    {% endif %}
+                    <span class="checkout__step__item-content-row checkout__payment__legal-item">{% trans %}checkout.legal_disclamer{% endtrans %}</span>
                 </div>
             </div>
         </div>
-
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        {% include('VoloFrontendBundle:Checkout/Partial:payment_list.html.twig') %}
-        {% endif %}
-        <div class="checkout__add-new-wrap">
-        {% include('VoloFrontendBundle:Checkout/Partial:payment_form.html.twig') %}
-        </div>
-    </div>
-    
-    <div class="voucher-component" data-vendor_id="{{ vendor.id }}">
-       <div class="checkout__subtitle__open">
-           <a id="add_voucher_link" class="checkout__more-feature-link">
-               {% trans %}link.have_voucher{% endtrans %}
-           </a>
-       </div>
-
-        <form action="#" id="voucher_form" role="form" novalidate>
-            <div class="checkout__item">
-                <div class="form-group form-group--two_col1--xs-full">
-                    <input type="text" class="form-control" id="voucher" name="voucher"
-                           required="true" placeholder="{% trans %}form.label.enter_voucher{% endtrans %}">
-                    <span class="error_msg error_invalid_voucher"></span>
-                    <span class="error_msg error_empty_voucher hide">{% trans %}error.please_insert_voucher_code{% endtrans %}</span>
-                </div>
-                <div class="form-group form-group--two_col2--xs-full">
-                    <button id="checkout-voucher-button" class="button pull-left">{% trans %}button.apply{% endtrans %}</button>
-                </div>
-            </div>
-        </form>
-        <div id="voucher-wrapper" class="checkout__item">{% trans %}voucher{% endtrans %}
-            <b id="voucher-text"></b>
-            <a id="remove_voucher_link">{% trans %}link.remove_voucher{% endtrans %}</a>
-        </div>
-    </div>
-
-    <div class="clearfix"></div>
-    <div class="checkout-button">
-        {% set hostedPaymentError = app.session.flashbag.get('payment_error') %}
-        <span class="error_msg {{ hostedPaymentError|length > 0 ? '' : 'hide' }}">
-            {% if hostedPaymentError|length > 0 %}{{ hostedPaymentError|first|trans }}{% endif %}
-        </span>
-        <div class="checkout__submit">
-            <button id="finish-and-pay" class="button">{% trans %}button.finish_and_pay{% endtrans %}</button>
-        </div>
-        <div class="checkout__disclaimer">{% trans %}checkout.disclamer{% endtrans %}</div>
-        <div class="clearfix"></div>
-        {% include('VoloFrontendBundle:Layout/Partial/templates:form_redirect.html.twig') %}
-    </div>
-
-    <div class="checkout__legal">
-        {% if country_code not in ['se', 'no'] %}
-            <span>{% trans with {'%legal_name%': vendor.addressLine2 }%}vendor.sold_by %legal_name%{% endtrans %}</span>
-        {% endif %}
-        <span>{% trans %}checkout.legal_disclamer{% endtrans %}</span>
     </div>
 {% endblock %}
 
@@ -221,23 +224,34 @@
     <script data-turbolinks-eval=true>
         //TODO make this a backbone view
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            $('#contact_information_form').on('submit', function (event) {
+            $('.checkout__contact-information__title-link').click(function (event) {
+                var $editContactInformationForm = $('#checkout-edit-contact-information'),
+                    editContactInformationFormIsVisible;
+
+                $editContactInformationForm.toggleClass('hide');
+                editContactInformationFormIsVisible = $editContactInformationForm.hasClass('hide');
+                $(this).toggleClass('checkout__contact-information__title-link--form-open', !editContactInformationFormIsVisible);
+                $('#checkout-contact-information').toggleClass('hide', !editContactInformationFormIsVisible);
+                event.preventDefault();
+            });
+    
+            $('#contact-information-form').on('submit', function (event) {
                 // replace the list with the new list from the POST request
                 event.preventDefault();
 
                 $.ajax({
                     url: Routing.generate('checkout_edit_contact_information', {email: '{{ customer.email }}', vendorCode: '{{ vendor.code}}'}),
                     type: 'PUT',
-                    data: $('#contact_information_form').serialize()
+                    data: $('#contact-information-form').serialize()
                 }).done(function (data) {
-                    var mobileNumberWrap = $('#mobile_number_wrap');
+                    var mobileNumberWrap = $('#contact-information-mobile-number-wrap');
                     mobileNumberWrap.find('.invalid_number').remove();
                     if (_.isUndefined(data.invalidPhoneError)) {
-                        $('#contact_information').html(data.html);
-                        $('#edit_contact_information_form').toggleClass('hide');
-                        $('.edit_contact_information_form_link__text--edit').removeClass('contact_information_form-open');
+                        $('#checkout-contact-information').html(data.html);
+                        $('#checkout-edit-contact-information').toggleClass('hide');
+                        $('.checkout__contact-information__title-link').removeClass('checkout__contact-information__title-link--form-open');
                     } else {
-                        mobileNumberWrap.append('<span class="error_msg invalid_number">' +
+                        mobileNumberWrap.append('<span class="checkout__step__item-content-row form__error-message invalid_number">' +
                             data.invalidPhoneError +
                             '</span>');
                     }

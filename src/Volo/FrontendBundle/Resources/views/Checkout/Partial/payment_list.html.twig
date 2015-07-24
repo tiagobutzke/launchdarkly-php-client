@@ -1,23 +1,27 @@
-<form class="hide" id="saved_payment_options" role="form">
-    {% for card in customer_cards %}
-    <div class="checkout__list sprite-form">
-        <input id="savedPlaymentOption{{ card.id }}" class="sprite-form__radio-button credit-card--radio" type="radio" name="credit_card" value="{{ card.id }}"/>
-        <div class="sprite-form__sprite"></div>
-        <label class="sprite-form__label" for="savedPlaymentOption{{ card.id }}">
-            **** {{ card.number }} {{ card.holder_name }}, {{ card.expiry_month }}/{{ card.expiry_year }}
-            <span class="checkout__list__payment_option_type checkout__list__payment_option_type--{{ card.brand }}"></span>
-        </label>
+<div class="checkout__step__item checkout__saved-payment-options">
+    <div class="checkout__step__item-content">
+        <form class="checkout__saved-payment-options__form hide" id="checkout-saved-payment-options" role="form">
+            {% for card in customer_cards %}
+                <div class="checkout__list-item checkout__saved-payment-options__list sprite-form">
+                    <input id="checkout-saved-payment-option-{{ card.id }}" class="sprite-form__radio-button checkout__saved-payment-options__credit-card-radio" type="radio" name="credit_card" value="{{ card.id }}"/>
+                    <div class="sprite-form__sprite"></div>
+                    <label class="sprite-form__label checkout__saved-payment-options__list-label" for="checkout-saved-payment-option-{{ card.id }}">
+                        **** {{ card.number }} {{ card.holder_name }}, {{ card.expiry_month }}/{{ card.expiry_year }}
+                        <span class="checkout__list-item__payment-option-type checkout__list-item__payment-option-type--{{ card.brand }}"></span>
+                    </label>
+                </div>
+            {% endfor %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') and customer_cards is defined and customer_cards|length > 0 %}
+                <div class="checkout__saved-payment-options__add-card-link">
+                    <span class="checkout__title-link">
+                        <a id="checkout-add-credit-card-link">
+                            <i class="checkout__title-link__icon checkout__title-link__icon--plus icon-plus"></i>
+                            <span class="checkout__saved-payment-options__add-card-link-text--edit">{% trans %}link.add_new_credit_card{% endtrans %}</span>
+                            <span class="checkout__saved-payment-options__add-card-link-text--cancel">{% trans %}link.cancel{% endtrans %}</span>
+                        </a>
+                    </span>
+                </div>
+            {% endif %}
+        </form>
     </div>
-    {% endfor %}
-    {% if is_granted('IS_AUTHENTICATED_FULLY') and customer_cards is defined and customer_cards|length > 0 %}
-    <div class="checkout__add_new_credit_card__container">
-        <span class="checkout__subtitle__edit">
-            <a id="add_new_credit_card_link">
-                <i class="icon-plus"></i>
-                <span class="checkout__add_new_credit_card__text--edit">{% trans %}link.add_new_credit_card{% endtrans %}</span>
-                <span class="checkout__add_new_credit_card__text--cancel">{% trans %}link.cancel{% endtrans %}</span>
-            </a>
-        </span>
-    </div>
-    {% endif %}
-</form>
+</div>

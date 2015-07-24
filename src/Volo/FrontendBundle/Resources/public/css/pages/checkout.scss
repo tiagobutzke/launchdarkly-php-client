@@ -1,25 +1,66 @@
-.checkout-page {
-  .header__cart {
-    display: none;
+/*
+* checkout-page declarations
+*/
+
+
+// -------------------------- CHECKOUT PLACEHOLDERS START --------------------------
+
+// TODO : refactor style to use proper Bootsrap columns layout instead of this custom columns
+%two-columns-form-layout {
+  @extend .clearfix;
+  width: 50%;
+  float: left;
+  clear: none;
+}
+
+%two-columns-form-layout--uneven {
+  @extend .clearfix;
+  float: left;
+  clear: none;
+}
+
+%two-columns-form-layout--from-md {
+  @extend .clearfix;
+  width: 100%;
+  float: none;
+  @include respond-from("screen-md") {
+    width: 50%;
+    float: left;
   }
 }
+
+%three-columns-form-layout {
+  @extend .clearfix;
+  width: 33%;
+  float: left;
+  clear: none;
+}
+
+// -------------------------- CHECKOUT PLACEHOLDERS END --------------------------
+
+
+// -------------------------- CHECKOUT WRAPPERS START --------------------------
 
 .checkout-wrapper {
   padding-bottom: 0;
   @include respond-from("screen-md") {
     @include fluid-container();
-
   }
 }
 
-.checkout {
+.checkout__blocks {
   @include respond-from("screen-md") {
     @include make-row();
     margin-top: 0;
   }
 }
 
-.checkout__main {
+// -------------------------- CHECKOUT WRAPPERS START --------------------------
+
+
+// -------------------------- CHECKOUT STEPS START --------------------------
+
+.checkout__steps {
   @include make-md-column(8);
   @include make-lg-column(7);
   @extend .col-lg-push-1;
@@ -27,84 +68,91 @@
   background-color: $color-bg-primary;
   margin-top:  $header-height-extra-small;
   @include respond-from("screen-md") {
-    border-radius: $border-radius-default;
     margin-top: $header-height-small + $grid-gutter-width;
     margin-bottom: $grid-gutter-width;
   }
-  #show-login-overlay {
-    display: none;
-  }
 }
 
-.checkout__time {
-  @include clearfix;
-  padding: 0 $grid-gutter-width / 2 $grid-gutter-width / 2;
+.checkout__step {
+  @include make-row(0);
   @include respond-from("screen-md") {
-    padding: 0 $grid-gutter-width $grid-gutter-width;
+    border-bottom: none;
   }
 }
 
-// titles and subtitles
-
-.checkout__title {
+.checkout__step__title {
+  @include make-xs-column(12);
   font-family: $bold-font-family;
   font-size: 0.875em;
-  padding: $space-sm $grid-gutter-width / 2;
   line-height: normal;
+  padding: $space-sm;
   background-color: $color-bg-secondary;
-  border-top: $dropdown-border;
-  border-bottom: $dropdown-border;
   margin: 0;
   text-transform: uppercase;
-  position: relative;
+  border-top: $dropdown-border;
+  border-bottom: $dropdown-border;
   @include respond-from("screen-md") {
-    padding: $grid-gutter-width;
-    font-size: 0.93em;
-    background-color: transparent;
+    border-radius: $border-radius-default;
     border-bottom: none;
-    margin-bottom: 0;
-  }
-
-  &:first-child {
-    border-top: none;
+    font-size: 0.93em;
+    padding: $grid-gutter-width;
+    background-color: transparent;
   }
 }
-
-.checkout__title--summary {
-  @include appear-from("screen-md");
+.checkout__step--first .checkout__step__title {
+  border-top: none;
 }
-
-.checkout__title--step {
+.checkout__step--reduced .checkout__step__title {
   color: $color-text-light;
-  margin-bottom: 0;
   border-top: none;
   @include respond-from("screen-md") {
     border-top: $dropdown-border;
-    padding: $grid-gutter-width;
   }
 }
 
-.checkout__title--stacked {
-  margin-bottom: 0;
-}
 
-.checkout__subtitle {
-  font-family: $bold-font-family;
-  font-size: 13px;
-  padding: $space-md $grid-gutter-width / 2;
-  line-height: normal;
-  margin: 0;
-  text-align: left;
-  text-transform: uppercase;
-  position: relative;
+// -------------------------- CHECKOUT STEPS END --------------------------
+
+
+// -------------------------- CHECKOUT ITEMS START --------------------------
+
+.checkout__step__items {
+  @include make-xs-column(12, 0);
+}
+.checkout__contact-information .checkout__step__items {
+  padding-top: $space-sm;
   @include respond-from("screen-md") {
-    padding: 0 $grid-gutter-width $space-md;
-    font-size: 14px;
+    padding-top: 0;
   }
+}
+.checkout__contact-information.checkout__step--active .checkout__step__items {
+  border-bottom: $dropdown-border;
+  @include respond-from("screen-md") {
+    border-bottom: 0;
+  }
+}
 
-  i.icon-cancel {
-    font-size: 1.2em;
+.checkout__step__item {
+  @include make-xs-column(12, 0);
+  padding-bottom: $space-sm;
+  @include respond-from("screen-md") {
+    padding-bottom: $space-lg;
   }
+}
+.checkout__step__item.checkout__payment-options {
+  padding-bottom: 0;
+  @include respond-from("screen-md") {
+    padding-bottom: $space-sm;
+  }
+}
+.checkout__step__item.checkout__delivery-information__edit-address {
+  padding-bottom: 0;
+}
+.checkout__step__item.checkout__payment__finish-and-pay {
+  padding-bottom: 0;
+}
+.checkout__step__item.checkout__payment__credit-card {
+  padding-bottom: 0;
 }
 
 .checkout__subtitle--above-form {
@@ -115,7 +163,99 @@
   };
 }
 
-.checkout__title__edit {
+
+.checkout__step__item-content {
+  @include clearfix;
+  @include make-xs-column(12);
+  padding: 0 $space-sm;
+  line-height: 1.4em;
+  font-size: 13px;
+  @include respond-from("screen-md") {
+    padding: 0 $grid-gutter-width;
+    font-size: 14px;
+  }
+}
+.checkout__delivery-information__time .checkout__step__item-content {
+  @include respond-from("screen-md") {
+    padding-left: 5px;
+  }
+}
+.checkout__payment__legal .checkout__step__item-content {
+  line-height: 1.3em;
+  font-size: 11px;
+}
+.checkout__payment-options-list.checkout__step__item-content {
+  padding: 0;
+  @include respond-from("screen-md") {
+    padding: 0 $grid-gutter-width;
+  }
+}
+.checkout__delivery-information__edit-address .checkout__step__item-content {
+  padding: 0;
+  @include respond-from("screen-md") {
+    padding: 0 $grid-gutter-width $grid-gutter-width $grid-gutter-width;
+  }
+}
+
+
+
+.checkout__step__item-title {
+  font-family: $bold-font-family;
+  font-size: 13px;
+  padding: $space-md $space-sm;
+  line-height: normal;
+  margin: 0;
+  text-align: left;
+  text-transform: uppercase;
+  position: relative;
+  @include respond-from("screen-md") {
+    font-size: 14px;
+    padding: 0 $grid-gutter-width $space-md $grid-gutter-width;
+  }
+}
+.checkout__delivery-information__time .checkout__step__item-title {
+  @include respond-from("screen-md") {
+    padding-left: 5px;
+  }
+}
+
+
+.checkout__step__item-button {
+  width: 100%;
+  @include respond-from("screen-md") {
+    float: right;
+    width: auto;
+  }
+}
+
+// Do not remove textarea in this selector
+//required to overwrite the textarea.form-control style in _variables.scss
+textarea.checkout__step__item-textarea {
+  height: $input-height * 2;
+  line-height: 1.4em;
+}
+
+
+.checkout__step__item-content-row {
+  display: block;
+}
+.checkout__step__item-content-row:first-child {
+  margin-top: $space-sm;
+  @include respond-from("screen-md") {
+    margin-top: 0;
+  }
+}
+.checkout__payment__legal .checkout__step__item-content-row:first-child {
+  margin-top: 0;
+}
+
+
+// -------------------------- CHECKOUT ITEMS END --------------------------
+
+
+// -------------------------- CHECKOUT TITLE LINK START --------------------------
+
+.checkout__title-link {
   float: right;
   display: inline-block;
   text-transform: none;
@@ -124,368 +264,227 @@
   @include respond-from("screen-md") {
     font-size: 14px;
   }
-
-  i {
-    display: inline-block;
-    margin-right: 2px;
-    vertical-align: middle;
-    color: $color-text-highlight;
-  }
-
-  i.icon-cancel {
-    font-size: 1.2em;
-  }
 }
-
-.checkout_cart {
-  @include respond-from("screen-md") {
-    margin-top: 17px;
-  }
-}
-
-.checkout__subtitle__edit {
-  @extend .checkout__title__edit;
-}
-
-.checkout__subtitle__open {
-  @extend .checkout__title__edit;
+.checkout__title-link--open {
   padding: 0 $grid-gutter-width / 2;
   float: none;
   @include respond-from("screen-md") {
     padding: 0 $grid-gutter-width;
   }
 }
+.checkout__payment__voucher .checkout__title-link {
+  padding: $grid-gutter-width / 2;
+  @include respond-from("screen-md") {
+   padding: $grid-gutter-width $grid-gutter-width / 2 $grid-gutter-width / 2 $grid-gutter-width;
+  }
+}
 
-.add_new_address_link__text--cancel{
+
+.checkout__title-link__icon {
+  display: inline-block;
+  margin-right: 2px;
+  vertical-align: middle;
+  color: $color-text-highlight;
+}
+.checkout__contact-information__title-link--form-open .checkout__title-link__icon {
+  display: none;
+}
+.checkout__delivery-information--list-shown .checkout__title-link__icon--plus {
   display: none;
 }
 
-.delivery_information_list-shown {
-  & .add_new_address_link__text--add-address,
-  & .icon-plus {
-    display: none;
-  }
 
-  & .add_new_address_link__text--cancel {
-    display: block;
-  }
+// TODO consider refactoring this code moving initial state definition to HTML
+.checkout__title-link__text--cancel {
+  display: none;
+}
+.checkout__delivery-information--list-shown .checkout__title-link__text--cancel {
+  display: block;
+}
+.checkout__delivery-information--list-shown .checkout__title-link__text--add-address-delivery {
+  display: none;
+}
+.checkout__title-link__text--cancel-delivery  {
+  display: none;
+}
+.checkout__delivery-information--list-shown .checkout__title-link__text--cancel-delivery {
+  display: block;
+}
+.checkout__delivery-information--list-shown .checkout__title-link__text--add-address {
+  display: none;
+}
+.checkout__contact-information__title-link--form-open .checkout__title-link__text--edit-contact {
+  display: none;
+}
+.checkout__title-link__text--cancel-contact {
+  display: none;
+}
+.checkout__contact-information__title-link--form-open .checkout__title-link__text--cancel-contact {
+  display: block;
+}
+.checkout__payment__select-address-link .checkout__title-link__text--cancel-list {
+  display: none;
+}
+.checkout__payment__select-address-link--open .checkout__title-link__text--cancel-list {
+  display: block;
+}
+.checkout__payment__select-address-link--open .checkout__title-link__text--select-list {
+  display: none;
 }
 
-.checkout__delivery_information {
-  @include make-row(0);
+
+// -------------------------- CHECKOUT TITLES END --------------------------
+
+
+// -------------------------- CHECKOUT DELIVERY INFORMATION START --------------------------
+
+
+.checkout__delivery-information__addresses {
+  line-height: 1.4em;
+  padding: $space-xs;
+  margin: 0;
+  max-width: 200px;
+  float: left;
+  overflow: hidden;
+  height: 150px;
+}
+.checkout__delivery-information__addresses--active {
+  border: $cta-secondary-border;
 }
 
-.checkout__delivery_information__address {
-  .checkout__subtitle {
-    text-align: left;
-  }
+
+.checkout__delivery-information__address {
+  @include make-xs-column(6, 0);
+  background-color: $color-bg-primary;
+  cursor: pointer;
+  @include transition(background-color .1s linear);
+}
+.checkout__delivery-information__address:hover {
+  background-color: $color-bg-secondary;
+}
+
+
+.checkout__delivery-information__time {
   @include make-xs-column(6, 0);
 }
 
-.checkout__delivery_information__time {
-  @include make-xs-column(6, 0);
-  .checkout__subtitle {
-    text-align: left;
-  }
+.checkout__delivery-address__delivery-notes {
+  color: $color-text-secondary;
+}
+
+.checkout__payment__select-address-link {
+  display: block;
+}
+
+.checkout__delivery-information__form {
+  padding: $space-sm;
+  border-bottom: $dropdown-border;
   @include respond-from("screen-md") {
-    .checkout__subtitle,
-    .checkout__item {
-      padding-left: 5px;
-    }
+    padding: 0;
+    border-bottom: none;
   }
 }
 
-.checkout__add_new_credit_card__container {
+.checkout__delivery-information__address-line-1 {
+  @extend %two-columns-form-layout--uneven;
+  width: 80%;
+  padding-right: $space-xs;
+}
+
+.checkout__delivery-information__address-line-2 {
+  @extend %two-columns-form-layout--uneven;
+  width: 20%;
+  padding-left: $space-xs;
+}
+
+.checkout__delivery-information__postal-index {
+  @extend %two-columns-form-layout;
+  padding-right: $space-xs;
+}
+
+.checkout__delivery-information__city {
+  @extend %two-columns-form-layout;
+  padding-left: $space-xs;
+}
+
+// -------------------------- CHECKOUT DELIVERY INFORMATION END --------------------------
+
+
+// -------------------------- CHECKOUT CONTACT INFORMATION START --------------------------
+
+.checkout__contact-information__first-name {
+  @extend %two-columns-form-layout--from-md;
+  padding-right: 0;
+  @include respond-from("screen-md") {
+    padding-right: $space-xs;
+  }
+}
+
+.checkout__contact-information__last-name  {
+  @extend %two-columns-form-layout--from-md;
+  padding-left: 0;
+  @include respond-from("screen-md") {
+    padding-left: $space-xs;
+    clear: none;
+  }
+}
+
+// -------------------------- CHECKOUT CONTACT INFORMATION END --------------------------
+
+
+// -------------------------- CHECKOUT PAYMENT START --------------------------
+
+
+.checkout__saved-payment-options {
+  padding-bottom: 0;
+}
+
+.checkout__saved-payment-options__form {
+  padding-bottom: $grid-gutter-width;
+}
+
+.checkout__saved-payment-options__add-card-link {
   position: relative;
   height: 30px;
-  padding-right: $grid-gutter-width / 2;
-  @include respond-from("screen-md") {
-    padding-right: $grid-gutter-width;
-  }
-}
-
-.paymentFormOpen {
-  .checkout__add_new_credit_card__text--edit,
-  .icon-plus {
-    display: none;
-  }
-  .checkout__add_new_credit_card__text--cancel {
-    display: block;
-  }
-}
-
-.checkout__add_new_credit_card__text--cancel {
-  display: none;
-}
-
-// main fields
-
-.checkout__time-field {
-  @include make-xs-column(6);
-  padding: 0;
-}
-
-.checkout__item {
-  @include clearfix;
-  line-height: 1.4em;
-  font-size: 0.813em;
-  padding: $space-sm;
-  padding-top: 0;
-
-  .button {
-    width: 100%;
-  }
-
-  @include respond-from("screen-md") {
-    font-size: 0.875em;
-    border: 0;
-    padding: 0 $grid-gutter-width $space-lg;
-
-    .button {
-      float: right;
-      width: auto;
-    }
-  }
-
-  textarea {
-    height: $input-height * 2;
-    line-height: 1.4em;
-  }
-
-  span {
-    display: block;
-
-    &.notes {
-      color: $color-text-secondary;
-    }
-
-    &:first-child {
-      margin-top: $space-sm;
-      @include respond-from("screen-md") {
-        margin-top: 0;
-      }
-    }
-  }
-
-  .checkout__item {
-    font-size: 1em;
-  }
-}
-.profile__blocks .checkout__item {
-  border: none;
-}
-
-.checkout__item--delivery-list {
-  @include clearfix;
-
-  padding-left: 0;
   padding-right: 0;
-}
-
-.contact_information_form-open {
-  .edit_contact_information_form_link__text--edit,
-  .icon-pencil {
-    display: none;
-  }
-  .edit_contact_information_form_link__text--cancel {
-    display: block;
-  }
-}
-
-.edit_contact_information_form_link__text--cancel {
-  display: none;
-}
-
-.checkout__more-feature-link .select_other_address_link__text--cancel {
-  display: none;
-}
-
-.checkout__more-feature-link.address-selection--open {
-  & .select_other_address_link__text--select {
-    display: none;
-  }
-  & .select_other_address_link__text--cancel {
-    display: block;
-  }
-}
-
-.checkout__item--no-subtitle {
   padding-top: $space-sm;
   @include respond-from("screen-md") {
     padding-top: 0;
   }
 }
 
-.checkout__item--step {
-  padding-top: $space-sm;
-  border-bottom: $dropdown-border;
-  @include respond-from("screen-md") {
-    padding-top: 0;
-    border: none;
-  }
+.checkout__saved-payment-options-open .checkout__title-link__icon--plus {
+  display: none;
 }
 
-.checkout__item--stacked {
-  @include appear-from("screen-md");
+
+// TODO consider refactoring this code moving initial state definition to HTML
+.checkout__saved-payment-options__add-card-link-text--cancel {
+  display: none;
+}
+.checkout__saved-payment-options-open .checkout__saved-payment-options__add-card-link-text--cancel {
+  display: block;
+}
+.checkout__saved-payment-options-open .checkout__saved-payment-options__add-card-link-text--edit {
+  display: none;
 }
 
-.checkout__item__info {
-  @include make-xs-column(12);
-
-  .checkout__subtitle {
-    font-size: 1em;
-    padding-bottom: 0;
-  }
-}
-
-.checkout__item__note {
-  color: $color-text-secondary;
-  width: 55%;
-}
-
-.checkout__item--cta-box {
-  @include appear-from("screen-md");
-  @extend .checkout__item;
-  padding-top: $grid-gutter-width / 2;
-  border: none;
-
-  span {
-    display: inline-block;
-    float: right;
-
-    i {
-      display: inline-block;
-      vertical-align: middle;
-      color: $color-text-highlight;
-      font-size: 1.2em;
-    }
-  }
-}
-
-// time picker
-
-.time-picker {
-  .desktop-cart__title {
-    @extend .checkout__subtitle;
-  }
-
-  .desktop-cart__time {
-    @extend .checkout__time;
-    font-size: 0.875em;
-  }
-
-  .desktop-cart__time__field-date, .desktop-cart__time__field-time {
-    @extend .checkout__time-field;
-  }
-}
-
-// address box
-
-.checkout__address-boxes {
-
-  @include respond-from("screen-md") {
-    @include make-row();
-    padding-bottom:  $grid-gutter-width / 2;
-    padding-left:  $grid-gutter-width / 2;
-  }
-}
-
-.checkout__address-box {
-
-  @include clearfix;
-  line-height: 1.4em;
-  font-size: 0.813em;
-  padding: $space-sm;
-  border-bottom: $dropdown-border;
-
-  @include respond-from("screen-md") {
-    @include make-md-column(4);
-    padding-left: 0;
-  }
-}
-
-.checkout__address-box__wrapper {
-
-  @include respond-from("screen-md") {
-    border: $dropdown-border;
-    padding: $grid-gutter-width / 2;
-    margin-bottom: $grid-gutter-width / 2;
-    height: 110px;
-    overflow: hidden;
-    line-height: 1.4em;
-    font-size: 0.875em;
-    position: relative;
-
-    &:hover {
-      cursor: pointer;
-      border: $input-border-active;
-    }
-  }
-}
-
-.checkout__address-box__wrapper--active {
-  @include respond-from("screen-md") {
-    @extend .checkout__address-box__wrapper;
-    border: $input-border-active;
-  }
-}
-
-.checkout__address-box__notes {
-  color: $color-text-secondary;
-  @include respond-from("screen-md") {
-    @include text-overflow();
-  }
-}
-
-.checkout__address-box__new {
-  @include respond-from("screen-md") {
-    margin: auto;
-    text-align: center;
-    @include vertical-center-element();
-
-    i {
-      display: block;
-      color: $color-icons-separator;
-      font-size: 1.4em;
-    }
-  }
-}
-
-// payment type selection
-
-.checkout__payments {
-  @include respond-from("screen-md") {
-    @include make-row();
-    padding-bottom:  $grid-gutter-width / 2;
-    padding-left:  $grid-gutter-width / 2;
-    border: none;
-    margin: 0 $grid-gutter-width / 2;
-  }
-}
-
-.checkout__payment {
+.checkout__payment-option {
   @include make-md-column(4);
   @include clearfix;
   padding: 0;
   line-height: 1.4em;
-  font-size: 0.813em;
+  font-size: 13px;
   @include respond-from("screen-md") {
     padding: $space-sm;
     padding-left: 0;
   }
 }
 
-.checkout__payment__wrapper {
+
+.checkout__payment-option__wrapper {
   border-bottom: $dropdown-border;
   padding: $space-sm;
-  &:hover {
-    cursor: pointer;
-  }
-
-  i {
-    display: none;
-  }
-
   @include respond-from("screen-md") {
     border: $dropdown-border;
     padding: $space-sm 0;
@@ -494,46 +493,43 @@
     line-height: 1.4em;
     font-size: 1em;
     position: relative;
-
     @include transition(all .1s linear);
-    &:hover {
-      cursor: pointer;
-      border: $cta-secondary-border;
-      color: $color-text-highlight;
-    }
   }
 }
-
-.checkout__payment__wrapper--active {
-  color: $color-text-highlight;
-
-  i {
-    display: inline-block;
-    margin-right: $space-xs;
-    color: $color-text-highlight;
-  }
-
+.checkout__payment-option__wrapper:hover {
+  cursor: pointer;
   @include respond-from("screen-md") {
     border: $cta-secondary-border;
+    color: $color-text-highlight;
+  }
+}
+.checkout__payment-option__wrapper--active {
+ color: $color-text-highlight;
+ @include respond-from("screen-md") {
+   border: $cta-secondary-border;
+ }
+}
 
-    i {
-      display: none;
-    }
+
+.checkout__payment-option__label-icon {
+  margin-right: $space-xs;
+  color: $color-text-highlight;
+  display: none;
+}
+.checkout__payment-option__wrapper--active .checkout__payment-option__label-icon {
+  display: inline-block;
+  @include respond-from("screen-md") {
+    display: none;
   }
 }
 
-.checkout__payment_img {
+
+.checkout__payment-option__image-wrapper {
   float: right;
   width: 60%;
   height: 30px;
   text-align: right;
   margin-top: -5px;
-
-  img {
-    display: inline;
-    height: 30px;
-  }
-
   @include respond-from("screen-md") {
     white-space: nowrap;
     height: 35px;
@@ -542,15 +538,17 @@
     text-align: center;
     margin-top: 0;
   }
-  @include respond-from("screen-lg") {
-    height: 45px;
-    img {
-      height: 40px;
-    }
+}
+.checkout__payment-option__image {
+  display: inline;
+  height: 30px;
+  @include respond-from("screen-md") {
+    height: 40px;
   }
 }
 
-.checkout__payment_label {
+
+.checkout__payment-option__label {
   width: 70%;
   @include respond-from("screen-md") {
     width: 100%;
@@ -558,9 +556,9 @@
   }
 }
 
-.checkout__payment_paypal_description, .checkout__payment_adyen_hpp_description {
+.checkout__payment-options__option-description {
   clear: both;
-  font-size: 0.8em;
+  font-size: 12px;
   padding-left: $grid-gutter-width / 2;
   padding-right: $grid-gutter-width / 2;
   @include respond-from("screen-md") {
@@ -568,7 +566,7 @@
   }
 }
 
-.checkout__payment_paypal_description__title, .checkout__payment_adyen_hpp_description__title {
+.checkout__payment-options__option-description-title {
   font-family: $bold-font-family;
   padding-top: $space-sm;
   padding-bottom: $space-xs;
@@ -578,225 +576,179 @@
   }
 }
 
-.checkout__payment_paypal_description__text, .checkout__payment_adyen_hpp_description__text {
+.checkout__saved-payment-options__list-label {
+  font-size: 12px;
+  @include respond-from("screen-md") {
+    font-size: 14px;
+  }
+}
+
+.checkout__payment-options__option-description-text {
   line-height: $base-line-height;
 }
 
-// credit card form
-
-.checkout__item__card {
-
-  .form-group {
-    margin: 0 0 $space-sm;
-  }
-
+.checkout__payment__credit-card-fields {
   @include respond-from("screen-md") {
     width: 50%;
     float: left;
   }
 }
 
-.checkout__item__card__help {
+
+.checkout__payment__credit-card-fields-form-group {
+  margin: 0 0 $space-sm;
+}
+.checkout__payment__credit-card-fields-form-group--expiry {
+  @extend %three-columns-form-layout;
+  padding-right: $space-sm;
+}
+.checkout__payment__credit-card-fields-form-group--cvc {
+  @extend %three-columns-form-layout;
+  width: 34%;
+  padding-right: 0;
+}
+
+
+.checkout__payment__credit-card-fields-help {
+  display: none;
   width: 67%;
   text-align: right;
-  display: none;
   @include respond-from("screen-md") {
     text-align: left;
     width: 45%;
     float: left;
     padding-left: 28px;
   }
-
-  img {
-    @include responsive-img();
-  }
 }
 
-.voucher-component {
+.checkout__payment__credit-card-fields-help-img {
+  @include responsive-img();
+}
+
+.checkout__payment__voucher {
   width: 100%;
   float: left;
   clear: both;
+  padding: 0;
+}
 
-  #voucher_form {
-    display: none;
-  }
+.checkout__payment__voucher-form {
+  display: none;
+  padding-bottom: $grid-gutter-width;
+  @extend .clearfix;
+}
 
-  #voucher-wrapper {
-    display: none;
-  }
+.checkout__payment__voucher-selected {
+  display: none;
+}
 
-  .error_invalid_voucher {
-    display: none;
-  }
-
-  .checkout__item {
-    border: none;
-    margin-bottom: 25px;
-    @include respond-from("screen-md") {
-      margin-bottom: 0;
-    }
-  }
-
-  .checkout__subtitle__open {
-    padding: $grid-gutter-width / 2;
-    @include respond-from("screen-md") {
-      padding: 0 $grid-gutter-width $grid-gutter-width / 2;
-    }
+.checkout__payment__voucher-code {
+  @extend %two-columns-form-layout--from-md;
+  padding-right: 0;
+  @include respond-from("screen-md") {
+    padding-right: $space-xs;
   }
 }
 
-.checkout__disclaimer {
+.checkout__payment__voucher-apply {
+  @extend %two-columns-form-layout--from-md;
+  padding-left: 0;
+  @include respond-from("screen-md") {
+    padding-left: $space-xs;
+    clear: none;
+  }
+}
+
+.checkout__payment__voucher-apply-button {
+  width: 100%;
+  @include respond-from("screen-md") {
+    width: auto;
+  }
+}
+
+.checkout__payment__legal {
+  text-align:  center;
+  font-size: 0.7em;
+  line-height: 1.3em;
+  color: $color-text-light;
+  padding: $space-sm 0;
+}
+
+.checkout__payment__legal-item {
+  display: inline-block;
+}
+
+.checkout__payment__finish-and-pay-submit {
+  @include make-xs-column(12);
+  @include make-md-column(6);
+  @extend .col-md-push-6;
+  padding: 0;
+  font-size: 16px;
+  @include respond-from("screen-md") {
+    padding: $grid-gutter-width 0 $grid-gutter-width $grid-gutter-width;
+  }
+}
+
+.checkout__payment__finish-and-pay-submit-button {
+  width: 100%;
+  @include respond-from("screen-md") {
+    float: right;
+    width: auto;
+  }
+}
+
+.checkout__payment__finish-and-pay-disclaimer {
   @include make-xs-column(12);
   @include make-md-column(6);
   @extend .col-md-pull-6;
-  padding: $space-sm;
-  font-size: 0.875em;
+  padding: $space-sm $space-xs;
+  font-size: 14px;
   color: $color-text-secondary;
   text-align: center;
   line-height: 1.4em;
   border-bottom: $dropdown-border;
   @include respond-from("screen-md") {
     text-align: left;
-    padding: $grid-gutter-width;
+    padding: $grid-gutter-width $grid-gutter-width $grid-gutter-width 0;
     border: none;
   }
 }
 
-.checkout__legal {
-  text-align:  center;
-  font-size: 0.7em;
-  line-height: 1.3em;
-  color: $color-text-light;
-  padding: $space-sm;
 
-  span {
-    display: inline-block;
-    margin-right: 14px;
-  }
+.checkout__payment__credit-card-fields-help-toggle {
+  display: block;
+  color: $color-text-highlight;
+  position: absolute;
+  right: $input-padding-right;
+  top: 15px;
 }
-
-.checkout__submit {
-  @include make-xs-column(12);
-  @include make-md-column(6);
-  @extend .col-md-push-6;
-  padding: 0 $space-sm;
-
-  .button {
-    width: 100%;
-  }
-
-  @include respond-from("screen-md") {
-    padding: $grid-gutter-width;
-
-    .button {
-      float: right;
-      width: auto;
-    }
-  }
+.checkout__payment__credit-card-fields-help-toggle:hover {
+  cursor: pointer;
 }
 
 
-.checkout__list {
+// -------------------------- CHECKOUT PAYMENT END --------------------------
+
+
+// -------------------------- CHECKOUT LIST START --------------------------
+
+.checkout__list-item {
   font-size: 0.875em;
-  padding: $space-xs $space-sm;
-  margin: 5px 0 0;
-  @include respond-from("screen-md") {
-    margin-top: -20px;
-    padding-left: $space-lg;
-  }
-}
-.profile__block--list .checkout__list {
-  line-height: normal;
-  margin-top: $space-xs;
-  @include respond-from("screen-md") {
-    margin-top: $space-sm;
-  }
+  padding: $space-xs 0;
+  margin: 0;
 }
 
 
-.checkout__list__payment_option_type {
+.checkout__list-item__payment-option-type {
   vertical-align: middle;
   display: inline-block;
 }
-
-.checkout__list__payment_option_type--visa {
+.checkout__list-item__payment-option-type--visa {
   @include retina-sprite($visa-group);
 }
-
-.checkout__list__payment_option_type--mastercard {
+.checkout__list-item__payment-option-type--mastercard {
   @include retina-sprite($mastercard-group);
 }
 
-.delivery__notes {
-  color: $color-text-secondary;
-}
 
-.checkout__more-feature-link {
-  display: block;
-
-  b {
-    font-weight: normal;
-  }
-}
-
-.delivery-information-list__wrapper {
-  .checkout__address-list--active {
-    border: $cta-secondary-border;
-  }
-}
-
-.checkout__address-list {
-  line-height: 1.4em;
-  padding: $space-xs;
-
-  margin: 0;
-
-  max-width: 200px;
-  float: left;
-  overflow: hidden;
-  height: 150px;
-
-  .delivery_address {
-    padding: $space-xs;
-    background-color: $color-bg-primary;
-    cursor: pointer;
-    @include transition(background-color .1s linear);
-    @include respond-from("screen-md") {
-      padding: $space-md;
-    }
-    &:hover {
-      background-color: $color-bg-secondary;
-    }
-  }
-}
-
-.selected-address {
-  @extend .radio;
-  line-height: 1.4em;
-  padding: $space-sm;
-  margin: 0;
-  @include respond-from("screen-md") {
-    padding: $grid-gutter-width;
-  }
-}
-
-.checkout__add-new-wrap {
-  @include clearfix;
-  @include respond-from("screen-md") {
-    padding-top: $grid-gutter-width;
-  }
-}
-
-.delivery-modal {
-  .modal-close-button {
-    cursor: pointer;
-    position: absolute;
-    right: 4px;
-    top: 2px;
-    @include retina-sprite($modal-close-group);
-    @include respond-from("screen-md") {
-      right: 15px;
-      top: -15px;
-    }
-  }
-}
+// -------------------------- CHECKOUT LIST END --------------------------

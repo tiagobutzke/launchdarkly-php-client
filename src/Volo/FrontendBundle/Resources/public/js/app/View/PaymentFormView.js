@@ -8,15 +8,15 @@ var PaymentFormView = Backbone.View.extend({
     },
 
     events: {
-        'keyup #form-expiry': '_fillExpiryForms',
+        'keyup #checkout-credit-card-form-expiry': '_fillExpiryForms',
         'keyup input': '_fillEncryptedData',
-        'change #store_credit_card': '_changeIsCreditCardStored'
+        'change #checkout-store-credit-card': '_changeIsCreditCardStored'
     },
 
     _initPaymentFormating: function() {
-        this.$('#form-expiry').payment('formatCardExpiry');
-        this.$('#adyen-encrypted-form-number').payment('formatCardNumber');
-        this.$('#adyen-encrypted-form-cvc').payment('formatCardCVC');
+        this.$('#checkout-credit-card-form-expiry').payment('formatCardExpiry');
+        this.$('#checkout-adyen-encrypted-form-number').payment('formatCardNumber');
+        this.$('#checkout-adyen-encrypted-form-cvc').payment('formatCardCVC');
     },
 
     _fillEncryptedData: function() {
@@ -34,14 +34,15 @@ var PaymentFormView = Backbone.View.extend({
     },
 
     _changeIsCreditCardStored: function () {
-        this.model.set('is_credit_card_store_active', this.$("#store_credit_card").is(':checked'));
+        this.model.set('is_credit_card_store_active', this.$("#checkout-store-credit-card").is(':checked'));
     },
 
     _fillName: function() {
-        var name = $('#contact_information .checkout__item span')[0];
+        // TODO check if this code works and is still needed
+        var name = $('#checkout-contact-information .checkout__step__item-content div')[0];
 
         if (name) {
-            this.$('#adyen-encrypted-form-holder-name').val(name.textContent);
+            this.$('#checkout-adyen-encrypted-form-holder-name').val(name.textContent);
         }
     },
 
@@ -56,8 +57,8 @@ var PaymentFormView = Backbone.View.extend({
                 month = '0' + month.toString();
             }
 
-            this.$('#adyen-encrypted-form-expiry-year').val(year);
-            this.$('#adyen-encrypted-form-expiry-month').val(month);
+            this.$('#checkout-adyen-encrypted-form-expiry-year').val(year);
+            this.$('#checkout-adyen-encrypted-form-expiry-month').val(month);
         }
     },
 

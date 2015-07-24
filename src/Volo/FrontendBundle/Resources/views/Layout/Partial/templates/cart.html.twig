@@ -64,7 +64,7 @@
     <div class="vendor__geocoding__tool-box">
         <form>
             <div class="form-group">
-                <input id="postal_index_form_input"
+                <input id="delivery-information-postal-index"
                        type="text"
                        class="form-control menu__input__postcode input__postcode{{ isDeliverable ? ' hide' }}"
                        autofocus=""
@@ -114,11 +114,11 @@
     {% set is_guest_user = is_granted('IS_AUTHENTICATED_FULLY') ? 'false' : 'true' %}
     <% if (subtotal >= minimum_order_amount && subtotal > 0) { %>
         <button class="button btn-checkout button--full-width" data-vendor-code="{{ vendor.code }}" data-is-guest-user="{{ is_guest_user }}">
-            <span>{% trans %}cart.checkout_link{% endtrans %}</span>
+            <span class="button__text">{% trans %}cart.checkout_link{% endtrans %}</span>
         </button>
     <% } else { %>
-        <button class="button btn-below-minimum-amount button--disabled btn-checkout disabled button--full-width" data-is-guest-user="{{ is_guest_user }}">
-            <span>
+        <button class="button btn-below-minimum-amount button--disabled btn-checkout button--full-width disabled" data-is-guest-user="{{ is_guest_user }}">
+            <span class="button__text">
             <% if (subtotal > 0) { %>
                 {% trans with {'%min%': vendor.minimumOrderAmount|price} %}cart.cart_below_mininum_total_amount %min%{% endtrans %}
             <% } else { %>
@@ -126,7 +126,7 @@
             <% }; %>
             </span>
         </button>
-        <span class="desktop-cart__error__below-minimum-amount error_msg hide">{% trans %}cart.need_add_more_products_to_place_order{% endtrans %}</span>
+        <span class="desktop-cart__error__below-minimum-amount form__error-message hide">{% trans %}cart.need_add_more_products_to_place_order{% endtrans %}</span>
     <% }; %>
 </script>
 

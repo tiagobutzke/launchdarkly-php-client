@@ -1,11 +1,13 @@
-<script type="text/template" id="template-delivery_address">
-    <div class="delivery_address">
-        <div class="delivery__company"><%= company %></div>
-        <div class="delivery__address">
-            <div class="delivery__address__line"><%= address_line1 %> <%- address_line2 %></div>
-            <div class="delivery__address__line"><%- postcode %> <%- city %></div>
+<script type="text/template" id="template-delivery-address">
+    <div class="checkout__delivery-information__addresses">
+        <div class="checkout__delivery-information__address">
+            <div><%= company %></div>
+            <div>
+                <div><%= address_line1 %> <%- address_line2 %></div>
+                <div><%- postcode %> <%- city %></div>
+            </div>
+            <div class="checkout__delivery-address__delivery-notes"><%= delivery_instructions %></div>
         </div>
-        <div class="delivery__notes"><%= delivery_instructions %></div>
+        <button class="button">Delete</button>
     </div>
-    <button class="button">Delete</button>
 </script>

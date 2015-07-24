@@ -1,5 +1,5 @@
 {% for address in customer_addresses %}
-    <div class="checkout__list sprite-form">
+    <div class="checkout__list-item sprite-form">
         <input type="radio" class="sprite-form__radio-button" id="selected_address-{{ address.id }}" name="selected_address" value="{{ address.id }}"
             {% if (selected_address is defined and selected_address.id == address.id) %}
                 checked="checked"
@@ -7,9 +7,9 @@
             />
         <div class="sprite-form__sprite"></div>
         <label for="selected_address-{{ address.id }}" class="sprite-form__label checkout_list__items" data-address-id="{{ address.id }}">
-            <div class="delivery__address">{{ address.address_line1 }} {{ address.address_line2 }} {{ address.postcode }}, {{ address.city }}</div>
-            <div class="delivery__company">{{ address.company }}</div>
-            <div class="delivery__notes">{{ address.delivery_instructions }}</div>
+            <div>{{ address.address_line1 }} {{ address.address_line2 }} {{ address.postcode }}, {{ address.city }}</div>
+            <div>{{ address.company }}</div>
+            <div class="checkout__delivery-address__delivery-notes">{{ address.delivery_instructions }}</div>
         </label>
     </div>
 {% endfor %}

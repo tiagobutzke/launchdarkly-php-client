@@ -6,9 +6,9 @@
  */
 VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
     events: {
-        "click .add_new_address_link__text--add-address": '_openAddressForm',
-        "click .add_new_address_link__text--cancel": '_closeAddressForm',
-        "submit #delivery_information_form": '_createAddress'
+        "click .checkout__title-link__text--add-address-delivery": '_openAddressForm',
+        "click .checkout__title-link__text--cancel-delivery": '_closeAddressForm',
+        "submit #delivery-information-form": '_createAddress'
     },
 
     initialize: function (options) {
@@ -19,7 +19,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
         }
 
         this.subViews = [];
-        this.template = _.template($('#template-delivery_address').html());
+        this.template = _.template($('#template-delivery-address').html());
         this.locationModel = options.locationModel;
 
         this.vendorId = this.$el.data().vendor_id;
@@ -61,7 +61,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
             checkoutModel: this.model
         });
 
-        this.$('#delivery-information-list').append(view.render().el);
+        this.$('#checkout-delivery-information-list').append(view.render().el);
         this.subViews.push(view);
     },
 
@@ -75,32 +75,32 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
     },
 
     _showCloseFormAddressLink: function () {
-        this.$('.add_new_address_link__text--cancel').removeClass('hide');
+        this.$('.checkout__title-link__text--cancel-delivery').removeClass('hide');
     },
 
     _hideCloseFormAddressLink: function () {
-        this.$('.add_new_address_link__text--cancel').addClass('hide');
+        this.$('.checkout__title-link__text--cancel-delivery').addClass('hide');
     },
 
     _openAddressForm: function () {
-        this.$('#delivery-information-list').addClass('hide');
-        this.$('#add_new_address_form').removeClass('hide', true);
-        this.$el.addClass('delivery_information_list-shown');
+        this.$('#checkout-delivery-information-list').addClass('hide');
+        this.$('#checkout-add-new-address-form').removeClass('hide', true);
+        this.$el.addClass('checkout__delivery-information--list-shown');
     },
 
     _closeAddressForm: function () {
-        this.$('#delivery-information-list').removeClass('hide');
-        this.$('#add_new_address_form').addClass('hide', true);
-        this.$el.removeClass('delivery_information_list-shown');
+        this.$('#checkout-delivery-information-list').removeClass('hide');
+        this.$('#checkout-add-new-address-form').addClass('hide', true);
+        this.$el.removeClass('checkout__delivery-information--list-shown');
     },
 
     _emptyAddressForm: function () {
-        this.$('#address_line1').val('');
-        this.$('#address_line2').val('');
-        this.$('#company').val('');
+        this.$('#delivery-information-address-line1').val('');
+        this.$('#delivery-information-address-line2').val('');
+        this.$('#delivery-information-company').val('');
         this.$('#delivery_instructions').val('');
-        this.$('#address_latitude').val('');
-        this.$('#address_longitude').val('');
+        this.$('#delivery-information-address-latitude').val('');
+        this.$('#delivery-information-address-longitude').val('');
     },
 
     unbind: function () {
@@ -128,7 +128,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
     },
 
     _createAddress: function () {
-        var data = this.$('#delivery_information_form').serializeJSON().customer_address,
+        var data = this.$('#delivery-information-form').serializeJSON().customer_address,
             model = this.collection.findSimilar(data);
 
         this._closeAddressForm();
@@ -169,12 +169,12 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
         this.collection.remove(model);
         this._updateSelectedAddress(oldAddress);
 
-        this.$('#address_line1').val(attributes.address_line1);
-        this.$('#address_line2').val(attributes.address_line2);
-        this.$('#company').val(attributes.company);
+        this.$('#delivery-information-address-line1').val(attributes.address_line1);
+        this.$('#delivery-information-address-line2').val(attributes.address_line2);
+        this.$('#delivery-information-company').val(attributes.company);
         this.$('#delivery_instructions').val(attributes.delivery_instructions);
-        this.$('#address_latitude').val('');
-        this.$('#address_longitude').val('');
+        this.$('#delivery-information-address-latitude').val('');
+        this.$('#delivery-information-address-longitude').val('');
 
         this._openAddressForm();
 
@@ -182,7 +182,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
             var selector = 'input[name=\'customer_address['+ error.field_name +']\']',
                 element = this.$(selector);
             _.each(error.violation_messages, function (message) {
-                var e = $('<span class="error_msg"></span>').text(message);
+                var e = $('<span class="form__error-message"></span>').text(message);
                 element.after(e);
             }, this);
         }, this);
@@ -217,16 +217,16 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
  */
 VOLO.UserAddressView = Backbone.View.extend({
     events: {
-        'click .delivery_address': '_selectAddress',
+        'click .checkout__delivery-information__address': '_selectAddress',
         'click button': '_delete'
     },
 
-    className: 'checkout__address-list',
+    className: 'checkout__delivery-information__addresses',
 
     initialize: function (options) {
         _.bindAll(this);
 
-        this.template = _.template($('#template-delivery_address').html());
+        this.template = _.template($('#template-delivery-address').html());
         this.checkoutModel = options.checkoutModel;
         this.listenTo(this.model, 'state:active', this.renderActiveState);
         this.listenTo(this.model, 'state:deactivate', this.renderDeactivateState);
@@ -236,18 +236,18 @@ VOLO.UserAddressView = Backbone.View.extend({
     render: function () {
         this.$el.html(this.template(this.model.attributes));
         if (this.model.id === this.checkoutModel.get('address_id')) {
-            this.$el.addClass('checkout__address-list--active');
+            this.$el.addClass('checkout__delivery-information__addresses--active');
         }
 
         return this;
     },
 
     renderActiveState: function() {
-        this.$el.addClass('checkout__address-list--active');
+        this.$el.addClass('checkout__delivery-information__addresses--active');
     },
 
     renderDeactivateState: function() {
-        this.$el.removeClass('checkout__address-list--active');
+        this.$el.removeClass('checkout__delivery-information__addresses--active');
     },
 
     _selectAddress: function () {

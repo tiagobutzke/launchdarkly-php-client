@@ -3,17 +3,16 @@
 */
 
 // ----------------------- BUTTONS START -----------------------
-.button, button {
-  &:hover, &:focus {
-    outline: none;
-  }
+
+
+button:hover,
+button:focus {
+  outline: none;
+}
+button:disabled {
+  background-color: $cta-color-bg-disabled;
 }
 
-input.button {
-  &:focus {
-    border: none;
-  }
-}
 
 .button {
   font-family: $cta-font-family;
@@ -31,59 +30,44 @@ input.button {
   line-height: 1em;
   padding-top: $space-xs;
   position: relative;
-
   @include transition(all .1s linear);
-  &:hover, &:focus {
-    background-color: $cta-color-bg-primary-hover;
-    color: $cta-color-text-primary;
-    text-decoration: none;
-    box-shadow: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    -moz-transition: none;
-    -webkit-transition: none;
-  }
 }
-
-.button-secondary {
-  @extend .button;
-  border: $cta-secondary-border;
-  color: $cta-color-text-secondary;
-  background-color: $cta-color-bg-secondary;
-
-  &:hover, &:focus {
-    background-color: $cta-color-bg-secondary-hover;
-    color: $cta-color-text-primary;
-  }
+.button:disabled {
+  background-color: $cta-color-bg-disabled;
 }
-
+.button:hover,
+.button:focus {
+  outline: none;
+  background-color: $cta-color-bg-primary-hover;
+  color: $cta-color-text-primary;
+  text-decoration: none;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -moz-transition: none;
+  -webkit-transition: none;
+}
+input.button:focus {
+  border: none;
+}
 a.button {
   padding: 0;
-  span {
-    @include vertical-center-absolute();
-    display: block;
-    width: 100%;
-    padding: 0 $cta-padding-right 0 $cta-padding-left;
-  }
 }
-
 .button--disabled {
   background-color: $cta-color-bg-disabled;
-  &:hover, &:focus {
-    background-color: $cta-color-bg-disabled;
-    color: $cta-color-text-primary;
-    cursor: default;
-  }
 }
-
+.button--disabled:hover,
+.button--disabled:focus {
+  background-color: $cta-color-bg-disabled;
+  color: $cta-color-text-primary;
+  cursor: default;
+}
 .button--pressed {
   background-color: $cta-pressed-box-shadow;
 }
-
 .button--inline {
   display: inline-block;
 }
-
 .button--add {
   height: 18px;
   width: 18px;
@@ -91,13 +75,29 @@ a.button {
   display: inline-block;
   margin-left: $space-sm;
 }
-
 .button--full-width {
   width: 100%;
 }
 
-.button:disabled, button:disabled {
-  background-color: $cta-color-bg-disabled;
+
+.button__text {
+  @include vertical-center-absolute();
+  left: 0;
+  display: block;
+  width: 100%;
+  padding: 0 $cta-padding-right 0 $cta-padding-left;
+}
+
+.button-secondary {
+  @extend .button;
+  border: $cta-secondary-border;
+  color: $cta-color-text-secondary;
+  background-color: $cta-color-bg-secondary;
+}
+.button-secondary:hover,
+.button-secondary:focus {
+  background-color: $cta-color-bg-secondary-hover;
+  color: $cta-color-text-primary;
 }
 
 // ----------------------- BUTTONS END -----------------------
@@ -106,7 +106,7 @@ a.button {
 
 // ----------------------- INPUT FIELDS START ------------------
 
-input, .form-control {
+.form-control {
   font-family: $input-font-family;
   font-size: $input-font-size;
   text-align: $input-text-align;
@@ -117,36 +117,46 @@ input, .form-control {
   line-height: inherit;
   border: $input-border;
   color: $input-color-text;
-
   box-shadow: none;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   -moz-transition: none;
   -webkit-transition: none;
-
   -webkit-appearance: none;
-  -moz-appearance:    none;
-  appearance:         none;
-
-  &:focus {
-    outline: none;
-    border: $input-border-active;
-    box-shadow: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    -moz-transition: none;
-    -webkit-transition: none;
-  }
-
-  &[type="radio"], &[type="checkbox"] {
-    height: auto;
-  }
+  -moz-appearance: none;
+  appearance: none;
 }
+.form-control:focus {
+  outline: none;
+  border: $input-border-active;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -moz-transition: none;
+  -webkit-transition: none;
+}
+.form-control[type="radio"],
+.form-control[type="checkbox"] {
+  height: auto;
+}
+
+
+input {
+  @extend .form-control;
+}
+input:focus {
+  @extend .form-control:focus;
+}
+input[type="radio"],
+input[type="checkbox"] {
+  height: auto;
+}
+
 
 select {
   -webkit-appearance: none;
-  -moz-appearance:    none;
-  appearance:         none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .form-group {
@@ -154,84 +164,9 @@ select {
   position: relative;
 }
 
-.form-group--two_col1_larger {
-  width: 80%;
-  float: left;
-  padding-right: $space-xs;
-  clear: none;
-}
-
-.form-group--two_col2_smaller {
-  width: 20%;
-  float: left;
-  padding-left: $space-xs;
-  clear: none;
-}
-
-.form-group--two_col1 {
-   width: 50%;
-   float: left;
-   padding-right: $space-xs;
-   clear: none;
- }
-
-.form-group--two_col2 {
-  width: 50%;
-  float: left;
-  padding-left: $space-xs;
-  clear: none;
-}
-
-.form-group--two_col1--xs-full {
-  width: 100%;
-  float: none;
-  padding-right: 0;
-  @include respond-from("screen-md") {
-    width: 50%;
-    float: left;
-    padding-right: $space-xs;
-  }
-}
-
-.form-group--two_col2--xs-full {
-  width: 100%;
-  float: none;
-  padding-left:0;
-  @include respond-from("screen-md") {
-    width: 50%;
-    float: left;
-    padding-left: $space-xs;
-    clear: none;
-  }
-}
-
-.form-group--3col {
-  width: 33%;
-  float: left;
-  padding-right: $space-sm;
-  clear: none;
-}
-
-.form-group--3col-last {
-  width: 34%;
-  float: left;
-  clear: none;
-  padding-right: 0;
-
-  i {
-    display: block;
-    color: $color-text-highlight;
-    position: absolute;
-    right: $input-padding-right;
-    top: 15px;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-}
-
 // BOOTSTRAP SELECT START
+// Please do not refactor this styles to full BEM syntax
+// to keep them consistent with Bootstrap Select plugin SASS style
 .bootstrap-select {
   width: 100% !important;
   height: 43px;
@@ -245,10 +180,9 @@ select {
   margin-top: -8px !important;
   color: $color-text-highlight;
   font-size: 1.35em;
-
-  &:before {
-    content: "\44";
-  }
+}
+.caret:before {
+  content: "\44";
 }
 
 
@@ -296,37 +230,6 @@ select {
     min-width: 200px;
   }
 }
-.header__account__dropdown .dropdown-menu:before {
-  position: absolute;
-  top: -7px;
-  left: 5px;
-  display: inline-block;
-  border-right: 7px solid transparent;
-  border-bottom: 7px solid $dropdown-color-border;
-  border-left: 7px solid transparent;
-  content: '';
-  @include respond-from("screen-md") {
-    right: 7px;
-    left: auto;
-  }
-}
-.header__account__dropdown .dropdown-menu:after {
-  position: absolute;
-  top: -6px;
-  left: 6px;
-  display: inline-block;
-  border-right: 6px solid transparent;
-  border-bottom: 6px solid $dropdown-color-bg-1;
-  border-left: 6px solid transparent;
-  content: '';
-  @include respond-from("screen-md") {
-    right: 8px;
-    left: auto;
-  }
-}
-.desktop-cart__time__field-time .dropdown-menu {
-  @include make-webkit-custom-scroll-bars();
-}
 
 
 .bootstrap-select > .dropdown-toggle {
@@ -339,11 +242,13 @@ select {
   border-radius: $input-border-radius;
   color: $dropdown-color-text;
   font-size: 1em;
-
-  &:hover, &:focus {
-    outline: none !important;
-  }
 }
+.bootstrap-select > .dropdown-toggle:hover,
+.bootstrap-select > .dropdown-toggle:focus {
+  outline: none !important;
+}
+
+
 // BOOTSTRAP SELECT END
 
 // ----------------------- INPUT FIELDS END ------------------
@@ -374,7 +279,7 @@ select {
 
 // ----------------------- SPRITE FORM ELEMENTS END ------------------
 
-// ----------------------- ERROR SUCCESS MESSAGE -----------------------------
+// ----------------------- ERROR -----------------------------
 
 %form-message {
   display: block;
@@ -383,25 +288,36 @@ select {
   padding: $space-xs $input-padding-left;
 }
 
-.error {
-  color: $input-color-text-error;
-  background-color: $input-color-bg-error;
-  border: $input-border-error;
-}
 
-.error_msg {
+.form__error-message {
   @extend %form-message;
   color: $error-msg-color-text;
   background-color: $error-msg-color-bg;
   margin-top: -1px;
 }
-
-.error-msg--above-form, .success-msg--above-form {
+.form__error-message--above-form {
   margin-bottom: $space-md;
 }
+.form__error-message.form__error-message--delivery-not-saved {
+  margin-bottom: 15px;
+}
+.form__error-message.form__error-message--existing-user {
+  display: none;
+}
+.form__error-message.form__error-message--invalid-voucher {
+  display: none;
+}
 
-.success-msg {
+
+.form__success-message {
   @extend %form-message;
   color: $success-msg-color-text;
   background-color: $success-msg-color-bg;
 }
+.form__success-message .form__success-message--above-form {
+  margin-bottom: $space-md;
+}
+
+
+// ----------------------- FORM ERRORS END -----------------------------
+

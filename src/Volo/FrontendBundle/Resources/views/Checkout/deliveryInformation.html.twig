@@ -12,21 +12,33 @@
 {% endblock %}
 
 {% block delivery_information %}
-    <h3 class="checkout__title">1. {% trans %}title.delivery_details{% endtrans %}</h3>
-
-    <h4 class="checkout__subtitle">{% trans %}title.delivery_time{% endtrans %}</h4>
-    <div class="time-picker" data-vendor_id="{{ vendor.id }}">
-        {% include('VoloFrontendBundle:Layout/Partial/templates:timepicker.html.twig') %}
+    <div class="checkout__step checkout__step--first checkout__step--active checkout__delivery-information">
+        <h3 class="checkout__step__title">1. {% trans %}title.delivery_details{% endtrans %}</h3>
+        <div class="checkout__step__items">
+            <div class="checkout__step__item">
+                <h4 class="checkout__step__item-title">{% trans %}title.delivery_time{% endtrans %}</h4>
+                <div class="checkout__step__item-content checkout__time-picker" data-vendor_id="{{ vendor.id }}">
+                    {% include('VoloFrontendBundle:Layout/Partial/templates:timepicker.html.twig') %}
+                </div>
+            </div>
+            <div class="checkout__step__item checkout__delivery-information__edit-address">
+                <h4 class="checkout__step__item-title">{% trans %}title.delivery_address{% endtrans %}</h4>
+                <div class="checkout__step__item-content">
+                    {% include('VoloFrontendBundle:Checkout/Partial:delivery_information_form.html.twig') %}
+                </div>
+            </div>
+        </div>
     </div>
-
-    <h4 class="checkout__subtitle">{% trans %}title.delivery_address{% endtrans %}</h4>
-    {% include('VoloFrontendBundle:Checkout/Partial:delivery_information_form.html.twig') %}
 {% endblock %}
 
 {% block contact_information %}
-    <h3 class="checkout__title checkout__title--step">2. {% trans %}title.contact_info{% endtrans %}</h3>
+    <div class="checkout__step checkout__step--reduced checkout__contact-information">
+        <h3 class="checkout__step__title">2. {% trans %}title.contact_info{% endtrans %}</h3>
+    </div>
 {% endblock %}
 
 {% block payment %}
-    <h3 class="checkout__title checkout__title--step">3. {% trans %}title.payment{% endtrans %}</h3>
+    <div class="checkout__step checkout__step--reduced checkout__payment">
+        <h3 class="checkout__step__title">3. {% trans %}title.payment{% endtrans %}</h3>
+    </div>
 {% endblock %}

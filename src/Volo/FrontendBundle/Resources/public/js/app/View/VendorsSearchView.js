@@ -17,7 +17,7 @@ var VendorsSearchView = HomeSearchView.extend({
     },
 
     buttonClick: function() {
-        this.$('#postal_index_form_input').removeClass('hide').focus();
+        this.$('#delivery-information-postal-index').removeClass('hide').focus();
         this.$('.restaurants__location__title').hide();
 
         return false;

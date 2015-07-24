@@ -9,7 +9,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         var View = ValidationView.extend({
             events: function(){
                 return _.extend({}, ValidationView.prototype.events, {
-                    'keydown #mobile_number': '_hideErrorMsg'
+                    'keydown #contact-information-mobile-number': '_hideErrorMsg'
                 });
             },
 

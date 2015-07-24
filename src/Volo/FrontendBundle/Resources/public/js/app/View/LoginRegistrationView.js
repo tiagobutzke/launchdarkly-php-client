@@ -69,10 +69,10 @@ var LoginRegistrationView = Backbone.View.extend({
             this._bindRegisterValidationView();
 
             if (data) {
-                this.$('#first_name').val(data.first_name);
-                this.$('#last_name').val(data.last_name);
-                this.$('#email').val(data.email);
-                this.$('#mobile_number').val(data.mobile_number);
+                this.$('#contact-information-first-name').val(data.first_name);
+                this.$('#contact-information-last-name').val(data.last_name);
+                this.$('#contact-information-email').val(data.email);
+                this.$('#contact-information-mobile-number').val(data.mobile_number);
             }
         }.bind(this));
 

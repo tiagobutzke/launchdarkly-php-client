@@ -1,74 +1,72 @@
-<form action="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}" id="delivery_information_form" method="post" role="form" novalidate>
-    <div class="checkout__item checkout__item--step">
-        <span class="error_msg error-msg--above-form hide" id="error_msg_delivery_not_saved">
-            {% trans %}delivery_information.needs_to_be_saved{% endtrans %}
-        </span>
-        <div class="form-group hide">
-            <input
-                    type="hidden"
-                    class="form-control"
-                    id="formatted_address"
-                    name="formatted_address"
-                    {% set addressValue = customer_address.address_line1|default('') ~ ' ' ~ customer_address.address_line2|default('') %}
-                    {#trim removes the empty string if address is empty, otherwise placeholder doesn't work#}
-                    value="{{ addressValue|trim }}"
-                    required="true"
-                    placeholder="{% trans %}form.placeholder.address{% endtrans %}"
-                    data-msg_ensure_full_address="{% trans %}formatted_address.ensure_full_address_with_number{% endtrans %}"
-                    data-validation-msg="{% trans %}validations.error.checkout.customer_address{% endtrans %}"
-                    >
-        </div>
-        <div class="form-group form-group--two_col1_larger">
-            <input class="form-control"
-                   placeholder="{% trans %}form.placeholder.address_line1{% endtrans %}"
-                   required="true"
-                   id="address_line1" name="customer_address[address_line1]" type="text"
-                   value="{{ customer_address.address_line1|default('') }}"
-                   data-validation-msg="{% trans %}validations.error.checkout.customer_address_line_1{% endtrans %}"
-                    >
-            </div>
-            <div class="form-group form-group--two_col2_smaller">
-                <input class="form-control"
-                       placeholder="{% trans %}form.placeholder.address_line2{% endtrans %}"
-                       required="true"
-                       id="address_line2" name="customer_address[address_line2]" type="text"
-                       value="{{ customer_address.address_line2|default('') }}"
-                       data-validation-msg="{% trans %}validations.error.checkout.customer_address_line_2{% endtrans %}"
-                        >
-        </div>
-        <div class="form-group form-group--two_col1">
-            <input type="text" class="form-control"  id="postal_index_form_input" name="customer_address[postcode]"
-                   data-vendor_id="{{ vendor.id }}"
-                   data-msg_ensure_full_address="{% trans %}formatted_address.ensure_full_address_with_number{% endtrans %}"
-                   value="{{ customer_address.postcode|default('') }}" required="true" placeholder="{% trans %}form.placeholder.postcode{% endtrans %}"
-                   data-validation-msg="{% trans %}validations.error.checkout.customer_postcode{% endtrans %}">
-        </div>
-        <div class="form-group form-group--two_col2">
-            <input type="text" class="form-control" id="city" name="customer_address[city]"
-                   tabindex="99"
-                   readonly="readonly"
-                   value="{{ customer_address.city|default('') }}" required="true" placeholder="{% trans %}form.placeholder.city{% endtrans %}"
-                   data-validation-msg="{% trans %}validations.error.checkout.customer_city{% endtrans %}">
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-control" id="company" name="customer_address[company]"
-                   value="{{ customer_address.company|default('') }}" placeholder="{% trans %}form.placeholder.company_name{% endtrans %}">
-        </div>
-        <div class="form-group">
-            <textarea cols="30" rows="10" class="form-control" id="delivery_instructions" name="customer_address[delivery_instructions]"
-                      placeholder="{% trans %}form.placeholder.delivery_instructions{% endtrans %}">{{ customer_address.delivery_instructions|default('') }}</textarea>
-        </div>
-        <input id="address_latitude" name="customer_address[latitude]" type="hidden"
-               value="{{ customer_address.latitude|default('') }}">
-        <input id="address_longitude" name="customer_address[longitude]" type="hidden"
-               value="{{ customer_address.longitude|default('') }}">
-        <input type="hidden" name="customer_address[city_id]" value="{{ vendor.city.id }}">
-        <button id="delivery_information_form_button" class="button button--disabled">
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                {% trans %}button.save{% endtrans %}
-            {% else %}
-                {% trans %}button.continue{% endtrans %}
-            {% endif %}
-        </button>
+<form class="checkout__delivery-information__form" action="{{ path('checkout_delivery_information', {vendorCode: vendor.code}) }}" id="delivery-information-form" method="post" role="form" novalidate>
+    <span class="checkout__step__item-content-row form__error-message form__error-message--delivery-not-saved hide" id="error-message-delivery-not-saved">
+        {% trans %}delivery_information.needs_to_be_saved{% endtrans %}
+    </span>
+    <div class="form-group hide">
+        <input
+                type="hidden"
+                class="form-control"
+                id="delivery-information-formatted-address"
+                name="formatted_address"
+                {% set addressValue = customer_address.address_line1|default('') ~ ' ' ~ customer_address.address_line2|default('') %}
+                {#trim removes the empty string if address is empty, otherwise placeholder doesn't work#}
+                value="{{ addressValue|trim }}"
+                required="true"
+                placeholder="{% trans %}form.placeholder.address{% endtrans %}"
+                data-msg_ensure_full_address="{% trans %}formatted_address.ensure_full_address_with_number{% endtrans %}"
+                data-validation-msg="{% trans %}validations.error.checkout.customer_address{% endtrans %}"
+                >
     </div>
+    <div class="form-group checkout__delivery-information__address-line-1">
+        <input class="form-control"
+               placeholder="{% trans %}form.placeholder.address_line1{% endtrans %}"
+               required="true"
+               id="delivery-information-address-line1" name="customer_address[address_line1]" type="text"
+               value="{{ customer_address.address_line1|default('') }}"
+               data-validation-msg="{% trans %}validations.error.checkout.customer_address_line_1{% endtrans %}"
+                >
+        </div>
+        <div class="form-group checkout__delivery-information__address-line-2">
+            <input class="form-control"
+                   placeholder="{% trans %}form.placeholder.address_line2{% endtrans %}"
+                   required="true"
+                   id="delivery-information-address-line2" name="customer_address[address_line2]" type="text"
+                   value="{{ customer_address.address_line2|default('') }}"
+                   data-validation-msg="{% trans %}validations.error.checkout.customer_address_line_2{% endtrans %}"
+                    >
+    </div>
+    <div class="form-group checkout__delivery-information__postal-index">
+        <input type="text" class="form-control"  id="delivery-information-postal-index" name="customer_address[postcode]"
+               data-vendor_id="{{ vendor.id }}"
+               data-msg_ensure_full_address="{% trans %}formatted_address.ensure_full_address_with_number{% endtrans %}"
+               value="{{ customer_address.postcode|default('') }}" required="true" placeholder="{% trans %}form.placeholder.postcode{% endtrans %}"
+               data-validation-msg="{% trans %}validations.error.checkout.customer_postcode{% endtrans %}">
+    </div>
+    <div class="form-group checkout__delivery-information__city">
+        <input type="text" class="form-control" id="delivery-information-city" name="customer_address[city]"
+               tabindex="99"
+               readonly="readonly"
+               value="{{ customer_address.city|default('') }}" required="true" placeholder="{% trans %}form.placeholder.city{% endtrans %}"
+               data-validation-msg="{% trans %}validations.error.checkout.customer_city{% endtrans %}">
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" id="delivery-information-company" name="customer_address[company]"
+               value="{{ customer_address.company|default('') }}" placeholder="{% trans %}form.placeholder.company_name{% endtrans %}">
+    </div>
+    <div class="form-group">
+        <textarea class="checkout__step__item-textarea form-control" cols="30" rows="10" id="delivery-information-instructions" name="customer_address[delivery_instructions]"
+                  placeholder="{% trans %}form.placeholder.delivery_instructions{% endtrans %}">{{ customer_address.delivery_instructions|default('') }}</textarea>
+    </div>
+    <input id="delivery-information-address-latitude" name="customer_address[latitude]" type="hidden"
+           value="{{ customer_address.latitude|default('') }}">
+    <input id="delivery-information-address-longitude" name="customer_address[longitude]" type="hidden"
+           value="{{ customer_address.longitude|default('') }}">
+    <input type="hidden" name="customer_address[city_id]" value="{{ vendor.city.id }}">
+    <button class="checkout__step__item-button button" id="delivery-information-form-button" disabled="disabled">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% trans %}button.save{% endtrans %}
+        {% else %}
+            {% trans %}button.continue{% endtrans %}
+        {% endif %}
+    </button>
 </form>

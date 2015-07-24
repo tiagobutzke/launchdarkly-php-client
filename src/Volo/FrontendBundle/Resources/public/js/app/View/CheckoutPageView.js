@@ -1,6 +1,6 @@
 var CheckoutPageView = Backbone.View.extend({
     events: {
-        'click #finish-and-pay': '_submitOrder',
+        'click #checkout-finish-and-pay-button': '_submitOrder',
         'click #add_new_address_link': 'render',
         'click #edit_contact_information_form_link': '_openContactInformationForm'
     },
@@ -34,10 +34,10 @@ var CheckoutPageView = Backbone.View.extend({
 
     render: function () {
         var addressFormVisible = this.$('#delivery_information_form_button').is(':visible');
-        var contactFormVisible = this.$('#contact_information_form').is(':visible');
+        var contactFormVisible = this.$('#contact-information-form').is(':visible');
 
         console.log('CheckoutPageView:render', this.model.isValid());
-        this.$('#finish-and-pay').toggleClass('button--disabled', !this.model.canBeSubmitted() || addressFormVisible || contactFormVisible);
+        this.$('#checkout-finish-and-pay-button').toggleClass('button--disabled', !this.model.canBeSubmitted() || addressFormVisible || contactFormVisible);
     },
 
     unbind: function () {
@@ -46,7 +46,7 @@ var CheckoutPageView = Backbone.View.extend({
     },
 
     _openContactInformationForm: function() {
-        var $editContactInformationForm = this.$('#edit_contact_information_form'),
+        var $editContactInformationForm = this.$('#checkout-edit-contact-information'),
             editContactInformationFormIsVisible;
 
         if ($editContactInformationForm.length){
@@ -58,14 +58,14 @@ var CheckoutPageView = Backbone.View.extend({
     },
 
     _submitOrder: function () {
-        if (this.$('#delivery_information_form_button').is(':visible')) {
-            this.$('#error_msg_delivery_not_saved').removeClass('hide');
+        if (this.$('#delivery-information-form-button').is(':visible')) {
+            this.$('#error-message-delivery-not-saved').removeClass('hide');
             this._scrollToError(this.$('#checkout-delivery-information-address').offset().top);
 
             return false;
         }
 
-        if (this.$('#contact_information_form').is(':visible')) {
+        if (this.$('#contact-information-form').is(':visible')) {
             this.$('#error_msg_contact_not_saved').removeClass('hide');
             this._scrollToError(this.$('.checkout__contact-information').offset().top);
 
@@ -76,10 +76,10 @@ var CheckoutPageView = Backbone.View.extend({
             return false;
         }
 
-        this.$('#error_msg_delivery_not_saved').addClass('hide');
-        this.spinner.spin(this.$('#finish-and-pay')[0]);
+        this.$('#error-message-delivery-not-saved').addClass('hide');
+        this.spinner.spin(this.$('#checkout-finish-and-pay-button')[0]);
         this.model.placeOrder(this.vendorCode, this.vendorId);
-        this.$('.error_msg').addClass('hide');
+        this.$('.form__error-message').addClass('hide');
     },
 
     _scrollToError: function(msgOffset) {
@@ -112,10 +112,10 @@ var CheckoutPageView = Backbone.View.extend({
     },
 
     handlePaymentError: function (data) {
-        this.$('.error_msg').removeClass('hide');
+        this.$('.form__error-message').removeClass('hide');
 
         if (_.isObject(data) && _.isString(data.error.errors.message)) {
-            this.$('.error_msg').html(data.error.errors.message);
+            this.$('.form__error-message').html(data.error.errors.message);
         }
         this.spinner.stop();
     },
@@ -125,6 +125,6 @@ var CheckoutPageView = Backbone.View.extend({
             view = compiled({location: location, args: args});
 
         this.$el.append(view);
-        this.$('#form__redirect').submit();
+        this.$('#checkout-form-redirect').submit();
     }
 });
