@@ -1,7 +1,7 @@
 <form action="{{ path('checkout_payment', {vendorCode: vendor.code}) }}"
       class="hide"
       id="payment_form" method="post" role="form" data-adyen_public_key="{{ adyen_public_key }}">
-    <h4 class="checkout__subtitle">{% trans %}title.credit_card_details{% endtrans %}</h4>
+    <h4 class="checkout__subtitle checkout__subtitle--above-form">{% trans %}title.credit_card_details{% endtrans %}</h4>
     <div class="checkout__item">
         <div class="checkout__item__card">
             <div class="form-group">

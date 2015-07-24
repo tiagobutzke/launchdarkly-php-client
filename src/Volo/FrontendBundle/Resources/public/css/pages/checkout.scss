@@ -107,6 +107,14 @@
   }
 }
 
+.checkout__subtitle--above-form {
+  font-size: 0.8em;
+  margin-top: -2px;
+  @include respond-from("screen-md") {
+    margin-top: -27px;
+  };
+}
+
 .checkout__title__edit {
   float: right;
   display: inline-block;
@@ -191,10 +199,8 @@
   position: relative;
   height: 30px;
   padding-right: $grid-gutter-width / 2;
-  padding-top: $space-sm;
   @include respond-from("screen-md") {
     padding-right: $grid-gutter-width;
-    padding-top: 0;
   }
 }
 
@@ -457,7 +463,6 @@
 
 .checkout__payment {
   @include make-md-column(4);
-  @include make-lg-column(3);
   @include clearfix;
   padding: 0;
   line-height: 1.4em;
@@ -517,7 +522,7 @@
 
 .checkout__payment_img {
   float: right;
-  width: 40%;
+  width: 60%;
   height: 30px;
   text-align: right;
   margin-top: -5px;
@@ -529,12 +534,14 @@
 
   @include respond-from("screen-md") {
     white-space: nowrap;
-    height: 40px;
+    height: 35px;
     float: none;
     width: auto;
     text-align: center;
     margin-top: 0;
-
+  }
+  @include respond-from("screen-lg") {
+    height: 45px;
     img {
       height: 40px;
     }
@@ -562,7 +569,8 @@
 .checkout__payment_paypal_description__title, .checkout__payment_adyen_hpp_description__title {
   font-family: $bold-font-family;
   padding-top: $space-sm;
-  padding-bottom: $space-sm;
+  padding-bottom: $space-xs;
+  text-transform: uppercase;
   @include respond-from("screen-md") {
     padding-top: 0;
   }
@@ -688,8 +696,12 @@
 
 .checkout__list {
   font-size: 0.875em;
-  padding: $space-xs $space-md;
-  margin: 0;
+  padding: $space-xs $space-sm;
+  margin: 5px 0 0;
+  @include respond-from("screen-md") {
+    margin-top: -20px;
+    padding-left: $space-lg;
+  }
 }
 .profile__block--list .checkout__list {
   line-height: normal;
