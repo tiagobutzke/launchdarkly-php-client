@@ -1,6 +1,18 @@
 CHANGELOG
 =========
 
+* 1.9.5
+
+  * SGFD-18478 Hide Special instructions
+
+* 1.9.4
+
+  * Fixed AT timezone
+
+* 1.9.2
+
+  *  SGFD-18388: Vendor listing opening time fix (reverted)
+
 * 1.9.1
 
   * SGFD-18211 Coming soon page fix
