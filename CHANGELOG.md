@@ -1,6 +1,23 @@
 CHANGELOG
 =========
 
+* 1.10.0
+
+  * SGFD-18442: Checkout Select first payment method
+  * SGFD-18152: Area Change, logo not reappearing after scrolling up
+  * SGFD-18388: Cache schedule
+  * SGFD-18372: Success Page Add placeholder
+  * SGFD-18445: Checkout visual Improvment
+  * SGFD-18299: Profile Refactor SASS to BEM
+  * SGFD-18320: Error pages Refactor SASS to BEM
+  * SGFD-18319: Static pages Refactor SASS to BEM
+  * SGFD-18174: Menu Refactor SASS to BEM
+  * SGFD-17992: Checkout save address
+  * SGFD-17818: Checkout button
+  * SGFD-17361: Profile change password
+  * SGFD-18380: Time picker format adjustement
+  * SGFD-18153: Registration validations
+
 * 1.9.5
 
   * SGFD-18478 Hide Special instructions
