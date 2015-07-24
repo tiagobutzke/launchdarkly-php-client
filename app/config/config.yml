@@ -81,6 +81,9 @@ doctrine_cache:
         translator_cache:
             namespace: %country_code%_%kernel.environment%_translator_cache
             type: php_file
+        schedule_cache:
+            namespace: %country_code%_%kernel.environment%_schedule_cache
+            type: php_file
         configuration_cache:
             namespace: %country_code%_%kernel.environment%_configuration_cache
             type: file_system

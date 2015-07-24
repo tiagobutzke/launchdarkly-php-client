@@ -28,15 +28,26 @@ class VendorService
     protected $cache;
 
     /**
-     * @param CityProvider   $cityProvider
-     * @param VendorProvider $vendorProvider
-     * @param Cache          $cache
+     * @var ScheduleService
      */
-    public function __construct(CityProvider $cityProvider, VendorProvider $vendorProvider, Cache $cache)
-    {
-        $this->cityProvider   = $cityProvider;
+    private $scheduleService;
+
+    /**
+     * @param CityProvider $cityProvider
+     * @param VendorProvider $vendorProvider
+     * @param ScheduleService $scheduleService
+     * @param Cache $cache
+     */
+    public function __construct(
+        CityProvider $cityProvider,
+        VendorProvider $vendorProvider,
+        ScheduleService $scheduleService,
+        Cache $cache
+    ) {
+        $this->cityProvider = $cityProvider;
         $this->vendorProvider = $vendorProvider;
-        $this->cache          = $cache;
+        $this->cache = $cache;
+        $this->scheduleService = $scheduleService;
     }
 
     /**
@@ -90,14 +101,17 @@ class VendorService
 
         return $this->cache->fetch($key);
     }
+
     /**
      *
      */
     public function refreshCachedVendorCode()
     {
+        $now = new \DateTime('now');
         $cities = $this->cityProvider->findAll();
         foreach ($cities->getItems() as $city) {
             foreach ($this->vendorProvider->findVendorsByCity($city)->getItems() as $vendor) {
+                $this->scheduleService->getNextDayPeriods($vendor, $now);
                 /** @var $vendor Vendor */
                 $this->cache->save($vendor->getUrlKey(), $vendor->getCode());
                 $this->cache->save(

@@ -2,6 +2,7 @@
 
 namespace Volo\FrontendBundle\Tests\Service;
 
+use Doctrine\Common\Cache\ArrayCache;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
 use Foodpanda\ApiSdk\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -23,7 +24,7 @@ class ScheduleServiceTest extends VoloTestCase
         // Random timezone
         date_default_timezone_set('Australia/Sydney');
 
-        $this->scheduleService = new ScheduleService();
+        $this->scheduleService = new ScheduleService(new ArrayCache());
     }
 
 
