@@ -248,4 +248,24 @@ class CustomerService
             }
         }
     }
+
+    /**
+     * @param Address $address
+     * @param AccessToken $accessToken
+     *
+     * @return Address
+     */
+    public function updateAddress(Address $address, AccessToken $accessToken)
+    {
+        return $this->provider->updateAddress($address, $accessToken);
+    }
+
+    /**
+     * @param int $id
+     * @param AccessToken $accessToken
+     */
+    public function deleteAddress($id, AccessToken $accessToken)
+    {
+        $this->provider->deleteAddress($id, $accessToken);
+    }
 }

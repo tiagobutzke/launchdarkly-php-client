@@ -33,8 +33,12 @@ VOLO.UserAddressCollection = Backbone.Collection.extend({
     model: VOLO.UserAddressModel,
     comparator: 'id',
 
+    initialize: function () {
+        _.bindAll(this);
+    },
+
     url: function() {
-        return Routing.generate('customer_address_list', {customerId: 0});
+        return Routing.generate('customer_address_list', {customerId: 'me'});
     },
 
     findSimilar: function (address) {
@@ -46,6 +50,12 @@ VOLO.UserAddressCollection = Backbone.Collection.extend({
             postcode: address.postcode,
             delivery_instructions: '' === address.delivery_instructions ? null : address.delivery_instructions,
             company: '' === address.company ? null : address.company
+        });
+    },
+
+    filterByCity: function (currentCity) {
+        return this.filter(function(address) {
+            return address.get('is_delivery_available') || address.get('city') === currentCity;
         });
     }
 });

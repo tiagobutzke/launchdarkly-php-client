@@ -276,6 +276,8 @@
 }
 
 .checkout__item--delivery-list {
+  @include clearfix;
+
   padding-left: 0;
   padding-right: 0;
 }
@@ -738,8 +740,6 @@
 }
 
 .delivery-information-list__wrapper {
-  margin-top: -15px;
-
   .checkout__address-list--active {
     border: $cta-secondary-border;
   }
@@ -750,6 +750,11 @@
   padding: $space-xs;
 
   margin: 0;
+
+  max-width: 200px;
+  float: left;
+  overflow: hidden;
+  height: 150px;
 
   .delivery_address {
     padding: $space-xs;

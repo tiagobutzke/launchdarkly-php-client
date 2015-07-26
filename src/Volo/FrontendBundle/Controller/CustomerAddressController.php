@@ -3,17 +3,20 @@
 namespace Volo\FrontendBundle\Controller;
 
 use Foodpanda\ApiSdk\Entity\Address\Address;
-use Foodpanda\ApiSdk\Provider\CustomerProvider;
+use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Foodpanda\ApiSdk\Serializer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Volo\FrontendBundle\Security\Token;
 use Volo\FrontendBundle\Service\CustomerService;
 
+/**
+ * @Route(defaults={"_format": "json"})
+ */
 class CustomerAddressController extends BaseController
 {
     /**
@@ -50,9 +53,67 @@ class CustomerAddressController extends BaseController
 
         $serializer = $this->getSerializer();
         $accessToken = $this->getToken()->getAccessToken();
-        $address = $this->getCustomerService()->getAddress($id, $accessToken, $vendorId);
+
+        try {
+            $address = $this->getCustomerService()->getAddress($id, $accessToken, $vendorId);
+        } catch (ApiErrorException $e) {
+            $data = json_decode($e->getJsonErrorMessage(), true);
+            if (isset($data['data']['exception_type'])
+                && 'ApiObjectDoesNotExistException' === $data['data']['exception_type']) {
+
+                throw $this->createNotFoundException(sprintf('Address not found: "%s"', $id));
+            }
+
+            return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
+        }
 
         return new JsonResponse($serializer->normalize($address));
+    }
+
+    /**
+     * @Route("/customer/{customerId}/address/{id}", name="customer_address_update", options={"expose"=true}, condition="request.isXmlHttpRequest()")
+     * @Method({"PUT"})
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return JsonResponse
+     */
+    public function updateAction(Request $request, $id)
+    {
+        $data = $this->decodeJsonContent($request);
+        $accessToken = $this->getToken()->getAccessToken();
+        $address = $this->getSerializer()->denormalizeCustomerAddress($data);
+
+        try {
+            $newAddress = $this->getCustomerService()->updateAddress($address, $accessToken);
+        } catch (ApiErrorException $e) {
+            return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
+        }
+
+        return new JsonResponse($this->getSerializer()->normalize($newAddress));
+    }
+
+    /**
+     * @Route("/customer/{customerId}/address/{id}", name="customer_address_delete", options={"expose"=true}, condition="request.isXmlHttpRequest()")
+     * @Method({"DELETE"})
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return JsonResponse
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        $accessToken = $this->getToken()->getAccessToken();
+
+        try {
+            $this->getCustomerService()->deleteAddress($id, $accessToken);
+        } catch (ApiErrorException $e) {
+            return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
+        }
+
+        return new JsonResponse('', Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -74,9 +135,18 @@ class CustomerAddressController extends BaseController
 
         /** @var Address $address */
         $address = $serializer->denormalize($data, Address::class);
-        $address = $this->getCustomerService()->findAddressOrCreate($address, $accessToken);
+        try {
+            $address = $this->getCustomerService()->findAddressOrCreate($address, $accessToken);
+        } catch (ApiErrorException $e) {
+            return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
+        }
 
-        return new RedirectResponse($this->generateUrl('customer_address_find_one', ['customerId' => 0, 'vendorId' => $vendorId, 'id' => $address->getId()]));
+        return new RedirectResponse(
+            $this->generateUrl(
+                'customer_address_find_one',
+                ['customerId' => 'me', 'vendorId' => $vendorId, 'id' => $address->getId()]
+            )
+        );
     }
 
     /**

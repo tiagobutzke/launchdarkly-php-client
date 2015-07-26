@@ -10,11 +10,11 @@ VOLO.gtmViews = []; //all views, which needs GTM should go here
 $(document).ready(VOLO.documentReadyFunction);
 
 VOLO.createUserAddressCollection = function (jsonUserAddress) {
-    jsonUserAddress = jsonUserAddress || {};
+    jsonUserAddress = jsonUserAddress || [];
 
     VOLO.userAddressCollection = VOLO.userAddressCollection || new VOLO.UserAddressCollection();
 
-    if (jsonUserAddress && jsonUserAddress.length) {
+    if (jsonUserAddress.length) {
         VOLO.userAddressCollection.reset(jsonUserAddress);
     }
 
@@ -26,7 +26,6 @@ VOLO.createCartModel = function (jsonCart) {
         dataProvider: new CartDataProvider(),
         parse: true
     });
-
 
     return VOLO.cartModel;
 };
@@ -311,16 +310,6 @@ VOLO.OrderTracking = function () {
     });
 };
 
-VOLO.createLogoutLinkView = function(cartModel) {
-    var view = new VOLO.LogoutLinkView({
-        el: '.logout-link',
-        model: cartModel
-    });
-
-    VOLO.views.push(view);
-    return view;
-};
-
 VOLO.createProfileView = function () {
     var profilePasswordFormView = new VOLO.ProfilePasswordFormView({
         el: '#profile-password-form'
@@ -411,10 +400,6 @@ VOLO.doBootstrap = function(configuration) {
     if ($('#show-login-overlay').length > 0) {
         existingUserLoginView = VOLO.createExistingUserLoginView();
         existingUserLoginView.render();
-    }
-
-    if ($('.logout-link').length > 0) {
-        VOLO.createLogoutLinkView(cartModel);
     }
 
     if ($('#profile-password-form').length > 0) {
