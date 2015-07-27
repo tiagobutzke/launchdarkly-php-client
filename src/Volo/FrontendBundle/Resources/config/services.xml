@@ -184,7 +184,7 @@
 
         <service id="volo_frontend.service.phone_number" class="%volo_frontend.service.phone_number.class%">
             <argument type="service" id="libphonenumber.phone_number_util" />
-            <argument>%locale%</argument>
+            <argument>%country_code%</argument>
             <argument type="service" id="translator" />
         </service>
 

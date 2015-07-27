@@ -37,7 +37,7 @@ class PhoneNumberService
         TranslatorInterface $translator
     ) {
         $this->phoneNumberUtil = $phoneNumberUtil;
-        $this->twoLetterCountryCode = strtoupper(substr($twoLetterCountryCode, 0, 2));
+        $this->twoLetterCountryCode = strtoupper($twoLetterCountryCode);
         $this->translator = $translator;
     }
 
