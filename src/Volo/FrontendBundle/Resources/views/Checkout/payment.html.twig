@@ -213,7 +213,7 @@
 {% block footer_scripts %}
     {{ parent() }}
     
-    <script data-turbolinks-eval=false>
+    <script data-turbolinks-eval=true>
         //TODO make this a backbone view
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             $('.edit_contact_information_form_link__text--edit').click(function (event) {
