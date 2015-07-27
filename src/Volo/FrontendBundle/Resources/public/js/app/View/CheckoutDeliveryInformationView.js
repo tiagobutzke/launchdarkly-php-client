@@ -24,24 +24,28 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
 
         this.vendorId = this.$el.data().vendor_id;
 
-        if (this.collection.length > 0) {
+        if (this.collection.filterByCity(this.locationModel.get('city')).length > 0) {
             this._selectLastAddress();
         }
 
         this.listenTo(this.model, 'change:address_id', this._changeAddress);
         this.listenTo(this.collection, 'add', this._renderAddress);
+        this.listenTo(this.collection, 'update', this._renderAddNewAddressLink);
     },
 
     render: function () {
         console.log('CheckoutDeliveryInformationView.render ', this.cid);
 
-        if (this.collection.length === 0) {
-            this._emptyAddressForm();
+        this._emptyAddressForm();
+
+        if (this.collection.filterByCity(this.locationModel.get('city')).length === 0) {
             this._openAddressForm();
         } else {
             this._closeAddressForm();
-            this._renderAddressList();
         }
+
+        this._renderAddressList();
+        this._renderAddNewAddressLink();
 
         return this;
     },
@@ -59,6 +63,23 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
 
         this.$('#delivery-information-list').append(view.render().el);
         this.subViews.push(view);
+    },
+
+    _renderAddNewAddressLink: function () {
+        if (this.collection.filterByCity(this.locationModel.get('city')).length === 0) {
+            this._hideCloseFormAddressLink();
+            this._openAddressForm();
+        } else {
+            this._showCloseFormAddressLink();
+        }
+    },
+
+    _showCloseFormAddressLink: function () {
+        this.$('.add_new_address_link__text--cancel').removeClass('hide');
+    },
+
+    _hideCloseFormAddressLink: function () {
+        this.$('.add_new_address_link__text--cancel').addClass('hide');
     },
 
     _openAddressForm: function () {
@@ -111,9 +132,11 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
             model = this.collection.findSimilar(data);
 
         this._closeAddressForm();
+        this._emptyAddressForm();
 
         if (model) {
             model.save(data, {
+                wait: false,
                 success: this._updateSelectedAddress,
                 error: this.onCreateError
             });
@@ -173,7 +196,6 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
         }
 
         this.model.set('address_id', id);
-        this._emptyAddressForm();
     },
 
     _selectLastAddress: function () {
