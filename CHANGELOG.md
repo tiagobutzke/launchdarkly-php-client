@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+* 1.10.1
+
+  * SGFD-18629: Checkout edit information link binding
+  * SGFD-18519: Fixing mobile country validation
+
 * 1.10.0
 
   * SGFD-18442: Checkout Select first payment method
