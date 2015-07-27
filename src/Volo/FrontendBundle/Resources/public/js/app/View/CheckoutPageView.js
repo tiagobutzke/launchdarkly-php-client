@@ -1,6 +1,11 @@
 var CheckoutPageView = Backbone.View.extend({
     events: {
-        'click #finish-and-pay': '_submitOrder'
+        'click #finish-and-pay': '_submitOrder',
+        'click #add_new_address_link': 'render',
+        'click #edit_contact_information_form_link': function(e) {
+            this._openContactInformationForm(e);
+            this.render();
+        }
     },
 
     initialize: function (options) {
@@ -31,8 +36,11 @@ var CheckoutPageView = Backbone.View.extend({
     },
 
     render: function () {
+        var addressFormVisible = this.$('#delivery_information_form_button').is(':visible');
+        var contactFormVisible = this.$('#contact_information_form').is(':visible');
+
         console.log('CheckoutPageView:render', this.model.isValid());
-        this.$('#finish-and-pay').toggleClass('button--disabled', !this.model.canBeSubmitted());
+        this.$('#finish-and-pay').toggleClass('button--disabled', !this.model.canBeSubmitted() || addressFormVisible || contactFormVisible);
     },
 
     unbind: function () {
@@ -40,18 +48,28 @@ var CheckoutPageView = Backbone.View.extend({
         this.undelegateEvents();
     },
 
-    _submitOrder: function () {
-        var paddingFromHeader = 16,
-            scrollToOffset, msgOffset;
+    _openContactInformationForm: function(e) {
+        e.preventDefault();
+        var $editContactInformationForm = this.$('#edit_contact_information_form'),
+            editContactInformationFormIsVisible;
 
+        $editContactInformationForm.toggleClass('hide');
+        editContactInformationFormIsVisible = $editContactInformationForm.hasClass('hide');
+        $('#contact_information').find('.checkout__item').toggleClass('hide', !editContactInformationFormIsVisible);
+    },
+
+    _submitOrder: function () {
         if (this.$('#delivery_information_form_button').is(':visible')) {
             this.$('#error_msg_delivery_not_saved').removeClass('hide');
-            msgOffset = this.$('#checkout-delivery-information-address').offset().top;
-            scrollToOffset =  msgOffset - paddingFromHeader - this.domObjects.$header.outerHeight();
+            this._scrollToError(this.$('#checkout-delivery-information-address').offset().top);
 
-            $('body').animate({
-                scrollTop: scrollToOffset
-            }, this.configuration.anchorScrollSpeed);
+            return false;
+        }
+
+        if (this.$('#contact_information_form').is(':visible')) {
+            this.$('#error_msg_contact_not_saved').removeClass('hide');
+            this._scrollToError(this.$('.checkout__contact-information').offset().top);
+
             return false;
         }
 
@@ -63,6 +81,16 @@ var CheckoutPageView = Backbone.View.extend({
         this.spinner.spin(this.$('#finish-and-pay')[0]);
         this.model.placeOrder(this.vendorCode, this.vendorId);
         this.$('.error_msg').addClass('hide');
+    },
+
+    _scrollToError: function(msgOffset) {
+        var paddingFromHeader = 16,
+            scrollToOffset =  msgOffset - paddingFromHeader - this.domObjects.$header.outerHeight();
+
+        this.$('#error_msg_delivery_not_saved').removeClass('hide');
+        $('body').animate({
+            scrollTop: scrollToOffset
+        }, this.configuration.anchorScrollSpeed);
     },
 
     handlePaymentSuccess: function (data) {
