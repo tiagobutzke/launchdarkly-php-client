@@ -145,6 +145,39 @@
 
 // ----------- RADIO BUTTON AND CHECKBOX SPRITE END ----------
 
+
+// ---------------------------- CUSTOM WEBKIT SCROLL BARS START -------------------------------
+
+// prevent default scroll bar disappearance on Webkit OS X
+// by providing custom scroll bars styled like the default ones
+
+@mixin make-webkit-custom-scroll-bars() {
+  ::-webkit-scrollbar {
+    -webkit-appearance: none;
+  }
+  ::-webkit-scrollbar:vertical {
+    width: 7px;
+  }
+  ::-webkit-scrollbar:horizontal {
+    height: 7px;
+  }
+
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 7px;
+    background-color: rgba(0, 0, 0, .5);
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+}
+
+// ---------------------------- CUSTOM WEBKIT SCROLL BARS END -------------------------------
+
+
+// ---------------------------- USE ICON FONT START -------------------------------
+
 @mixin use-iconmoon-font() {
   font-family: 'icomoon';
   speak: none;
@@ -158,3 +191,5 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+// ---------------------------- USE ICON FONT END -------------------------------

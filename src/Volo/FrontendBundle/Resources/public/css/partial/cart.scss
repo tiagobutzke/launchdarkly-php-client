@@ -537,6 +537,7 @@ tr.summary__item__row_mobile {
 }
 
 .desktop-cart__order {
+  @include make-webkit-custom-scroll-bars();
   padding: 0;
 }
 
