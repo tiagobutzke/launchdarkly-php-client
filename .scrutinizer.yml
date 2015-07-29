@@ -70,8 +70,8 @@ build:
             - gem install sass -v '~> 3.4.13'
             - npm install
             - npm install -g bower
-            - SYMFONY_ENV=test composer install --no-interaction
-            - app/console fos:js-routing:dump --env=test
+            - COUNTRY_CODE=test SYMFONY_ENV=test composer install --no-interaction
+            - COUNTRY_CODE=test app/console fos:js-routing:dump --env=test
     project_setup:
         before:
             - grunt
@@ -79,6 +79,8 @@ build:
         override:
             -
                 command: 'phpunit -c app/ --coverage-clover="build/logs/clover.xml"'
+                environment: { COUNTRY_CODE: 'test' }
+                idle_timeout: 3500
                 coverage:
                     file: 'build/logs/clover.xml'
                     format: 'php-clover'
