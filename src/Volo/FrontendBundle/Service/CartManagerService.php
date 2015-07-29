@@ -31,8 +31,9 @@ class CartManagerService
     protected $tokenStorage;
 
     /**
-     * @param CartProvider   $cartProvider
+     * @param CartProvider $cartProvider
      * @param VendorProvider $vendorProvider
+     * @param TokenStorage $tokenStorage
      */
     public function __construct(
         CartProvider $cartProvider,
@@ -129,10 +130,12 @@ class CartManagerService
         /** @var Token $token */
         $token = $this->tokenStorage->getToken();
 
-        if ($token instanceof Token) {
-            $response = $this->cartProvider->calculate($jsonCart, $token->getAccessToken());
-        } else {
-            $response = $this->cartProvider->calculate($jsonCart);
+        $mergedCart = $this->mergeSimilarProducts($jsonCart);
+        $accessToken =  $token instanceof Token ? $token->getAccessToken() : null;
+        $response = $this->cartProvider->calculate($mergedCart, $accessToken);
+
+        if (count($response['vendorCart']) > 0) {
+            $response['vendorCart'][0] = $this->unMergeSimilarProducts($response['vendorCart'][0], $jsonCart);
         }
 
         if (array_key_exists('vendorCart', $response)) {
@@ -142,6 +145,55 @@ class CartManagerService
         }
 
         return $this->fixMinDeliveryFeeDiscount($jsonCart['vendor_id'], $response);
+    }
+
+    /**
+     * @param array $calculatedCart
+     * @param array $jsonCart
+     *
+     * @return array
+     */
+    protected function unMergeSimilarProducts(array $calculatedCart, array $jsonCart)
+    {
+        $unMergedProducts = [];
+        foreach ($jsonCart['products'] as $jsonCartProduct) {
+            $productKey = $this->createProductIdentificationKey($jsonCartProduct, true);
+            foreach ($calculatedCart['products'] as $calculatedCartProduct) {
+                if ($productKey === $this->createProductIdentificationKey($calculatedCartProduct, true)) {
+                    $multiplier = $jsonCartProduct['quantity'] / $calculatedCartProduct['quantity'];
+                    $product = $calculatedCartProduct;
+                    $product['total_price_before_discount'] *= $multiplier;
+                    $product['total_price'] *= $multiplier;
+                    $product['quantity'] = $jsonCartProduct['quantity'];
+                    $unMergedProducts[] = $product;
+                    break;
+                }
+            }
+        }
+        $calculatedCart['products'] = $unMergedProducts;
+
+        return $calculatedCart;
+    }
+
+    /**
+     * @param array $cart
+     *
+     * @return array
+     */
+    public function mergeSimilarProducts(array $cart)
+    {
+        $mergedCart = $cart;
+        $mergedCart['products'] = [];
+        foreach ($cart['products'] as $product) {
+            $productKey = $this->createProductIdentificationKey($product, true);
+            if (array_key_exists($productKey, $mergedCart['products'])) {
+                $product['quantity'] += $mergedCart['products'][$productKey]['quantity'];
+            }
+            $mergedCart['products'][$productKey] = $product;
+        }
+        $mergedCart['products'] = array_values($mergedCart['products']);
+
+        return $mergedCart;
     }
 
     /**
@@ -255,21 +307,21 @@ class CartManagerService
     {
         $instructions = new ArrayCollection();
         foreach ($jsonCart['products'] as $product) {
-            $key = $this->createSpecialInstructionsKey($product);
-            
+            $key = $this->createProductIdentificationKey($product);
+
             $data = $instructions->containsKey($key) ? $instructions[$key] : [];
             $data[] = $product['special_instructions'];
-            
+
             $instructions->set($key, $data);
         }
 
         foreach ($response['vendorCart'] as &$vendorCart) {
             foreach ($vendorCart['products'] as &$responseProduct) {
-                $key = $this->createSpecialInstructionsKey($responseProduct);
+                $key = $this->createProductIdentificationKey($responseProduct);
                 if ($instructions->containsKey($key)) {
                     $data = $instructions[$key];
                     $responseProduct['special_instructions'] = array_shift($data);
-                    
+
                     count($data) === 0 ? $instructions->remove($key) : $instructions->set($key, $data);
                 }
             }
@@ -280,14 +332,16 @@ class CartManagerService
 
     /**
      * @param array $product
+     * @param bool $ignoreQuantity
      *
      * @return string
      */
-    protected function createSpecialInstructionsKey(array $product)
+    protected function createProductIdentificationKey(array $product, $ignoreQuantity = false)
     {
-        return sprintf('%s_%s_%s',
+        return sprintf(
+            '%s_%d_%s',
             array_key_exists('variation_id', $product) ? $product['variation_id'] : $product['product_variation_id'],
-            $product['quantity'],
+            $ignoreQuantity ? 1 : $product['quantity'],
             implode('_', array_column($product['toppings'], 'id'))
         );
     }
