@@ -9,6 +9,29 @@
 {% block body_class %}menu {% if customHeadlineImage == true%}vendor_custom{% endif %}{% endblock %}
 {% block gtm_page_type %}Restaurant Detail Page{% endblock %}
 
+{% block google_tag_manager_before %}
+    {% set vendorProductsQuantity = 0 %}
+    {% for menuCategory in vendor.menus.first.menuCategories %}
+        {% set vendorProductsQuantity = vendorProductsQuantity + menuCategory.products.count() %}
+    {% endfor %}
+    <script type="text/javascript">
+        dataLayer.push({
+            'nrCategories': '{{ vendor.menus.first.menuCategories.count() }}',
+            'nrMenuItems':  '{{ vendorProductsQuantity }}',
+            'ecommerce': {
+                'detail': {
+                    'actionField': {'list': VOLO.tagManager.pageType},
+                    'products': [{
+                        'name': '{{ vendor.name }}',
+                        'id': '{{ vendor.code }}',
+                        'variant': '{{ isVendorOpen(vendor, date('now')) ? 'open' : 'closed' }}'
+                    }]
+                }
+            }
+        })
+    </script>
+{% endblock %}
+
 {% block footer_scripts %}
     {{ parent() }}
 
