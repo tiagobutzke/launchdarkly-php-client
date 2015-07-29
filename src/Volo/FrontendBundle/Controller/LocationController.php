@@ -3,6 +3,7 @@
 namespace Volo\FrontendBundle\Controller;
 
 use Foodpanda\ApiSdk\Entity\Cart\AbstractLocation;
+use Foodpanda\ApiSdk\Entity\Cart\CityLocation;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -17,7 +18,7 @@ class LocationController extends Controller
      * @Route(
      *      "/city/{cityUrlKey}",
      *      name="volo_location_search_vendors_by_city",
-     *      requirements={"cityUrlKey"="[a-z-]+"}
+     *      requirements={"cityUrlKey"="[a-zA-Z-]+"}
      * )
      * @Route(
      *      "/restaurants/lat/{latitude}/lng/{longitude}/plz/{postcode}/city/{city}/address/{address}",
@@ -42,6 +43,13 @@ class LocationController extends Controller
      */
     public function locationAction(Request $request, AbstractLocation $location, array $formattedLocation, $cityId)
     {
+        if ($location instanceof CityLocation) {
+            $urlKeyFromApi = $request->attributes->get('cityUrlKeyFromApi');
+            if ($request->attributes->get('cityUrlKey') !== $urlKeyFromApi) {
+                return $this->redirectToRoute('volo_location_search_vendors_by_city', ['cityUrlKey' => $urlKeyFromApi]);
+            }
+        }
+
         $vendors = $this->get('volo_frontend.provider.vendor')->findVendorsByLocation($location);
 
         list($openVendors, $closedVendorsWithPreorder) = $vendors->getItems()
