@@ -62,6 +62,7 @@ class UserLocationConverter implements ParamConverterInterface
         $lng = $request->attributes->get('longitude', false);
 
         $request->attributes->set('cityId', null);
+        $request->attributes->set('cityUrlKeyFromApi', null);
 
         switch(true) {
             case $cityUrlKey:
@@ -79,6 +80,7 @@ class UserLocationConverter implements ParamConverterInterface
                 );
 
                 $request->attributes->set('cityId', $city->getId());
+                $request->attributes->set('cityUrlKeyFromApi', $city->getUrlKey());
                 break;
             case $areaId:
                 $convertedParameter = new AreaLocation($areaId);
@@ -130,7 +132,7 @@ class UserLocationConverter implements ParamConverterInterface
     {
          $filtered = $this->cityProvider->findAll()->getItems()->filter(function($element) use ($cityUrlKey) {
             /** @var City $element */
-            return $element->getUrlKey() === $cityUrlKey;
+            return strtolower($element->getUrlKey()) === strtolower($cityUrlKey);
         });
 
         return $filtered->first();

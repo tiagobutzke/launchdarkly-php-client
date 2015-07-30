@@ -14,4 +14,26 @@ class LocationControllerTest extends VoloTestCase
 
         $this->isSuccessful($client->getResponse());
     }
+
+    public function testRedirectionCityUppercaseUrlKey()
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/city/BERLIN');
+
+        $response = $client->getResponse();
+
+        $this->assertTrue($response->isRedirect('/city/berlin'));
+    }
+
+    public function testRedirectionCityMixedCaseUrlKey()
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/city/BeRlIn');
+
+        $response = $client->getResponse();
+
+        $this->assertTrue($response->isRedirect('/city/berlin'));
+    }
 }
