@@ -1,6 +1,20 @@
 CHANGELOG
 =========
 
+* 1.11.0
+
+  * SGFD-18742: jshint update
+  * SGFD-18618: Checkout disable button on new address
+  * SGFD-18705: Prevent scroll bars disappearance on Mac
+  * SGFD-18538: Zip query param
+  * SGFD-15756: SEO city redirection
+  * SGFD-18549: Address form improvements
+  * SGFD-18042: GTM Page load on restaurant detail page
+  * SGFD-18041: GTM clicks on restaurants
+  * SGFD-18040: GTM Additional restaurant impressions
+  * SGFD-18038: GTM virtualPageView vendors
+  * SGFD-18035: GTM pageload new
+
 * 1.10.2-1.10.3
 
   * Release to kill the cache
