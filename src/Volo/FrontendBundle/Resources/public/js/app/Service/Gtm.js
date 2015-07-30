@@ -1,5 +1,10 @@
 var VOLO = VOLO || {};
 VOLO.GTMService = function (options) {
+    this.options = {};
+    this.options.referrer = options.options.referrer;
+    this.options.currency = options.options.currency;
+    this.options.pageType = options.options.pageType;
+
     this.dataLayer = options.dataLayer;
     this.sessionId = options.sessionId;
     this.checkoutModel = options.checkoutModel || null;
@@ -7,7 +12,7 @@ VOLO.GTMService = function (options) {
     this.checkoutInformationValidationFormView = options.checkoutInformationValidationFormView;
     this.loginButtonView = options.loginButtonView;
     this.existingUserLoginView = options.existingUserLoginView;
-    this.referrer = options.referrer;
+    this.restaurantsView = options.restaurantsView;
 
     this.initialize();
 };
@@ -35,6 +40,26 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
             );
         }
 
+        if (_.isObject(this.restaurantsView)) {
+            this.listenTo(
+                this.restaurantsView,
+                'restaurantsView:restaurantClicked',
+                this.fireRestaurantClicked
+            );
+
+            this.listenTo(
+                this.restaurantsView,
+                'restaurantsView:restaurantsDisplayedOnLoad',
+                this.fireRestaurantsDisplayedOnLoad
+            );
+
+            this.listenTo(
+                this.restaurantsView,
+                'restaurantsView:restaurantsDisplayedOnScroll',
+                this.fireRestaurantsDisplayedOnScroll
+            );
+        }
+
         if (_.isObject(this.loginButtonView)) {
             this._bindLoginRegistrationEvents();
         }
@@ -42,10 +67,33 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
         if (_.isObject(this.existingUserLoginView)) {
             this._bindLoginRegistrationEvents();
         }
+
+        this._push(this.doMobileDetection(window.navigator.userAgent));
     },
 
     unbind: function () {
         this.stopListening();
+    },
+
+    doMobileDetection: function (userAgent) {
+        var md = new MobileDetect(userAgent);
+
+        var detectionResult = {
+            deviceType: 'desktop',
+            deviceName: null
+        };
+
+        if (md.phone()) {
+            detectionResult.deviceType = 'mobile';
+            detectionResult.deviceName = md.phone();
+        }
+
+        if (md.tablet()) {
+            detectionResult.deviceType = 'tablet';
+            detectionResult.deviceName = md.tablet();
+        }
+
+        return detectionResult;
     },
 
     fireLogin: function (data) {
@@ -126,6 +174,45 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
         });
     },
 
+    fireRestaurantClicked: function (data) {
+        this._push({
+            'event': 'restaurantClick',
+            'ecommerce': {
+                'currencyCode': this.options.currency,
+                'click': {
+                    'actionField': {
+                        'list': this.options.pageType
+                    },
+                    'products': [{
+                        'name': data.name,
+                        'id': data.id,
+                        'variant': data.variant,
+                        'position': data.position
+                    }]
+                }
+            }
+        });
+    },
+
+    fireRestaurantsDisplayedOnLoad: function(impressions) {
+        this._push({
+            'ecommerce': {
+                'currencyCode': this.options.currency,
+                'impressions': _.map(impressions, this._addListToImpressions, this)
+            }
+        });
+    },
+
+    fireRestaurantsDisplayedOnScroll: function(impressions) {
+        this._push({
+            'event': 'restaurantImpressions',
+            'ecommerce': {
+                'currencyCode': this.options.currency,
+                'impressions': _.map(impressions, this._addListToImpressions, this)
+            }
+        });
+    },
+
     _createCookieName: function (vendorId) {
         return 'gtm_event_addFirstProduct-' + vendorId;
     },
@@ -151,8 +238,14 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
         );
     },
 
+    _addListToImpressions: function(element) {
+        element.list = this.options.pageType;
+
+        return element;
+    },
+
     _push: function(data) {
-        data.referrer = this.referrer;
+        data.referrer = this.options.referrer;
         dataLayer.push(data);
     }
 });

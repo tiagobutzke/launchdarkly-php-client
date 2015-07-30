@@ -1,21 +1,7 @@
 {% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
 
 {% block title %}{% trans %}brand{% endtrans %} | {% trans %}meta_title.home_page{% endtrans %}{% endblock %}
-{% block google_tag_manager %}
-    <script type="text/javascript" data-turbolinks-eval=always>
-        dataLayer.push({
-            'event': 'virtualPageView',
-            'pageType': 'Home',
-            'zipcode': '{{ customer_location().postcode }}',
-            'city': '{{ customer_location().city }}',
-            'country': '{{ gtm_get_country() }}',
-            'loggedIn': '{{ is_customer_authenticated_fully() ? 'true' : 'false' }}',
-            'customerId': '{{ is_customer_authenticated_fully() ? get_authenticated_customer().id }}',
-            'referrer': VOLO.gtmReferrer
-        });
-    </script>
-{% endblock %}
-
+{% block gtm_page_type %}Home{% endblock %}
 {% block body_class %}home{% endblock %}
 
 {% block head_meta_seo %}

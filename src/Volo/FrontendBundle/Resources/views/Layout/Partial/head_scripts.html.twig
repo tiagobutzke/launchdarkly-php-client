@@ -9,7 +9,10 @@
 
     <script type="text/javascript">
         var VOLO = VOLO || {};
-        VOLO.gtmReferrer = '{{ gtm_get_referrer() }}';
+        VOLO.tagManager = {};
+        VOLO.tagManager.referrer = '{{ gtm_get_referrer() }}';
+        VOLO.tagManager.pageType = '';
+
         VOLO.Translations = {
             home: {
                 postal_index_form_please_select_option: '{{ 'home.postal_index_form_please_select_option'|trans|e }}'

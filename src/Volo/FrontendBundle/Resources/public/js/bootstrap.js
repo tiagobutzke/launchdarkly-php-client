@@ -244,6 +244,16 @@ VOLO.createVendorsListSearchView = function () {
     return vendorSearchView;
 };
 
+VOLO.createRestaurantsView = function() {
+    var restaurantsView = new VOLO.RestaurantsView({
+        el: '.restaurants__list'
+    });
+
+    VOLO.views.push(restaurantsView);
+    VOLO.gtmViews.push(restaurantsView);
+    return restaurantsView;
+};
+
 VOLO.initGTMService = function(options) {
     if (_.isObject(VOLO.GTMServiceInstance)) {
         VOLO.GTMServiceInstance.unbind();
@@ -313,7 +323,8 @@ VOLO.doBootstrap = function(configuration) {
         checkoutInformationValidationFormView,
         loginButtonView,
         existingUserLoginView,
-        cartIconView
+        cartIconView,
+        restaurantsView
     ;
 
     if ($('.menu__list-wrapper').length > 0) {
@@ -321,6 +332,10 @@ VOLO.doBootstrap = function(configuration) {
 
         var cartViews = VOLO.createCartViews(cartModel, locationModel, VOLO.GTMServiceInstance);
         cartViews.cartView.render();
+    }
+
+    if ($('.restaurants__list').length > 0) {
+        restaurantsView = VOLO.createRestaurantsView();
     }
 
     var $checkoutMain = $('.checkout__main');
@@ -384,16 +399,22 @@ VOLO.doBootstrap = function(configuration) {
     }
 
     var GTMServiceInstance = VOLO.initGTMService({
+        options: {
+            referrer: VOLO.tagManager.referrer,
+            currency: VOLO.configuration.currencySymbol,
+            pageType: VOLO.tagManager.pageType
+        },
         checkoutModel: checkoutModel,
         sessionId: configuration.sessionId,
         checkoutDeliveryValidationView: gtmCheckoutValidationView,
         checkoutInformationValidationFormView: checkoutInformationValidationFormView,
         loginButtonView: loginButtonView,
         existingUserLoginView: existingUserLoginView,
-        referrer: VOLO.gtmReferrer
+        restaurantsView: restaurantsView
     });
 
     _.invoke(VOLO.gtmViews, 'setGtmService', GTMServiceInstance);
+    _.invoke(VOLO.gtmViews, 'onGtmServiceCreated');
 };
 
 $(document).on('page:load page:restore', function () {

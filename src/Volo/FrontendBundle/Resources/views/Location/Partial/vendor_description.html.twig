@@ -1,6 +1,11 @@
 {% block vendor_description %}
     <a href="{{ path('vendor', {code: vendor.code, urlKey: vendor.urlKey}) }}">
-        <div class="restaurants__list__item">
+        <div class="restaurants__list__item"
+             data-name="{{ vendor.name }}"
+             data-code="{{ vendor.code }}"
+             data-variant="{{ vendorIsOpen }}"
+             data-position="{{ vendorsCounter }}"
+        >
             <div class="restaurants__list__item-wrapper">
                 <div class="restaurants__list__item-image-wrapper">
                     <div class="restaurants__list__item-preorder">

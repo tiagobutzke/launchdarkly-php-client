@@ -7,20 +7,31 @@
 {% set richDescription = cms('restaurant-rich-description-' ~ vendor.code) %}
 
 {% block body_class %}menu {% if customHeadlineImage == true%}vendor_custom{% endif %}{% endblock %}
-{% block google_tag_manager %}
-    <script type="text/javascript" data-turbolinks-eval=always>
+{% block gtm_page_type %}Restaurant Detail Page{% endblock %}
+
+{% block google_tag_manager_before %}
+    {% set vendorProductsQuantity = 0 %}
+    {% for menuCategory in vendor.menus.first.menuCategories %}
+        {% set vendorProductsQuantity = vendorProductsQuantity + menuCategory.products.count() %}
+    {% endfor %}
+    <script type="text/javascript">
         dataLayer.push({
-            'event': 'virtualPageView',
-            'pageType': 'Restaurant Detail Page',
-            'zipcode': '{{ customer_location().postcode }}',
-            'city': '{{ customer_location().city }}',
-            'country': '{{ gtm_get_country() }}',
-            'loggedIn': '{{ is_customer_authenticated_fully() ? 'true' : 'false' }}',
-            'customerId': '{{ is_customer_authenticated_fully() ? get_authenticated_customer().id }}',
-            'referrer': VOLO.gtmReferrer
-        });
+            'nrCategories': '{{ vendor.menus.first.menuCategories.count() }}',
+            'nrMenuItems':  '{{ vendorProductsQuantity }}',
+            'ecommerce': {
+                'detail': {
+                    'actionField': {'list': VOLO.tagManager.pageType},
+                    'products': [{
+                        'name': '{{ vendor.name }}',
+                        'id': '{{ vendor.code }}',
+                        'variant': '{{ isVendorOpen(vendor, date('now')) ? 'open' : 'closed' }}'
+                    }]
+                }
+            }
+        })
     </script>
 {% endblock %}
+
 {% block footer_scripts %}
     {{ parent() }}
 
