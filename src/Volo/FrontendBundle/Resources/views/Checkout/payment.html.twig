@@ -67,6 +67,7 @@
 {% endblock %}
 
 {% block contact_information %}
+    <div class="checkout__contact-information">
     <h3 class="checkout__title">
         2. {% trans %}title.contact_information{% endtrans %}
         <span class="checkout__subtitle__edit">
@@ -88,6 +89,7 @@
             {% include('VoloFrontendBundle:Checkout/Partial:contact_information_form.html.twig') with {action: '', phoneNumberError: phoneNumberError|default("")} %}
         </div>
     {% endif %}
+    </div>
 {% endblock %}
 
 {% block payment %}
@@ -216,17 +218,6 @@
     <script data-turbolinks-eval=true>
         //TODO make this a backbone view
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            $('.edit_contact_information_form_link__text--edit').click(function (event) {
-                var $editContactInformationForm = $('#edit_contact_information_form'),
-                    editContactInformationFormIsVisible;
-
-                $editContactInformationForm.toggleClass('hide');
-                editContactInformationFormIsVisible = $editContactInformationForm.hasClass('hide');
-                $(this).toggleClass('contact_information_form-open', editContactInformationFormIsVisible);
-                $('#contact_information').find('.checkout__item').toggleClass('hide', !editContactInformationFormIsVisible);
-                event.preventDefault();
-            });
-    
             $('#contact_information_form').on('submit', function (event) {
                 // replace the list with the new list from the POST request
                 event.preventDefault();

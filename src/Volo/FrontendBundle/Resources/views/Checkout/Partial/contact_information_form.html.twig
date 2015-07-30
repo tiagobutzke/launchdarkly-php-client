@@ -1,5 +1,8 @@
 <form action="{{ action }}" id="contact_information_form" method="post" role="form" novalidate>
     <div class="checkout__item checkout__item--step">
+        <span class="error_msg error-msg--above-form hide" id="error_msg_contact_not_saved">
+            {% trans %}contact_information.needs_to_be_saved{% endtrans %}
+        </span>
         <div class="form-group form-group--two_col1--xs-full">
             <input type="text" class="form-control" id="first_name" name="customer[first_name]"
                    value="{{ customer.first_name|default('') }}" required="true" placeholder="{% trans %}form.placeholder.first_name{% endtrans %}"
