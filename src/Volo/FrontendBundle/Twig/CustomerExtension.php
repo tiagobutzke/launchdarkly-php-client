@@ -2,6 +2,7 @@
 
 namespace Volo\FrontendBundle\Twig;
 
+use Foodpanda\ApiSdk\Entity\Customer\Customer;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
@@ -47,7 +48,7 @@ class CustomerExtension extends \Twig_Extension
     }
 
     /**
-     * @return array
+     * @return Customer
      */
     public function getAuthenticatedCustomer()
     {
@@ -56,7 +57,7 @@ class CustomerExtension extends \Twig_Extension
             return $attributes['customer'];
         }
 
-        return [];
+        return null;
     }
 
     /**

@@ -1,54 +1,58 @@
 <?php
 
-namespace Volo\FrontendBundle\Controller;
+namespace Volo\FrontendBundle\Controller\Api;
 
 use Foodpanda\ApiSdk\Entity\Address\Address;
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
-use Foodpanda\ApiSdk\Serializer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Volo\FrontendBundle\Security\Token;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Volo\FrontendBundle\Service\CustomerService;
 
 /**
- * @Route(defaults={"_format": "json"})
+ * @Route("/api/v1/customer/{customerId}", defaults={"_format": "json"}, condition="request.isXmlHttpRequest()")
  */
-class CustomerAddressController extends BaseController
+class CustomerAddressController extends BaseApiController
 {
     /**
-     * @Route("/customer/{customerId}/address", name="customer_address_list", options={"expose"=true}, condition="request.isXmlHttpRequest()")
+     * @Route("/address", name="api_customers_address_list", options={"expose"=true})
      * @Method({"GET"})
      *
      * @param Request $request
+     * @param int $customerId
      *
      * @return JsonResponse
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request, $customerId)
     {
+        $this->isCustomerAllowed($customerId);
+
         $vendorId = $request->query->get('vendorId');
 
         $serializer = $this->getSerializer();
         $accessToken = $this->getToken()->getAccessToken();
         $addresses = $this->getCustomerService()->getAddresses($accessToken, $vendorId);
 
-        return new JsonResponse($serializer->normalize($addresses)['items']);
+        return new JsonResponse($serializer->normalize($addresses));
     }
 
     /**
-     * @Route("/customer/{customerId}/address/{id}", name="customer_address_find_one", options={"expose"=true}, condition="request.isXmlHttpRequest()")
+     * @Route("/address/{id}", name="api_customers_address_find_one")
      * @Method({"GET"})
      *
      * @param Request $request
-     * @param $id
+     * @param int $customerId
+     * @param int $id
      *
      * @return JsonResponse
      */
-    public function findOneAction(Request $request, $id)
+    public function findOneAction(Request $request, $customerId, $id)
     {
+        $this->isCustomerAllowed($customerId);
+
         $vendorId = $request->query->get('vendorId');
 
         $serializer = $this->getSerializer();
@@ -71,16 +75,19 @@ class CustomerAddressController extends BaseController
     }
 
     /**
-     * @Route("/customer/{customerId}/address/{id}", name="customer_address_update", options={"expose"=true}, condition="request.isXmlHttpRequest()")
+     * @Route("/address/{id}", name="api_customers_address_update")
      * @Method({"PUT"})
      *
      * @param Request $request
-     * @param $id
+     * @param int $customerId
+     * @param int $id
      *
      * @return JsonResponse
      */
-    public function updateAction(Request $request, $id)
+    public function updateAction(Request $request, $customerId, $id)
     {
+        $this->isCustomerAllowed($customerId);
+
         $data = $this->decodeJsonContent($request);
         $accessToken = $this->getToken()->getAccessToken();
         $address = $this->getSerializer()->denormalizeCustomerAddress($data);
@@ -95,16 +102,18 @@ class CustomerAddressController extends BaseController
     }
 
     /**
-     * @Route("/customer/{customerId}/address/{id}", name="customer_address_delete", options={"expose"=true}, condition="request.isXmlHttpRequest()")
+     * @Route("/address/{id}", name="api_customers_address_delete")
      * @Method({"DELETE"})
      *
-     * @param Request $request
-     * @param $id
+     * @param int $customerId
+     * @param int $id
      *
      * @return JsonResponse
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction($customerId, $id)
     {
+        $this->isCustomerAllowed($customerId);
+
         $accessToken = $this->getToken()->getAccessToken();
 
         try {
@@ -117,15 +126,18 @@ class CustomerAddressController extends BaseController
     }
 
     /**
-     * @Route("/customer/{customerId}/address", name="customer_address_create", options={"expose"=true}, condition="request.isXmlHttpRequest()")
+     * @Route("/address", name="api_customers_address_create")
      * @Method({"POST"})
      *
      * @param Request $request
+     * @param int $customerId
      *
      * @return JsonResponse
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, $customerId)
     {
+        $this->isCustomerAllowed($customerId);
+
         $vendorId    = $request->request->get('vendor_id');
         $serializer = $this->getSerializer();
         $token = $this->getToken();
@@ -136,25 +148,20 @@ class CustomerAddressController extends BaseController
         /** @var Address $address */
         $address = $serializer->denormalize($data, Address::class);
         try {
-            $address = $this->getCustomerService()->findAddressOrCreate($address, $accessToken);
+            $address = $this->getCustomerService()->create($address, $accessToken);
         } catch (ApiErrorException $e) {
             return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
         }
 
-        return new RedirectResponse(
-            $this->generateUrl(
-                'customer_address_find_one',
-                ['customerId' => 'me', 'vendorId' => $vendorId, 'id' => $address->getId()]
-            )
+        $url = $this->generateUrl(
+            'api_customers_address_find_one',
+            ['customerId' => $customerId, 'vendorId' => $vendorId, 'id' => $address->getId()],
+            UrlGeneratorInterface::ABSOLUTE_URL
         );
-    }
 
-    /**
-     * @return Serializer
-     */
-    private function getSerializer()
-    {
-        return $this->get('volo_frontend.api.serializer');
+        return new JsonResponse($this->getSerializer()->normalize($address), Response::HTTP_CREATED, [
+            'Location' => $url
+        ]);
     }
 
     /**
@@ -163,13 +170,5 @@ class CustomerAddressController extends BaseController
     private function getCustomerService()
     {
         return $this->get('volo_frontend.service.customer');
-    }
-
-    /**
-     * @return Token
-     */
-    private function getToken()
-    {
-        return $this->get('security.token_storage')->getToken();
     }
 }

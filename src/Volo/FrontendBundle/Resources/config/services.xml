@@ -40,7 +40,8 @@
         <parameter key="volo_frontend.twig.customer_extension.class">Volo\FrontendBundle\Twig\CustomerExtension</parameter>
         <parameter key="volo_frontend.service.wti.class">Volo\FrontendBundle\Service\WTIService</parameter>
         <parameter key="volo_frontend.event_listener.coming_soon_listener.class">Volo\FrontendBundle\EventListener\ComingSoonListener</parameter>
-        <parameter key="volo_frontend.event_listener.login_listener.class">Volo\FrontendBundle\EventListener\LoginListener</parameter>
+        <parameter key="volo_frontend.security.ajax_authentication_success_handler.class">Volo\FrontendBundle\Security\AjaxAuthenticationSuccessListener</parameter>
+        <parameter key="volo_frontend.security.ajax_authentication_failure_handler.class">Volo\FrontendBundle\Security\AjaxAuthenticationFailureListener</parameter>
     </parameters>
 
     <services>
@@ -203,9 +204,10 @@
             <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="255" />
         </service>
 
-        <service id="volo_frontend.event_listener.login_listener" class="%volo_frontend.event_listener.login_listener.class%">
+        <service id="volo_frontend.security.ajax_authentication_success_handler"
+                 class="%volo_frontend.security.ajax_authentication_success_handler.class%"
+                 parent="security.authentication.success_handler">
             <argument type="service" id="volo_frontend.service.customer"/>
-            <tag name="kernel.event_listener" event="security.interactive_login" method="onSecurityInteractiveLogin" priority="255" />
         </service>
     </services>
 </container>

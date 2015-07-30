@@ -484,6 +484,17 @@ textarea.checkout__step__item-textarea {
   display: block;
 }
 
+.checkout__delivery-information__edit-link {
+  position: absolute;
+  right: 30px;
+  top: 10px;
+  font-size: 16px;
+  display: none;
+}
+.checkout__delivery-information__addresses:hover .checkout__delivery-information__edit-link {
+  display: block;
+}
+
 // -------------------------- CHECKOUT DELIVERY INFORMATION END --------------------------
 
 

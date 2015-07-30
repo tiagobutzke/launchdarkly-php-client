@@ -34,6 +34,7 @@
     "jquery": "2.1.4",
     "cookies-js": "~1.2.1",
     "promise-polyfill": "~2.1.0",
-    "jquery.serializeJSON": "~2.6.1"
+    "jquery.serializeJSON": "~2.6.1",
+    "backbone.localStorage": "~1.1.16"
   }
 }

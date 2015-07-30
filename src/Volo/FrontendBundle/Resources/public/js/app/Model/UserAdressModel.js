@@ -32,25 +32,22 @@ VOLO.UserAddressModel = Backbone.Model.extend({
 VOLO.UserAddressCollection = Backbone.Collection.extend({
     model: VOLO.UserAddressModel,
     comparator: 'id',
-
-    initialize: function () {
+    initialize: function (data, options) {
         _.bindAll(this);
+        this.isLocalStorageEnabled = options.customer.isGuest;
+        this.customerId = options.customer.id;
+    },
+
+    localStorage: function () {
+        if (this.isLocalStorageEnabled) {
+            return new Backbone.LocalStorage("UserAddressCollection");
+        }
+
+        return false;
     },
 
     url: function() {
-        return Routing.generate('customer_address_list', {customerId: 'me'});
-    },
-
-    findSimilar: function (address) {
-        return this.findWhere({
-            address_line1: address.address_line1,
-            address_line2: address.address_line2,
-            city: address.city,
-            city_id: address.city_id,
-            postcode: address.postcode,
-            delivery_instructions: '' === address.delivery_instructions ? null : address.delivery_instructions,
-            company: '' === address.company ? null : address.company
-        });
+        return Routing.generate('api_customers_address_list', {customerId: this.customerId});
     },
 
     filterByCity: function (currentCity) {

@@ -59,10 +59,13 @@ var CheckoutModel = Backbone.Model.extend({
         return this.isValid() && !this.get('placing_order');
     },
 
-    placeOrder: function (vendorCode, vendorId) {
+    placeOrder: function (vendorCode, vendorId, customer, address, isSubscribedNewsletter) {
         var data = {
             expected_total_amount: this.cartModel.getCart(vendorId).get('total_value'),
-            payment_type_id: this.get('payment_type_id')
+            payment_type_id: this.get('payment_type_id'),
+            customer: customer.toJSON(),
+            address: address.toJSON(),
+            isSubscribedNewsletter: isSubscribedNewsletter
         };
 
         this.trigger('payment:attempt_to_pay', {

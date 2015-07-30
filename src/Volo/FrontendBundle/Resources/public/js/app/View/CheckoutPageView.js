@@ -15,21 +15,26 @@ var CheckoutPageView = Backbone.View.extend({
         this.domObjects = {};
         this.domObjects.$header = options.$header;
         this.configuration = options.configuration;
+        this.customerModel = options.customerModel;
+        this.userAddressCollection = options.userAddressCollection;
+        this.contactInformationView = new VOLO.CheckoutContactInformationView({
+            el: this.$('.checkout__contact-information'),
+            customerModel: this.customerModel,
+            userAddressCollection: this.userAddressCollection
+        });
+        this.timePickerView = new TimePickerView({
+            model: options.cartModel,
+            vendor_id: this.vendorId
+        });
 
-        console.log('is guest user', this.$el.data().is_guest_user);
+        console.log('is guest user ', this.customerModel.isGuest);
+        this.model.set('is_guest_user', this.customerModel.isGuest);
 
-        this.model.set('is_guest_user', this.$el.data().is_guest_user);
-
-        this.listenTo(this.model, 'change:address_id', this.render, this);
-        this.listenTo(this.model, 'change:credit_card_id', this.render, this);
-        this.listenTo(this.model, 'change:adyen_encrypted_data', this.render, this);
-        this.listenTo(this.model, 'change:payment_type_id', this.render, this);
-        this.listenTo(this.model, 'change:payment_type_code', this.render, this);
-        this.listenTo(this.model, 'change:cart_dirty', this.render, this);
-        this.listenTo(this.model, 'change:placing_order', this.render, this);
+        this.listenTo(this.model, 'change', this.render, this);
 
         this.listenTo(this.model, 'payment:success', this.handlePaymentSuccess, this);
         this.listenTo(this.model, 'payment:error', this.handlePaymentError, this);
+        this.listenTo(this.userAddressCollection, 'update', this.renderContactInformationStep);
     },
 
     render: function () {
@@ -37,12 +42,25 @@ var CheckoutPageView = Backbone.View.extend({
         var contactFormVisible = this.$('#contact-information-form').is(':visible');
 
         console.log('CheckoutPageView:render', this.model.isValid());
-        this.$('#checkout-finish-and-pay-button').toggleClass('button--disabled', !this.model.canBeSubmitted() || addressFormVisible || contactFormVisible);
+        this.$('#checkout-finish-and-pay-button').toggleClass('button--disabled', this.userAddressCollection.length > 0 && !this.model.canBeSubmitted() || addressFormVisible || contactFormVisible);
+        this.renderContactInformationStep();
+
+        this.timePickerView.setElement(this.$('.checkout__time-picker'));
+        this.timePickerView.render();
+
+        return this;
+    },
+
+    renderContactInformationStep: function () {
+        console.log('renderContactInformationStep', this.cid);
+        this.contactInformationView.render();
     },
 
     unbind: function () {
         this.stopListening();
         this.undelegateEvents();
+        this.contactInformationView.unbind();
+        this.timePickerView.unbind();
     },
 
     _openContactInformationForm: function() {
@@ -58,16 +76,12 @@ var CheckoutPageView = Backbone.View.extend({
     },
 
     _submitOrder: function () {
+        var isSubscribedNewsletter = this.contactInformationView.isNewsletterSubscriptionChecked(),
+            address = this.userAddressCollection.get(this.model.get('address_id'));
+
         if (this.$('#delivery-information-form-button').is(':visible')) {
             this.$('#error-message-delivery-not-saved').removeClass('hide');
             this._scrollToError(this.$('#checkout-delivery-information-address').offset().top);
-
-            return false;
-        }
-
-        if (this.$('#contact-information-form').is(':visible')) {
-            this.$('#error_msg_contact_not_saved').removeClass('hide');
-            this._scrollToError(this.$('.checkout__contact-information').offset().top);
 
             return false;
         }
@@ -78,7 +92,14 @@ var CheckoutPageView = Backbone.View.extend({
 
         this.$('#error-message-delivery-not-saved').addClass('hide');
         this.spinner.spin(this.$('#checkout-finish-and-pay-button')[0]);
-        this.model.placeOrder(this.vendorCode, this.vendorId);
+
+        //var address = this.userAddressCollection.get(this.model.get('address_id'));
+        this.model.placeOrder(this.vendorCode, this.vendorId, this.customerModel, address, isSubscribedNewsletter);
+
+        this.trigger('validationView:validateSuccessful', {
+            newsletterSignup: isSubscribedNewsletter
+        });
+
         this.$('.form__error-message').addClass('hide');
     },
 
@@ -112,10 +133,16 @@ var CheckoutPageView = Backbone.View.extend({
     },
 
     handlePaymentError: function (data) {
+        var exists = _.get(data, 'exists', {exists: false});
         this.$('.form__error-message').removeClass('hide');
 
-        if (_.isObject(data) && _.isString(data.error.errors.message)) {
+        if (_.isObject(data) && _.isString(_.get(data, 'error.errors.message'))) {
             this.$('.form__error-message').html(data.error.errors.message);
+        } else if (exists) {
+            this.contactInformationView.renderExistingUser();
+        } else {
+            alert('500 error');
+            console.log(data);
         }
         this.spinner.stop();
     },

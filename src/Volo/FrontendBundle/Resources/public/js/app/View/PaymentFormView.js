@@ -1,10 +1,13 @@
 var PaymentFormView = Backbone.View.extend({
-    initialize: function() {
+    initialize: function(options) {
         _.bindAll(this);
+
+        this.customerModel = options.customerModel;
 
         this._fillName();
         this._initPaymentFormating();
         this._adyenPublicKey = this.$el.data('adyen_public_key');
+        this.listenTo(this.customerModel, 'change', this._fillName);
     },
 
     events: {
@@ -38,12 +41,7 @@ var PaymentFormView = Backbone.View.extend({
     },
 
     _fillName: function() {
-        // TODO check if this code works and is still needed
-        var name = $('#checkout-contact-information .checkout__step__item-content div')[0];
-
-        if (name) {
-            this.$('#checkout-adyen-encrypted-form-holder-name').val(name.textContent);
-        }
+        this.$('#checkout-adyen-encrypted-form-holder-name').val(this.customerModel.getFullName());
     },
 
     _fillExpiryForms: function(e) {

@@ -63,6 +63,7 @@ module.exports = function (grunt) {
         'web/thumbor/configuration.js',
         'web/bower_components/lodash/lodash.js',
         'web/bower_components/backbone/backbone.js',
+        'web/bower_components/backbone.localStorage/backbone.localStorage.js',
         'web/bower_components/geocomplete/jquery.geocomplete.js',
         'web/bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/modal.js',
         'web/bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/tooltip.js',

@@ -114,7 +114,13 @@ class CustomerService
         /** @var Token $token */
         $token = $this->tokenStorage->getToken();
         $customer = $this->serializer->denormalizeCustomer($customerParameters);
-        $validPhoneNumber = $this->validatePhoneNumber($customer->getMobileNumber());
+
+        $mobileNumber = $customer->getMobileNumber();
+        if ($customer->getMobileCountryCode()) {
+            $mobileNumber = sprintf('+%d%d', $customer->getMobileCountryCode(), $customer->getMobileNumber());
+        }
+
+        $validPhoneNumber = $this->validatePhoneNumber($mobileNumber);
         $this->setParsedMobileNumber($customer, $validPhoneNumber);
 
         $authenticatedCustomer = $this->provider->updateCustomer($token->getAccessToken(), $customer);
@@ -139,7 +145,7 @@ class CustomerService
      *
      * @return PhoneNumber
      */
-    protected function validatePhoneNumber($mobileNumber)
+    public function validatePhoneNumber($mobileNumber)
     {
         $parsedNumber = $this->phoneService->parsePhoneNumber($mobileNumber);
         $this->phoneService->validateNumber($parsedNumber);
@@ -209,43 +215,27 @@ class CustomerService
      *
      * @return Address
      */
-    public function findAddressOrCreate(Address $address, AccessToken $accessToken)
+    public function create(Address $address, AccessToken $accessToken)
     {
-        /** @var AddressesCollection $customerAddress */
-        $customerAddresses = $this->provider->getAddresses($accessToken)->getItems();
-        if ($customerAddresses->isAlreadySaved($address)) {
-            return $customerAddresses->findSimilar($address);
-        }
-
         return $this->provider->createAddress($accessToken, $address);
     }
 
     /**
-     * @param $address
-     * @param $accessToken
-     *
-     * @return Address
-     */
-    public function findAddressOrCreateByArray(array $address,AccessToken $accessToken)
-    {
-        /** @var Address $address */
-        $address = $this->serializer->denormalize($address, Address::class);
-
-        return $this->findAddressOrCreate($address, $accessToken);
-    }
-
-    /**
-     * @param SessionInterface $session
+     * @param array $data
      * @param AccessToken $accessToken
      */
-    public function saveUserAddressFromSession(SessionInterface $session, AccessToken $accessToken)
+    public function saveUserAddressFromSession(array $data, AccessToken $accessToken)
     {
-        $vendorCode = $session->get(CheckoutController::SESSION_CURRENT_VENDOR_TEMPLATE);
-        if ($vendorCode) {
-            $key = sprintf(CheckoutController::SESSION_DELIVERY_KEY_TEMPLATE, $vendorCode);
-            if ($session->has($key)) {
-                $this->findAddressOrCreateByArray($session->get($key), $accessToken);
-            }
+        $customerAddresses = $this->getAddresses($accessToken);
+
+        /** @var Address $address */
+        $address = $this->serializer->denormalize($data, Address::class);
+
+        if ($customerAddresses->isAlreadySaved($address)) {
+            $address = $customerAddresses->findSimilar($address);
+            $this->updateAddress($address, $accessToken);
+        } else {
+            $this->create($address, $accessToken);
         }
     }
 

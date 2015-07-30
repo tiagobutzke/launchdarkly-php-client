@@ -45,9 +45,9 @@ class CustomerController extends BaseController
 
                 $this->get('security.token_storage')->setToken($token);
 
-                $customerService->saveUserAddressFromSession($request->getSession(), $token->getAccessToken());
-
-                return $this->redirectToRoute('home');
+                return new JsonResponse([
+                    'url' => $this->generateUrl('home')
+                ]);
             } catch (PhoneNumberValidationException $e) {
                 $errorMessages[] = $e->getMessage();
                 $statusCode = Response::HTTP_BAD_REQUEST;

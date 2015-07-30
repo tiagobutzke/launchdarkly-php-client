@@ -1,16 +1,19 @@
 var ExistingUserLoginView = Backbone.View.extend({
-    initialize: function () {
+    initialize: function (options) {
         _.bindAll(this);
         var queryParams = {};
         if (this.$el.data('username')) {
             queryParams.username = this.$el.data('username');
+        } else if (options.username) {
+            queryParams.username = options.username;
         }
         if (this.$el.data('error-message-key')) {
             queryParams.error = this.$el.data('error-message-key');
         }
         this.loginRegistrationView = new LoginRegistrationView({
-            el: '#login-registration-modal',
-            queryParams: queryParams
+            el: '#login-existing-user-modal',
+            queryParams: queryParams,
+            address: options.address
         });
 
         this.listenTo(this.loginRegistrationView, 'loginRegistrationView:login', function(data) {

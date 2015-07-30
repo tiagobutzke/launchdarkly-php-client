@@ -1,7 +1,9 @@
 var LoginButtonView = Backbone.View.extend({
-    initialize: function () {
+    initialize: function (options) {
         console.log('LoginButtonView.initialize ', this.cid);
         _.bindAll(this);
+
+        this.customerModel = options.customerModel;
 
         this.loginRegistrationView = new LoginRegistrationView({
             el:'#login-registration-modal'
@@ -23,8 +25,8 @@ var LoginButtonView = Backbone.View.extend({
         this.loginRegistrationView.render();
     },
 
-    showRegistrationModal: function(data) {
-        this.loginRegistrationView.renderRegistration(data);
+    showRegistrationModal: function() {
+        this.loginRegistrationView.renderRegistration(this.customerModel);
     },
 
     showModalResetPassword: function(code) {

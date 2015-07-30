@@ -44,16 +44,10 @@ class OrderController extends Controller
         if ($request->isXmlHttpRequest() && $request->query->get('partial')) {
             $viewName = 'VoloFrontendBundle:Order:tracking_steps.html.twig';
         }
-        /** @var GuestCustomer $guestCustomer */
-        $guestCustomer = $session->get(
-            sprintf(CheckoutController::SESSION_GUEST_CUSTOMER_KEY_TEMPLATE, $orderPayment->getVendorCode())
-        );
-        $customer = $guestCustomer ? $guestCustomer->getCustomer() : new GuestCustomer();
 
         $content = $this->renderView($viewName, [
             'order' => $orderPayment,
-            'status' => $status,
-            'customer' => $customer,
+            'status' => $status
         ]);
 
         return new Response($content);

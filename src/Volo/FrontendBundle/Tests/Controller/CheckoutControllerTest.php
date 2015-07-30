@@ -16,7 +16,7 @@ class CheckoutControllerTest extends VoloTestCase
         $session = $client->getContainer()->get('session');
         $client->getContainer()->get('volo_frontend.service.cart_manager')->saveCart($session, $vendorId, $this->getCart());
         
-        $client->request('GET', sprintf('/checkout/%s/delivery', $vendorCode));
+        $client->request('GET', sprintf('/checkout/%s/payment', $vendorCode));
 
         $this->isSuccessful($client->getResponse());
     }

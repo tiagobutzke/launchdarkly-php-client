@@ -44,7 +44,7 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
             this.trigger('submit:successful_before', {
                 deliveryTime: $('#order-delivery-time').val()
             });
-            this.$('#delivery_information_form_button').click();
+            this.$('#delivery-information-form-button').click();
         }.bind(this));
 
         validate.fail(function() {
@@ -58,9 +58,9 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
         var doValidate = this._doValidate();
 
         doValidate.then(function() {
-            this.$("#delivery_information_form_button").removeClass('button--disabled');
+            this.$("#delivery-information-form-button").removeClass('button--disabled');
         }.bind(this), function() {
-            this.$("#delivery_information_form_button").addClass('button--disabled');
+            this.$("#delivery-information-form-button").addClass('button--disabled');
         }.bind(this));
     },
 
@@ -72,11 +72,11 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
 
         doValidate.then(
             function() {
-                this.$("#delivery_information_form_button").removeClass('button--disabled');
+                this.$("#delivery-information-form-button").removeClass('button--disabled');
             }.bind(this),
             function(invalidObj) {
                 if (invalidObj) {
-                    this.$("#delivery_information_form_button").addClass('button--disabled');
+                    this.$("#delivery-information-form-button").addClass('button--disabled');
                 }
 
                 if (invalidObj && invalidObj[target.name] && value !== '') {
@@ -128,14 +128,14 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
 
     _geoCodeAndValidateDelivery: function() {
         return this._geocodePostalCode({
-            city: this.$('#city').val(),
-            postcode: this.$('#postal_index_form_input').val()
+            city: this.$('#delivery-information-city').val(),
+            postcode: this.$('#delivery-information-postal-index').val()
         });
     },
 
     isValidForm: function() {
-        return this.$('#address_line1').val().length > 0 && this.$('#address_line2').val().length > 0 &&
-            this.$('#postal_index_form_input').val().length > 0 && this.$('#city').val().length > 0;
+        return this.$('#delivery-information-address-line1').val().length > 0 && this.$('#delivery-information-address-line2').val().length > 0 &&
+            this.$('#delivery-information-postal-index').val().length > 0 && this.$('#delivery-information-city').val().length > 0;
     },
 
     _geocodePostalCode: function(locationData) {
@@ -171,17 +171,17 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
         if (!this.isValidForm()) return;
 
         this._postalCodeGeocodingService.geocodeAddress({
-            address: this.$('#address_line1').val() + ' ' + this.$('#address_line2').val() + ', ' + this.$('#postal_index_form_input').val() + ', ' + this.$('#city').val(),
+            address: this.$('#delivery-information-address-line1').val() + ' ' + this.$('#delivery-information-address-line2').val() + ', ' + this.$('#delivery-information-postal-index').val() + ', ' + this.$('#delivery-information-city').val(),
 
             success: function(result) {
                 console.log(result);
-                this.$("#address_latitude").val(result.lat());
-                this.$("#address_longitude").val(result.lng());
+                this.$("#delivery-information-address-latitude").val(result.lat());
+                this.$("#delivery-information-address-longitude").val(result.lng());
             }.bind(this),
 
             error: function() {
-                this.$("#address_latitude").val('');
-                this.$("#address_longitude").val('');
+                this.$("#delivery-information-address-latitude").val('');
+                this.$("#delivery-information-address-longitude").val('');
             }.bind(this)
         });
     },
@@ -189,7 +189,7 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
     _validateDelivery: function (locationData) {
         var deferred = $.Deferred(),
             deliveryCheckData = {
-                vendorId: this.$('#postal_index_form_input').data('vendor_id'),
+                vendorId: this.$('#delivery-information-postal-index').data('vendor_id'),
                 latitude: locationData.lat,
                 longitude: locationData.lng
             };

@@ -52,10 +52,11 @@ var LoginRegistrationView = Backbone.View.extend({
         console.log('LoginRegistrationView.initialize ', this.cid);
         _.bindAll(this);
         this.queryParams = options.queryParams || {};
+        this.address = options.address;
     },
 
     render: function() {
-        this.$('.modal-content').load(Routing.generate('login', this.queryParams), function(){
+        this.$('.modal-content').load(Routing.generate('login', this.queryParams), function() {
             this.$el.modal();
             this._bindLoginView();
         }.bind(this));
@@ -63,16 +64,16 @@ var LoginRegistrationView = Backbone.View.extend({
         return this;
     },
 
-    renderRegistration: function(data) {
-        this.$('.modal-content').load(Routing.generate('customer.create'), function(){
+    renderRegistration: function(customer) {
+        this.$('.modal-content').load(Routing.generate('customer.create'), function() {
             this.$el.modal();
             this._bindRegisterValidationView();
 
-            if (data) {
-                this.$('#contact-information-first-name').val(data.first_name);
-                this.$('#contact-information-last-name').val(data.last_name);
-                this.$('#contact-information-email').val(data.email);
-                this.$('#contact-information-mobile-number').val(data.mobile_number);
+            if (customer) {
+                this.$('#contact-information-first-name').val(customer.get('first_name'));
+                this.$('#contact-information-last-name').val(customer.get('last_name'));
+                this.$('#contact-information-email').val(customer.get('email'));
+                this.$('#contact-information-mobile-number').val(customer.getFullMobileNumber());
             }
         }.bind(this));
 
@@ -198,6 +199,8 @@ var LoginRegistrationView = Backbone.View.extend({
         event.preventDefault();
         var $form = this.$('.registration-form');
         this._handleFormSubmit($form, this.$('.modal-content'));
+
+        return false;
     },
 
     _closeLoginRegistrationOverlay: function() {
@@ -212,19 +215,22 @@ var LoginRegistrationView = Backbone.View.extend({
             type: $form.attr('method'),
             url: $form.attr('action'),
             data: $form.serialize(),
-
-            beforeSend: function() {
+            dataType: 'json',
+            beforeSend: function(xhr) {
                 $(target).addClass('modal-content--loading');
                 spinner.spin(target);
                 $form.find('button').prop("disabled", true);
-            },
-            success: function() {
+                if (this.address) {
+                    xhr.setRequestHeader('FD-save-address', JSON.stringify(this.address.toJSON()));
+                }
+            }.bind(this),
+            success: function(response) {
                 this._unbindLoginView();
                 this._unbindRegisterValidationView();
 
-                Turbolinks.visit(window.location.href);
-
                 this._fireFormSubmit($form, true);
+
+                window.location.replace(response.url);
             }.bind(this),
             error: function (data) {
                 spinner.stop();

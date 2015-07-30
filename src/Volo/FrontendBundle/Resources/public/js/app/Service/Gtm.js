@@ -34,7 +34,7 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
 
         if (_.isObject(this.checkoutInformationValidationFormView)) {
             this.listenTo(
-                this.checkoutInformationValidationFormView,
+                this.checkoutPageView,
                 'validationView:validateSuccessful',
                 this.fireCheckoutContactDetailsSet
             );

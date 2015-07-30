@@ -3,7 +3,15 @@ var PaymentTypeView = Backbone.View.extend({
         _.bindAll(this);
 
         this.checkoutModel = options.checkoutModel;
-        this.$('.checkout__payment__wrapper').first().click();
+
+        if ($('#checkout-payment-form').length > 0) {
+            this.paymentFormView = new PaymentFormView({
+                el: this.$('#checkout-payment-form'),
+                model: this.checkoutModel,
+                customerModel: options.customerModel
+            });
+        }
+        this.$('.checkout__payment-option__wrapper').first().click();
     },
 
     events: {
@@ -17,6 +25,7 @@ var PaymentTypeView = Backbone.View.extend({
 
     unbind: function() {
         this.undelegateEvents();
+        this.paymentFormView.unbind();
     },
 
     _toggleCreditCardHelp: function() {
