@@ -182,7 +182,9 @@ module.exports = function (grunt) {
     config.jshint = {
         options: {
             force: true,
-            ignores: jsSources.allLibs
+            ignores: jsSources.allLibs,
+            expr: true,
+            debug: debug
         },
         gruntfile: {
             src: 'Gruntfile.js'
