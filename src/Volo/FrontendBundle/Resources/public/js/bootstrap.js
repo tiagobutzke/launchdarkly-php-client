@@ -103,7 +103,7 @@ VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel) {
         });
     }
     if ($('#delivery_information_form').length > 0) {
-        views.checkoutDeliveryValidationView = new CheckoutDeliveryValidationView({
+        views.checkoutDeliveryValidationView = new VOLO.CheckoutDeliveryValidationView({
             el: '#delivery_information_form',
             deliveryCheck: deliveryCheck,
             locationModel: locationModel,

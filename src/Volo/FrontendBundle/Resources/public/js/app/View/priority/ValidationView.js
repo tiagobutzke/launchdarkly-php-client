@@ -5,12 +5,8 @@ var ValidationView = Backbone.View.extend({
     _defaultConstraints: {},
 
     events: {
-        'blur input[name]': '_validateField',
-        'blur select[name]': '_validateField',
-
-        'keyup input[name]': '_hideMessage',
-        'keyup select[name]': '_hideMessage',
-
+        'blur input[name], select[name]': '_validateField',
+        'keyup input[name], select[name]': '_hideMessage',
         'click button': '_validateForm'
     },
 
@@ -27,13 +23,15 @@ var ValidationView = Backbone.View.extend({
             $target = $(target),
             value = target.value || '',
             formValues = validate.collectFormValues(this.el),
-            invalidObj = validate(formValues, this.constraints);
+            doValidate = validate.async(formValues, this.constraints);
 
-        if (invalidObj && invalidObj[target.name] && value !== '') {
-            this._displayMessage(target);
-        }
+        doValidate.then($.noop, function(invalidObj) {
+            if (invalidObj && invalidObj[target.name] && value !== '') {
+                this._displayMessage(target);
+            }
 
-        $target.toggleClass(this.inputErrorClass, !!invalidObj);
+            $target.toggleClass(this.inputErrorClass, !!invalidObj);
+        }.bind(this));
     },
 
     _validateForm: function(e) {

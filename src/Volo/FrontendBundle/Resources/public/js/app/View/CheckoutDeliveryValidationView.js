@@ -1,147 +1,140 @@
-var CheckoutDeliveryValidationView = Backbone.View.extend({
-    events: {
-        "submit": '_submit',
-        'focus #postal_index_form_input': '_hideTooltip',
-        'click': '_hideTooltip',
-        'change #city, #postal_index_form_input': '_geoCodeAndValidateDelivery',
-        "blur #address_line1, #address_line2": '_geoCodeAndValidateDelivery',
-        "keyup #address_line1, #address_line2":'_validateForm'
-    },
+var VOLO = VOLO || {};
 
-    initialize: function (options) {
-        var $postalIndexFormInput = this.$('#postal_index_form_input');
-
-        _.bindAll(this);
-        // @TODO: re-enable this later when it works better
-        //this.geocodingService = options.geocodingService;
-        this.postalCodeGeocodingService = options.postalCodeGeocodingService;
-        this.vendorId = $postalIndexFormInput.data('vendor_id');
-        // @TODO: re-enable this later when it works better
-        // this.geocodingService.init(this.$('#formatted_address'), []);
-        var locationObject = {
-            latitude:  options.locationModel.get('latitude'),
-            longitude: options.locationModel.get('longitude')
-        };
-        //this.geocodingService.setLocation(locationObject);
-
-        this.locationModel = options.locationModel;
-        this.postalCodeGeocodingService.setLocation(locationObject);
-        this.deliveryCheck = options.deliveryCheck;
-        this._jsValidationView = new ValidationView({
-            el: this.el,
-            constraints: {
-                "customer_address[postcode]": {
-                    presence: true
-                },
-                "customer_address[city]": {
-                    presence: true
-                },
-                "customer_address[address_line1]": {
-                    presence: true
-                },
-                "customer_address[address_line2]": {
-                    presence: true
-                }
+VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
+    initialize: function(options) {
+        ValidationView.prototype.initialize.apply(this, arguments);
+        this.constraints = {
+            "customer_address[postcode]": {
+                presence: true,
+                deliveryValidation: true
+            },
+            "customer_address[city]": {
+                presence: true
+            },
+            "customer_address[address_line1]": {
+                presence: true
+            },
+            "customer_address[address_line2]": {
+                presence: true
             }
-        });
-        $postalIndexFormInput.tooltip({
-            placement: 'top',
-            html: true,
-            trigger: 'manual'
-        });
-        this.tooltipAlignLeft($postalIndexFormInput);
-        // @TODO: re-enable this later when it works better
-        //this.listenTo(this.geocodingService, 'autocomplete:place_changed', this.onPlaceChanged);
-        this._geoCodeAndValidateDelivery();
+        };
+
+        this._deliveryCheck = options.deliveryCheck;
+        this._locationModel = options.locationModel;
+        this._postalCodeGeocodingService = options.postalCodeGeocodingService;
+
+        this._createDeliveryAsyncValidation();
+        this._toggleContinueButton();
     },
 
-    _geoCodeAndValidateDelivery: function () {
-        this._geocodePostalCode({
-            city: this.$('#city').val(),
-            postcode: this.$('#postal_index_form_input').val()
+    events: function() {
+        return _.extend({}, ValidationView.prototype.events, {
+            'click button': '_submit'
         });
     },
 
-    unbind: function () {
-        this._jsValidationView.unbind();
-        //this.geocodingService.removeListeners(this.$('#postal_index_form_input'));
-        this.stopListening();
-        this.undelegateEvents();
-    },
+    _submit: function() {
+        var validate = this._validateForm();
+        if (this._canSubmit) {
+            return true;
+        }
 
-    _submit: function () {
-        var submitAllowed = $(document.activeElement).attr('id') !== 'formatted_address' &&
-            !this.$("#delivery_information_form_button").attr('disabled');
-
-        if (submitAllowed) {
-            this.$('#error_msg_delivery_not_saved').addClass('hide');
-
+        validate.done(function() {
+            this._canSubmit = true;
             this.trigger('submit:successful_before', {
                 deliveryTime: $('#order-delivery-time').val()
             });
+            this.$('#delivery_information_form_button').click();
+        }.bind(this));
+
+        validate.fail(function() {
+            this._canSubmit = false;
+        }.bind(this));
+
+        return false;
+    },
+
+    _toggleContinueButton: function() {
+        var doValidate = this._doValidate();
+
+        doValidate.then(function() {
+            this.$("#delivery_information_form_button").removeClass('button--disabled');
+        }.bind(this), function() {
+            this.$("#delivery_information_form_button").addClass('button--disabled');
+        }.bind(this));
+    },
+
+    _validateField: function (e) {
+        var target = e.target,
+            $target = $(target),
+            value = target.value || '',
+            doValidate = this._doValidate();
+
+        doValidate.then(
+            function() {
+                this.$("#delivery_information_form_button").removeClass('button--disabled');
+            }.bind(this),
+            function(invalidObj) {
+                if (invalidObj) {
+                    this.$("#delivery_information_form_button").addClass('button--disabled');
+                }
+
+                if (invalidObj && invalidObj[target.name] && value !== '') {
+                    this._displayMessage(target);
+                }
+
+                $target.toggleClass(this.inputErrorClass, !!invalidObj);
+            }.bind(this));
+    },
+
+    _validateForm: function() {
+        var doValidate = this._doValidate(),
+            deferred = $.Deferred();
+
+        doValidate.then(deferred.resolve, function(errors) {
+            _.each(this.$("input[name], select[name]"), function(input) {
+                if (errors[input.name]) {
+                    this._displayMessage(input);
+                }
+            }, this);
+
+            deferred.reject();
+        }.bind(this));
+
+        return deferred;
+    },
+
+    _doValidate: function() {
+        var formValues = validate.collectFormValues(this.el);
+
+        return validate.async(formValues, this.constraints);
+    },
+
+    _createDeliveryAsyncValidation: function() {
+        if (!validate.Promise) {
+            validate.Promise = window.Promise;
         }
 
-        return submitAllowed;
+        if (!validate.validators.deliveryValidation) {
+            validate.validators.deliveryValidation = function() {
+                return new Promise(function(resolve, reject) {
+                    this._geoCodeAndValidateDelivery().then(function(res) {
+                        if (res) {
+                            resolve();
+                        } else {
+                            reject('delivery not valid');
+                        }
+                    });
+                }.bind(this));
+            }.bind(this);
+        }
     },
 
-    onPlaceChanged: function (locationMeta) {
-        var data = this._getDataFromMeta(locationMeta);
-        var addressLine1 = data.street + ' ' + data.building;
-
-        this._hideTooltip();
-
-        this.$("#city").val(data.city);
-        this.$('#postal_index_form_input').val(data.postcode);
-        this.$('#formatted_address').val($.trim(addressLine1));
-        this.$('#address_line1').val(data.street);
-        this.$('#address_line2').val(data.building);
-        this.$('#address_latitude').val(data.lat);
-        this.$('#address_longitude').val(data.lng);
-        this._geocodePostalCode(data);
-    },
-
-    _getDataFromMeta: function (locationMeta) {
-        console.log(locationMeta);
-        var postCode = (locationMeta.postalCode && locationMeta.postalCode.value) || this.$('#postal_index_form_input').val();
-
-        var formattedAddress = postCode + ", " + locationMeta.city;
-
-        return {
-            formattedAddress: formattedAddress,
-            postcode: postCode,
-            building: locationMeta.building,
-            street: locationMeta.street,
-            lat: locationMeta.lat,
-            lng: locationMeta.lng,
-            city: locationMeta.city
-        };
-    },
-
-    _hideTooltip: function () {
-        this.$('#postal_index_form_input').tooltip('hide');
-    },
-
-    _showInputPopup: function (text, isBlocking) {
-        this.$('#postal_index_form_input').attr({
-            'data-is-blocking-popup': _.isUndefined(isBlocking) ? false : isBlocking,
-            'title': text
-        }).tooltip('fixTitle');
-
-        this.$('#postal_index_form_input').tooltip('show');
-    },
-
-    _toggleSubmitButtonDisabled: function(disabledState) {
-        console.log('_toggleSubmitButtonDisabled ', disabledState);
-        this.$("#delivery_information_form_button").attr('disabled', disabledState);
-    },
-
-    _validateAddressFields: function () {
-        var street = this.$('#address_line1').val(),
-            houseNum = this.$('#address_line2').val(),
-            streetValid = street !== '',
-            houseNumValid = houseNum !== '';
-
-        return streetValid && houseNumValid;
+    _geoCodeAndValidateDelivery: function() {
+        return this._geocodePostalCode({
+            city: this.$('#city').val(),
+            postcode: this.$('#postal_index_form_input').val()
+        });
     },
 
     isValidForm: function() {
@@ -149,89 +142,66 @@ var CheckoutDeliveryValidationView = Backbone.View.extend({
             this.$('#postal_index_form_input').val().length > 0 && this.$('#city').val().length > 0;
     },
 
-    _validateForm: function() {
-        this._toggleSubmitButtonDisabled(!this.isValidForm());
+    _geocodePostalCode: function(locationData) {
+        var deferred = $.Deferred();
+
+        console.log('_geocodePostalCode ', this.cid, locationData);
+        this._geocodeAddress(); //todo remove this side effect
+
+        var getPostalCode = this._postalCodeGeocodingService.geocodeCenterPostalcode({
+            address: locationData.postcode + ", " + locationData.city,
+            postalCode: locationData.postcode,
+            city: locationData.city
+        });
+
+        getPostalCode.done(function(result) {
+            this._validateDelivery({lat: result.lat(), lng: result.lng()}).then(deferred.resolve);
+        }.bind(this));
+
+        getPostalCode.fail(function(results, status) {
+            if (_.isString(status) && status === 'ZERO_RESULTS') {
+                deferred.resolve(false);
+            } else {
+                this._validateDelivery({lat: this._locationModel.get('latitude'), lng: this._locationModel.get('longitude')}).done(deferred.resolve).done(function(result) {
+                    deferred.resolve(this.isValidForm() && result);
+                }.bind(this));
+            }
+        }.bind(this));
+
+        return deferred;
     },
 
     _geocodeAddress: function() {
-        this._toggleSubmitButtonDisabled(true);
-        if (!this.isValidForm()) {
-            return;
-        }
+        if (!this.isValidForm()) return;
 
-        this.postalCodeGeocodingService.geocodeAddress({
+        this._postalCodeGeocodingService.geocodeAddress({
             address: this.$('#address_line1').val() + ' ' + this.$('#address_line2').val() + ', ' + this.$('#postal_index_form_input').val() + ', ' + this.$('#city').val(),
 
-            success: function (result) {
+            success: function(result) {
                 console.log(result);
                 this.$("#address_latitude").val(result.lat());
                 this.$("#address_longitude").val(result.lng());
             }.bind(this),
 
-            error: function () {
+            error: function() {
                 this.$("#address_latitude").val('');
                 this.$("#address_longitude").val('');
             }.bind(this)
         });
     },
 
-    _geocodePostalCode: function (locationData) {
-        console.log('_geocodePostalCode ', this.cid, locationData);
-        this._geocodeAddress();
-
-        this.postalCodeGeocodingService.geocodeCenterPostalcode({
-            address: locationData.postcode + ", " + locationData.city,
-            postalCode: locationData.postcode,
-            city: locationData.city,
-
-            success: function (result) {
-                this._validateDelivery({lat: result.lat(), lng: result.lng()});
-            }.bind(this),
-
-            error: function (results, status) {
-                var postalCode;
-                if (results && results.length > 0) {
-                    postalCode = _.findWhere(results[0].address_components, {types: ['postal_code']});
-                }
-
-                if (_.isString(status) && status === 'ZERO_RESULTS') {
-                    this._showInputPopup(this.$('#postal_index_form_input').data('validation-msg'), true);
-                    this._toggleSubmitButtonDisabled(true);
-                } else if (_.get(postalCode, 'long_name') === this.locationModel.get('postcode')) {
-                    this._validateDelivery({lat: this.locationModel.get('latitude'), lng: this.locationModel.get('longitude')});
-                } else {
-                    this._toggleSubmitButtonDisabled(!this.isValidForm());
-                }
-            }.bind(this)
-        });
-    },
-
     _validateDelivery: function (locationData) {
-        if ($('#delivery-modal').hasClass('in')) {
-            return;
-        }
-
-        this._hideTooltip();
-
-        var deliveryCheckData = {
-            vendorId: this.vendorId,
-            latitude: locationData.lat,
-            longitude: locationData.lng
-        };
-        this.deliveryCheck.isValid(deliveryCheckData)
+        var deferred = $.Deferred(),
+            deliveryCheckData = {
+                vendorId: this.$('#postal_index_form_input').data('vendor_id'),
+                latitude: locationData.lat,
+                longitude: locationData.lng
+            };
+        this._deliveryCheck.isValid(deliveryCheckData)
             .done(function (resultData) {
-                if (resultData.result === true) {
-                    if (this.$('#postal_index_form_input').data('is-blocking-popup')) {
-                        this._hideTooltip();
-                    }
-                    this._toggleSubmitButtonDisabled(!this._validateAddressFields());
-                } else {
-                    this._showInputPopup(this.$('#postal_index_form_input').data('validation-msg'), true);
-                    this._toggleSubmitButtonDisabled(true);
-                }
+                deferred.resolve(!!resultData.result);
+            });
 
-            }.bind(this));
+        return deferred;
     }
 });
-
-_.extend(CheckoutDeliveryValidationView.prototype, VOLO.TooltipAlignMixin);

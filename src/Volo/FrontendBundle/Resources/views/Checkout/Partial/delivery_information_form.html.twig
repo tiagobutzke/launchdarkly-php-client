@@ -63,7 +63,7 @@
         <input id="address_longitude" name="customer_address[longitude]" type="hidden"
                value="{{ customer_address.longitude|default('') }}">
         <input type="hidden" name="customer_address[city_id]" value="{{ vendor.city.id }}">
-        <button id="delivery_information_form_button" class="button" disabled="disabled">
+        <button id="delivery_information_form_button" class="button button--disabled">
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 {% trans %}button.save{% endtrans %}
             {% else %}
@@ -72,18 +72,3 @@
         </button>
     </div>
 </form>
-<script type="text/template" id="template-delivery-modal">
-    <div class="modal fade delivery-modal" id="delivery-modal" tabindex="-1" role="dialog" aria-labelledby="deliveryForm" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="delivery-error__message">{{ "error.restaurant_does_not_deliver_this_postal_code"|trans }}</div>
-                </div>
-                <div class="modal-footer">
-                    <a class="delivery-error__find-restaurants button"><span>{{ 'link.show_restaurants_in_my_area'|trans }}</span></a>
-                </div>
-                <div class="modal-close-button"></div>
-            </div>
-        </div>
-    </div>
-</script>
