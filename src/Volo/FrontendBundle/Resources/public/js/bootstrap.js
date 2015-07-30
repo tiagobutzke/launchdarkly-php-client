@@ -334,7 +334,9 @@ VOLO.doBootstrap = function(configuration) {
             urlZipCode = window.location.search.split('zip=')[1];
 
         cartViews.cartView.render();
-        cartViews.cartView.setZipCode(urlZipCode);
+        if (urlZipCode) {
+            cartViews.cartView.setZipCode(urlZipCode);
+        }
     }
 
     if ($('.restaurants__list').length > 0) {
