@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.11.1
+
+  * SGFD-18538: zip code fix
+
 * 1.11.0
 
   * SGFD-18742: jshint update
