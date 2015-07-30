@@ -330,8 +330,11 @@ VOLO.doBootstrap = function(configuration) {
     if ($('.menu__list-wrapper').length > 0) {
         cartModel = VOLO.createCartModel(VOLO.jsonCart);
 
-        var cartViews = VOLO.createCartViews(cartModel, locationModel, VOLO.GTMServiceInstance);
+        var cartViews = VOLO.createCartViews(cartModel, locationModel, VOLO.GTMServiceInstance),
+            urlZipCode = window.location.search.split('zip=')[1];
+
         cartViews.cartView.render();
+        cartViews.cartView.setZipCode(urlZipCode);
     }
 
     if ($('.restaurants__list').length > 0) {

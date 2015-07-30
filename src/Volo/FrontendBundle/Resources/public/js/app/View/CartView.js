@@ -330,10 +330,25 @@ var CartView = Backbone.View.extend({
         this._toggleContainerVisibility();
         this._updateCartIcon();
 
+        this._initVendorGeocodingSubView();
+
+        // recalculating cart scrolling position, should be done as last thing
+        this.stickOnTopCart.init(this.$(this.stickOnTopCartTargetSelector));
+        this._updateCartHeight();
+
+        return this;
+    },
+
+    setZipCode: function (zipCode) {
+        this.vendorGeocodingSubView.setZipCode(zipCode);
+    },
+
+    _initVendorGeocodingSubView: function() {
         if (_.isObject(this.vendorGeocodingSubView)) {
             this.vendorGeocodingSubView.unbind();
             //this.vendorGeocodingSubView.remove();
         }
+
         this.vendorGeocodingSubView = new VendorGeocodingView({
             el: this.$('.vendor__geocoding__tool-box'),
             geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1]),
@@ -341,12 +356,6 @@ var CartView = Backbone.View.extend({
             modelCart: this.model.getCart(this.vendor_id),
             smallScreenMaxSize: this.smallScreenMaxSize
         });
-
-        // recalculating cart scrolling position, should be done as last thing
-        this.stickOnTopCart.init(this.$(this.stickOnTopCartTargetSelector));
-        this._updateCartHeight();
-
-        return this;
     },
 
     renderCheckoutButton: function() {

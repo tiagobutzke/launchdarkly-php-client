@@ -55,6 +55,13 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
         getLocation.fail(this._onGetLocationFail);
     },
 
+    getLocationByZipCode: function (zipCode) {
+        console.log('place_changed');
+        var getLocation = this.updateByZipCode(zipCode);
+        getLocation.done(this._onGetLocationDone);
+        getLocation.fail(this._onGetLocationFail);
+    },
+
     _onGetLocationDone: function(locationMeta) {
         this.trigger('autocomplete:place_changed', locationMeta);
     },
@@ -86,6 +93,19 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
         return deferred;
     },
 
+    /**
+     * @returns $.Deferred
+     */
+    updateByZipCode: function (zipCode) {
+        var deferred = $.Deferred();
+
+        this.serachByZipcode(zipCode)
+            .then(this._getLocationMeta, deferred.reject)
+            .done(deferred.resolve);
+
+        return deferred;
+    },
+
     _getSearchPlace: function () {
         var deferred = $.Deferred(),
             place = this.autocomplete.getPlace();
@@ -96,6 +116,29 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
         } else {
             deferred.resolve(place);
         }
+
+        return deferred;
+    },
+
+    serachByZipcode: function (zipCode) {
+        var geocoder = new google.maps.Geocoder();
+        var deferred = $.Deferred();
+
+        geocoder.geocode({
+            "address": zipCode + '',
+            componentRestrictions: {
+                country: this.locale
+            }
+        }, function (results, status) {
+            console.log(status);
+            console.log(results);
+
+            results[0].place = {
+                geometry: results[0].geometry
+            };
+
+            deferred.resolve(results[0]);
+        });
 
         return deferred;
     },
@@ -140,6 +183,7 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
     },
 
     _getLocationMetaFromGeocode: function (place) {
+        console.log('place meta ', place);
         return {
             formattedAddress: place.formatted_address,
             city: this._findCityInAddressComponents(place.address_components),

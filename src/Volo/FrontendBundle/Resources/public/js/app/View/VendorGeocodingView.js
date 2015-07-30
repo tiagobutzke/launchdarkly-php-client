@@ -53,6 +53,10 @@ var VendorGeocodingView = HomeSearchView.extend({
         }
     },
 
+    setZipCode: function(zipCode) {
+        this.geocodingService.getLocationByZipCode(zipCode);
+    },
+
     onSearchFail: function () {
         this._showInputPopup(_.template($('#template-vendor-is-deliverable-server-error').html()));
         this._enableInputNode();
@@ -100,7 +104,6 @@ var VendorGeocodingView = HomeSearchView.extend({
 
     _alarmNoPostcode: function (event) {
         if (event.validationError === 'location_not_set') {
-
             this._hideFormattedAddress();
             var $body = $('body'),
                 offset = $('.menu__blocks').offset().top - $('.header__wrapper').height();
