@@ -47,6 +47,11 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
         this._renderAddressList();
         this._renderAddNewAddressLink();
 
+        var md = new MobileDetect(window.navigator.userAgent);
+        if (md.mobile()) {
+            $('.checkout__delivery-information__delete-link').show();
+        }
+
         return this;
     },
 
@@ -217,8 +222,10 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
  */
 VOLO.UserAddressView = Backbone.View.extend({
     events: {
-        'click .checkout__delivery-information__address': '_selectAddress',
-        'click button': '_delete'
+        'click .checkout__delivery-information__item': '_selectAddress',
+        'click .checkout__delivery-information__delete-link': '_showAddressDeleteModal',
+        'click .delivery-information__delete-modal__link-no': '_hideAddressDeleteModal',
+        'click .delivery-information__delete-modal__link-yes': '_delete'
     },
 
     className: 'checkout__delivery-information__addresses',
@@ -251,8 +258,22 @@ VOLO.UserAddressView = Backbone.View.extend({
     },
 
     _selectAddress: function () {
+        $('.checkout__delivery-information__delete-modal-wrapper').addClass('hide');
         this.checkoutModel.set('address_id', this.model.id);
         this.renderActiveState();
+
+        return false;
+    },
+
+    _showAddressDeleteModal: function() {
+        $('.checkout__delivery-information__delete-modal-wrapper').addClass('hide');
+        this.$('.checkout__delivery-information__delete-modal-wrapper').removeClass('hide');
+
+        return false;
+    },
+
+    _hideAddressDeleteModal: function() {
+        this.$('.checkout__delivery-information__delete-modal-wrapper').addClass('hide');
 
         return false;
     },

@@ -1,13 +1,20 @@
 <script type="text/template" id="template-delivery-address">
-    <div class="checkout__delivery-information__addresses">
-        <div class="checkout__delivery-information__address">
-            <div><%= company %></div>
-            <div>
-                <div><%= address_line1 %> <%- address_line2 %></div>
-                <div><%- postcode %> <%- city %></div>
+    <div class="checkout__delivery-information__item">
+        <div class="hide checkout__delivery-information__delete-modal-wrapper">
+            <p class="delivery-information__delete-modal__text">{% trans %}text.delete_delivery_address{% endtrans %}</p>
+            <div class="delivery-information__delete-modal__button">
+                <a class="button button--smaller-height delivery-information__delete-modal__link-yes"><span class="button__text">{% trans %}link.text_yes{% endtrans %}</span></a>
             </div>
-            <div class="checkout__delivery-address__delivery-notes"><%= delivery_instructions %></div>
+            <div class="delivery-information__delete-modal__button">
+                <a class="button button--smaller-height delivery-information__delete-modal__link-no"><span class="button__text">{% trans %}link.text_no{% endtrans %}</span></a>
+            </div>
         </div>
-        <button class="button">Delete</button>
+        <div class="checkout__delivery-information__company"><%= company %></div>
+        <div class="checkout__delivery-information__address-line"><%= address_line1 %> <%- address_line2 %></div>
+        <div class="checkout__delivery-information__address-line"><%- postcode %> <%- city %></div>
+        <div class="checkout__delivery-information__notes"><%= delivery_instructions %></div>
+        <a class="checkout__delivery-information__delete-link">
+            <i class="icon-trash"></i>
+        </a>
     </div>
 </script>

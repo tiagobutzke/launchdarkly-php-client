@@ -78,7 +78,9 @@ a.button {
 .button--full-width {
   width: 100%;
 }
-
+.button--smaller-height {
+  height: $cta-smaller-height;
+}
 
 .button__text {
   @include vertical-center-absolute();

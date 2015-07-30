@@ -339,20 +339,6 @@ textarea.checkout__step__item-textarea {
 // -------------------------- CHECKOUT DELIVERY INFORMATION START --------------------------
 
 
-.checkout__delivery-information__addresses {
-  line-height: 1.4em;
-  padding: $space-xs;
-  margin: 0;
-  max-width: 200px;
-  float: left;
-  overflow: hidden;
-  height: 150px;
-}
-.checkout__delivery-information__addresses--active {
-  border: $cta-secondary-border;
-}
-
-
 .checkout__delivery-information__address {
   @include make-xs-column(6, 0);
   background-color: $color-bg-primary;
@@ -405,6 +391,97 @@ textarea.checkout__step__item-textarea {
 .checkout__delivery-information__city {
   @extend %two-columns-form-layout;
   padding-left: $space-xs;
+}
+
+.checkout-delivery-information-list {
+  margin-left: -5px;
+  margin-right: -5px;
+}
+
+.checkout__delivery-information__addresses {
+  @include make-sm-column(6);
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-bottom: $space-sm;
+}
+
+.checkout__delivery-information__item {
+  @include clearfix();
+  position: relative;
+  padding: $space-sm;
+  border: $base-border;
+  margin: 0;
+  background-color: $color-bg-primary;
+  cursor: pointer;
+  @include transition(background-color .1s linear);
+  @include respond-from("screen-sm") {
+    height: 100px;
+    min-height: 100px;
+    max-height: 100px;
+  }
+}
+.checkout__delivery-information__addresses--active .checkout__delivery-information__item {
+  border: $cta-secondary-border;
+}
+
+.checkout__delivery-information__notes {
+  color: $color-text-light;
+  margin-top: $space-xs;
+}
+
+.checkout__delivery-information__company {
+  padding-right: 20px;
+}
+
+.checkout__delivery-information__company,
+.checkout__delivery-information__notes,
+.checkout__delivery-information__address-line {
+  @include hide-text-on-one-line();
+  height: 18px;
+  @include respond-from("screen-md") {
+    height: 19px;
+  }
+}
+
+.delivery-information-list {
+  margin: 0 $space-xs;
+
+  @include respond-from("screen-md") {
+    margin: 0 $space-lg;
+  }
+}
+
+.checkout__delivery-information__delete-modal-wrapper {
+  position: absolute;
+  background-color: $color-bg-primary;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.delivery-information__delete-modal__text {
+  @include make-xs-column(12);
+  @include hide-text-on-one-line();
+  padding-right: $space-lg;
+}
+
+.delivery-information__delete-modal__button {
+  @include make-xs-column(6);
+}
+
+.checkout__delivery-information__delete-link {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 16px;
+  display: none;
+}
+.checkout__delivery-information__addresses:hover .checkout__delivery-information__delete-modal-wrapper ~ .checkout__delivery-information__delete-link {
+  display: none;
+}
+.checkout__delivery-information__addresses:hover .checkout__delivery-information__delete-modal-wrapper.hide ~ .checkout__delivery-information__delete-link {
+  display: block;
 }
 
 // -------------------------- CHECKOUT DELIVERY INFORMATION END --------------------------

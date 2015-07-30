@@ -6,7 +6,7 @@
 $fontspath: "../../fonts/";
 
 // this value should be changed anytime fonts file are updated in order to avoid caching issues
-$font-version: 2;
+$font-version: 8;
 
 @font-face {
   font-family: 'icomoon';
@@ -112,6 +112,7 @@ $cta-padding-left: 20px;
 $cta-padding-right: 20px;
 $cta-border-radius: $border-radius-default;
 $cta-height: $form-element-height-default;
+$cta-smaller-height: 30px;
 // Primary button
 $cta-color-text-primary: #fff;
 $cta-color-bg-primary: #d70f64;
