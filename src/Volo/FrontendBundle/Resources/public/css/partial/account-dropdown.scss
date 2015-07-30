@@ -11,49 +11,4 @@
   .dropdown-backdrop {
     position: static;
   }
-
-  .dropdown-menu {
-    margin-top: 30px;
-    left: 0;
-    font-size: $dropdown-font-size;
-
-    &:before {
-      position: absolute;
-      top: -7px;
-      left: 5px;
-      display: inline-block;
-      border-right: 7px solid transparent;
-      border-bottom: 7px solid $dropdown-color-border;
-      border-left: 7px solid transparent;
-      content: '';
-    }
-
-    &:after {
-      position: absolute;
-      top: -6px;
-      left: 6px;
-      display: inline-block;
-      border-right: 6px solid transparent;
-      border-bottom: 6px solid $dropdown-color-bg-1;
-      border-left: 6px solid transparent;
-      content: '';
-    }
-
-    @include respond-from("screen-md") {
-      right: -5px;
-      left: auto;
-      margin-top: 0;
-      min-width: 200px;
-
-      &:before {
-        right: 7px;
-        left: auto;
-      }
-
-      &:after {
-        right: 8px;
-        left: auto;
-      }
-    }
-  }
 }
