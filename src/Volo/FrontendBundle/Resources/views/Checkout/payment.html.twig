@@ -72,7 +72,10 @@
         2. {% trans %}title.contact_information{% endtrans %}
         <span class="checkout__subtitle__edit">
         <a id="edit_contact_information_form_link"
-           href="{{ path('checkout_contact_information', {vendorCode: vendor.code}) }}">
+            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                href="{{ path('checkout_contact_information', {vendorCode: vendor.code}) }}"
+            {% endif %}
+        >
             <i class="icon-pencil"></i>
             <span class="edit_contact_information_form_link__text--edit">{% trans %}link.edit_contact_information{% endtrans %}</span>
             <span class="edit_contact_information_form_link__text--cancel">{% trans %}link.cancel{% endtrans %}</span>
