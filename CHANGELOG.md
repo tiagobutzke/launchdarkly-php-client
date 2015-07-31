@@ -1,6 +1,16 @@
 CHANGELOG
 =========
 
+* 1.11.2
+
+  * SGFD-18538: hide input field when zip code is present in url
+  * SGFD-18827: register promise on every page
+  * SGFD-18827: added Promise polyfill to bower
+  * SGFD-18826: IE10, 9 / Javascript error on restaurant page
+  * SGFD-18802: Checkout / Change personal information no possible
+  * SGFD-18781: error pages js fix
+  * SGFD-18705: Prevent scroll bars disappearance on Mac
+
 * 1.11.1
 
   * SGFD-18538: zip code fix
