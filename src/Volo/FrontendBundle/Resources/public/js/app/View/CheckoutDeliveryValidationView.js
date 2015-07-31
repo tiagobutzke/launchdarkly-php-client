@@ -111,10 +111,6 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
     },
 
     _createDeliveryAsyncValidation: function() {
-        if (!validate.Promise) {
-            validate.Promise = window.Promise;
-        }
-
         if (!validate.validators.deliveryValidation) {
             validate.validators.deliveryValidation = function() {
                 return new Promise(function(resolve, reject) {
