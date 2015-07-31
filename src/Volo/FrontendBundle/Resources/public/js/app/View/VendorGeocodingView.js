@@ -54,6 +54,7 @@ var VendorGeocodingView = HomeSearchView.extend({
     },
 
     setZipCode: function(zipCode) {
+        this._showFormattedAddress();
         this.geocodingService.getLocationByZipCode(zipCode);
     },
 
@@ -137,6 +138,7 @@ var VendorGeocodingView = HomeSearchView.extend({
 
             var template = _.template($('#template-vendor-menu-nothing-found').html());
             this._enableInputNode();
+            this._hideFormattedAddress();
             this._showInputPopup(template({url: url}));
         }
     }
