@@ -3,6 +3,7 @@
 namespace Volo\FrontendBundle\Controller;
 
 use CommerceGuys\Guzzle\Oauth2\AccessToken;
+use Foodpanda\ApiSdk\Exception\OrderNotFoundException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -19,6 +20,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class PaymentGatewayController extends Controller
 {
+    const ORDER_PAID_STATUS = 'paid';
+    
     /**
      * @Method({"GET", "POST"})
      * @Route(
@@ -50,7 +53,7 @@ class PaymentGatewayController extends Controller
             $request->request->all()
         );
 
-        if ($this->isPaymentSucessful($request)) {
+        if ($this->isPaymentSucessful($request, $orderCode)) {
             $this->get('volo_frontend.service.cart_manager')->deleteCart(
                 $request->getSession(),
                 $vendor->getId()
@@ -69,14 +72,31 @@ class PaymentGatewayController extends Controller
 
     /**
      * @param Request $request
+     * @param string  $orderCode
      *
      * @return mixed
      */
-    protected function isPaymentSucessful(Request $request)
+    protected function isPaymentSucessful(Request $request, $orderCode)
     {
         switch (true) {
             case $request->query->has('success'): // paypal
-                return $request->query->get('success');
+                if (!$request->query->get('success')) {
+                    return false;
+                }
+
+                $session     = $this->get('session');
+                $accessToken = $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')
+                    ? $this->get('security.token_storage')->getToken()->getAccessToken()
+                    : new AccessToken($session->get(OrderController::SESSION_GUEST_ORDER_ACCESS_TOKEN), 'bearer');
+
+                try {
+                    $order = $this->get('volo_frontend.provider.order')->orderPaymentInformation($orderCode,
+                        $accessToken);
+
+                    return $order['status'] === static::ORDER_PAID_STATUS;
+                } catch (OrderNotFoundException $e) {
+                    return false;
+                }
                 break;
             case $request->query->has('paymentMethod') && $request->query->has('authResult'): // adyen hpp
                 return $request->query->get('authResult') === 'AUTHORISED';
