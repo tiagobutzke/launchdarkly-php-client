@@ -2,10 +2,7 @@ var CheckoutPageView = Backbone.View.extend({
     events: {
         'click #finish-and-pay': '_submitOrder',
         'click #add_new_address_link': 'render',
-        'click #edit_contact_information_form_link': function(e) {
-            this._openContactInformationForm(e);
-            this.render();
-        }
+        'click #edit_contact_information_form_link': '_openContactInformationForm'
     },
 
     initialize: function (options) {
@@ -48,14 +45,16 @@ var CheckoutPageView = Backbone.View.extend({
         this.undelegateEvents();
     },
 
-    _openContactInformationForm: function(e) {
-        e.preventDefault();
+    _openContactInformationForm: function() {
         var $editContactInformationForm = this.$('#edit_contact_information_form'),
             editContactInformationFormIsVisible;
 
-        $editContactInformationForm.toggleClass('hide');
-        editContactInformationFormIsVisible = $editContactInformationForm.hasClass('hide');
-        $('#contact_information').find('.checkout__item').toggleClass('hide', !editContactInformationFormIsVisible);
+        if ($editContactInformationForm.length){
+            $editContactInformationForm.toggleClass('hide');
+            editContactInformationFormIsVisible = $editContactInformationForm.hasClass('hide');
+            $('#contact_information').find('.checkout__item').toggleClass('hide', !editContactInformationFormIsVisible);
+            this.render();
+        }
     },
 
     _submitOrder: function () {
