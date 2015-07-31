@@ -12,6 +12,8 @@ VOLO.GTMService = function (options) {
     this.checkoutInformationValidationFormView = options.checkoutInformationValidationFormView;
     this.loginButtonView = options.loginButtonView;
     this.restaurantsView = options.restaurantsView;
+    this.homeSearchView = options.homeSearchView;
+    this.homeView = options.homeView;
 
     this.initialize();
 };
@@ -56,6 +58,22 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
                 this.restaurantsView,
                 'restaurantsView:restaurantsDisplayedOnScroll',
                 this.fireRestaurantsDisplayedOnScroll
+            );
+        }
+
+        if (_.isObject(this.homeSearchView)) {
+            this.listenTo(
+                this.homeSearchView,
+                'ctaTrackable:ctaClicked',
+                this.fireCTAClicked
+            );
+        }
+
+        if (_.isObject(this.homeView)) {
+            this.listenTo(
+                this.homeView,
+                'ctaTrackable:ctaClicked',
+                this.fireCTAClicked
             );
         }
 
@@ -205,6 +223,13 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
                 'currencyCode': this.options.currency,
                 'impressions': _.map(impressions, this._addListToImpressions, this)
             }
+        });
+    },
+
+    fireCTAClicked: function (data) {
+        this._push({
+            'event': 'homeCTAclick',
+            'ctaName': data.name
         });
     },
 

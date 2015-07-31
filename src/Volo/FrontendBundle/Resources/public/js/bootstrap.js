@@ -199,6 +199,16 @@ VOLO.createHomeSearchView = function (locationModel) {
     return homeSearchView;
 };
 
+VOLO.createHomeView = function () {
+    var homeView = new HomeView({
+        el: '.home'
+    });
+
+    VOLO.views.push(homeView);
+
+    return homeView;
+};
+
 VOLO.createLoginButtonView = function (customerModel) {
     var loginButtonView = new LoginButtonView({
         el: '.header__account',
@@ -302,8 +312,7 @@ VOLO.doBootstrap = function(configuration) {
         checkoutModel,
         loginButtonView,
         cartIconView,
-        restaurantsView,
-        userAddressCollection
+        restaurantsView
     ;
 
     userAddressCollection = VOLO.createUserAddressCollection(VOLO.jsonUserAddress, VOLO.customer);
@@ -355,8 +364,13 @@ VOLO.doBootstrap = function(configuration) {
     }
 
     if ($('.home__teaser__form').length > 0) {
-        var homeSearchView = VOLO.createHomeSearchView(locationModel);
+        homeSearchView = VOLO.createHomeSearchView(locationModel);
         homeSearchView.render();
+    }
+
+    if ($('.home__teaser__form').length > 0) {
+        homeView = VOLO.createHomehView();
+        homeView.render();
     }
 
     if ($('.header__account').length > 0) {
@@ -396,6 +410,7 @@ VOLO.doBootstrap = function(configuration) {
         sessionId: configuration.sessionId,
         checkoutPageView: checkoutViews.checkoutPageView,
         loginButtonView: loginButtonView,
+        existingUserLoginView: existingUserLoginView,
         restaurantsView: restaurantsView
     });
 

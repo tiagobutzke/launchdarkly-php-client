@@ -3,7 +3,7 @@
  * options:
  * - geocodingService: GeocodingService
  */
-var HomeSearchView = Backbone.View.extend({
+var HomeSearchView = CTATrackableView.extend({
     initialize: function (options) {
         console.log('HomeSearchView.initialize ', this.cid);
         _.bindAll(this);
@@ -16,13 +16,15 @@ var HomeSearchView = Backbone.View.extend({
         this.postInit();
     },
 
-    events: {
-        'click .home__teaser__button': '_submitPressed',
-        'submit': '_submitPressed',
-        'focus #delivery-information-postal-index': '_hideTooltip',
-        'blur #delivery-information-postal-index': '_hideTooltip',
-        'click #delivery-information-postal-index': '_scrollToInput',
-        'keydown #delivery-information-postal-index': '_inputChanged'
+    events: function() {
+        return _.extend({}, CTATrackableView.prototype.events, {
+            'click .home__teaser__button': '_submitPressed',
+            'submit': '_submitPressed',
+            'focus #delivery-information-postal-index': '_hideTooltip',
+            'blur #delivery-information-postal-index': '_hideTooltip',
+            'click #delivery-information-postal-index': '_scrollToInput',
+            'keydown #delivery-information-postal-index': '_inputChanged'
+        });
     },
 
     render: function() {
