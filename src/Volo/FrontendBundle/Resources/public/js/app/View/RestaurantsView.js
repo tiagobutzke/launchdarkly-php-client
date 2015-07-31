@@ -11,7 +11,8 @@ VOLO.RestaurantsView = Backbone.View.extend({
         this._eventTriggerDelay = options.triggerDelay || 300;
         this._lastTimeOut = null;
         this._displayedRestaurants = [];
-        this._scrollEvent = $(window).on('scroll resize', this._onScrollResize);
+        this.$window = $(window);
+        this._scrollEvent = this.$window.on('scroll resize', this._onScrollResize);
     },
 
     onGtmServiceCreated: function() {
@@ -53,17 +54,14 @@ VOLO.RestaurantsView = Backbone.View.extend({
     },
 
     _getVisibleRestaurants: function() {
-        var $restaurants = this.$('.restaurants__list__item'),
-            curried = _.curry(this._isElOnScreen),
-            $window = $(window);
+        var $restaurants = this.$('.restaurants__list__item');
 
-        return _.filter($.makeArray($restaurants), curried($window.height(), $window.scrollTop()));
+        return _.filter($.makeArray($restaurants), this._isElOnScreen);
     },
 
-    _isElOnScreen: function(height, scrollTop, element) {
-        var elementPos = $(element).offset(),
-            elementTop = elementPos.top,
-            scrolled = height + scrollTop;
+    _isElOnScreen: function(element) {
+        var elementTop = $(element).offset().top,
+            scrolled = this.$window.height() + this.$window.scrollTop();
 
         return elementTop <= scrolled;
     },
