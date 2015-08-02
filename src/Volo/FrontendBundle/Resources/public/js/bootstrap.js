@@ -124,21 +124,9 @@ VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel, us
             userAddressCollection: userAddressCollection,
             customerModel: VOLO.customer,
             cartModel: cartModel,
-            loginView: loginButtonView
-        });
-        views.checkoutDeliveryInformationView = new VOLO.CheckoutDeliveryInformationView({
-            el: '.checkout__delivery-information',
-            model: checkoutModel,
-            collection: userAddressCollection,
+            loginView: loginButtonView,
             locationModel: locationModel,
-            customerModel: VOLO.customer
-        });
-        views.checkoutDeliveryValidationView = new VOLO.CheckoutDeliveryValidationView({
-            el: '#delivery-information-form',
-            deliveryCheck: deliveryCheck,
-            locationModel: locationModel,
-            geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1]),
-            postalCodeGeocodingService: new PostalCodeGeocodingService(VOLO.configuration.locale.split('_')[1])
+            deliveryCheck: deliveryCheck
         });
     }
 
@@ -155,8 +143,8 @@ VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel, us
         model: cartModel
     });
 
-
     VOLO.views = VOLO.views.concat(_.values(views));
+
     return views;
 };
 
@@ -168,9 +156,6 @@ VOLO.renderCheckoutViews = function (checkoutViews) {
     }
     if (checkoutViews.checkoutPageView) {
         checkoutViews.checkoutPageView.render();
-    }
-    if (checkoutViews.checkoutDeliveryInformationView) {
-        checkoutViews.checkoutDeliveryInformationView.render();
     }
 };
 
@@ -311,10 +296,9 @@ VOLO.doBootstrap = function(configuration) {
     window.blazy.revalidate();
 
     var locationModel = VOLO.createLocationModel(VOLO.jsonLocation),
-        gtmCheckoutValidationView,
+        checkoutViews = {},
         cartModel,
         checkoutModel,
-        checkoutInformationValidationFormView,
         loginButtonView,
         cartIconView,
         restaurantsView,
@@ -356,9 +340,7 @@ VOLO.doBootstrap = function(configuration) {
         cartModel = VOLO.createCartModel(VOLO.jsonCart);
         checkoutModel = VOLO.createCheckoutModel(cartModel, locationModel, $checkoutMain.data('vendor_id'));
 
-        var checkoutViews = VOLO.createCheckoutViews(cartModel, checkoutModel, locationModel, userAddressCollection, loginButtonView);
-        gtmCheckoutValidationView = checkoutViews.checkoutDeliveryValidationView;
-        checkoutInformationValidationFormView = checkoutViews.checkoutPageView.checkoutInformationValidationFormView;
+        checkoutViews = VOLO.createCheckoutViews(cartModel, checkoutModel, locationModel, userAddressCollection, loginButtonView);
         VOLO.renderCheckoutViews(checkoutViews);
     }
 
@@ -404,8 +386,7 @@ VOLO.doBootstrap = function(configuration) {
         },
         checkoutModel: checkoutModel,
         sessionId: configuration.sessionId,
-        checkoutDeliveryValidationView: gtmCheckoutValidationView,
-        checkoutInformationValidationFormView: checkoutInformationValidationFormView,
+        checkoutPageView: checkoutViews.checkoutPageView,
         loginButtonView: loginButtonView,
         restaurantsView: restaurantsView
     });

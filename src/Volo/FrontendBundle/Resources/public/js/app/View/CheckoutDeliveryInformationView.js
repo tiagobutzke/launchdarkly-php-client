@@ -29,6 +29,14 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
         this.listenTo(this.collection, 'custom:edit', this._editAddress);
         this.listenTo(this.collection, 'add', this._renderAddress);
         this.listenTo(this.collection, 'update', this._renderAddNewAddressLink);
+
+        this.checkoutDeliveryValidationView = new VOLO.CheckoutDeliveryValidationView({
+            el: this.$('#delivery-information-form'),
+            deliveryCheck: options.deliveryCheck,
+            locationModel: options.locationModel,
+            geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1]),
+            postalCodeGeocodingService: new PostalCodeGeocodingService(VOLO.configuration.locale.split('_')[1])
+        });
     },
 
     render: function () {
@@ -97,9 +105,11 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
     },
 
     _openAddressForm: function () {
+        this.$('.form__error-message').addClass('hide');
         this.$('#checkout-delivery-information-list').addClass('hide');
         this.$('#checkout-add-new-address-form').removeClass('hide', true);
         this.$el.addClass('checkout__delivery-information--list-shown');
+        this.trigger('form:open', this);
     },
 
     _closeAddressForm: function () {
@@ -107,6 +117,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
         this.$('#checkout-add-new-address-form').addClass('hide', true);
         this.$el.removeClass('checkout__delivery-information--list-shown');
         this._emptyAddressForm();
+        this.trigger('form:close', this);
     },
 
     _emptyAddressForm: function () {
@@ -122,6 +133,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
     unbind: function () {
         this.stopListening();
         this.undelegateEvents();
+        this.checkoutDeliveryValidationView.unbind();
     },
 
     _changeAddress: function (checkoutModel, id) {
@@ -222,6 +234,10 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
         }
 
         this.model.set('address_id', id);
+        this.trigger('delivery:submit:successful_before', {
+            deliveryTime: this.$('#order-delivery-time').val()
+        });
+
     },
 
     _selectLastAddress: function () {

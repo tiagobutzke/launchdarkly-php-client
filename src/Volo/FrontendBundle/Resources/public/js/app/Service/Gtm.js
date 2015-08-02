@@ -8,7 +8,7 @@ VOLO.GTMService = function (options) {
     this.dataLayer = options.dataLayer;
     this.sessionId = options.sessionId;
     this.checkoutModel = options.checkoutModel || null;
-    this.checkoutDeliveryValidationView = options.checkoutDeliveryValidationView;
+    this.checkoutPageView = options.checkoutPageView;
     this.checkoutInformationValidationFormView = options.checkoutInformationValidationFormView;
     this.loginButtonView = options.loginButtonView;
     this.restaurantsView = options.restaurantsView;
@@ -23,15 +23,15 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
             this.listenTo(this.checkoutModel, 'payment:error', this.fireCheckoutPaymentFailed);
         }
 
-        if (_.isObject(this.checkoutDeliveryValidationView)) {
+        if (_.isObject(this.checkoutPageView)) {
             this.listenTo(
-                this.checkoutDeliveryValidationView,
-                'submit:successful_before',
+                this.checkoutPageView,
+                'delivery:submit:successful_before',
                 this.fireCheckoutDeliveryDetailsSet
             );
         }
 
-        if (_.isObject(this.checkoutInformationValidationFormView)) {
+        if (_.isObject(this.checkoutPageView)) {
             this.listenTo(
                 this.checkoutPageView,
                 'validationView:validateSuccessful',

@@ -21,6 +21,16 @@ var CheckoutPageView = Backbone.View.extend({
             userAddressCollection: this.userAddressCollection,
             loginView: options.loginView
         });
+
+        this.checkoutDeliveryInformationView = new VOLO.CheckoutDeliveryInformationView({
+            el: this.$('.checkout__delivery-information'),
+            model: this.model,
+            collection: this.userAddressCollection,
+            customerModel: this.customerModel,
+            locationModel: options.locationModel,
+            deliveryCheck: options.deliveryCheck
+        });
+
         this.timePickerView = new TimePickerView({
             model: options.cartModel,
             vendor_id: this.vendorId
@@ -39,6 +49,12 @@ var CheckoutPageView = Backbone.View.extend({
 
         this.listenTo(this.contactInformationView, 'form:open', this.renderPayButton);
         this.listenTo(this.contactInformationView, 'form:close', this.renderPayButton);
+
+        this.listenTo(this.checkoutDeliveryInformationView, 'form:open', this.renderPayButton);
+        this.listenTo(this.checkoutDeliveryInformationView, 'form:close', this.renderPayButton);
+
+        this.listenTo(this.contactInformationView, 'all', this.trigger);
+        this.listenTo(this.checkoutDeliveryInformationView, 'all', this.trigger);
     },
 
     render: function () {
@@ -49,6 +65,8 @@ var CheckoutPageView = Backbone.View.extend({
 
         this._switchPaymentFormVisibility();
         this.renderPayButton();
+
+        this.checkoutDeliveryInformationView.render();
 
         return this;
     },
@@ -98,7 +116,7 @@ var CheckoutPageView = Backbone.View.extend({
     },
 
     _submitOrder: function () {
-        var isSubscribedNewsletter = this.contactInformationView.isNewsletterSubscriptionChecked(),
+        var isSubscribedNewsletter = this.customerModel.get('is_newsletter_subscribed'),
             address = this.userAddressCollection.get(this.model.get('address_id'));
 
         if (this.$('#delivery-information-form-button').is(':visible')) {
@@ -122,12 +140,7 @@ var CheckoutPageView = Backbone.View.extend({
         this.$('#error-message-delivery-not-saved').addClass('hide');
         this.spinner.spin(this.$('#checkout-finish-and-pay-button')[0]);
 
-        //var address = this.userAddressCollection.get(this.model.get('address_id'));
         this.model.placeOrder(this.vendorCode, this.vendorId, this.customerModel, address, isSubscribedNewsletter);
-
-        this.trigger('validationView:validateSuccessful', {
-            newsletterSignup: isSubscribedNewsletter
-        });
 
         this.$('.form__error-message').addClass('hide');
     },
@@ -136,7 +149,6 @@ var CheckoutPageView = Backbone.View.extend({
         var paddingFromHeader = 16,
             scrollToOffset =  msgOffset - paddingFromHeader - this.domObjects.$header.outerHeight();
 
-        this.$('#error_msg_delivery_not_saved').removeClass('hide');
         $('body').animate({
             scrollTop: scrollToOffset
         }, this.configuration.anchorScrollSpeed);
@@ -163,12 +175,12 @@ var CheckoutPageView = Backbone.View.extend({
 
     handlePaymentError: function (data) {
         var exists = _.get(data, 'exists', {exists: false});
-        this.$('.form__error-message').removeClass('hide');
 
         if (_.isObject(data) && _.isString(_.get(data, 'error.errors.message'))) {
             this.$('.form__error-message').html(data.error.errors.message);
+            this.$('.form__error-message').removeClass('hide');
         } else if (exists) {
-            this.contactInformationView.renderExistingUser();
+            this.contactInformationView.openLoginModal();
         } else {
             console.log(data);
         }

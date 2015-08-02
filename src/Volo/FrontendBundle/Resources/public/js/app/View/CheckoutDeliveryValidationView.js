@@ -41,9 +41,6 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
 
         validate.done(function() {
             this._canSubmit = true;
-            this.trigger('submit:successful_before', {
-                deliveryTime: $('#order-delivery-time').val()
-            });
             this.$('#delivery-information-form-button').click();
         }.bind(this));
 

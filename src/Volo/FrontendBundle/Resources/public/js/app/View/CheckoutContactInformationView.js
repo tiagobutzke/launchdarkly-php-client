@@ -45,6 +45,10 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         });
 
         this.listenTo(this.customerModel, 'change', this.renderContactInformation);
+
+        if (this.customerModel.isGuest) {
+            this._isExistingUser(this.customerModel.get('email'));
+        }
     },
 
     render: function () {
@@ -60,11 +64,11 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
             this.$('.checkout__contact-information__title-link').removeClass('hide');
         }
 
+        this._fillUpForm();
         if (this.customerModel.isValid()) {
             this.renderContactInformation();
             this._closeForm();
         } else {
-            this._fillUpForm();
             this._openForm();
         }
 
@@ -77,7 +81,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         this.$('.customer_phone_number').html(_.escape(this.customerModel.getFullMobileNumber()));
     },
 
-    _openLoginModal: function () {
+    openLoginModal: function () {
         this.loginView.showLoginModal();
         this.loginView.setUsername(this.$('#contact-information-email').val());
         this.loginView.setErrorMessage(this.$('#checkout-edit-contact-information').data('error-message-key'));
@@ -111,7 +115,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         this._showForm();
         this.$('.checkout__title-link__text--edit-contact').removeClass('contact_information_form-open');
         this.hideContactInformation();
-        this.trigger('form:open');
+        this.trigger('form:open', this);
     },
 
     _closeForm: function () {
@@ -119,7 +123,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         this.$('.checkout__title-link__text--edit-contact').addClass('contact_information_form-open');
         this.$('#contact_information').removeClass('hide');
         this.showContactInformation();
-        this.trigger('form:close');
+        this.trigger('form:close', this);
     },
 
     _fillUpForm: function () {
@@ -128,7 +132,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
             this.$('#contact-information-last-name').val(this.customerModel.get('last_name'));
             this.$('#contact-information-email').val(this.customerModel.get('email'));
             this.$('#contact-information-mobile-number').val(this.customerModel.getFullMobileNumber());
-            this.$('#newsletter_checkbox').val(this.customerModel.get('newsletter_checkbox'));
+            this.$('#newsletter_checkbox').prop('checked', this.customerModel.get('is_newsletter_subscribed'));
         }
     },
 
@@ -149,7 +153,10 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
     },
 
     _submit: function() {
-        var form = this.$('#contact-information-form').serializeJSON(),
+        var form = this.$('#contact-information-form').serializeJSON({
+                checkboxUncheckedValue: 'false',
+                parseBooleans: true
+            }),
             customer = form.customer;
 
         this._isExistingUser(customer.email)
@@ -186,7 +193,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
             dataType: 'json',
             success: function (response) {
                 if (response.exists) {
-                    this._openLoginModal();
+                    this.openLoginModal();
                 }
             }.bind(this)
         });
@@ -201,12 +208,11 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         });
     },
 
-    _onCustomerSaveSuccess: function () {
+    _onCustomerSaveSuccess: function (customer) {
         this.renderContactInformation();
         this._switchFormVisibility();
+        this.trigger('validationView:validateSuccessful', {
+            newsletterSignup: customer.get('is_newsletter_subscribed')
+        });
     },
-
-    isNewsletterSubscriptionChecked: function () {
-        return this.$('#newsletter_checkbox').is(':checked');
-    }
 });

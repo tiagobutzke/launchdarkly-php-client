@@ -14,7 +14,9 @@
         <div class="profile__blocks">
             <div class="profile__block">
                 <h3 class="profile__block__title">{% trans %}title.my_profile{% endtrans %}</h3>
-                {% include 'VoloFrontendBundle:Checkout/Partial:contact_information_form.html.twig' with {action: path('profile_index')} %}
+                <div class="checkout__step__item-content">
+                    {% include 'VoloFrontendBundle:Checkout/Partial:contact_information_form.html.twig' with {action: path('profile_index')} %}
+                </div>
             </div>
             <div class="profile__block">
                 <h3 class="profile__block__title">{% trans %}title.my_password{% endtrans %}</h3>
@@ -54,7 +56,9 @@
             </div>
             <div class="profile__block profile__block--list">
                 <h3 class="profile__block__title">{% trans %}title.my_addresses{% endtrans %}</h3>
+                <div class="checkout__step__item-content">
                     {% include 'VoloFrontendBundle:Profile:delivery_information_list.html.twig' %}
+                </div>
             </div>
             <div class="profile__block profile__block--list">
                 <h3 class="profile__block__title">{% trans %}title.payment_list{% endtrans %}</h3>
