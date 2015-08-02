@@ -25,10 +25,10 @@
                 <div class="checkout__step checkout__step--first checkout__delivery-information" data-vendor_id="{{ vendor.id }}">
                     {% include 'VoloFrontendBundle:Checkout/Partial:step_delivery_information.html.twig' %}
                 </div>
-                <div class="checkout__step checkout__contact-information">
+                <div class="checkout__step checkout__step--reduced checkout__contact-information">
                     {% include 'VoloFrontendBundle:Checkout/Partial:step_contact_information.html.twig' %}
                 </div>
-                <div class="checkout__step checkout__payment">
+                <div class="checkout__step checkout__step--reduced checkout__payment">
                     {% include 'VoloFrontendBundle:Checkout/Partial:step_payment.html.twig' %}
                 </div>
             </div>

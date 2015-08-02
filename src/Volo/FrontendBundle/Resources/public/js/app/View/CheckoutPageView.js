@@ -1,8 +1,6 @@
 var CheckoutPageView = Backbone.View.extend({
     events: {
-        'click #checkout-finish-and-pay-button': '_submitOrder',
-        'click #add_new_address_link': 'render',
-        'click #edit_contact_information_form_link': '_openContactInformationForm'
+        'click #checkout-finish-and-pay-button': '_submitOrder'
     },
 
     initialize: function (options) {
@@ -30,25 +28,60 @@ var CheckoutPageView = Backbone.View.extend({
         console.log('is guest user ', this.customerModel.isGuest);
         this.model.set('is_guest_user', this.customerModel.isGuest);
 
-        this.listenTo(this.model, 'change', this.render, this);
+        this.listenTo(this.model, 'change', this.renderPayButton, this);
 
         this.listenTo(this.model, 'payment:success', this.handlePaymentSuccess, this);
         this.listenTo(this.model, 'payment:error', this.handlePaymentError, this);
         this.listenTo(this.userAddressCollection, 'update', this.renderContactInformationStep);
+
+        this.listenTo(this.customerModel, 'change', this._switchPaymentFormVisibility);
+
+        this.listenTo(this.contactInformationView, 'form:open', this.renderPayButton);
+        this.listenTo(this.contactInformationView, 'form:close', this.renderPayButton);
     },
 
     render: function () {
-        var addressFormVisible = this.$('#delivery_information_form_button').is(':visible');
-        var contactFormVisible = this.$('#contact-information-form').is(':visible');
-
-        console.log('CheckoutPageView:render', this.model.isValid());
-        this.$('#checkout-finish-and-pay-button').toggleClass('button--disabled', this.userAddressCollection.length > 0 && !this.model.canBeSubmitted() || addressFormVisible || contactFormVisible);
         this.renderContactInformationStep();
 
         this.timePickerView.setElement(this.$('.checkout__time-picker'));
         this.timePickerView.render();
 
+        this._switchPaymentFormVisibility();
+        this.renderPayButton();
+
         return this;
+    },
+
+    renderPayButton: function () {
+        var isButtonDisabled = this.userAddressCollection.length === 0 ||
+            (!this.model.canBeSubmitted() ||
+                this.$('#delivery-information-form').is(':visible') ||
+                this.$('#contact-information-form').is(':visible')
+            );
+
+        console.log('isButtonDisabled ', isButtonDisabled);
+        if (isButtonDisabled) {
+            this.$('#checkout-finish-and-pay-button').addClass('button--disabled');
+        } else {
+            this.$('#checkout-finish-and-pay-button').removeClass('button--disabled');
+        }
+    },
+
+    _switchPaymentFormVisibility: function () {
+        if (this.userAddressCollection.length > 0 && this.customerModel.isValid()) {
+            this.$('.checkout__payment').removeClass('checkout__step--reduced');
+            this.$('.checkout__payment .checkout__step__items').removeClass('hide');
+            this._refreshBlazy();
+        } else {
+            this.$('.checkout__payment').addClass('checkout__step--reduced');
+            this.$('.checkout__payment .checkout__step__items').addClass('hide');
+        }
+    },
+
+    _refreshBlazy: function () {
+        if (window.blazy) {
+            window.blazy.revalidate();
+        }
     },
 
     renderContactInformationStep: function () {
@@ -63,18 +96,6 @@ var CheckoutPageView = Backbone.View.extend({
         this.timePickerView.unbind();
     },
 
-    _openContactInformationForm: function() {
-        var $editContactInformationForm = this.$('#checkout-edit-contact-information'),
-            editContactInformationFormIsVisible;
-
-        if ($editContactInformationForm.length){
-            $editContactInformationForm.toggleClass('hide');
-            editContactInformationFormIsVisible = $editContactInformationForm.hasClass('hide');
-            $('#contact_information').find('.checkout__item').toggleClass('hide', !editContactInformationFormIsVisible);
-            this.render();
-        }
-    },
-
     _submitOrder: function () {
         var isSubscribedNewsletter = this.contactInformationView.isNewsletterSubscriptionChecked(),
             address = this.userAddressCollection.get(this.model.get('address_id'));
@@ -82,6 +103,13 @@ var CheckoutPageView = Backbone.View.extend({
         if (this.$('#delivery-information-form-button').is(':visible')) {
             this.$('#error-message-delivery-not-saved').removeClass('hide');
             this._scrollToError(this.$('#checkout-delivery-information-address').offset().top);
+
+            return false;
+        }
+
+        if (this.$('#contact-information-form').is(':visible')) {
+            this.$('#error-message-contact-not-saved').removeClass('hide');
+            this._scrollToError(this.$('.checkout__contact-information').offset().top);
 
             return false;
         }

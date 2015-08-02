@@ -26,7 +26,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         this.existingUserLoginView = null;
 
         this._jsValidationView = new View({
-            el: this.$('contact-information-form'),
+            el: this.$('#contact-information-form'),
             constraints: {
                 "customer[first_name]": {
                     presence: true
@@ -51,9 +51,13 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         if (this.userAddressCollection.length === 0) {
             this.hideContactInformation();
             this._hideForm();
-            this.$el.addClass('checkout__step--active');
+            this.$el.addClass('checkout__step--reduced');
+            this.$('.checkout__contact-information__title-link').addClass('hide');
 
             return this;
+        } else {
+            this.$el.removeClass('checkout__step--reduced');
+            this.$('.checkout__contact-information__title-link').removeClass('hide');
         }
 
         if (this.customerModel.isValid()) {
@@ -109,10 +113,11 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
 
     _openForm: function () {
         this._fillUpForm();
-        this.$('.form__error-message').hide();
+        this.$('.form__error-message').addClass('hide');
         this._showForm();
         this.$('.checkout__title-link__text--edit-contact').removeClass('contact_information_form-open');
         this.hideContactInformation();
+        this.trigger('form:open');
     },
 
     _closeForm: function () {
@@ -120,6 +125,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         this.$('.checkout__title-link__text--edit-contact').addClass('contact_information_form-open');
         this.$('#contact_information').removeClass('hide');
         this.showContactInformation();
+        this.trigger('form:close');
     },
 
     _fillUpForm: function () {

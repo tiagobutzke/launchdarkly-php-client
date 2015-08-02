@@ -47,12 +47,12 @@ var VoucherView = Backbone.View.extend({
     },
 
     _hideErrorMsg: function() {
-        this.$('.form__error-message--invalid-voucher').css('display', 'none');
+        this.$('.form__error-message--invalid-voucher').addClass('hide');
         this.$('.checkout__error-empty-voucher').addClass('hide');
     },
 
     _showErrorMsg: function() {
-        this.$('.form__error-message--invalid-voucher').css('display', 'block');
+        this.$('.form__error-message--invalid-voucher').removeClass('hide');
         this.$('.form__error-message--invalid-voucher').text(this.voucherError);
     },
 
