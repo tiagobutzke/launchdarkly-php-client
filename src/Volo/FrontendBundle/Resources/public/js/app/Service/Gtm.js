@@ -11,7 +11,6 @@ VOLO.GTMService = function (options) {
     this.checkoutDeliveryValidationView = options.checkoutDeliveryValidationView;
     this.checkoutInformationValidationFormView = options.checkoutInformationValidationFormView;
     this.loginButtonView = options.loginButtonView;
-    this.existingUserLoginView = options.existingUserLoginView;
     this.restaurantsView = options.restaurantsView;
 
     this.initialize();
@@ -61,10 +60,6 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
         }
 
         if (_.isObject(this.loginButtonView)) {
-            this._bindLoginRegistrationEvents();
-        }
-
-        if (_.isObject(this.existingUserLoginView)) {
             this._bindLoginRegistrationEvents();
         }
 

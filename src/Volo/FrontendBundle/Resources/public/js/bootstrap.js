@@ -96,7 +96,7 @@ VOLO.createCartViews = function (cartModel, locationModel, gtmService) {
     };
 };
 
-VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel, userAddressCollection) {
+VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel, userAddressCollection, loginButtonView) {
     var views = {},
         deliveryCheck = new DeliveryCheck();
 
@@ -123,7 +123,8 @@ VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel, us
             model: checkoutModel,
             userAddressCollection: userAddressCollection,
             customerModel: VOLO.customer,
-            cartModel: cartModel
+            cartModel: cartModel,
+            loginView: loginButtonView
         });
         views.checkoutDeliveryInformationView = new VOLO.CheckoutDeliveryInformationView({
             el: '.checkout__delivery-information',
@@ -315,7 +316,6 @@ VOLO.doBootstrap = function(configuration) {
         checkoutModel,
         checkoutInformationValidationFormView,
         loginButtonView,
-        existingUserLoginView,
         cartIconView,
         restaurantsView,
         userAddressCollection = VOLO.createUserAddressCollection(VOLO.jsonUserAddress, VOLO.customer)
@@ -342,12 +342,21 @@ VOLO.doBootstrap = function(configuration) {
         restaurantsView = VOLO.createRestaurantsView();
     }
 
+    if ($('.header__account').length > 0) {
+        loginButtonView = VOLO.createLoginButtonView(VOLO.customer);
+        var $registerButton = $('.create_account__login__button');
+
+        if ($registerButton.length > 0) {
+            VOLO.createRegistrationEvent($registerButton, loginButtonView);
+        }
+    }
+
     var $checkoutMain = $('.checkout__steps');
     if ($checkoutMain.length > 0) {
         cartModel = VOLO.createCartModel(VOLO.jsonCart);
         checkoutModel = VOLO.createCheckoutModel(cartModel, locationModel, $checkoutMain.data('vendor_id'));
 
-        var checkoutViews = VOLO.createCheckoutViews(cartModel, checkoutModel, locationModel, userAddressCollection);
+        var checkoutViews = VOLO.createCheckoutViews(cartModel, checkoutModel, locationModel, userAddressCollection, loginButtonView);
         gtmCheckoutValidationView = checkoutViews.checkoutDeliveryValidationView;
         checkoutInformationValidationFormView = checkoutViews.checkoutPageView.checkoutInformationValidationFormView;
         VOLO.renderCheckoutViews(checkoutViews);
@@ -359,12 +368,12 @@ VOLO.doBootstrap = function(configuration) {
     }
 
     if ($('.header__account').length > 0) {
-        loginButtonView = VOLO.createLoginButtonView(VOLO.customer);
-        var $registerButton = $('.create_account__login__button');
-
-        if ($registerButton.length > 0) {
-            VOLO.createRegistrationEvent($registerButton, loginButtonView);
-        }
+        //loginButtonView = VOLO.createLoginButtonView(VOLO.customer);
+        //var $registerButton = $('.create_account__login__button');
+        //
+        //if ($registerButton.length > 0) {
+        //    VOLO.createRegistrationEvent($registerButton, loginButtonView);
+        //}
 
         if ($('body').hasClass('show-change-password-modal') && $('.header__account__login-text').length > 0) {
             loginButtonView.showModalResetPassword(location.pathname.split('/')[4]);
@@ -383,11 +392,6 @@ VOLO.doBootstrap = function(configuration) {
         VOLO.orderTrackingInterval = setInterval(VOLO.OrderTracking, 60000);
     }
 
-    if ($('#checkout-error-existing-user').length > 0) {
-        existingUserLoginView = VOLO.createExistingUserLoginView();
-        existingUserLoginView.render();
-    }
-
     if ($('#profile-password-form').length > 0) {
         VOLO.createProfileView();
     }
@@ -403,7 +407,6 @@ VOLO.doBootstrap = function(configuration) {
         checkoutDeliveryValidationView: gtmCheckoutValidationView,
         checkoutInformationValidationFormView: checkoutInformationValidationFormView,
         loginButtonView: loginButtonView,
-        existingUserLoginView: existingUserLoginView,
         restaurantsView: restaurantsView
     });
 

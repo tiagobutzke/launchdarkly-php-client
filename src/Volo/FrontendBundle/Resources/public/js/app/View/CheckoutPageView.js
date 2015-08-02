@@ -18,7 +18,8 @@ var CheckoutPageView = Backbone.View.extend({
         this.contactInformationView = new VOLO.CheckoutContactInformationView({
             el: this.$('.checkout__contact-information'),
             customerModel: this.customerModel,
-            userAddressCollection: this.userAddressCollection
+            userAddressCollection: this.userAddressCollection,
+            loginView: options.loginView
         });
         this.timePickerView = new TimePickerView({
             model: options.cartModel,
@@ -169,7 +170,6 @@ var CheckoutPageView = Backbone.View.extend({
         } else if (exists) {
             this.contactInformationView.renderExistingUser();
         } else {
-            alert('500 error');
             console.log(data);
         }
         this.spinner.stop();

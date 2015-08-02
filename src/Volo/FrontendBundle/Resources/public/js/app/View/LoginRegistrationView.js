@@ -53,29 +53,39 @@ var LoginRegistrationView = Backbone.View.extend({
         _.bindAll(this);
         this.queryParams = options.queryParams || {};
         this.address = options.address;
+        this.customerModel = options.customerModel;
+        this.templateLogin = _.template($('#template-login').html());
+        this.templateRegistration = _.template($('#template-registration').html());
     },
 
     render: function() {
-        this.$('.modal-content').load(Routing.generate('login', this.queryParams), function() {
-            this.$el.modal();
-            this._bindLoginView();
-        }.bind(this));
+        this.$('.modal-content').html(this.templateLogin());
+        this.$el.modal();
+        this._bindLoginView();
 
         return this;
     },
 
-    renderRegistration: function(customer) {
-        this.$('.modal-content').load(Routing.generate('customer.create'), function() {
-            this.$el.modal();
-            this._bindRegisterValidationView();
+    setUsername: function (username) {
+        this.$('#username').val(username);
+    },
 
-            if (customer) {
-                this.$('#contact-information-first-name').val(customer.get('first_name'));
-                this.$('#contact-information-last-name').val(customer.get('last_name'));
-                this.$('#contact-information-email').val(customer.get('email'));
-                this.$('#contact-information-mobile-number').val(customer.getFullMobileNumber());
-            }
-        }.bind(this));
+    setErrorMessage: function (errorMessage) {
+        this.$('.modal-error-message').html(errorMessage);
+        this.$('.modal-error-message').removeClass('hide');
+    },
+
+    renderRegistration: function() {
+        this.$('.modal-content').html(this.templateRegistration());
+        this.$el.modal();
+        this._bindRegisterValidationView();
+
+        if (this.customerModel) {
+            this.$('#contact-information-first-name').val(this.customerModel.get('first_name'));
+            this.$('#contact-information-last-name').val(this.customerModel.get('last_name'));
+            this.$('#contact-information-email').val(this.customerModel.get('email'));
+            this.$('#contact-information-mobile-number').val(this.customerModel.getFullMobileNumber());
+        }
 
         return this;
     },
@@ -93,7 +103,7 @@ var LoginRegistrationView = Backbone.View.extend({
     },
 
     events: {
-        'click .register-link': '_loadRegistrationFormIntoLoginModal',
+        'click .register-link': 'renderRegistration',
         'click .login-link': 'render',
         'click .forgot-password-link': '_loadForgotPasswordFormIntoLoginModal',
         'submit .forgot-password-form': '_handingSubmitOfLostPasswordForm',
@@ -108,10 +118,6 @@ var LoginRegistrationView = Backbone.View.extend({
         this._unbindRegisterValidationView();
         this.stopListening();
         this.undelegateEvents();
-    },
-
-    _loadRegistrationFormIntoLoginModal: function() {
-        this.$('.modal-content').load(Routing.generate('customer.create'), this._bindRegisterValidationView);
     },
 
     _loadForgotPasswordFormIntoLoginModal: function() {
@@ -205,6 +211,7 @@ var LoginRegistrationView = Backbone.View.extend({
 
     _closeLoginRegistrationOverlay: function() {
         this.$el.modal('hide');
+        this.$('.modal-error-message').text('').addClass('hide');
     },
 
     _handleFormSubmit: function($form, $modalContent) {

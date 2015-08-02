@@ -23,7 +23,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
 
         this.customerModel = options.customerModel;
         this.userAddressCollection = options.userAddressCollection;
-        this.existingUserLoginView = null;
+        this.loginView = options.loginView;
 
         this._jsValidationView = new View({
             el: this.$('#contact-information-form'),
@@ -77,16 +77,10 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         this.$('.customer_phone_number').html(_.escape(this.customerModel.getFullMobileNumber()));
     },
 
-    renderExistingUser: function () {
-        if (this.existingUserLoginView) {
-            this.existingUserLoginView.unbind();
-        }
-        this.existingUserLoginView = new ExistingUserLoginView({
-            el: this.$('#show-login-overlay'),
-            username: this.$('#contact-information-email').val(),
-            address: this.userAddressCollection.first()
-        });
-        this.existingUserLoginView.render();
+    _openLoginModal: function () {
+        this.loginView.showLoginModal();
+        this.loginView.setUsername(this.$('#contact-information-email').val());
+        this.loginView.setErrorMessage(this.$('#checkout-edit-contact-information').data('error-message-key'));
     },
 
     unbind: function () {
@@ -192,7 +186,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
             dataType: 'json',
             success: function (response) {
                 if (response.exists) {
-                    this.renderExistingUser();
+                    this._openLoginModal();
                 }
             }.bind(this)
         });

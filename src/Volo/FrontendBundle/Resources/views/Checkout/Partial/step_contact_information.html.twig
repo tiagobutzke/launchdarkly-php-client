@@ -16,7 +16,7 @@
                 <div class="customer_email"></div>
                 <div class="customer_phone_number"></div>
             </div>
-            <div id="checkout-edit-contact-information" class="hide">
+            <div id="checkout-edit-contact-information" class="hide" data-error-message-key="{% trans %}checkout.user_already_exists{% endtrans %}">
                 {% include('VoloFrontendBundle:Checkout/Partial:contact_information_form.html.twig') with {action: ''} %}
             </div>
         </div>
