@@ -284,9 +284,10 @@ VOLO.OrderTracking = function () {
 
 VOLO.createProfileView = function () {
     var profilePasswordFormView = new VOLO.ProfilePasswordFormView({
-        el: '#profile-password-form'
+        el: '#profile-contact-information-form'
     });
 
+    VOLO.profilePasswordFormView = profilePasswordFormView;
     VOLO.views.push(profilePasswordFormView);
 
     return profilePasswordFormView;
@@ -374,7 +375,7 @@ VOLO.doBootstrap = function(configuration) {
         VOLO.orderTrackingInterval = setInterval(VOLO.OrderTracking, 60000);
     }
 
-    if ($('#profile-password-form').length > 0) {
+    if ($('#profile-contact-information-form').length > 0) {
         VOLO.createProfileView();
     }
 

@@ -27,7 +27,7 @@
                     {% if isChangePasswordSuccess == true %}
                         <div class="form__success-message form__success-message--above-form">{% trans %}customer.change_password.success{% endtrans %}</div>
                     {% endif %}
-                    <form action="{{ path('profile_index') }}" id="contact-information-form" method="post" role="form">
+                    <form action="{{ path('profile_index') }}" id="profile-contact-information-form" method="post" role="form" novalidate>
                         <div class="form-group">
                             <input type="password" class="form-control" id="old_password"
                                    name="password_form[old_password]" value="" required="true"
