@@ -2,6 +2,7 @@
 
 namespace Volo\FrontendBundle\Controller\Api;
 
+use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,6 +32,16 @@ class CustomerController extends BaseApiController
             $data = $this->decodeJsonContent($request);
 
             $customer = $this->get('volo_frontend.service.customer')->updateCustomer($data);
+
+        } catch (ApiErrorException $e) {
+            $data = json_decode($e->getJsonErrorMessage(), true);
+            if (isset($data['data']['exception_type'])
+                && 'ApiObjectDoesNotExistException' === $data['data']['exception_type']) {
+
+                throw $this->createNotFoundException(sprintf('Address not found: "%s"', $id));
+            }
+
+            return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
 
         } catch (PhoneNumberValidationException $e) {
             return new JsonResponse([

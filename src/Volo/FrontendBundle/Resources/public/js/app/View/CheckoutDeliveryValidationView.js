@@ -29,11 +29,11 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
 
     events: function() {
         return _.extend({}, ValidationView.prototype.events, {
-            'click button': '_submit'
+            'click button': $.noop
         });
     },
 
-    _submit: function() {
+    _submit: function(callback) {
         var validate = this._validateForm();
         if (this._canSubmit) {
             return true;
@@ -41,7 +41,7 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
 
         validate.done(function() {
             this._canSubmit = true;
-            this.$('#delivery-information-form-button').click();
+            callback();
         }.bind(this));
 
         validate.fail(function() {

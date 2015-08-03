@@ -159,6 +159,8 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
             }),
             customer = form.customer;
 
+        this.$('.form__error-message').remove();
+
         this._isExistingUser(customer.email)
             .then(function (response) {
                 if (response.exists) {
@@ -170,8 +172,13 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
                         this._onSuccessMobileNumberValidation(customer, response);
                     }.bind(this),
                     error: function (response) {
-                        this.$('.error_msg.invalid_number').data({'validation-msg': _.get(response, 'responseJSON.error.mobile_number')});
-                        this._jsValidationView._displayMessage(this.$('#contact-information-mobile-number')[0]);
+                        var errorMessage = _.get(response, 'responseJSON.error.mobile_number');
+                        if (errorMessage) {
+                            this._jsValidationView.createErrorMessage(
+                                _.get(response, 'responseJSON.error.mobile_number'),
+                                this.$('#contact-information-mobile-number')[0]
+                            );
+                        }
                     }.bind(this)
                 });
             }.bind(this));
@@ -204,7 +211,8 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         customer.mobile_country_code = response.mobile_country_code;
 
         this.customerModel.save(customer, {
-            success: this._onCustomerSaveSuccess
+            success: this._onCustomerSaveSuccess,
+            error: this._onCustomerSaveError
         });
     },
 
@@ -215,4 +223,14 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
             newsletterSignup: customer.get('is_newsletter_subscribed')
         });
     },
+
+    _onCustomerSaveError: function(model, response) {
+        _.each(_.get(response,  'responseJSON.error.errors', []), function (error) {
+            var selector = 'input[name=\'customer['+ error.field_name +']\']',
+                element = this.$(selector);
+            _.each(_.get(error, 'violation_messages', []), function (message) {
+                this._jsValidationView.createErrorMessage(message, element[0]);
+            }, this);
+        }, this);
+    }
 });

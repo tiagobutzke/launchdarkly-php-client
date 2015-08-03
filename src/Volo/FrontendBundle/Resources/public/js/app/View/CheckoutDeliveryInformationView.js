@@ -8,7 +8,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
     events: {
         "click .checkout__title-link__text--add-address-delivery": '_openAddressForm',
         "click .checkout__title-link__text--cancel-delivery": '_closeAddressForm',
-        "submit #delivery-information-form": '_createAddress'
+        "submit #delivery-information-form": '_submit'
     },
 
     initialize: function (options) {
@@ -155,6 +155,10 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
         }
     },
 
+    _submit: function () {
+        return this.checkoutDeliveryValidationView._submit(this._createAddress);
+    },
+
     _createAddress: function () {
         var data = {}, model;
 
@@ -220,8 +224,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
             var selector = 'input[name=\'customer_address['+ error.field_name +']\']',
                 element = this.$(selector);
             _.each(_.get(error, 'violation_messages', []), function (message) {
-                var e = $('<span class="form__error-message"></span>').text(message);
-                element.after(e);
+                this.checkoutDeliveryValidationView.createErrorMessage(message, element[0]);
             }, this);
         }, this);
 
