@@ -15,6 +15,7 @@ var CheckoutPageView = Backbone.View.extend({
         this.configuration = options.configuration;
         this.customerModel = options.customerModel;
         this.userAddressCollection = options.userAddressCollection;
+        this.locationModel = options.locationModel;
         this.contactInformationView = new VOLO.CheckoutContactInformationView({
             el: this.$('.checkout__contact-information'),
             customerModel: this.customerModel,
@@ -25,9 +26,10 @@ var CheckoutPageView = Backbone.View.extend({
         this.checkoutDeliveryInformationView = new VOLO.CheckoutDeliveryInformationView({
             el: this.$('.checkout__delivery-information'),
             model: this.model,
+            vendorId: this.vendorId,
             collection: this.userAddressCollection,
             customerModel: this.customerModel,
-            locationModel: options.locationModel,
+            locationModel: this.locationModel,
             deliveryCheck: options.deliveryCheck
         });
 
@@ -72,7 +74,7 @@ var CheckoutPageView = Backbone.View.extend({
     },
 
     renderPayButton: function () {
-        var isButtonDisabled = this.userAddressCollection.length === 0 ||
+        var isButtonDisabled = this.userAddressCollection.filterByCityAndVendorId(this.locationModel.get('city'), this.vendorId).length === 0 ||
             (!this.model.canBeSubmitted() ||
                 this.$('#delivery-information-form').is(':visible') ||
                 this.$('#contact-information-form').is(':visible')
@@ -87,7 +89,7 @@ var CheckoutPageView = Backbone.View.extend({
     },
 
     _switchPaymentFormVisibility: function () {
-        if (this.userAddressCollection.length > 0 && this.customerModel.isValid()) {
+        if (this.userAddressCollection.filterByCityAndVendorId(this.locationModel.get('city'), this.vendorId).length > 0 && this.customerModel.isValid()) {
             this.$('.checkout__payment').removeClass('checkout__step--reduced');
             this.$('.checkout__payment .checkout__step__items').removeClass('hide');
             this._refreshBlazy();

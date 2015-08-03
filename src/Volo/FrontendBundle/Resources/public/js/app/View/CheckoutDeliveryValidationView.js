@@ -33,22 +33,8 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
         });
     },
 
-    _submit: function(callback) {
-        var validate = this._validateForm();
-        if (this._canSubmit) {
-            return true;
-        }
-
-        validate.done(function() {
-            this._canSubmit = true;
-            callback();
-        }.bind(this));
-
-        validate.fail(function() {
-            this._canSubmit = false;
-        }.bind(this));
-
-        return false;
+    submit: function(callback) {
+        this._validateForm().done(callback);
     },
 
     _toggleContinueButton: function() {
