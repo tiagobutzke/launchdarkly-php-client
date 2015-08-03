@@ -24,6 +24,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         this.customerModel = options.customerModel;
         this.userAddressCollection = options.userAddressCollection;
         this.loginView = options.loginView;
+        this.checkoutModel = options.checkoutModel;
 
         this._jsValidationView = new View({
             el: this.$('#contact-information-form'),
@@ -85,6 +86,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         this.loginView.showLoginModal();
         this.loginView.setUsername(this.$('#contact-information-email').val());
         this.loginView.setErrorMessage(this.$('#checkout-edit-contact-information').data('error-message-key'));
+        this.loginView.setAddress(this.userAddressCollection.get(this.checkoutModel.get('address_id')));
     },
 
     unbind: function () {

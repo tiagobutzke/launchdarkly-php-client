@@ -51,8 +51,7 @@ var LoginRegistrationView = Backbone.View.extend({
         options = options || {};
         console.log('LoginRegistrationView.initialize ', this.cid);
         _.bindAll(this);
-        this.queryParams = options.queryParams || {};
-        this.address = options.address;
+        this.address = null;
         this.customerModel = options.customerModel;
         this.templateLogin = _.template($('#template-login').html());
         this.templateRegistration = _.template($('#template-registration').html());
@@ -73,6 +72,10 @@ var LoginRegistrationView = Backbone.View.extend({
     setErrorMessage: function (errorMessage) {
         this.$('.modal-error-message').html(errorMessage);
         this.$('.modal-error-message').removeClass('hide');
+    },
+
+    setAddress: function (address) {
+        this.address = address;
     },
 
     renderRegistration: function() {
@@ -212,6 +215,7 @@ var LoginRegistrationView = Backbone.View.extend({
     _closeLoginRegistrationOverlay: function() {
         this.$el.modal('hide');
         this.$('.modal-error-message').text('').addClass('hide');
+        this.address = null;
     },
 
     _handleFormSubmit: function($form, $modalContent) {

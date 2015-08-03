@@ -34,6 +34,10 @@ var LoginButtonView = Backbone.View.extend({
         this.loginRegistrationView.setErrorMessage(errorMessage);
     },
 
+    setAddress: function (address) {
+        this.loginRegistrationView.setAddress(address);
+    },
+
     showRegistrationModal: function() {
         this.loginRegistrationView.renderRegistration();
     },

@@ -20,7 +20,8 @@ var CheckoutPageView = Backbone.View.extend({
             el: this.$('.checkout__contact-information'),
             customerModel: this.customerModel,
             userAddressCollection: this.userAddressCollection,
-            loginView: options.loginView
+            loginView: options.loginView,
+            checkoutModel: this.model
         });
 
         this.checkoutDeliveryInformationView = new VOLO.CheckoutDeliveryInformationView({
@@ -47,6 +48,7 @@ var CheckoutPageView = Backbone.View.extend({
         this.listenTo(this.model, 'payment:error', this.handlePaymentError, this);
         this.listenTo(this.userAddressCollection, 'update', this.renderContactInformationStep);
 
+        this.listenTo(this.userAddressCollection, 'update', this._switchPaymentFormVisibility);
         this.listenTo(this.customerModel, 'change', this._switchPaymentFormVisibility);
 
         this.listenTo(this.contactInformationView, 'form:open', this.renderPayButton);
