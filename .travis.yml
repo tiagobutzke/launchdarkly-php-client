@@ -6,9 +6,15 @@ env:
    global:
      - COUNTRY_CODE=test
 
+sudo: false
+
+addons:
+  apt:
+    packages:
+      - graphicsmagick
+      - libgraphicsmagick1-dev
+
 before_install:
-    - sudo apt-get update
-    - sudo apt-get install -y graphicsmagick libgraphicsmagick1-dev
     - npm install -g grunt-cli
     - npm install -g bower
     - gem update --system
