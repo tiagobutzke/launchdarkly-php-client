@@ -36,6 +36,12 @@
                 {% set deliveryTime = date(status.confirmed_delivery_time.date, status.confirmed_delivery_time.timezone)|formatTime %}
                 {% trans with {'%deliveryTime%': deliveryTime }%}title.it_should_arrive_at %deliveryTime%{% endtrans %}
             </h2>
+            {% if (order.reference == 'cod') %}
+                {% set totalAmount = status.total_value|price %}
+                <span class="tracking-hero__pay_cash-on-delivery">
+                    {% trans with {'%totalAmount%': totalAmount }%}title.please_pay_the_driver %totalAmount%{% endtrans %}
+                </span>
+            {% endif %}
 
             {#TODO app - show app info when app is available #}
             {#<div class="tracking-header__app">#}

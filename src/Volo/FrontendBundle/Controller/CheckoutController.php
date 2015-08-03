@@ -7,7 +7,6 @@ use Foodpanda\ApiSdk\Entity\Customer\Customer;
 use Foodpanda\ApiSdk\Entity\Order\GuestCustomer;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
-use Foodpanda\ApiSdk\Exception\ApiException;
 use Foodpanda\ApiSdk\Provider\CustomerProvider;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -16,6 +15,7 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -34,7 +34,7 @@ class CheckoutController extends BaseController
      * @Route("/{vendorCode}/delivery", name="checkout_delivery_information", options={"expose"=true})
      * @Method({"GET", "POST"})
      *
-     * @param string  $vendorCode
+     * @param string $vendorCode
      *
      * @return array
      */
@@ -45,7 +45,12 @@ class CheckoutController extends BaseController
     }
 
     /**
-     * @Route("/validate/mobile-number/{phoneNumber}", name="checkout_validate_phone_number", defaults={"_format": "json"}, options={"expose"=true}, condition="request.isXmlHttpRequest()")
+     * @Route(
+     *      "/validate/mobile-number/{phoneNumber}",
+     *      name="checkout_validate_phone_number",
+     *      defaults={"_format": "json"}, options={"expose"=true},
+     *      condition="request.isXmlHttpRequest()"
+     * )
      * @Method({"GET"})
      *
      * @param string $phoneNumber
@@ -71,7 +76,13 @@ class CheckoutController extends BaseController
     }
 
     /**
-     * @Route("/validate/customer-email/{email}", name="checkout_validate_email", defaults={"_format": "json"}, options={"expose"=true}, condition="request.isXmlHttpRequest()")
+     * @Route(
+     *      "/validate/customer-email/{email}",
+     *      name="checkout_validate_email",
+     *      defaults={"_format": "json"},
+     *      options={"expose"=true},
+     *      condition="request.isXmlHttpRequest()"
+     * )
      * @Method({"GET"})
      *
      * @param string $email
@@ -92,7 +103,9 @@ class CheckoutController extends BaseController
             );
         } catch (ApiErrorException $e) {
             $error = json_decode($e->getJsonErrorMessage(), true);
-            if (isset($error['data']['exception_type']) && 'ApiCustomerAlreadyExistsException' === $error['data']['exception_type']) {
+            if (isset($error['data']['exception_type']) &&
+                'ApiCustomerAlreadyExistsException' === $error['data']['exception_type']
+            ) {
                 $isExistingUser = true;
             }
         }
@@ -108,7 +121,7 @@ class CheckoutController extends BaseController
      * @Template()
      *
      * @param Request $request
-     * @param string  $vendorCode
+     * @param string $vendorCode
      *
      * @return array
      */
@@ -119,11 +132,11 @@ class CheckoutController extends BaseController
         } catch (ApiErrorException $exception) {
             throw new NotFoundHttpException('Vendor invalid', $exception);
         }
-        $cart    = $this->getCart($vendor);
-        $session = $this->get('session');
+        $session = $request->getSession();
+        $cart = $this->getCart($session, $vendor);
 
         $configuration = $this->get('volo_frontend.service.configuration')->getConfiguration();
-        $location = $this->get('volo_frontend.service.customer_location')->get($request->getSession());
+        $location = $this->get('volo_frontend.service.customer_location')->get($session);
         $serializer = $this->get('volo_frontend.api.serializer');
 
         $customerLocation = $this->get('volo_frontend.service.customer_location')->get($session);
@@ -133,16 +146,16 @@ class CheckoutController extends BaseController
         ];
 
         $viewData = [
-            'cart'             => $this->get('volo_frontend.service.cart_manager')->calculateCart($cart),
-            'vendor'           => $vendor,
-            'adyen_public_key' => $configuration->getAdyenEncryptionPublicKey(),
-            'address'          => is_array($location) ? $location[CustomerLocationService::KEY_ADDRESS] : '',
-            'location'         => $location,
-            'isDeliverable'    => is_array($location),
-            'default_address'  => $restaurantLocation,
-            'customer'         => $serializer->normalize(new Customer()),
+            'cart'               => $this->get('volo_frontend.service.cart_manager')->calculateCart($cart),
+            'vendor'             => $vendor,
+            'adyen_public_key'   => $configuration->getAdyenEncryptionPublicKey(),
+            'address'            => is_array($location) ? $location[CustomerLocationService::KEY_ADDRESS] : '',
+            'location'           => $location,
+            'isDeliverable'      => is_array($location),
+            'default_address'    => $restaurantLocation,
+            'customer'           => $serializer->normalize(new Customer()),
             'customer_addresses' => [],
-            'errorMessages'    => [],
+            'errorMessages'      => [],
         ];
 
         $viewData = $this->addViewDataForAuthenticatedUser($vendor, $viewData);
@@ -167,18 +180,25 @@ class CheckoutController extends BaseController
 
             $viewData['customer_addresses'] = $serializer->normalize($customerAddresses);
             $viewData['customer'] = $serializer->normalize($token->getAttributes()['customer']);
-            $viewData['customer_cards'] = $this->getCustomerProvider()->getAdyenCards($token->getAccessToken())['items'];
+            $viewData['customer_cards']
+                = $this->getCustomerProvider()->getAdyenCards($token->getAccessToken())['items'];
         }
 
         return $viewData;
     }
 
     /**
-     * @Route("/{vendorCode}/pay", name="checkout_place_order", defaults={"_format": "json"}, options={"expose"=true}, condition="request.isXmlHttpRequest()")
+     * @Route(
+     *      "/{vendorCode}/pay",
+     *      name="checkout_place_order",
+     *      defaults={"_format": "json"},
+     *      options={"expose"=true},
+     *      condition="request.isXmlHttpRequest()"
+     * )
      * @Method({"POST"})
      *
      * @param Request $request
-     * @param string  $vendorCode
+     * @param string $vendorCode
      *
      * @return JsonResponse
      */
@@ -200,7 +220,7 @@ class CheckoutController extends BaseController
         } catch (ApiErrorException $e) {
             return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
         }
-        $cart = $this->getCart($vendor);
+        $cart = $this->getCart($request->getSession(), $vendor);
 
         $data['client_ip'] = $request->getClientIp();
 
@@ -213,14 +233,19 @@ class CheckoutController extends BaseController
                 );
             } catch (ApiErrorException $e) {
                 $error = json_decode($e->getJsonErrorMessage(), true);
-                if (isset($error['data']['exception_type']) && 'ApiCustomerAlreadyExistsException' === $error['data']['exception_type']) {
+                if (isset($error['data']['exception_type']) &&
+                    'ApiCustomerAlreadyExistsException' === $error['data']['exception_type']
+                ) {
                     return new JsonResponse([
                         'exists' => true
                     ], Response::HTTP_BAD_REQUEST);
                 }
             }
 
-            $request->getSession()->set(OrderController::SESSION_GUEST_ORDER_ACCESS_TOKEN, $guestCustomer->getAccessToken());
+            $request->getSession()->set(
+                OrderController::SESSION_GUEST_ORDER_ACCESS_TOKEN,
+                $guestCustomer->getAccessToken()
+            );
 
             $customer = $guestCustomer->getCustomer();
             $accessToken = new AccessToken($guestCustomer->getAccessToken(), 'bearer');
@@ -232,13 +257,18 @@ class CheckoutController extends BaseController
         }
 
         try {
-            $apiResult = $this->handleOrder($cart, $data, $guestCustomer);
+            $apiResult = $this->handleOrder($request->getSession(), $cart, $data, $guestCustomer);
         } catch (ApiErrorException $e) {
             return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
         }
 
         if (isset($data['isSubscribedNewsletter'])) {
-            $this->updateSubscriptionNewsletter((bool) $data['isSubscribedNewsletter'], $customer, $vendor, $accessToken);
+            $this->updateSubscriptionNewsletter(
+                (bool)$data['isSubscribedNewsletter'],
+                $customer,
+                $vendor,
+                $accessToken
+            );
         }
 
         // if we're using hosted payment, at this point the order is placed but not paid.
@@ -253,13 +283,13 @@ class CheckoutController extends BaseController
     }
 
     /**
+     * @param SessionInterface $session
      * @param Vendor $vendor
      *
      * @return array
      */
-    protected function getCart(Vendor $vendor)
+    protected function getCart(SessionInterface $session, Vendor $vendor)
     {
-        $session = $this->get('session');
         $cart = $this->get('volo_frontend.service.cart_manager')->getCart($session, $vendor->getId());
 
         if ($cart === null || count($cart['products']) === 0) {
@@ -270,23 +300,28 @@ class CheckoutController extends BaseController
     }
 
     /**
+     * @param SessionInterface $session
      * @param array $cart
      * @param array $data
      * @param GuestCustomer $guestCustomer
      *
      * @return array
      */
-    protected function handleOrder(array $cart, array $data, GuestCustomer $guestCustomer = null)
-    {
+    protected function handleOrder(
+        SessionInterface $session,
+        array $cart,
+        array $data,
+        GuestCustomer $guestCustomer = null
+    ) {
         $orderManager = $this->get('volo_frontend.service.order_manager');
 
         $expectedAmount = $data['expected_total_amount'];
-        $paymentTypeId  = $data['payment_type_id'];
-
+        $paymentTypeId = $data['payment_type_id'];
+        $session->set(OrderController::SESSION_ORDER_PAYMENT_CODE, $data['payment_type_code']);
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             /** @var \Volo\FrontendBundle\Security\Token $token */
-            $token          = $this->get('security.token_storage')->getToken();
-            $addressId      = $data['customer_address_id'];
+            $token = $this->get('security.token_storage')->getToken();
+            $addressId = $data['customer_address_id'];
 
             $order = $orderManager->placeOrder(
                 $token->getAccessToken(),
@@ -296,7 +331,7 @@ class CheckoutController extends BaseController
                 $cart
             );
 
-            if ($order['hosted_payment_page_redirect'] === null) {
+            if ($order['hosted_payment_page_redirect'] === null && $data['payment_type_code'] !== 'cod') {
                 $orderManager->payment($token->getAccessToken(), $data + $order);
             }
         } else {
@@ -307,7 +342,7 @@ class CheckoutController extends BaseController
                 $cart
             );
 
-            if ($order['hosted_payment_page_redirect'] === null) {
+            if ($order['hosted_payment_page_redirect'] === null && $data['payment_type_code'] !== 'cod') {
                 $orderManager->guestPayment($order, $data['encrypted_payment_data'], $data['client_ip']);
             }
         }
@@ -337,8 +372,12 @@ class CheckoutController extends BaseController
      * @param Vendor $vendor
      * @param AccessToken $accessToken
      */
-    private function updateSubscriptionNewsletter($isSubscribedNewsletter, Customer $customer, Vendor $vendor, AccessToken $accessToken)
-    {
+    private function updateSubscriptionNewsletter(
+        $isSubscribedNewsletter,
+        Customer $customer,
+        Vendor $vendor,
+        AccessToken $accessToken
+    ) {
         try {
             if ($isSubscribedNewsletter) {
                 $this->get('volo_frontend.provider.newsletter')->subscribe(

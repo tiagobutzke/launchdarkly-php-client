@@ -3,20 +3,20 @@
 namespace Volo\FrontendBundle\Controller;
 
 use CommerceGuys\Guzzle\Oauth2\AccessToken;
-use Foodpanda\ApiSdk\Entity\Order\GuestCustomer;
+use Foodpanda\ApiSdk\Entity\Order\OrderPayment;
 use Foodpanda\ApiSdk\Exception\OrderNotFoundException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/orders")
  */
-class OrderController extends Controller
+class OrderController extends BaseController
 {
     const SESSION_GUEST_ORDER_ACCESS_TOKEN = 'guest_order_access_token';
+    const SESSION_ORDER_PAYMENT_CODE = 'order_payment_code';
 
     /**
      * @Route("/{orderCode}/tracking", name="order_tracking", options={"expose"=true})
@@ -28,14 +28,21 @@ class OrderController extends Controller
      */
     public function statusAction(Request $request, $orderCode)
     {
-        $session = $this->get('session');
+        $session = $request->getSession();
         $accessToken = $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')
             ? $this->get('security.token_storage')->getToken()->getAccessToken()
             : new AccessToken($session->get(static::SESSION_GUEST_ORDER_ACCESS_TOKEN), 'bearer');
         $orderProvider = $this->get('volo_frontend.provider.order');
         try {
-            $orderPayment = $orderProvider->fetchOrderPaymentInformation($orderCode, $accessToken);
             $status = $orderProvider->fetchOrderStatus($orderCode, $accessToken);
+            if ($session->get(static::SESSION_ORDER_PAYMENT_CODE) === 'cod') {
+                $orderPayment = new OrderPayment();
+                $orderPayment->setStatus('pending');
+                $orderPayment->setReference('cod');
+                $orderPayment->setAmount($status['total_value']);
+            } else {
+                $orderPayment = $orderProvider->fetchOrderPaymentInformation($orderCode, $accessToken);
+            }
         } catch (OrderNotFoundException $e) {
             throw $this->createNotFoundException('Order not found.', $e);
         }

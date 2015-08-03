@@ -18,6 +18,7 @@ var PaymentTypeView = Backbone.View.extend({
         'click .paypal': '_displayPayPal',
         'click .adyen': '_displayCreditCard',
         'click .adyen_hpp': '_displayAdyenHpp',
+        'click .cod': '_displayCashOnDelivery',
         'click .checkout__payment__credit-card-fields-help-toggle': '_toggleCreditCardHelp',
         'click #checkout-add-credit-card-link': '_toggleNewCreditCard',
         'click .checkout__saved-payment-options__credit-card-radio': '_selectSavedCreditCard'
@@ -32,6 +33,18 @@ var PaymentTypeView = Backbone.View.extend({
         this.$('.checkout__payment__credit-card-fields-help').toggle();
     },
 
+    _displayCashOnDelivery: function() {
+        var $cod = this.$('.cod');
+        this.checkoutModel.set('payment_type_code', $cod.data('payment_type_code'));
+        this.checkoutModel.set('payment_type_id', $cod.data('payment_type_id'));
+        this.$('.checkout__payment-options__option-description--paypal').addClass('hide');
+        this.$('.checkout__payment-options__option-description--adyen').addClass('hide');
+        this.$('.checkout__payment-options__option-description--cod').removeClass('hide');
+        this.$('.checkout__saved-payment-options__list').addClass('hide');
+        this.$('#checkout-payment-form').addClass('hide');
+        this._activatePaymentMethod($cod);
+    },
+
     _displayCreditCard: function() {
         var $creditCardNode = this.$('.adyen');
 
@@ -40,6 +53,7 @@ var PaymentTypeView = Backbone.View.extend({
 
         this.$('.checkout__payment-options__option-description--paypal').addClass('hide');
         this.$('.checkout__payment-options__option-description--adyen').addClass('hide');
+        this.$('.checkout__payment-options__option-description--cod').addClass('hide');
         this.$('#checkout-payment-form').toggleClass('hide', this.$(".checkout__saved-payment-options__credit-card-radio").length > 0);
         this.$('#checkout-saved-payment-options').removeClass('hide');
         this.$('.checkout__saved-payment-options__list').removeClass('hide');
@@ -55,6 +69,7 @@ var PaymentTypeView = Backbone.View.extend({
 
         this.$('.checkout__payment-options__option-description--adyen').removeClass('hide');
         this.$('.checkout__payment-options__option-description--paypal').addClass('hide');
+        this.$('.checkout__payment-options__option-description--cod').addClass('hide');
         this.$('#checkout-saved-payment-options').addClass('hide');
         this.$('.checkout__saved-payment-options__list').addClass('hide');
         this.$('#checkout-payment-form').addClass('hide');
@@ -71,6 +86,7 @@ var PaymentTypeView = Backbone.View.extend({
 
         this.$('.checkout__payment-options__option-description--paypal').removeClass('hide');
         this.$('.checkout__payment-options__option-description--adyen').addClass('hide');
+        this.$('.checkout__payment-options__option-description--cod').addClass('hide');
         this.$('#checkout-payment-form').addClass('hide');
         this.$('#checkout-saved-payment-options').addClass('hide');
         this.$('.checkout__saved-payment-options__list').addClass('hide');

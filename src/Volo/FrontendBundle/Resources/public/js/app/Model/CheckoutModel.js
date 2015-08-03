@@ -34,7 +34,7 @@ var CheckoutModel = Backbone.Model.extend({
         }
 
         if (this.get('is_guest_user')) {
-            if (_.indexOf(['paypal', 'adyen_hpp'], this.get('payment_type_code')) != -1) {
+            if (_.indexOf(['paypal', 'adyen_hpp', 'cod'], this.get('payment_type_code')) != -1) {
                 return true;
             }
 
@@ -66,7 +66,8 @@ var CheckoutModel = Backbone.Model.extend({
             payment_type_id: this.get('payment_type_id'),
             customer: customer.toJSON(),
             address: address.toJSON(),
-            isSubscribedNewsletter: isSubscribedNewsletter
+            isSubscribedNewsletter: isSubscribedNewsletter,
+            payment_type_code: this.get('payment_type_code')
         };
 
         this.trigger('payment:attempt_to_pay', {

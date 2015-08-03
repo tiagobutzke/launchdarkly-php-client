@@ -34,6 +34,13 @@
                                      alt="alt-text"/>
                                 {% set label_credit_cart = 'payment.label_adyen_hpp' %}
                             {% endif %}
+                            {% if payment.paymentTypeCode == 'cod' %}
+                                <img class="checkout__payment-option__image b-lazy"
+                                     src=data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+                                     data-src="{{ asset('img/checkout/cod.png') }}|{{ asset('img/checkout/cod-2x.png') }}"
+                                     alt="alt-text"/>
+                                {% set label_credit_cart = 'payment.cash_on_delivery' %}
+                            {% endif %}
                         </div>
                         <div class="checkout__payment-option__label">
                             <i class="checkout__payment-option__label-icon icon-check"></i>{{ label_credit_cart|trans }}
@@ -55,6 +62,15 @@
                 </div>
                 <div class="checkout__payment-options__option-description-text">
                     {% trans %}generic.payment_adyen_hpp_description_text{% endtrans %}
+                </div>
+            </div>
+
+            <div class="checkout__payment-options__option-description checkout__payment-options__option-description--cod hide">
+                <div class="checkout__payment-options__option-description-title">
+                    {% trans %}generic.payment_cod_description_title{% endtrans %}
+                </div>
+                <div class="checkout__payment-options__option-description-text">
+                    {% trans %}generic.payment_cod_description_text{% endtrans %}
                 </div>
             </div>
         </div>
