@@ -96,7 +96,7 @@ VOLO.createCartViews = function (cartModel, locationModel, gtmService) {
     };
 };
 
-VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel, userAddressCollection, loginButtonView) {
+VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel, userAddressCollection, loginButtonView, customerModel) {
     var views = {},
         deliveryCheck = new DeliveryCheck();
 
@@ -122,7 +122,7 @@ VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel, us
             configuration: VOLO.configuration,
             model: checkoutModel,
             userAddressCollection: userAddressCollection,
-            customerModel: VOLO.customer,
+            customerModel: customerModel,
             cartModel: cartModel,
             loginView: loginButtonView,
             locationModel: locationModel,
@@ -134,7 +134,7 @@ VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel, us
         views.paymentTypeView = new PaymentTypeView({
             el: '.checkout__payment',
             checkoutModel: checkoutModel,
-            customerModel: VOLO.customer
+            customerModel: customerModel
         });
     }
 
@@ -341,7 +341,7 @@ VOLO.doBootstrap = function(configuration) {
         cartModel = VOLO.createCartModel(VOLO.jsonCart);
         checkoutModel = VOLO.createCheckoutModel(cartModel, locationModel, $checkoutMain.data('vendor_id'));
 
-        checkoutViews = VOLO.createCheckoutViews(cartModel, checkoutModel, locationModel, userAddressCollection, loginButtonView);
+        checkoutViews = VOLO.createCheckoutViews(cartModel, checkoutModel, locationModel, userAddressCollection, loginButtonView, VOLO.customer);
         VOLO.renderCheckoutViews(checkoutViews);
     }
 

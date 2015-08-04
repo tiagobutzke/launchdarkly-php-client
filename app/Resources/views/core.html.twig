@@ -87,18 +87,6 @@
             </div>
             {% block footer %}{% endblock %}
         </div>
-        {% block footer_scripts %}
-            <script data-turbolinks-eval=always>
-                var VOLO = VOLO || {};
-                {% if is_customer_authenticated_fully() %}
-                    {% set customer = serialize(get_authenticated_customer()) %}
-                    {% set isGuest = 'false' %}
-                {% else %}
-                    {% set customer = '[]' %}
-                    {% set isGuest = 'true' %}
-                {% endif %}
-                VOLO.createCustomerModel({{ customer|raw }}, {{ isGuest }});
-            </script>
-        {% endblock %}
+        {% block footer_scripts %}{% endblock %}
     </body>
 </html>
