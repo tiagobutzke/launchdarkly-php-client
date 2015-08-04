@@ -27,6 +27,10 @@ var LoginButtonView = Backbone.View.extend({
         this.loginRegistrationView.renderRegistration(data);
     },
 
+    showModalResetPassword: function(code) {
+        this.loginRegistrationView.renderResetPassword(code);
+    },
+
     unbind: function() {
         this.stopListening();
         this.undelegateEvents();

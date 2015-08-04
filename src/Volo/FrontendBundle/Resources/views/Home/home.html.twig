@@ -2,7 +2,7 @@
 
 {% block title %}{% trans %}brand{% endtrans %} | {% trans %}meta_title.home_page{% endtrans %}{% endblock %}
 {% block gtm_page_type %}Home{% endblock %}
-{% block body_class %}home{% endblock %}
+{% block body_class %}home {{ showChangePasswordModal ? 'show-change-password-modal' : '' }}{% endblock %}
 
 {% block head_meta_seo %}
     <meta name="robots" content="index, follow">
