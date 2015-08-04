@@ -4,6 +4,7 @@ namespace Volo\FrontendBundle\Controller;
 
 use Foodpanda\ApiSdk\Entity\Cart\AbstractLocation;
 use Foodpanda\ApiSdk\Entity\Cart\CityLocation;
+use Foodpanda\ApiSdk\Entity\City\City;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
 use Foodpanda\ApiSdk\Entity\Vendor\VendorsCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -38,17 +39,16 @@ class LocationController extends Controller
      * @param Request $request
      * @param AbstractLocation $location
      * @param array $formattedLocation
-     * @param int $cityId
      * 
      * @return array
      */
-    public function locationAction(Request $request, AbstractLocation $location, array $formattedLocation, $cityId)
+    public function locationAction(Request $request, AbstractLocation $location, array $formattedLocation)
     {
-        if ($location instanceof CityLocation) {
-            $urlKeyFromApi = $request->attributes->get('cityUrlKeyFromApi');
-            if ($request->attributes->get('cityUrlKey') !== $urlKeyFromApi) {
-                return $this->redirectToRoute('volo_location_search_vendors_by_city', ['cityUrlKey' => $urlKeyFromApi]);
-            }
+        /** @var City $city */
+        $city = $request->attributes->get('cityObj');
+
+        if ($location instanceof CityLocation && $request->attributes->get('cityUrlKey') !== $city->getUrlKey()) {
+            return $this->redirectToRoute('volo_location_search_vendors_by_city', ['cityUrlKey' => $city->getUrlKey()]);
         }
 
         $vendors = $this->get('volo_frontend.provider.vendor')->findVendorsByLocation($location);
@@ -68,7 +68,8 @@ class LocationController extends Controller
             'vendors' => $vendors->getItems(),
             'openVendors' => $openVendors,
             'closedVendors' => $closedVendorsWithPreorder,
-            'cityId' => $cityId,
+            'city' => $city,
+            'hasQueryParams' => $request->query->count() > 0,
             'location' => $this->get('volo_frontend.service.customer_location')->get($request->getSession())
         ];
     }

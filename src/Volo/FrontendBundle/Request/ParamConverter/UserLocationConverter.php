@@ -61,9 +61,6 @@ class UserLocationConverter implements ParamConverterInterface
         $lat = $request->attributes->get('latitude', false);
         $lng = $request->attributes->get('longitude', false);
 
-        $request->attributes->set('cityId', null);
-        $request->attributes->set('cityUrlKeyFromApi', null);
-
         switch(true) {
             case $cityUrlKey:
                 $city = $this->findCityByCode($cityUrlKey);
@@ -79,8 +76,7 @@ class UserLocationConverter implements ParamConverterInterface
                     null
                 );
 
-                $request->attributes->set('cityId', $city->getId());
-                $request->attributes->set('cityUrlKeyFromApi', $city->getUrlKey());
+                $request->attributes->set('cityObj', $city);
                 break;
             case $areaId:
                 $convertedParameter = new AreaLocation($areaId);
@@ -103,6 +99,13 @@ class UserLocationConverter implements ParamConverterInterface
                     $gpsLocation[CustomerLocationService::KEY_PLZ],
                     $gpsLocation[CustomerLocationService::KEY_ADDRESS]
                 );
+
+                try {
+                    $city = $this->findCityByLocation($convertedParameter);
+                    $request->attributes->set('cityObj', $city);
+                } catch (\RuntimeException $e) {
+                    // no city ? we just continue
+                }
                 break;
             default:
                 $message = $this->translator->trans('customer.location.missing_keys');
@@ -130,12 +133,30 @@ class UserLocationConverter implements ParamConverterInterface
      */
     protected function findCityByCode($cityUrlKey)
     {
-         $filtered = $this->cityProvider->findAll()->getItems()->filter(function($element) use ($cityUrlKey) {
+        $filtered = $this->cityProvider->findAll()->getItems()->filter(function($element) use ($cityUrlKey) {
             /** @var City $element */
             return strtolower($element->getUrlKey()) === strtolower($cityUrlKey);
         });
 
         return $filtered->first();
+    }
+
+    /**
+     * @param GpsLocation $location
+     *
+     * @return City
+     */
+    protected function findCityByLocation(GpsLocation $location)
+    {
+        $cities = $this->cityProvider->findCitiesByLocation($location);
+
+        if ($cities->getAvailableCount() === 0) {
+            throw new \RuntimeException(
+                sprintf('No cities found with coordinates : %f/%f', $location->getLatitude(), $location->getLongitude())
+            );
+        }
+
+        return $cities->getItems()->first();
     }
 
     /**
