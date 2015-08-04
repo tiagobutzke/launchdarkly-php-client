@@ -55,6 +55,8 @@ var LoginRegistrationView = Backbone.View.extend({
         this.customerModel = options.customerModel;
         this.templateLogin = _.template($('#template-login').html());
         this.templateRegistration = _.template($('#template-registration').html());
+        this.templateResetPassword = _.template($('#template-reset-password').html());
+        this.templateForgottPassword = _.template($('#template-forgot-password').html());
     },
 
     render: function() {
@@ -93,14 +95,14 @@ var LoginRegistrationView = Backbone.View.extend({
         return this;
     },
 
-    renderResetPassword: function (code) {
-        this.$('.modal-content').load(Routing.generate('customer_reset_password', {code: code}), function(){
-            this.$el.modal();
-            this._registerValidationView = new ValidationView({
-                el: this.$('.reset-password-form'),
-                constraints: this._resetPasswordConstraints
-            });
-        }.bind(this));
+    renderResetPassword: function () {
+        this.$('.modal-content').html(this.templateResetPassword());
+
+        this.$el.modal();
+        this._registerValidationView = new ValidationView({
+            el: this.$('.reset-password-form'),
+            constraints: this._resetPasswordConstraints
+        });
 
         return this;
     },
@@ -125,15 +127,14 @@ var LoginRegistrationView = Backbone.View.extend({
 
     _loadForgotPasswordFormIntoLoginModal: function() {
         var email = this.$('#username').val();
-        
-        this.$('.modal-content').load(Routing.generate('customer.forgot_password'), function() {
-            this._registerValidationView = new ValidationView({
-                el: this.$('.forgot-password-form'),
-                constraints: this._forgotPasswordConstraints
-            });
 
-            this.$('#email').val(email);
-        }.bind(this));
+        this.$('.modal-content').html(this.templateForgottPassword);
+        this._registerValidationView = new ValidationView({
+            el: this.$('.forgot-password-form'),
+            constraints: this._forgotPasswordConstraints
+        });
+
+        this.$('#email').val(email);
     },
 
     _handingSubmitOfLostPasswordForm: function(event) {

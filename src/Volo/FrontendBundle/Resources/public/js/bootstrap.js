@@ -345,15 +345,8 @@ VOLO.doBootstrap = function(configuration) {
     }
 
     if ($('.header__account').length > 0) {
-        //loginButtonView = VOLO.createLoginButtonView(VOLO.customer);
-        //var $registerButton = $('.create_account__login__button');
-        //
-        //if ($registerButton.length > 0) {
-        //    VOLO.createRegistrationEvent($registerButton, loginButtonView);
-        //}
-
         if ($('body').hasClass('show-change-password-modal') && $('.header__account__login-text').length > 0) {
-            loginButtonView.showModalResetPassword(location.pathname.split('/')[4]);
+            loginButtonView.showModalResetPassword();
         }
     }
 
