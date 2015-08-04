@@ -1,12 +1,12 @@
 {% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
 
-{% block title %}{% trans %}brand{% endtrans %} | {% trans %}meta_title.home_page{% endtrans %}{% endblock %}
+{% block title %}{{ cms('seo.title.homepage') }}{% endblock %}
 {% block gtm_page_type %}Home{% endblock %}
 {% block body_class %}home{% endblock %}
 
 {% block head_meta_seo %}
     <meta name="robots" content="index, follow">
-    <meta name="description" content="{% trans %}meta.description{% endtrans %}">
+    <meta name="description" content="{{ cms('seo.description.home_page') }}">
 {% endblock %}
 
 {% block content %}

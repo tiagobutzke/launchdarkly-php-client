@@ -2,7 +2,13 @@
 {% use 'VoloFrontendBundle:Location:Partial/vendor_description.html.twig' %}
 
 {% set promoAddress = formattedLocation.city == '-' ? formattedLocation.postcode : formattedLocation.city  %}
-{% block title %}{{ promoAddress }} | {% trans %}brand{% endtrans %}{% endblock %}
+{% block title %}
+    {% if gpsSearch %}
+        {{ cms('seo.title.vendor_listing_page') | replace({'{city}': formattedLocation.city, '{zipcode}': formattedLocation.postcode}) }}
+    {% else %}
+        {{ cms('seo.title.city_page') | replace({'{city}': city.name}) }}
+    {% endif %}
+{% endblock %}
 {% block body_class %}restaurants{% endblock %}
 {% block gtm_page_type %}Restaurant List Page{% endblock %}
 {% block google_tag_manager_before %}
@@ -24,6 +30,13 @@
 {% endblock %}
 
 {% block head_meta_seo %}
+    {{ parent() }}
+    {% if gpsSearch %}
+        <meta name="description" content="{{ cms('seo.description.city_page') | replace({'{city}': city.name}) }}">
+    {% else %}
+        <meta name="description" content="{{ cms('seo.description.vendor_listing_page') | replace({'{city}': formattedLocation.city, '{zipcode}': formattedLocation.postcode}) }}">
+    {% endif %}
+
     {% if city is not null %}
         <link rel="canonical" href="{{ path('volo_location_search_vendors_by_city', {cityUrlKey: city.urlKey}) }}" />
     {% endif %}

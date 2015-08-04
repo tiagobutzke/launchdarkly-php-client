@@ -103,7 +103,7 @@ class UserLocationConverter implements ParamConverterInterface
                 try {
                     $city = $this->findCityByLocation($convertedParameter);
                     $request->attributes->set('cityObj', $city);
-                } catch (\RuntimeException $e) {
+                } catch (NotFoundHttpException $e) {
                     // no city ? we just continue
                 }
                 break;
@@ -151,7 +151,7 @@ class UserLocationConverter implements ParamConverterInterface
         $cities = $this->cityProvider->findCitiesByLocation($location);
 
         if ($cities->getAvailableCount() === 0) {
-            throw new \RuntimeException(
+            throw new NotFoundHttpException(
                 sprintf('No cities found with coordinates : %f/%f', $location->getLatitude(), $location->getLongitude())
             );
         }
