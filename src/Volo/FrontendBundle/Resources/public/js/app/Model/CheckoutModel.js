@@ -4,6 +4,7 @@ var CheckoutModel = Backbone.Model.extend({
         is_guest_user: false,
         cart_dirty: false,
         address_id: null,
+        is_contact_information_valid: false,
         credit_card_id: null,
         is_credit_card_store_active: true,
         payment_type_id: null,

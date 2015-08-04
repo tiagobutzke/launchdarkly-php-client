@@ -18,9 +18,11 @@ var CheckoutPageView = Backbone.View.extend({
         this.locationModel = options.locationModel;
         this.contactInformationView = new VOLO.CheckoutContactInformationView({
             el: this.$('.checkout__contact-information'),
+            vendorId: this.vendorId,
             customerModel: this.customerModel,
             userAddressCollection: this.userAddressCollection,
             loginView: options.loginView,
+            locationModel: this.locationModel,
             checkoutModel: this.model
         });
 
@@ -48,8 +50,9 @@ var CheckoutPageView = Backbone.View.extend({
         this.listenTo(this.model, 'payment:error', this.handlePaymentError, this);
         this.listenTo(this.userAddressCollection, 'update', this.renderContactInformationStep);
 
-        this.listenTo(this.userAddressCollection, 'update', this._switchPaymentFormVisibility);
+        this.listenTo(this.model, 'change', this._switchPaymentFormVisibility);
         this.listenTo(this.customerModel, 'change', this._switchPaymentFormVisibility);
+        this.listenTo(this.userAddressCollection, 'update', this._switchPaymentFormVisibility);
 
         this.listenTo(this.contactInformationView, 'form:open', this.renderPayButton);
         this.listenTo(this.contactInformationView, 'form:close', this.renderPayButton);
@@ -76,7 +79,7 @@ var CheckoutPageView = Backbone.View.extend({
     },
 
     renderPayButton: function () {
-        var isButtonDisabled = this.userAddressCollection.filterByCityAndVendorId(this.locationModel.get('city'), this.vendorId).length === 0 ||
+        var isButtonDisabled = this.userAddressCollection.filterByCityAndVendorId(this.locationModel.get('city'), this.vendorId).length === 0 &&
             (!this.model.canBeSubmitted() ||
                 this.$('#delivery-information-form').is(':visible') ||
                 this.$('#contact-information-form').is(':visible')
@@ -91,7 +94,7 @@ var CheckoutPageView = Backbone.View.extend({
     },
 
     _switchPaymentFormVisibility: function () {
-        if (this.userAddressCollection.filterByCityAndVendorId(this.locationModel.get('city'), this.vendorId).length > 0 && this.customerModel.isValid()) {
+        if (!_.isNull(this.model.get('address_id')) && this.model.get('is_contact_information_valid') && this.customerModel.isValid()) {
             this.$('.checkout__payment').removeClass('checkout__step--reduced');
             this.$('.checkout__payment .checkout__step__items').removeClass('hide');
             this._refreshBlazy();
@@ -113,9 +116,11 @@ var CheckoutPageView = Backbone.View.extend({
     },
 
     unbind: function () {
+        console.log('unbind checkoutPage ', this.cid);
         this.stopListening();
         this.undelegateEvents();
         this.contactInformationView.unbind();
+        this.checkoutDeliveryInformationView.unbind();
         this.timePickerView.unbind();
     },
 
@@ -159,6 +164,8 @@ var CheckoutPageView = Backbone.View.extend({
     },
 
     handlePaymentSuccess: function (data) {
+        this.model.set(this.model.defaults, {silent: true});
+
         if (_.isNull(data.hosted_payment_page_redirect)) {
             this.model.cartModel.emptyCart(this.vendorId);
             Turbolinks.visit(Routing.generate('order_tracking', {orderCode: data.code}));

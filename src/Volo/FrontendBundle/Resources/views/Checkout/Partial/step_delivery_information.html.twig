@@ -1,6 +1,4 @@
-<h3 class="checkout__step__title">1. {% trans %}title.delivery_details{% endtrans %}
-    <span class="checkout__title-link"></span>
-</h3>
+<h3 class="checkout__step__title">1. {% trans %}title.delivery_details{% endtrans %}</h3>
 <div class="checkout__step__items">
     <div class="checkout__step__item">
         <h4 class="checkout__step__item-title">{% trans %}title.delivery_time{% endtrans %}</h4>
@@ -15,6 +13,10 @@
                 <span class="checkout__title-link__text--add-address-delivery">{% trans %}link.add_new_address{% endtrans %}</span>
                 <span class="checkout__title-link__text--cancel-delivery">{% trans %}link.cancel{% endtrans %}</span>
             </a>
+        </span>
+        <span class="checkout__title-link checkout__title-link-guest">
+            <i class="checkout__title-link__icon icon-pencil"></i>
+            <a>{% trans %}link.edit_delivery_information{% endtrans %}</a>
         </span>
     </h4>
     <div class="checkout__step__item-content">

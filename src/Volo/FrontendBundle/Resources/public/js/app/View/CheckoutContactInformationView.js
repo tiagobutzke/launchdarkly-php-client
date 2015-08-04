@@ -21,10 +21,12 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
             }
         });
 
+        this.vendorId = options.vendorId;
         this.customerModel = options.customerModel;
         this.userAddressCollection = options.userAddressCollection;
         this.loginView = options.loginView;
         this.checkoutModel = options.checkoutModel;
+        this.locationModel = options.locationModel;
 
         this._jsValidationView = new View({
             el: this.$('#contact-information-form'),
@@ -46,34 +48,55 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         });
 
         this.listenTo(this.customerModel, 'change', this.renderContactInformation);
-
-        if (this.customerModel.isGuest) {
-            this._isExistingUser(this.customerModel.get('email'));
-        }
+        this.listenTo(this.checkoutModel, 'change', this.render);
     },
 
     render: function () {
-        if (this.userAddressCollection.length === 0) {
+        if (this.customerModel.isGuest) {
+            this.renderGuest();
+        } else {
+            if (_.isNull(this.checkoutModel.get('address_id'))) {
+                this.hideContactInformation();
+                this._hideForm();
+                this.$el.addClass('checkout__step--reduced');
+                this.$('.checkout__contact-information__title-link').addClass('hide');
+            } else {
+                this.$el.removeClass('checkout__step--reduced');
+                this.$('.checkout__contact-information__title-link').removeClass('hide');
+
+                this._fillUpForm();
+                if (this.customerModel.isValid()) {
+                    this.checkoutModel.set('is_contact_information_valid', true);
+                    this.renderContactInformation();
+                    this._closeForm();
+                } else {
+                    this._openForm();
+                }
+            }
+        }
+
+        return this;
+    },
+
+    renderGuest: function () {
+        if (_.isNull(this.checkoutModel.get('address_id'))) {
+            this.checkoutModel.set('is_contact_information_valid', false);
             this.hideContactInformation();
             this._hideForm();
             this.$el.addClass('checkout__step--reduced');
             this.$('.checkout__contact-information__title-link').addClass('hide');
-
-            return this;
         } else {
             this.$el.removeClass('checkout__step--reduced');
             this.$('.checkout__contact-information__title-link').removeClass('hide');
-        }
 
-        this._fillUpForm();
-        if (this.customerModel.isValid()) {
-            this.renderContactInformation();
-            this._closeForm();
-        } else {
-            this._openForm();
+            this._fillUpForm();
+            if (this.checkoutModel.get('is_contact_information_valid') && this.customerModel.isValid()) {
+                this.renderContactInformation();
+                this._closeForm();
+            } else {
+                this._openForm();
+            }
         }
-
-        return this;
     },
 
     renderContactInformation: function () {
@@ -221,6 +244,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
     _onCustomerSaveSuccess: function (customer) {
         this.renderContactInformation();
         this._switchFormVisibility();
+        this.checkoutModel.set('is_contact_information_valid', true);
         this.trigger('validationView:validateSuccessful', {
             newsletterSignup: customer.get('is_newsletter_subscribed')
         });

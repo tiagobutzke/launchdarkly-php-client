@@ -163,7 +163,6 @@
   };
 }
 
-
 .checkout__step__item-content {
   @include clearfix;
   @include make-xs-column(12);
@@ -404,6 +403,9 @@ textarea.checkout__step__item-textarea {
   padding-right: 5px;
   margin-bottom: $space-sm;
 }
+.isGuest.checkout__delivery-information__addresses {
+  margin-bottom: 0;
+}
 
 .checkout__delivery-information__item {
   @include clearfix();
@@ -420,8 +422,17 @@ textarea.checkout__step__item-textarea {
     max-height: 100px;
   }
 }
+.isGuest.checkout__delivery-information__item {
+  border: none;
+  cursor: default;
+  padding: 0;
+}
 .checkout__delivery-information__addresses--active .checkout__delivery-information__item {
   border: $cta-secondary-border;
+}
+.isGuest.checkout__delivery-information__addresses--active .checkout__delivery-information__item {
+  border: none;
+  cursor: default;
 }
 
 .checkout__delivery-information__notes {
@@ -483,6 +494,9 @@ textarea.checkout__step__item-textarea {
 .checkout__delivery-information__addresses:hover .checkout__delivery-information__delete-modal-wrapper.hide ~ .checkout__delivery-information__delete-link {
   display: block;
 }
+.isGuest.checkout__delivery-information__addresses:hover .checkout__delivery-information__delete-modal-wrapper.hide ~ .checkout__delivery-information__delete-link {
+  display: none;
+}
 
 .checkout__delivery-information__edit-link {
   position: absolute;
@@ -493,6 +507,9 @@ textarea.checkout__step__item-textarea {
 }
 .checkout__delivery-information__addresses:hover .checkout__delivery-information__edit-link {
   display: block;
+}
+.isGuest.checkout__delivery-information__addresses:hover .checkout__delivery-information__edit-link {
+  display: none;
 }
 
 // -------------------------- CHECKOUT DELIVERY INFORMATION END --------------------------

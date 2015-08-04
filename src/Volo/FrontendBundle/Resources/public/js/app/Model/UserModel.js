@@ -34,7 +34,12 @@ VOLO.CustomerModel = Backbone.Model.extend({
     },
 
     getFullMobileNumber: function () {
-        return '+' + this.get('mobile_country_code') + ' '  + this.get('mobile_number');
+        var mobileNumber = '';
+        if (this.get('mobile_country_code') && this.get('mobile_number')) {
+            mobileNumber = '+' + this.get('mobile_country_code') + ' '  + this.get('mobile_number');
+        }
+
+        return mobileNumber;
     },
 
     getFullName: function() {

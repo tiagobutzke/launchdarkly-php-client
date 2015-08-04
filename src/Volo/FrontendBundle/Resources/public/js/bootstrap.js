@@ -406,6 +406,7 @@ $(document).on('page:before-unload', function () {
     console.log('page:before-unload');
 
     _.invoke(VOLO.views, 'unbind');
+    VOLO.views.length = 0;
 
     if (_.isObject(VOLO.orderTrackingInterval)) {
         clearInterval(VOLO.orderTrackingInterval);

@@ -7,6 +7,7 @@
 VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
     events: {
         "click .checkout__title-link__text--add-address-delivery": '_openAddressForm',
+        "click .checkout__title-link-guest": '_editGuestAddress',
         "click .checkout__title-link__text--cancel-delivery": '_closeAddressForm',
         "submit #delivery-information-form": '_submit'
     },
@@ -21,7 +22,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
 
         this.vendorId = options.vendorId;
 
-        if (this.collection.filterByCityAndVendorId(this.locationModel.get('city'), this.vendorId).length > 0) {
+        if (!this.customerModel.isGuest && this.collection.filterByCityAndVendorId(this.locationModel.get('city'), this.vendorId).length > 0) {
             this._selectLastAddress();
         }
 
@@ -44,25 +45,21 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
 
         this._emptyAddressForm();
 
-        if (this.customerModel.isGuest) {
+        if (this.customerModel.isGuest && _.isNull(this.model.get('address_id'))) {
             this.$('.checkout__title-link__icon--plus').addClass('hide');
             this.$('.checkout__title-link__text--add-address-delivery').addClass('hide');
-        }
 
-        if (this.collection.filterByCityAndVendorId(this.locationModel.get('city'), this.vendorId).length === 0) {
-            this._openAddressForm();
+            this._editGuestAddress();
         } else {
-            this._closeAddressForm();
+            if (this.collection.filterByCityAndVendorId(this.locationModel.get('city'), this.vendorId).length === 0) {
+                this._openAddressForm();
+            } else {
+                this._closeAddressForm();
+            }
         }
 
-        this.$('#checkout-delivery-information-list').empty();
         this._renderAddressList();
         this._renderAddNewAddressLink();
-
-        var md = new MobileDetect(window.navigator.userAgent);
-        if (md.mobile()) {
-            $('.checkout__delivery-information__delete-link').show();
-        }
 
         return this;
     },
@@ -103,26 +100,47 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
     },
 
     _showCloseFormAddressLink: function () {
-        this.$('.checkout__title-link__text--cancel-delivery').removeClass('hide');
+        if (this.customerModel.isGuest && _.isNull(this.model.get('address_id'))) {
+            this.$('.checkout__title-link__text--cancel-delivery').addClass('hide');
+        } else {
+            this.$('.checkout__title-link__text--cancel-delivery').removeClass('hide');
+        }
     },
 
     _hideCloseFormAddressLink: function () {
         this.$('.checkout__title-link__text--cancel-delivery').addClass('hide');
     },
 
+    _editGuestAddress: function () {
+        var address = _.first(this.collection.filterByCityAndVendorId(this.locationModel.get('city'), this.vendorId));
+        if (address) {
+            this._editAddress(address);
+        }
+    },
+
     _openAddressForm: function () {
         this.$('.form__error-message').addClass('hide');
         this.$('#checkout-delivery-information-list').addClass('hide');
-        this.$('#checkout-add-new-address-form').removeClass('hide', true);
+        this.$('#checkout-add-new-address-form').removeClass('hide');
         this.$el.addClass('checkout__delivery-information--list-shown');
+
+        if (this.customerModel.isGuest) {
+            this.$('.checkout__title-link-guest').addClass('hide');
+        }
+
         this.trigger('form:open', this);
     },
 
     _closeAddressForm: function () {
         this.$('#checkout-delivery-information-list').removeClass('hide');
-        this.$('#checkout-add-new-address-form').addClass('hide', true);
+        this.$('#checkout-add-new-address-form').addClass('hide');
         this.$el.removeClass('checkout__delivery-information--list-shown');
         this._emptyAddressForm();
+
+        if (this.customerModel.isGuest) {
+            this.$('.checkout__title-link-guest').removeClass('hide');
+        }
+
         this.trigger('form:close', this);
     },
 
@@ -297,9 +315,19 @@ VOLO.UserAddressView = Backbone.View.extend({
     },
 
     render: function () {
+        var md = new MobileDetect(window.navigator.userAgent);
+
         this.$el.html(this.template(this.model.attributes));
+        if (this.checkoutModel.get('is_guest_user')) {
+            this.$el.addClass('isGuest');
+        }
+
         if (this.model.id === this.checkoutModel.get('address_id')) {
             this.$el.addClass('checkout__delivery-information__addresses--active');
+        }
+
+        if (md.mobile()) {
+            $('.checkout__delivery-information__delete-link').show();
         }
 
         return this;
@@ -314,7 +342,11 @@ VOLO.UserAddressView = Backbone.View.extend({
     },
 
     _selectAddress: function () {
-        $('.checkout__delivery-information__delete-modal-wrapper').addClass('hide');
+        if (this.checkoutModel.get('is_guest_user')) {
+            return false;
+        }
+
+        this.$('.checkout__delivery-information__delete-modal-wrapper').addClass('hide');
         this.checkoutModel.set('address_id', this.model.id);
         this.renderActiveState();
 
@@ -322,7 +354,7 @@ VOLO.UserAddressView = Backbone.View.extend({
     },
 
     _showAddressDeleteModal: function() {
-        $('.checkout__delivery-information__delete-modal-wrapper').addClass('hide');
+        this.$('.checkout__delivery-information__delete-modal-wrapper').addClass('hide');
         this.$('.checkout__delivery-information__delete-modal-wrapper').removeClass('hide');
 
         return false;
