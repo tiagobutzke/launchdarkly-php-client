@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Volo\FrontendBundle\Service\CustomerService;
 use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
 
 /**
@@ -26,13 +27,15 @@ class CustomerController extends BaseApiController
      */
     public function updateContactInformationAction(Request $request, $id)
     {
-        $this->isCustomerAllowed($id);
-
         try {
             $data = $this->decodeJsonContent($request);
 
-            $customer = $this->get('volo_frontend.service.customer')->updateCustomer($data);
-
+            if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+                $customer = $this->get('volo_frontend.service.customer')->updateCustomer($data);
+            } else {
+                $request->getSession()->set(CustomerService::SESSION_CONTACT_KEY_TEMPLATE, $data);
+                $customer = $this->getSerializer()->denormalizeAuthenticatedCustomer($data);
+            }
         } catch (ApiErrorException $e) {
             $data = json_decode($e->getJsonErrorMessage(), true);
             if (isset($data['data']['exception_type'])
@@ -42,7 +45,6 @@ class CustomerController extends BaseApiController
             }
 
             return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
-
         } catch (PhoneNumberValidationException $e) {
             return new JsonResponse([
                 'invalidPhoneError' => $e->getMessage()
@@ -51,6 +53,24 @@ class CustomerController extends BaseApiController
 
         $customer->setPassword('');
         $customer->setToken('');
+
+        return new JsonResponse($this->getSerializer()->normalize($customer));
+    }
+    /**
+     * @Route("/{id}", name="api_customers_get", options={"expose"=true})
+     * @Method({"GET"})
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function getCustomerAction(Request $request)
+    {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return new JsonResponse([], Response::HTTP_NOT_IMPLEMENTED);
+        } else {
+            $customer = $request->getSession()->get(CustomerService::SESSION_CONTACT_KEY_TEMPLATE);
+        }
 
         return new JsonResponse($this->getSerializer()->normalize($customer));
     }

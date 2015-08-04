@@ -12,14 +12,14 @@ use Foodpanda\ApiSdk\Entity\Order\GuestCustomer;
 use Foodpanda\ApiSdk\Provider\CustomerProvider;
 use Foodpanda\ApiSdk\Serializer;
 use libphonenumber\PhoneNumber;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Volo\FrontendBundle\Controller\CheckoutController;
 use Volo\FrontendBundle\Security\Token;
 use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
 
 class CustomerService
 {
+    const SESSION_CONTACT_KEY_TEMPLATE = 'customer-contact';
+
     /**
      * @var Serializer
      */

@@ -15,16 +15,8 @@ VOLO.CustomerModel = Backbone.Model.extend({
         }
     },
 
-    localStorage: function () {
-        if (this.isGuest) {
-            return new Backbone.LocalStorage('CustomerModel');
-        }
-
-        return false;
-    },
-
     urlRoot: function() {
-        return Routing.generate('api_customers_update');
+        return Routing.generate('api_customers_get');
     },
 
     validate: function(attrs, options) {

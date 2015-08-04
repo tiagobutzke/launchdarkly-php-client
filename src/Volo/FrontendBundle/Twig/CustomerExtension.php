@@ -3,8 +3,10 @@
 namespace Volo\FrontendBundle\Twig;
 
 use Foodpanda\ApiSdk\Entity\Customer\Customer;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Volo\FrontendBundle\Service\CustomerService;
 
 class CustomerExtension extends \Twig_Extension
 {
@@ -32,6 +34,7 @@ class CustomerExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFunction('is_customer_authenticated_fully', [$this, 'isCustomerAuthenticatedFully'], ['is_safe' => ['html']]),
             new \Twig_SimpleFunction('get_authenticated_customer', [$this, 'getAuthenticatedCustomer'], ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('get_guest_customer', [$this, 'getGuestCustomer'], ['is_safe' => ['html']]),
         );
     }
 
@@ -58,6 +61,15 @@ class CustomerExtension extends \Twig_Extension
         }
 
         return null;
+    }
+
+    /**
+     * @param SessionInterface $session
+     * @return Customer
+     */
+    public function getGuestCustomer(SessionInterface $session)
+    {
+        return $session->get(CustomerService::SESSION_CONTACT_KEY_TEMPLATE, []);
     }
 
     /**

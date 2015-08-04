@@ -10,15 +10,9 @@ VOLO.gtmViews = []; //all views, which needs GTM should go here
 $(document).ready(VOLO.documentReadyFunction);
 
 VOLO.createCustomerModel = function (jsonCustomer, isGuest) {
-    VOLO.customer = new VOLO.CustomerModel({}, {
+    VOLO.customer = new VOLO.CustomerModel(jsonCustomer, {
         isGuest: isGuest
     });
-
-    if (!isGuest) {
-        VOLO.customer.set(jsonCustomer);
-    } else {
-        VOLO.customer.fetch();
-    }
 
     return VOLO.customer;
 };
