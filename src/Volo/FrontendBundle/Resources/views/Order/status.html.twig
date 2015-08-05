@@ -21,7 +21,7 @@
                         }
                     }
                 }
-            });
+            }, '{{ gtm_get_referrer() }}', '{{ app.session.id }}');
         });
     </script>
 {% endblock %}

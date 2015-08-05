@@ -112,7 +112,7 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
         });
     },
 
-    fireOrderStatus: function(data) {
+    fireOrderStatus: function(data, referrer, sessionId) {
         if (!this._hasCookie('orderPay')) {
             return;
         }
@@ -120,9 +120,9 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
         Cookies.expire('orderPay');
 
         data.event = 'transaction';
-        data.sessionId = this.sessionId;
+        data.sessionId = _.get(this, 'sessionId', sessionId);
 
-        this._push(data);
+        this._push(data, referrer);
     },
 
     fireAddProduct: function (vendorId, data) {
@@ -244,8 +244,9 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
         return element;
     },
 
-    _push: function(data) {
-        data.referrer = this.options.referrer;
+    _push: function(data, referrer) {
+        data.referrer = _.get(this, 'options.referrer', referrer);
+        console.log('GTM referrer ', data.referrer);
         dataLayer.push(data);
     }
 });
