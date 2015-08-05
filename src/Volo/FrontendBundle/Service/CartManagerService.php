@@ -183,7 +183,7 @@ class CartManagerService
     /**
      * @param SessionInterface $session
      *
-     * @return array
+     * @return array|null
      */
     public function getDefaultCart($session)
     {

@@ -2,6 +2,7 @@
 
 namespace Volo\FrontendBundle\Twig;
 
+use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Twig_Extensions_Extension_Intl;
@@ -138,7 +139,11 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
         $cart = $this->cartManager->getDefaultCart($session);
 
         if ($cart !== null) {
-            return $this->cartManager->calculateCart($cart)['total_value'];
+            try {
+                return $this->cartManager->calculateCart($cart)['total_value'];
+            } catch (ApiErrorException $exception) {
+                // do nothing, we'll return 0 anyway.
+            }
         }
 
         return .0;
