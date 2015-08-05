@@ -60,13 +60,9 @@ class CheckoutController extends BaseController
     public function validatePhoneNumberAction($phoneNumber)
     {
         try {
-            $validPhoneNumber = $this->get('volo_frontend.service.customer')->validatePhoneNumber($phoneNumber);
+            $validPhoneNumber = $this->getCustomerService()->validatePhoneNumber($phoneNumber);
         } catch (PhoneNumberValidationException $e) {
-            return new JsonResponse([
-                'error' => [
-                    'mobile_number' => $e->getMessage()
-                ]
-            ], Response::HTTP_BAD_REQUEST);
+            return new JsonResponse(['error' => ['mobile_number' => $e->getMessage()]], Response::HTTP_BAD_REQUEST);
         }
 
         return new JsonResponse([
@@ -97,7 +93,7 @@ class CheckoutController extends BaseController
 
         $isExistingUser = false;
         try {
-            $this->get('volo_frontend.service.customer')->createGuestCustomer(
+            $this->getCustomerService()->createGuestCustomer(
                 ['email' => $email],
                 []
             );
@@ -155,7 +151,6 @@ class CheckoutController extends BaseController
             'default_address'    => $restaurantLocation,
             'customer'           => $serializer->normalize(new Customer()),
             'customer_addresses' => [],
-            'errorMessages'      => [],
         ];
 
         $viewData = $this->addViewDataForAuthenticatedUser($vendor, $viewData);
@@ -205,7 +200,7 @@ class CheckoutController extends BaseController
     public function placeOrderAction(Request $request, $vendorCode)
     {
         try {
-            $data = $this->decodeJsonContent($request);
+            $data = $this->decodeJsonContent($request->getContent());
         } catch (BadRequestHttpException $e) {
             $text = $this->get('translator')->trans('json_error.invalid_request');
 
@@ -227,7 +222,7 @@ class CheckoutController extends BaseController
         $guestCustomer = null;
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             try {
-                $guestCustomer = $this->get('volo_frontend.service.customer')->createGuestCustomer(
+                $guestCustomer = $this->getCustomerService()->createGuestCustomer(
                     $data['customer'],
                     $data['address']
                 );
@@ -236,9 +231,7 @@ class CheckoutController extends BaseController
                 if (isset($error['data']['exception_type']) &&
                     'ApiCustomerAlreadyExistsException' === $error['data']['exception_type']
                 ) {
-                    return new JsonResponse([
-                        'exists' => true
-                    ], Response::HTTP_BAD_REQUEST);
+                    return new JsonResponse(['exists' => true], Response::HTTP_BAD_REQUEST);
                 }
             }
 
@@ -253,7 +246,7 @@ class CheckoutController extends BaseController
             /** @var \Volo\FrontendBundle\Security\Token $token */
             $token = $this->get('security.token_storage')->getToken();
             $accessToken = $token->getAccessToken();
-            $customer = $this->get('volo_frontend.service.customer')->getCustomer($accessToken);
+            $customer = $this->getCustomerService()->getCustomer($accessToken);
         }
 
         try {
@@ -356,14 +349,6 @@ class CheckoutController extends BaseController
     private function getCustomerProvider()
     {
         return $this->get('volo_frontend.provider.customer');
-    }
-
-    /**
-     * @return CustomerService
-     */
-    private function getCustomerService()
-    {
-        return $this->get('volo_frontend.service.customer');
     }
 
     /**

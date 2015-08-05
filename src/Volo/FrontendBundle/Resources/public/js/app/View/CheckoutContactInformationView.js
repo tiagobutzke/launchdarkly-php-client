@@ -55,27 +55,31 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         if (this.customerModel.isGuest) {
             this.renderGuest();
         } else {
-            if (_.isNull(this.checkoutModel.get('address_id'))) {
-                this.hideContactInformation();
-                this._hideForm();
-                this.$el.addClass('checkout__step--reduced');
-                this.$('.checkout__contact-information__title-link').addClass('hide');
-            } else {
-                this.$el.removeClass('checkout__step--reduced');
-                this.$('.checkout__contact-information__title-link').removeClass('hide');
-
-                this._fillUpForm();
-                if (this.customerModel.isValid()) {
-                    this.checkoutModel.set('is_contact_information_valid', true);
-                    this.renderContactInformation();
-                    this._closeForm();
-                } else {
-                    this._openForm();
-                }
-            }
+            this.renderAuthenticatedCustomer();
         }
 
         return this;
+    },
+
+    renderAuthenticatedCustomer: function () {
+        if (_.isNull(this.checkoutModel.get('address_id'))) {
+            this.hideContactInformation();
+            this._hideForm();
+            this.$el.addClass('checkout__step--reduced');
+            this.$('.checkout__contact-information__title-link').addClass('hide');
+        } else {
+            this.$el.removeClass('checkout__step--reduced');
+            this.$('.checkout__contact-information__title-link').removeClass('hide');
+
+            this._fillUpForm();
+            if (this.customerModel.isValid()) {
+                this.checkoutModel.set('is_contact_information_valid', true);
+                this.renderContactInformation();
+                this._closeForm();
+            } else {
+                this._openForm();
+            }
+        }
     },
 
     renderGuest: function () {

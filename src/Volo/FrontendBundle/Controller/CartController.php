@@ -23,7 +23,7 @@ class CartController extends BaseController
      */
     public function calculateAction(Request $request)
     {
-        $data = $this->decodeJsonContent($request);
+        $data = $this->decodeJsonContent($request->getContent());
 
         $cartManager = $this->get('volo_frontend.service.cart_manager');
         try {

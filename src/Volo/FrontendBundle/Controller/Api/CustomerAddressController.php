@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Volo\FrontendBundle\Service\CustomerService;
 
 /**
  * @Route("/api/v1/customer/{customerId}", defaults={"_format": "json"}, condition="request.isXmlHttpRequest()")
@@ -88,7 +87,7 @@ class CustomerAddressController extends BaseApiController
     {
         $this->isCustomerAllowed($customerId);
 
-        $data = $this->decodeJsonContent($request);
+        $data = $this->decodeJsonContent($request->getContent());
         $accessToken = $this->getToken()->getAccessToken();
         $address = $this->getSerializer()->denormalizeCustomerAddress($data);
 
@@ -143,7 +142,7 @@ class CustomerAddressController extends BaseApiController
         $token = $this->getToken();
         $accessToken = $token->getAccessToken();
 
-        $data = $this->sanitizeInputData($this->decodeJsonContent($request));
+        $data = $this->sanitizeInputData($this->decodeJsonContent($request->getContent()));
 
         /** @var Address $address */
         $address = $serializer->denormalize($data, Address::class);
@@ -159,16 +158,10 @@ class CustomerAddressController extends BaseApiController
             UrlGeneratorInterface::ABSOLUTE_URL
         );
 
-        return new JsonResponse($this->getSerializer()->normalize($address), Response::HTTP_CREATED, [
-            'Location' => $url
-        ]);
-    }
-
-    /**
-     * @return CustomerService
-     */
-    private function getCustomerService()
-    {
-        return $this->get('volo_frontend.service.customer');
+        return new JsonResponse(
+            $this->getSerializer()->normalize($address),
+            Response::HTTP_CREATED,
+            ['Location' => $url]
+        );
     }
 }
