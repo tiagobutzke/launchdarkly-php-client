@@ -268,7 +268,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
             id = address.id;
         }
 
-        this.model.set('address_id', id);
+        this.model.save('address_id', id);
         this.trigger('delivery:submit:successful_before', {
             deliveryTime: this.$('#order-delivery-time').val()
         });
@@ -283,7 +283,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
         if (address) {
             id = address.id;
         }
-        this.model.set('address_id', id);
+        this.model.save('address_id', id);
     }
 });
 

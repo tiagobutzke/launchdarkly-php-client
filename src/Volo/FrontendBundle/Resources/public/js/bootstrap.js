@@ -50,6 +50,7 @@ VOLO.createLocationModel = function (jsonLocation) {
 
 VOLO.createCheckoutModel = function (cartModel, locationModel, vendorId) {
     VOLO.checkoutModel = new CheckoutModel({}, {cartModel: cartModel});
+    VOLO.checkoutModel.fetch();
 
     cartModel.getCart(vendorId).set('location', locationModel.attributes);
 

@@ -42,7 +42,7 @@ var CheckoutPageView = Backbone.View.extend({
         });
 
         console.log('is guest user ', this.customerModel.isGuest);
-        this.model.set('is_guest_user', this.customerModel.isGuest);
+        this.model.save('is_guest_user', this.customerModel.isGuest);
 
         this.listenTo(this.model, 'change', this.renderPayButton, this);
 
@@ -164,7 +164,7 @@ var CheckoutPageView = Backbone.View.extend({
     },
 
     handlePaymentSuccess: function (data) {
-        this.model.set(this.model.defaults, {silent: true});
+        this.model.save(this.model.defaults, {silent: true});
 
         if (_.isNull(data.hosted_payment_page_redirect)) {
             this.model.cartModel.emptyCart(this.vendorId);

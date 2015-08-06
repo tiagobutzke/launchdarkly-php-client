@@ -1,5 +1,6 @@
 var CheckoutModel = Backbone.Model.extend({
     defaults: {
+        id: 'checkout',
         placing_order: false,
         is_guest_user: false,
         cart_dirty: false,
@@ -22,6 +23,10 @@ var CheckoutModel = Backbone.Model.extend({
             this.listenTo(model, 'cart:ready', function() {this.set('cart_dirty', false);}.bind(this));
             this.listenTo(model, 'cart:error', function() {this.set('cart_dirty', false);}.bind(this));
         }.bind(this));
+    },
+
+    localStorage: function () {
+        return new Backbone.LocalStorage("CheckoutModel");
     },
 
     isValid: function () {

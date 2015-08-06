@@ -35,8 +35,8 @@ var PaymentTypeView = Backbone.View.extend({
 
     _displayCashOnDelivery: function() {
         var $cod = this.$('.cod');
-        this.checkoutModel.set('payment_type_code', $cod.data('payment_type_code'));
-        this.checkoutModel.set('payment_type_id', $cod.data('payment_type_id'));
+        this.checkoutModel.save('payment_type_code', $cod.data('payment_type_code'));
+        this.checkoutModel.save('payment_type_id', $cod.data('payment_type_id'));
         this.$('.checkout__payment__option-description--paypal').addClass('hide');
         this.$('.checkout__payment__option-description--adyen').addClass('hide');
         this.$('.checkout__payment__option-description--cod').removeClass('hide');
@@ -48,8 +48,8 @@ var PaymentTypeView = Backbone.View.extend({
     _displayCreditCard: function() {
         var $creditCardNode = this.$('.adyen');
 
-        this.checkoutModel.set('payment_type_code', $creditCardNode.data('payment_type_code'));
-        this.checkoutModel.set('payment_type_id', $creditCardNode.data('payment_type_id'));
+        this.checkoutModel.save('payment_type_code', $creditCardNode.data('payment_type_code'));
+        this.checkoutModel.save('payment_type_id', $creditCardNode.data('payment_type_id'));
 
         this.$('.checkout__payment__option-description--paypal').addClass('hide');
         this.$('.checkout__payment__option-description--adyen').addClass('hide');
@@ -64,8 +64,8 @@ var PaymentTypeView = Backbone.View.extend({
     _displayAdyenHpp: function() {
         var $node = this.$('.adyen_hpp');
 
-        this.checkoutModel.set('payment_type_code', $node.data('payment_type_code'));
-        this.checkoutModel.set('payment_type_id', $node.data('payment_type_id'));
+        this.checkoutModel.save('payment_type_code', $node.data('payment_type_code'));
+        this.checkoutModel.save('payment_type_id', $node.data('payment_type_id'));
 
         this.$('.checkout__payment__option-description--adyen').removeClass('hide');
         this.$('.checkout__payment__option-description--paypal').addClass('hide');
@@ -80,9 +80,9 @@ var PaymentTypeView = Backbone.View.extend({
     _displayPayPal: function() {
         var $payPalNode = this.$('.paypal');
 
-        this.checkoutModel.set('payment_type_code', $payPalNode.data('payment_type_code'));
-        this.checkoutModel.set('payment_type_id', $payPalNode.data('payment_type_id'));
-        this.checkoutModel.set('credit_card_id', null);
+        this.checkoutModel.save('payment_type_code', $payPalNode.data('payment_type_code'));
+        this.checkoutModel.save('payment_type_id', $payPalNode.data('payment_type_id'));
+        this.checkoutModel.save('credit_card_id', null);
 
         this.$('.checkout__payment__option-description--paypal').removeClass('hide');
         this.$('.checkout__payment__option-description--adyen').addClass('hide');

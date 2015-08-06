@@ -73,7 +73,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
 
             this._fillUpForm();
             if (this.customerModel.isValid()) {
-                this.checkoutModel.set('is_contact_information_valid', true);
+                this.checkoutModel.save('is_contact_information_valid', true);
                 this.renderContactInformation();
                 this._closeForm();
             } else {
@@ -84,7 +84,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
 
     renderGuest: function () {
         if (_.isNull(this.checkoutModel.get('address_id'))) {
-            this.checkoutModel.set('is_contact_information_valid', false);
+            this.checkoutModel.save('is_contact_information_valid', false);
             this.hideContactInformation();
             this._hideForm();
             this.$el.addClass('checkout__step--reduced');
@@ -248,7 +248,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
     _onCustomerSaveSuccess: function (customer) {
         this.renderContactInformation();
         this._switchFormVisibility();
-        this.checkoutModel.set('is_contact_information_valid', true);
+        this.checkoutModel.save('is_contact_information_valid', true);
         this.trigger('validationView:validateSuccessful', {
             newsletterSignup: customer.get('is_newsletter_subscribed')
         });

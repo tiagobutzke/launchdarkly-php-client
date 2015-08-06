@@ -33,11 +33,11 @@ var PaymentFormView = Backbone.View.extend({
             return $(this).val() === "";
         }).length;
 
-        this.model.set('adyen_encrypted_data', isComplete ? encryptedForm.encrypt() : null);
+        this.model.save('adyen_encrypted_data', isComplete ? encryptedForm.encrypt() : null);
     },
 
     _changeIsCreditCardStored: function () {
-        this.model.set('is_credit_card_store_active', this.$("#checkout-store-credit-card").is(':checked'));
+        this.model.save('is_credit_card_store_active', this.$("#checkout-store-credit-card").is(':checked'));
     },
 
     _fillName: function() {
