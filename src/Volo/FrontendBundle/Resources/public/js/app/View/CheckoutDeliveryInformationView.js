@@ -254,7 +254,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
         this._fillForm(model);
         this._openAddressForm();
 
-        _.each(_.get(response,  'responseJSON.error.errors', []), function (error) {
+        _.each(_.get(response, 'responseJSON.error.errors', []), function (error) {
             var selector = 'input[name=\'customer_address['+ error.field_name +']\']',
                 element = this.$(selector);
             _.each(_.get(error, 'violation_messages', []), function (message) {

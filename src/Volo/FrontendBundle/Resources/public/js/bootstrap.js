@@ -277,15 +277,22 @@ VOLO.OrderTracking = function () {
     });
 };
 
-VOLO.createProfileView = function () {
+VOLO.createProfileView = function(customerModel) {
     var profilePasswordFormView = new VOLO.ProfilePasswordFormView({
         el: '#profile-contact-information-form'
     });
+    var profileContactView = new VOLO.ContactInformatioForm({
+        el: $('#contact-information-form'),
+        model: customerModel
+    });
 
-    VOLO.profilePasswordFormView = profilePasswordFormView;
+    VOLO.views.push(profileContactView);
     VOLO.views.push(profilePasswordFormView);
 
-    return profilePasswordFormView;
+    return {
+        profilePasswordFormView: profilePasswordFormView,
+        profileContactView: profileContactView
+    };
 };
 
 VOLO.doBootstrap = function(configuration) {
@@ -363,8 +370,8 @@ VOLO.doBootstrap = function(configuration) {
         VOLO.orderTrackingInterval = setInterval(VOLO.OrderTracking, 60000);
     }
 
-    if ($('#profile-contact-information-form').length > 0) {
-        VOLO.createProfileView();
+    if ($('.profile__blocks-wrapper').length > 0) {
+        VOLO.createProfileView(VOLO.customer).profileContactView.fillUpForm();
     }
 
     var GTMServiceInstance = VOLO.initGTMService({

@@ -9,18 +9,6 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
     initialize: function(options) {
         _.bindAll(this);
 
-        var View = ValidationView.extend({
-            events: function(){
-                return _.extend({}, ValidationView.prototype.events, {
-                    'keydown #contact-information-mobile-number': '_hideErrorMsg'
-                });
-            },
-
-            _hideErrorMsg: function() {
-                this.$('.invalid_number').hide();
-            }
-        });
-
         this.vendorId = options.vendorId;
         this.customerModel = options.customerModel;
         this.userAddressCollection = options.userAddressCollection;
@@ -28,23 +16,9 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         this.checkoutModel = options.checkoutModel;
         this.locationModel = options.locationModel;
 
-        this._jsValidationView = new View({
+        this.contactInformationForm = new VOLO.ContactInformatioForm({
             el: this.$('#contact-information-form'),
-            constraints: {
-                "customer[first_name]": {
-                    presence: true
-                },
-                "customer[last_name]": {
-                    presence: true
-                },
-                "customer[email]": {
-                    presence: true,
-                    email: true
-                },
-                "customer[mobile_number]": {
-                    presence: true
-                }
-            }
+            model: this.customerModel
         });
 
         this.listenTo(this.customerModel, 'change', this.renderContactInformation);
@@ -71,7 +45,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
             this.$el.removeClass('checkout__step--reduced');
             this.$('.checkout__contact-information__title-link').removeClass('hide');
 
-            this._fillUpForm();
+            this.contactInformationForm.fillUpForm();
             if (this.customerModel.isValid()) {
                 this.checkoutModel.save('is_contact_information_valid', true);
                 this.renderContactInformation();
@@ -97,7 +71,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
                 this.$('.checkout__contact-information__title-link').addClass('hide');
             }
 
-            this._fillUpForm();
+            this.contactInformationForm.fillUpForm();
             if (this.checkoutModel.get('is_contact_information_valid') && this.customerModel.isValid()) {
                 this.renderContactInformation();
                 this._closeForm();
@@ -121,7 +95,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
     },
 
     unbind: function () {
-        this._jsValidationView.unbind();
+        this.contactInformationForm.unbind();
         this.stopListening();
         this.undelegateEvents();
     },
@@ -143,7 +117,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
     },
 
     _openForm: function () {
-        this._fillUpForm();
+        this.contactInformationForm.fillUpForm();
         this.$('.form__error-message').addClass('hide');
         this._showForm();
         this.$('.checkout__title-link__text--edit-contact').removeClass('contact_information_form-open');
@@ -157,16 +131,6 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         this.$('#contact_information').removeClass('hide');
         this.showContactInformation();
         this.trigger('form:close', this);
-    },
-
-    _fillUpForm: function () {
-        if (this.customerModel.isValid()) {
-            this.$('#contact-information-first-name').val(this.customerModel.get('first_name'));
-            this.$('#contact-information-last-name').val(this.customerModel.get('last_name'));
-            this.$('#contact-information-email').val(this.customerModel.get('email'));
-            this.$('#contact-information-mobile-number').val(this.customerModel.getFullMobileNumber());
-            this.$('#contact-information-newsletter-checkbox').prop('checked', this.customerModel.get('is_newsletter_subscribed'));
-        }
     },
 
     _showForm: function () {
@@ -207,7 +171,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
                     error: function (response) {
                         var errorMessage = _.get(response, 'responseJSON.error.mobile_number');
                         if (errorMessage) {
-                            this._jsValidationView.createErrorMessage(
+                            this.contactInformationForm.createErrorMessage(
                                 _.get(response, 'responseJSON.error.mobile_number'),
                                 this.$('#contact-information-mobile-number')[0]
                             );
@@ -263,7 +227,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
             var selector = 'input[name=\'customer['+ error.field_name +']\']',
                 element = this.$(selector);
             _.each(_.get(error, 'violation_messages', []), function (message) {
-                this._jsValidationView.createErrorMessage(message, element[0]);
+                this.contactInformationForm.createErrorMessage(message, element[0]);
             }, this);
         }, this);
     }
