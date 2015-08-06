@@ -40,18 +40,22 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
             this.hideContactInformation();
             this._hideForm();
             this.$el.addClass('checkout__step--reduced');
-            this.$('.checkout__contact-information__title-link').addClass('hide');
+            this._hideEditLink();
+            this._hideCancelLink();
         } else {
             this.$el.removeClass('checkout__step--reduced');
-            this.$('.checkout__contact-information__title-link').removeClass('hide');
 
             this.contactInformationForm.fillUpForm();
             if (this.customerModel.isValid()) {
                 this.checkoutModel.save('is_contact_information_valid', true);
                 this.renderContactInformation();
                 this._closeForm();
+                //this._showEditLink();
+                //this._hideCancelLink();
             } else {
                 this._openForm();
+                //this._showCancelLink();
+                //this._showEditLink();
             }
         }
     },
@@ -62,14 +66,10 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
             this.hideContactInformation();
             this._hideForm();
             this.$el.addClass('checkout__step--reduced');
-            this.$('.checkout__contact-information__title-link').addClass('hide');
+            this._hideEditLink();
+            this._hideCancelLink();
         } else {
             this.$el.removeClass('checkout__step--reduced');
-            if (this.customerModel.isValid()) {
-                this.$('.checkout__contact-information__title-link').removeClass('hide');
-            } else {
-                this.$('.checkout__contact-information__title-link').addClass('hide');
-            }
 
             this.contactInformationForm.fillUpForm();
             if (this.checkoutModel.get('is_contact_information_valid') && this.customerModel.isValid()) {
@@ -77,6 +77,10 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
                 this._closeForm();
             } else {
                 this._openForm();
+                if (!this.customerModel.isValid()) {
+                    this._hideEditLink();
+                    this._hideCancelLink();
+                }
             }
         }
     },
@@ -120,14 +124,16 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         this.contactInformationForm.fillUpForm();
         this.$('.form__error-message').addClass('hide');
         this._showForm();
-        this.$('.checkout__title-link__text--edit-contact').removeClass('contact_information_form-open');
+        this._showCancelLink();
+        this._hideEditLink();
         this.hideContactInformation();
         this.trigger('form:open', this);
     },
 
     _closeForm: function () {
         this._hideForm();
-        this.$('.checkout__title-link__text--edit-contact').addClass('contact_information_form-open');
+        this._showEditLink();
+        this._hideCancelLink();
         this.$('#contact_information').removeClass('hide');
         this.showContactInformation();
         this.trigger('form:close', this);
@@ -147,6 +153,24 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
 
     showContactInformation: function () {
         this.$('#checkout-contact-information').removeClass('hide');
+    },
+
+    _showEditLink: function () {
+        this.$('.checkout__title-link__text--edit-contact').removeClass('hide');
+        this.$('.checkout__title-link__icon.icon-pencil').removeClass('hide');
+    },
+
+    _hideEditLink: function () {
+        this.$('.checkout__title-link__text--edit-contact').addClass('hide');
+        this.$('.checkout__title-link__icon.icon-pencil').addClass('hide');
+    },
+
+    _showCancelLink: function () {
+        this.$('.checkout__title-link__text--cancel-contact').removeClass('hide');
+    },
+
+    _hideCancelLink: function () {
+        this.$('.checkout__title-link__text--cancel-contact').addClass('hide');
     },
 
     _submit: function() {

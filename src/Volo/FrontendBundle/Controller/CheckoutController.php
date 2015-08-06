@@ -20,7 +20,6 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Volo\FrontendBundle\Service\CustomerLocationService;
-use Volo\FrontendBundle\Service\CustomerService;
 use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
 
 /**
@@ -167,8 +166,7 @@ class CheckoutController extends BaseController
     private function addViewDataForAuthenticatedUser(Vendor $vendor, array $viewData)
     {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            /** @var \Volo\FrontendBundle\Security\Token $token */
-            $token = $this->get('security.token_storage')->getToken();
+            $token = $this->getToken();
             $serializer = $this->get('volo_frontend.api.serializer');
 
             $customerAddresses = $this->getCustomerService()->getAddresses($token->getAccessToken(), $vendor->getId());
@@ -243,9 +241,7 @@ class CheckoutController extends BaseController
             $customer = $guestCustomer->getCustomer();
             $accessToken = new AccessToken($guestCustomer->getAccessToken(), 'bearer');
         } else {
-            /** @var \Volo\FrontendBundle\Security\Token $token */
-            $token = $this->get('security.token_storage')->getToken();
-            $accessToken = $token->getAccessToken();
+            $accessToken = $this->getToken()->getAccessToken();
             $customer = $this->getCustomerService()->getCustomer($accessToken);
         }
 
@@ -280,6 +276,7 @@ class CheckoutController extends BaseController
      * @param Vendor $vendor
      *
      * @return array
+     * @throws HttpException
      */
     protected function getCart(SessionInterface $session, Vendor $vendor)
     {
@@ -312,8 +309,7 @@ class CheckoutController extends BaseController
         $paymentTypeId = $data['payment_type_id'];
         $session->set(OrderController::SESSION_ORDER_PAYMENT_CODE, $data['payment_type_code']);
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            /** @var \Volo\FrontendBundle\Security\Token $token */
-            $token = $this->get('security.token_storage')->getToken();
+            $token = $this->getToken();
             $addressId = $data['customer_address_id'];
 
             $order = $orderManager->placeOrder(

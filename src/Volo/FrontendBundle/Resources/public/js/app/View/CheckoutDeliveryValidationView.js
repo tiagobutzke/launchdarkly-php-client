@@ -24,7 +24,6 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
         this._postalCodeGeocodingService = options.postalCodeGeocodingService;
 
         this._createDeliveryAsyncValidation();
-        this._toggleContinueButton();
     },
 
     events: function() {
@@ -37,7 +36,7 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
         this._validateForm().done(callback);
     },
 
-    _toggleContinueButton: function() {
+    toggleContinueButton: function() {
         var doValidate = this._doValidate();
 
         doValidate.then(function() {

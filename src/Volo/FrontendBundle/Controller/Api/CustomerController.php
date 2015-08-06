@@ -8,16 +8,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Volo\FrontendBundle\Controller\BaseController;
 use Volo\FrontendBundle\Service\CustomerService;
 use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
 
 /**
  * @Route("/api/v1/customers", defaults={"_format": "json"}, condition="request.isXmlHttpRequest()")
  */
-class CustomerController extends BaseApiController
+class CustomerController extends BaseController
 {
     /**
-     * @Route("/{id}", name="api_customers_update", options={"expose"=true})
+     * @Route("/{id}", name="api_customers_update")
      * @Method({"PUT"})
      *
      * @param Request $request

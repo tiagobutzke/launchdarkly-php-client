@@ -2,9 +2,12 @@
 
 namespace Volo\FrontendBundle\Controller;
 
+use Foodpanda\ApiSdk\Entity\Customer\Customer;
+use Foodpanda\ApiSdk\Serializer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Volo\FrontendBundle\Security\Token;
 use Volo\FrontendBundle\Service\CustomerService;
 
 class BaseController extends Controller
@@ -46,10 +49,44 @@ class BaseController extends Controller
     }
 
     /**
+     * @param int $customerId
+     *
+     * @throws AccessDeniedHttpException
+     */
+    protected function throwAccessDeniedIfCustomerNotAllowed($customerId)
+    {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw new AccessDeniedHttpException('Access denied.');
+        }
+
+        /** @var Customer $customer */
+        $customer = $this->getToken()->getAttribute('customer');
+        if ($customerId !== $customer->getId()) {
+            throw new AccessDeniedHttpException(sprintf('Customer id %d is not allowed.', $customerId));
+        }
+    }
+
+    /**
      * @return CustomerService
      */
     protected function getCustomerService()
     {
         return $this->get('volo_frontend.service.customer');
+    }
+
+    /**
+     * @return Serializer
+     */
+    protected function getSerializer()
+    {
+        return $this->get('volo_frontend.api.serializer');
+    }
+
+    /**
+     * @return Token
+     */
+    protected function getToken()
+    {
+        return $this->get('security.token_storage')->getToken();
     }
 }

@@ -10,11 +10,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Volo\FrontendBundle\Controller\BaseController;
 
 /**
  * @Route("/api/v1/customer/{customerId}", defaults={"_format": "json"}, condition="request.isXmlHttpRequest()")
  */
-class CustomerAddressController extends BaseApiController
+class CustomerAddressController extends BaseController
 {
     /**
      * @Route("/address", name="api_customers_address_list", options={"expose"=true})
@@ -27,7 +28,7 @@ class CustomerAddressController extends BaseApiController
      */
     public function listAction(Request $request, $customerId)
     {
-        $this->isCustomerAllowed($customerId);
+        $this->throwAccessDeniedIfCustomerNotAllowed($customerId);
 
         $vendorId = $request->query->get('vendorId');
 
@@ -50,7 +51,7 @@ class CustomerAddressController extends BaseApiController
      */
     public function findOneAction(Request $request, $customerId, $id)
     {
-        $this->isCustomerAllowed($customerId);
+        $this->throwAccessDeniedIfCustomerNotAllowed($customerId);
 
         $vendorId = $request->query->get('vendorId');
 
@@ -85,7 +86,7 @@ class CustomerAddressController extends BaseApiController
      */
     public function updateAction(Request $request, $customerId, $id)
     {
-        $this->isCustomerAllowed($customerId);
+        $this->throwAccessDeniedIfCustomerNotAllowed($customerId);
 
         $data = $this->decodeJsonContent($request->getContent());
         $accessToken = $this->getToken()->getAccessToken();
@@ -111,7 +112,7 @@ class CustomerAddressController extends BaseApiController
      */
     public function deleteAction($customerId, $id)
     {
-        $this->isCustomerAllowed($customerId);
+        $this->throwAccessDeniedIfCustomerNotAllowed($customerId);
 
         $accessToken = $this->getToken()->getAccessToken();
 
@@ -135,7 +136,7 @@ class CustomerAddressController extends BaseApiController
      */
     public function createAction(Request $request, $customerId)
     {
-        $this->isCustomerAllowed($customerId);
+        $this->throwAccessDeniedIfCustomerNotAllowed($customerId);
 
         $vendorId    = $request->request->get('vendor_id');
         $serializer = $this->getSerializer();
@@ -145,7 +146,7 @@ class CustomerAddressController extends BaseApiController
         $data = $this->sanitizeInputData($this->decodeJsonContent($request->getContent()));
 
         /** @var Address $address */
-        $address = $serializer->denormalize($data, Address::class);
+        $address = $serializer->denormalizeCustomerAddress($data);
         try {
             $address = $this->getCustomerService()->create($address, $accessToken);
         } catch (ApiErrorException $e) {

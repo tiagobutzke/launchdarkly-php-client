@@ -42,7 +42,7 @@ class AjaxAuthenticationSuccessListener extends DefaultAuthenticationSuccessHand
             if ($request->headers->has('FD-save-address')) {
                 $address = json_decode($request->headers->get('FD-save-address'), true);
 
-                $this->customerService->saveUserAddressFromSession($address, $token->getAccessToken());
+                $this->customerService->saveCustomerAddressFromGuestCustomer($address, $token->getAccessToken());
             }
             $response = new JsonResponse(['url' => $this->determineTargetUrl($request)]);
         } else {

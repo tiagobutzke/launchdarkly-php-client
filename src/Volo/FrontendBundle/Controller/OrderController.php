@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * @Route("/orders")
@@ -35,14 +36,7 @@ class OrderController extends BaseController
         $orderProvider = $this->get('volo_frontend.provider.order');
         try {
             $status = $orderProvider->fetchOrderStatus($orderCode, $accessToken);
-            if ($session->get(static::SESSION_ORDER_PAYMENT_CODE) === 'cod') {
-                $orderPayment = new OrderPayment();
-                $orderPayment->setStatus('pending');
-                $orderPayment->setReference('cod');
-                $orderPayment->setAmount($status['total_value']);
-            } else {
-                $orderPayment = $orderProvider->fetchOrderPaymentInformation($orderCode, $accessToken);
-            }
+            $orderPayment = $this->createOrderPayment($orderCode, $session, $status, $orderProvider, $accessToken);
         } catch (OrderNotFoundException $e) {
             throw $this->createNotFoundException('Order not found.', $e);
         }
@@ -58,5 +52,36 @@ class OrderController extends BaseController
         ]);
 
         return new Response($content);
+    }
+
+    /**
+     * @param string $orderCode
+     * @param SessionInterface $session
+     * @param array $status
+     * @param string $orderProvider
+     * @param AccessToken $accessToken
+     *
+     * @return OrderPayment
+     */
+    private function createOrderPayment(
+        $orderCode,
+        SessionInterface $session,
+        array $status,
+        $orderProvider,
+        AccessToken $accessToken
+    )
+    {
+        if ($session->get(static::SESSION_ORDER_PAYMENT_CODE) === 'cod') {
+            $orderPayment = new OrderPayment();
+            $orderPayment->setStatus('pending');
+            $orderPayment->setReference('cod');
+            $orderPayment->setAmount($status['total_value']);
+
+            return $orderPayment;
+        } else {
+            $orderPayment = $orderProvider->fetchOrderPaymentInformation($orderCode, $accessToken);
+
+            return $orderPayment;
+        }
     }
 }

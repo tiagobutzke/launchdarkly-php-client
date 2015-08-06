@@ -117,7 +117,7 @@ class CustomerService
 
         $mobileNumber = $customer->getMobileNumber();
         if ($customer->getMobileCountryCode()) {
-            $mobileNumber = sprintf('+%d%d', $customer->getMobileCountryCode(), $customer->getMobileNumber());
+            $mobileNumber = sprintf('+%s%s', $customer->getMobileCountryCode(), $customer->getMobileNumber());
         }
 
         $validPhoneNumber = $this->validatePhoneNumber($mobileNumber);
@@ -187,7 +187,7 @@ class CustomerService
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param AccessToken $accessToken
      * @param int $vendorId
      *
@@ -210,8 +210,8 @@ class CustomerService
     }
 
     /**
-     * @param $address
-     * @param $accessToken
+     * @param Address $address
+     * @param AccessToken $accessToken
      *
      * @return Address
      */
@@ -224,12 +224,12 @@ class CustomerService
      * @param array $data
      * @param AccessToken $accessToken
      */
-    public function saveUserAddressFromSession(array $data, AccessToken $accessToken)
+    public function saveCustomerAddressFromGuestCustomer(array $data, AccessToken $accessToken)
     {
         $customerAddresses = $this->getAddresses($accessToken);
 
         /** @var Address $address */
-        $address = $this->serializer->denormalize($data, Address::class);
+        $address = $this->serializer->denormalizeCustomerAddress($data);
 
         if ($customerAddresses->isAlreadySaved($address)) {
             $address = $customerAddresses->findSimilar($address);

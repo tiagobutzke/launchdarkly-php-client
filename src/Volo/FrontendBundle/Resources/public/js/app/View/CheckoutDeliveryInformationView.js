@@ -22,13 +22,18 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
 
         this.vendorId = options.vendorId;
 
-        if (!this.customerModel.isGuest && this.collection.filterByCityAndVendorId(this.locationModel.get('city'), this.vendorId).length > 0) {
+        var address = this.collection.filterByCityAndVendorId(this.locationModel.get('city'), this.vendorId);
+        if (!_.findWhere(address, {id: this.model.get('address_id')})) {
+            this.model.save(this.model.defaults, {silent: true});
+        }
+
+        if (!this.customerModel.isGuest && address.length > 0) {
             this._selectLastAddress();
         }
 
         this.listenTo(this.model, 'change:address_id', this._changeAddress);
         this.listenTo(this.collection, 'custom:edit', this._editAddress);
-        this.listenTo(this.collection, 'add', this._renderAddress);
+        this.listenTo(this.collection, 'add', this._renderNewAddress);
         this.listenTo(this.collection, 'update', this._renderAddNewAddressLink);
 
         this.checkoutDeliveryValidationView = new VOLO.CheckoutDeliveryValidationView({
@@ -58,6 +63,8 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
             }
         }
 
+        this.checkoutDeliveryValidationView.toggleContinueButton();
+
         this._renderAddressList();
         this._renderAddNewAddressLink();
 
@@ -76,6 +83,16 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
         });
 
         this.$('#checkout-delivery-information-list').append(view.render().el);
+        this.subViews.push(view);
+    },
+
+    _renderNewAddress: function (address) {
+        var view = new VOLO.UserAddressView({
+            model: address,
+            checkoutModel: this.model
+        });
+
+        this.$('#checkout-delivery-information-list').prepend(view.render().el);
         this.subViews.push(view);
     },
 
@@ -279,7 +296,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
 
     _selectLastAddress: function () {
         var addresses = this.collection.filterByCityAndVendorId(this.locationModel.get('city'), this.vendorId),
-            address = _.last(addresses),
+            address = _.first(addresses),
             id = null;
 
         if (address) {

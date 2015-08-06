@@ -46,7 +46,13 @@ VOLO.UserAddressModel = Backbone.Model.extend({
 
 VOLO.UserAddressCollection = Backbone.Collection.extend({
     model: VOLO.UserAddressModel,
-    comparator: 'id',
+    comparator: function (a, b) {
+        if (a.id >=b.id) return -1 ;
+        if (a.id < b.id) return 1 ;
+
+        return 0;
+    },
+
     initialize: function (data, options) {
         _.bindAll(this);
         this.isLocalStorageEnabled = options.customer.isGuest;

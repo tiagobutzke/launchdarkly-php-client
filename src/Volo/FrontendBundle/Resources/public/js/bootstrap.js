@@ -48,11 +48,9 @@ VOLO.createLocationModel = function (jsonLocation) {
     return VOLO.locationModel;
 };
 
-VOLO.createCheckoutModel = function (cartModel, locationModel, vendorId) {
+VOLO.createCheckoutModel = function (cartModel) {
     VOLO.checkoutModel = new CheckoutModel({}, {cartModel: cartModel});
     VOLO.checkoutModel.fetch();
-
-    cartModel.getCart(vendorId).set('location', locationModel.attributes);
 
     return VOLO.checkoutModel;
 };
@@ -324,6 +322,12 @@ VOLO.doBootstrap = function(configuration) {
             cartViews.cartView.setZipCode(urlZipCode);
         }
     }
+    cartModel = VOLO.createCartModel(VOLO.jsonCart);
+    checkoutModel = VOLO.createCheckoutModel(cartModel, locationModel);
+
+    if ($('.menu__list-wrapper').length > 0) {
+        checkoutModel.save(checkoutModel.defaults, {silent: true});
+    }
 
     if ($('.restaurants__list').length > 0) {
         restaurantsView = VOLO.createRestaurantsView();
@@ -340,8 +344,9 @@ VOLO.doBootstrap = function(configuration) {
 
     var $checkoutMain = $('.checkout__steps');
     if ($checkoutMain.length > 0) {
-        cartModel = VOLO.createCartModel(VOLO.jsonCart);
-        checkoutModel = VOLO.createCheckoutModel(cartModel, locationModel, $checkoutMain.data('vendor_id'));
+        //cartModel = VOLO.createCartModel(VOLO.jsonCart);
+        //checkoutModel = VOLO.createCheckoutModel(cartModel, locationModel, $checkoutMain.data('vendor_id'));
+        cartModel.getCart($checkoutMain.data('vendor_id')).set('location', locationModel.attributes);
 
         checkoutViews = VOLO.createCheckoutViews(cartModel, checkoutModel, locationModel, userAddressCollection, loginButtonView, VOLO.customer);
         VOLO.renderCheckoutViews(checkoutViews);
