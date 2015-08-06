@@ -91,7 +91,11 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
             this.$('.checkout__contact-information__title-link').addClass('hide');
         } else {
             this.$el.removeClass('checkout__step--reduced');
-            this.$('.checkout__contact-information__title-link').removeClass('hide');
+            if (this.customerModel.isValid()) {
+                this.$('.checkout__contact-information__title-link').removeClass('hide');
+            } else {
+                this.$('.checkout__contact-information__title-link').addClass('hide');
+            }
 
             this._fillUpForm();
             if (this.checkoutModel.get('is_contact_information_valid') && this.customerModel.isValid()) {
