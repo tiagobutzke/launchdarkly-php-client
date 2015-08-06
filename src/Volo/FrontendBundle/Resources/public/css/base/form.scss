@@ -301,13 +301,11 @@ select {
   margin-bottom: $space-md;
 }
 .form__error-message.form__error-message--delivery-not-saved {
+  margin-top: $space-sm;
   margin-bottom: 15px;
-}
-.form__error-message.form__error-message--existing-user {
-  display: none;
-}
-.form__error-message.form__error-message--invalid-voucher {
-  display: none;
+  @include respond-from("screen-md") {
+    margin-top: 0;
+  }
 }
 
 

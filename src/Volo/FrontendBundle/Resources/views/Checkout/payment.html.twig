@@ -22,7 +22,7 @@
     <div class="checkout-wrapper">
         <div class="checkout__blocks">
             <div class="checkout__steps" data-vendor_id="{{ vendor.id }}" data-vendor_code="{{ vendor.code }}">
-                <div class="checkout__step checkout__step--first checkout__delivery-information">
+                <div class="checkout__step checkout__delivery-information">
                     {% include 'VoloFrontendBundle:Checkout/Partial:step_delivery_information.html.twig' %}
                 </div>
                 <div class="checkout__step checkout__step--reduced checkout__contact-information">
@@ -32,18 +32,11 @@
                     {% include 'VoloFrontendBundle:Checkout/Partial:step_payment.html.twig' %}
                 </div>
             </div>
-            <h3 class="checkout__title checkout__title--summary">{% trans %}title.order_summary{% endtrans %}</h3>
             <div id="cart">
                 <div class="desktop-cart desktop-cart--checkout" data-minimum_order_amount="{{ vendor.minimumOrderAmount }}" data-vendor_id="{{ vendor.id }}">
                     {# cart from template #}
                 </div>
             </div>
-        </div>
-    </div>
-    {# Sticky bottom cart mobile #}
-    <div class="bottom-cart">
-        <div class="bottom-cart__wrapper">
-            <div class="bottom-cart__cta--full">{{ block('checkout_button') }}</div>
         </div>
     </div>
 {% endblock %}

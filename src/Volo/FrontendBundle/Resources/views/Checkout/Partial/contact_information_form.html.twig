@@ -2,12 +2,12 @@
     <span class="form__error-message form__error-message--contact-not-saved form__error-message--above-form hide" id="error-message-contact-not-saved">
         {% trans %}contact_information.needs_to_be_saved{% endtrans %}
     </span>
-    <div class="form-group checkout__contact-information__first-name">
+    <div class="form-group checkout__contact-information__form-first-name">
         <input type="text" class="form-control" id="contact-information-first-name" name="customer[first_name]"
                value="" required="true" placeholder="{% trans %}form.placeholder.first_name{% endtrans %}"
                data-validation-msg="{% trans %}validations.error.checkout.customer_first_name{% endtrans %}">
     </div>
-    <div class="form-group checkout__contact-information__last-name">
+    <div class="form-group checkout__contact-information__form-last-name">
         <input type="text" class="form-control" id="contact-information-last-name" name="customer[last_name]"
                value="" required="true" placeholder="{% trans %}form.placeholder.last_name{% endtrans %}"
                data-validation-msg="{% trans %}validations.error.checkout.customer_last_name{% endtrans %}">
@@ -25,9 +25,9 @@
     </div>
     <div class="form-group checkout__step__item-form-group--newsletter sprite-form">
         <input type="checkbox" class="form-control sprite-form__checkbox" name="customer[is_newsletter_subscribed]"
-               id="newsletter_checkbox" value="true" data-unchecked-value="false" checked="checked">
+               id="contact-information-newsletter-checkbox" value="true" data-unchecked-value="false" checked="checked">
         <div class="sprite-form__sprite"></div>
-        <label class="sprite-form__label" for="newsletter_checkbox">
+        <label class="sprite-form__label" for="contact-information-newsletter-checkbox">
             {% trans %}form.label.newsletter{% endtrans %}
         </label>
     </div>

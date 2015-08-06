@@ -124,7 +124,7 @@ VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel, us
         });
     }
 
-    if ($('.checkout__payment-options').length > 0) {
+    if ($('.checkout__payment__options').length > 0) {
         views.paymentTypeView = new PaymentTypeView({
             el: '.checkout__payment',
             checkoutModel: checkoutModel,

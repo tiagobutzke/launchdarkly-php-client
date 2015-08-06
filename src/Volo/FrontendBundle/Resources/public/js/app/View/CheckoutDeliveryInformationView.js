@@ -7,7 +7,7 @@
 VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
     events: {
         "click .checkout__title-link__text--add-address-delivery": '_openAddressForm',
-        "click .checkout__title-link-guest": '_editGuestAddress',
+        "click .checkout__title-link--guest": '_editGuestAddress',
         "click .checkout__title-link__text--cancel-delivery": '_closeAddressForm',
         "submit #delivery-information-form": '_submit'
     },
@@ -125,7 +125,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
         this.$el.addClass('checkout__delivery-information--list-shown');
 
         if (this.customerModel.isGuest) {
-            this.$('.checkout__title-link-guest').addClass('hide');
+            this.$('.checkout__title-link--guest').addClass('hide');
         }
 
         this.trigger('form:open', this);
@@ -138,7 +138,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
         this._emptyAddressForm();
 
         if (this.customerModel.isGuest) {
-            this.$('.checkout__title-link-guest').removeClass('hide');
+            this.$('.checkout__title-link--guest').removeClass('hide');
         }
 
         this.trigger('form:close', this);

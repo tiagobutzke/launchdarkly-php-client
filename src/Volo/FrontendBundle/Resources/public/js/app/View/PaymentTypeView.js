@@ -11,7 +11,7 @@ var PaymentTypeView = Backbone.View.extend({
                 customerModel: options.customerModel
             });
         }
-        this.$('.checkout__payment-option__wrapper').first().click();
+        this.$('.checkout__payment__option-wrapper').first().click();
     },
 
     events: {
@@ -37,9 +37,9 @@ var PaymentTypeView = Backbone.View.extend({
         var $cod = this.$('.cod');
         this.checkoutModel.set('payment_type_code', $cod.data('payment_type_code'));
         this.checkoutModel.set('payment_type_id', $cod.data('payment_type_id'));
-        this.$('.checkout__payment-options__option-description--paypal').addClass('hide');
-        this.$('.checkout__payment-options__option-description--adyen').addClass('hide');
-        this.$('.checkout__payment-options__option-description--cod').removeClass('hide');
+        this.$('.checkout__payment__option-description--paypal').addClass('hide');
+        this.$('.checkout__payment__option-description--adyen').addClass('hide');
+        this.$('.checkout__payment__option-description--cod').removeClass('hide');
         this.$('.checkout__saved-payment-options__list').addClass('hide');
         this.$('#checkout-payment-form').addClass('hide');
         this._activatePaymentMethod($cod);
@@ -51,9 +51,9 @@ var PaymentTypeView = Backbone.View.extend({
         this.checkoutModel.set('payment_type_code', $creditCardNode.data('payment_type_code'));
         this.checkoutModel.set('payment_type_id', $creditCardNode.data('payment_type_id'));
 
-        this.$('.checkout__payment-options__option-description--paypal').addClass('hide');
-        this.$('.checkout__payment-options__option-description--adyen').addClass('hide');
-        this.$('.checkout__payment-options__option-description--cod').addClass('hide');
+        this.$('.checkout__payment__option-description--paypal').addClass('hide');
+        this.$('.checkout__payment__option-description--adyen').addClass('hide');
+        this.$('.checkout__payment__option-description--cod').addClass('hide');
         this.$('#checkout-payment-form').toggleClass('hide', this.$(".checkout__saved-payment-options__credit-card-radio").length > 0);
         this.$('#checkout-saved-payment-options').removeClass('hide');
         this.$('.checkout__saved-payment-options__list').removeClass('hide');
@@ -67,9 +67,9 @@ var PaymentTypeView = Backbone.View.extend({
         this.checkoutModel.set('payment_type_code', $node.data('payment_type_code'));
         this.checkoutModel.set('payment_type_id', $node.data('payment_type_id'));
 
-        this.$('.checkout__payment-options__option-description--adyen').removeClass('hide');
-        this.$('.checkout__payment-options__option-description--paypal').addClass('hide');
-        this.$('.checkout__payment-options__option-description--cod').addClass('hide');
+        this.$('.checkout__payment__option-description--adyen').removeClass('hide');
+        this.$('.checkout__payment__option-description--paypal').addClass('hide');
+        this.$('.checkout__payment__option-description--cod').addClass('hide');
         this.$('#checkout-saved-payment-options').addClass('hide');
         this.$('.checkout__saved-payment-options__list').addClass('hide');
         this.$('#checkout-payment-form').addClass('hide');
@@ -84,9 +84,9 @@ var PaymentTypeView = Backbone.View.extend({
         this.checkoutModel.set('payment_type_id', $payPalNode.data('payment_type_id'));
         this.checkoutModel.set('credit_card_id', null);
 
-        this.$('.checkout__payment-options__option-description--paypal').removeClass('hide');
-        this.$('.checkout__payment-options__option-description--adyen').addClass('hide');
-        this.$('.checkout__payment-options__option-description--cod').addClass('hide');
+        this.$('.checkout__payment__option-description--paypal').removeClass('hide');
+        this.$('.checkout__payment__option-description--adyen').addClass('hide');
+        this.$('.checkout__payment__option-description--cod').addClass('hide');
         this.$('#checkout-payment-form').addClass('hide');
         this.$('#checkout-saved-payment-options').addClass('hide');
         this.$('.checkout__saved-payment-options__list').addClass('hide');
@@ -97,8 +97,8 @@ var PaymentTypeView = Backbone.View.extend({
     },
 
     _activatePaymentMethod: function($paymentMethodNode) {
-        this.$('.checkout__payment-option__wrapper--active').removeClass('checkout__payment-option__wrapper--active');
-        $paymentMethodNode.addClass('checkout__payment-option__wrapper--active');
+        this.$('.checkout__payment__option-wrapper--active').removeClass('checkout__payment__option-wrapper--active');
+        $paymentMethodNode.addClass('checkout__payment__option-wrapper--active');
     },
 
     _toggleNewCreditCard: function() {

@@ -1,10 +1,9 @@
 <form class="checkout__delivery-information__form" id="delivery-information-form" method="post" role="form" novalidate>
-    <span class="checkout__step__item-content-row form__error-message form__error-message--delivery-not-saved hide" id="error-message-delivery-not-saved">
+    <div class="form__error-message form__error-message--delivery-not-saved hide" id="error-message-delivery-not-saved">
         {% trans %}delivery_information.needs_to_be_saved{% endtrans %}
-    </span>
+    </div>
     <div class="form-group hide">
-        <input
-                type="hidden"
+        <input  type="hidden"
                 class="form-control"
                 id="delivery-information-formatted-address"
                 name="formatted_address"
@@ -34,22 +33,25 @@
                 >
     </div>
     <div class="form-group checkout__delivery-information__postal-index">
-        <input type="text" class="form-control"  id="delivery-information-postal-index" name="customer_address[postcode]"
+        <input type="text" class="form-control" id="delivery-information-postal-index" name="customer_address[postcode]"
                data-vendor_id="{{ vendor.id }}"
                data-msg_ensure_full_address="{% trans %}formatted_address.ensure_full_address_with_number{% endtrans %}"
                value="{{ customer_address.postcode|default('') }}" required="true" placeholder="{% trans %}form.placeholder.postcode{% endtrans %}"
-               data-validation-msg="{% trans %}validations.error.checkout.customer_postcode{% endtrans %}">
+               data-validation-msg="{% trans %}validations.error.checkout.customer_postcode{% endtrans %}"
+                >
     </div>
     <div class="form-group checkout__delivery-information__city">
         <input type="text" class="form-control" id="delivery-information-city" name="customer_address[city]"
                tabindex="99"
                readonly="readonly"
                value="{{ customer_address.city|default('') }}" required="true" placeholder="{% trans %}form.placeholder.city{% endtrans %}"
-               data-validation-msg="{% trans %}validations.error.checkout.customer_city{% endtrans %}">
+               data-validation-msg="{% trans %}validations.error.checkout.customer_city{% endtrans %}"
+                >
     </div>
     <div class="form-group">
         <input type="text" class="form-control" id="delivery-information-company" name="customer_address[company]"
-               value="" placeholder="{% trans %}form.placeholder.company_name{% endtrans %}">
+               value="" placeholder="{% trans %}form.placeholder.company_name{% endtrans %}"
+                >
     </div>
     <div class="form-group">
         <textarea class="checkout__step__item-textarea form-control" cols="30" rows="10" id="delivery-information-instructions" name="customer_address[delivery_instructions]"

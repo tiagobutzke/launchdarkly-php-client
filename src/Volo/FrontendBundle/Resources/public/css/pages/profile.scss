@@ -29,8 +29,9 @@
 .profile__block {
   @include make-md-column(6);
   @extend .col-md-push-3;
+  @extend .clearfix;
   clear: both;
-  padding: 0;
+  padding: 0 0 20px 0;
   background-color: $color-bg-primary;
   @include respond-from("screen-md") {
     margin-bottom: $space-sm;
@@ -64,4 +65,24 @@
 }
 .profile__block--list .profile__block__title {
   margin-bottom: 0;
+}
+
+.profile__block__content {
+  @extend .checkout__step__item-content;
+}
+
+
+.profile__saved-address {
+  padding: $space-xs 0;
+}
+.profile__saved-address:first-child {
+  margin-top: 15px;
+}
+
+
+.profile__saved-address__line {
+  display: block;
+}
+.profile__saved-address__line--notes {
+  color: $color-text-light;
 }

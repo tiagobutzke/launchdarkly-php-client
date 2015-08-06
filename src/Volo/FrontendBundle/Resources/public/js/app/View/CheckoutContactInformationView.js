@@ -104,9 +104,9 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
     },
 
     renderContactInformation: function () {
-        this.$('.customer_full_name').html(this.customerModel.escape('first_name') + ' ' + this.customerModel.escape('last_name'));
-        this.$('.customer_email').html(this.customerModel.escape('email'));
-        this.$('.customer_phone_number').html(_.escape(this.customerModel.getFullMobileNumber()));
+        this.$('.checkout__contact-information__full-name').html(this.customerModel.escape('first_name') + ' ' + this.customerModel.escape('last_name'));
+        this.$('.checkout__contact-information__email').html(this.customerModel.escape('email'));
+        this.$('.checkout__contact-information__phone-number').html(_.escape(this.customerModel.getFullMobileNumber()));
     },
 
     openLoginModal: function () {
@@ -161,7 +161,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
             this.$('#contact-information-last-name').val(this.customerModel.get('last_name'));
             this.$('#contact-information-email').val(this.customerModel.get('email'));
             this.$('#contact-information-mobile-number').val(this.customerModel.getFullMobileNumber());
-            this.$('#newsletter_checkbox').prop('checked', this.customerModel.get('is_newsletter_subscribed'));
+            this.$('#contact-information-newsletter-checkbox').prop('checked', this.customerModel.get('is_newsletter_subscribed'));
         }
     },
 

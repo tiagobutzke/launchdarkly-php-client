@@ -26,7 +26,7 @@ var PaymentFormView = Backbone.View.extend({
         var encryptedForm = adyen.encrypt.createEncryptedForm(
             this.el,
             this._adyenPublicKey,
-            {cardTypeElement: this.$('#cardType')[0]}
+            {cardTypeElement: this.$('#checkout-credit-card-form-card-type')[0]}
         );
 
         var isComplete = !this.$("input").filter(function() {

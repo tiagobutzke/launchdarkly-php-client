@@ -89,7 +89,6 @@
   background-color: $color-bg-secondary;
   margin: 0;
   text-transform: uppercase;
-  border-top: $dropdown-border;
   border-bottom: $dropdown-border;
   @include respond-from("screen-md") {
     border-radius: $border-radius-default;
@@ -99,15 +98,16 @@
     background-color: transparent;
   }
 }
-.checkout__step--first .checkout__step__title {
-  border-top: none;
+.checkout__step--reduced .checkout__step__title {
+  border-bottom: $dropdown-border;
+}
+.checkout__step:last-child .checkout__step__title {
+  @include respond-from("screen-md") {
+    border-bottom: none;
+  }
 }
 .checkout__step--reduced .checkout__step__title {
   color: $color-text-light;
-  border-top: none;
-  @include respond-from("screen-md") {
-    border-top: $dropdown-border;
-  }
 }
 
 
@@ -117,6 +117,7 @@
 // -------------------------- CHECKOUT ITEMS START --------------------------
 
 .checkout__step__items {
+  border-bottom: $dropdown-border;
   @include make-xs-column(12, 0);
 }
 .checkout__contact-information .checkout__step__items {
@@ -131,6 +132,13 @@
     border-bottom: 0;
   }
 }
+.checkout__step--reduced .checkout__step__items {
+  display: none;
+}
+.checkout__step:last-child .checkout__step__items {
+  border-bottom: none;
+}
+
 
 .checkout__step__item {
   @include make-xs-column(12, 0);
@@ -139,7 +147,7 @@
     padding-bottom: $space-lg;
   }
 }
-.checkout__step__item.checkout__payment-options {
+.checkout__step__item.checkout__payment__options {
   padding-bottom: 0;
   @include respond-from("screen-md") {
     padding-bottom: $space-sm;
@@ -183,7 +191,7 @@
   line-height: 1.3em;
   font-size: 11px;
 }
-.checkout__payment-options-list.checkout__step__item-content {
+.checkout__payment__options-list.checkout__step__item-content {
   padding: 0;
   @include respond-from("screen-md") {
     padding: 0 $grid-gutter-width;
@@ -235,20 +243,6 @@ textarea.checkout__step__item-textarea {
 }
 
 
-.checkout__step__item-content-row {
-  display: block;
-}
-.checkout__step__item-content-row:first-child {
-  margin-top: $space-sm;
-  @include respond-from("screen-md") {
-    margin-top: 0;
-  }
-}
-.checkout__payment__legal .checkout__step__item-content-row:first-child {
-  margin-top: 0;
-}
-
-
 // -------------------------- CHECKOUT ITEMS END --------------------------
 
 
@@ -264,17 +258,11 @@ textarea.checkout__step__item-textarea {
     font-size: 14px;
   }
 }
-.checkout__title-link--open {
-  padding: 0 $grid-gutter-width / 2;
-  float: none;
-  @include respond-from("screen-md") {
-    padding: 0 $grid-gutter-width;
-  }
-}
 .checkout__payment__voucher .checkout__title-link {
-  padding: $grid-gutter-width / 2;
+  float: none;
+  padding: $grid-gutter-width $grid-gutter-width / 2 $grid-gutter-width / 2 $grid-gutter-width / 2;
   @include respond-from("screen-md") {
-   padding: $grid-gutter-width $grid-gutter-width / 2 $grid-gutter-width / 2 $grid-gutter-width;
+    padding: $grid-gutter-width $grid-gutter-width / 2 $grid-gutter-width / 2 $grid-gutter-width;
   }
 }
 
@@ -353,19 +341,14 @@ textarea.checkout__step__item-textarea {
   @include make-xs-column(6, 0);
 }
 
-.checkout__delivery-address__delivery-notes {
-  color: $color-text-secondary;
-}
-
 .checkout__payment__select-address-link {
   display: block;
 }
 
 .checkout__delivery-information__form {
-  padding: $space-sm;
+  padding: 0;
   border-bottom: $dropdown-border;
   @include respond-from("screen-md") {
-    padding: 0;
     border-bottom: none;
   }
 }
@@ -392,7 +375,7 @@ textarea.checkout__step__item-textarea {
   padding-left: $space-xs;
 }
 
-.checkout-delivery-information-list {
+.checkout__delivery-information__list {
   margin-left: -5px;
   margin-right: -5px;
 }
@@ -517,7 +500,7 @@ textarea.checkout__step__item-textarea {
 
 // -------------------------- CHECKOUT CONTACT INFORMATION START --------------------------
 
-.checkout__contact-information__first-name {
+.checkout__contact-information__form-first-name {
   @extend %two-columns-form-layout--from-md;
   padding-right: 0;
   @include respond-from("screen-md") {
@@ -525,7 +508,7 @@ textarea.checkout__step__item-textarea {
   }
 }
 
-.checkout__contact-information__last-name  {
+.checkout__contact-information__form-last-name  {
   @extend %two-columns-form-layout--from-md;
   padding-left: 0;
   @include respond-from("screen-md") {
@@ -542,10 +525,6 @@ textarea.checkout__step__item-textarea {
 
 .checkout__saved-payment-options {
   padding-bottom: 0;
-}
-
-.checkout__saved-payment-options__form {
-  padding-bottom: $grid-gutter-width;
 }
 
 .checkout__saved-payment-options__add-card-link {
@@ -574,7 +553,7 @@ textarea.checkout__step__item-textarea {
   display: none;
 }
 
-.checkout__payment-option {
+.checkout__payment__option {
   @include make-md-column(4);
   @include clearfix;
   padding: 0;
@@ -587,7 +566,7 @@ textarea.checkout__step__item-textarea {
 }
 
 
-.checkout__payment-option__wrapper {
+.checkout__payment__option-wrapper {
   border-bottom: $dropdown-border;
   padding: $space-sm;
   @include respond-from("screen-md") {
@@ -601,14 +580,14 @@ textarea.checkout__step__item-textarea {
     @include transition(all .1s linear);
   }
 }
-.checkout__payment-option__wrapper:hover {
+.checkout__payment__option-wrapper:hover {
   cursor: pointer;
   @include respond-from("screen-md") {
     border: $cta-secondary-border;
     color: $color-text-highlight;
   }
 }
-.checkout__payment-option__wrapper--active {
+.checkout__payment__option-wrapper--active {
  color: $color-text-highlight;
  @include respond-from("screen-md") {
    border: $cta-secondary-border;
@@ -616,12 +595,12 @@ textarea.checkout__step__item-textarea {
 }
 
 
-.checkout__payment-option__label-icon {
+.checkout__payment__option-label-icon {
   margin-right: $space-xs;
   color: $color-text-highlight;
   display: none;
 }
-.checkout__payment-option__wrapper--active .checkout__payment-option__label-icon {
+.checkout__payment__option-wrapper--active .checkout__payment__option-label-icon {
   display: inline-block;
   @include respond-from("screen-md") {
     display: none;
@@ -629,7 +608,7 @@ textarea.checkout__step__item-textarea {
 }
 
 
-.checkout__payment-option__image-wrapper {
+.checkout__payment__option-image-wrapper {
   float: right;
   width: 60%;
   height: 30px;
@@ -644,7 +623,7 @@ textarea.checkout__step__item-textarea {
     margin-top: 0;
   }
 }
-.checkout__payment-option__image {
+.checkout__payment__option-image {
   display: inline;
   height: 30px;
   @include respond-from("screen-md") {
@@ -653,7 +632,7 @@ textarea.checkout__step__item-textarea {
 }
 
 
-.checkout__payment-option__label {
+.checkout__payment__option-label {
   width: 70%;
   @include respond-from("screen-md") {
     width: 100%;
@@ -661,7 +640,7 @@ textarea.checkout__step__item-textarea {
   }
 }
 
-.checkout__payment-options__option-description {
+.checkout__payment__option-description {
   clear: both;
   font-size: 12px;
   padding-left: $grid-gutter-width / 2;
@@ -671,7 +650,7 @@ textarea.checkout__step__item-textarea {
   }
 }
 
-.checkout__payment-options__option-description-title {
+.checkout__payment__option-description-title {
   font-family: $bold-font-family;
   padding-top: $space-sm;
   padding-bottom: $space-xs;
@@ -681,16 +660,39 @@ textarea.checkout__step__item-textarea {
   }
 }
 
+.checkout__saved-payment-options__list {
+  padding: $space-sm 0;
+  min-height: 40px;
+}
+
+
 .checkout__saved-payment-options__list-label {
   font-size: 12px;
   @include respond-from("screen-md") {
     font-size: 14px;
   }
 }
+.checkout__saved-payment-options__list:first-child {
+  margin-top: 10px;
+}
 
-.checkout__payment-options__option-description-text {
+
+.checkout__payment__option-description-text {
   line-height: $base-line-height;
 }
+
+
+.checkout__saved-payment-options__option-type {
+  vertical-align: middle;
+  display: inline-block;
+}
+.checkout__saved-payment-options__option-type--visa {
+  @include retina-sprite($visa-group);
+}
+.checkout__saved-payment-options__option-type--mastercard {
+  @include retina-sprite($mastercard-group);
+}
+
 
 .checkout__payment__credit-card-fields {
   @include respond-from("screen-md") {
@@ -833,27 +835,3 @@ textarea.checkout__step__item-textarea {
 
 
 // -------------------------- CHECKOUT PAYMENT END --------------------------
-
-
-// -------------------------- CHECKOUT LIST START --------------------------
-
-.checkout__list-item {
-  font-size: 0.875em;
-  padding: $space-xs 0;
-  margin: 0;
-}
-
-
-.checkout__list-item__payment-option-type {
-  vertical-align: middle;
-  display: inline-block;
-}
-.checkout__list-item__payment-option-type--visa {
-  @include retina-sprite($visa-group);
-}
-.checkout__list-item__payment-option-type--mastercard {
-  @include retina-sprite($mastercard-group);
-}
-
-
-// -------------------------- CHECKOUT LIST END --------------------------

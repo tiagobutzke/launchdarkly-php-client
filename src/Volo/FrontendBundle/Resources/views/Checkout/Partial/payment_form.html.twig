@@ -1,52 +1,50 @@
-<div class="checkout__step__item checkout__payment__credit-card">
-    <form class="hide" action="{{ path('checkout_payment', {vendorCode: vendor.code}) }}" id="checkout-payment-form"
-          method="post" role="form" data-adyen_public_key="{{ adyen_public_key }}">
-        <h4 class="checkout__step__item-title checkout__subtitle--above-form">{% trans %}title.credit_card_details{% endtrans %}</h4>
-        <div class="checkout__step__item-content">
-            <div class="checkout__payment__credit-card-fields">
-                <div class="checkout__payment__credit-card-fields-form-group form-group">
-                    <input type="text" class="form-control" id="checkout-adyen-encrypted-form-holder-name" size="20"
-                           autocomplete="off" data-encrypted-name="holderName" placeholder="{% trans %}form.placeholder.card_holder_name{% endtrans %}">
-                </div>
-                <div class="checkout__payment__credit-card-fields-form-group form-group">
-                    <input type="tel" class="form-control" id="checkout-adyen-encrypted-form-number" size="20"
-                           autocomplete="off" data-encrypted-name="number" placeholder="{% trans %}form.placeholder.card_number{% endtrans %}">
-                    <span class="checkout__step__item-content-row" id="cardType"></span>
-                </div>
-                <div class="checkout__payment__credit-card-fields-form-group checkout__payment__credit-card-fields-form-group--expiry form-group">
-                    <input type="tel" class="form-control" id="checkout-credit-card-form-expiry" maxlength="7" size="7"
-                           autocomplete="off" placeholder="{% trans %}form.placeholder.mmyy{% endtrans %}">
-                </div>
-                <div class="checkout__payment__credit-card-fields-form-group form-group checkout__payment__credit-card-fields-form-group--cvc">
-                    <input type="tel" class="form-control" id="checkout-adyen-encrypted-form-cvc" size="4" maxlength="4"
-                           autocomplete="off" data-encrypted-name="cvc" placeholder="{% trans %}form.placeholder.cvc{% endtrans %}">
-                    <i class="checkout__payment__credit-card-fields-help-toggle icon-help-circled"></i>
-                </div>
-                <div class="hide">
-                    <input type="hidden" id="checkout-adyen-encrypted-form-expiry-generationtime" value="{{ "now"|date('c') }}"
-                           data-encrypted-name="generationtime"/></div>
-                <div class="hide">
-                    <input type="hidden" id="checkout-adyen-encrypted-form-expiry-year" maxlength="4" size="4" data-encrypted-name="expiryYear">
-                </div>
-                <div class="hide">
-                    <input type="hidden" id="checkout-adyen-encrypted-form-expiry-month" maxlength="4" size="4" data-encrypted-name="expiryMonth">
-                </div>
-
-                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <div class="checkout__payment__credit-card-fields-form-group form-group sprite-form">
-                        <input type="checkbox" class="form-control sprite-form__checkbox" id="checkout-store-credit-card" checked="checked">
-                        <div class="sprite-form__sprite"></div>
-                        <label class="sprite-form__label" for="checkout-store-credit-card">
-                            {% trans %}form.label.store_credit_card{% endtrans %}
-                        </label>
-                    </div>
-                {% endif %}
-
+<form class="hide" action="{{ path('checkout_payment', {vendorCode: vendor.code}) }}" id="checkout-payment-form"
+      method="post" role="form" data-adyen_public_key="{{ adyen_public_key }}">
+    <h4 class="checkout__step__item-title checkout__subtitle--above-form">{% trans %}title.credit_card_details{% endtrans %}</h4>
+    <div class="checkout__step__item-content">
+        <div class="checkout__payment__credit-card-fields">
+            <div class="checkout__payment__credit-card-fields-form-group form-group">
+                <input type="text" class="form-control" id="checkout-adyen-encrypted-form-holder-name" size="20"
+                       autocomplete="off" data-encrypted-name="holderName" placeholder="{% trans %}form.placeholder.card_holder_name{% endtrans %}">
+            </div>
+            <div class="checkout__payment__credit-card-fields-form-group form-group">
+                <input type="tel" class="form-control" id="checkout-adyen-encrypted-form-number" size="20"
+                       autocomplete="off" data-encrypted-name="number" placeholder="{% trans %}form.placeholder.card_number{% endtrans %}">
+                <div id="checkout-credit-card-form-card-type"></div>
+            </div>
+            <div class="checkout__payment__credit-card-fields-form-group checkout__payment__credit-card-fields-form-group--expiry form-group">
+                <input type="tel" class="form-control" id="checkout-credit-card-form-expiry" maxlength="7" size="7"
+                       autocomplete="off" placeholder="{% trans %}form.placeholder.mmyy{% endtrans %}">
+            </div>
+            <div class="checkout__payment__credit-card-fields-form-group form-group checkout__payment__credit-card-fields-form-group--cvc">
+                <input type="tel" class="form-control" id="checkout-adyen-encrypted-form-cvc" size="4" maxlength="4"
+                       autocomplete="off" data-encrypted-name="cvc" placeholder="{% trans %}form.placeholder.cvc{% endtrans %}">
+                <i class="checkout__payment__credit-card-fields-help-toggle icon-help-circled"></i>
+            </div>
+            <div class="hide">
+                <input type="hidden" id="checkout-adyen-encrypted-form-expiry-generationtime" value="{{ "now"|date('c') }}"
+                       data-encrypted-name="generationtime"/></div>
+            <div class="hide">
+                <input type="hidden" id="checkout-adyen-encrypted-form-expiry-year" maxlength="4" size="4" data-encrypted-name="expiryYear">
+            </div>
+            <div class="hide">
+                <input type="hidden" id="checkout-adyen-encrypted-form-expiry-month" maxlength="4" size="4" data-encrypted-name="expiryMonth">
             </div>
 
-            <div class="checkout__payment__credit-card-fields-help">
-                <img class="checkout__payment__credit-card-fields-help-img" alt="" src="{{ asset('img/checkout/cvc_help-2x.png') }}" />
-            </div>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <div class="checkout__payment__credit-card-fields-form-group form-group sprite-form">
+                    <input type="checkbox" class="form-control sprite-form__checkbox" id="checkout-store-credit-card" checked="checked">
+                    <div class="sprite-form__sprite"></div>
+                    <label class="sprite-form__label" for="checkout-store-credit-card">
+                        {% trans %}form.label.store_credit_card{% endtrans %}
+                    </label>
+                </div>
+            {% endif %}
+
         </div>
-    </form>
-</div>
+
+        <div class="checkout__payment__credit-card-fields-help">
+            <img class="checkout__payment__credit-card-fields-help-img" alt="" src="{{ asset('img/checkout/cvc_help-2x.png') }}" />
+        </div>
+    </div>
+</form>
