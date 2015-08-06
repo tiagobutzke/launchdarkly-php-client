@@ -4,7 +4,7 @@ var PaymentTypeView = Backbone.View.extend({
 
         this.checkoutModel = options.checkoutModel;
 
-        if ($('#checkout-payment-form').length > 0) {
+        if (this.$('#checkout-payment-form').length > 0) {
             this.paymentFormView = new PaymentFormView({
                 el: this.$('#checkout-payment-form'),
                 model: this.checkoutModel,

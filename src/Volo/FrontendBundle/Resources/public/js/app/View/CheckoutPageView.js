@@ -79,18 +79,13 @@ var CheckoutPageView = Backbone.View.extend({
     },
 
     renderPayButton: function () {
-        var isButtonDisabled = this.userAddressCollection.filterByCityAndVendorId(this.locationModel.get('city'), this.vendorId).length === 0 &&
-            (!this.model.canBeSubmitted() ||
-                this.$('#delivery-information-form').is(':visible') ||
-                this.$('#contact-information-form').is(':visible')
-            );
+        var isButtonDisabled = !this.model.get('address_id') ||
+            !this.model.canBeSubmitted() ||
+            this.$('#delivery-information-form').is(':visible') ||
+            this.$('#contact-information-form').is(':visible');
 
         console.log('isButtonDisabled ', isButtonDisabled);
-        if (isButtonDisabled) {
-            this.$('#checkout-finish-and-pay-button').addClass('button--disabled');
-        } else {
-            this.$('#checkout-finish-and-pay-button').removeClass('button--disabled');
-        }
+        this.$('#checkout-finish-and-pay-button').toggleClass('button--disabled', isButtonDisabled);
     },
 
     _switchPaymentFormVisibility: function () {
