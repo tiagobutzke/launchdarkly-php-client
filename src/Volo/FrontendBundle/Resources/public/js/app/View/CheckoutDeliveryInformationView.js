@@ -349,6 +349,7 @@ VOLO.UserAddressView = Backbone.View.extend({
         }
 
         this.$('.checkout__delivery-information__delete-modal-wrapper').addClass('hide');
+        this.$('.checkout__delivery-information__address-link').removeClass('hide');
         this.checkoutModel.set('address_id', this.model.id);
         this.renderActiveState();
 
@@ -356,14 +357,15 @@ VOLO.UserAddressView = Backbone.View.extend({
     },
 
     _showAddressDeleteModal: function() {
-        this.$('.checkout__delivery-information__delete-modal-wrapper').addClass('hide');
         this.$('.checkout__delivery-information__delete-modal-wrapper').removeClass('hide');
+        this.$('.checkout__delivery-information__address-link').addClass('hide');
 
         return false;
     },
 
     _hideAddressDeleteModal: function() {
         this.$('.checkout__delivery-information__delete-modal-wrapper').addClass('hide');
+        this.$('.checkout__delivery-information__address-link').removeClass('hide');
 
         return false;
     },
