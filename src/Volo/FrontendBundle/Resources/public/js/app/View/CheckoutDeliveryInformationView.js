@@ -328,6 +328,7 @@ VOLO.UserAddressView = Backbone.View.extend({
 
         if (md.mobile()) {
             $('.checkout__delivery-information__delete-link').show();
+            $('.checkout__delivery-information__edit-link').show();
         }
 
         return this;
