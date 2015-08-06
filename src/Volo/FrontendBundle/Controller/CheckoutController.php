@@ -128,7 +128,11 @@ class CheckoutController extends BaseController
             throw new NotFoundHttpException('Vendor invalid', $exception);
         }
         $session = $request->getSession();
-        $cart = $this->getCart($session, $vendor);
+        try {
+            $cart = $this->getCart($session, $vendor);
+        } catch (\RuntimeException $exception) {
+            return $this->redirectToRoute('vendor', ['code' => $vendor->getCode(), 'urlKey' => $vendor->getUrlKey()]);
+        }
 
         $configuration = $this->get('volo_frontend.service.configuration')->getConfiguration();
         $location = $this->get('volo_frontend.service.customer_location')->get($session);
@@ -275,15 +279,15 @@ class CheckoutController extends BaseController
      * @param SessionInterface $session
      * @param Vendor $vendor
      *
+     * @throws \RuntimeException
      * @return array
-     * @throws HttpException
      */
     protected function getCart(SessionInterface $session, Vendor $vendor)
     {
         $cart = $this->get('volo_frontend.service.cart_manager')->getCart($session, $vendor->getId());
 
         if ($cart === null || count($cart['products']) === 0) {
-            throw new HttpException(Response::HTTP_BAD_REQUEST, 'No cart found for this vendor');
+            throw new \RuntimeException(sprintf('No cart found for vendor %s', $vendor->getCode()));
         }
 
         return $cart;
