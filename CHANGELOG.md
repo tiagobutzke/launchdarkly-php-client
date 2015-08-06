@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-* 1.12.0
+* 1.12.1
   * SGFD-16740: Forgot Password
   * SGFD-18781: HOTFIX 1.11.1 / 404 Page / JS not loaded -> no shadow action (2nd part)
 
