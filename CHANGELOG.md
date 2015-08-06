@@ -5,6 +5,9 @@ CHANGELOG
   * SGFD-16740: Forgot Password
   * SGFD-18781: HOTFIX 1.11.1 / 404 Page / JS not loaded -> no shadow action (2nd part)
 
+* 1.11.4
+  * SGFD-19003: GTM cart calculation error handling
+
 * 1.11.2.1
   * Hot fix GTM issue in the tracking page
 
