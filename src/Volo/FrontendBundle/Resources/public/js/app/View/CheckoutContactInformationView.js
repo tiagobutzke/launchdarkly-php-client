@@ -2,8 +2,7 @@ var VOLO = VOLO || {};
 
 VOLO.CheckoutContactInformationView = Backbone.View.extend({
     events: {
-        'click .checkout__contact-information__title-link': '_switchFormVisibility',
-        'submit form': '_submit'
+        'click .checkout__contact-information__title-link': '_switchFormVisibility'
     },
 
     initialize: function(options) {
@@ -22,6 +21,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         });
 
         this.listenTo(this.customerModel, 'change', this.renderContactInformation);
+        this.listenTo(this.customerModel, 'customer:saved', this._onCustomerSaveSuccess);
         this.listenTo(this.checkoutModel, 'change', this.render);
     },
 
@@ -173,94 +173,12 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         this.$('.checkout__title-link__text--cancel-contact').addClass('hide');
     },
 
-    _submit: function() {
-        var form = this.$('#contact-information-form').serializeJSON({
-                checkboxUncheckedValue: 'false',
-                parseBooleans: true
-            }),
-            customer = {};
-
-        _.each(form.customer, function (val, key) {
-            if (_.isString(val)) {
-                customer[key] = _.escape(val);
-            } else {
-                customer[key] = val;
-            }
-        });
-
-        this.$('.form__error-message').remove();
-
-        this._isExistingUser(customer.email)
-            .then(function (response) {
-                if (response.exists) {
-                    return;
-                }
-                $.ajax({
-                    url: Routing.generate('checkout_validate_phone_number', {phoneNumber: this.$('#contact-information-mobile-number').val()}),
-                    success: function (response) {
-                        this._onSuccessMobileNumberValidation(customer, response);
-                    }.bind(this),
-                    error: function (response) {
-                        var errorMessage = _.get(response, 'responseJSON.error.mobile_number');
-                        if (errorMessage) {
-                            this.contactInformationForm.createErrorMessage(
-                                _.get(response, 'responseJSON.error.mobile_number'),
-                                this.$('#contact-information-mobile-number')[0]
-                            );
-                        }
-                    }.bind(this)
-                });
-            }.bind(this));
-
-        return false;
-    },
-
-    _isExistingUser: function (email) {
-        if (!this.customerModel.isGuest) {
-            var deferred = $.Deferred();
-
-            return deferred.resolve({
-                exists: false
-            });
-        }
-
-        return $.ajax({
-            url: Routing.generate('checkout_validate_email', {email: email}),
-            dataType: 'json',
-            success: function (response) {
-                if (response.exists) {
-                    this.openLoginModal();
-                }
-            }.bind(this)
-        });
-    },
-
-    _onSuccessMobileNumberValidation: function (customer, response) {
-        customer.mobile_number = response.mobile_number;
-        customer.mobile_country_code = response.mobile_country_code;
-
-        this.customerModel.save(customer, {
-            success: this._onCustomerSaveSuccess,
-            error: this._onCustomerSaveError
-        });
-    },
-
-    _onCustomerSaveSuccess: function (customer) {
+    _onCustomerSaveSuccess: function () {
         this.renderContactInformation();
         this._switchFormVisibility();
         this.checkoutModel.save('is_contact_information_valid', true);
         this.trigger('validationView:validateSuccessful', {
-            newsletterSignup: customer.get('is_newsletter_subscribed')
+            newsletterSignup: this.customerModel.get('is_newsletter_subscribed')
         });
-    },
-
-    _onCustomerSaveError: function(model, response) {
-        _.each(_.get(response,  'responseJSON.error.errors', []), function (error) {
-            var selector = 'input[name=\'customer['+ error.field_name +']\']',
-                element = this.$(selector);
-            _.each(_.get(error, 'violation_messages', []), function (message) {
-                this.contactInformationForm.createErrorMessage(message, element[0]);
-            }, this);
-        }, this);
     }
 });

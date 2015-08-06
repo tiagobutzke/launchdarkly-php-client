@@ -6,18 +6,15 @@ use Foodpanda\ApiSdk\Exception\ChangePasswordCustomerException;
 use Foodpanda\ApiSdk\Exception\ValidationEntityException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Volo\FrontendBundle\Security\Token;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
 
 /**
  * @Route("/profile")
  * @Template()
  */
-class ProfileController extends Controller
+class ProfileController extends BaseController
 {
     /**
      * @Route("", name="profile_index")
@@ -33,20 +30,11 @@ class ProfileController extends Controller
             throw new AccessDeniedHttpException('Access denied for profile page.');
         }
 
-        $serializer       = $this->get('volo_frontend.api.serializer');
         $customerProvider = $this->get('volo_frontend.provider.customer');
         $errorMessage     = '';
-        $phoneNumberError = '';
         $isChangePasswordSuccess = false;
         $passwordFormErrorMessages = [];
         if ($request->getMethod() === Request::METHOD_POST) {
-            if ($request->request->has('customer')) {
-                try {
-                    $this->get('volo_frontend.service.customer')->updateCustomer($request->request->get('customer', []));
-                } catch (PhoneNumberValidationException $e) {
-                    $phoneNumberError = $e->getMessage();
-                }
-            }
             if ($request->request->has('password_form')) {
                 try {
                     $this->updatePassword($request);
@@ -59,21 +47,17 @@ class ProfileController extends Controller
             }
         }
 
-        /** @var Token $token */
-        $token       = $this->get('security.token_storage')->getToken();
-        $accessToken = $token->getAccessToken();
+        $accessToken = $this->getToken()->getAccessToken();
         $customer    = $customerProvider->getCustomer($accessToken);
         $addresses   = $customerProvider->getAddresses($accessToken);
-        $creditCards = $customerProvider->getAdyenCards($accessToken);
 
         return [
             'isChangePasswordSuccess'   => $isChangePasswordSuccess,
             'passwordFormErrorMessages' => $passwordFormErrorMessages,
-            'phoneNumberError'   => $phoneNumberError,
             'errorMessage'       => $errorMessage,
-            'customer'           => $serializer->normalize($customer),
-            'customer_addresses' => $serializer->normalize($addresses->getItems()),
-            'customer_cards'     => $creditCards['items'],
+            'customer'           => $this->getSerializer()->normalize($customer),
+            'customer_addresses' => $this->getSerializer()->normalize($addresses->getItems()),
+            'customer_cards'     => $customerProvider->getAdyenCards($accessToken)['items'],
         ];
     }
 
