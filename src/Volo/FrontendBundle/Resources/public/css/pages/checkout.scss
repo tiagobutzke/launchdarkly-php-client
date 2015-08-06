@@ -424,7 +424,10 @@ textarea.checkout__step__item-textarea {
 }
 
 .checkout__delivery-information__company {
-  padding-right: 20px;
+  padding-right: 50px;
+}
+.is-mobile .checkout__delivery-information__company {
+  padding-right: 70px;
 }
 
 .checkout__delivery-information__company,
@@ -464,36 +467,32 @@ textarea.checkout__step__item-textarea {
   @include make-xs-column(6);
 }
 
-.checkout__delivery-information__delete-link {
+
+.checkout__delivery-information__address-link {
   position: absolute;
-  right: 10px;
   top: 10px;
   font-size: 16px;
-  display: none;
+  color: $color-text-inactive;
 }
-.checkout__delivery-information__addresses:hover .checkout__delivery-information__delete-modal-wrapper ~ .checkout__delivery-information__delete-link {
-  display: none;
+.checkout__delivery-information__address-link:hover {
+  color: $color-text-link-hover;
 }
-.checkout__delivery-information__addresses:hover .checkout__delivery-information__delete-modal-wrapper.hide ~ .checkout__delivery-information__delete-link {
-  display: block;
+.is-mobile .checkout__delivery-information__address-link {
+  color: $color-text-link;
 }
-.isGuest.checkout__delivery-information__addresses:hover .checkout__delivery-information__delete-modal-wrapper.hide ~ .checkout__delivery-information__delete-link {
-  display: none;
+.checkout__delivery-information__address-link--cancel {
+  right: 10px;
+}
+.is-mobile .checkout__delivery-information__address-link--cancel {
+  right: 20px;
+}
+.checkout__delivery-information__address-link--edit {
+  right: 33px;
+}
+.is-mobile .checkout__delivery-information__address-link--edit {
+  right: 55px;
 }
 
-.checkout__delivery-information__edit-link {
-  position: absolute;
-  right: 30px;
-  top: 10px;
-  font-size: 16px;
-  display: none;
-}
-.checkout__delivery-information__addresses:hover .checkout__delivery-information__edit-link {
-  display: block;
-}
-.isGuest.checkout__delivery-information__addresses:hover .checkout__delivery-information__edit-link {
-  display: none;
-}
 
 // -------------------------- CHECKOUT DELIVERY INFORMATION END --------------------------
 

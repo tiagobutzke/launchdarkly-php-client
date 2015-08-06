@@ -295,10 +295,10 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
 VOLO.UserAddressView = Backbone.View.extend({
     events: {
         'click .checkout__delivery-information__item': '_selectAddress',
-        'click .checkout__delivery-information__delete-link': '_showAddressDeleteModal',
+        'click .checkout__delivery-information__address-link--cancel': '_showAddressDeleteModal',
         'click .delivery-information__delete-modal__link-no': '_hideAddressDeleteModal',
         'click .delivery-information__delete-modal__link-yes': '_delete',
-        'click .checkout__delivery-information__edit-link': '_edit'
+        'click .checkout__delivery-information__address-link--edit': '_edit'
     },
 
     className: 'checkout__delivery-information__addresses',
@@ -327,8 +327,7 @@ VOLO.UserAddressView = Backbone.View.extend({
         }
 
         if (md.mobile()) {
-            $('.checkout__delivery-information__delete-link').show();
-            $('.checkout__delivery-information__edit-link').show();
+            this.$el.addClass('is-mobile');
         }
 
         return this;
