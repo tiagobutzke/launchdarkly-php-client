@@ -42,11 +42,18 @@
         <parameter key="volo_frontend.event_listener.coming_soon_listener.class">Volo\FrontendBundle\EventListener\ComingSoonListener</parameter>
         <parameter key="volo_frontend.security.ajax_authentication_success_handler.class">Volo\FrontendBundle\Security\AjaxAuthenticationSuccessListener</parameter>
         <parameter key="volo_frontend.security.ajax_authentication_failure_handler.class">Volo\FrontendBundle\Security\AjaxAuthenticationFailureListener</parameter>
+        <parameter key="volo_frontend.event_listener.locale_listener.class">Volo\FrontendBundle\EventListener\LocaleListener</parameter>
     </parameters>
 
     <services>
         <service id="session.handler.redis" class="%framework.service.session_handler.class%">
             <argument type="string">%session_handler_redis_save_path%</argument>
+        </service>
+
+        <service id="volo_frontend.event_listener.locale_listener" class="%volo_frontend.event_listener.locale_listener.class%">
+            <argument type="service" id="volo_frontend.service.configuration" />
+            <argument type="service" id="volo_frontend.api.client"></argument>
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
         </service>
 
         <service id="volo_frontend.event_listener.default_time_zone_listener"

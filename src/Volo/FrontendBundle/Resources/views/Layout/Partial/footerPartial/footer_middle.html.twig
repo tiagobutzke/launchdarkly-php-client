@@ -1,6 +1,13 @@
 {% set footerLinks = cms('footer-links') %}
 {% if footerLinks is not empty %}
     <div class="footer__wrapper__middle">
+        {% for locale in locales %}
+            {% if locale != app.request.locale %}
+                <a class="footer__language-switch button-secondary" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : locale})) }}">
+                    {{ locale|languageName }}
+                </a>
+            {% endif %}
+        {% endfor %}
         {{ footerLinks|raw }}
     </div>
 {% endif %}

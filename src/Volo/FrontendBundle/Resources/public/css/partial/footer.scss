@@ -256,3 +256,16 @@
   }
 
 }
+
+
+.footer__language-switch {
+  @include make-xs-column(8);
+  @extend .col-xs-push-2;
+  @include make-sm-column(6);
+  @extend .col-sm-push-3;
+  line-height: $cta-height;
+  margin-bottom: $space-md;
+  @include respond-from("screen-md") {
+    display: none;
+  }
+}

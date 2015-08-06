@@ -5,3 +5,4 @@ parameters:
     country_code: fi
     environment: development
     locale: fi_FI
+    supported_locales: [fi_FI]

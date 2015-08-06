@@ -71,8 +71,6 @@
                     </argument>
                 </argument>
             </argument>
-            <argument>%foodpanda.api.client_id%</argument>
-            <argument>%foodpanda.api.client_secret%</argument>
         </service>
 
         <service id="volo_frontend.api.serializer" class="%volo_frontend.api.serializer.class%">

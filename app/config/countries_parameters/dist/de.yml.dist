@@ -6,3 +6,4 @@ parameters:
     environment: development
     locale: de_DE
     timezone: "Europe/Berlin"
+    supported_locales: [de_DE]

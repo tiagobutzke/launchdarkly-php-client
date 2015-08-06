@@ -1,6 +1,13 @@
 {% block header %}
     <header class="header {% block headerClass %}{% endblock headerClass %}">
         <div class="header__wrapper">
+            <h1 class="header__logo">
+                <a class="header__logo__a" href="{{ path('home') }}">
+                    <i class="icon-logo"></i>
+                    <span>{% trans %}brand_name{% endtrans %}</span>
+                </a>
+                <span class="header__logo__restaurant-name"></span>
+            </h1>
             <div class="header__account">
                 {% if is_customer_authenticated_fully() %}
                     <div class="header__account__dropdown dropdown">
@@ -22,13 +29,6 @@
                     <a class="show-login-modal header__account__login-icon"><i class="icon-profile"></i></a>
                 {% endif %}
             </div>
-            <h1 class="header__logo">
-                <a class="header__logo__a" href="{{ path('home') }}">
-                    <i class="icon-logo"></i>
-                    <span>{% trans %}brand_name{% endtrans %}</span>
-                </a>
-                <span class="header__logo__restaurant-name"></span>
-            </h1>
             {% set cartProductCount = get_default_cart_count(app.session) %}
             <a class="header__cart" data-vendor_id="{{ get_default_cart_vendor_id(app.session) }}">
                 <i class="icon-cart"></i>
@@ -38,6 +38,13 @@
                     <span class="header__cart__products__count hidden">{{ cartProductCount }}</span>
                 {% endif %}
             </a>
+            {% for locale in locales %}
+                {% if locale != app.request.locale %}
+                    <a class="header__language-switch" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : locale})) }}">
+                        {{ locale|languageName }}
+                    </a>
+                {% endif %}
+            {% endfor %}
         </div>
         <div class="header__wrapper__bg"></div>
     </header>

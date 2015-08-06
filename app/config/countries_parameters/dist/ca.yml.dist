@@ -5,3 +5,4 @@ parameters:
     country_code: ca
     environment: development
     locale: en_CA
+    supported_locales: [en_CA]

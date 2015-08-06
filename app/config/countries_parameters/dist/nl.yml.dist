@@ -5,3 +5,4 @@ parameters:
     country_code: nl
     environment: development
     locale: nl_NL
+    supported_locales: [nl_NL]

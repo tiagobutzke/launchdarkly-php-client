@@ -5,3 +5,4 @@ parameters:
     country_code: au
     environment: development
     locale: en_AU
+    supported_locales: [en_AU]

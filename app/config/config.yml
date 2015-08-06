@@ -13,7 +13,7 @@ parameters:
 
 framework:
     #esi:             ~
-    translator:      { fallbacks: ["en"] }
+    translator:      { fallbacks: %translator_fallback_languages% }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -53,6 +53,7 @@ twig:
         timezone: '%timezone%'
         google_tag_manager_container_id: %google_tag_manager_container_id%
         average_delivery_time: '%average_delivery_time%'
+        locales: "%supported_locales%"
         address_autocomplete_type: '%address_autocomplete_type%'
 
 # Assetic Configuration
@@ -206,3 +207,8 @@ foodpanda_api_health:
     enabled: ['version', 'session', 'cache']
     prefix: 'health_check.'
 #    sqs_endpoint: %aws_sqs_elasticsearch_update_queue%
+
+jms_i18n_routing:
+    default_locale: %locale%
+    locales: %supported_locales%
+    strategy: prefix_except_default

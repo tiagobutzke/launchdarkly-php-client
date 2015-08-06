@@ -5,3 +5,4 @@ parameters:
     country_code: ch
     environment: development
     locale: de_CH
+    supported_locales: [de_CH]

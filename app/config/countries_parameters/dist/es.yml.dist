@@ -5,3 +5,4 @@ parameters:
     country_code: es
     environment: development
     locale: es_ES
+    supported_locales: [es_ES]

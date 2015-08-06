@@ -39,6 +39,7 @@ class AppKernel extends Kernel
             new Jb\Bundle\PhumborBundle\JbPhumborBundle(),
             new Foodpanda\Bundle\Core\HealthBundle\FoodpandaCoreHealthBundle(),
             new Foodpanda\Bundle\Api\HealthBundle\FoodpandaApiHealthBundle(),
+            new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

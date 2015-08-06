@@ -9,31 +9,33 @@
     "require": {
         "php": ">=5.5",
         "symfony/symfony": "2.6.*",
-        "twig/extensions": "~1.0",
-        "symfony/assetic-bundle": "~2.3",
-        "symfony/monolog-bundle": "~2.4",
+        "twig/extensions": "1.2.*",
+        "symfony/assetic-bundle": "2.6.*",
+        "symfony/monolog-bundle": "2.7.*",
         "sensio/distribution-bundle": "~3.0,>=3.0.12",
         "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
-        "incenteev/composer-parameter-handler": "~2.0",
+        "incenteev/composer-parameter-handler": "2.1.*",
         "friendsofsymfony/jsrouting-bundle": "1.5.4",
-        "guzzlehttp/guzzle": "~5.0",
+        "guzzlehttp/guzzle": "5.3.*",
         "guzzlehttp/log-subscriber": "1.0.*",
         "guzzlehttp/cache-subscriber": "dev-master#487b846c",
-        "commerceguys/guzzle-oauth2-plugin": "~2.0",
-        "helthe/turbolinks-bundle": "~1.1",
+        "commerceguys/guzzle-oauth2-plugin": "2.1.*",
+        "helthe/turbolinks-bundle": "1.1.*",
         "foodpanda/translation-library": "~1.1",
         "foodpanda/api-sdk": "dev-master#3661aa9",
         "drak/native-session": "^1.0",
         "misd/phone-number-bundle": "~1.0",
-        "jbouzekri/phumbor-bundle": "~1.1",
-        "doctrine/doctrine-cache-bundle": "^1.0"
+        "jbouzekri/phumbor-bundle": "1.1.*",
+        "doctrine/doctrine-cache-bundle": "^1.0",
+        "jms/i18n-routing-bundle": "dev-master"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3",
-        "phpunit/phpunit": "4.6.*",
+        "sensio/generator-bundle": "2.5.*",
+        "phpunit/phpunit": "4.6.10",
         "phpunit/php-code-coverage": "2.0.*",
         "phpmd/phpmd": "2.2.*",
-        "squizlabs/php_codesniffer": "2.3.*"
+        "squizlabs/php_codesniffer": "2.3.*",
+        "ext-intl" : "*"
     },
     "scripts": {
         "post-root-package-install": [

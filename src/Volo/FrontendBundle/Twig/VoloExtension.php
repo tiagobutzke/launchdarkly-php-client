@@ -4,9 +4,9 @@ namespace Volo\FrontendBundle\Twig;
 
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Twig_Extensions_Extension_Intl;
 use Volo\FrontendBundle\Service\CartManagerService;
+use Symfony\Component\Intl\Intl;
 
 class VoloExtension extends Twig_Extensions_Extension_Intl
 {
@@ -50,6 +50,7 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
             new \Twig_SimpleFilter('formatOpeningDay', array($this, 'formatOpeningDay')),
             new \Twig_SimpleFilter('prepareLogoUrl', array($this, 'prepareLogoUrl')),
             new \Twig_SimpleFilter('localisedDay', array($this, 'localisedDay')),
+            new \Twig_SimpleFilter('languageName', array($this, 'getLanguageName')),
         ]);
     }
 
@@ -264,5 +265,16 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
         $timeDifference = strtotime($orderConfirmedDeliveryTime) - strtotime($orderTime);
 
         return floor($timeDifference / 86400);
+    }
+
+    /**
+     * @param string $locale
+     *
+     * @return string
+     *
+     */
+    public function getLanguageName($locale)
+    {
+        return Intl::getLanguageBundle()->getLanguageName(substr($locale, 0, 2), null, $locale);
     }
 }
