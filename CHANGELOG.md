@@ -1,5 +1,7 @@
 CHANGELOG
 =========
+* 1.12.2
+  * SGFD-19026: Checkout / redirect instead of error page 
 
 * 1.12.1
   * SGFD-16740: Forgot Password
