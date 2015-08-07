@@ -2,6 +2,7 @@
 
 namespace Volo\FrontendBundle\EventListener;
 
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
@@ -18,12 +19,19 @@ class ComingSoonListener
     private $templateEngine;
 
     /**
+     * @var Router
+     */
+    private $router;
+
+    /**
      * @param EngineInterface $templateEngine
+     * @param Router $router
      * @param bool $isMaintenanceEnabled
      */
-    public function __construct(EngineInterface $templateEngine, $isMaintenanceEnabled)
+    public function __construct(EngineInterface $templateEngine, Router $router, $isMaintenanceEnabled)
     {
         $this->templateEngine = $templateEngine;
+        $this->router = $router;
         $this->isMaintenanceEnabled = $isMaintenanceEnabled;
     }
 
@@ -32,7 +40,13 @@ class ComingSoonListener
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-        if ($this->isMaintenanceEnabled) {
+        $request = $event->getRequest();
+
+        if ($this->isMaintenanceEnabled && !$request->cookies->has('coming-soon-disabled')) {
+            $match = $this->router->match($request->getPathInfo());
+            if (isset($match['_route']) && $match['_route'] === 'coming-soon-disable') {
+                return;
+            }
             $response = $this->templateEngine->renderResponse('VoloFrontendBundle:SplashScreen:coming_soon.html.twig');
 
             $event->setResponse($response);
