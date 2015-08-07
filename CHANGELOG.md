@@ -1,5 +1,10 @@
 CHANGELOG
 =========
+* 1.15.0
+  * SGFD-18902: IE / PLZ placeholder styling #454 
+  * SGFD-18891: IE 9 / Error Pages #
+  * SGFD-17924: IE 11, 10 - Overlap of cart icon with scrolling bar #443 
+  * SGFD-18718: checkout cart item - disable edit #427 
 
 * 1.14.0
   * SGFD-17488 Checkout / Show Only Deliverable Addresses
