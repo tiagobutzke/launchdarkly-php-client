@@ -4,6 +4,7 @@
 
 body {
   background-color: $color-bg-primary;
+  -ms-overflow-style: scrollbar;
 }
 
 ul {
