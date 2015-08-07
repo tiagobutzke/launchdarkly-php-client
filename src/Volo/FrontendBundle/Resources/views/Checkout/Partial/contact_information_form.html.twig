@@ -1,39 +1,38 @@
-<form action="{{ action }}" id="contact_information_form" method="post" role="form" novalidate>
-    <div class="checkout__item checkout__item--step">
-        <span class="error_msg error-msg--above-form hide" id="error_msg_contact_not_saved">
-            {% trans %}contact_information.needs_to_be_saved{% endtrans %}
-        </span>
-        <div class="form-group form-group--two_col1--xs-full">
-            <input type="text" class="form-control" id="first_name" name="customer[first_name]"
-                   value="{{ customer.first_name|default('') }}" required="true" placeholder="{% trans %}form.placeholder.first_name{% endtrans %}"
-                   data-validation-msg="{% trans %}validations.error.checkout.customer_first_name{% endtrans %}">
-        </div>
-        <div class="form-group form-group--two_col2--xs-full">
-            <input type="text" class="form-control" id="last_name" name="customer[last_name]"
-                   value="{{ customer.last_name|default('') }}" required="true" placeholder="{% trans %}form.placeholder.last_name{% endtrans %}"
-                   data-validation-msg="{% trans %}validations.error.checkout.customer_last_name{% endtrans %}">
-        </div>
-        <div class="form-group">
-            <input type="email" class="form-control" id="email" name="customer[email]" value="{{ customer.email|default('') }}"
-                   required="true" placeholder="{% trans %}form.placeholder.email{% endtrans %}"
-                   data-validation-msg="{% trans %}validations.error.checkout.customer_email{% endtrans %}">
-        </div>
-        <div class="form-group" id="mobile_number_wrap">
-            <input type="tel" class="form-control" id="mobile_number" name="customer[mobile_number]"
-                   value="{{ customer.mobile_country_code|default('') }}{{ customer.mobile_number|default('') }}"
-                   required="true" placeholder="{% trans %}form.placeholder.mobile_number{% endtrans %}"
-                   data-validation-msg="{% trans %}validations.error.checkout.customer_mobile_number{% endtrans %}">
-            {% if phoneNumberError %}
-                <span class="error_msg invalid_number">{{ phoneNumberError|trans|raw }}</span>
-            {% endif %}
-        </div>
-        <div class="form-group newsletter-form-group sprite-form">
-            <input type="checkbox" class="form-control sprite-form__checkbox" name="customer[newsletter_checkbox]" id="newsletter_checkbox" checked="checked">
-            <div class="sprite-form__sprite"></div>
-            <label class="sprite-form__label" for="newsletter_checkbox">
-                {% trans %}form.label.newsletter{% endtrans %}
-            </label>
-        </div>
-        <button class="button">{% trans %}button.continue{% endtrans %}</button>
+<form action="{{ action }}" id="contact-information-form" method="post" role="form" novalidate>
+    <span class="form__error-message form__error-message--contact-not-saved form__error-message--above-form hide" id="error-message-contact-not-saved">
+        {% trans %}contact_information.needs_to_be_saved{% endtrans %}
+    </span>
+    <div class="form-group checkout__contact-information__form-first-name">
+        <input type="text" class="form-control" id="contact-information-first-name" name="customer[first_name]"
+               value="" required="true" placeholder="{% trans %}form.placeholder.first_name{% endtrans %}"
+               data-validation-msg="{% trans %}validations.error.checkout.customer_first_name{% endtrans %}">
     </div>
+    <div class="form-group checkout__contact-information__form-last-name">
+        <input type="text" class="form-control" id="contact-information-last-name" name="customer[last_name]"
+               value="" required="true" placeholder="{% trans %}form.placeholder.last_name{% endtrans %}"
+               data-validation-msg="{% trans %}validations.error.checkout.customer_last_name{% endtrans %}">
+    </div>
+    <div class="form-group">
+        <input type="email" class="form-control" id="contact-information-email" name="customer[email]" value=""
+               required="true" placeholder="{% trans %}form.placeholder.email{% endtrans %}"
+               data-validation-msg="{% trans %}validations.error.checkout.customer_email{% endtrans %}">
+    </div>
+    <div class="form-group" id="contact-information-mobile-number-wrap">
+        <input type="tel" class="form-control" id="contact-information-mobile-number" name="customer[mobile_number]"
+               value=""
+               required="true" placeholder="{% trans %}form.placeholder.mobile_number{% endtrans %}"
+               data-validation-msg="{% trans %}validations.error.checkout.customer_mobile_number{% endtrans %}">
+        {% if phoneNumberError|default('') %}
+            <span class="checkout__step__item-content-row form__error-message invalid_number">{{ phoneNumberError|trans|raw }}</span>
+        {% endif %}
+    </div>
+    <div class="form-group checkout__step__item-form-group--newsletter sprite-form">
+        <input type="checkbox" class="form-control sprite-form__checkbox" name="customer[is_newsletter_subscribed]"
+               id="contact-information-newsletter-checkbox" value="true" data-unchecked-value="false" checked="checked">
+        <div class="sprite-form__sprite"></div>
+        <label class="sprite-form__label" for="contact-information-newsletter-checkbox">
+            {% trans %}form.label.newsletter{% endtrans %}
+        </label>
+    </div>
+    <button class="checkout__step__item-button button">{% trans %}button.continue{% endtrans %}</button>
 </form>

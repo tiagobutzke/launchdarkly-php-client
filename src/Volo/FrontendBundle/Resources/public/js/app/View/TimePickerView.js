@@ -4,9 +4,10 @@ var TimePickerView = Backbone.View.extend({
         'change #order-delivery-date': 'updateDeliveryTime'
     },
 
-    initialize: function () {
+    initialize: function (options) {
         _.bindAll(this);
-        this.vendor_id = this.$el.data().vendor_id;
+        this.template = _.template($('#template-time-picker').html());
+        this.vendor_id = options.vendor_id;
 
         var vendorCart = this.model.getCart(this.vendor_id);
         this.listenTo(vendorCart, 'change:order_time', this.render, this);
@@ -14,6 +15,7 @@ var TimePickerView = Backbone.View.extend({
 
     render: function () {
         console.log('TimePickerView.render ', this.cid);
+        this.$el.html(this.template());
 
         var md = new MobileDetect(window.navigator.userAgent);
         if (md.mobile()) {
@@ -43,6 +45,8 @@ var TimePickerView = Backbone.View.extend({
         }
 
         this.$('select').selectpicker('refresh');
+
+        return this;
     },
 
     renderTimeSelect: function () {

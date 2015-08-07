@@ -1,0 +1,24 @@
+<h3 class="checkout__step__title">2. {% trans %}title.contact_information{% endtrans %}
+    <span class="checkout__title-link checkout__contact-information__title-link">
+        <a>
+            <i class="checkout__title-link__icon icon-pencil hide"></i>
+            <span class="checkout__title-link__text--edit-contact hide">{% trans %}link.edit_contact_information{% endtrans %}</span>
+            <span class="checkout__title-link__text--cancel-contact hide">{% trans %}link.cancel{% endtrans %}</span>
+        </a>
+    </span>
+</h3>
+
+<div class="checkout__step__items">
+    <div class="checkout__step__item">
+        <div class="checkout__step__item-content">
+            <div id="checkout-contact-information">
+                <div class="checkout__contact-information__full-name"></div>
+                <div class="checkout__contact-information__email"></div>
+                <div class="checkout__contact-information__phone-number"></div>
+            </div>
+            <div id="checkout-edit-contact-information" class="hide" data-error-message-key="{% trans %}checkout.user_already_exists{% endtrans %}">
+                {% include('VoloFrontendBundle:Checkout/Partial:contact_information_form.html.twig') with {action: ''} %}
+            </div>
+        </div>
+    </div>
+</div>

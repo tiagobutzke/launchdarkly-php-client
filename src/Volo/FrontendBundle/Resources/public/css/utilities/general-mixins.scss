@@ -35,6 +35,12 @@
     text-decoration: none;
   }
 };
+
+@mixin hide-text-on-one-line() {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 // ----------------------- TEXT END ---------------------------
 
 // ----------- CENTERS TEXT VERTICALLY BY A GIVEN HEIGHT START ----------

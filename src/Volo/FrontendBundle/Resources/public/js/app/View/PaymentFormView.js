@@ -1,48 +1,47 @@
 var PaymentFormView = Backbone.View.extend({
-    initialize: function() {
+    initialize: function(options) {
         _.bindAll(this);
+
+        this.customerModel = options.customerModel;
 
         this._fillName();
         this._initPaymentFormating();
         this._adyenPublicKey = this.$el.data('adyen_public_key');
+        this.listenTo(this.customerModel, 'change', this._fillName);
     },
 
     events: {
-        'keyup #form-expiry': '_fillExpiryForms',
+        'keyup #checkout-credit-card-form-expiry': '_fillExpiryForms',
         'keyup input': '_fillEncryptedData',
-        'change #store_credit_card': '_changeIsCreditCardStored'
+        'change #checkout-store-credit-card': '_changeIsCreditCardStored'
     },
 
     _initPaymentFormating: function() {
-        this.$('#form-expiry').payment('formatCardExpiry');
-        this.$('#adyen-encrypted-form-number').payment('formatCardNumber');
-        this.$('#adyen-encrypted-form-cvc').payment('formatCardCVC');
+        this.$('#checkout-credit-card-form-expiry').payment('formatCardExpiry');
+        this.$('#checkout-adyen-encrypted-form-number').payment('formatCardNumber');
+        this.$('#checkout-adyen-encrypted-form-cvc').payment('formatCardCVC');
     },
 
     _fillEncryptedData: function() {
         var encryptedForm = adyen.encrypt.createEncryptedForm(
             this.el,
             this._adyenPublicKey,
-            {cardTypeElement: this.$('#cardType')[0]}
+            {cardTypeElement: this.$('#checkout-credit-card-form-card-type')[0]}
         );
 
         var isComplete = !this.$("input").filter(function() {
             return $(this).val() === "";
         }).length;
 
-        this.model.set('adyen_encrypted_data', isComplete ? encryptedForm.encrypt() : null);
+        this.model.save('adyen_encrypted_data', isComplete ? encryptedForm.encrypt() : null);
     },
 
     _changeIsCreditCardStored: function () {
-        this.model.set('is_credit_card_store_active', this.$("#store_credit_card").is(':checked'));
+        this.model.save('is_credit_card_store_active', this.$("#checkout-store-credit-card").is(':checked'));
     },
 
     _fillName: function() {
-        var name = $('#contact_information .checkout__item span')[0];
-
-        if (name) {
-            this.$('#adyen-encrypted-form-holder-name').val(name.textContent);
-        }
+        this.$('#checkout-adyen-encrypted-form-holder-name').val(this.customerModel.getFullName());
     },
 
     _fillExpiryForms: function(e) {
@@ -56,8 +55,8 @@ var PaymentFormView = Backbone.View.extend({
                 month = '0' + month.toString();
             }
 
-            this.$('#adyen-encrypted-form-expiry-year').val(year);
-            this.$('#adyen-encrypted-form-expiry-month').val(month);
+            this.$('#checkout-adyen-encrypted-form-expiry-year').val(year);
+            this.$('#checkout-adyen-encrypted-form-expiry-month').val(month);
         }
     },
 

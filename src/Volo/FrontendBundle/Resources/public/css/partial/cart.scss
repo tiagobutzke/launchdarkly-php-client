@@ -115,6 +115,11 @@
     }
   }
 }
+.desktop-cart--checkout {
+  @include respond-from("screen-md") {
+    margin-top: 17px;
+  }
+}
 
 .desktop-cart__hero {
   width: 100%;
@@ -493,6 +498,7 @@ tr.summary__item__row_mobile {
   }
 }
 
+
 .desktop-cart__title {
   font-family: $bold-font-family;
   @extend .text-center;
@@ -511,10 +517,15 @@ tr.summary__item__row_mobile {
     }
   }
 }
+.checkout__time-picker .desktop-cart__title {
+  @extend .checkout__step__item-title;
+}
+
 
 .cart__title--time {
   @include appear-from("screen-md");
 }
+
 
 .desktop-cart__time {
   padding: 0;
@@ -524,17 +535,33 @@ tr.summary__item__row_mobile {
     padding: 0 $space-sm;
   }
 }
+.checkout__time-picker .desktop-cart__time {
+  @include clearfix;
+  padding: 0;
+  font-size: 14px;
+}
+
 
 .desktop-cart__time__field-date {
   height: $input-height;
   @include make-xs-column(6, 0);
 }
+.checkout__time-picker .desktop-cart__time__field-date {
+  @include make-xs-column(6);
+  padding: 0;
+}
+
 
 .desktop-cart__time__field-time {
   height: $input-height;
   @include make-xs-column(6, 0);
   margin-left: -1px;
 }
+.checkout__time-picker .desktop-cart__time__field-time {
+  @include make-xs-column(6);
+  padding: 0;
+}
+
 
 .desktop-cart__order {
   @include make-webkit-custom-scroll-bars();
@@ -672,6 +699,7 @@ tr.summary__item__row_mobile {
     @include respond-from("screen-md") {
       position: relative;
       padding-left: $grid-gutter-width;
+      padding-top: 60px;
     }
   }
 

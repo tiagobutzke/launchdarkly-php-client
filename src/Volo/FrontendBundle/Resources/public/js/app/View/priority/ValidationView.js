@@ -54,18 +54,22 @@ var ValidationView = Backbone.View.extend({
     _displayMessage: function(target) {
         var view = this._errorMessages[target.name];
         if (view) {
-            view.show();
+            view.removeClass('hide');
         } else {
-            var msg = $('<span class="error_msg">'+target.getAttribute('data-validation-msg')+'</span>');
-            this._errorMessages[target.name] = msg;
-
-            msg.insertAfter(target);
+            this._errorMessages[target.name] = this.createErrorMessage(target.getAttribute('data-validation-msg'), target);
         }
+    },
+
+    createErrorMessage: function(errorMessage, target) {
+        var msg = $('<span class="form__error-message"></span>').text(errorMessage);
+        msg.insertAfter(target);
+
+        return msg;
     },
 
     _hideMessage: function(e) {
         if (e.keyCode !== 13 && this._errorMessages[e.target.name]) {
-            this._errorMessages[e.target.name].hide();
+            this._errorMessages[e.target.name].addClass('hide');
         }
     },
 

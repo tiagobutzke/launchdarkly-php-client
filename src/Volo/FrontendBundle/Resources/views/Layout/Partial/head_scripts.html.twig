@@ -36,5 +36,14 @@
         VOLO.configuration.averageDeliveryTime = '{{ average_delivery_time }}';
 
         dataLayer = [];
+
+        {% if is_customer_authenticated_fully() %}
+            {% set customer = serialize(get_authenticated_customer()) %}
+            {% set isGuest = 'false' %}
+        {% else %}
+            {% set customer = get_guest_customer(app.request.session)|to_escaped_json %}
+            {% set isGuest = 'true' %}
+        {% endif %}
+        VOLO.createCustomerModel({{ customer|raw }}, {{ isGuest }});
     </script>
 {% endblock %}

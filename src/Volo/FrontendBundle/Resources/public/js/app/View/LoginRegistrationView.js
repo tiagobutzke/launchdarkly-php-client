@@ -51,48 +51,64 @@ var LoginRegistrationView = Backbone.View.extend({
         options = options || {};
         console.log('LoginRegistrationView.initialize ', this.cid);
         _.bindAll(this);
-        this.queryParams = options.queryParams || {};
+        this.address = null;
+        this.customerModel = options.customerModel;
+        this.templateLogin = _.template($('#template-login').html());
+        this.templateRegistration = _.template($('#template-registration').html());
+        this.templateResetPassword = _.template($('#template-reset-password').html());
+        this.templateForgottPassword = _.template($('#template-forgot-password').html());
     },
 
     render: function() {
-        this.$('.modal-content').load(Routing.generate('login', this.queryParams), function(){
-            this.$el.modal();
-            this._bindLoginView();
-        }.bind(this));
+        this.$('.modal-content').html(this.templateLogin());
+        this.$el.modal();
+        this._bindLoginView();
 
         return this;
     },
 
-    renderRegistration: function(data) {
-        this.$('.modal-content').load(Routing.generate('customer.create'), function(){
-            this.$el.modal();
-            this._bindRegisterValidationView();
+    setUsername: function (username) {
+        this.$('#username').val(username);
+    },
 
-            if (data) {
-                this.$('#first_name').val(data.first_name);
-                this.$('#last_name').val(data.last_name);
-                this.$('#email').val(data.email);
-                this.$('#mobile_number').val(data.mobile_number);
-            }
-        }.bind(this));
+    setErrorMessage: function (errorMessage) {
+        this.$('.modal-error-message').html(errorMessage);
+        this.$('.modal-error-message').removeClass('hide');
+    },
+
+    setAddress: function (address) {
+        this.address = address;
+    },
+
+    renderRegistration: function() {
+        this.$('.modal-content').html(this.templateRegistration());
+        this.$el.modal();
+        this._bindRegisterValidationView();
+
+        if (this.customerModel) {
+            this.$('#contact-information-first-name').val(this.customerModel.get('first_name'));
+            this.$('#contact-information-last-name').val(this.customerModel.get('last_name'));
+            this.$('#contact-information-email').val(this.customerModel.get('email'));
+            this.$('#contact-information-mobile-number').val(this.customerModel.getFullMobileNumber());
+        }
 
         return this;
     },
 
-    renderResetPassword: function (code) {
-        this.$('.modal-content').load(Routing.generate('customer_reset_password', {code: code}), function(){
-            this.$el.modal();
-            this._registerValidationView = new ValidationView({
-                el: this.$('.reset-password-form'),
-                constraints: this._resetPasswordConstraints
-            });
-        }.bind(this));
+    renderResetPassword: function () {
+        this.$('.modal-content').html(this.templateResetPassword());
+
+        this.$el.modal();
+        this._registerValidationView = new ValidationView({
+            el: this.$('.reset-password-form'),
+            constraints: this._resetPasswordConstraints
+        });
 
         return this;
     },
 
     events: {
-        'click .register-link': '_loadRegistrationFormIntoLoginModal',
+        'click .register-link': 'renderRegistration',
         'click .login-link': 'render',
         'click .forgot-password-link': '_loadForgotPasswordFormIntoLoginModal',
         'submit .forgot-password-form': '_handingSubmitOfLostPasswordForm',
@@ -109,21 +125,16 @@ var LoginRegistrationView = Backbone.View.extend({
         this.undelegateEvents();
     },
 
-    _loadRegistrationFormIntoLoginModal: function() {
-        this.$('.modal-content').load(Routing.generate('customer.create'), this._bindRegisterValidationView);
-    },
-
     _loadForgotPasswordFormIntoLoginModal: function() {
         var email = this.$('#username').val();
-        
-        this.$('.modal-content').load(Routing.generate('customer.forgot_password'), function() {
-            this._registerValidationView = new ValidationView({
-                el: this.$('.forgot-password-form'),
-                constraints: this._forgotPasswordConstraints
-            });
 
-            this.$('#email').val(email);
-        }.bind(this));
+        this.$('.modal-content').html(this.templateForgottPassword);
+        this._registerValidationView = new ValidationView({
+            el: this.$('.forgot-password-form'),
+            constraints: this._forgotPasswordConstraints
+        });
+
+        this.$('#email').val(email);
     },
 
     _handingSubmitOfLostPasswordForm: function(event) {
@@ -198,10 +209,14 @@ var LoginRegistrationView = Backbone.View.extend({
         event.preventDefault();
         var $form = this.$('.registration-form');
         this._handleFormSubmit($form, this.$('.modal-content'));
+
+        return false;
     },
 
     _closeLoginRegistrationOverlay: function() {
         this.$el.modal('hide');
+        this.$('.modal-error-message').text('').addClass('hide');
+        this.address = null;
     },
 
     _handleFormSubmit: function($form, $modalContent) {
@@ -212,19 +227,22 @@ var LoginRegistrationView = Backbone.View.extend({
             type: $form.attr('method'),
             url: $form.attr('action'),
             data: $form.serialize(),
-
-            beforeSend: function() {
+            dataType: 'json',
+            beforeSend: function(xhr) {
                 $(target).addClass('modal-content--loading');
                 spinner.spin(target);
                 $form.find('button').prop("disabled", true);
-            },
-            success: function() {
+                if (this.address) {
+                    xhr.setRequestHeader('FD-save-address', JSON.stringify(this.address.toJSON()));
+                }
+            }.bind(this),
+            success: function(response) {
                 this._unbindLoginView();
                 this._unbindRegisterValidationView();
 
-                Turbolinks.visit(window.location.href);
-
                 this._fireFormSubmit($form, true);
+
+                window.location.replace(response.url);
             }.bind(this),
             error: function (data) {
                 spinner.stop();

@@ -1,9 +1,9 @@
 var VoucherView = Backbone.View.extend({
     events: {
-        'click #add_voucher_link': '_toggleForm',
-        'click #remove_voucher_link': '_removeVoucher',
-        'submit #voucher_form': '_addVoucher',
-        'keyup #voucher': '_hideErrorMsg'
+        'click #checkout-add-voucher-link': '_toggleForm',
+        'click #checkout-remove-selected-voucher-link': '_removeVoucher',
+        'submit #checkout-voucher-form': '_addVoucher',
+        'keyup #checkout-voucher-input': '_hideErrorMsg'
     },
 
     initialize: function() {
@@ -28,16 +28,16 @@ var VoucherView = Backbone.View.extend({
         var vendorCart = this.model.getCart(this.vendor_id);
 
         if (_.isString(vendorCart.get('voucher'))) {
-            this.$('#voucher-wrapper').show();
-            this.$('#voucher-text').text(vendorCart.get('voucher'));
-            this.$('#voucher').val(vendorCart.get('voucher'));
+            this.$('#checkout-selected-voucher').show();
+            this.$('#checkout-selected-voucher-text').text(vendorCart.get('voucher'));
+            this.$('#checkout-voucher-input').val(vendorCart.get('voucher'));
 
-            this.$('#voucher_form').hide();
-            this.$('#add_voucher_link').hide();
+            this.$('#checkout-voucher-form').hide();
+            this.$('#checkout-add-voucher-link').hide();
         } else {
-            this.$('#voucher-wrapper').hide();
-            this.$('#add_voucher_link').show();
-            this.$('#voucher-text').empty();
+            this.$('#checkout-selected-voucher').hide();
+            this.$('#checkout-add-voucher-link').show();
+            this.$('#checkout-selected-voucher-text').empty();
         }
     },
 
@@ -47,17 +47,17 @@ var VoucherView = Backbone.View.extend({
     },
 
     _hideErrorMsg: function() {
-        this.$('.error_invalid_voucher').css('display', 'none');
-        this.$('.error_empty_voucher').addClass('hide');
+        this.$('.form__error-message--invalid-voucher').addClass('hide');
+        this.$('.checkout__error-empty-voucher').addClass('hide');
     },
 
     _showErrorMsg: function() {
-        this.$('.error_invalid_voucher').css('display', 'block');
-        this.$('.error_invalid_voucher').text(this.voucherError);
+        this.$('.form__error-message--invalid-voucher').removeClass('hide');
+        this.$('.form__error-message--invalid-voucher').text(this.voucherError);
     },
 
     _showEmptyFieldErrorMsg: function() {
-        this.$('.error_empty_voucher').removeClass('hide');
+        this.$('.checkout__error-empty-voucher').removeClass('hide');
     },
 
     unbind: function () {
@@ -66,20 +66,20 @@ var VoucherView = Backbone.View.extend({
     },
 
     _toggleForm: function () {
-        this.$('#voucher_form').toggle();
+        this.$('#checkout-voucher-form').toggle();
     },
 
     _removeVoucher: function() {
         var vendorCart = this.model.getCart(this.vendor_id);
 
-        this.$('#voucher').val('');
+        this.$('#checkout-voucher-input').val('');
         vendorCart.set('voucher', null);
         vendorCart.updateCart();
     },
 
     _addVoucher: function (event) {
         var vendorCart,
-            $voucher = this.$('#voucher');
+            $voucher = this.$('#checkout-voucher-input');
 
         if (!$voucher.val().length) {
             this._showEmptyFieldErrorMsg();

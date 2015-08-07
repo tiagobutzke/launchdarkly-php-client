@@ -116,7 +116,6 @@ var CartView = Backbone.View.extend({
         _.bindAll(this);
 
         this.subViews = [];
-        this.timePickerView = null;
         this.locationModel = options.locationModel;
 
         this.template = _.template($('#template-cart').html());
@@ -128,6 +127,11 @@ var CartView = Backbone.View.extend({
         this.model.getCart(this.vendor_id).set('location', {
             latitude:  this.locationModel.get('latitude'),
             longitude: this.locationModel.get('longitude')
+        });
+
+        this.timePickerView = new TimePickerView({
+            model: this.model,
+            vendor_id: this.vendor_id
         });
 
         this.domObjects = {};
@@ -155,7 +159,7 @@ var CartView = Backbone.View.extend({
                 return this.$(this.stickOnTopCartTargetSelector).offset().top;
             }.bind(this),
             isActiveGetter: function() {
-                return !$('body').hasClass('checkout-page');
+                return !$('body').hasClass('checkout');
             }.bind(this),
             endPointGetter: function() {
                 return this.domObjects.$menuMain.offset().top + this.domObjects.$menuMain.outerHeight();
@@ -308,12 +312,10 @@ var CartView = Backbone.View.extend({
     },
 
     _handleCartSubmit: function() {
-        var vendorCode = this.$('.btn-checkout').data('vendor-code'),
-            isGuestUser = this.$('.btn-checkout').data('is-guest-user'),
-            redirectRouteName = isGuestUser ? 'checkout_delivery_information' : 'checkout_payment';
+        var vendorCode = this.$('.btn-checkout').data('vendor-code');
 
         if (!this.$('.btn-checkout').hasClass('disabled')) {
-            Turbolinks.visit(Routing.generate(redirectRouteName, {vendorCode: vendorCode}));
+            Turbolinks.visit(Routing.generate('checkout_payment', {vendorCode: vendorCode}));
         }
 
         return false;
@@ -452,15 +454,7 @@ var CartView = Backbone.View.extend({
     },
 
     renderTimePicker: function() {
-        if (_.isObject(this.timePickerView)) {
-            this.timePickerView.unbind();
-        }
-
-        this.timePickerView = new TimePickerView({
-            el: this.$('.desktop-cart__time'),
-            model: this.model
-        });
-
+        this.timePickerView.setElement(this.$('.cart__time-picker'));
         this.timePickerView.render();
     },
 

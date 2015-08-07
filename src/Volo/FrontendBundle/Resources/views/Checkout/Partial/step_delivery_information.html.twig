@@ -1,0 +1,28 @@
+<h3 class="checkout__step__title">1. {% trans %}title.delivery_details{% endtrans %}</h3>
+<div class="checkout__step__items">
+    <div class="checkout__step__item">
+        <h4 class="checkout__step__item-title">{% trans %}title.delivery_time{% endtrans %}</h4>
+        <div class="checkout__step__item-content checkout__time-picker"></div>
+    </div>
+    <div class="checkout__step__item">
+        <h4 class="checkout__step__item-title" id="checkout-delivery-information-address">{% trans %}title.delivery_address{% endtrans %}
+            <span class="checkout__title-link checkout__title-link--add-address">
+                <a id="checkout-add-new-address-link">
+                    <i class="checkout__title-link__icon checkout__title-link__icon--plus icon-plus"></i>
+                    <span class="checkout__title-link__text--add-address-delivery">{% trans %}link.add_new_address{% endtrans %}</span>
+                    <span class="checkout__title-link__text--cancel-delivery">{% trans %}link.cancel{% endtrans %}</span>
+                </a>
+            </span>
+            <span class="checkout__title-link checkout__title-link--edit-address-guest hide">
+                <i class="checkout__title-link__icon icon-pencil"></i>
+                <a>{% trans %}link.edit_delivery_information{% endtrans %}</a>
+            </span>
+        </h4>
+        <div class="checkout__step__item-content">
+            <div class="checkout__delivery-information__list" id="checkout-delivery-information-list"></div>
+            <div class="hide" id="checkout-add-new-address-form">
+                {% include 'VoloFrontendBundle:Checkout/Partial:delivery_information_form.html.twig' with {'vendor' : vendor, 'customer_address': default_address} only %}
+            </div>
+        </div>
+    </div>
+</div>

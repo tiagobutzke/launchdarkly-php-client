@@ -35,7 +35,9 @@ class CustomerControllerTest extends VoloTestCase
         ];
         $client->request('POST', '/customer', $params, [], ['HTTP_X-Requested-With' => 'XMLHttpRequest']);
 
-        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertJson($client->getResponse()->getContent());
+        $json = json_decode($client->getResponse()->getContent(), true);
+        $this->assertEquals(['url' => '/'], $json);
 
         $token = $client->getContainer()->get('security.token_storage')->getToken();
         $this->assertInstanceOf(Token::class, $token);

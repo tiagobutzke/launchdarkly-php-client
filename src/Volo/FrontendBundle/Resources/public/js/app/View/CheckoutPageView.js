@@ -1,8 +1,6 @@
 var CheckoutPageView = Backbone.View.extend({
     events: {
-        'click #finish-and-pay': '_submitOrder',
-        'click #add_new_address_link': 'render',
-        'click #edit_contact_information_form_link': '_openContactInformationForm'
+        'click #checkout-finish-and-pay-button': '_submitOrder'
     },
 
     initialize: function (options) {
@@ -15,58 +13,125 @@ var CheckoutPageView = Backbone.View.extend({
         this.domObjects = {};
         this.domObjects.$header = options.$header;
         this.configuration = options.configuration;
+        this.customerModel = options.customerModel;
+        this.userAddressCollection = options.userAddressCollection;
+        this.locationModel = options.locationModel;
+        this.contactInformationView = new VOLO.CheckoutContactInformationView({
+            el: this.$('.checkout__contact-information'),
+            vendorId: this.vendorId,
+            customerModel: this.customerModel,
+            userAddressCollection: this.userAddressCollection,
+            loginView: options.loginView,
+            locationModel: this.locationModel,
+            checkoutModel: this.model
+        });
 
-        console.log('is guest user', this.$el.data().is_guest_user);
+        this.checkoutDeliveryInformationView = new VOLO.CheckoutDeliveryInformationView({
+            el: this.$('.checkout__delivery-information'),
+            model: this.model,
+            vendorId: this.vendorId,
+            collection: this.userAddressCollection,
+            customerModel: this.customerModel,
+            locationModel: this.locationModel,
+            deliveryCheck: options.deliveryCheck
+        });
 
-        this.model.set('is_guest_user', this.$el.data().is_guest_user);
+        this.timePickerView = new TimePickerView({
+            model: options.cartModel,
+            vendor_id: this.vendorId
+        });
 
-        this.listenTo(this.model, 'change:address_id', this.render, this);
-        this.listenTo(this.model, 'change:credit_card_id', this.render, this);
-        this.listenTo(this.model, 'change:adyen_encrypted_data', this.render, this);
-        this.listenTo(this.model, 'change:payment_type_id', this.render, this);
-        this.listenTo(this.model, 'change:payment_type_code', this.render, this);
-        this.listenTo(this.model, 'change:cart_dirty', this.render, this);
-        this.listenTo(this.model, 'change:placing_order', this.render, this);
+        console.log('is guest user ', this.customerModel.isGuest);
+        this.model.save('is_guest_user', this.customerModel.isGuest);
+
+        this.listenTo(this.model, 'change', this.renderPayButton, this);
 
         this.listenTo(this.model, 'payment:success', this.handlePaymentSuccess, this);
         this.listenTo(this.model, 'payment:error', this.handlePaymentError, this);
+        this.listenTo(this.userAddressCollection, 'update', this.renderContactInformationStep);
+
+        this.listenTo(this.model, 'change', this._switchPaymentFormVisibility);
+        this.listenTo(this.customerModel, 'change', this._switchPaymentFormVisibility);
+        this.listenTo(this.userAddressCollection, 'update', this._switchPaymentFormVisibility);
+
+        this.listenTo(this.contactInformationView, 'form:open', this.renderPayButton);
+        this.listenTo(this.contactInformationView, 'form:close', this.renderPayButton);
+
+        this.listenTo(this.checkoutDeliveryInformationView, 'form:open', this.renderPayButton);
+        this.listenTo(this.checkoutDeliveryInformationView, 'form:close', this.renderPayButton);
+
+        this.listenTo(this.contactInformationView, 'all', this.trigger);
+        this.listenTo(this.checkoutDeliveryInformationView, 'all', this.trigger);
     },
 
     render: function () {
-        var addressFormVisible = this.$('#delivery_information_form_button').is(':visible');
-        var contactFormVisible = this.$('#contact_information_form').is(':visible');
+        this.renderContactInformationStep();
 
-        console.log('CheckoutPageView:render', this.model.isValid());
-        this.$('#finish-and-pay').toggleClass('button--disabled', !this.model.canBeSubmitted() || addressFormVisible || contactFormVisible);
+        this.timePickerView.setElement(this.$('.checkout__time-picker'));
+        this.timePickerView.render();
+
+        this._switchPaymentFormVisibility();
+        this.renderPayButton();
+
+        this.checkoutDeliveryInformationView.render();
+
+        return this;
     },
 
-    unbind: function () {
-        this.stopListening();
-        this.undelegateEvents();
+    renderPayButton: function () {
+        var isButtonDisabled = !this.model.get('address_id') ||
+            !this.model.canBeSubmitted() ||
+            this.$('#delivery-information-form').is(':visible') ||
+            this.$('#contact-information-form').is(':visible');
+
+        console.log('isButtonDisabled ', isButtonDisabled);
+        this.$('#checkout-finish-and-pay-button').toggleClass('button--disabled', isButtonDisabled);
     },
 
-    _openContactInformationForm: function() {
-        var $editContactInformationForm = this.$('#edit_contact_information_form'),
-            editContactInformationFormIsVisible;
-
-        if ($editContactInformationForm.length){
-            $editContactInformationForm.toggleClass('hide');
-            editContactInformationFormIsVisible = $editContactInformationForm.hasClass('hide');
-            $('#contact_information').find('.checkout__item').toggleClass('hide', !editContactInformationFormIsVisible);
-            this.render();
+    _switchPaymentFormVisibility: function () {
+        if (!_.isNull(this.model.get('address_id')) && this.model.get('is_contact_information_valid') && this.customerModel.isValid()) {
+            this.$('.checkout__payment').removeClass('checkout__step--reduced');
+            this.$('.checkout__payment .checkout__step__items').removeClass('hide');
+            this._refreshBlazy();
+        } else {
+            this.$('.checkout__payment').addClass('checkout__step--reduced');
+            this.$('.checkout__payment .checkout__step__items').addClass('hide');
         }
     },
 
+    _refreshBlazy: function () {
+        if (window.blazy) {
+            window.blazy.revalidate();
+        }
+    },
+
+    renderContactInformationStep: function () {
+        console.log('renderContactInformationStep', this.cid);
+        this.contactInformationView.render();
+    },
+
+    unbind: function () {
+        console.log('unbind checkoutPage ', this.cid);
+        this.stopListening();
+        this.undelegateEvents();
+        this.contactInformationView.unbind();
+        this.checkoutDeliveryInformationView.unbind();
+        this.timePickerView.unbind();
+    },
+
     _submitOrder: function () {
-        if (this.$('#delivery_information_form_button').is(':visible')) {
-            this.$('#error_msg_delivery_not_saved').removeClass('hide');
+        var isSubscribedNewsletter = this.customerModel.get('is_newsletter_subscribed'),
+            address = this.userAddressCollection.get(this.model.get('address_id'));
+
+        if (this.$('#delivery-information-form-button').is(':visible')) {
+            this.$('#error-message-delivery-not-saved').removeClass('hide');
             this._scrollToError(this.$('#checkout-delivery-information-address').offset().top);
 
             return false;
         }
 
-        if (this.$('#contact_information_form').is(':visible')) {
-            this.$('#error_msg_contact_not_saved').removeClass('hide');
+        if (this.$('#contact-information-form').is(':visible')) {
+            this.$('#error-message-contact-not-saved').removeClass('hide');
             this._scrollToError(this.$('.checkout__contact-information').offset().top);
 
             return false;
@@ -76,23 +141,26 @@ var CheckoutPageView = Backbone.View.extend({
             return false;
         }
 
-        this.$('#error_msg_delivery_not_saved').addClass('hide');
-        this.spinner.spin(this.$('#finish-and-pay')[0]);
-        this.model.placeOrder(this.vendorCode, this.vendorId);
-        this.$('.error_msg').addClass('hide');
+        this.$('#error-message-delivery-not-saved').addClass('hide');
+        this.spinner.spin(this.$('#checkout-finish-and-pay-button')[0]);
+
+        this.model.placeOrder(this.vendorCode, this.vendorId, this.customerModel, address, isSubscribedNewsletter);
+
+        this.$('.form__error-message').addClass('hide');
     },
 
     _scrollToError: function(msgOffset) {
         var paddingFromHeader = 16,
             scrollToOffset =  msgOffset - paddingFromHeader - this.domObjects.$header.outerHeight();
 
-        this.$('#error_msg_delivery_not_saved').removeClass('hide');
         $('body').animate({
             scrollTop: scrollToOffset
         }, this.configuration.anchorScrollSpeed);
     },
 
     handlePaymentSuccess: function (data) {
+        this.model.save(this.model.defaults, {silent: true});
+
         if (_.isNull(data.hosted_payment_page_redirect)) {
             this.model.cartModel.emptyCart(this.vendorId);
             Turbolinks.visit(Routing.generate('order_tracking', {orderCode: data.code}));
@@ -112,10 +180,15 @@ var CheckoutPageView = Backbone.View.extend({
     },
 
     handlePaymentError: function (data) {
-        this.$('.error_msg').removeClass('hide');
+        var exists = _.get(data, 'exists', {exists: false});
 
-        if (_.isObject(data) && _.isString(data.error.errors.message)) {
-            this.$('.error_msg').html(data.error.errors.message);
+        if (_.isObject(data) && _.isString(_.get(data, 'error.errors.message'))) {
+            this.$('.form__error-message').html(data.error.errors.message);
+            this.$('.form__error-message').removeClass('hide');
+        } else if (exists) {
+            this.contactInformationView.openLoginModal();
+        } else {
+            console.log(data);
         }
         this.spinner.stop();
     },
@@ -125,6 +198,6 @@ var CheckoutPageView = Backbone.View.extend({
             view = compiled({location: location, args: args});
 
         this.$el.append(view);
-        this.$('#form__redirect').submit();
+        this.$('#checkout-form-redirect').submit();
     }
 });

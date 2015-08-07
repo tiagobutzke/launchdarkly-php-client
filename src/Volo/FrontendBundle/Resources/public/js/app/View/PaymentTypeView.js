@@ -3,37 +3,60 @@ var PaymentTypeView = Backbone.View.extend({
         _.bindAll(this);
 
         this.checkoutModel = options.checkoutModel;
-        this.$('.checkout__payment__wrapper').first().click();
+
+        if (this.$('#checkout-payment-form').length > 0) {
+            this.paymentFormView = new PaymentFormView({
+                el: this.$('#checkout-payment-form'),
+                model: this.checkoutModel,
+                customerModel: options.customerModel
+            });
+        }
+        this.$('.checkout__payment__option-wrapper').first().click();
     },
 
     events: {
         'click .paypal': '_displayPayPal',
         'click .adyen': '_displayCreditCard',
         'click .adyen_hpp': '_displayAdyenHpp',
-        'click .checkout__item__card__help-toggle': '_toggleCreditCardHelp',
-        'click #add_new_credit_card_link': '_toggleNewCreditCard',
-        'click .credit-card--radio': '_selectSavedCreditCard'
+        'click .cod': '_displayCashOnDelivery',
+        'click .checkout__payment__credit-card-fields-help-toggle': '_toggleCreditCardHelp',
+        'click #checkout-add-credit-card-link': '_toggleNewCreditCard',
+        'click .checkout__saved-payment-options__credit-card-radio': '_selectSavedCreditCard'
     },
 
     unbind: function() {
         this.undelegateEvents();
+        this.paymentFormView.unbind();
     },
 
     _toggleCreditCardHelp: function() {
-        this.$('.checkout__item__card__help').toggle();
+        this.$('.checkout__payment__credit-card-fields-help').toggle();
+    },
+
+    _displayCashOnDelivery: function() {
+        var $cod = this.$('.cod');
+        this.checkoutModel.save('payment_type_code', $cod.data('payment_type_code'));
+        this.checkoutModel.save('payment_type_id', $cod.data('payment_type_id'));
+        this.$('.checkout__payment__option-description--paypal').addClass('hide');
+        this.$('.checkout__payment__option-description--adyen').addClass('hide');
+        this.$('.checkout__payment__option-description--cod').removeClass('hide');
+        this.$('.checkout__saved-payment-options__list').addClass('hide');
+        this.$('#checkout-payment-form').addClass('hide');
+        this._activatePaymentMethod($cod);
     },
 
     _displayCreditCard: function() {
         var $creditCardNode = this.$('.adyen');
 
-        this.checkoutModel.set('payment_type_code', $creditCardNode.data('payment_type_code'));
-        this.checkoutModel.set('payment_type_id', $creditCardNode.data('payment_type_id'));
+        this.checkoutModel.save('payment_type_code', $creditCardNode.data('payment_type_code'));
+        this.checkoutModel.save('payment_type_id', $creditCardNode.data('payment_type_id'));
 
-        this.$('.checkout__payment_paypal_description').addClass('hide');
-        this.$('.checkout__payment_adyen_hpp_description').addClass('hide');
-        this.$('#payment_form').toggleClass('hide', this.$(".credit-card--radio").length > 0);
-        this.$('#saved_payment_options').removeClass('hide');
-        this.$('.checkout__list').removeClass('hide');
+        this.$('.checkout__payment__option-description--paypal').addClass('hide');
+        this.$('.checkout__payment__option-description--adyen').addClass('hide');
+        this.$('.checkout__payment__option-description--cod').addClass('hide');
+        this.$('#checkout-payment-form').toggleClass('hide', this.$(".checkout__saved-payment-options__credit-card-radio").length > 0);
+        this.$('#checkout-saved-payment-options').removeClass('hide');
+        this.$('.checkout__saved-payment-options__list').removeClass('hide');
 
         this._activatePaymentMethod($creditCardNode);
     },
@@ -41,14 +64,15 @@ var PaymentTypeView = Backbone.View.extend({
     _displayAdyenHpp: function() {
         var $node = this.$('.adyen_hpp');
 
-        this.checkoutModel.set('payment_type_code', $node.data('payment_type_code'));
-        this.checkoutModel.set('payment_type_id', $node.data('payment_type_id'));
+        this.checkoutModel.save('payment_type_code', $node.data('payment_type_code'));
+        this.checkoutModel.save('payment_type_id', $node.data('payment_type_id'));
 
-        this.$('.checkout__payment_adyen_hpp_description').removeClass('hide');
-        this.$('.checkout__payment_paypal_description').addClass('hide');
-        this.$('#saved_payment_options').addClass('hide');
-        this.$('.checkout__list').addClass('hide');
-        this.$('#payment_form').addClass('hide');
+        this.$('.checkout__payment__option-description--adyen').removeClass('hide');
+        this.$('.checkout__payment__option-description--paypal').addClass('hide');
+        this.$('.checkout__payment__option-description--cod').addClass('hide');
+        this.$('#checkout-saved-payment-options').addClass('hide');
+        this.$('.checkout__saved-payment-options__list').addClass('hide');
+        this.$('#checkout-payment-form').addClass('hide');
 
         this._activatePaymentMethod($node);
     },
@@ -56,45 +80,46 @@ var PaymentTypeView = Backbone.View.extend({
     _displayPayPal: function() {
         var $payPalNode = this.$('.paypal');
 
-        this.checkoutModel.set('payment_type_code', $payPalNode.data('payment_type_code'));
-        this.checkoutModel.set('payment_type_id', $payPalNode.data('payment_type_id'));
-        this.checkoutModel.set('credit_card_id', null);
+        this.checkoutModel.save('payment_type_code', $payPalNode.data('payment_type_code'));
+        this.checkoutModel.save('payment_type_id', $payPalNode.data('payment_type_id'));
+        this.checkoutModel.save('credit_card_id', null);
 
-        this.$('.checkout__payment_paypal_description').removeClass('hide');
-        this.$('.checkout__payment_adyen_hpp_description').addClass('hide');
-        this.$('#payment_form').addClass('hide');
-        this.$('#saved_payment_options').addClass('hide');
-        this.$('.checkout__list').addClass('hide');
-        this.$('.credit-card--radio').attr("checked", false);
-        this.$('#add_new_credit_card_link').removeClass('paymentFormOpen');
+        this.$('.checkout__payment__option-description--paypal').removeClass('hide');
+        this.$('.checkout__payment__option-description--adyen').addClass('hide');
+        this.$('.checkout__payment__option-description--cod').addClass('hide');
+        this.$('#checkout-payment-form').addClass('hide');
+        this.$('#checkout-saved-payment-options').addClass('hide');
+        this.$('.checkout__saved-payment-options__list').addClass('hide');
+        this.$('.checkout__saved-payment-options__credit-card-radio').attr("checked", false);
+        this.$('#checkout-add-credit-card-link').removeClass('checkout__saved-payment-options-open');
 
         this._activatePaymentMethod($payPalNode);
     },
 
     _activatePaymentMethod: function($paymentMethodNode) {
-        this.$('.checkout__payment__wrapper--active').removeClass('checkout__payment__wrapper--active');
-        $paymentMethodNode.addClass('checkout__payment__wrapper--active');
+        this.$('.checkout__payment__option-wrapper--active').removeClass('checkout__payment__option-wrapper--active');
+        $paymentMethodNode.addClass('checkout__payment__option-wrapper--active');
     },
 
     _toggleNewCreditCard: function() {
-        var $payment_form = this.$('#payment_form'),
+        var $checkoutPaymentForm = this.$('#checkout-payment-form'),
             paymentFormVisible;
 
-        $payment_form.toggleClass('hide');
-        paymentFormVisible = !$payment_form.hasClass('hide');
+        $checkoutPaymentForm.toggleClass('hide');
+        paymentFormVisible = !$checkoutPaymentForm.hasClass('hide');
 
-        this.$('#add_new_credit_card_link').toggleClass('paymentFormOpen', paymentFormVisible);
+        this.$('#checkout-add-credit-card-link').toggleClass('checkout__saved-payment-options-open', paymentFormVisible);
         if (paymentFormVisible) {
-            this.$('.credit-card--radio').attr("checked", false);
+            this.$('.checkout__saved-payment-options__credit-card-radio').attr("checked", false);
             VOLO.checkoutModel.set('credit_card_id', null);
         }
     },
 
     _selectSavedCreditCard: function() {
-        this.$('#payment_form').addClass('hide');
-        this.$('#add_new_credit_card_link').removeClass('paymentFormOpen');
+        this.$('#checkout-payment-form').addClass('hide');
+        this.$('#checkout-add-credit-card-link').removeClass('checkout__saved-payment-options-open');
 
-        VOLO.checkoutModel.set('credit_card_id', this.$(".credit-card--radio:checked").val());
+        VOLO.checkoutModel.set('credit_card_id', this.$(".checkout__saved-payment-options__credit-card-radio:checked").val());
         VOLO.checkoutModel.set('adyen_encrypted_data', null);
     }
 });

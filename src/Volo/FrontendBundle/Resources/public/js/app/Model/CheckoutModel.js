@@ -1,9 +1,11 @@
 var CheckoutModel = Backbone.Model.extend({
     defaults: {
+        id: 'checkout',
         placing_order: false,
         is_guest_user: false,
         cart_dirty: false,
         address_id: null,
+        is_contact_information_valid: false,
         credit_card_id: null,
         is_credit_card_store_active: true,
         payment_type_id: null,
@@ -17,10 +19,14 @@ var CheckoutModel = Backbone.Model.extend({
         this.cartModel = options.cartModel;
 
         _.each(this.cartModel.vendorCarts.models, function (model) {
-            this.listenTo(model, 'cart:dirty', function() {this.set('cart_dirty', true);}.bind(this));
-            this.listenTo(model, 'cart:ready', function() {this.set('cart_dirty', false);}.bind(this));
-            this.listenTo(model, 'cart:error', function() {this.set('cart_dirty', false);}.bind(this));
+            this.listenTo(model, 'cart:dirty', function() {this.save('cart_dirty', true);}.bind(this));
+            this.listenTo(model, 'cart:ready', function() {this.save('cart_dirty', false);}.bind(this));
+            this.listenTo(model, 'cart:error', function() {this.save('cart_dirty', false);}.bind(this));
         }.bind(this));
+    },
+
+    localStorage: function () {
+        return new Backbone.LocalStorage("CheckoutModel");
     },
 
     isValid: function () {
@@ -33,7 +39,7 @@ var CheckoutModel = Backbone.Model.extend({
         }
 
         if (this.get('is_guest_user')) {
-            if (_.indexOf(['paypal', 'adyen_hpp'], this.get('payment_type_code')) != -1) {
+            if (_.indexOf(['paypal', 'adyen_hpp', 'cod'], this.get('payment_type_code')) != -1) {
                 return true;
             }
 
@@ -59,10 +65,14 @@ var CheckoutModel = Backbone.Model.extend({
         return this.isValid() && !this.get('placing_order');
     },
 
-    placeOrder: function (vendorCode, vendorId) {
+    placeOrder: function (vendorCode, vendorId, customer, address, isSubscribedNewsletter) {
         var data = {
             expected_total_amount: this.cartModel.getCart(vendorId).get('total_value'),
-            payment_type_id: this.get('payment_type_id')
+            payment_type_id: this.get('payment_type_id'),
+            customer: customer.toJSON(),
+            address: address.toJSON(),
+            isSubscribedNewsletter: isSubscribedNewsletter,
+            payment_type_code: this.get('payment_type_code')
         };
 
         this.trigger('payment:attempt_to_pay', {

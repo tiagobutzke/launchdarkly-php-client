@@ -22,10 +22,10 @@ var VendorGeocodingView = HomeSearchView.extend({
 
     events: {
         'submit': '_submitPressed',
-        'focus #postal_index_form_input': '_hideTooltip',
+        'focus #delivery-information-postal-index': '_hideTooltip',
         'click .postal-index-form-overlay': '_hideTooltip',
-        'click #postal_index_form_input': '_scrollToInput',
-        'keyup #postal_index_form_input': '_inputChanged'
+        'click #delivery-information-postal-index': '_scrollToInput',
+        'keyup #delivery-information-postal-index': '_inputChanged'
     },
 
     /**

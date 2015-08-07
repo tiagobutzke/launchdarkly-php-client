@@ -3,6 +3,8 @@
 namespace Volo\FrontendBundle\Service;
 
 use CommerceGuys\Guzzle\Oauth2\AccessToken;
+use Foodpanda\ApiSdk\Entity\Address\Address;
+use Foodpanda\ApiSdk\Entity\Address\AddressesCollection;
 use Foodpanda\ApiSdk\Entity\Customer\AuthenticatedCustomer;
 use Foodpanda\ApiSdk\Entity\Customer\Customer;
 use Foodpanda\ApiSdk\Entity\Customer\CustomerPassword;
@@ -16,6 +18,8 @@ use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
 
 class CustomerService
 {
+    const SESSION_CONTACT_KEY_TEMPLATE = 'customer-contact';
+
     /**
      * @var Serializer
      */
@@ -54,6 +58,15 @@ class CustomerService
         $this->provider = $provider;
         $this->phoneService = $phoneService;
         $this->tokenStorage = $tokenStorage;
+    }
+
+    /**
+     * @param AccessToken $accessToken
+     *
+     * @return Customer
+     */
+    public function getCustomer(AccessToken $accessToken) {
+        return $this->provider->getCustomer($accessToken);
     }
 
     /**
@@ -101,7 +114,13 @@ class CustomerService
         /** @var Token $token */
         $token = $this->tokenStorage->getToken();
         $customer = $this->serializer->denormalizeCustomer($customerParameters);
-        $validPhoneNumber = $this->validatePhoneNumber($customer->getMobileNumber());
+
+        $mobileNumber = $customer->getMobileNumber();
+        if ($customer->getMobileCountryCode()) {
+            $mobileNumber = sprintf('+%s%s', $customer->getMobileCountryCode(), $customer->getMobileNumber());
+        }
+
+        $validPhoneNumber = $this->validatePhoneNumber($mobileNumber);
         $this->setParsedMobileNumber($customer, $validPhoneNumber);
 
         $authenticatedCustomer = $this->provider->updateCustomer($token->getAccessToken(), $customer);
@@ -126,7 +145,7 @@ class CustomerService
      *
      * @return PhoneNumber
      */
-    protected function validatePhoneNumber($mobileNumber)
+    public function validatePhoneNumber($mobileNumber)
     {
         $parsedNumber = $this->phoneService->parsePhoneNumber($mobileNumber);
         $this->phoneService->validateNumber($parsedNumber);
@@ -165,5 +184,78 @@ class CustomerService
         $token    = new Token($username, ['customer' => $authenticatedCustomer], ['ROLE_CUSTOMER']);
         $token->setAttribute('tokens', new AccessToken($authenticatedCustomer->getToken(), 'bearer'));
         $this->tokenStorage->setToken($token);
+    }
+
+    /**
+     * @param int $id
+     * @param AccessToken $accessToken
+     * @param int $vendorId
+     *
+     * @return AddressesCollection
+     */
+    public function getAddress($id, AccessToken $accessToken, $vendorId = null)
+    {
+        return $this->provider->getAddress($id, $accessToken, $vendorId);
+    }
+
+    /**
+     * @param AccessToken $accessToken
+     * @param int $vendorId
+     *
+     * @return AddressesCollection
+     */
+    public function getAddresses(AccessToken $accessToken, $vendorId = null)
+    {
+        return $this->provider->getAddresses($accessToken, $vendorId)->getItems();
+    }
+
+    /**
+     * @param Address $address
+     * @param AccessToken $accessToken
+     *
+     * @return Address
+     */
+    public function create(Address $address, AccessToken $accessToken)
+    {
+        return $this->provider->createAddress($accessToken, $address);
+    }
+
+    /**
+     * @param array $data
+     * @param AccessToken $accessToken
+     */
+    public function saveCustomerAddressFromGuestCustomer(array $data, AccessToken $accessToken)
+    {
+        $customerAddresses = $this->getAddresses($accessToken);
+
+        /** @var Address $address */
+        $address = $this->serializer->denormalizeCustomerAddress($data);
+
+        if ($customerAddresses->isAlreadySaved($address)) {
+            $address = $customerAddresses->findSimilar($address);
+            $this->updateAddress($address, $accessToken);
+        } else {
+            $this->create($address, $accessToken);
+        }
+    }
+
+    /**
+     * @param Address $address
+     * @param AccessToken $accessToken
+     *
+     * @return Address
+     */
+    public function updateAddress(Address $address, AccessToken $accessToken)
+    {
+        return $this->provider->updateAddress($address, $accessToken);
+    }
+
+    /**
+     * @param int $id
+     * @param AccessToken $accessToken
+     */
+    public function deleteAddress($id, AccessToken $accessToken)
+    {
+        $this->provider->deleteAddress($id, $accessToken);
     }
 }

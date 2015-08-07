@@ -2,7 +2,7 @@
 
 {% block title %}{% trans %}brand{% endtrans %} | {% trans %}meta_title.home_page{% endtrans %}{% endblock %}
 {% block gtm_page_type %}Home{% endblock %}
-{% block body_class %}home {{ showChangePasswordModal ? 'show-change-password-modal' : '' }}{% endblock %}
+{% block body_class %}home{% endblock %}
 
 {% block head_meta_seo %}
     <meta name="robots" content="index, follow">
@@ -17,11 +17,11 @@
         <div class="home__teaser__slogan">
             <h2 class="home__teaser__slogan-text">{{ 'general.slogan'|trans }}</h2>
         </div>
-        <form class="home__teaser__form" id="postal_index_form" method="GET">
+        <form class="home__teaser__form" id="delivery-information-postal-index-form" method="GET">
             <div class="home__teaser__form-input-wrapper">
                 <input type="text" class="home__teaser__form-input"
-                       id="postal_index_form_input"
-                       value="{{ postalCode }}"
+                       id="delivery-information-postal-index"
+                       value="{{ postalCode|default('') }}"
                        autofocus=""
                        placeholder="{% trans %}postal_code.your_postal_code{% endtrans %}"
                        data-msg_error_not_found="{% trans %}postal_code.not_found{% endtrans %}"

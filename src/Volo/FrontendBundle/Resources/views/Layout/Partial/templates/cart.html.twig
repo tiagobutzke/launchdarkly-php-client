@@ -64,7 +64,7 @@
     <div class="vendor__geocoding__tool-box">
         <form>
             <div class="form-group">
-                <input id="postal_index_form_input"
+                <input id="delivery-information-postal-index"
                        type="text"
                        class="form-control menu__input__postcode input__postcode{{ isDeliverable ? ' hide' }}"
                        autofocus=""
@@ -77,7 +77,7 @@
         </div>
         <div class="postal-index-form-overlay"></div>
     </div>
-    {% include('VoloFrontendBundle:Layout/Partial/templates:timepicker.html.twig') %}
+    <div class="cart__time-picker"></div>
     <div class="desktop-cart-container">
         {# NOTE if you want to add new elements to the cart add them inside one of the 3 divs: #}
         {# desktop-cart__header, desktop-cart__order, desktop-cart__footer #}
@@ -110,15 +110,16 @@
     </div>
 </script>
 
+{% include('VoloFrontendBundle:Layout/Partial/templates:timepicker.html.twig') %}
+
 <script type="text/template" id="template-cart-checkout-button">
-    {% set is_guest_user = is_granted('IS_AUTHENTICATED_FULLY') ? 'false' : 'true' %}
     <% if (subtotal >= minimum_order_amount && subtotal > 0) { %>
-        <button class="button btn-checkout button--full-width" data-vendor-code="{{ vendor.code }}" data-is-guest-user="{{ is_guest_user }}">
-            <span>{% trans %}cart.checkout_link{% endtrans %}</span>
+        <button class="button btn-checkout button--full-width" data-vendor-code="{{ vendor.code }}">
+            <span class="button__text">{% trans %}cart.checkout_link{% endtrans %}</span>
         </button>
     <% } else { %>
-        <button class="button btn-below-minimum-amount button--disabled btn-checkout disabled button--full-width" data-is-guest-user="{{ is_guest_user }}">
-            <span>
+        <button class="button btn-below-minimum-amount button--disabled btn-checkout button--full-width disabled">
+            <span class="button__text">
             <% if (subtotal > 0) { %>
                 {% trans with {'%min%': vendor.minimumOrderAmount|price} %}cart.cart_below_mininum_total_amount %min%{% endtrans %}
             <% } else { %>
@@ -126,7 +127,7 @@
             <% }; %>
             </span>
         </button>
-        <span class="desktop-cart__error__below-minimum-amount error_msg hide">{% trans %}cart.need_add_more_products_to_place_order{% endtrans %}</span>
+        <span class="desktop-cart__error__below-minimum-amount form__error-message hide">{% trans %}cart.need_add_more_products_to_place_order{% endtrans %}</span>
     <% }; %>
 </script>
 
