@@ -24,7 +24,7 @@ VOLO.createUserAddressCollection = function (jsonUserAddress, customerModel) {
             customer: customerModel
         });
 
-    if (VOLO.userAddressCollection.isLocalStorageEnabled) {
+    if (VOLO.userAddressCollection.isGuest) {
         VOLO.userAddressCollection.fetch();
     } else {
         VOLO.userAddressCollection.reset(jsonUserAddress);
@@ -303,8 +303,10 @@ VOLO.doBootstrap = function(configuration) {
         loginButtonView,
         cartIconView,
         restaurantsView,
-        userAddressCollection = VOLO.createUserAddressCollection(VOLO.jsonUserAddress, VOLO.customer)
+        userAddressCollection
     ;
+
+    userAddressCollection = VOLO.createUserAddressCollection(VOLO.jsonUserAddress, VOLO.customer);
 
     if ($('.header__cart').length > 0 && $('#cart').length === 0) {
         cartIconView = VOLO.createCartIconView();

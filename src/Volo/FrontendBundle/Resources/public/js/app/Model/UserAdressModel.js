@@ -29,16 +29,16 @@ VOLO.UserAddressModel = Backbone.Model.extend({
     },
 
     validate: function (attributes) {
-        if (!_.isString(attributes.address_line1) || attributes.address_line1.length === 0) {
+        if (!attributes.address_line1) {
             return 'address_line1 not valid';
         }
-        if (!_.isString(attributes.address_line2) || attributes.address_line2.length === 0) {
+        if (!attributes.address_line2) {
             return 'address_line2 not valid';
         }
-        if (!_.isString(attributes.city) || attributes.city.length === 0) {
+        if (!attributes.city) {
             return 'city not valid';
         }
-        if (!_.isString(attributes.postcode) || attributes.postcode.length === 0) {
+        if (!attributes.postcode) {
             return 'postcode not valid';
         }
     }
@@ -55,16 +55,16 @@ VOLO.UserAddressCollection = Backbone.Collection.extend({
 
     initialize: function (data, options) {
         _.bindAll(this);
-        this.isLocalStorageEnabled = options.customer.isGuest;
+        this.isGuest = options.customer.isGuest;
         this.customerId = options.customer.id;
     },
 
     localStorage: function () {
-        if (this.isLocalStorageEnabled) {
+        if (this.isGuest) {
             return new Backbone.LocalStorage("UserAddressCollection");
         }
 
-        return false;
+        return null;
     },
 
     url: function() {
@@ -73,9 +73,11 @@ VOLO.UserAddressCollection = Backbone.Collection.extend({
 
     filterByCityAndVendorId: function (currentCity, vendorId) {
         return this.filter(function(address) {
-            var isDeliverable = address.get('is_delivery_available') || address.get('city') === currentCity;
-            if (this.isLocalStorageEnabled) {
-                isDeliverable = isDeliverable && address.get('vendor_id') === vendorId;
+            var isDeliverable;
+            if (this.isGuest) {
+                isDeliverable = address.get('vendor_id') === vendorId;
+            } else {
+                isDeliverable = address.isNew() || address.get('is_delivery_available') || address.get('city') === currentCity;
             }
 
             return isDeliverable;

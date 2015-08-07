@@ -117,7 +117,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
     },
 
     _showCloseFormAddressLink: function () {
-        if (this.customerModel.isGuest && _.isNull(this.model.get('address_id'))) {
+        if (this.customerModel.isGuest && !this.model.get('address_id')) {
             this.$('.checkout__title-link__text--cancel-delivery').addClass('hide');
         } else {
             this.$('.checkout__title-link__text--cancel-delivery').removeClass('hide');
@@ -145,6 +145,8 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
             this.$('.checkout__title-link--add-address').removeClass('hide');
             this.$('.checkout__title-link--edit-address-guest').addClass('hide');
         }
+
+        this._showCloseFormAddressLink();
 
         this.trigger('form:open', this);
     },
@@ -181,7 +183,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
 
     _changeAddress: function (checkoutModel, id) {
         var oldAddress, address;
-        if (_.isNull(id)) {
+        if (!id) {
             this._selectLastAddress();
 
             return;
@@ -205,7 +207,8 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
     },
 
     _createAddress: function () {
-        var data = {}, model;
+        var data = {},
+            model;
 
         _.each(this.$('#delivery-information-form').serializeJSON().customer_address, function (val, key) {
             if (_.trim(val).length > 0) {

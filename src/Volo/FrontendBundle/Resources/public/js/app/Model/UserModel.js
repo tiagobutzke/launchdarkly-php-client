@@ -20,8 +20,17 @@ VOLO.CustomerModel = Backbone.Model.extend({
     },
 
     validate: function(attrs, options) {
-        if (!_.isString(attrs.first_name) || attrs.first_name.length === 0) {
-            return 'not valid';
+        if (!attrs.first_name) {
+            return 'first_name not valid';
+        }
+        if (!attrs.last_name) {
+            return 'last_name not valid';
+        }
+        if (!attrs.email) {
+            return 'email not valid';
+        }
+        if (!attrs.mobile_number) {
+            return 'mobile number not valid';
         }
     },
 
