@@ -148,6 +148,8 @@
   font-size: 0.875em;
   @include centerTextVerticallyByHeight(30px);
   margin-top: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 .restaurants__tool-box--sticking .restaurants__location__input {
   margin-top: 8px;
