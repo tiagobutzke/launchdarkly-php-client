@@ -166,6 +166,8 @@ var CartView = Backbone.View.extend({
             }.bind(this)
         });
 
+        this.CartItemViewClass = CartItemView;
+
         this.initListener();
     },
 
@@ -388,7 +390,7 @@ var CartView = Backbone.View.extend({
     },
 
     renderNewItem: function(item) {
-        var view = new CartItemView({
+        var view = new this.CartItemViewClass({
             model: item,
             cartModel: this.model,
             vendorId: this.vendor_id

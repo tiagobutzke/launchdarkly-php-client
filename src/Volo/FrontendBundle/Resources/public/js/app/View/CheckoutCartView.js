@@ -1,4 +1,14 @@
+var CheckoutCartItemView = CartItemView.extend({
+    _editItem: $.noop
+});
+
 var CheckoutCartView = CartView.extend({
+    initialize: function() {
+        CartView.prototype.initialize.apply(this, arguments);
+
+        this.CartItemViewClass = CheckoutCartItemView
+    },
+
     render: function () {
         CartView.prototype.render.apply(this, arguments);
 
@@ -13,32 +23,24 @@ var CheckoutCartView = CartView.extend({
      * @override
      * @private
      */
-    renderTimePicker: function () {
-
-    },
+    renderTimePicker: $.noop,
 
     /**
      * @override
      * @private
      */
-    _makeCartAndMenuSticky: function () {
-
-    },
+    _makeCartAndMenuSticky: $.noop,
 
     /**
      * @override
      * @private
      */
-    handleVouchersErrors: function () {
-
-    },
+    handleVouchersErrors: $.noop,
 
     /**
      * @override
      * @private
      */
-    renderCheckoutButton: function() {
-
-    }
+    renderCheckoutButton: $.noop
 });
 
