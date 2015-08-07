@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.14.0
+  * SGFD-17488 Checkout / Show Only Deliverable Addresses
+
 * 1.13.0
   * SGFD-18925 skip coming soon page with cookie
 
