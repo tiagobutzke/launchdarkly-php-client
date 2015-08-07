@@ -1,5 +1,9 @@
 CHANGELOG
 =========
+
+* 1.13.0
+  * SGFD-18925 skip coming soon page with cookie
+
 * 1.12.2
   * SGFD-19026: Checkout / redirect instead of error page 
 
