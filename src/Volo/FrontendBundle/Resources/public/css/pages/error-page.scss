@@ -35,6 +35,9 @@
   font-weight: normal;
   text-transform: uppercase;
 }
+.ie9 .error-page__block__error-code {
+  color: #DEDECF;
+}
 .error-page__block__error-code--shadowed-static {
   text-shadow: rgba(100, 100, 0, 0.0470588) 0px 0px 1px,
   rgba(100, 100, 0, 0.0470588) -3px -3px 3px,
