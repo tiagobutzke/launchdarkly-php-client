@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+* 1.51.4
+  * SGFD-19122 fixed xss address fields issue
+
+* 1.51.3
+  * INTVOLO-65 SGFD-18306 moved address data from the header to post param
+
 * 1.15.1
   * SGFD-19122 fixed xss address fields issue & SGFD-17989 fixed special characters in addresses
   * SGFD-18918 temporary disabled polling ajax request in the tracking page
