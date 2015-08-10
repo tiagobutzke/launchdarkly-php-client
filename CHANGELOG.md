@@ -1,5 +1,11 @@
 CHANGELOG
 =========
+
+* 1.15.1
+  * SGFD-19122 fixed xss address fields issue & SGFD-17989 fixed special characters in addresses
+  * SGFD-18918 temporary disabled polling ajax request in the tracking page
+  * SGFD-19076 Spain / change avg. delivery time on home page to 30 (fixed in 1.12.3)
+
 * 1.15.0
   * SGFD-18902: IE / PLZ placeholder styling #454 
   * SGFD-18891: IE 9 / Error Pages #
