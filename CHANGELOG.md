@@ -9,9 +9,14 @@ CHANGELOG
 * 1.14.0
   * SGFD-17488 Checkout / Show Only Deliverable Addresses
   * SGDF-18580 Cash On Delivery
+  * SGFD-18306 Checkout / Usability Improvement 2: Address management
+  * SGFD-18841 Checkout / anonymous-registered user use the same UI
 
 * 1.13.0
   * SGFD-18925 skip coming soon page with cookie
+
+* 1.12.3
+  * SGFD-19076 Spain / change avg. delivery time on home page to 30
 
 * 1.12.2
   * SGFD-19026: Checkout / redirect instead of error page 
