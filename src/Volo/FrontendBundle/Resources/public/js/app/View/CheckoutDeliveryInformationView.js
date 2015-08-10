@@ -212,7 +212,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
 
         _.each(this.$('#delivery-information-form').serializeJSON().customer_address, function (val, key) {
             if (_.trim(val).length > 0) {
-                data[key] = val;
+                data[key] = _.escape(val);
             }
         });
         if (this.customerModel.isGuest) {
@@ -252,13 +252,13 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
         var attributes = address.toJSON();
 
         this.$('#delivery-information-address_id').val(attributes.id);
-        this.$('#delivery-information-address-line1').val(attributes.address_line1);
-        this.$('#delivery-information-address-line2').val(attributes.address_line2);
-        this.$('#delivery-information-company').val(attributes.company);
-        this.$('#delivery-information-city').val(attributes.city);
+        this.$('#delivery-information-address-line1').val(_.unescape(attributes.address_line1));
+        this.$('#delivery-information-address-line2').val(_.unescape(attributes.address_line2));
+        this.$('#delivery-information-company').val(_.unescape(attributes.company));
+        this.$('#delivery-information-city').val(_.unescape(attributes.city));
         this.$('#delivery-information-city_id').val(attributes.city_id);
-        this.$('#delivery-information-postal-index').val(attributes.postcode);
-        this.$('#delivery-information-instructions').val(attributes.delivery_instructions);
+        this.$('#delivery-information-postal-index').val(_.unescape(attributes.postcode));
+        this.$('#delivery-information-instructions').val(_.unescape(attributes.delivery_instructions));
         this.$('#delivery-information-address-latitude').val(attributes.latitude);
         this.$('#delivery-information-address-longitude').val(attributes.longitude);
     },

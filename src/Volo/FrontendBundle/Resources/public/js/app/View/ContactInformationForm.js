@@ -34,10 +34,10 @@ VOLO.ContactInformatioForm = ValidationView.extend({
 
     fillUpForm: function () {
         if (this.model.isValid()) {
-            this.$('#contact-information-first-name').val(this.model.get('first_name'));
-            this.$('#contact-information-last-name').val(this.model.get('last_name'));
-            this.$('#contact-information-email').val(this.model.get('email'));
-            this.$('#contact-information-mobile-number').val(this.model.getFullMobileNumber());
+            this.$('#contact-information-first-name').val(_.unescape(this.model.get('first_name')));
+            this.$('#contact-information-last-name').val(_.unescape(this.model.get('last_name')));
+            this.$('#contact-information-email').val(_.unescape(this.model.get('email')));
+            this.$('#contact-information-mobile-number').val(_.unescape(this.model.getFullMobileNumber()));
             this.$('#contact-information-newsletter-checkbox').prop('checked', this.model.get('is_newsletter_subscribed'));
         }
     }

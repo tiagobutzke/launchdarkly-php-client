@@ -86,9 +86,9 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
     },
 
     renderContactInformation: function () {
-        this.$('.checkout__contact-information__full-name').html(this.customerModel.escape('first_name') + ' ' + this.customerModel.escape('last_name'));
-        this.$('.checkout__contact-information__email').html(this.customerModel.escape('email'));
-        this.$('.checkout__contact-information__phone-number').html(_.escape(this.customerModel.getFullMobileNumber()));
+        this.$('.checkout__contact-information__full-name').text(_.unescape(this.customerModel.getFullName()));
+        this.$('.checkout__contact-information__email').text(_.unescape(this.customerModel.get('email')));
+        this.$('.checkout__contact-information__phone-number').text(_.unescape(this.customerModel.getFullMobileNumber()));
     },
 
     openLoginModal: function () {
@@ -178,7 +178,13 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
                 checkboxUncheckedValue: 'false',
                 parseBooleans: true
             }),
-            customer = form.customer;
+            customer = {};
+
+        _.each(form.customer, function (val, key) {
+            if (_.trim(val).length > 0) {
+                customer[key] = _.escape(val);
+            }
+        });
 
         this.$('.form__error-message').remove();
 
