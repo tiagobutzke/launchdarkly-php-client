@@ -221,20 +221,22 @@ var LoginRegistrationView = Backbone.View.extend({
 
     _handleFormSubmit: function($form, $modalContent) {
         var target = document.getElementById('spinner-wrapper'),
-            spinner = new Spinner();
+            spinner = new Spinner(),
+            data = $form.serializeJSON();
+
+        if (this.address) {
+            data.guest_address = this.address.toJSON();
+        }
 
         $.ajax({
             type: $form.attr('method'),
             url: $form.attr('action'),
-            data: $form.serialize(),
+            data: $.param(data),
             dataType: 'json',
             beforeSend: function(xhr) {
                 $(target).addClass('modal-content--loading');
                 spinner.spin(target);
                 $form.find('button').prop("disabled", true);
-                if (this.address) {
-                    xhr.setRequestHeader('FD-save-address', JSON.stringify(this.address.toJSON()));
-                }
             }.bind(this),
             success: function(response) {
                 this._unbindLoginView();

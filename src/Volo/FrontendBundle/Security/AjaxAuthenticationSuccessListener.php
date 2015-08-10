@@ -39,8 +39,8 @@ class AjaxAuthenticationSuccessListener extends DefaultAuthenticationSuccessHand
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
         if ($request->isXmlHttpRequest()) {
-            if ($request->headers->has('FD-save-address')) {
-                $address = json_decode($request->headers->get('FD-save-address'), true);
+            if ($request->request->has('guest_address')) {
+                $address = $request->request->get('guest_address', []);
 
                 $this->customerService->saveCustomerAddressFromGuestCustomer($address, $token->getAccessToken());
             }
