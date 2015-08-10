@@ -170,7 +170,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
         this.$('#delivery-information-address-line1').val('');
         this.$('#delivery-information-address-line2').val('');
         this.$('#delivery-information-company').val('');
-        this.$('#delivery_instructions').val('');
+        this.$('#delivery-information-instructions').val('');
         this.$('#delivery-information-address-latitude').val('');
         this.$('#delivery-information-address-longitude').val('');
     },
