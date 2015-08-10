@@ -3,4 +3,4 @@ imports:
 parameters:
     locale: es_ES
     timezone: "Europe/Madrid"
-    average_delivery_time: 38
+    average_delivery_time: 30
