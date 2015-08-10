@@ -371,10 +371,15 @@ VOLO.doBootstrap = function(configuration) {
     }
 
     if ($('.order-status-wrapper').length > 0) {
-        if (!_.isNull(VOLO.orderTrackingInterval)) {
-            clearInterval(VOLO.orderTrackingInterval);
-        }
-        VOLO.orderTrackingInterval = setInterval(VOLO.OrderTracking, 60000);
+        /**
+         * Temporary disabled
+         *
+         * https://jira.rocket-internet.de/browse/SGFD-18918
+         */
+        //if (!_.isNull(VOLO.orderTrackingInterval)) {
+        //    clearInterval(VOLO.orderTrackingInterval);
+        //}
+        //VOLO.orderTrackingInterval = setInterval(VOLO.OrderTracking, 60000);
     }
 
     if ($('.profile__blocks-wrapper').length > 0) {
