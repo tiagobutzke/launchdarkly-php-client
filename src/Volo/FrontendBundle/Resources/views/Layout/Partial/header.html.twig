@@ -5,7 +5,7 @@
                 {% if is_customer_authenticated_fully() %}
                     <div class="header__account__dropdown dropdown">
                         <a class="header__account__open" id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ get_authenticated_customer().firstName|raw('html') }}<i class="icon-down-open-mini"></i>
+                            {{ get_authenticated_customer().firstName|escape('html') }}<i class="icon-down-open-mini"></i>
                         </a>
                         <a href="#" class="header__account__login-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-profile"></i></a>
                         <ul class="dropdown-menu arrow" role="menu" aria-labelledby="dLabel">

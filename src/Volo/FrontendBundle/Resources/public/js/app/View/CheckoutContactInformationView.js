@@ -181,8 +181,10 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
             customer = {};
 
         _.each(form.customer, function (val, key) {
-            if (_.trim(val).length > 0) {
+            if (_.isString(val)) {
                 customer[key] = _.escape(val);
+            } else {
+                customer[key] = val;
             }
         });
 
