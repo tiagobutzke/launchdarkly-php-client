@@ -6,7 +6,7 @@ var CheckoutCartView = CartView.extend({
     initialize: function() {
         CartView.prototype.initialize.apply(this, arguments);
 
-        this.CartItemViewClass = CheckoutCartItemView
+        this.CartItemViewClass = CheckoutCartItemView;
     },
 
     render: function () {
