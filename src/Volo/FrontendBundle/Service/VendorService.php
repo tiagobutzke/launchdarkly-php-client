@@ -64,15 +64,16 @@ class VendorService
      */
     public function getVendorCodeByUrlKey($urlKey)
     {
-        if (!$this->cache->contains($urlKey)) {
+        $lowercaseUrlKey = strtolower($urlKey);
+        if (!$this->cache->contains($lowercaseUrlKey)) {
             $this->refreshCachedVendorCode();
         }
 
-        if (!$this->cache->contains($urlKey)) {
+        if (!$this->cache->contains($lowercaseUrlKey)) {
             throw new \RuntimeException(sprintf('Vendor not found for urlKey "%s".', $urlKey));
         }
 
-        return $this->cache->fetch($urlKey);
+        return $this->cache->fetch($lowercaseUrlKey);
     }
 
     /**
@@ -113,7 +114,7 @@ class VendorService
             foreach ($this->vendorProvider->findVendorsByCity($city)->getItems() as $vendor) {
                 $this->scheduleService->getNextDayPeriods($vendor, $now);
                 /** @var $vendor Vendor */
-                $this->cache->save($vendor->getUrlKey(), $vendor->getCode());
+                $this->cache->save(strtolower($vendor->getUrlKey()), $vendor->getCode());
                 $this->cache->save(
                     static::VENDOR_ID_CACHE_KEY_PREFIX . $vendor->getId(),
                     [
