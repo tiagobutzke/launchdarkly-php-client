@@ -11,32 +11,36 @@
                             {% set label_credit_cart = '' %}
                             {% if payment.paymentTypeCode == 'paypal' %}
                                 <img class="checkout__payment__option-image b-lazy"
-                                     src=data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+                                     src={{ blazy_placeholder }}
                                      data-src="{{ asset('img/checkout/paypal.png') }}|{{ asset('img/checkout/paypal-2x.png') }}"
                                      alt="alt-text"/>
                                 {% set label_credit_cart = 'payment.label_paypal' %}
                             {% endif %}
                             {% if payment.paymentTypeCode == 'adyen' %}
                                 <img class="checkout__payment__option-image b-lazy"
-                                     src=data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+                                     src={{ blazy_placeholder }}
                                      data-src="{{ asset('img/checkout/visa.png') }}|{{ asset('img/checkout/visa-2x.png') }}"
                                      alt="alt-text"/>
                                 <img class="checkout__payment__option-image b-lazy"
-                                     src=data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+                                     src={{ blazy_placeholder }}
                                      data-src="{{ asset('img/checkout/mastercard.png') }}|{{ asset('img/checkout/mastercard-2x.png') }}"
+                                     alt="alt-text"/>
+                                <img class="checkout__payment__option-image b-lazy"
+                                     src={{ blazy_placeholder }}
+                                     data-src="{{ asset('img/checkout/amex.png') }}|{{ asset('img/checkout/amex-2x.png') }}"
                                      alt="alt-text"/>
                                 {% set label_credit_cart = 'payment.paymentTypeCode' %}
                             {% endif %}
                             {% if payment.paymentTypeCode == 'adyen_hpp' %}
                                 <img class="checkout__payment__option-image b-lazy"
-                                     src=data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+                                     src={{ blazy_placeholder }}
                                      data-src="{{ asset('img/checkout/ideal.png') }}|{{ asset('img/checkout/ideal-2x.png') }}"
                                      alt="alt-text"/>
                                 {% set label_credit_cart = 'payment.label_adyen_hpp' %}
                             {% endif %}
                             {% if payment.paymentTypeCode == 'cod' %}
                                 <img class="checkout__payment__option-image b-lazy"
-                                     src=data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+                                     src={{ blazy_placeholder }}
                                      data-src="{{ asset('img/checkout/cod.png') }}|{{ asset('img/checkout/cod-2x.png') }}"
                                      alt="alt-text"/>
                                 {% set label_credit_cart = 'payment.cash_on_delivery' %}

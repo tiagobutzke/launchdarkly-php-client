@@ -619,8 +619,8 @@ textarea.checkout__step__item-textarea {
 .checkout__payment__option-image {
   display: inline;
   height: 30px;
-  @include respond-from("screen-md") {
-    height: 40px;
+  @include respond-from("screen-lg") {
+    height: 35px;
   }
 }
 
