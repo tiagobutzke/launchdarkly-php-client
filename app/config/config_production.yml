@@ -37,6 +37,13 @@ monolog:
         newrelic:
             type:     newrelic
             level:    error
+        slack:
+            type:       slack
+            token:      xoxp-4456203445-4434037920-8956922919-5deb02
+            level:      error
+            channel:    C08U6G1A6
+            icon_emoji: ':scream:'
+            bot_name:   'Foodora %country_code% %environment%'
         console:
             type:  console
 
