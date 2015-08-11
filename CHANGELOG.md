@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.16.0
+  * INTVOLO-303 Checkout - Missing Amex icon
+  * INTVOLO-296 hide add new cards for COD
+
 * 1.51.4
   * SGFD-19122 fixed xss address fields issue
 
