@@ -25,6 +25,12 @@ var HomeSearchView = Backbone.View.extend({
         'keydown #delivery-information-postal-index': '_inputChanged'
     },
 
+    render: function() {
+        if (!this.isIE()) {
+            this.$('.home__teaser__form-input').focus();
+        }
+    },
+
     unbind: function() {
         this.$('#delivery-information-postal-index').tooltip('destroy');
         this.geocodingService.removeListeners(this.$('#delivery-information-postal-index'));
@@ -158,7 +164,14 @@ var HomeSearchView = Backbone.View.extend({
     },
 
     _enableInputNode: function () {
-        this.$('#delivery-information-postal-index').css('opacity', '1').attr('disabled', false).focus();
+        var $postalIndexFormInput = this.$('#delivery-information-postal-index');
+
+        $postalIndexFormInput.css('opacity', '1').attr('disabled', false);
+        if (!this.isIE()) {
+            $postalIndexFormInput.focus();
+        } else {
+            this._hideTooltip();
+        }
     },
 
     _disableInputNode: function () {
@@ -168,3 +181,4 @@ var HomeSearchView = Backbone.View.extend({
 
 _.extend(HomeSearchView.prototype, VOLO.TooltipAlignMixin);
 _.extend(HomeSearchView.prototype, VOLO.DetectScreenSizeMixin);
+_.extend(HomeSearchView.prototype, VOLO.DetectIE);

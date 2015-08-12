@@ -17,9 +17,16 @@ var VendorsSearchView = HomeSearchView.extend({
     },
 
     buttonClick: function() {
-        this.$('#delivery-information-postal-index').removeClass('hide').focus();
+        var $postal_index_form_input = $('#delivery-information-postal-index');
+
+        $postal_index_form_input.removeClass('hide');
+        if (!this.isIE()) {
+            $postal_index_form_input.focus();
+        }
         this.$('.restaurants__location__title').hide();
 
         return false;
     }
 });
+
+_.extend(VendorsSearchView.prototype, VOLO.DetectIE);
