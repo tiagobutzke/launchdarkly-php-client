@@ -1,6 +1,19 @@
 CHANGELOG
 =========
 
+* 1.17.0
+
+  * SGFD-17614: CSS font sizes refactor on all pages
+  * SGFD-18775: Paypal pending/error order handling
+  * SGFD-17759: IE | Input field description is missing after opening home page
+  * SGFD-18830: IE | Scroll to top not working in Menu and Checkout pages
+  * SGFD-18286: IE | Delivery instructions field - placeholder is used as content
+  * SGFD-15763: SEO | URL canonical & noindex
+  * SGFD-15789: SEO | Metadata
+  * INTVOLO-82: Vendor code and CMS redirection
+  * INTVOLO-189: Simple load balancer check
+  * INTVOLO-288: Login without cookie
+
 * 1.16.2
 
   * Deployment: hardcoded list of countries
