@@ -155,6 +155,7 @@ class AppKernel extends Kernel
             'nl',
             'no',
             'se',
+            'hk',
         ];
     }
 
