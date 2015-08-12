@@ -37,9 +37,10 @@ class VendorController extends Controller
      */
     public function vendorAction(Request $request, $code, $urlKey)
     {
+        $vendorCode = strtolower($code);
         try {
-            $vendor = $this->get('volo_frontend.provider.vendor')->find($code);
-            if ($vendor->getUrlKey() !== $urlKey) {
+            $vendor = $this->get('volo_frontend.provider.vendor')->find($vendorCode);
+            if ($vendor->getUrlKey() !== $urlKey || $vendorCode !== $code) {
                 return $this->redirectToRoute('vendor', [
                     'code' => $vendor->getCode(),
                     'urlKey' => $vendor->getUrlKey()
@@ -143,12 +144,12 @@ class VendorController extends Controller
     public function vendorByCodeAction($code)
     {
         try {
-            $vendor = $this->get('volo_frontend.provider.vendor')->find($code);
+            $vendor = $this->get('volo_frontend.provider.vendor')->find(strtolower($code));
         } catch (ApiErrorException $exception) {
             throw $this->createNotFoundException('Vendor not found!', $exception);
         }
 
-        return $this->redirectToVendorPage($code, $vendor->getUrlKey());
+        return $this->redirectToVendorPage($vendor->getCode(), $vendor->getUrlKey());
     }
 
     /**
@@ -167,7 +168,7 @@ class VendorController extends Controller
             throw $this->createNotFoundException('Vendor not found!', $e);
         }
 
-        return $this->redirectToVendorPage($code, $urlKey);
+        return $this->vendorByCodeAction($code);
     }
 
     /**
@@ -181,8 +182,7 @@ class VendorController extends Controller
 
         return $this->redirectToRoute(
             'vendor',
-            ['code' => $code, 'urlKey' => $urlKey],
-            Response::HTTP_FOUND
+            ['code' => $code, 'urlKey' => $urlKey]
         );
     }
 }

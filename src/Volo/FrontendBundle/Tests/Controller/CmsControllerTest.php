@@ -16,16 +16,32 @@ class CmsControllerTest extends VoloTestCase
         $this->isSuccessful($client->getResponse());
     }
 
+    public function testCmsUppercaseAction()
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/contents/PRIVACY.htm');
+
+        $this->assertTrue($client->getResponse()->isRedirect('/contents/privacy.htm'));
+    }
+
     public function testPrivacyPath()
     {
         $client = static::createClient();
         $client->followRedirects(false);
 
-        $client->request('GET', '/privacy');
+        $client->request('GET', '/contents/privacy.htm');
 
-        $this->assertEquals(Response::HTTP_MOVED_PERMANENTLY, $client->getResponse()->getStatusCode());
-
-        $client->followRedirect();
         $this->isSuccessful($client->getResponse());
+    }
+
+    public function testunknownCms()
+    {
+        $client = static::createClient();
+        $client->followRedirects(false);
+
+        $client->request('GET', '/contents/unknown.htm');
+
+        $this->assertTrue($client->getResponse()->isNotFound());
     }
 }

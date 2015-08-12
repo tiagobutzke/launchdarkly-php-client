@@ -103,4 +103,42 @@ class VendorControllerTest extends VoloTestCase
         $this->isSuccessful($client->getResponse(), false);
         $this->assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
     }
+
+    public function testVendorByUpperCaseCodeWithoutUrlKey()
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/restaurant/S9Iz');
+
+        $this->assertTrue($client->getResponse()->isRedirect('/restaurant/s9iz/la-piccola'));
+    }
+
+    public function testVendorByUpperCaseUrlKey()
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/restaurant/LA-PICCOLA');
+
+        $this->assertTrue($client->getResponse()->isRedirect('/restaurant/s9iz/la-piccola'));
+    }
+
+    public function testVendorByUpperCaseCodeWithUrlKey()
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/restaurant/S9IZ/la-piccola');
+
+        $test = $client->getResponse();
+
+        $this->assertTrue($client->getResponse()->isRedirect('/restaurant/s9iz/la-piccola'));
+    }
+
+    public function testVendorByUpperCaseUrlKeyAndCode()
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/restaurant/s9iz/LA-PICCOLA');
+
+        $this->assertTrue($client->getResponse()->isRedirect('/restaurant/s9iz/la-piccola'));
+    }
 }
