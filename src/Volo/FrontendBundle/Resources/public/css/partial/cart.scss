@@ -1,71 +1,4 @@
-//mobile bottom cart
-.modal-close-button.mobile-close__cart {
-  right: 4px;
-  top: 2px;
-}
-
-.bottom-cart {
-  display: none;
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  height: $top-cart-height / 2;
-  padding-left:  $grid-gutter-width / 2;
-  padding-right: $grid-gutter-width / 2;
-  background-color: $color-bg-text-selection;
-  z-index: $zindex-navbar-fixed;
-  color: $color-text-selection;
-  font-size: 0.875em;
-  @include respond-from("screen-md") {
-    display: none;
-  }
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.bottom-cart__wrapper {
-  @include make-row();
-}
-
-.bottom-cart__quantity {
-  @include make-xs-column(3);
-  @include centerTextVerticallyByHeight($top-cart-height / 2);
-  span {
-    display: block;
-    color: $color-text-highlight;
-    background-color: $color-bg-primary;
-    text-align: center;
-    border-radius: 50%;
-    width: 28px;
-    height: 28px;
-    @include centerTextVerticallyByHeight(26px);
-    @include vertical-center-element();
-    padding-top: 1px;
-  }
-}
-
-.bottom-cart__cta {
-  @include make-xs-column(6);
-  @include centerTextVerticallyByHeight($top-cart-height / 2);
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.bottom-cart__cta--full {
-  @extend .bottom-cart__cta;
-  @include make-xs-column(12);
-}
-
-.bottom-cart__price {
-  @include make-xs-column(3);
-  @include centerTextVerticallyByHeight($top-cart-height / 2);
-  text-align: right;
-}
-
-// cart
+// cart styles declarations
 
 // this class is applied to body only when mobile cart is visible
 // to fix scrolling issues of mobile cart on IOS
@@ -93,7 +26,7 @@
   top: 0;
   left: 0;
   background-color: $color-bg-primary;
-  font-size: 0.875em;
+  font-size: $font-size-1_4rem;
   padding: $space-xs;
   z-index: 900;
   overflow-y: scroll;
@@ -146,19 +79,15 @@
     width: 100%;
     color: $color-text-selection;
     text-align: center;
-    font-size: 1.1em;
+    font-size: $font-size-1_6rem;
     text-transform: uppercase;
     padding-top: $space-sm;
   }
+}
 
-  i {
-    display: inline-block;
-    position: absolute;
-    top: $space-xs;
-    right: $space-xs;
-    color: $color-text-selection;
-    font-size: 2em;
-  }
+.modal-close-button.mobile-close__cart {
+  right: 4px;
+  top: 2px;
 }
 
 .vendor__geocoding__tool-box {
@@ -173,11 +102,11 @@
   }
 
   .vendor__geocoding__tool-box__title {
-    font-size: 1em;
+    font-size: $font-size-1_4rem;
     margin-top: $space-sm;
     margin-bottom: $space-sm;
     font-family: $bold-font-family;
-    line-height: 1.4em;
+    line-height: 1.4;
     text-transform: uppercase;
     @include respond-from("screen-md") {
       margin-top: 30px;
@@ -236,7 +165,7 @@
   padding: 0 $space-sm;
   border: none;
   line-height: normal;
-  font-size: 1em;
+  font-size: $font-size-1_4rem;
   overflow-y: auto;
   min-height: 50px;
   @include respond-from("screen-md") {
@@ -294,7 +223,7 @@ td.summary__item__quantity {
     position: relative;
     width: 51px;
     height: 33px;
-    line-height: 30px;
+    line-height: 2.14;
     background-image: url("#{$imagepath}cart/bg_add-toggle-2x.png");
     background-size: 51px 33px;
   }
@@ -327,7 +256,7 @@ td.summary__item__name {
 }
 
 .summary__item__extra {
-  line-height: 1.15em;
+  line-height: 1.143;
   display: block;
   color: $color-text-secondary;
   margin-top: 3px;
@@ -339,7 +268,7 @@ td.summary__item__name {
 }
 
 .summary__item__special-instructions {
-  line-height: 1.15em;
+  line-height: 1.143;
   display: block;
   color: $color-text-secondary;
   margin-top: 3px;
@@ -409,7 +338,7 @@ tr.summary__item__row_mobile {
 
   td.summary__item__quantity {
     padding: 8px $space-sm;
-    font-size: 1.2em;
+    font-size: $font-size-1_6rem;
 
     span {
       padding: 0;
@@ -451,6 +380,7 @@ tr.summary__item__row_mobile {
   .summary__item__icon {
     padding-left: 0;
     padding-right: 0;
+
     i {
       width: 28px;
       border-radius: $border-radius-default;
@@ -458,7 +388,7 @@ tr.summary__item__row_mobile {
       background-color: $color-bg-secondary;
       display: inline-block;
       text-align: center;
-      font-size: 1.5em;
+      font-size: 2.1rem;
       color: $color-text-highlight;
     }
 
@@ -479,7 +409,7 @@ tr.summary__item__row_mobile {
   text-align: center;
   width: 28px;
   height: 33px;
-  line-height: 30px;
+  line-height: 2.14;
   top: -25px;
   right: -2px;
   background-image: url("#{$imagepath}cart/bg_delete-toggle-2x.png");
@@ -503,7 +433,8 @@ tr.summary__item__row_mobile {
   font-family: $bold-font-family;
   @extend .text-center;
   text-transform: uppercase;
-  font-size: 1em;
+  font-size: $font-size-1_4rem;
+  line-height: 1.875;
   margin: 0 0 $space-md;
   padding: $space-md $space-sm;
   border-bottom: $base-border;
@@ -566,6 +497,7 @@ tr.summary__item__row_mobile {
 .desktop-cart__order {
   @include make-webkit-custom-scroll-bars();
   padding: 0;
+  line-height: 1.83;
 }
 
 .desktop-cart_order__message {
@@ -573,7 +505,7 @@ tr.summary__item__row_mobile {
   color: $color-text-secondary;
   margin-bottom: 0;
   margin-top: $space-sm;
-  line-height: 1.4em;
+  line-height: 1.4;
 }
 
 .desktop-cart__footer__message {
@@ -612,7 +544,7 @@ tr.summary__item__row_mobile {
 
 .desktop-cart__order__total {
   padding: $space-sm;
-  font-size: 1.05em;
+  font-size: $font-size-1_6rem;
   font-family: $base-font-family;
   @include respond-from("screen-md") {
     font-family: $bold-font-family;
@@ -622,7 +554,7 @@ tr.summary__item__row_mobile {
   em {
     font-family: $base-font-family;
     font-style: normal;
-    font-size: 0.9em;
+    font-size: $font-size-1_4rem;
     font-weight: normal;
   }
 }
@@ -674,6 +606,7 @@ tr.summary__item__row_mobile {
   position: relative;
   overflow: auto;
   opacity: 1;
+  line-height: 1.83;
 
   &.disabled {
     opacity: 0.5;
@@ -754,7 +687,7 @@ tr.summary__item__row_mobile {
 
     td.summary__item__quantity {
       padding: 8px 0;
-      font-size: 1em;
+      font-size: $font-size-1_4rem;
     }
 
     td.summary__item__sign {

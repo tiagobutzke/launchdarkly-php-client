@@ -2,8 +2,8 @@
 .toppings-product__name {
   padding: $space-md $space-lg 0 $space-md;
   font-family: $bold-font-family;
-  font-size: 0.9em;
-  line-height: 1.5em;
+  font-size: $font-size-1_4rem;
+  line-height: 1.5;
   @include respond-from("screen-md") {
     line-height: initial;
     padding: initial;
@@ -13,8 +13,8 @@
 .toppings-product__price {
   padding: 0 $space-md 0 $space-md;
   font-family: $bold-font-family;
-  line-height: 1.5em;
-  font-size: 0.9em;
+  line-height: 1.41;
+  font-size: $font-size-1_4rem;
   @include respond-from("screen-md") {
     line-height: initial;
     padding: initial;
@@ -24,11 +24,12 @@
 .toppings-product__description {
   padding: 0 $space-md $space-sm $space-md;
   color: $color-text-secondary;
-  font-size: 0.8em;
-  line-height: 1.4em;
+  font-size: $font-size-1_2rem;
+  line-height: 1.41;
   @include respond-from("screen-md") {
-    font-size: 0.9em;
+    font-size: $font-size-1_4rem;
     padding: $space-sm 0 $space-md 0;
+    line-height: 1.43;
   }
 }
 
@@ -38,7 +39,8 @@
 
 .topping__header {
   font-family: $bold-font-family;
-  font-size: 0.750em;
+  font-size: $font-size-1_2rem;
+  line-height: 2.13;
   border-bottom: $base-border;
   padding: $space-sm 0;
   margin: 0;
@@ -46,7 +48,8 @@
   overflow: auto;
   cursor: pointer;
   @include respond-from("screen-md") {
-    font-size: 0.875em;
+    font-size: $font-size-1_4rem;
+    line-height: 1.9;
   }
 
   @include transition(background-color .1s linear);
@@ -120,9 +123,10 @@
 .topping-option {
   overflow: auto;
   color: $color-text-secondary;
-  font-size: 0.8em;
+  font-size: $font-size-1_4rem;
   padding: $space-sm $space-md;
   cursor: pointer;
+  line-height: 2;
 
   @include transition(background-color .1s linear);
   &:hover {
@@ -138,7 +142,6 @@
   }
 
   @include respond-from("screen-md") {
-    font-size: 0.9em;
     padding: $space-sm 0;
   }
 }
@@ -228,9 +231,9 @@
     color: $error-msg-color-text;
     padding: 5px 10px;
     background-color: $error-msg-color-bg;
-    font-size: 0.8em;
+    font-size: $font-size-1_4rem;
     @include respond-from("screen-md") {
-      font-size: 0.9em;
+      font-size: $font-size-1_4rem;
     }
   }
 
@@ -259,7 +262,7 @@
     color: $color-text-link;
     line-height: inherit;
     text-align: center;
-    font-size: 28px;
+    font-size: 2.8rem;
   }
 
   & .product__quantity {

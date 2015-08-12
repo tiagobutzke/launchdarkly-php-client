@@ -49,11 +49,10 @@ $font-version: 8;
   url('#{$fontspath}SatisfyRegular.svg?#{$font-version}#SatisfyRegular') format('svg');
 }
 
-$base-font-size: 16px;
-$small-font-size: 13px;
+$base-font-size: 10px;
 $base-font-family: 'Avenir Book', Arial, sans-serif;
 $base-font-weight: 400;
-$base-line-height: 1.6em;
+$base-line-height: 1.6;
 $color-text-primary: #292929;
 $color-text-secondary: #666;
 $color-text-light: #999;
@@ -66,6 +65,29 @@ $color-text-link-hover: #ac0c50;
 $bold-font-family: 'Avenir Heavy', Arial, sans-serif;
 $satisfy-font-family: 'Satisfy Regular', Arial, sans-serif;
 // ----------------------- FONTS END --------------------------
+
+// ----------------------- TEXT FONT SIZES -----------------------
+$font-size-1rem: 1rem;
+$font-size-1_2rem: 1.2rem;
+$font-size-1_4rem: 1.4rem;
+$font-size-1_6rem: 1.6rem;
+$font-size-1_9rem: 1.9rem;
+$font-size-2_2rem: 2.2rem;
+$font-size-2_4rem: 2.4rem;
+$font-size-2_8rem: 2.8rem;
+$font-size-3_2rem: 3.2rem;
+$font-size-3_6rem: 3.6rem;
+$font-size-3_8rem: 3.8rem;
+$font-size-4_1rem: 4.1rem;
+$font-size-5_7rem: 5.7rem;
+$font-size-6_4rem: 6.4rem;
+$font-size-6_7rem: 6.7rem;
+$font-size-9_6rem: 9.6rem;
+$font-size-11_8rem: 11.8rem;
+$font-size-13rem: 13rem;
+$font-size-14_4rem: 14.4rem;
+$font-size-22_4rem: 22.4rem;
+// ----------------------- END TEXT FONT SIZES -----------------------
 
 // ----------------------- IMAGES START -----------------------
 $imagepath: "../../img/";
@@ -105,7 +127,7 @@ $form-element-height-default: 44px;
 
 //  BUTTONS START
 $cta-font-family: 'Avenir Heavy', Arial, sans-serif;
-$cta-font-size: 0.875em;
+$cta-font-size: $font-size-1_4rem;
 $cta-text-align: center;
 $cta-text-transform: uppercase;
 $cta-padding-left: 20px;
@@ -130,7 +152,7 @@ $cta-pressed-box-shadow: inset 0 2px 0 1px #8a0a40;
 
 //  INPUT FIELDS START
 $input-font-family: 'Avenir Book', Arial, sans-serif;
-$input-font-size: 1em;
+$input-font-size: $font-size-1_6rem;
 $input-text-align: left;
 $input-padding-left: 12px;
 $input-padding-right: 12px;
@@ -148,8 +170,8 @@ $input-color-bg-error: #ffefef;
 $input-border-error: 1px solid #f0502d;
 // Error contextual message
 $error-msg-font-family: 'Avenir Book', Arial, sans-serif;
-$error-msg-font-size: 12px;
-$error-msg-line-height: 1.45em;
+$error-msg-font-size: $font-size-1_2rem;
+$error-msg-line-height: 1.42;
 $error-msg-color-bg: #f0502d;
 $error-msg-color-text: #fff;
 $error-msg-height: 20px;
@@ -162,7 +184,7 @@ $success-msg-color-text: #fff;
 
 // ----------------------- DROP DOWNS START --------------------
 $dropdown-font-family: 'Avenir Book', Arial, sans-serif;
-$dropdown-font-size: 0.875em;
+$dropdown-font-size: $font-size-1_4rem;
 $dropdown-color-text: #292929;
 $dropdown-color-bg-1: #fff;
 $dropdown-color-bg-2: transparent;
@@ -178,7 +200,7 @@ $dropdown-color-border: #c8c8c8;
 
 // ----------------------- RESTAURANT LIST START ------------------------
 $hero-restaurant-img: "#{$imagepath}hero_banners/hero_restaurant.jpg";
-$restaurant-font-size: 0.875em;
+$restaurant-font-size: $font-size-1_4rem;
 $restaurant-box-shadow: 0px 0px 2px 0px rgba(1,1,1,0.2);
 $restaurant-box-shadow-hover: 0px 7px 20px 0px rgba(1,1,1,0.2);
 $restaurant-bg-color: #fff;

@@ -9,7 +9,7 @@
   }
   .header__logo__restaurant-name {
     line-height: normal;
-    font-size: 0.622em;
+    font-size: $font-size-2_2rem;
     color: $color-text-highlight;
     text-transform: uppercase;
     display: block;
@@ -111,16 +111,16 @@
   }
 
   i {
-    font-size: 0.75em;
+    font-size: 2.7rem;
     color: $color-text-selection;
     display: block;
     padding-left: 1px;
     @include transition(opacity .5s linear);
     @include respond-from("screen-md") {
-      font-size: 0.8em;
+      font-size: 2.88rem;
     }
     @include respond-from("screen-lg") {
-      font-size: 1em;
+      font-size: 3.6rem;
     }
   }
 
@@ -134,9 +134,10 @@
 .header__cart {
   position: relative;
   @include make-link($link-color-bg-dark, $link-color-bg-dark);
-  font-size: 1.5em;
+  font-size: 2.4rem;
   float: right;
   margin: 11px 5px;
+  line-height: 1;
   @include respond-from("screen-md") {
     margin: 20px 0 11px;
   }
@@ -158,8 +159,8 @@
   background-color: $color-text-highlight;
   width: 23px;
   height: 23px;
-  font-size: 14px;
-  line-height: 23px;
+  font-size: $font-size-1_4rem;
+  line-height: 1.6;
   position: absolute;
   top: -7px;
   left: 17px;
@@ -187,9 +188,10 @@
 
 .header__account__login-icon {
   position: absolute;
-  font-size: 1.4em;
+  font-size: 2.23rem;
   display: block;
   margin-top: 2px;
+  line-height: 1;
   @include make-link($link-color-bg-dark, $link-color-bg-dark);
   @include respond-from("screen-md") {
     display: none;
@@ -211,11 +213,11 @@
 
 .header__account__open {
   @include make-link($link-color-bg-dark, $link-color-bg-dark);
-  font-size: 1em;
+  font-size: $font-size-1_6rem;
   @include appear-from("screen-md");
 
   i {
-    font-size: 1.3em;
+    font-size: 2rem;
     vertical-align: sub;
   }
 }
@@ -240,9 +242,10 @@
   .header__logo__a {
     i {
       color: $color-text-highlight;
-    }
-    @include respond-from("screen-lg") {
-      font-size: 0.8em;
+
+      @include respond-from("screen-lg") {
+        font-size: 2.88rem;
+      }
     }
   }
 

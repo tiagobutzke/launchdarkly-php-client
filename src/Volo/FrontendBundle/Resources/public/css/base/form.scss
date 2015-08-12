@@ -27,7 +27,7 @@ button:disabled {
   border: 0;
   color: $cta-color-text-primary;
   background-color: $cta-color-bg-primary;
-  line-height: 1em;
+  line-height: 1;
   padding-top: $space-xs;
   position: relative;
   @include transition(all .1s linear);
@@ -110,7 +110,7 @@ a.button {
 
 .form-control {
   font-family: $input-font-family;
-  font-size: $input-font-size;
+  font-size: $font-size-1_4rem;
   text-align: $input-text-align;
   padding-left: $input-padding-left;
   padding-right: $input-padding-right;
@@ -181,7 +181,7 @@ select {
   right: 24px !important;
   margin-top: -8px !important;
   color: $color-text-highlight;
-  font-size: 1.35em;
+  font-size: 1.9rem;
 }
 .caret:before {
   content: "\44";
@@ -195,7 +195,7 @@ select {
   padding: 0;
   margin: 0;
   list-style: none;
-  font-size: 1em;
+  font-size: $font-size-1_4rem;
   text-align: left;
   background-color: $dropdown-color-bg-1;
   border: $dropdown-border;
@@ -243,7 +243,11 @@ select {
   padding-right: $space-xs;
   border-radius: $input-border-radius;
   color: $dropdown-color-text;
-  font-size: 1em;
+  font-size: $font-size-1_4rem;
+
+  &:hover, &:focus {
+    outline: none !important;
+  }
 }
 .bootstrap-select > .dropdown-toggle:hover,
 .bootstrap-select > .dropdown-toggle:focus {

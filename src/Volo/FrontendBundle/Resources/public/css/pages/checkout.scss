@@ -83,18 +83,18 @@
 .checkout__step__title {
   @include make-xs-column(12);
   font-family: $bold-font-family;
-  font-size: 0.875em;
+  font-size: $font-size-1_4rem;
+  padding: $space-sm $grid-gutter-width / 2;
   line-height: normal;
-  padding: $space-sm;
   background-color: $color-bg-secondary;
   margin: 0;
   text-transform: uppercase;
   border-bottom: $dropdown-border;
   @include respond-from("screen-md") {
+    padding: $grid-gutter-width;
+    font-size: $font-size-1_6rem;
     border-radius: $border-radius-default;
     border-bottom: none;
-    font-size: 0.93em;
-    padding: $grid-gutter-width;
     background-color: transparent;
   }
 }
@@ -139,11 +139,22 @@
   border-bottom: none;
 }
 
+.checkout__subtitle {
+  font-family: $bold-font-family;
+  font-size: $font-size-1_4rem;
+  padding: $space-md $grid-gutter-width / 2;
+  line-height: normal;
+  margin: 0;
+  text-align: left;
+  text-transform: uppercase;
+  position: relative;
+}
 
 .checkout__step__item {
   @include make-xs-column(12, 0);
   padding-bottom: $space-sm;
-  @include respond-from("screen-md") {
+  @include respond-from("screen-md") {   
+    font-size: $font-size-1_4rem;
     padding-bottom: $space-lg;
   }
 }
@@ -164,22 +175,21 @@
 }
 
 .checkout__subtitle--above-form {
-  font-size: 0.8em;
+  font-size: $font-size-1_2rem;
   margin-top: -2px;
   @include respond-from("screen-md") {
     margin-top: -27px;
-  };
+  }
 }
 
 .checkout__step__item-content {
   @include clearfix;
   @include make-xs-column(12);
   padding: 0 $space-sm;
-  line-height: 1.4em;
-  font-size: 13px;
+  font-size: $font-size-1_4rem;
+  line-height: 1.38;
   @include respond-from("screen-md") {
     padding: 0 $grid-gutter-width;
-    font-size: 14px;
   }
 }
 .checkout__delivery-information__time .checkout__step__item-content {
@@ -188,8 +198,8 @@
   }
 }
 .checkout__payment__legal .checkout__step__item-content {
-  line-height: 1.3em;
-  font-size: 11px;
+  line-height: 1.27;
+  font-size: $font-size-1_2rem;
 }
 .checkout__payment__options-list.checkout__step__item-content {
   padding: 0;
@@ -208,7 +218,7 @@
 
 .checkout__step__item-title {
   font-family: $bold-font-family;
-  font-size: 13px;
+  font-size: $font-size-1_4rem;
   padding: $space-md $space-sm;
   line-height: normal;
   margin: 0;
@@ -216,7 +226,6 @@
   text-transform: uppercase;
   position: relative;
   @include respond-from("screen-md") {
-    font-size: 14px;
     padding: 0 $grid-gutter-width $space-md $grid-gutter-width;
   }
 }
@@ -239,7 +248,7 @@
 //required to overwrite the textarea.form-control style in _variables.scss
 textarea.checkout__step__item-textarea {
   height: $input-height * 2;
-  line-height: 1.4em;
+  line-height: 1.4;
 }
 
 
@@ -253,10 +262,7 @@ textarea.checkout__step__item-textarea {
   display: inline-block;
   text-transform: none;
   font-family: $base-font-family;
-  font-size: 13px;
-  @include respond-from("screen-md") {
-    font-size: 14px;
-  }
+  font-size:$font-size-1_4rem;
 }
 .checkout__payment__voucher .checkout__title-link {
   float: none;
@@ -462,7 +468,7 @@ textarea.checkout__step__item-textarea {
 .checkout__delivery-information__address-link {
   position: absolute;
   top: 10px;
-  font-size: 16px;
+  font-size: $font-size-1_6rem;
   color: $color-text-inactive;
 }
 .checkout__delivery-information__address-link:hover {
@@ -550,8 +556,8 @@ textarea.checkout__step__item-textarea {
   @include make-md-column(4);
   @include clearfix;
   padding: 0;
-  line-height: 1.4em;
-  font-size: 13px;
+  line-height: 1.43;
+  font-size: $font-size-1_4rem;
   @include respond-from("screen-md") {
     padding: $space-sm;
     padding-left: 0;
@@ -567,8 +573,8 @@ textarea.checkout__step__item-textarea {
     padding: $space-sm 0;
     margin-bottom: $grid-gutter-width / 2;
     overflow: hidden;
-    line-height: 1.4em;
-    font-size: 1em;
+    line-height: 1.43;
+    font-size: $font-size-1_4rem;
     position: relative;
     @include transition(all .1s linear);
   }
@@ -635,7 +641,7 @@ textarea.checkout__step__item-textarea {
 
 .checkout__payment__option-description {
   clear: both;
-  font-size: 12px;
+  font-size: $font-size-1_2rem;
   padding-left: $grid-gutter-width / 2;
   padding-right: $grid-gutter-width / 2;
   @include respond-from("screen-md") {
@@ -648,6 +654,7 @@ textarea.checkout__step__item-textarea {
   padding-top: $space-sm;
   padding-bottom: $space-xs;
   text-transform: uppercase;
+  line-height: 2;
   @include respond-from("screen-md") {
     padding-top: 0;
   }
@@ -660,9 +667,9 @@ textarea.checkout__step__item-textarea {
 
 
 .checkout__saved-payment-options__list-label {
-  font-size: 12px;
+  font-size: $font-size-1_2rem;
   @include respond-from("screen-md") {
-    font-size: 14px;
+    font-size: $font-size-1_4rem;
   }
 }
 .checkout__saved-payment-options__list:first-child {
@@ -768,8 +775,8 @@ textarea.checkout__step__item-textarea {
 
 .checkout__payment__legal {
   text-align:  center;
-  font-size: 0.7em;
-  line-height: 1.3em;
+  font-size: $font-size-1_2rem;
+  line-height: 1.43;
   color: $color-text-light;
   padding: $space-sm 0;
 }
@@ -783,7 +790,7 @@ textarea.checkout__step__item-textarea {
   @include make-md-column(6);
   @extend .col-md-push-6;
   padding: 0;
-  font-size: 16px;
+  font-size: $font-size-1_6rem;
   @include respond-from("screen-md") {
     padding: $grid-gutter-width 0 $grid-gutter-width $grid-gutter-width;
   }
@@ -802,10 +809,10 @@ textarea.checkout__step__item-textarea {
   @include make-md-column(6);
   @extend .col-md-pull-6;
   padding: $space-sm $space-xs;
-  font-size: 14px;
+  font-size: $font-size-1_4rem;
   color: $color-text-secondary;
   text-align: center;
-  line-height: 1.4em;
+  line-height: 1.4;
   border-bottom: $dropdown-border;
   @include respond-from("screen-md") {
     text-align: left;

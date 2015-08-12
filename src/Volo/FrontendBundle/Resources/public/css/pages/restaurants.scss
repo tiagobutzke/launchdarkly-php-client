@@ -71,7 +71,7 @@
 
 .restaurants__location__title {
   text-align: center;
-  line-height: 30px;
+  line-height: 2.14;
   @include respond-from("screen-md") {
     text-align: right;
   }
@@ -101,9 +101,6 @@
 
 .restaurants__change-button__text {
   display: inline;
-  @include respond-from("screen-md") {
-    line-height: 30px;
-  }
 }
 .restaurants__tool-box--sticking .restaurants__change-button__text {
   display: none;
@@ -145,7 +142,7 @@
 
 
 .restaurants__location__input {
-  font-size: 0.875em;
+  font-size: $font-size-1_4rem;
   @include centerTextVerticallyByHeight(30px);
   margin-top: 0;
   padding-top: 0;
@@ -243,11 +240,11 @@
   margin: $space-sm 0 0;
   @include set-default-gutter();
   height: 15px;
-  line-height: 15px;
+  line-height: 1.1;
   @include text-overflow();
   @include respond-from("screen-sm") {
     height: 20px;
-    line-height: 20px;
+    line-height: 1.43;
   }
 }
 
@@ -258,6 +255,7 @@
   float: left;
   height: 20px;
   color: $color-text-secondary;
+  line-height: 1.6;
   @include text-overflow();
   @include set-default-gutter();
   @include respond-from("screen-sm") {
@@ -269,6 +267,7 @@
 .restaurants__list__item-preorder {
   display: none;
 }
+
 .restaurants__list--closed .restaurants__list__item-preorder {
   width: 100%;
   text-align: center;
@@ -283,7 +282,7 @@
 .restaurants__list__item-preorder-icon {
   margin: 0 auto $space-sm;
   display: inline-block;
-  font-size: 1.7em;
+  font-size: 2.7rem;
 }
 
 .restaurants__list__item-preorder-label {
@@ -309,6 +308,7 @@
   float: right;
   @include respond-from("screen-sm") {
     float: none;
+    line-height: 1.83;
   }
 }
 
@@ -327,25 +327,25 @@
 .restaurants__not-available-message__title {
   font-family: $satisfy-font-family;
   color: $color-text-highlight;
-  font-size: 1.5em;
+  font-size: $font-size-2_4rem;
   font-weight: normal;
   margin: 0;
   line-height: normal;
   @include respond-from("screen-sm") {
-    font-size: 1.7em;
+    font-size: $font-size-2_8rem;
   }
 }
 
 .restaurants__not-available-message__text {
   font-family: $base-font-family;
-  font-size: 0.9em;
+  font-size: $font-size-1_4rem;
   font-weight: normal;
   line-height: normal;
   padding-bottom: 60px;
   width: 86%;
   margin: 0 auto;
   @include respond-from("screen-sm") {
-    font-size: 1.15em;
+    font-size: $font-size-1_6rem;
     width: 60%;
   }
 }
@@ -357,7 +357,7 @@
 
 .restaurants__city-bottom-info {
   @extend .clearfix;
-  font-size: 0.875em;
+  font-size: $font-size-1_4rem;
   padding-top: $space-lg;
   @include respond-from("screen-md") {
     @include make-row(0);
@@ -374,7 +374,7 @@
   margin: 0;
   font-family: $bold-font-family;
   text-transform: uppercase;
-  font-size: 1em;
+  font-size: $font-size-1_4rem;
   @extend .text-center;
 }
 

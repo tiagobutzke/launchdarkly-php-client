@@ -29,8 +29,8 @@
 
 .home__titles__main-title {
   @include make-xs-column(12);
-  font-size: 1.2em;
-  line-height: 1em;
+  font-size: $font-size-1_9rem;
+  line-height: 1;
   padding-bottom: 5px;
   padding-left: $space-percent-lg;
   padding-right: $space-percent-lg;
@@ -38,33 +38,33 @@
   font-family: $satisfy-font-family;
   color: $color-text-highlight;
   @include respond-from('screen-sm') {
-    font-size: 1.5em;
+    font-size: $font-size-2_4rem;
   }
   @include respond-from('screen-md') {
-    font-size: 1.8em;
+    font-size: $font-size-2_8rem;
   }
   @include respond-from('screen-lg') {
-    font-size: 2.1em;
+    font-size: $font-size-3_2rem;
   }
 }
 
 .home__titles__subtitle {
   @include make-xs-column(12);
-  font-size: 1.4em;
-  line-height: 1em;
+  font-size: $font-size-2_2rem;
+  line-height: 1;
   text-align: center;
   color: $color-text-primary;
   text-transform: uppercase;
   padding-left: $space-percent-lg;
   padding-right: $space-percent-lg;
   @include respond-from('screen-sm') {
-    font-size: 2em;
+    font-size:$font-size-3_2rem;
   }
   @include respond-from('screen-md') {
-    font-size: 2.3em;
+    font-size: $font-size-3_6rem;
   }
   @include respond-from('screen-lg') {
-    font-size: 2.6em;
+    font-size: $font-size-4_1rem;
   }
 }
 
@@ -103,18 +103,18 @@
 
 .home__teaser__slogan-text {
   font-family: $base-font-family;
-  line-height: 1.2em;
-  font-size: 1.2em;
+  line-height: 1.2;
+  font-size: $font-size-1_9rem;
   margin-bottom: 0.5em;
   text-transform: uppercase;
   @include respond-from('screen-sm') {
-    font-size: 1.8em;
+    font-size: $font-size-2_8rem;
   }
   @include respond-from('screen-md') {
-    font-size: 2.3em;
+    font-size: $font-size-3_6rem;
   }
   @include respond-from('screen-lg') {
-    font-size: 2.6em;
+    font-size: $font-size-4_1rem;
   }
 }
 
@@ -125,17 +125,19 @@
 
 .home__teaser__form-input-wrapper {
    display: inline-block;
-  position: relative;
+   position: relative;
    width: 85%;
    margin-bottom: $space-sm;
    @include respond-from('screen-sm') {
      width: 280px;
      bottom: 8%;
    }
+
  }
 
 .home__teaser__form-input {
   width: 100%;
+  font-size: $font-size-1_6rem;
 }
 
 .home__teaser__button {
@@ -256,11 +258,11 @@
   padding-left:12%;
   padding-right:12%;
   font-family: $base-font-family;
-  line-height: 1em;
-  font-size: 1em;
+  line-height: 1;
+  font-size: $font-size-1_6rem;
   @include respond-from('screen-md') {
-    line-height: 1.3em;
-    font-size: 2em;
+    line-height: 1.3;
+    font-size: $font-size-3_2rem;
   }
 }
 
@@ -269,10 +271,10 @@
   @include make-xs-column-offset(6);
   @extend .text-right;
   padding: $space-xs 2px 0;
-  line-height: 1em;
-  font-size: 0.6em;
+  line-height: 1;
+  font-size: $font-size-1rem;
   @include respond-from('screen-md') {
-    font-size: 1em;
+    font-size: $font-size-1_6rem;
   }
 }
 
@@ -342,26 +344,26 @@
   color: #fff;
   text-align: center;
   text-transform: uppercase;
-  font-size: 0.9em;
-  line-height: 0.9em;
+  font-size: $font-size-1_4rem;
+  line-height: 0.9;
   @include respond-from('screen-sm') {
-    font-size: 1.4em;
-    line-height: 1.4em;
+    font-size: $font-size-2_2rem;
+    line-height: 1.4;
   }
 }
 
 // Style is used in CMS. Never change or delete the corresponding css selector
 .city__called-action {
   margin-top: $space-xs;
-  font-size: 0.8em;
-  line-height: 0.8em;
+  font-size: $font-size-1_2rem;
+  line-height: 0.8;
   font-family: $base-font-family;
   padding: 5% 10% 4.5%;
   height: auto;
   display: none;
   @include respond-from('screen-sm') {
-    font-size: 0.7em;
-    line-height: 0.7em;
+    font-size: $font-size-1_6rem;
+    line-height: 1.4;
   }
 }
 
@@ -433,10 +435,9 @@
   @include make-md-column-offset(3);
   text-align: center;
   padding-bottom: $space-percent-xs;
-  font-size: 0.7em;
-  line-height: 1.4em;
+  font-size: $font-size-1_2rem;
+  line-height: 1.4;
   @include respond-from('screen-md') {
-    font-size: 0.8em;
     line-height: $base-line-height;
     padding-bottom: $space-percent-sm;
   }
@@ -457,21 +458,20 @@
 
 .home__app__message-label {
   font-weight: normal;
-  font-size: 0.8em;
-  line-height: 1.2em;
+  font-size: $font-size-1_2rem;
+  line-height: 1.16;
   text-align: center;
   padding-top: $space-percent-md;
   padding-bottom: $space-percent-sm;
   @include respond-from('screen-sm') {
     padding-top: $space-percent-lg;
     padding-bottom: 0;
-    font-size: 1em;
+    font-size: $font-size-1_6rem;
   }
   @include respond-from('screen-md') {
     padding-top: $space-percent-md;
     padding-bottom: $space-percent-sm;
-    line-height: $base-line-height;
-    font-size: 1.2em;
+    font-size: $font-size-1_9rem;
   }
 }
 
@@ -491,7 +491,7 @@
 .home__app__message-input {
   @include make-xs-column(12, 0);
   @include make-md-column(12);
-  font-size: 0.8em;
+  font-size: $font-size-1_4rem;
   @include respond-from('screen-md') {
     font-size: $input-font-size;
   }
