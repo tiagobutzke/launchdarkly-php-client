@@ -18,6 +18,7 @@ security:
                 check_path: /login_check
                 use_referer: true
                 success_handler: volo_frontend.security.ajax_authentication_success_handler
+                require_previous_session: false
 
             logout:
                 path:   /logout
