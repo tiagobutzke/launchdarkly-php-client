@@ -202,7 +202,7 @@
             <argument id="templating" type="service"/>
             <argument type="service" id="router" />
             <argument>%is_coming_soon_enabled%</argument>
-            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="255" />
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="100" />
         </service>
 
         <service id="volo_frontend.security.ajax_authentication_success_handler"
