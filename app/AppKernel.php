@@ -135,29 +135,27 @@ class AppKernel extends Kernel
     }
 
     /**
-     * @throws LogicException if cannot get the list
      * @return string[]
      */
     public static function getAvailableCountryCodes()
     {
-        $countriesCodes = [];
-
-        $finder = new Finder();
-        $files = $finder
-            ->files()
-            ->name('*.yml')
-            ->notName('test.yml')
-            ->notName('common.yml')
-            ->in(__DIR__ . '/config/countries_parameters');
-
-        foreach ($files as $filename) {
-            $countriesCodes[] = pathinfo($filename, PATHINFO_FILENAME);
-        }
-
-        if (count($countriesCodes) === 0) {
-            throw new LogicException('No countries codes parameters files have been found: ' . static::CONFIG_COUNTRY_TEMPLATE);
-        }
-        return $countriesCodes;
+        return [
+            'at',
+            'au',
+            'ca',
+            'ch',
+            'de',
+            'dk',
+            'es',
+            'fi',
+            'fr',
+            'gb',
+            'ie',
+            'it',
+            'nl',
+            'no',
+            'se',
+        ];
     }
 
     /**
