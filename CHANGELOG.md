@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+* 1.16.2
+
+  * Deployment: hardcoded list of countries
+
+* 1.16.1
+
+  * INTVOLO-75: HK blank page fix
+
 * 1.16.0
   * INTVOLO-303 Checkout - Missing Amex icon
   * INTVOLO-296 hide add new cards for COD
