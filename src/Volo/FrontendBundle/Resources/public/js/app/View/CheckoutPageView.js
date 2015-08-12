@@ -153,7 +153,7 @@ var CheckoutPageView = Backbone.View.extend({
         var paddingFromHeader = 16,
             scrollToOffset =  msgOffset - paddingFromHeader - this.domObjects.$header.outerHeight();
 
-        $('body').animate({
+        $('html, body').animate({
             scrollTop: scrollToOffset
         }, this.configuration.anchorScrollSpeed);
     },

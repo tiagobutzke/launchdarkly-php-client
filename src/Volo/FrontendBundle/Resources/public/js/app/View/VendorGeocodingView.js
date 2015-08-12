@@ -106,11 +106,10 @@ var VendorGeocodingView = HomeSearchView.extend({
     _alarmNoPostcode: function (event) {
         if (event.validationError === 'location_not_set') {
             this._hideFormattedAddress();
-            var $body = $('body'),
-                offset = $('.menu__blocks').offset().top - $('.header__wrapper').height();
+            var offset = $('.menu__blocks').offset().top - $('.header__wrapper').height();
 
-            if ($body.width() - this.scrollBarSize > this.smallScreenMaxSize) {
-                $body.animate({
+            if ($('body').width() - this.scrollBarSize > this.smallScreenMaxSize) {
+                $('html, body').animate({
                     scrollTop: offset
                 }, VOLO.configuration.anchorScrollSpeed, function() {
                     this._showInputPopupAndBackground(_.template($('#template-vendor-supply-postcode').html()));
