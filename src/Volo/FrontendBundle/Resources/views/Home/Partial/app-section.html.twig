@@ -4,20 +4,21 @@
             <img class="home__app__phone-left-img b-lazy" alt="" data-src="{{ asset('img/homepage/phone-left.png') }}" src="{{ blazy_placeholder }}">
         </div>
         <div class="home__app__message">
-            <a class="home__app__message-logo">
+            <a class="home__app__message-logo" href="https://itunes.apple.com/app/id998930867?mt=8" target="_blank">
                 <img class="home__app__message-img b-lazy" alt="" data-src="{{ asset('img/homepage/apple-store.jpg') }}" src="{{ blazy_placeholder }}">
             </a>
             <a class="home__app__message-logo">
                 {{ 'app.coming_soon'|trans }}
                 <img class="home__app__message-img b-lazy" alt="" data-src="{{ asset('img/homepage/google-play-gray.jpg') }}" src="{{ blazy_placeholder }}">
             </a>
-            <form class="home__app__message-form" action="" method="GET">
-                <label class="home__app__message-label" >{{ 'form.label.send_download_link_to_mobile_phone'|trans }}</label>
-                <div class="home__app__message-input-container">
-                    <input type="text" class="home__app__message-input" name="" placeholder="{{ 'form.placeholder.phone_number'|trans }}">
-                </div>
-                <button class="home__app__message-button button button--inline" type="submit">{{ 'button.send'|trans }}</button>
-            </form>
+            {# TODO show app form when feature is implemented #}
+            {#<form class="home__app__message-form" action="" method="GET">#}
+                {#<label class="home__app__message-label" >{{ 'form.label.send_download_link_to_mobile_phone'|trans }}</label>#}
+                {#<div class="home__app__message-input-container">#}
+                    {#<input type="text" class="home__app__message-input" name="" placeholder="{{ 'form.placeholder.phone_number'|trans }}">#}
+                {#</div>#}
+                {#<button class="home__app__message-button button button--inline" type="submit">{{ 'button.send'|trans }}</button>#}
+            {#</form>#}
         </div>
         <div class="home__app__phone-right">
             <img class="home__app__phone-right-img b-lazy" alt="" data-src="{{ asset('img/homepage/phone-right.png') }}" src="{{ blazy_placeholder }}">

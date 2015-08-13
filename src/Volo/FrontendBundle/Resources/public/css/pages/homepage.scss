@@ -443,6 +443,11 @@
   }
 }
 
+// this style should be removed once Android app is released
+.home__app__message-logo:last-child:hover {
+  cursor: default;
+}
+
 .home__app__message-form {
   @include make-xs-column(12);
   @include make-sm-column(10);
