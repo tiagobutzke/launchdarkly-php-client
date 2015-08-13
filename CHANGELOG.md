@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.17.3
+
+  * INTVOLO-X: Timezone hotfix
+
 * 1.17.1 / 1.17.2
 
   * INTVOLO-313: Fix no vendor found page
