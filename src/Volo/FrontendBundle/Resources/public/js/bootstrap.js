@@ -294,6 +294,7 @@ VOLO.createProfileView = function(customerModel) {
 };
 
 VOLO.doBootstrap = function(configuration) {
+    moment.tz.setDefault(VOLO.configuration.timeZone);
     window.blazy.revalidate();
 
     var locationModel = VOLO.createLocationModel(VOLO.jsonLocation),
