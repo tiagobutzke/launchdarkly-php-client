@@ -219,7 +219,7 @@ var ToppingsView = Backbone.View.extend({
     initialize: function(options) {
         this.template = _.template($('#template-choices-toppings').html());
         this.cartModel = options.cartModel;
-        this.vendorId = options.vendorId;
+        this.vendor = options.vendor;
         this.subViews = [];
         this.specialInstructionsView = null;
         this.productToUpdate = options.productToUpdate || null;
@@ -296,26 +296,52 @@ var ToppingsView = Backbone.View.extend({
     },
 
     _addToCart: function() {
+        var cart;
+
         if (!this.model.isValid()) {
             this.$('.modal-error-message').slideDown('fast');
 
             return;
         }
 
-        if (this.gtmService) {
-            console.log('GTM:addProduct');
-            this.gtmService.fireAddProduct(this.vendorId, {
-                id: this.model.get('product_variation_id'),
-                name: this.model.get('name')
-            });
-        }
+        cart = this.cartModel.getCart(this.vendor.id);
+
+        this.listenToOnce(cart, 'cart:ready', function () {
+            this._fireAddToCartEvent(this.model.get('product_variation_id'));
+        }.bind(this));
 
         if (this.productToUpdate) {
-            this.cartModel.getCart(this.vendorId).updateItem(this.productToUpdate, this.model); //modify product
+            cart.updateItem(this.productToUpdate, this.model); //modify product
         } else {
-            this.cartModel.getCart(this.vendorId).addItem(this.model); //add product
+            cart.addItem(this.model); //add product
         }
         this._closeModal();
+    },
+
+    _fireAddToCartEvent: function (productVariationId) {
+        if (this.gtmService) {
+            cart = this.cartModel.getCart(this.vendor.id);
+            var model = _.findWhere(cart.products.models, {attributes: {product_variation_id: productVariationId}});
+
+            console.debug('GTM:addProduct');
+            this.gtmService.fireAddProduct(this.vendor.id, {
+                id: model.get('product_variation_id'),
+                name: model.get('name'),
+                productPrice: model.get('total_price'),
+                vendor: {
+                    'name': this.vendor.name,
+                    'id': this.vendor.code,
+                    'category': this.vendor.category,
+                    'variant': this.vendor.variant
+                },
+                cart: {
+                    value: cart.get('total_value'),
+                    contents: cart.getProductsIds().join(','),
+                    quantity: cart.getProductsCount()
+                },
+                actionLocation: 'PDP'
+            });
+        }
     },
     
     _closeModal: function() {
@@ -324,5 +350,11 @@ var ToppingsView = Backbone.View.extend({
         this.specialInstructionsView.remove();
         this.quantitySelectorView.remove();
         this.$('#choices-toppings-modal').modal('hide');
+    },
+
+    unbind: function() {
+        console.log('ToppingsView.unbind', this.cid);
+        this.stopListening();
+        this.undelegateEvents();
     }
 });

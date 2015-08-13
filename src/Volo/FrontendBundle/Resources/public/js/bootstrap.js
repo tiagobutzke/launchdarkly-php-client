@@ -78,11 +78,12 @@ VOLO.createCartViews = function (cartModel, locationModel, gtmService) {
     var $header = $('.header'),
         $menuMain = $('.menu__list-wrapper'),
         $postalCodeBar = $('.menu__postal-code-bar'),
+        vendor = $menuMain.data('vendor'),
         vendorGeocodingView = new VendorGeocodingView({
             el: $postalCodeBar,
             geocodingService: new GeocodingService(VOLO.configuration.countryCode),
             model: locationModel,
-            modelCart: cartModel.getCart($menuMain.data('vendor_id')),
+            modelCart: cartModel.getCart(vendor.id),
             smallScreenMaxSize: VOLO.configuration.smallScreenMaxSize,
             $window: $(window)
         }),

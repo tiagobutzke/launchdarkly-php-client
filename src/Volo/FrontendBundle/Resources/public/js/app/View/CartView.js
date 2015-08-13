@@ -30,7 +30,7 @@ var CartItemView = Backbone.View.extend({
         _.bindAll(this);
         this.template = _.template($('#template-cart-item').html());
         this.cartModel = options.cartModel;
-        this.vendorId = options.vendorId;
+        this.vendor = options.vendor;
         this.listenTo(this.model.toppings, 'update', this.render);
         this.listenTo(this.model, 'change:quantity', this._updateItemQuantity);
     },
@@ -68,7 +68,7 @@ var CartItemView = Backbone.View.extend({
             el: '.modal-dialogs',
             model: clone,
             cartModel: this.cartModel,
-            vendorId: this.vendorId,
+            vendor: this.vendor,
             productToUpdate: this.model,
             gtmService: this.gtmService
         });
@@ -78,12 +78,12 @@ var CartItemView = Backbone.View.extend({
     },
 
     _removeItem: function() {
-        this.cartModel.getCart(this.vendorId).removeItem(this.model);
+        this.cartModel.getCart(this.vendor.id).removeItem(this.model);
     },
 
     _decreaseQuantity: function() {
         if (this.model.get('quantity') > 1) {
-            this.cartModel.getCart(this.vendorId).increaseQuantity(this.model, -1);
+            this.cartModel.getCart(this.vendor.id).increaseQuantity(this.model, -1);
         }
     },
 
@@ -92,7 +92,7 @@ var CartItemView = Backbone.View.extend({
     },
 
     _increaseQuantity: function() {
-        this.cartModel.getCart(this.vendorId).increaseQuantity(this.model, 1);
+        this.cartModel.getCart(this.vendor.id).increaseQuantity(this.model, 1);
     },
 
     _toggleMinusAvailabilty: function(quantity) {
@@ -122,9 +122,11 @@ var CartView = Backbone.View.extend({
         this.templateSubTotal = _.template($('#template-cart-subtotal').html());
         this.templateCheckoutButton = _.template($('#template-cart-checkout-button').html());
 
-        this.vendor_id = this.$('.desktop-cart').data().vendor_id;
-        this.model.getCart(this.vendor_id).set('minimum_order_amount', this.$('.desktop-cart').data().minimum_order_amount);
-        this.model.getCart(this.vendor_id).set('location', {
+        this.vendor = this.$('.desktop-cart').data().vendor;
+        this.vendor.variant = this.$('.desktop-cart').data().vendorIsOpen;
+
+        this.model.getCart(this.vendor.id).set('minimum_order_amount', this.$('.desktop-cart').data().minimum_order_amount);
+        this.model.getCart(this.vendor.id).set('location', {
             location_type: this.locationModel.defaults.location_type,
             latitude:  this.locationModel.get('latitude'),
             longitude: this.locationModel.get('longitude')
@@ -132,7 +134,7 @@ var CartView = Backbone.View.extend({
 
         this.timePickerView = new TimePickerView({
             model: this.model,
-            vendor_id: this.vendor_id,
+            vendor_id: this.vendor.id,
             values: options.timePickerValues
         });
         this.vendorGeocodingView = options.vendorGeocodingView;
@@ -243,7 +245,7 @@ var CartView = Backbone.View.extend({
     },
 
     initListener: function () {
-        var vendorCart = this.model.getCart(this.vendor_id);
+        var vendorCart = this.model.getCart(this.vendor.id);
         this.listenTo(vendorCart, 'cart:dirty', this.disableCart, this);
 
         this.listenTo(vendorCart, 'cart:ready', this.enableCart, this);
@@ -276,7 +278,7 @@ var CartView = Backbone.View.extend({
     },
 
     _updateCartIcon: function() {
-        var productsCount = this.model.getCart(this.vendor_id).getProductsCount(),
+        var productsCount = this.model.getCart(this.vendor.id).getProductsCount(),
             $header = this.domObjects.$header,
             $productCounter = $header ? $header.find('.header__cart__products__count') : null;
 
@@ -340,7 +342,7 @@ var CartView = Backbone.View.extend({
 
     render: function() {
         console.log('CartView:render');
-        this.$('.desktop-cart').html(this.template(this.model.getCart(this.vendor_id).attributes));
+        this.$('.desktop-cart').html(this.template(this.model.getCart(this.vendor.id).attributes));
         this.renderSubTotal();
         this.renderCheckoutButton();
         this.renderProducts();
@@ -366,13 +368,13 @@ var CartView = Backbone.View.extend({
 
     renderCheckoutButton: function() {
         this.$('.desktop-cart__order__checkout_button_container').html(
-            this.templateCheckoutButton(this.model.getCart(this.vendor_id).attributes)
+            this.templateCheckoutButton(this.model.getCart(this.vendor.id).attributes)
         );
     },
 
     renderSubTotal: function () {
         this.$('.desktop-cart__order__subtotal-container').html(
-            this.templateSubTotal(this.model.getCart(this.vendor_id).attributes)
+            this.templateSubTotal(this.model.getCart(this.vendor.id).attributes)
         );
 
         return this;
@@ -383,7 +385,7 @@ var CartView = Backbone.View.extend({
         _.invoke(this.subViews, 'unbind');
         _.invoke(this.subViews, 'remove');
         this.subViews.length = 0;
-        this.model.getCart(this.vendor_id).products.each(this.renderNewItem);
+        this.model.getCart(this.vendor.id).products.each(this.renderNewItem);
         this.setGtmService(this.gtmService);
 
         // recalculating cart scrolling position
@@ -395,7 +397,7 @@ var CartView = Backbone.View.extend({
         var view = new this.CartItemViewClass({
             model: item,
             cartModel: this.model,
-            vendorId: this.vendor_id
+            vendor: this.vendor
         });
         this.subViews.push(view);
 
@@ -451,7 +453,7 @@ var CartView = Backbone.View.extend({
     _toggleContainerVisibility: function() {
         var $productsContainer = this.$('.desktop-cart__products'),
             $cartMsg = this.$('.desktop-cart_order__message'),
-                cartEmpty = this.model.getCart(this.vendor_id).products.length === 0;
+            cartEmpty = this.model.getCart(this.vendor.id).products.length === 0;
 
         $cartMsg.toggle(cartEmpty);
         $productsContainer.toggle(!cartEmpty);
@@ -488,8 +490,8 @@ var CartView = Backbone.View.extend({
         ];
 
         if (_.isObject(data) && _.indexOf(supportedErrors, _.get(data, 'error.errors.exception_type')) !== -1) {
-            this.model.getCart(this.vendor_id).set('voucher', null);
-            _.defer(this.model.getCart(this.vendor_id).updateCart);
+            this.model.getCart(this.vendor.id).set('voucher', null);
+            _.defer(this.model.getCart(this.vendor.id).updateCart);
         }
     }
 });

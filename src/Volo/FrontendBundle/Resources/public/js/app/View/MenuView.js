@@ -9,7 +9,8 @@ var MenuView = Backbone.View.extend({
         this.domObjects.$postalCodeBar = options.$postalCodeBar;
 
         this.subViews = [];
-        this.vendor_id = this.$el.data().vendor_id;
+        this.vendor = this.$el.data().vendor;
+        this.vendor.variant = this.$el.data().vendorIsOpen;
 
         this.gtmService = options.gtmService || null;
 
@@ -85,7 +86,7 @@ var MenuView = Backbone.View.extend({
             el: $(item),
             model: new MenuItemModel(object),
             cartModel: this.cartModel,
-            vendor_id: this.vendor_id,
+            vendor: this.vendor,
             gtmService: this.gtmService
         }));
     },
@@ -113,7 +114,7 @@ var MenuItemView = Backbone.View.extend({
 
     initialize : function (options) {
         this.cartModel = options.cartModel;
-        this.vendor_id = options.vendor_id;
+        this.vendor = options.vendor;
         this.gtmService = options.gtmService;
     },
 
@@ -122,18 +123,22 @@ var MenuItemView = Backbone.View.extend({
     },
 
     addProduct: function() {
+        var model, cart;
+
         console.log('MenuItemView.addProduct ', this.cid);
 
-        if (this.cartModel.getCart(this.vendor_id).isValid()) {
+        if (this.cartModel.getCart(this.vendor.id).isValid()) {
             if (this.model.showOrderDialog()) {
                 this.createViewDialog();
             } else {
-                var model = CartItemModel.createFromMenuItem(this.model.toJSON());
-                this.gtmService && this.gtmService.fireAddProduct(this.vendor_id, {
-                    id: model.get('product_variation_id'),
-                    name: model.get('name')
-                });
-                this.cartModel.getCart(this.vendor_id).addItem(model);
+                model = CartItemModel.createFromMenuItem(this.model.toJSON());
+                cart = this.cartModel.getCart(this.vendor.id);
+
+                this.listenToOnce(cart, 'cart:ready', function () {
+                    this._fireAddToCartEvent(model.get('product_variation_id'));
+                }.bind(this));
+
+                cart.addItem(model);
             }
         }
     },
@@ -145,7 +150,7 @@ var MenuItemView = Backbone.View.extend({
             el: '.modal-dialogs',
             model: cartItemModel,
             cartModel: this.cartModel,
-            vendorId: this.vendor_id,
+            vendor: this.vendor,
             gtmService: this.gtmService
         });
 
@@ -157,5 +162,31 @@ var MenuItemView = Backbone.View.extend({
         console.log('MenuItemView.unbind', this.cid);
         this.stopListening();
         this.undelegateEvents();
+    },
+
+    _fireAddToCartEvent: function(productVariationId) {
+        var cart = this.cartModel.getCart(this.vendor.id),
+            model = _.findWhere(cart.products.models, {attributes: {product_variation_id: productVariationId}});
+
+        if (this.gtmService) {
+            console.log('GTM:addProduct');
+            this.gtmService.fireAddProduct(this.vendor.id, {
+                id: model.get('product_variation_id'),
+                name: model.get('name'),
+                productPrice: model.get('total_price'),
+                vendor: {
+                    'name': this.vendor.name,
+                    'id': this.vendor.code,
+                    'category': this.vendor.category,
+                    'variant': this.vendor.variant
+                },
+                cart: {
+                    value: cart.get('total_value'),
+                    contents: cart.getProductsIds().join(','),
+                    quantity: cart.getProductsCount()
+                },
+                actionLocation: 'Restaurant Detail Page'
+            });
+        }
     }
 });
