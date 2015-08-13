@@ -7,19 +7,21 @@
 
 {% block content %}
     <div class="hero-banner-wrapper">
-        {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {type: 'hero', 'vendorCode' : order.vendor_code, 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
+        <div class="hero-banner-content">
+            {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {type: 'hero', 'vendorCode' : order.vendor_code, 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
 
-        <div class="hero-traking__info">
-            <h2 class="tracking-header__title">{% trans %}title.we_have_received_your_order{% endtrans %}!</h2>
-            <h2 class="tracking-header__title">
-                {% set deliveryTime = date(status.confirmed_delivery_time.date, status.confirmed_delivery_time.timezone)|formatTime %}
-                {% trans with {'%deliveryTime%': deliveryTime }%}title.it_should_arrive_at %deliveryTime%{% endtrans %}
-            </h2>
-            {#TODO app - show app info when app is available #}
-            {#<div class="tracking-header__app">#}
-                {#<button class="tracking-header__app__button">{% trans %}button.download_app{% endtrans %}</button>#}
-                {#<div class="tracking-header__app__message">{% trans %}general.to_get_real_time_updates_on_your_order{% endtrans %}.</div>#}
-            {#</div>#}
+            <div class="hero-traking__info">
+                <h2 class="tracking-header__title">{% trans %}title.we_have_received_your_order{% endtrans %}!</h2>
+                <h2 class="tracking-header__title">
+                    {% set deliveryTime = date(status.confirmed_delivery_time.date, status.confirmed_delivery_time.timezone)|formatTime %}
+                    {% trans with {'%deliveryTime%': deliveryTime }%}title.it_should_arrive_at %deliveryTime%{% endtrans %}
+                </h2>
+                {#TODO app - show app info when app is available #}
+                {#<div class="tracking-header__app">#}
+                    {#<button class="tracking-header__app__button">{% trans %}button.download_app{% endtrans %}</button>#}
+                    {#<div class="tracking-header__app__message">{% trans %}general.to_get_real_time_updates_on_your_order{% endtrans %}.</div>#}
+                {#</div>#}
+            </div>
         </div>
     </div>
     <div class="order-status-wrapper" data-order_code="{{ order.reference }}">

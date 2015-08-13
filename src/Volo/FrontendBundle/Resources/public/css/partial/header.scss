@@ -90,6 +90,9 @@
   .restaurants__tool-box--sticking & {
     display: none;
   }
+  .restaurants--no-address .restaurants__tool-box--sticking & {
+    display: block;
+  }
   @include respond-from("screen-md") {
     width: auto;
     margin-top: 15px;

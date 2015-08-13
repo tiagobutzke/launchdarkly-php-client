@@ -6,6 +6,7 @@ var MenuView = Backbone.View.extend({
         this.domObjects = {};
         this.navigateToAnchorBuffer = 30;
         this.domObjects.$header = options.$header;
+        this.domObjects.$postalCodeBar = options.$postalCodeBar;
 
         this.subViews = [];
         this.vendor_id = this.$el.data().vendor_id;
@@ -15,11 +16,16 @@ var MenuView = Backbone.View.extend({
         _.each(this.$('.menu__item'), this.initSubViews, this);
 
         // initializing menu height resize behaviour
+        this.vendorGeocodingView = options.vendorGeocodingView;
+        this.listenTo(this.vendorGeocodingView, 'vendor_geocoding_view:postcode_toggle', this._updateStickingOnTopCoordinates);
 
         this.stickOnTopMenu = new StickOnTop({
             $container: this.$('.menu__categories'),
             stickOnTopValueGetter: function() {
-                return this.domObjects.$header.outerHeight();
+                var $postalCodeBar = this.domObjects.$postalCodeBar;
+
+                return this.domObjects.$header.outerHeight() +
+                    ($postalCodeBar.hasClass('hidden') ? 0 : $postalCodeBar.outerHeight());
             }.bind(this),
             startingPointGetter: function() {
                 var vendorLogo = this.$('.menu__categories__vendor-logo'),
@@ -34,6 +40,10 @@ var MenuView = Backbone.View.extend({
         this.stickOnTopMenu.init(this.$('.menu__categories nav'));
         this._boundStickyUpdate = this.stickOnTopMenu.updateCoordinates.bind(this.stickOnTopMenu);
         this.$('.menu__categories__vendor-logo-img').off('load', this._boundStickyUpdate).on('load', this._boundStickyUpdate);
+    },
+
+    _updateStickingOnTopCoordinates: function () {
+        this.stickOnTopMenu.updateCoordinates();
     },
 
     setGtmService: function (gtmService) {
@@ -62,6 +72,8 @@ var MenuView = Backbone.View.extend({
         this.stopListening();
         this.undelegateEvents();
         this.domObjects = {};
+        this.vendorGeocodingView && this.vendorGeocodingView.unbind();
+
         if (_.isObject(this.gtmService)) {
             this.gtmService.unbind();
         }

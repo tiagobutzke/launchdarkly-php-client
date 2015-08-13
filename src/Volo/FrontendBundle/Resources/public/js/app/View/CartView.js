@@ -134,6 +134,7 @@ var CartView = Backbone.View.extend({
             vendor_id: this.vendor_id,
             values: options.timePickerValues
         });
+        this.vendorGeocodingView = options.vendorGeocodingView;
 
         this.domObjects = {};
         this.domObjects.$header = options.$header;
@@ -156,11 +157,19 @@ var CartView = Backbone.View.extend({
             $container: this.$(this.stickOnTopCartContainerSelector),
             noStickyBreakPoint: this.smallScreenMaxSize,
             stickOnTopValueGetter: function() {
+                var stickOnTopValue;
                 if (this.domObjects.$body.hasClass('show-ios-smart-banner')) {
-                    return this.domObjects.$header.outerHeight() + this.domObjects.$iosBanner.outerHeight();
+                    stickOnTopValue = this.domObjects.$header.outerHeight() + this.domObjects.$iosBanner.outerHeight();
                 } else {
-                    return this.domObjects.$header.outerHeight();
+                    stickOnTopValue = this.domObjects.$header.outerHeight();
                 }
+
+                var $postalCodeBar = this.domObjects.$body.find('.menu__postal-code-bar');
+                if (!$postalCodeBar.hasClass('hidden')) {
+                    stickOnTopValue += $postalCodeBar.outerHeight();
+                }
+
+                return stickOnTopValue;
             }.bind(this),
             startingPointGetter: function() {
                 return this.$(this.stickOnTopCartTargetSelector).offset().top;
@@ -225,9 +234,7 @@ var CartView = Backbone.View.extend({
         this.undelegateEvents();
         this.domObjects = {};
 
-        if (_.isObject(this.vendorGeocodingSubView)) {
-            this.vendorGeocodingSubView.unbind();
-        }
+        this.vendorGeocodingView && this.vendorGeocodingView.unbind();
 
         if (_.isObject(this.gtmService)) {
             this.gtmService.unbind();
@@ -247,7 +254,6 @@ var CartView = Backbone.View.extend({
         this.listenTo(vendorCart, 'cart:error', this.renderProducts, this);
 
         this.listenTo(vendorCart, 'change', this.renderSubTotal);
-        this.listenTo(vendorCart, 'invalid', this._showMobileCart);
         this.listenTo(vendorCart.products, 'update', this.renderProducts, this);
         this.listenTo(vendorCart.products, 'update', this._toggleContainerVisibility, this);
         this.listenTo(vendorCart.products, 'update', this._updateCartIcon, this);
@@ -258,15 +264,14 @@ var CartView = Backbone.View.extend({
         this.$window.off('resize', this.boundUpdateCartHeight).on('resize', this.boundUpdateCartHeight);
         this.$window.off('scroll', this.boundUpdateCartHeight).on('scroll', this.boundUpdateCartHeight);
 
+        this.listenTo(this.vendorGeocodingView, 'vendor_geocoding_view:postcode_toggle', this._updateStickingOnTopCoordinates);
         this._initializeMobileCartIcon();
     },
 
     _initializeMobileCartIcon: function() {
         //listening on cart icon in header
         var $header = this.domObjects.$header;
-        if ($header) {
-            $header.find('.header__cart').click(this._showMobileCart);
-        }
+        $header && $header.find('.header__cart').click(this._showMobileCart);
     },
 
     _updateCartIcon: function() {
@@ -343,8 +348,6 @@ var CartView = Backbone.View.extend({
         this._toggleContainerVisibility();
         this._updateCartIcon();
 
-        this._initVendorGeocodingSubView();
-
         // recalculating cart scrolling position, should be done as last thing
         this.stickOnTopCart.init(this.$(this.stickOnTopCartTargetSelector));
         this._updateCartHeight();
@@ -356,19 +359,8 @@ var CartView = Backbone.View.extend({
         this.vendorGeocodingSubView.setZipCode(zipCode);
     },
 
-    _initVendorGeocodingSubView: function() {
-        if (_.isObject(this.vendorGeocodingSubView)) {
-            this.vendorGeocodingSubView.unbind();
-            //this.vendorGeocodingSubView.remove();
-        }
-
-        this.vendorGeocodingSubView = new VendorGeocodingView({
-            el: this.$('.vendor__geocoding__tool-box'),
-            geocodingService: new GeocodingService(VOLO.configuration.countryCode),
-            model: this.locationModel,
-            modelCart: this.model.getCart(this.vendor_id),
-            smallScreenMaxSize: this.smallScreenMaxSize
-        });
+    _updateStickingOnTopCoordinates: function() {
+        this.stickOnTopCart.updateCoordinates();
     },
 
     renderCheckoutButton: function() {
@@ -458,7 +450,7 @@ var CartView = Backbone.View.extend({
     _toggleContainerVisibility: function() {
         var $productsContainer = this.$('.desktop-cart__products'),
             $cartMsg = this.$('.desktop-cart_order__message'),
-            cartEmpty = this.model.getCart(this.vendor_id).products.length === 0;
+                cartEmpty = this.model.getCart(this.vendor_id).products.length === 0;
 
         $cartMsg.toggle(cartEmpty);
         $productsContainer.toggle(!cartEmpty);

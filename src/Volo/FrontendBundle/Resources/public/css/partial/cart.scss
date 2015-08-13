@@ -11,7 +11,7 @@
 
 
 .menu .desktop-cart {
-  z-index: 1017;
+  z-index: 1042;
   @include respond-from("screen-md") {
    z-index: 900;
   }
@@ -100,7 +100,7 @@
   text-align: center;
   padding-top: $space-xs;
   @include respond-from("screen-md") {
-    padding: 0 $space-sm;
+    padding: 30px $space-sm 0 $space-sm;
     width: 98%;
     margin: 0 auto;
   }
@@ -113,7 +113,7 @@
     line-height: 1.4;
     text-transform: uppercase;
     @include respond-from("screen-md") {
-      margin-top: 30px;
+      margin-top: 0;
       margin-bottom: $space-md;
     }
   }

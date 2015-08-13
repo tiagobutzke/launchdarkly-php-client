@@ -7,6 +7,8 @@ var HomeSearchView = CTATrackableView.extend({
     initialize: function (options) {
         console.log('HomeSearchView.initialize ', this.cid);
         _.bindAll(this);
+
+
         this.geocodingService = options.geocodingService;
         this.geocodingService.init(this.$('#delivery-information-postal-index'), VOLO.configuration.address_config);
 
@@ -18,7 +20,7 @@ var HomeSearchView = CTATrackableView.extend({
 
     events: function() {
         return _.extend({}, CTATrackableView.prototype.events, {
-            'click .home__teaser__button': '_submitPressed',
+            'click .restaurants-search-form__button': '_submitPressed',
             'submit': '_submitPressed',
             'focus #delivery-information-postal-index': '_hideTooltip',
             'blur #delivery-information-postal-index': '_hideTooltip',
@@ -28,10 +30,10 @@ var HomeSearchView = CTATrackableView.extend({
     },
 
     render: function() {
-        var node = this.$('.home__teaser__form-input');
+        var node = this.$('.restaurants-search-form__input');
         var postcode = node.val();
 
-        if (postcode !== '') {
+        if (postcode) {
             this.geocodingService.getLocationByZipCode(postcode);
         }
 
@@ -162,14 +164,17 @@ var HomeSearchView = CTATrackableView.extend({
         };
     },
 
+    _getTooltipPlacement: function() {
+        return this.isBelowMediumScreen() ? 'top' : 'bottom';
+    },
+
     _showInputPopup: function (text) {
-        var $postalIndexFormInput = this.$('#delivery-information-postal-index'),
-            placement = this.isBelowMediumScreen() ? 'top' : 'bottom';
+        var $postalIndexFormInput = this.$('#delivery-information-postal-index');
 
         if (!$postalIndexFormInput.hasClass('hide')) {
             console.log('_showInputPopup ', this.cid);
             $postalIndexFormInput.tooltip({
-                placement: placement,
+                placement: this._getTooltipPlacement(),
                 html: true,
                 trigger: 'manual',
                 title: text,
@@ -181,7 +186,6 @@ var HomeSearchView = CTATrackableView.extend({
     },
 
     _hideTooltip: function () {
-        console.log('_hideTooltip');
         this.$('#delivery-information-postal-index').tooltip('destroy');
     },
 

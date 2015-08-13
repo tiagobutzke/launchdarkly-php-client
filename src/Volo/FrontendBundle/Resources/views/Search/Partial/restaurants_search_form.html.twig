@@ -1,0 +1,22 @@
+<form class="restaurants-search-form" id="delivery-information-postal-index-form" method="GET">
+    <div class="restaurants-search-form__input-wrapper">
+        <input type="text" class="restaurants-search-form__input"
+               id="delivery-information-postal-index"
+               value="{{ postalCode|default('') }}"
+               placeholder="{% trans %}postal_code.your_postal_code{% endtrans %}"
+               data-msg_error_not_found="{% trans %}postal_code.not_found{% endtrans %}"
+               data-msg_you_probably_mean="{% trans %}postal_code.you_probably_mean{% endtrans %}"
+               data-msg_error_empty="{% trans %}postal_code.empty{% endtrans %}"
+                >
+    </div>
+    <input class="restaurants-search-form__button restaurants-search-form__button--full button button--inline"
+           type="submit"
+           value="{{ buttonText }}"
+           data-gtm-cta="findRestaurant_main"
+    >
+    <input class="restaurants-search-form__button restaurants-search-form__button--reduced button button--inline icon-right-open-big"
+           type="submit"
+           value="a"
+           data-gtm-cta="findRestaurant_main"
+    >
+</form>

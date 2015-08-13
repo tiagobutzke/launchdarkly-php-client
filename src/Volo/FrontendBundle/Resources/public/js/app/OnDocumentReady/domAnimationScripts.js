@@ -64,7 +64,7 @@ VOLO.initDomAnimationScripts = function() {
         targetSelector: '.restaurants__tool-box, .header',
         className: 'restaurants__tool-box--sticking',
         isActiveGetter: function() {
-            return $('.restaurants__list').length && $('.header').length;
+            return $('.restaurants__list').length && $('.header').length && !$('body').hasClass('restaurants--no-address');
         },
         startingPointGetter: function() {
             if ($document.find('body.show-ios-smart-banner').length) {

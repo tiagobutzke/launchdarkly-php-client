@@ -76,32 +76,45 @@ VOLO.createVendorPopupView = function() {
 
 VOLO.createCartViews = function (cartModel, locationModel, gtmService) {
     var $header = $('.header'),
+        $menuMain = $('.menu__list-wrapper'),
+        $postalCodeBar = $('.menu__postal-code-bar'),
+        vendorGeocodingView = new VendorGeocodingView({
+            el: $postalCodeBar,
+            geocodingService: new GeocodingService(VOLO.configuration.countryCode),
+            model: locationModel,
+            modelCart: cartModel.getCart($menuMain.data('vendor_id')),
+            smallScreenMaxSize: VOLO.configuration.smallScreenMaxSize,
+            $window: $(window)
+        }),
         menuView = new MenuView({
             el: '.menu__list-wrapper',
             cartModel: cartModel,
             locationModel: locationModel,
             $header: $header,
-            gtmService: gtmService
+            $postalCodeBar: $postalCodeBar,
+            gtmService: gtmService,
+            vendorGeocodingView: vendorGeocodingView
         }),
         cartView = new CartView({
             el: '#cart',
             model: cartModel,
             locationModel: locationModel,
-            $header: $header,
-            $menuMain: $('.menu__list-wrapper'),
             $window: $(window),
             $iosBanner: $('.ios-smart-banner'),
             $body: $('body'),
+            $header: $header,
+            $menuMain: $menuMain,
             gtmService: gtmService,
             smallScreenMaxSize: VOLO.configuration.smallScreenMaxSize,
-            timePickerValues: VOLO.timePickerValues
+            timePickerValues: VOLO.timePickerValues,
+            vendorGeocodingView: vendorGeocodingView
         }),
         cartErrorModalView = new CartErrorModalView({
             el: '#cartCalculationErrorModal',
             model: cartModel
         });
 
-    VOLO.views.push(menuView, cartView, cartErrorModalView);
+    VOLO.views.push(menuView, cartView, cartErrorModalView, vendorGeocodingView);
     VOLO.gtmViews.push(menuView, cartView);
 
     return {
@@ -221,7 +234,7 @@ VOLO.initCurrencyFormat = function (locale, currency_symbol) {
 
 VOLO.createHomeSearchView = function (locationModel) {
     var homeSearchView = new HomeSearchView({
-        el: '.home__teaser__form',
+        el: '.restaurants-search-form',
         model: locationModel,
         geocodingService: new GeocodingService(VOLO.configuration.countryCode)
     });
@@ -270,6 +283,18 @@ VOLO.createVendorsListSearchView = function () {
     return vendorSearchView;
 };
 
+VOLO.createVendorsListSearchNoLocationView = function (locationModel) {
+    var vendorSearchView = new VendorsSearchNoLocationView({
+        el: '.restaurants .hero-banner-wrapper ',
+        model: locationModel,
+        geocodingService: new GeocodingService(VOLO.configuration.countryCode),
+        $window: $(window)
+    });
+
+    VOLO.views.push(vendorSearchView);
+    return vendorSearchView;
+};
+
 VOLO.createRestaurantsView = function() {
     var restaurantsView = new VOLO.RestaurantsView({
         el: '.restaurants__list'
@@ -278,6 +303,17 @@ VOLO.createRestaurantsView = function() {
     VOLO.views.push(restaurantsView);
     VOLO.gtmViews.push(restaurantsView);
     return restaurantsView;
+};
+
+VOLO.createRestaurantsSearchView = function() {
+    var restaurantsSearchView = new VOLO.AddressFormStickingOnTop({
+        el: '.restaurants__search-bar',
+        $container: $('.hero-banner-wrapper'),
+        $header: $('.header')
+    });
+
+    VOLO.views.push(restaurantsSearchView);
+    return restaurantsSearchView;
 };
 
 VOLO.initGTMService = function(options) {
@@ -402,14 +438,17 @@ VOLO.doBootstrap = function(configuration) {
         VOLO.renderCheckoutViews(checkoutViews);
     }
 
-    if ($('.home__teaser__form').length > 0) {
-        homeSearchView = VOLO.createHomeSearchView(locationModel);
+    if ($('.home .restaurants-search-form').length > 0) {
+        var homeSearchView = VOLO.createHomeSearchView(locationModel),
+            homeView = VOLO.createHomeView();
+
         homeSearchView.render();
+        homeView.render();
     }
 
-    if ($('.home__teaser__form').length > 0) {
-        homeView = VOLO.createHomeView();
-        homeView.render();
+    if ($('.restaurants .restaurants-search-form').length > 0) {
+        VOLO.createVendorsListSearchNoLocationView(locationModel).render();
+        VOLO.createRestaurantsSearchView();
     }
 
     if ($('.header__account').length > 0) {

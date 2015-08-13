@@ -20,6 +20,7 @@ VOLO.IOSBannerView = Backbone.View.extend({
     _hideBanner: function() {
         Cookies.set(VOLO.IOSBannerView.HIDE_IOS_BANNER_COOKIE_NAME, '1', { expires: 1 });
         this.$body.removeClass('show-ios-smart-banner');
+        this.$body.resize(); //trigger the event for updating position of sticky items in DOM
 
         this.unbind();
     },

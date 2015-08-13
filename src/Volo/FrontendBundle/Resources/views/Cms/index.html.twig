@@ -8,8 +8,10 @@
 
 {% block content %}
     <div class="hero-banner-wrapper">
-        {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {'vendorCode' : 'cms', type: 'hero', 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
-        <h1>{{ element.metaTitle }}</h1>
+        <div class="hero-banner-content">
+            {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {'vendorCode' : 'cms', type: 'hero', 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
+            <h1>{{ element.metaTitle }}</h1>
+        </div>
     </div>
     <div class="static-page__blocks-wrapper">
         <div class="static-page__blocks">
