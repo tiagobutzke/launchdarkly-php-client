@@ -26,6 +26,17 @@ class LocationControllerTest extends VoloTestCase
         $this->assertTrue($response->isRedirect('/city/berlin'));
     }
 
+    public function testCityPageSeoIndexFollow()
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/city/berlin');
+
+        $response = $client->getResponse();
+
+        $this->assertContains('index, follow', $response->getContent());
+    }
+
     public function testRedirectionCityMixedCaseUrlKey()
     {
         $client = static::createClient();
