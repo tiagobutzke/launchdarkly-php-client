@@ -6,7 +6,7 @@
 $fontspath: "../../fonts/";
 
 // this value should be changed anytime fonts file are updated in order to avoid caching issues
-$font-version: 8;
+$font-version: 9;
 
 @font-face {
   font-family: 'icomoon';
@@ -21,22 +21,22 @@ $font-version: 8;
 
 @font-face {
   font-family: 'Avenir Book';
-  src: url('#{$fontspath}AvenirBook.eot?#{$font-version}');
-  src: url('#{$fontspath}AvenirBook.eot?#{$font-version}') format('embedded-opentype'),
-  url('#{$fontspath}AvenirBook.woff?#{$font-version}') format('woff2'),
-  url('#{$fontspath}AvenirBook.woff?#{$font-version}') format('woff'),
-  url('#{$fontspath}AvenirBook.ttf?#{$font-version}') format('truetype'),
-  url('#{$fontspath}AvenirBook.svg?#{$font-version}#AvenirBook') format('svg');
+  src: url('#{$fontspath}2ED58B_1_0.eot?#{$font-version}');
+  src: url('#{$fontspath}2ED58B_1_0.eot?#{$font-version}') format('embedded-opentype'),
+  url('#{$fontspath}2ED58B_1_0.woff?#{$font-version}') format('woff2'),
+  url('#{$fontspath}2ED58B_1_0.woff?#{$font-version}') format('woff'),
+  url('#{$fontspath}2ED58B_1_0.ttf?#{$font-version}') format('truetype'),
+  url('#{$fontspath}2ED58B_1_0.svg?#{$font-version}#2ED58B_1_0') format('svg');
 }
 
 @font-face {
   font-family: 'Avenir Heavy';
-  src: url('#{$fontspath}AvenirHeavy.eot?#{$font-version}');
-  src: url('#{$fontspath}AvenirHeavy.eot?#{$font-version}') format('embedded-opentype'),
-  url('#{$fontspath}AvenirHeavy.woff2?#{$font-version}') format('woff2'),
-  url('#{$fontspath}AvenirHeavy.woff?#{$font-version}') format('woff'),
-  url('#{$fontspath}AvenirHeavy.ttf?#{$font-version}') format('truetype'),
-  url('#{$fontspath}AvenirHeavy.svg?#{$font-version}#AvenirHeavy') format('svg');
+  src: url('#{$fontspath}2ED58B_0_0.eot?#{$font-version}');
+  src: url('#{$fontspath}2ED58B_0_0.eot?#{$font-version}') format('embedded-opentype'),
+  url('#{$fontspath}2ED58B_0_0.woff2?#{$font-version}') format('woff2'),
+  url('#{$fontspath}2ED58B_0_0.woff?#{$font-version}') format('woff'),
+  url('#{$fontspath}2ED58B_0_0.ttf?#{$font-version}') format('truetype'),
+  url('#{$fontspath}2ED58B_0_0.svg?#{$font-version}#2ED58B_0_0') format('svg');
 }
 
 @font-face {
