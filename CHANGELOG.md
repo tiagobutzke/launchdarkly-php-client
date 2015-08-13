@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+* 1.17.1 / 1.17.2
+
+  * INTVOLO-313: Fix no vendor found page
+  * INTVOLO-85: Swapped SEO descr. city/vendor listing
+
 * 1.17.0
 
   * SGFD-17614: CSS font sizes refactor on all pages

@@ -32,9 +32,9 @@
 {% block head_meta_seo %}
     {{ parent() }}
     {% if gpsSearch %}
-        <meta name="description" content="{{ cms('seo.description.city_page') | replace({'{city}': city.name}) }}">
-    {% else %}
         <meta name="description" content="{{ cms('seo.description.vendor_listing_page') | replace({'{city}': formattedLocation.city, '{zipcode}': formattedLocation.postcode}) }}">
+    {% else %}
+        <meta name="description" content="{{ cms('seo.description.city_page') | replace({'{city}': city.name}) }}">
     {% endif %}
 
     {% if city is not null %}

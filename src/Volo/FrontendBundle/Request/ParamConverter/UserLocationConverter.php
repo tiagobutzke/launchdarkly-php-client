@@ -3,6 +3,7 @@
 namespace Volo\FrontendBundle\Request\ParamConverter;
 
 use Foodpanda\ApiSdk\Entity\Cart\AbstractLocation;
+use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\HttpFoundation\Request;
@@ -148,7 +149,13 @@ class UserLocationConverter implements ParamConverterInterface
      */
     protected function findCityByLocation(GpsLocation $location)
     {
-        $cities = $this->cityProvider->findCitiesByLocation($location);
+        try {
+            $cities = $this->cityProvider->findCitiesByLocation($location);
+        } catch (ApiErrorException $e) {
+            throw new NotFoundHttpException(
+                sprintf('No cities found with coordinates : %f/%f', $location->getLatitude(), $location->getLongitude())
+            );
+        }
 
         if ($cities->getAvailableCount() === 0) {
             throw new NotFoundHttpException(
