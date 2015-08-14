@@ -8,6 +8,11 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 class ComingSoonListener
 {
+    private $whitelistedRoutes = [
+        'coming-soon-disable',
+        '_foodpanda_api_health_check'
+    ];
+
     /**
      * @var bool
      */
@@ -44,7 +49,7 @@ class ComingSoonListener
 
         if ($this->isMaintenanceEnabled && !$request->cookies->has('coming-soon-disabled')) {
             $match = $this->router->match($request->getPathInfo());
-            if (isset($match['_route']) && $match['_route'] === 'coming-soon-disable') {
+            if (isset($match['_route']) && in_array($match['_route'], $this->whitelistedRoutes)) {
                 return;
             }
             $response = $this->templateEngine->renderResponse('VoloFrontendBundle:SplashScreen:coming_soon.html.twig');
