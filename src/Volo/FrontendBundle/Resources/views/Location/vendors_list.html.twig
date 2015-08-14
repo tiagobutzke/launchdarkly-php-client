@@ -75,7 +75,7 @@
 
                 <div class="restaurants__location__title">
                     <span class="restaurants__location__address">
-                        {% if gpsSearch %}
+                        {% if gpsSearch and (address_autocomplete_type|first == '(Regions)') %}
                             {{ 'address.delivery_by_gps %address%'|trans({
                                 '%address%': formattedLocation['address']
                             }) }}
