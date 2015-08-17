@@ -323,9 +323,8 @@ VOLO.doBootstrap = function(configuration) {
         cartIconView.render();
     }
 
+    cartModel = VOLO.createCartModel(VOLO.jsonCart);
     if ($('.menu__list-wrapper').length > 0) {
-        cartModel = VOLO.createCartModel(VOLO.jsonCart);
-
         var cartViews = VOLO.createCartViews(cartModel, locationModel, VOLO.GTMServiceInstance),
             urlZipCode = window.location.search.split('zip=')[1];
 
@@ -334,7 +333,7 @@ VOLO.doBootstrap = function(configuration) {
             cartViews.cartView.setZipCode(urlZipCode);
         }
     }
-    cartModel = VOLO.createCartModel(VOLO.jsonCart);
+
     checkoutModel = VOLO.createCheckoutModel(cartModel, locationModel);
 
     if ($('.menu__list-wrapper').length > 0) {

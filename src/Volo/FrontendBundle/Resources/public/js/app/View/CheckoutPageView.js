@@ -159,10 +159,7 @@ var CheckoutPageView = Backbone.View.extend({
     },
 
     handlePaymentSuccess: function (data) {
-        this.model.save(this.model.defaults, {silent: true});
-
         if (_.isNull(data.hosted_payment_page_redirect)) {
-            this.model.cartModel.emptyCart(this.vendorId);
             Turbolinks.visit(Routing.generate('order_tracking', {
                 orderCode: data.code
             }));

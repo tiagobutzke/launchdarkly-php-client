@@ -77,3 +77,12 @@
         {#</div>#}
     </div>
 {% endblock %}
+
+{% block footer_scripts %}
+    {{ parent() }}
+
+    <script data-turbolinks-eval=always>
+        VOLO.checkoutModel && VOLO.checkoutModel.save(CheckoutModel.defaults, {silent: true});
+        VOLO.cartModel && VOLO.cartModel.vendorCarts.reset();
+    </script>
+{% endblock %}
