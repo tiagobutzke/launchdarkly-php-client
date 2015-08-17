@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.18.0
+  * INTVOLO-104: Profile page validation
+  * INTVOLO-115: Change the foodora fonts to paid version
+
 * 1.17.4
 
   * Coming soon <> health check page fix
