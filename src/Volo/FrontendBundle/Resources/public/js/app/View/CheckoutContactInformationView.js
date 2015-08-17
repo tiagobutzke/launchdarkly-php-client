@@ -22,6 +22,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
 
         this.listenTo(this.customerModel, 'change', this.renderContactInformation);
         this.listenTo(this.customerModel, 'customer:saved', this._onCustomerSaveSuccess);
+        this.listenTo(this.customerModel, 'customer:already_exist', this.openLoginModal);
         this.listenTo(this.checkoutModel, 'change', this.render);
     },
 

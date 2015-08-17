@@ -80,7 +80,7 @@ VOLO.ContactInformatioForm = ValidationView.extend({
             dataType: 'json',
             success: function (response) {
                 if (response.exists) {
-                    this.openLoginModal();
+                    this.model.trigger('customer:already_exist');
                 }
             }.bind(this)
         });
