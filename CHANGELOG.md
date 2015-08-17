@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.21.0
+  * INTVOLO-174: API Cache
+
 * 1.20.3
   * INTVOLO-398 fixed address saved twice
 
