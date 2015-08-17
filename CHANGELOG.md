@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.19.0
+  * INTVOLO-2 CTA GTM click
+
 * 1.18.0
   * INTVOLO-104: Profile page validation
   * INTVOLO-115: Change the foodora fonts to paid version
