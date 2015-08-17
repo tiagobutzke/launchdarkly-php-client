@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.20.0
+  * INTVOLO-310: Index city and vendor pages
+  * INTVOLO-307 newrelic / slack error logging
+
 * 1.19.0
   * INTVOLO-2 CTA GTM click
 
