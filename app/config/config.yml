@@ -9,6 +9,7 @@ parameters:
     google_api_channel: ''
     google_tag_manager_container_id: ''
     monolog.handler.newrelic.class: Volo\FrontendBundle\EventListener\NewRelicHandler
+    monolog.handler.slack.class: Volo\FrontendBundle\EventListener\SlackHandler
 
 framework:
     #esi:             ~
