@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.20.3
+  * INTVOLO-398 fixed address saved twice
+
 * 1.20.2
   * INTVOLO-104: Profile page validation - fixed checkout form
 
