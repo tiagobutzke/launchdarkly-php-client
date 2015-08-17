@@ -155,15 +155,7 @@
             {{ cms('homepage-cities') }}
         </div>
     </section>
-    <div class="home__titles">
-        <div class="home__titles__main-title">
-            {{ 'title.take_volo_where_you_go'|trans }}
-        </div>
-        <div class="home__titles__subtitle">
-            {{ 'title.download_free_app'|trans }}
-        </div>
-    </div>
-    <section class="home__app">
-        {% include('VoloFrontendBundle:Home/Partial:app-section.html.twig') %}
-    </section>
+    {% if "de" == country_code %}
+        {{ cms('homepage-app-promo') }}
+    {% endif %}
 {% endblock %}
