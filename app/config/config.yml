@@ -79,6 +79,9 @@ monolog:
 
 doctrine_cache:
     providers:
+        api_cache:
+            namespace: %country_code%_%kernel.environment%_api_cache
+            type: php_file
         translator_cache:
             namespace: %country_code%_%kernel.environment%_translator_cache
             type: php_file
