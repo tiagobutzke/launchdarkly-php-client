@@ -370,7 +370,7 @@ VOLO.doBootstrap = function(configuration) {
     }
 
     if ($('.home__teaser__form').length > 0) {
-        homeView = VOLO.createHomehView();
+        homeView = VOLO.createHomeView();
         homeView.render();
     }
 
@@ -411,7 +411,6 @@ VOLO.doBootstrap = function(configuration) {
         sessionId: configuration.sessionId,
         checkoutPageView: checkoutViews.checkoutPageView,
         loginButtonView: loginButtonView,
-        existingUserLoginView: existingUserLoginView,
         restaurantsView: restaurantsView
     });
 
