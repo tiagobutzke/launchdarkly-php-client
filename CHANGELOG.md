@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.17.4
+
+  * Coming soon <> health check page fix
+
 * 1.17.3
 
   * INTVOLO-X: Timezone hotfix
