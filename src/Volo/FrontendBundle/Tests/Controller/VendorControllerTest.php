@@ -122,6 +122,17 @@ class VendorControllerTest extends VoloTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/restaurant/s9iz/la-piccola'));
     }
 
+    public function testVendorPageSeoIndexFollow()
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/restaurant/s9iz/la-piccola');
+
+        $response = $client->getResponse();
+
+        $this->assertContains('index, follow', $response->getContent());
+    }
+
     public function testVendorByUpperCaseCodeWithUrlKey()
     {
         $client = static::createClient();

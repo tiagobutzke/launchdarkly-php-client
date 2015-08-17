@@ -3,7 +3,7 @@
 {% block title %}{{ cms('seo.title.vendor_page') | replace({'{city}': vendor.city.name, '{vendor}': vendor.name}) }}{% endblock %}
 
 {% block head_meta_seo %}
-    {{ parent() }}
+    <meta name="robots" content="index, follow">
     <meta name="description" content="{{ cms('seo.description.vendor_page') | replace({'{city}': vendor.city.name, '{restaurant}': vendor.name}) }}">
 {% endblock %}
 
