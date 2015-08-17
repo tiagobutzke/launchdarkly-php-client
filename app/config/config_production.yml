@@ -49,6 +49,11 @@ monolog:
 
 doctrine_cache:
     providers:
+        api_cache:
+            type: redis
+            redis:
+              host: %redis_cache_host%
+              port: %redis_cache_port%
         translator_cache:
             type: redis
             redis:

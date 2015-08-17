@@ -11,7 +11,8 @@
         <parameter key="guzzle.subscriber.log.formatter.format" type="constant">GuzzleHttp\Subscriber\Log\Formatter::DEBUG</parameter>
         <parameter key="guzzle.ring.client.mock_handler.class">GuzzleHttp\Ring\Client\MockHandler</parameter>
         <parameter key="guzzle.ring.client.curl_handler.class">GuzzleHttp\Ring\Client\CurlHandler</parameter>
-
+        <parameter key="guzzle.subscriber.cache.cache_storage.class">GuzzleHttp\Subscriber\Cache\CacheStorage</parameter>
+        <parameter key="guzzle.subscriber.cache.cache_subscriber.class">GuzzleHttp\Subscriber\Cache\CacheSubscriber</parameter>
         <parameter key="volo_frontend.api.mock.handler_callable.class">Foodpanda\ApiSdk\Tests\MockHandlerCallable</parameter>
 
         <parameter key="volo_frontend.api.serializer.class">Foodpanda\ApiSdk\Serializer</parameter>
@@ -25,6 +26,17 @@
         <service id="guzzle.ring.client.curl_handler" class="%guzzle.ring.client.curl_handler.class%"/>
         <service id="guzzle.ring.client.mock_handler" class="%guzzle.ring.client.mock_handler.class%">
             <argument type="service" id="volo_frontend.api.mock.handler_callable" />
+        </service>
+
+        <service id="guzzle.subscriber.cache.cache_storage" class="%guzzle.subscriber.cache.cache_storage.class%">
+            <argument type="service" id="doctrine_cache.providers.api_cache"/>
+        </service>
+        <service id="guzzle.subscriber.cache.cache_subscriber" class="%guzzle.subscriber.cache.cache_subscriber.class%">
+            <argument type="service" id="guzzle.subscriber.cache.cache_storage"/>
+            <argument type="collection">
+                <argument type="string">GuzzleHttp\Subscriber\Cache\Utils</argument>
+                <argument type="string">canCacheRequest</argument>
+            </argument>
         </service>
 
         <service id="guzzle.ring.client.handler_factory" class="stdClass"
@@ -41,6 +53,9 @@
         <service id="volo_frontend.guzzle.event.emitter" class="%guzzle.event.emitter.class%" public="false">
             <call method="attach">
                 <argument type="service" id="guzzle.subscriber.log.log_subscriber" />
+            </call>
+            <call method="attach">
+                <argument type="service" id="guzzle.subscriber.cache.cache_subscriber" />
             </call>
         </service>
 
