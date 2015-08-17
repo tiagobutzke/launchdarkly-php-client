@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.20.2
+  * INTVOLO-104: Profile page validation - fixed checkout form
+
 * 1.20.1
   * SGFD-18036 CTA GTM click - rebase problems fix
 
