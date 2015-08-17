@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.20.1
+  * SGFD-18036 CTA GTM click - rebase problems fix
+
 * 1.20.0
   * INTVOLO-310: Index city and vendor pages
   * INTVOLO-307 newrelic / slack error logging
