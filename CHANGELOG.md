@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.22.0
+  * INTVOLO-404 logging errors improvements
+  * INTVOLO-285: Allow fully geocoded addresses
+
 * 1.21.1-1.21.2
 
   * Disable SSL verification on API call
