@@ -5,4 +5,3 @@ parameters:
     country_code: fr
     environment: development
     locale: fr_FR
-    supported_locales: [fr_FR]

@@ -5,4 +5,3 @@ parameters:
     country_code: dk
     environment: development
     locale: da_DK
-    supported_locales: [da_DK]

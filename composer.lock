@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cd56668e839fdb1aef73d98c5a45604a",
+    "hash": "196a03d45e2ba42df2d6af90e54f3f52",
     "packages": [
         {
             "name": "99designs/phumbor",
@@ -663,7 +663,7 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:foodpanda/api-sdk.git",
-                "reference": "06689a7799b79f8fd5d05229535ed895893c597d"
+                "reference": "3661aa9"
             },
             "require": {
                 "commerceguys/guzzle-oauth2-plugin": "~2.0",
@@ -692,7 +692,7 @@
                 }
             ],
             "description": "Foodpanda API SDK",
-            "time": "2015-08-14 10:52:54"
+            "time": "2015-08-17 14:14:45"
         },
         {
             "name": "foodpanda/translation-library",
@@ -835,6 +835,58 @@
                 "validation"
             ],
             "time": "2015-08-04 09:42:04"
+        },
+        {
+            "name": "guzzlehttp/cache-subscriber",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/cache-subscriber.git",
+                "reference": "487b846c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/cache-subscriber/zipball/487b846c91fd0034ecd0225ee53927c93bd21586",
+                "reference": "487b846c",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/cache": "~1.3",
+                "guzzlehttp/guzzle": "~5.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Subscriber\\Cache\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Guzzle HTTP cache subscriber",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "Guzzle",
+                "cache"
+            ],
+            "time": "2015-08-05 21:32:58"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -2737,16 +2789,16 @@
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "1.4.5",
+            "version": "1.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "09fc125d65c344c53a7c7ad8f261e3f3af9f76c5"
+                "reference": "3ab72c62e550370a6cd5dc873e1a04ab57562f5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/09fc125d65c344c53a7c7ad8f261e3f3af9f76c5",
-                "reference": "09fc125d65c344c53a7c7ad8f261e3f3af9f76c5",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/3ab72c62e550370a6cd5dc873e1a04ab57562f5b",
+                "reference": "3ab72c62e550370a6cd5dc873e1a04ab57562f5b",
                 "shasum": ""
             },
             "require": {
@@ -2782,7 +2834,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2015-08-13 14:23:08"
+            "time": "2015-08-16 08:51:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -3409,6 +3461,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "guzzlehttp/cache-subscriber": 20,
         "foodpanda/api-sdk": 20,
         "jms/i18n-routing-bundle": 20
     },
@@ -3417,5 +3470,7 @@
     "platform": {
         "php": ">=5.5"
     },
-    "platform-dev": []
+    "platform-dev": {
+        "ext-intl": "*"
+    }
 }

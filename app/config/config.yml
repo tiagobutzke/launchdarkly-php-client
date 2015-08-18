@@ -10,6 +10,11 @@ parameters:
     google_tag_manager_container_id: ''
     monolog.handler.newrelic.class: Volo\FrontendBundle\EventListener\NewRelicHandler
     monolog.handler.slack.class: Volo\FrontendBundle\EventListener\SlackHandler
+    localeSettings:
+        detectBrowserLanguage: %detect_browser_language_enabled%
+        locales: %supported_locales%
+        localeMapping: %short_to_full_locale_name_mapping%
+        defaultLocale: %locale%
 
 framework:
     #esi:             ~

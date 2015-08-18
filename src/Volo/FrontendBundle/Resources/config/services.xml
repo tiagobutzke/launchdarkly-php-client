@@ -43,16 +43,25 @@
         <parameter key="volo_frontend.security.ajax_authentication_success_handler.class">Volo\FrontendBundle\Security\AjaxAuthenticationSuccessListener</parameter>
         <parameter key="volo_frontend.security.ajax_authentication_failure_handler.class">Volo\FrontendBundle\Security\AjaxAuthenticationFailureListener</parameter>
         <parameter key="volo_frontend.event_listener.locale_listener.class">Volo\FrontendBundle\EventListener\LocaleListener</parameter>
+        <parameter key="volo_frontend.provider.locale_config_provider.class">Volo\FrontendBundle\Provider\LocaleConfigProvider</parameter>
     </parameters>
 
     <services>
+        <service id="volo_frontend.provider.locale_config_provider" class="%volo_frontend.provider.locale_config_provider.class%">
+            <argument>%localeSettings%</argument>
+        </service>
+
         <service id="session.handler.redis" class="%framework.service.session_handler.class%">
             <argument type="string">%session_handler_redis_save_path%</argument>
         </service>
 
         <service id="volo_frontend.event_listener.locale_listener" class="%volo_frontend.event_listener.locale_listener.class%">
             <argument type="service" id="volo_frontend.service.configuration" />
-            <argument type="service" id="volo_frontend.api.client"></argument>
+            <argument type="service" id="volo_frontend.api.client" />
+            <argument type="service" id="volo_frontend.provider.locale_config_provider" />
+            <argument type="service" id="translator.default" />
+            <argument type="service" id="router.default" />
+
             <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
         </service>
 

@@ -5,4 +5,3 @@ parameters:
     country_code: ie
     environment: development
     locale: en_IE
-    supported_locales: [en_IE]

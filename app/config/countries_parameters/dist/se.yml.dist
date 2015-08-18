@@ -5,4 +5,3 @@ parameters:
     country_code: se
     environment: development
     locale: sv_SE
-    supported_locales: [sv_SE]

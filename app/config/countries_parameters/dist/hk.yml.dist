@@ -5,4 +5,3 @@ parameters:
     country_code: hk
     environment: development
     locale: en_HK
-    supported_locales: [en_HK]
