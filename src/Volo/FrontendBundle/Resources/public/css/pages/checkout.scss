@@ -272,6 +272,16 @@ textarea.checkout__step__item-textarea {
   }
 }
 
+.checkout__title-link--login {
+  display: block;
+  float: none;
+  padding-bottom: $space-sm;
+  @include respond-from("screen-sm") {
+    display: inline-block;
+    float: right;
+    padding-bottom: 0;
+  }
+}
 
 .checkout__title-link__icon {
   display: inline-block;
