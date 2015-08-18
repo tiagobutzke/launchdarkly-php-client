@@ -21,7 +21,7 @@
 {% block content %}
     <div class="checkout-wrapper">
         <div class="checkout__blocks">
-            <div class="checkout__steps" data-vendor_id="{{ vendor.id }}" data-vendor_code="{{ vendor.code }}">
+            <div class="checkout__steps" data-vendor_id="{{ vendor.id }}" data-vendor_code="{{ vendor.code }}" data-vendor_min_delivery_time="{{ vendor.minimumDeliveryTime }}">
                 <div class="checkout__step checkout__delivery-information">
                     {% include 'VoloFrontendBundle:Checkout/Partial:step_delivery_information.html.twig' %}
                 </div>
@@ -54,6 +54,7 @@
 
     <script data-turbolinks-eval=always>
         var VOLO = VOLO || {};
+        VOLO.timePickerValues = {{ getTimePickerJsonValues(vendor)|to_escaped_json}};
         VOLO.jsonCart = {{ cart|to_escaped_json }};
         VOLO.jsonUserAddress = {{ customer_addresses|to_escaped_json }};
         VOLO.jsonLocation = {{ location|to_escaped_json }};

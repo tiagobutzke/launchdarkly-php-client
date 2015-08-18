@@ -38,8 +38,11 @@ var CheckoutPageView = Backbone.View.extend({
         });
 
         this.timePickerView = new TimePickerView({
+            el: this.$('.checkout__time-picker'),
             model: options.cartModel,
-            vendor_id: this.vendorId
+            vendor_id: this.vendorId,
+            values: options.timePickerValues,
+            minDeliveryTime: this.$el.data().vendor_min_delivery_time
         });
 
         console.log('is guest user ', this.customerModel.isGuest);
@@ -68,7 +71,6 @@ var CheckoutPageView = Backbone.View.extend({
     render: function () {
         this.renderContactInformationStep();
 
-        this.timePickerView.setElement(this.$('.checkout__time-picker'));
         this.timePickerView.render();
 
         this._switchPaymentFormVisibility();

@@ -1,30 +1,13 @@
 <script type="text/template" id="template-time-picker">
     <div class="desktop-cart__time">
         <div class="desktop-cart__time__field-date">
-            {% set timePickerValues = getTimePickerValues(vendor, date('now')) %}
             <select id="order-delivery-date">
-                {% for times in timePickerValues %}
-                    {% set jsonData = getTimePickerTimeValues(times) %}
-                    {% if((times|length == 0 or times|first|date('Y-m-d') == 'now'|date('Y-m-d')) and isVendorOpen(vendor, date('now'))) %}
-                        {% set jsonData = {'now' : 'time_picker.now'|trans}|merge(jsonData) %}
-                    {% endif %}
-
-                    {% set value = times|length == 0 ? date() : times|first %}
-                    <option value="{{ value|date('Y-m-d') }}" data-delivery-hours='{{ jsonData|to_escaped_json }}'>
-                        {{ value|formatOpeningDay }}
-                    </option>
-                {% endfor %}
+                <% _.forEach(days, function(text, key) { %><option value="<%- key %>"><%- text %></option><% }); %>
             </select>
         </div>
         <div class="desktop-cart__time__field-time">
-            <select id="order-delivery-time">
-                {% if(timePickerValues|first|length == 0 or timePickerValues|first|first|date('Y-m-d') == 'now'|date('Y-m-d') and isVendorOpen(vendor, date('now'))) %}
-                    <option value="now">{% trans %}now{% endtrans %}</option>
-                {% endif %}
-
-                {% for time in timePickerValues|first %}
-                    <option value="{{ time|date('H:i') }}">{{ time|formatTime }}</option>
-                {% endfor %}
+            <select id="order-delivery-time" data-tooltip-msg="{% trans %}timepicker.tooltip.selection_expired_and_updated{% endtrans %}">
+                <% _.forEach(times, function(text, key) { %><option value="<%- key %>"><%- text %></option><% }); %>
             </select>
         </div>
     </div>

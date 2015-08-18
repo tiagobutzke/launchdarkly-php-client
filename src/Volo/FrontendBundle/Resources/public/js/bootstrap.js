@@ -72,7 +72,8 @@ VOLO.createCartViews = function (cartModel, locationModel, gtmService) {
             $menuMain: $('.menu__list-wrapper'),
             $window: $(window),
             gtmService: gtmService,
-            smallScreenMaxSize: VOLO.configuration.smallScreenMaxSize
+            smallScreenMaxSize: VOLO.configuration.smallScreenMaxSize,
+            timePickerValues: VOLO.timePickerValues
         }),
         cartErrorModalView = new CartErrorModalView({
             el: '#cartCalculationErrorModal',
@@ -99,7 +100,8 @@ VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel, us
         $header: $('.header'),
         locationModel: locationModel,
         $menuMain: $('.checkout__steps'),
-        $window: $(window)
+        $window: $(window),
+        timePickerValues: VOLO.timePickerValues
     });
 
     if ($('.checkout__payment__voucher').length > 0) {
@@ -119,7 +121,8 @@ VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel, us
             cartModel: cartModel,
             loginView: loginButtonView,
             locationModel: locationModel,
-            deliveryCheck: deliveryCheck
+            deliveryCheck: deliveryCheck,
+            timePickerValues: VOLO.timePickerValues
         });
     }
 

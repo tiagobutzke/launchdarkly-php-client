@@ -16,11 +16,6 @@ class VoloExtension extends \Twig_Extension
     private $translator;
 
     /**
-     * @var string
-     */
-    private $timePickerDateFormat;
-
-    /**
      * @var CartManagerService
      */
     private $cartManager;
@@ -30,11 +25,10 @@ class VoloExtension extends \Twig_Extension
      * @param CartManagerService  $cartManager
      * @param                     $datePickerDateFormat
      */
-    public function __construct(TranslatorInterface $translator, CartManagerService $cartManager, $datePickerDateFormat)
+    public function __construct(TranslatorInterface $translator, CartManagerService $cartManager)
     {
         $this->translator = $translator;
         $this->cartManager = $cartManager;
-        $this->timePickerDateFormat = $datePickerDateFormat;
     }
 
     /**
@@ -217,20 +211,6 @@ class VoloExtension extends \Twig_Extension
 
         $formatter->setPattern('eeee');
         return $formatter->format($date);
-    }
-
-    /**
-     * @param \DateTime $day
-     *
-     * @return bool|string
-     */
-    public function formatOpeningDay(\DateTime $day)
-    {
-        $formatter = \IntlDateFormatter::create($this->translator->getLocale(), \IntlDateFormatter::GREGORIAN, \IntlDateFormatter::NONE);
-
-        // @see http://userguide.icu-project.org/formatparse/datetime for formats
-        $formatter->setPattern($this->timePickerDateFormat);
-        return $formatter->format($day);
     }
 
     /**

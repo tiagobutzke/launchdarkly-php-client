@@ -131,7 +131,8 @@ var CartView = Backbone.View.extend({
 
         this.timePickerView = new TimePickerView({
             model: this.model,
-            vendor_id: this.vendor_id
+            vendor_id: this.vendor_id,
+            values: options.timePickerValues
         });
 
         this.domObjects = {};

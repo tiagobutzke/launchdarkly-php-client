@@ -9,6 +9,7 @@ use Foodpanda\ApiSdk\Entity\SpecialDay\SpecialDay;
 use Foodpanda\ApiSdk\Entity\Schedule\SchedulesCollection;
 use Foodpanda\ApiSdk\Entity\SpecialDay\SpecialDaysCollection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class ScheduleService
 {
@@ -20,11 +21,25 @@ class ScheduleService
     protected $cache;
 
     /**
-     * @param Cache $cache
+     * @var string
      */
-    public function __construct(Cache $cache)
+    protected $timePickerDateFormat;
+
+    /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
+    /**
+     * @param Cache               $cache
+     * @param TranslatorInterface $translator
+     * @param string              $timePickerDateFormat
+     */
+    public function __construct(Cache $cache, TranslatorInterface $translator, $timePickerDateFormat)
     {
         $this->cache = $cache;
+        $this->translator = $translator;
+        $this->timePickerDateFormat = $timePickerDateFormat;
     }
 
     /**
@@ -265,5 +280,100 @@ class ScheduleService
         $closingTime->modify(sprintf('+%s minutes', $closingOffset));
 
         return array($openingTime, $closingTime);
+    }
+
+    /**
+     * @param ArrayCollection $times
+     *
+     * @return array
+     */
+    public function getTimePickerTimeValues(ArrayCollection $times)
+    {
+        $intl = \IntlDateFormatter::create($this->translator->getLocale(), \IntlDateFormatter::NONE, \IntlDateFormatter::SHORT);
+
+        $results = [];
+        foreach ($times as $time) {
+            $endTime = clone $time;
+            $results[$time->format('H:i')] = sprintf(
+                '%s - %s',
+                $intl->format($time),
+                $intl->format($endTime->modify('+30 minutes'))
+            );
+        }
+
+        return $results;
+    }
+
+    /**
+     * @param Vendor    $vendor
+     * @param \DateTime $start
+     *
+     * @return ArrayCollection
+     */
+    public function getTimePickerValues(Vendor $vendor, \DateTime $start)
+    {
+        /** @var ArrayCollection $openingPeriods */
+        // We exclude the last closing interval of all periods by adding a 1 min offset.
+        $openingPeriods = $this->getNextFourDaysOpenings($vendor, $start, new \DateInterval('PT30M'), $vendor->getMinimumDeliveryTime(), -1);
+
+        if ($openingPeriods->isEmpty()) {
+            return new ArrayCollection();
+        }
+
+        // Prune the elements in the past.
+        $firstPeriod = current($openingPeriods->slice(0, 1));
+        if ($firstPeriod->first()->format('Y-m-d') === date('Y-m-d')) {
+            $startPlusDelivery = clone $start;
+            $startPlusDelivery->modify(sprintf('+%s minutes', $vendor->getMinimumDeliveryTime()));
+            $firstPeriod = $firstPeriod->filter(function (\DateTime $time) use ($startPlusDelivery) {
+                return $time > $startPlusDelivery;
+            });
+        }
+
+        if ($firstPeriod->count() === 0 && !$this->isVendorOpen($vendor, $start)) {
+            return $openingPeriods->slice(1, 3);
+        } else {
+            return new ArrayCollection([$firstPeriod] + $openingPeriods->slice(1, 2));
+        }
+    }
+
+    /**
+     * @param Vendor $vendor
+     *
+     * @return array
+     */
+    public function getTimePickerJsonValues(Vendor $vendor)
+    {
+        $days = [];
+        foreach ($this->getTimePickerValues($vendor, new \DateTime()) as $day) {
+            $times = [];
+
+            if (($day->isEmpty() || $day->first()->format('Y-m-d') === date('Y-m-d')) && $this->isVendorOpen($vendor, new \DateTime())) {
+                $times['now'] = $this->translator->trans('time_picker.now');
+            }
+
+            $dayKey = $day->isEmpty() ? new \DateTime : $day->first(); 
+            $days[$dayKey->format('Y-m-d')] = [
+                'text' => $this->formatOpeningDay($dayKey),
+                'times'   => array_merge($times, $this->getTimePickerTimeValues($day)),
+            ];
+        }
+
+        return $days;
+    }
+
+    /**
+     * @param \DateTime $day
+     *
+     * @return bool|string
+     */
+    public function formatOpeningDay(\DateTime $day)
+    {
+        $formatter = \IntlDateFormatter::create($this->translator->getLocale(), \IntlDateFormatter::GREGORIAN, \IntlDateFormatter::NONE);
+
+        // @see http://userguide.icu-project.org/formatparse/datetime for formats
+        $formatter->setPattern($this->timePickerDateFormat);
+
+        return $formatter->format($day);
     }
 }
