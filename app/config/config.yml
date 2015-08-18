@@ -53,6 +53,7 @@ twig:
         timezone: '%timezone%'
         google_tag_manager_container_id: %google_tag_manager_container_id%
         average_delivery_time: '%average_delivery_time%'
+        address_autocomplete_type: '%address_autocomplete_type%'
 
 # Assetic Configuration
 assetic:

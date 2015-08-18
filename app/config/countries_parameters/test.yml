@@ -13,3 +13,5 @@ parameters:
 
     is_coming_soon_enabled: false
     timepicker_date_format: 'eee MMM d'
+    address_autocomplete_type:
+        - "(regions)"

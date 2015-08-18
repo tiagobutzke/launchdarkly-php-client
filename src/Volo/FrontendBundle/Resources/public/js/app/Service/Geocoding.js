@@ -2,16 +2,17 @@ var GeocodingService = function(locale) {
     this.autocomplete = null;
     this._listeners = [];
     this.locale = locale;
-    this.defaultTypes = ['(regions)'];
+    this.addressComponentsForAutocomplete = ['(regions)'];
 };
 
 _.extend(GeocodingService.prototype, Backbone.Events, {
     init: function ($input, config) {
         _.bindAll(this);
+        this.addressComponentsForAutocomplete = config || this.addressComponentsForAutocomplete;
         this.autocomplete = new google.maps.places.Autocomplete(
             $input[0],
             {
-                types: config || this.defaultTypes,
+                types: this.addressComponentsForAutocomplete,
                 componentRestrictions: {
                     country: this.locale
                 }

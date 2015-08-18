@@ -8,7 +8,7 @@ var HomeSearchView = CTATrackableView.extend({
         console.log('HomeSearchView.initialize ', this.cid);
         _.bindAll(this);
         this.geocodingService = options.geocodingService;
-        this.geocodingService.init(this.$('#delivery-information-postal-index'));
+        this.geocodingService.init(this.$('#delivery-information-postal-index'), VOLO.configuration.autocompleteType);
 
         this.listenTo(this.geocodingService, 'autocomplete:place_changed', this._applyNewLocationData);
         this.listenTo(this.geocodingService, 'autocomplete:not_found', this._notFound);

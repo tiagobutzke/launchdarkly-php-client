@@ -4,3 +4,5 @@ parameters:
     locale: es_ES
     timezone: "Europe/Madrid"
     average_delivery_time: 30
+    address_autocomplete_type:
+        - "address"
