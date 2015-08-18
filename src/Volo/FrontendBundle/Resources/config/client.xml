@@ -65,6 +65,7 @@
                 <argument key="emitter" type="service" id="volo_frontend.guzzle.event.emitter" />
                 <argument key="handler" type="service" id="guzzle.ring.client.handler_factory"/>
                 <argument key="defaults" type="collection">
+                    <argument key="verify">false</argument>
                     <argument key="headers" type="collection">
                         <argument key="X-FP-API-KEY" type="string">%foodpanda.api.client_id%</argument>
                     </argument>
