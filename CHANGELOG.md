@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-* 1.21.1
+* 1.21.1-1.21.2
 
   * Disable SSL verification on API call
 
