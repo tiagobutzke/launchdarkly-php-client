@@ -8,31 +8,15 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class NewRelicHandler extends BaseNewRelicHandler
 {
-    /**
-     * @var string[]
-     */
-    protected $exceptionClassNamesBlackList = [
-        ClientException::class,
-        NotFoundHttpException::class,
-    ];
+
+    use MonologHandlerTrait;
 
     /**
      * {@inheritdoc}
      */
     protected function write(array $record)
     {
-        $isAllowedToBeWritten = true;
-
-        if (isset($record['context']['exception'])) {
-            foreach ($this->exceptionClassNamesBlackList as $blackListExceptionClassName) {
-                if ($record['context']['exception'] instanceof $blackListExceptionClassName) {
-                    $isAllowedToBeWritten = false;
-                    break;
-                }
-            }
-        }
-
-        if ($isAllowedToBeWritten) {
+        if ($this->isAllowedToBeWritten($record)) {
             parent::write($this->addPreviousExceptions($record));
         }
     }
