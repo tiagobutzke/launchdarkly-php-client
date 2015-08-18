@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.22.1
+  * Removed fully geocoded addresses for ES, added it for HK
+
 * 1.22.0
   * INTVOLO-404 logging errors improvements
   * INTVOLO-285: Allow fully geocoded addresses
