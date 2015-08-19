@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.22.2
+  * INTVOLO-407 - replacing capitalized R with r with geo search results
+
 * 1.22.1
   * Removed fully geocoded addresses for ES, added it for HK
 
