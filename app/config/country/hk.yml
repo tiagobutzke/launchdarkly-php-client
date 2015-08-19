@@ -8,3 +8,5 @@ parameters:
     is_coming_soon_enabled: true
     address_autocomplete_type:
         - "address"
+
+    supported_locales: [%locale%, zh_HK]
