@@ -130,7 +130,7 @@ class CartManagerService
         $token = $this->tokenStorage->getToken();
 
         if ($token instanceof Token) {
-            $response = $this->cartProvider->calculate($jsonCart, $token->getAccessToken()); 
+            $response = $this->cartProvider->calculate($jsonCart, $token->getAccessToken());
         } else {
             $response = $this->cartProvider->calculate($jsonCart);
         }

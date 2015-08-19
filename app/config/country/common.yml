@@ -1,5 +1,9 @@
 parameters:
     is_coming_soon_enabled: false
     timepicker_date_format: 'eee MMM d'
+    detect_browser_language_enabled: true
+    translator_fallback_languages: ['en']
+    short_to_full_locale_name_mapping: []
+    supported_locales: [%locale%]
     address_autocomplete_type:
         - "(regions)"

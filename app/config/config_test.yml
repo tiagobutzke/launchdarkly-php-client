@@ -17,3 +17,11 @@ parameters:
     average_delivery_time: 30
     is_coming_soon_enabled: false
     timepicker_date_format: 'eee MMM d'
+    supported_locales: [%locale%]
+    translator_fallback_languages: ['en']
+    localeSettings:
+        detectBrowserLanguage: true
+        locales: %supported_locales%
+        localeMapping: []
+        defaultLocale: %locale%
+

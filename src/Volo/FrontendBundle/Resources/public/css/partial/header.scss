@@ -274,3 +274,23 @@
       @include make-link();
   }
 }
+
+
+.header__language-switch {
+  @include make-link($link-color-bg-dark, $link-color-bg-dark);
+  @include appear-from("screen-md");
+  @include respond-from("screen-md") {
+    float: right;
+    margin-right: 35px;
+    margin-top: 20px;
+  }
+  @include respond-from("screen-lg") {
+    margin-top: 32px;
+  }
+}
+.header--white .header__language-switch {
+  @include make-link();
+  @include respond-from("screen-md") {
+    margin-top: 15px;
+  }
+}
