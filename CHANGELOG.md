@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+* 1.23.0
+  * INTVOLO-89 multilanguage
+  * INTVOLO-314 Multilanguage Improvement / Router and Browser Lang Detection
+  * INTVOLO-412: Full Address geocoding without postal-code
+
 * 1.22.2
   * INTVOLO-407 - replacing capitalized R with r with geo search results
 
