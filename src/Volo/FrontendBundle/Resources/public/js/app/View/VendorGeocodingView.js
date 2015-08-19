@@ -83,7 +83,7 @@ var VendorGeocodingView = HomeSearchView.extend({
 
     _showFormattedAddress: function() {
         console.log('_showFormattedAddress ', this.cid);
-        if (_.get(VOLO.configuration, 'address_autocomplete_type[0]') === '(regions)') {
+        if (_.get(VOLO.configuration.address_config, 'autocomplete_type[0]').toLowerCase() === '(regions)') {
             this.$('.vendor__geocoding__tool-box__title').removeClass('hide');
         }
         this.$('.input__postcode').addClass('hide');

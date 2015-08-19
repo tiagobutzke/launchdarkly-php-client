@@ -2,13 +2,15 @@ var GeocodingService = function(locale) {
     this.autocomplete = null;
     this._listeners = [];
     this.locale = locale;
+    this.postalCodeField = null;
     this.addressComponentsForAutocomplete = ['(regions)'];
 };
 
 _.extend(GeocodingService.prototype, Backbone.Events, {
     init: function ($input, config) {
         _.bindAll(this);
-        this.addressComponentsForAutocomplete = config || this.addressComponentsForAutocomplete;
+        this.postalCodeField = config.postal_code_field || ['postal_code'];
+        this.addressComponentsForAutocomplete = config.autocomplete_type || this.addressComponentsForAutocomplete;
         this.autocomplete = new google.maps.places.Autocomplete(
             $input[0],
             {
@@ -235,13 +237,20 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
     },
 
     _findPostalCodeInAddressComponents: function (addressComponents) {
-        return _.pluck(_.where(addressComponents, {'types': ['postal_code']}), 'short_name')[0];
+        var postalCode = null;
+        _.each(this.postalCodeField, function(type) {
+            if (!postalCode) {
+                postalCode = this._findFieldInAddressComponents(addressComponents, type, 'short_name');
+            }
+        }, this);
+
+        return postalCode;
     },
 
     _findCityInAddressComponents: function (addressComponents) {
         var cityName = null;
 
-        _.each(['locality', 'administrative_area_level_2', 'administrative_area_level_3'], function(type) {
+        _.each(['locality', 'administrative_area_level_2', 'administrative_area_level_3', 'administrative_area_level_1'], function(type) {
             if (!cityName) {
                 cityName = this._findFieldInAddressComponents(addressComponents, type);
             }
@@ -250,10 +259,10 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
         return cityName || '-';
     },
 
-    _findFieldInAddressComponents: function(addressComponents, fieldName) {
+    _findFieldInAddressComponents: function(addressComponents, fieldName, valueToGet) {
         return _.chain(addressComponents)
             .where({types: [fieldName]})
-            .pluck('long_name')
+            .pluck(valueToGet || 'long_name')
             .first()
             .thru(function(first) {
                 return first || '';
