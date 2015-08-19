@@ -22,7 +22,7 @@
         VOLO.configuration.countryCode = '{{ country_code }}';
         VOLO.configuration.locale = '{{ locale }}';
         VOLO.configuration.userLocale = '{{ app.request.locale }}';
-        VOLO.configuration.autocompleteType = {{ address_autocomplete_type|to_escaped_json }};
+        VOLO.configuration.address_config = {{ address_config|to_escaped_json }}
         VOLO.configuration.sessionId = '{{ app.session.id }}';
         VOLO.configuration.googleTagManagerContainerId = '{{ google_tag_manager_container_id }}';
         VOLO.orderTrackingInterval = null;

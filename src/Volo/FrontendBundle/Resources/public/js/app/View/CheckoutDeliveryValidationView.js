@@ -124,7 +124,11 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
         var deferred = $.Deferred();
 
         console.log('_geocodePostalCode ', this.cid, locationData);
-        this._geocodeAddress(); //todo remove this side effect
+        var validateDeliveryWithAddressOnly = VOLO.configuration.address_config.autocomplete_type === 'address';
+        this._geocodeAddress(validateDeliveryWithAddressOnly); //todo remove this side effect
+        if (validateDeliveryWithAddressOnly) {
+            return deferred;
+        }
 
         var getPostalCode = this._postalCodeGeocodingService.geocodeCenterPostalcode({
             address: locationData.postcode + ", " + locationData.city,
@@ -149,7 +153,7 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
         return deferred;
     },
 
-    _geocodeAddress: function() {
+    _geocodeAddress: function(validateDeliveryWithAddressOnly) {
         if (!this.isValidForm()) return;
 
         this._postalCodeGeocodingService.geocodeAddress({
@@ -159,6 +163,15 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
                 console.log(result);
                 this.$("#delivery-information-address-latitude").val(result.lat());
                 this.$("#delivery-information-address-longitude").val(result.lng());
+                if (validateDeliveryWithAddressOnly) {
+                    this._validateDelivery(
+                        {lat: result.lat(), lng: result.lng()}
+                    )
+                    .done(function() {
+                            this.isValidForm();
+                        }.bind(this)
+                    ).bind(this);
+                }
             }.bind(this),
 
             error: function() {

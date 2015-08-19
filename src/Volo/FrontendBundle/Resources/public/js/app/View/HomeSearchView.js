@@ -8,7 +8,7 @@ var HomeSearchView = CTATrackableView.extend({
         console.log('HomeSearchView.initialize ', this.cid);
         _.bindAll(this);
         this.geocodingService = options.geocodingService;
-        this.geocodingService.init(this.$('#delivery-information-postal-index'), VOLO.configuration.autocompleteType);
+        this.geocodingService.init(this.$('#delivery-information-postal-index'), VOLO.configuration.address_config);
 
         this.listenTo(this.geocodingService, 'autocomplete:place_changed', this._applyNewLocationData);
         this.listenTo(this.geocodingService, 'autocomplete:not_found', this._notFound);
@@ -99,6 +99,10 @@ var HomeSearchView = CTATrackableView.extend({
         }));
     },
 
+    _isFullAddressAutocomplete: function() {
+        return VOLO.configuration.address_config.autocomplete_type[0] === 'address';
+    },
+
     _applyNewLocationData: function (locationMeta) {
         var data = this._getDataFromMeta(locationMeta);
 
@@ -117,7 +121,8 @@ var HomeSearchView = CTATrackableView.extend({
             longitude: data.lng,
             postcode: data.postcode,
             city: data.city,
-            address: data.postcode + ", " + data.city // address in query param
+            address: this._isFullAddressAutocomplete() ? data.formattedAddress : data.postcode + ", " + data.city
+
         });
 
         dataLayer.push({
@@ -129,7 +134,7 @@ var HomeSearchView = CTATrackableView.extend({
     _getDataFromMeta: function (locationMeta) {
         var formattedAddress = locationMeta.formattedAddress;
 
-        if (!formattedAddress.match(locationMeta.postalCode.value)) {
+        if (!formattedAddress.match(locationMeta.postalCode.value) && !this._isFullAddressAutocomplete()) {
             formattedAddress = locationMeta.postalCode.value + ", " + locationMeta.city;
         }
 

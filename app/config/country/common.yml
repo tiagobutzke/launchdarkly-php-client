@@ -5,5 +5,8 @@ parameters:
     translator_fallback_languages: ['en']
     short_to_full_locale_name_mapping: []
     supported_locales: [%locale%]
-    address_autocomplete_type:
-        - "(regions)"
+    address_config:
+        postal_code_field:
+            - 'postal_code'
+        autocomplete_type:
+            - "(regions)"
