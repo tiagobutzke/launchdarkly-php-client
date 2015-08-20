@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+* 1.23.1
+  * INTVOLO-314: Geo-coding improvement - Fixing short-locale names
+  * INTVOLO-415 fos js routing fix
+  * SGFD-19149 Added AE and SG
+
 * 1.23.0
   * INTVOLO-89 multilanguage
   * INTVOLO-314 Multilanguage Improvement / Router and Browser Lang Detection
