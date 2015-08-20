@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ComingSoonController extends Controller
 {
     /**
-     * @Route("/testing-mode", name="coming-soon-disable")
+     * @Route("/testing-mode", name="_coming-soon-disable")
      *
      * @param Request $request
      *
