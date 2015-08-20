@@ -44,6 +44,7 @@
         <parameter key="volo_frontend.security.ajax_authentication_failure_handler.class">Volo\FrontendBundle\Security\AjaxAuthenticationFailureListener</parameter>
         <parameter key="volo_frontend.event_listener.locale_listener.class">Volo\FrontendBundle\EventListener\LocaleListener</parameter>
         <parameter key="volo_frontend.provider.locale_config_provider.class">Volo\FrontendBundle\Provider\LocaleConfigProvider</parameter>
+        <parameter key="translator.class">Volo\FrontendBundle\Service\TranslatorService</parameter>
     </parameters>
 
     <services>

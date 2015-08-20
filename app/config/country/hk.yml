@@ -6,7 +6,7 @@ parameters:
     average_delivery_time: 30
 
     is_coming_soon_enabled: true
-    supported_locales: [%locale%, zh_HK]
+    supported_locales: [%locale%, zh]
     address_config:
         postal_code_field:
             - 'postal_code'
@@ -14,3 +14,6 @@ parameters:
             - 'administrative_area_level_1'
         autocomplete_type:
             - "address"
+    short_to_full_locale_name_mapping:
+        zh: zh_HK
+        en: en_HK
