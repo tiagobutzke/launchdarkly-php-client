@@ -1,5 +1,7 @@
 CHANGELOG
 =========
+* 1.23.3
+  * INTVOLO-415 added cache breaker for FOS routing JS
 
 * 1.23.2
   * INTVOLO-416 turbolinks visit locale fix
