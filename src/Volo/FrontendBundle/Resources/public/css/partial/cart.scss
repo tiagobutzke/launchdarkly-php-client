@@ -519,6 +519,11 @@ tr.summary__item__row_mobile {
   }
 }
 
+%desktop-cart__order__price {
+  display: inline-block;
+  float: right;
+}
+
 .desktop-cart__order__subtotal {
   padding: $space-md $space-sm 0;
   border-top: $base-border;
@@ -527,8 +532,14 @@ tr.summary__item__row_mobile {
   }
 }
 
-.desktop-cart__order__voucher {
-  color: $color-text-highlight;
+.desktop-cart__order__subtotal-price {
+  @extend %desktop-cart__order__price;
+}
+
+.desktop-cart__order__subtotal-min-order {
+  font-style: normal;
+  font-size: $font-size-1_2rem;
+  display: inline-block;
 }
 
 .desktop-cart__order__delivery {
@@ -537,9 +548,27 @@ tr.summary__item__row_mobile {
   @include respond-from("screen-md") {
     padding: 0;
   }
-  span {
-    @extend .desktop-cart__order__total__price;
+}
+
+.desktop-cart__order__delivery-price {
+  @extend %desktop-cart__order__price;
+}
+
+.desktop-cart__order__delivery-discount {
+  color: $color-text-highlight;
+  font-weight: normal;
+}
+
+.desktop-cart__order__voucher {
+  color: $color-text-highlight;
+  padding: 0 $space-sm;
+  @include respond-from("screen-md") {
+    padding: 0;
   }
+}
+
+.desktop-cart__order__voucher-price {
+  @extend %desktop-cart__order__price;
 }
 
 .desktop-cart__order__total {
@@ -550,29 +579,17 @@ tr.summary__item__row_mobile {
     font-family: $bold-font-family;
     padding: $space-sm 0;
   }
-
-  em {
-    font-family: $base-font-family;
-    font-style: normal;
-    font-size: $font-size-1_4rem;
-    font-weight: normal;
-  }
 }
 
-.desktop-cart__order__total__price {
-  display: inline-block;
-  float: right;
+.desktop-cart__order__total-note {
+  font-family: $base-font-family;
+  font-style: normal;
+  font-size: $font-size-1_4rem;
+  font-weight: normal;
 }
 
-.delivery-fee-after-discount {
-  margin-left: $space-xs;
-  color: $color-text-highlight;
-}
-
-.desktop-cart__order-voucher-total {
-  color: $color-text-highlight;
-  display: inline-block;
-  float: right;
+.desktop-cart__order__total-price {
+  @extend %desktop-cart__order__price;
 }
 
 .desktop-cart__order__subtotal-container {
@@ -604,7 +621,6 @@ tr.summary__item__row_mobile {
 
 .desktop-cart__footer {
   position: relative;
-  overflow: auto;
   opacity: 1;
   line-height: 1.83;
 
@@ -749,7 +765,8 @@ tr.summary__item__row_mobile {
     padding: 15px 0 0;
   }
 
-  .desktop-cart__order__delivery {
+  .desktop-cart__order__delivery,
+  .desktop-cart__order__voucher {
     padding: 0;
   }
 
