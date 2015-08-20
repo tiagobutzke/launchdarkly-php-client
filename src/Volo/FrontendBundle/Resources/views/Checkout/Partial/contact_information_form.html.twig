@@ -2,6 +2,34 @@
     <span class="form__error-message form__error-message--contact-not-saved form__error-message--above-form hide" id="error-message-contact-not-saved">
         {% trans %}contact_information.needs_to_be_saved{% endtrans %}
     </span>
+
+    <div class="checkout__contact-information__login-warning hide">{% trans %}checkout.login_warning{% endtrans %}</div>
+
+    <div class="form-group">
+        <input type="email" class="form-control" id="contact-information-email" name="customer[email]" value=""
+               required="true" placeholder="{% trans %}form.placeholder.email{% endtrans %}"
+               data-validation-msg="{% trans %}validations.error.checkout.customer_email{% endtrans %}">
+    </div>
+
+    <div class="checkout__contact-information__register-link-wrapper hide">
+        <a class="checkout__contact-information__register-link">{% trans %}checkout.create_account_link{% endtrans %}</a>
+        <span class="checkout__contact-information_register-text">{% trans %}checkout.create_account_text{% endtrans %}</span>
+    </div>
+
+    <div class="form-group hide checkout__contact-information__password-wrapper">
+        <input type="password" class="form-control" id="contact-information-password" name="customer[password]"
+               value=""
+               required="true" placeholder="{% trans %}form.placeholder.password{% endtrans %}"
+               data-validation-msg="{% trans %}validations.error.register.password{% endtrans %}">
+    </div>
+
+    <div class="checkout__contact-information__server-error-message hide"></div>
+    <div class="text-center checkout__contact-information__forgot-password hide">{% trans %}content.forgot_password{% endtrans %} <a>{% trans %}link.forgot_password{% endtrans %}</a></div>
+
+    <div class="checkout__contact-information__hide-register-link-wrapper hide">
+        <a class="checkout__contact-information__hide-register-link">{% trans %}checkout.create_account_hide{% endtrans %}</a>
+    </div>
+
     <div class="form-group checkout__contact-information__form-first-name">
         <input type="text" class="form-control" id="contact-information-first-name" name="customer[first_name]"
                value="" required="true" placeholder="{% trans %}form.placeholder.first_name{% endtrans %}"
@@ -12,11 +40,7 @@
                value="" required="true" placeholder="{% trans %}form.placeholder.last_name{% endtrans %}"
                data-validation-msg="{% trans %}validations.error.checkout.customer_last_name{% endtrans %}">
     </div>
-    <div class="form-group">
-        <input type="email" class="form-control" id="contact-information-email" name="customer[email]" value=""
-               required="true" placeholder="{% trans %}form.placeholder.email{% endtrans %}"
-               data-validation-msg="{% trans %}validations.error.checkout.customer_email{% endtrans %}">
-    </div>
+
     <div class="form-group" id="contact-information-mobile-number-wrap">
         <input type="tel" class="form-control" id="contact-information-mobile-number" name="customer[mobile_number]"
                value=""
@@ -26,6 +50,7 @@
             <span class="checkout__step__item-content-row form__error-message invalid_number">{{ phoneNumberError|trans|raw }}</span>
         {% endif %}
     </div>
+
     <div class="form-group checkout__step__item-form-group--newsletter sprite-form">
         <input type="checkbox" class="form-control sprite-form__checkbox" name="customer[is_newsletter_subscribed]"
                id="contact-information-newsletter-checkbox" value="true" data-unchecked-value="false" checked="checked">

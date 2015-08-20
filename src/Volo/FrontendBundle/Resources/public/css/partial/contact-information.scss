@@ -5,3 +5,27 @@
 .profile__blocks .checkout__step__item-form-group--newsletter {
   display: none;
 }
+
+.checkout__contact-information__login-warning {
+  color: $color-text-information-message;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.checkout__contact-information__register-link-wrapper, .checkout__contact-information__hide-register-link-wrapper {
+  margin-top: -9px;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.checkout__contact-information__forgot-password {
+  margin-bottom: 10px;
+}
+
+.checkout__contact-information__server-error-message {
+  @extend %form-message;
+  color: $error-msg-color-text;
+  background-color: $error-msg-color-bg;
+  margin-top: -16px;
+  margin-bottom: 10px;
+}

@@ -296,7 +296,7 @@ VOLO.createProfileView = function(customerModel) {
     var profilePasswordFormView = new VOLO.ProfilePasswordFormView({
         el: '#profile-contact-information-form'
     });
-    var profileContactView = new VOLO.ContactInformatioForm({
+    var profileContactView = new VOLO.ContactInformationForm({
         el: $('#contact-information-form'),
         model: customerModel
     });

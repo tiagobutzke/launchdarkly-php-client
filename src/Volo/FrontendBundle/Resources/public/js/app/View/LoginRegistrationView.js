@@ -110,7 +110,7 @@ var LoginRegistrationView = Backbone.View.extend({
     events: {
         'click .register-link': 'renderRegistration',
         'click .login-link': 'render',
-        'click .forgot-password-link': '_loadForgotPasswordFormIntoLoginModal',
+        'click .forgot-password-link': 'renderForgotPassword',
         'submit .forgot-password-form': '_handingSubmitOfLostPasswordForm',
         'submit .reset-password-form': '_handingSubmitOfResetPasswordForm',
         'submit .login-form': '_handingSubmitOfLoginForm',
@@ -125,8 +125,9 @@ var LoginRegistrationView = Backbone.View.extend({
         this.undelegateEvents();
     },
 
-    _loadForgotPasswordFormIntoLoginModal: function() {
+    renderForgotPassword: function() {
         var email = this.$('#username').val();
+        this.$el.modal();
 
         this.$('.modal-content').html(this.templateForgottPassword);
         this._registerValidationView = new ValidationView({
@@ -135,6 +136,8 @@ var LoginRegistrationView = Backbone.View.extend({
         });
 
         this.$('#email').val(email);
+
+        return this;
     },
 
     _handingSubmitOfLostPasswordForm: function(event) {

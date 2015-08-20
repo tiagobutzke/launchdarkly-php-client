@@ -9,10 +9,15 @@ VOLO.CustomerModel = Backbone.Model.extend({
 
     initialize: function (data, options) {
         _.bindAll(this);
+
+        //todo isGuest should be a method
         this.isGuest = options.isGuest;
         if (this.isGuest) {
             this.set('id', 'anon.');
         }
+
+        this.isRegistering = false;
+        this.isExistingEmail = false;
     },
 
     urlRoot: function() {
