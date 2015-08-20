@@ -163,7 +163,10 @@ var CheckoutPageView = Backbone.View.extend({
 
         if (_.isNull(data.hosted_payment_page_redirect)) {
             this.model.cartModel.emptyCart(this.vendorId);
-            Turbolinks.visit(Routing.generate('order_tracking', {orderCode: data.code}));
+            Turbolinks.visit(Routing.generate('order_tracking', {
+                orderCode: data.code,
+                _locale: VOLO.configuration.userLocale
+            }));
         } else {
             if (data.hosted_payment_page_redirect.method === 'post') { // adyen hpp
                 var params = data.hosted_payment_page_redirect.parameters,

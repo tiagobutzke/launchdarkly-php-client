@@ -40,7 +40,9 @@
             </a>
             {% for locale in locales %}
                 {% if locale != app.request.locale %}
-                    <a class="header__language-switch" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : locale})) }}">
+                    <a class="header__language-switch"
+                       href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : locale})) }}"
+                       data-no-turbolink="true">
                         {{ locale|languageName }}
                     </a>
                 {% endif %}

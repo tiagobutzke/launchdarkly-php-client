@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 class ComingSoonListener
 {
     private $whitelistedRoutes = [
-        'coming-soon-disable',
+        '_coming-soon-disable',
         '_foodpanda_api_health_check'
     ];
 
