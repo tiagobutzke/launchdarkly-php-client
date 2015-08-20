@@ -4,13 +4,13 @@ namespace Volo\FrontendBundle\EventListener;
 
 use Foodpanda\ApiSdk\Api\FoodpandaClient;
 use Foodpanda\ApiSdk\Entity\Language\Language;
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Routing\Router;
 use Volo\FrontendBundle\Provider\LocaleConfigProvider;
 use Volo\FrontendBundle\Service\ConfigurationService;
+use Volo\FrontendBundle\Service\TranslatorService;
 
 class LocaleListener
 {
@@ -35,15 +35,10 @@ class LocaleListener
     protected $router;
 
     /**
-     * @var Translator
-     */
-    protected $translator;
-
-    /**
      * @param ConfigurationService $config
      * @param FoodpandaClient $client
      * @param LocaleConfigProvider $localeConfigProvider
-     * @param Translator $translator
+     * @param TranslatorService $translator
      * @param Router $router
      *
      */
@@ -51,14 +46,14 @@ class LocaleListener
         ConfigurationService $config,
         FoodpandaClient $client,
         LocaleConfigProvider $localeConfigProvider,
-        Translator $translator,
+        TranslatorService $translator,
         Router $router
     ) {
         $this->client = $client;
         $this->config = $config;
         $this->localeConfigProvider = $localeConfigProvider;
         $this->router = $router;
-        $this->translator = $translator;
+        $translator->setLocaleConfigProvider($localeConfigProvider);
     }
 
     /**
@@ -84,12 +79,6 @@ class LocaleListener
         if (null !== $languageId) {
             $this->client->setLanguageId($languageId);
         }
-
-        $this->translator->setLocale(
-            $this->localeConfigProvider->getFullLocale(
-                $request->getLocale()
-            )
-        );
     }
 
     /**
