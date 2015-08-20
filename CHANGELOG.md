@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.23.2
+  * INTVOLO-416 turbolinks visit locale fix
+
 * 1.23.1
   * INTVOLO-314: Geo-coding improvement - Fixing short-locale names
   * INTVOLO-415 fos js routing fix
