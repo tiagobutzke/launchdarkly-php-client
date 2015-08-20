@@ -4,5 +4,4 @@ imports:
 parameters:
     country_code: de
     environment: development
-    locale: de_DE
     timezone: "Europe/Berlin"

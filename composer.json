@@ -150,6 +150,16 @@
                 "file": "app/config/countries_parameters/hk.yml",
                 "dist-file": "app/config/countries_parameters/dist/hk.yml.dist",
                 "keep-outdated": true
+            },
+            {
+                "file": "app/config/countries_parameters/ae.yml",
+                "dist-file": "app/config/countries_parameters/dist/ae.yml.dist",
+                "keep-outdated": true
+            },
+            {
+                "file": "app/config/countries_parameters/sg.yml",
+                "dist-file": "app/config/countries_parameters/dist/sg.yml.dist",
+                "keep-outdated": true
             }
         ],
         "branch-alias": {

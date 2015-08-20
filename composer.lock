@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "196a03d45e2ba42df2d6af90e54f3f52",
+    "hash": "e8695421a1fa4731ed9d77c47b6c740d",
     "packages": [
         {
             "name": "99designs/phumbor",
