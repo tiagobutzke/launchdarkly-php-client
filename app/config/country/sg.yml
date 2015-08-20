@@ -1,0 +1,6 @@
+imports:
+    - { resource: common.yml }
+parameters:
+    locale: en_SG
+    timezone: "Asia/Singapore"
+    average_delivery_time: 30

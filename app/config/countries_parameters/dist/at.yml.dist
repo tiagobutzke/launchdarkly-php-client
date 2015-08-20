@@ -4,4 +4,3 @@ imports:
 parameters:
     country_code: at
     environment: development
-    locale: de_AT

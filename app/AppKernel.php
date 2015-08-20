@@ -141,6 +141,7 @@ class AppKernel extends Kernel
     public static function getAvailableCountryCodes()
     {
         return [
+            'ae',
             'at',
             'au',
             'ca',
