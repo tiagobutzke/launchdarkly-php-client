@@ -3,9 +3,9 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.2&amp;sensor=false&amp;libraries=places&amp;language={{ locale|replace('_', '-') }}&amp;client={{ google_api_client_id }}&amp;channel={{ google_api_channel }}"></script>
     <script src="{{ asset('js/dist/head.js') }}"></script>
     {% if app.debug == true %}
-        <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
         <script src="{{ path('thumbor_configuration') }}"></script>
     {% endif %}
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
 
     <script type="text/javascript">
         var VOLO = VOLO || {};

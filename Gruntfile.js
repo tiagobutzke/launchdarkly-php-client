@@ -59,7 +59,6 @@ module.exports = function (grunt) {
     jsSources.allLibs = jsSources.libs.concat([
         'web/bundles/heltheturbolinks/js/turbolinks.js',
         'web/bundles/fosjsrouting/js/router.js',
-        'web/js/fos_js_routes.js',
         'web/thumbor/configuration.js',
         'web/bower_components/lodash/lodash.js',
         'web/bower_components/backbone/backbone.js',
