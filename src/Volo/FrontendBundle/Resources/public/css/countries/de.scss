@@ -1,4 +1,4 @@
-@import '../bootstrap/bootstrap';
+﻿@import '../bootstrap/bootstrap';
 @import '../../dist/sass/sprite-common';
 @import '../variables';
 
@@ -12,10 +12,5 @@
 
 
 // ----------------------- COUNTRY STYLES OVERRIDE START --------------------------
-
-.city {
-  @include make-md-column(6);
-  @extend .col-md-push-3;
-}
 
 // ----------------------- COUNTRY STYLES OVERRIDE END ----------------------------

@@ -37,6 +37,6 @@ li {
 }
 
 .turbolinks-progress-bar::before {
-  background-color: #d70f64 !important;
+  background-color: $cta-color-bg-primary !important;
   height: 5px;
 }

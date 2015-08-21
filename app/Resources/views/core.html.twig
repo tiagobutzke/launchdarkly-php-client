@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <title>{% block title %}{{ 'general.default_page_title'|trans }}{% endblock %}</title>
 
-        {% if "es" == country_code or "se" == country_code %}
+        {% if "es" == country_code or "se" == country_code or "au" == country_code %}
             {% set faviconCountry = country_code %}
         {% else %}
             {% set faviconCountry = 'default' %}
@@ -25,7 +25,7 @@
         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/img/favicon/'~ faviconCountry ~'/favicon-16x16.png') }}">
         <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('/img/favicon/'~ faviconCountry ~'/favicon-96x96.png') }}">
         <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/img/favicon/'~ faviconCountry ~'/favicon-32x32.png') }}">
-        <meta name="msapplication-TileColor" content="{{ 'default' == faviconCountry ? '#D70F64' : '#FFFFFF' }} ">
+        <meta name="msapplication-TileColor" content="{{ 'default' == faviconCountry ? '#d70f64' : '#FFFFFF' }} ">
         <meta name="msapplication-square70x70logo" content="{{ asset('/img/favicon/'~ faviconCountry ~'/smalltile.png') }}">
         <meta name="msapplication-square150x150logo" content="{{ asset('/img/favicon/'~ faviconCountry ~'/mediumtile.png') }}">
         <meta name="msapplication-square310x310logo" content="{{ asset('/img/favicon/'~ faviconCountry ~'/largetile.png') }}">

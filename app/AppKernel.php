@@ -140,25 +140,7 @@ class AppKernel extends Kernel
      */
     public static function getAvailableCountryCodes()
     {
-        return [
-            'ae',
-            'at',
-            'au',
-            'ca',
-            'ch',
-            'de',
-            'dk',
-            'es',
-            'fi',
-            'fr',
-            'gb',
-            'ie',
-            'it',
-            'nl',
-            'no',
-            'se',
-            'hk',
-        ];
+        return json_decode(__DIR__ . '/../countries.json', true);
     }
 
     /**

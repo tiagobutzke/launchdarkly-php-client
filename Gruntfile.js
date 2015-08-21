@@ -129,19 +129,31 @@ module.exports = function (grunt) {
         }
     };
 
+
+    var allCountries = grunt.file.readJSON('countries.json');
+
+    if(env === 'dev') {
+        allCountries = ['de']; //filter sass build to only some countries to make it faster
+    }
+
     config.sass = {
         options: {
             loadPath: process.cwd(),
             style: 'compressed',
             sourcemap: (env === 'dev') ? 'file' : 'none'
-        },
-        siteBundleStyle: {
-            files: [{
-                src: frontendAssetPath('/css/main.scss'),
-                dest: frontendWebPath('/css/dist/style.css')
-            }]
         }
     };
+    _.each(allCountries, function(country) {
+        var siteBundleStyle = 'siteBundleStyle_' +  country;
+
+        config.sass[siteBundleStyle] = {
+            files: [{
+                src: frontendAssetPath('/css/countries/' + country + '.scss'),
+                dest: frontendWebPath('/css/dist/style-' + country + '.css')
+            }]
+        };
+    });
+
 
     config.uglify = {
         options: {
