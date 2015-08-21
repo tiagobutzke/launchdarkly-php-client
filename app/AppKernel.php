@@ -140,7 +140,12 @@ class AppKernel extends Kernel
      */
     public static function getAvailableCountryCodes()
     {
-        return json_decode(__DIR__ . '/../countries.json', true);
+        $filename = __DIR__ . '/config/countries.json';
+        if (!file_exists($filename)) {
+            throw new \RuntimeException(sprintf('"%s" does not exist.', $filename));
+        }
+
+        return json_decode(file_get_contents($filename), true);
     }
 
     /**

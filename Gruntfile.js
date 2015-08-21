@@ -39,10 +39,15 @@ module.exports = function (grunt) {
         return md5(hash.join(''));
     }
 
-    var env = grunt.option('env') || 'dev';
-    var debug = (env === 'dev');
+    var env = grunt.option('env') || 'dev',
+        allCountriesOption = grunt.option('sass-countries'),
+        debug = (env === 'dev'),
+        allCountriesSass = grunt.file.readJSON('app/config/countries.json'),
+        jsSources = {};
 
-    var jsSources = {};
+    if (allCountriesOption) {
+        allCountriesSass = allCountriesOption.split(',');
+    }
 
     jsSources.libs = [
         'web/bower_components/jquery/dist/jquery.js',
@@ -129,13 +134,6 @@ module.exports = function (grunt) {
         }
     };
 
-
-    var allCountries = grunt.file.readJSON('countries.json');
-
-    if(env === 'dev') {
-        allCountries = ['de']; //filter sass build to only some countries to make it faster
-    }
-
     config.sass = {
         options: {
             loadPath: process.cwd(),
@@ -143,10 +141,10 @@ module.exports = function (grunt) {
             sourcemap: (env === 'dev') ? 'file' : 'none'
         }
     };
-    _.each(allCountries, function(country) {
-        var siteBundleStyle = 'siteBundleStyle_' +  country;
+    _.each(allCountriesSass, function(country) {
+        var countryLabel = 'country_' +  country;
 
-        config.sass[siteBundleStyle] = {
+        config.sass[countryLabel] = {
             files: [{
                 src: frontendAssetPath('/css/countries/' + country + '.scss'),
                 dest: frontendWebPath('/css/dist/style-' + country + '.css')
