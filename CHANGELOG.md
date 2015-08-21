@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.23.8
+  * Fixed AU timezone
+
 * 1.23.7
   * INTVOLO-419 HK: Wrong currency is shown on menu page
 
