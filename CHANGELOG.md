@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-* 1.23.4
+* 1.23.5
   * INTVOLO-421 Wrong error page is shown when reloading order success page after delting cache and cookies
 
 * 1.23.3
