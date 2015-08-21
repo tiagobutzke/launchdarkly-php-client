@@ -95,8 +95,7 @@ var HomeSearchView = CTATrackableView.extend({
             address: data.address,
             longitude: data.longitude,
             latitude: data.latitude,
-            postcode: data.postcode,
-            _locale: VOLO.configuration.userLocale
+            postcode: data.postcode
         }));
     },
 

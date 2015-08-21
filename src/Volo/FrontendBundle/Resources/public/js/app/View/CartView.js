@@ -318,8 +318,7 @@ var CartView = Backbone.View.extend({
 
         if (!this.$('.btn-checkout').hasClass('disabled')) {
             Turbolinks.visit(Routing.generate('checkout_payment', {
-                vendorCode: vendorCode,
-                _locale: VOLO.configuration.userLocale
+                vendorCode: vendorCode
             }));
         }
 
@@ -509,7 +508,7 @@ var VendorCartIconView = Backbone.View.extend({
     _gotoMenuPage: function() {
         var vendorId = this.$el.data().vendor_id + '';
         if (vendorId.length > 0) {
-            Turbolinks.visit(Routing.generate('vendor_by_id', {id: vendorId, _locale: VOLO.configuration.userLocale}));
+            Turbolinks.visit(Routing.generate('vendor_by_id', {id: vendorId}));
         }
     },
 
