@@ -80,9 +80,14 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
     public function priceFilter($number)
     {
         $formatter = twig_get_number_formatter($this->locale, 'currency');
-        $currency = $formatter->getTextAttribute(\NumberFormatter::CURRENCY_CODE);
+        $currencyCode = $formatter->getTextAttribute(\NumberFormatter::CURRENCY_CODE);
 
-        return $formatter->formatCurrency($number, $currency);
+        // TODO: Temporary fix for Hong Kong
+        if ('en_HK' === $this->locale) {
+            $currencyCode = Intl::getCurrencyBundle()->getCurrencySymbol($currencyCode);
+        }
+
+        return $formatter->formatCurrency($number, $currencyCode);
     }
 
     /**
