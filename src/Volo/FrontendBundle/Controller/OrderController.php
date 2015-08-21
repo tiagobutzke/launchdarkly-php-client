@@ -30,15 +30,14 @@ class OrderController extends BaseController
     public function statusAction(Request $request, $orderCode)
     {
         $session = $request->getSession();
-        $accessToken = $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')
-            ? $this->get('security.token_storage')->getToken()->getAccessToken()
-            : new AccessToken($session->get(static::SESSION_GUEST_ORDER_ACCESS_TOKEN), 'bearer');
+        $accessToken = $this->createAccessToken($orderCode, $session);
+
         $orderProvider = $this->get('volo_frontend.provider.order');
         try {
             $status = $orderProvider->fetchOrderStatus($orderCode, $accessToken);
             $orderPayment = $this->createOrderPayment($orderCode, $session, $status, $orderProvider, $accessToken);
         } catch (OrderNotFoundException $e) {
-            throw $this->createNotFoundException('Order not found.', $e);
+            throw $this->createNotFoundException(sprintf('Order "%s" not found.', $orderCode), $e);
         }
 
         $viewName = 'VoloFrontendBundle:Order:status.html.twig';
@@ -83,5 +82,25 @@ class OrderController extends BaseController
 
             return $orderPayment;
         }
+    }
+
+    /**
+     * @param string $orderCode
+     * @param SessionInterface $session
+     *
+     * @return AccessToken
+     */
+    private function createAccessToken($orderCode, SessionInterface $session)
+    {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $accessToken = $this->getToken()->getAccessToken();
+        } else {
+            if (!$session->has(static::SESSION_GUEST_ORDER_ACCESS_TOKEN)) {
+                throw $this->createNotFoundException(sprintf('Order "%s" not found for guest user.', $orderCode));
+            }
+            $accessToken = new AccessToken($session->get(static::SESSION_GUEST_ORDER_ACCESS_TOKEN), 'bearer');
+        }
+
+        return $accessToken;
     }
 }
