@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.24.7
+  * INTVOLO-419 HK: Wrong currency is shown on menu page
+
 * 1.23.6
   * INTVOLO-416: Reverting most of turbolinks visit locale fix
 
