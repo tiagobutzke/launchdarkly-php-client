@@ -16,15 +16,19 @@
    z-index: 900;
   }
 }
+.show-ios-smart-banner .desktop-cart {
+  top: $ios-smart-banner-height;
+}
+
 
 .desktop-cart {
   @include make-md-column(4);
   @include make-lg-column(3);
   width: 100%;
-  height: 100%;
   position: fixed;
   top: 0;
   left: 0;
+  bottom: 0;
   background-color: $color-bg-primary;
   font-size: $font-size-1_4rem;
   padding: $space-xs;

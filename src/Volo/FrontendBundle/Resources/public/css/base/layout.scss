@@ -40,3 +40,11 @@ li {
   background-color: $cta-color-bg-primary !important;
   height: 5px;
 }
+
+
+.show-ios-smart-banner .header--mobile + main {
+  margin-top: $ios-smart-banner-height + $header-height-extra-small;
+}
+.show-ios-smart-banner main {
+  margin-top: $ios-smart-banner-height;
+}
