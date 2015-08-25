@@ -153,11 +153,7 @@ var ToppingSpecialInstructionsView = Backbone.View.extend({
     },
 
     render: function() {
-        /**
-         * SGFD-18478 Hide Special instructions
-         * Temporary disabling special instructions layout
-         */
-        //this.$el.html(this.template(this.model.toJSON()));
+        this.$el.html(this.template(this.model.toJSON()));
 
         return this;
     },
