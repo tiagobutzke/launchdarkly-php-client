@@ -140,25 +140,12 @@ class AppKernel extends Kernel
      */
     public static function getAvailableCountryCodes()
     {
-        return [
-            'ae',
-            'at',
-            'au',
-            'ca',
-            'ch',
-            'de',
-            'dk',
-            'es',
-            'fi',
-            'fr',
-            'gb',
-            'ie',
-            'it',
-            'nl',
-            'no',
-            'se',
-            'hk',
-        ];
+        $filename = __DIR__ . '/config/countries.json';
+        if (!file_exists($filename)) {
+            throw new \RuntimeException(sprintf('"%s" does not exist.', $filename));
+        }
+
+        return json_decode(file_get_contents($filename), true);
     }
 
     /**

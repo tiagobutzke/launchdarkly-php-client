@@ -1,7 +1,3 @@
-@import '../dist/sass/sprite-common';
-
-@import 'variables';
-
 @import 'utilities/general-mixins';
 @import 'utilities/grid-mixins';
 @import 'utilities/bootstrap-select';
@@ -36,7 +32,3 @@
 
 @import 'animations/flipper';
 @import 'animations/numbersScroller';
-
-@import 'countries/no';
-@import 'countries/es';
-@import 'countries/se';

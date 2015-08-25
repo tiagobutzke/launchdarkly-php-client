@@ -1,20 +1,34 @@
-body.country-es {
+@import '../bootstrap/bootstrap';
+@import '../../dist/sass/sprite-common';
+@import '../variables';
 
-  .icon-logo {
-    &:before {
-      content: "\e61a" !important;
-    }
-  }
 
-  .header--white {
-    .header__logo__a {
-      i {
-        color: #000;
-      }
-    }
-  }
+// ----------------------- COUNTRY VARIABLES OVERRIDE START --------------------------
 
-  .footer__nav__press {
-    display: none;
+// ----------------------- COUNTRY VARIABLES OVERRIDE END ----------------------------
+
+
+@import "../shop";
+
+
+// ----------------------- COUNTRY STYLES OVERRIDE START --------------------------
+
+.icon-logo {
+  &:before {
+    content: "\e61a" !important;
   }
 }
+
+.header--white {
+  .header__logo__a {
+    i {
+      color: #000;
+    }
+  }
+}
+
+.footer__nav__press {
+  display: none;
+}
+
+// ----------------------- COUNTRY STYLES OVERRIDE END ----------------------------

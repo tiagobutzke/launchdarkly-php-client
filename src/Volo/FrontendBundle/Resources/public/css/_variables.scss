@@ -195,7 +195,7 @@ $dropdown-color-border: #c8c8c8;
 // ----------------------- DROP DOWNS END ----------------------
 
 // ----------------------- HOMEPAGE START ----------------------
-
+$numbers-image-url: '#{$imagepath}/numbers/numbers-sprite.jpg';
 // ----------------------- HOMEPAGE END ------------------------
 
 // ----------------------- RESTAURANT LIST START ------------------------
@@ -211,8 +211,8 @@ $top-cart-height: 100px;
 // ----------------------- MENU END ------------------------
 
 // ----------------------- TOOLTIP START ------------------------
-$tooltip-bg: #D70F64;
-$tooltip-arrow-color: $tooltip-bg;
+$tooltip-bg: #d70f64;
+$tooltip-arrow-color: #d70f64;
 // ----------------------- TOOLTIP END ------------------------
 
 // ----------------------- HEADER START ------------------------

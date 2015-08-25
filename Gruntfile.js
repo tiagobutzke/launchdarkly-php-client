@@ -39,10 +39,15 @@ module.exports = function (grunt) {
         return md5(hash.join(''));
     }
 
-    var env = grunt.option('env') || 'dev';
-    var debug = (env === 'dev');
+    var env = grunt.option('env') || 'dev',
+        allCountriesOption = grunt.option('sass-countries'),
+        debug = (env === 'dev'),
+        allCountriesSass = grunt.file.readJSON('app/config/countries.json'),
+        jsSources = {};
 
-    var jsSources = {};
+    if (allCountriesOption) {
+        allCountriesSass = allCountriesOption.split(',');
+    }
 
     jsSources.libs = [
         'web/bower_components/jquery/dist/jquery.js',
@@ -134,14 +139,19 @@ module.exports = function (grunt) {
             loadPath: process.cwd(),
             style: 'compressed',
             sourcemap: (env === 'dev') ? 'file' : 'none'
-        },
-        siteBundleStyle: {
-            files: [{
-                src: frontendAssetPath('/css/main.scss'),
-                dest: frontendWebPath('/css/dist/style.css')
-            }]
         }
     };
+    _.each(allCountriesSass, function(country) {
+        var countryLabel = 'country_' +  country;
+
+        config.sass[countryLabel] = {
+            files: [{
+                src: frontendAssetPath('/css/countries/' + country + '.scss'),
+                dest: frontendWebPath('/css/dist/style-' + country + '.css')
+            }]
+        };
+    });
+
 
     config.uglify = {
         options: {

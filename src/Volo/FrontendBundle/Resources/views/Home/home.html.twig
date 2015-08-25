@@ -119,10 +119,15 @@
                     <div class="home__stats__second-number">
                         <div class="numbers__scroller">
                             <div class="numbers__sprite number0"></div>
-                            <img class="number__spacer b-lazy" alt="" data-src="{{ asset('img/numbers/numbers-sprite.jpg') }}" src="{{ blazy_placeholder }}">
-                            <img class="number__spacer b-lazy" alt="" data-src="{{ asset('img/numbers/numbers-sprite.jpg') }}" src="{{ blazy_placeholder }}">
-                            <img class="number__spacer b-lazy" alt="" data-src="{{ asset('img/numbers/numbers-sprite.jpg') }}" src="{{ blazy_placeholder }}">
-                            <img class="number__spacer b-lazy" alt="" data-src="{{ asset('img/numbers/numbers-sprite.jpg') }}" src="{{ blazy_placeholder }}">
+                            {% if "au" == country_code %}
+                                {% set numbersSpriteName = 'numbers-sprite-au.jpg' %}
+                            {% else %}
+                                {% set numbersSpriteName = 'numbers-sprite.jpg' %}
+                            {% endif %}
+                            <img class="number__spacer b-lazy" alt="" data-src="{{ asset('img/numbers/' ~ numbersSpriteName) }}" src="{{ blazy_placeholder }}">
+                            <img class="number__spacer b-lazy" alt="" data-src="{{ asset('img/numbers/' ~ numbersSpriteName) }}" src="{{ blazy_placeholder }}">
+                            <img class="number__spacer b-lazy" alt="" data-src="{{ asset('img/numbers/' ~ numbersSpriteName) }}" src="{{ blazy_placeholder }}">
+                            <img class="number__spacer b-lazy" alt="" data-src="{{ asset('img/numbers/' ~ numbersSpriteName) }}" src="{{ blazy_placeholder }}">
                         </div>
                     </div>
                     <div class="home__stats__comment-minutes">

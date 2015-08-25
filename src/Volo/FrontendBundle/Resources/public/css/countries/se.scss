@@ -1,9 +1,24 @@
-.country-se .icon-logo:before {
+@import '../bootstrap/bootstrap';
+@import '../../dist/sass/sprite-common';
+@import '../variables';
+
+
+// ----------------------- COUNTRY VARIABLES OVERRIDE START --------------------------
+
+// ----------------------- COUNTRY VARIABLES OVERRIDE END ----------------------------
+
+
+@import "../shop";
+
+
+// ----------------------- COUNTRY STYLES OVERRIDE START --------------------------
+
+.icon-logo:before {
   content: "\e61c" !important;
 }
 
 
-.country-se .header__logo {
+.header__logo {
   margin-top: 11px;
   @include respond-from("screen-md") {
     margin-top: 16px;
@@ -12,7 +27,7 @@
     margin-top: 20px;
   }
 }
-.country-se .header--white .header__logo {
+.header--white .header__logo {
   margin-top: 11px;
   @include respond-from("screen-md") {
     margin-top: 16px;
@@ -23,11 +38,11 @@
 }
 
 
-.country-se .header__logo__a {
+.header__logo__a {
   padding-top: 1px;
 }
 
-.country-se .header__logo__a  i {
+.header__logo__a  i {
   font-size: 2.3rem;
   @include respond-from("screen-md") {
     font-size: 2.5rem;
@@ -36,3 +51,6 @@
     font-size: 3.1rem;
   }
 }
+
+
+// ----------------------- COUNTRY STYLES OVERRIDE END ----------------------------

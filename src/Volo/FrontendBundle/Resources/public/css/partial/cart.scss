@@ -475,6 +475,7 @@ tr.summary__item__row_mobile {
 
 .desktop-cart__time__field-date {
   height: $input-height;
+  background-color: $dropdown-color-bg-1;
   @include make-xs-column(6, 0);
 }
 .checkout__time-picker .desktop-cart__time__field-date {
@@ -485,6 +486,7 @@ tr.summary__item__row_mobile {
 
 .desktop-cart__time__field-time {
   height: $input-height;
+  background-color: $dropdown-color-bg-1;
   @include make-xs-column(6, 0);
   margin-left: -1px;
 }
