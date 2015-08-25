@@ -124,61 +124,68 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
         var deferred = $.Deferred();
 
         console.log('_geocodePostalCode ', this.cid, locationData);
-        var validateDeliveryWithAddressOnly = VOLO.configuration.address_config.autocomplete_type === 'address';
-        this._geocodeAddress(validateDeliveryWithAddressOnly); //todo remove this side effect
+        //todo inject it, don't use global objects
+        var validateDeliveryWithAddressOnly = VOLO.configuration.address_config.autocomplete_type[0] === 'address';
+
+        var addressGeocode = this._geocodeAddress();
         if (validateDeliveryWithAddressOnly) {
-            return deferred;
-        }
+            addressGeocode.done(function(result) {
+                this._validateDelivery({lat: result.lat(), lng: result.lng()}).then(deferred.resolve);
+            }.bind(this));
 
-        var getPostalCode = this._postalCodeGeocodingService.geocodeCenterPostalcode({
-            address: locationData.postcode + ", " + locationData.city,
-            postalCode: locationData.postcode,
-            city: locationData.city
-        });
-
-        getPostalCode.done(function(result) {
-            this._validateDelivery({lat: result.lat(), lng: result.lng()}).then(deferred.resolve);
-        }.bind(this));
-
-        getPostalCode.fail(function(results, status) {
-            if (_.isString(status) && status === 'ZERO_RESULTS') {
+            addressGeocode.fail(function() {
                 deferred.resolve(false);
-            } else {
-                this._validateDelivery({lat: this._locationModel.get('latitude'), lng: this._locationModel.get('longitude')}).done(deferred.resolve).done(function(result) {
-                    deferred.resolve(this.isValidForm() && result);
-                }.bind(this));
-            }
-        }.bind(this));
+            });
+        } else {
+            var getPostalCode = this._postalCodeGeocodingService.geocodeCenterPostalcode({
+                address: locationData.postcode + ", " + locationData.city,
+                postalCode: locationData.postcode,
+                city: locationData.city
+            });
+
+            getPostalCode.done(function(result) {
+                this._validateDelivery({lat: result.lat(), lng: result.lng()}).then(deferred.resolve);
+            }.bind(this));
+
+            getPostalCode.fail(function(results, status) {
+                if (_.isString(status) && status === 'ZERO_RESULTS') {
+                    deferred.resolve(false);
+                } else {
+                    this._validateDelivery({lat: this._locationModel.get('latitude'), lng: this._locationModel.get('longitude')}).done(deferred.resolve).done(function(result) {
+                        deferred.resolve(this.isValidForm() && result);
+                    }.bind(this));
+                }
+            }.bind(this));
+        }
 
         return deferred;
     },
 
-    _geocodeAddress: function(validateDeliveryWithAddressOnly) {
-        if (!this.isValidForm()) return;
+    _geocodeAddress: function() {
+        var deferred = $.Deferred();
 
-        this._postalCodeGeocodingService.geocodeAddress({
-            address: this.$('#delivery-information-address-line1').val() + ' ' + this.$('#delivery-information-address-line2').val() + ', ' + this.$('#delivery-information-postal-index').val() + ', ' + this.$('#delivery-information-city').val(),
+        if (this.isValidForm()) {
+            this._postalCodeGeocodingService.geocodeAddress({
+                address: this.$('#delivery-information-address-line1').val() + ' ' + this.$('#delivery-information-address-line2').val() + ', ' + this.$('#delivery-information-postal-index').val() + ', ' + this.$('#delivery-information-city').val(),
 
-            success: function(result) {
-                console.log(result);
-                this.$("#delivery-information-address-latitude").val(result.lat());
-                this.$("#delivery-information-address-longitude").val(result.lng());
-                if (validateDeliveryWithAddressOnly) {
-                    this._validateDelivery(
-                        {lat: result.lat(), lng: result.lng()}
-                    )
-                    .done(function() {
-                            this.isValidForm();
-                        }.bind(this)
-                    ).bind(this);
-                }
-            }.bind(this),
+                success: function(result) {
+                    console.log(result);
+                    this.$("#delivery-information-address-latitude").val(result.lat());
+                    this.$("#delivery-information-address-longitude").val(result.lng());
+                    deferred.resolve(result);
+                }.bind(this),
 
-            error: function() {
-                this.$("#delivery-information-address-latitude").val('');
-                this.$("#delivery-information-address-longitude").val('');
-            }.bind(this)
-        });
+                error: function() {
+                    this.$("#delivery-information-address-latitude").val('');
+                    this.$("#delivery-information-address-longitude").val('');
+                    deferred.reject();
+                }.bind(this)
+            });
+        } else {
+            deferred.reject();
+        }
+
+        return deferred;
     },
 
     _validateDelivery: function (locationData) {
