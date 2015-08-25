@@ -15,10 +15,21 @@ class CheckoutControllerTest extends VoloTestCase
 
         $session = $client->getContainer()->get('session');
         $client->getContainer()->get('volo_frontend.service.cart_manager')->saveCart($session, $vendorId, $this->getCart());
-        
+
         $client->request('GET', sprintf('/checkout/%s/payment', $vendorCode));
 
         $this->isSuccessful($client->getResponse());
+    }
+
+    public function testRedirectionToMenuWhenNoCart()
+    {
+        $client = static::createClient();
+
+        $vendorCode = 'm2hc';
+
+        $client->request('GET', sprintf('/checkout/%s/delivery', $vendorCode));
+
+        $this->isTrue($client->getResponse()->isRedirect('/restaurant/m2hc/magda_cafe'));
     }
 
     public function testGuestPost()
