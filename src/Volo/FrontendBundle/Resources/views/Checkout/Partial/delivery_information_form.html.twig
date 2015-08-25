@@ -19,7 +19,7 @@
                placeholder="{% trans %}form.placeholder.address_line1{% endtrans %}"
                required="true"
                id="delivery-information-address-line1" name="customer_address[address_line1]" type="text"
-               value=""
+               value="{{ customer_address.street|default('') }}"
                data-validation-msg="{% trans %}validations.error.checkout.customer_address_line_1{% endtrans %}"
                 >
     </div>
@@ -28,11 +28,11 @@
                placeholder="{% trans %}form.placeholder.address_line2{% endtrans %}"
                required="true"
                id="delivery-information-address-line2" name="customer_address[address_line2]" type="text"
-               value=""
+               value="{{  customer_address.building|default('') }}"
                data-validation-msg="{% trans %}validations.error.checkout.customer_address_line_2{% endtrans %}"
                 >
     </div>
-    <div class="form-group checkout__delivery-information__postal-index">
+    <div class="form-group checkout__delivery-information__postal-index{% if (address_config.hide_checkout_postal_code) %} hide{% endif %}">
         <input type="text" class="form-control" id="delivery-information-postal-index" name="customer_address[postcode]"
                data-vendor_id="{{ vendor.id }}"
                data-msg_ensure_full_address="{% trans %}formatted_address.ensure_full_address_with_number{% endtrans %}"
@@ -40,7 +40,7 @@
                data-validation-msg="{% trans %}validations.error.checkout.customer_postcode{% endtrans %}"
                 >
     </div>
-    <div class="form-group checkout__delivery-information__city">
+    <div class="form-group checkout__delivery-information__city{% if (address_config.hide_checkout_postal_code) %} hide{% endif %}">
         <input type="text" class="form-control" id="delivery-information-city" name="customer_address[city]"
                tabindex="99"
                readonly="readonly"

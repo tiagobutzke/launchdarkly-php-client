@@ -95,7 +95,9 @@ var HomeSearchView = CTATrackableView.extend({
             address: data.address,
             longitude: data.longitude,
             latitude: data.latitude,
-            postcode: data.postcode
+            postcode: data.postcode,
+            street: data.street,
+            building: data.building
         }));
     },
 
@@ -121,8 +123,9 @@ var HomeSearchView = CTATrackableView.extend({
             longitude: data.lng,
             postcode: data.postcode,
             city: data.city,
-            address: this._isFullAddressAutocomplete() ? data.formattedAddress : data.postcode + ", " + data.city
-
+            address: this._isFullAddressAutocomplete() ? data.formattedAddress : data.postcode + ", " + data.city,
+            building: this._isFullAddressAutocomplete() ? data.building : null,
+            street: this._isFullAddressAutocomplete() ? data.street : null
         });
 
         dataLayer.push({
@@ -143,7 +146,9 @@ var HomeSearchView = CTATrackableView.extend({
             postcode: locationMeta.postalCode.value,
             lat: locationMeta.lat,
             lng: locationMeta.lng,
-            city: locationMeta.city
+            city: locationMeta.city,
+            street: locationMeta.street,
+            building: locationMeta.building,
         };
     },
 

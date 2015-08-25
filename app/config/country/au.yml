@@ -4,3 +4,11 @@ parameters:
     locale: en_AU
     timezone: "Australia/Melbourne"
     average_delivery_time: 30
+    address_config:
+        postal_code_field:
+            - 'postal_code'
+            - 'neighborhood'
+            - 'administrative_area_level_1'
+        autocomplete_type:
+            - "address"
+        hide_checkout_postal_code: false

@@ -23,13 +23,14 @@ class LocationController extends Controller
      *      requirements={"cityUrlKey"="[a-zA-Z-]+"}
      * )
      * @Route(
-     *      "/restaurants/lat/{latitude}/lng/{longitude}/plz/{postcode}/city/{city}/address/{address}",
+     *      "/restaurants/lat/{latitude}/lng/{longitude}/plz/{postcode}/city/{city}/address/{address}/{street}/{building}",
      *      name="volo_location_search_vendors_by_gps",
      *      options={"expose"=true},
+     *      defaults={"street"="", "building"=""},
      *      requirements={
      *          "latitude"="-?(\d*[.])?\d+",
      *          "longitude"="-?(\d*[.])?\d+",
-     *          "postcode"="[a-zA-Z0-9\s]+"
+     *          "postcode"="[^/]+"
      *      }
      * )
      * @Method({"GET"})
@@ -39,7 +40,7 @@ class LocationController extends Controller
      * @param Request $request
      * @param AbstractLocation $location
      * @param array $formattedLocation
-     * 
+     *
      * @return array
      */
     public function locationAction(Request $request, AbstractLocation $location, array $formattedLocation)

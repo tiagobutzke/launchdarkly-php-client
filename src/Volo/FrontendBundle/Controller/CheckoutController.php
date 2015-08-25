@@ -141,7 +141,9 @@ class CheckoutController extends BaseController
         $customerLocation = $this->get('volo_frontend.service.customer_location')->get($session);
         $restaurantLocation = [
             'city' => $vendor->getCity()->getName(),
-            'postcode' => $customerLocation[CustomerLocationService::KEY_PLZ]
+            'postcode' => $customerLocation[CustomerLocationService::KEY_PLZ],
+            'street' => $customerLocation[CustomerLocationService::KEY_STREET],
+            'building' => $customerLocation[CustomerLocationService::KEY_BUILDING],
         ];
 
         $viewData = [
