@@ -59,7 +59,7 @@ class CheckoutController extends BaseController
     public function validatePhoneNumberAction($phoneNumber)
     {
         try {
-            $validPhoneNumber = $this->getCustomerService()->validatePhoneNumber($phoneNumber);
+            $validPhoneNumber = $this->getCustomerService()->validatePhoneNumber(urldecode($phoneNumber));
         } catch (PhoneNumberValidationException $e) {
             return new JsonResponse(['error' => ['mobile_number' => $e->getMessage()]], Response::HTTP_BAD_REQUEST);
         }

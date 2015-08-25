@@ -48,7 +48,8 @@ VOLO.ContactInformatioForm = ValidationView.extend({
                 parseBooleans: true
             }),
             customer = {},
-            routingParam = {phoneNumber: this.$('#contact-information-mobile-number').val()};
+            phoneNum = encodeURIComponent(this.$('#contact-information-mobile-number').val()),
+            routingParam = {phoneNumber: phoneNum};
 
         _.each(form.customer, function (val, key) {
             customer[key] = _.isString(val) ? _.escape(val) : val; 
@@ -61,7 +62,7 @@ VOLO.ContactInformatioForm = ValidationView.extend({
                 if (!response.exists) {
                     return $.ajax({
                         url: Routing.generate('checkout_validate_phone_number', routingParam),
-                            success: _.curry(this._onSuccessMobileNumberValidation, 2)(customer),
+                        success: _.curry(this._onSuccessMobileNumberValidation, 2)(customer),
                         error: this._onErrorMobileNumberValidation
                     });
                 }
