@@ -73,7 +73,7 @@
         </service>
 
         <service id="volo_frontend.twig.volo_extension" class="%volo_frontend.twig.volo_extension.class%">
-            <argument>%locale%</argument>
+            <argument type="service" id="translator" />
             <argument type="service" id="volo_frontend.service.cart_manager" />
             <argument>%timepicker_date_format%</argument>
             <tag name="twig.extension"/>
