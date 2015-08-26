@@ -4,16 +4,16 @@ namespace Volo\FrontendBundle\Twig;
 
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Twig_Extensions_Extension_Intl;
+use Symfony\Component\Translation\TranslatorInterface;
 use Volo\FrontendBundle\Service\CartManagerService;
 use Symfony\Component\Intl\Intl;
 
-class VoloExtension extends Twig_Extensions_Extension_Intl
+class VoloExtension extends \Twig_Extension
 {
     /**
-     * @var string
+     * @var TranslatorInterface
      */
-    private $locale;
+    private $translator;
 
     /**
      * @var string
@@ -26,14 +26,13 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
     private $cartManager;
 
     /**
-     * @param string $locale
-     * @param CartManagerService $cartManager
+     * @param TranslatorInterface $translator
+     * @param CartManagerService  $cartManager
+     * @param                     $datePickerDateFormat
      */
-    public function __construct($locale, CartManagerService $cartManager, $datePickerDateFormat)
+    public function __construct(TranslatorInterface $translator, CartManagerService $cartManager, $datePickerDateFormat)
     {
-        parent::__construct();
-
-        $this->locale = $locale;
+        $this->translator = $translator;
         $this->cartManager = $cartManager;
         $this->timePickerDateFormat = $datePickerDateFormat;
     }
@@ -79,11 +78,11 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
      */
     public function priceFilter($number)
     {
-        $formatter = twig_get_number_formatter($this->locale, 'currency');
+        $formatter = twig_get_number_formatter($this->translator->getLocale(), 'currency');
         $currencyCode = $formatter->getTextAttribute(\NumberFormatter::CURRENCY_CODE);
 
         // TODO: Temporary fix for Hong Kong
-        if ('en_HK' === $this->locale) {
+        if ('en_HK' === $this->translator->getLocale()) {
             $currencyCode = Intl::getCurrencyBundle()->getCurrencySymbol($currencyCode);
         }
 
@@ -95,7 +94,7 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
      */
     public function getConfiguration()
     {
-        $formatter = twig_get_number_formatter($this->locale, 'currency');
+        $formatter = twig_get_number_formatter($this->translator->getLocale(), 'currency');
         $currencyIso = $formatter->getTextAttribute(\NumberFormatter::CURRENCY_CODE);
 
         return [
@@ -184,7 +183,7 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
      */
     public function formatTime(\DateTime $dateTime)
     {
-        $formatter = \IntlDateFormatter::create($this->locale, \IntlDateFormatter::NONE, \IntlDateFormatter::SHORT);
+        $formatter = \IntlDateFormatter::create($this->translator->getLocale(), \IntlDateFormatter::NONE, \IntlDateFormatter::SHORT);
 
         return $formatter->format($dateTime);
     }
@@ -199,7 +198,7 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
         $timestamp = strtotime("+{$dayIndex} day", strtotime('next Sunday'));
         $dateTime = new \DateTime();
         $dateTime->setTimestamp($timestamp);
-        $formatter = \IntlDateFormatter::create($this->locale, \IntlDateFormatter::SHORT, \IntlDateFormatter::SHORT);
+        $formatter = \IntlDateFormatter::create($this->translator->getLocale(), \IntlDateFormatter::SHORT, \IntlDateFormatter::SHORT);
 
         // @see http://userguide.icu-project.org/formatparse/datetime for formats
         $formatter->setPattern('eee');
@@ -214,7 +213,7 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
      */
     public function localisedDay(\DateTime $date)
     {
-        $formatter = \IntlDateFormatter::create($this->locale, \IntlDateFormatter::GREGORIAN, \IntlDateFormatter::NONE);
+        $formatter = \IntlDateFormatter::create($this->translator->getLocale(), \IntlDateFormatter::GREGORIAN, \IntlDateFormatter::NONE);
 
         $formatter->setPattern('eeee');
         return $formatter->format($date);
@@ -227,7 +226,7 @@ class VoloExtension extends Twig_Extensions_Extension_Intl
      */
     public function formatOpeningDay(\DateTime $day)
     {
-        $formatter = \IntlDateFormatter::create($this->locale, \IntlDateFormatter::GREGORIAN, \IntlDateFormatter::NONE);
+        $formatter = \IntlDateFormatter::create($this->translator->getLocale(), \IntlDateFormatter::GREGORIAN, \IntlDateFormatter::NONE);
 
         // @see http://userguide.icu-project.org/formatparse/datetime for formats
         $formatter->setPattern($this->timePickerDateFormat);
