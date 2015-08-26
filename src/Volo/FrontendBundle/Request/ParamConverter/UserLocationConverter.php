@@ -90,7 +90,9 @@ class UserLocationConverter implements ParamConverterInterface
                     $request->get(CustomerLocationService::KEY_LNG),
                     $request->get(CustomerLocationService::KEY_PLZ),
                     $request->get(CustomerLocationService::KEY_CITY),
-                    $request->get(CustomerLocationService::KEY_ADDRESS)
+                    $request->get(CustomerLocationService::KEY_ADDRESS),
+                    $request->get(CustomerLocationService::KEY_STREET),
+                    $request->get(CustomerLocationService::KEY_BUILDING)
                 );
 
                 $this->customerLocationService->set($request->getSession(), $gpsLocation);

@@ -175,13 +175,20 @@ class CustomerController extends BaseController
         $customerLocationService = $this->get('volo_frontend.service.customer_location');
 
         $data = $this->decodeJsonContent($request->getContent());
-
+        if (!array_key_exists(CustomerLocationService::KEY_STREET, $data)) {
+            $data[CustomerLocationService::KEY_STREET] = '';
+        }
+        if (!array_key_exists(CustomerLocationService::KEY_BUILDING, $data)) {
+            $data[CustomerLocationService::KEY_BUILDING] = '';
+        }
         $gpsLocation = $customerLocationService->create(
             $data[CustomerLocationService::KEY_LAT],
             $data[CustomerLocationService::KEY_LNG],
             $data[CustomerLocationService::KEY_PLZ],
             $data[CustomerLocationService::KEY_CITY],
-            $data[CustomerLocationService::KEY_ADDRESS]
+            $data[CustomerLocationService::KEY_ADDRESS],
+            $data[CustomerLocationService::KEY_STREET],
+            $data[CustomerLocationService::KEY_BUILDING]
         );
 
         try {

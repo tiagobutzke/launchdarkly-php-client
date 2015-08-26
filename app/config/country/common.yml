@@ -10,3 +10,4 @@ parameters:
             - 'postal_code'
         autocomplete_type:
             - "(regions)"
+        hide_checkout_postal_code: false

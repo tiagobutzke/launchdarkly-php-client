@@ -48,7 +48,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
     render: function () {
         console.log('CheckoutDeliveryInformationView.render ', this.cid);
 
-        this._emptyAddressForm();
+        this._emptyAddressForm(VOLO.configuration.address_config.autocomplete_type[0] === 'address');
 
         if (this.customerModel.isGuest && _.isNull(this.model.get('address_id'))) {
             this.$('.checkout__title-link__icon--plus').addClass('hide');
@@ -165,10 +165,12 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
         this.trigger('form:close', this);
     },
 
-    _emptyAddressForm: function () {
+    _emptyAddressForm: function (keepAddressLines) {
         this.$('#delivery-information-address_id').val('');
-        this.$('#delivery-information-address-line1').val('');
-        this.$('#delivery-information-address-line2').val('');
+        if (!keepAddressLines) {
+            this.$('#delivery-information-address-line1').val('');
+            this.$('#delivery-information-address-line2').val('');
+        }
         this.$('#delivery-information-company').val('');
         this.$('#delivery-information-instructions').val('');
         this.$('#delivery-information-address-latitude').val('');

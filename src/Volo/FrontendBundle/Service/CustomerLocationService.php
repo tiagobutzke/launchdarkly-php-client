@@ -14,6 +14,8 @@ class CustomerLocationService
     const KEY_PLZ = 'postcode';
     const KEY_CITY = 'city';
     const KEY_ADDRESS = 'address';
+    const KEY_STREET = 'street';
+    const KEY_BUILDING = 'building';
 
     /**
      * @param SessionInterface $session
@@ -42,10 +44,12 @@ class CustomerLocationService
      * @param string $postCode
      * @param string $city
      * @param string $address
+     * @param string $street
+     * @param string $building
      *
      * @return array
      */
-    public function create($lat, $lng, $postCode, $city, $address)
+    public function create($lat, $lng, $postCode, $city, $address, $street = '', $building = '')
     {
         return [
             static::KEY_LAT => $lat,
@@ -53,6 +57,8 @@ class CustomerLocationService
             static::KEY_PLZ => $postCode,
             static::KEY_CITY => $city,
             static::KEY_ADDRESS => $address,
+            static::KEY_STREET => $street,
+            static::KEY_BUILDING => $building,
         ];
     }
 
