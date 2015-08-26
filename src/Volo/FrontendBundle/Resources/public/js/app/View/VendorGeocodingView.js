@@ -122,10 +122,18 @@ var VendorGeocodingView = HomeSearchView.extend({
         }
     },
 
+    _prepareDeliveringToLabel: function () {
+        if (this._isFullAddressAutocomplete()) {
+            return this.model.get('building') + " " + this.model.get('street') + ", " + this.model.get('postcode');
+        }
+
+        return this.model.get('postcode');
+    },
+
     _parseIsDeliverable: function (response) {
         var data = this.model.toJSON();
         if (response.result) { // is deliverable
-            this.$('.location__address').html(this.model.get('postcode'));
+            this.$('.location__address').html(this._prepareDeliveringToLabel());
             this._showFormattedAddress();
             this.model.save();
         } else {

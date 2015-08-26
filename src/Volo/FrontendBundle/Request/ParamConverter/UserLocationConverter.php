@@ -100,7 +100,9 @@ class UserLocationConverter implements ParamConverterInterface
                     $convertedParameter->getLocationType(),
                     $gpsLocation[CustomerLocationService::KEY_CITY],
                     $gpsLocation[CustomerLocationService::KEY_PLZ],
-                    $gpsLocation[CustomerLocationService::KEY_ADDRESS]
+                    $gpsLocation[CustomerLocationService::KEY_ADDRESS],
+                    $gpsLocation[CustomerLocationService::KEY_STREET],
+                    $gpsLocation[CustomerLocationService::KEY_BUILDING]
                 );
 
                 try {
@@ -173,16 +175,25 @@ class UserLocationConverter implements ParamConverterInterface
      * @param string $city
      * @param string $postcode
      * @param string $address
+     * @param string $street
+     * @param string $building
      *
      * @return array
      */
-    protected function createFormattedLocation($type, $city, $postcode, $address)
+    protected function createFormattedLocation($type, $city, $postcode, $address, $street = '', $building = '')
     {
+        // this is to handle the case when the user select district / main area without a street address
+        $deliveryAddress = trim(sprintf('%s %s, %s', $building, $street, $postcode));
+        $deliveryAddress = strpos($deliveryAddress, ',') ? substr($deliveryAddress, 1) : $deliveryAddress;
+
         return [
-            'type' => $type,
-            'city' => $city,
-            'postcode' => $postcode,
-            'address' => $address,
+            'type'             => $type,
+            'city'             => $city,
+            'postcode'         => $postcode,
+            'address'          => $address,
+            'street'           => $street,
+            'building'         => $building,
+            'delivery_address' => $deliveryAddress
         ];
     }
 }
