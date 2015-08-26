@@ -5,7 +5,6 @@ parameters:
     timezone: "Asia/Hong_Kong"
     average_delivery_time: 30
 
-    is_coming_soon_enabled: true
     supported_locales: [%locale%, zh]
     address_config:
         postal_code_field:
