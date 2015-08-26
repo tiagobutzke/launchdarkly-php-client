@@ -1,6 +1,21 @@
 CHANGELOG
 =========
 
+* 1.24.0
+
+  * SGFD-18923: Error handling after sucessful purchase
+  * SGFD-18589: Api cart quantity calculation bug
+  * INTVOLO-436: HK/AU time picker design changes
+  * INTVOLO-86: City pages Facebook preview image
+  * INTVOLO-294: Rebranding to Suppertime look
+  * INTVOLO-409: Escape slash in phone number
+  * INTVOLO-483: Url with parameter to noindex
+  * INTVOLO-318: JS error for Mac on Chrome
+  * INTVOLO-468: Multi language fixes
+  * INTVOLO-476: Prefilling checkout
+  * INTVOLO-309: Home-page-App-Promo
+  * INTVOLO-471: Geocoding fixes
+
 * 1.23.8
   * Fixed AU timezone
 
