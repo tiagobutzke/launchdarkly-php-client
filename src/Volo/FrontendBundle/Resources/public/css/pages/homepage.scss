@@ -417,12 +417,12 @@
 .home__app__message {
   @include make-xs-column(6);
   @include make-md-column(6, 0);
-  padding-top: 0;
+  padding-top: 14%;
   @include respond-from('screen-sm') {
-    padding-top: 0;
+    padding-top: 18%;
   }
   @include respond-from('screen-md') {
-    padding-top: 10%;
+    padding-top: 21%;
   }
 }
 
@@ -433,13 +433,13 @@
   @include make-sm-column-offset(2);
   @include make-md-column(6);
   @include make-md-column-offset(3);
+  color: $color-text-inactive;
   text-align: center;
-  padding-bottom: $space-percent-xs;
+  padding-bottom: $space-sm;
   font-size: $font-size-1_2rem;
   line-height: 1.4;
-  @include respond-from('screen-md') {
-    line-height: $base-line-height;
-    padding-bottom: $space-percent-sm;
+  @include respond-from('screen-sm') {
+    padding-bottom: $space-lg;
   }
 }
 
