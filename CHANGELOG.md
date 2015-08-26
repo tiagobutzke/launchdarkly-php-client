@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+* 1.24.1
+
+  * Removed HK coming soon page
+  * INTVOLO-460: Coming soon page AE/SE/CA
+  * GTM fix: New cookie lib, API changed
+
 * 1.24.0
 
   * SGFD-18923: Error handling after sucessful purchase
