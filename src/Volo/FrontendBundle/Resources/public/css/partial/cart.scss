@@ -469,7 +469,9 @@ tr.summary__item__row_mobile {
 .checkout__time-picker .desktop-cart__time {
   @include clearfix;
   padding: 0;
-  font-size: 14px;
+  @include respond-from("screen-md") {
+    width: 100%;
+  }
 }
 
 
@@ -478,23 +480,12 @@ tr.summary__item__row_mobile {
   background-color: $dropdown-color-bg-1;
   @include make-xs-column(6, 0);
 }
-.checkout__time-picker .desktop-cart__time__field-date {
-  @include make-xs-column(6);
-  padding: 0;
-}
 
 
 .desktop-cart__time__field-time {
-  height: $input-height;
-  background-color: $dropdown-color-bg-1;
-  @include make-xs-column(6, 0);
+  @extend .desktop-cart__time__field-date;
   margin-left: -1px;
 }
-.checkout__time-picker .desktop-cart__time__field-time {
-  @include make-xs-column(6);
-  padding: 0;
-}
-
 
 .desktop-cart__order {
   @include make-webkit-custom-scroll-bars();
