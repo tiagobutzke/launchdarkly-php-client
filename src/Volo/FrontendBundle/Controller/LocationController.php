@@ -63,6 +63,7 @@ class LocationController extends Controller
             });
 
         return [
+            'hasQueryParams' => $request->query->count() > 0,
             'gpsSearch' => $location->getLocationType() === 'polygon',
             'formattedLocation' => $formattedLocation,
             'vendors' => $vendors->getItems(),

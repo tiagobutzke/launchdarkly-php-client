@@ -31,12 +31,12 @@
 
 {% block head_meta_seo %}
     {% if gpsSearch %}
-        <meta name="robots" content="noindex, follow">
         <meta name="description" content="{{ cms('seo.description.vendor_listing_page') | replace({'{city}': formattedLocation.city, '{zipcode}': formattedLocation.postcode}) }}">
     {% else %}
-        <meta name="robots" content="index, follow">
         <meta name="description" content="{{ cms('seo.description.city_page') | replace({'{city}': city.name}) }}">
     {% endif %}
+
+    <meta name="robots" content="{{ not gpsSearch and not hasQueryParams ? 'index, follow' : 'noindex, follow' }}">
 
     {% if city is not null %}
         <meta property="og:image" content="https://volo-images.s3.amazonaws.com/production/{{ country_code }}/city-{{ city.id }}.jpg" />
