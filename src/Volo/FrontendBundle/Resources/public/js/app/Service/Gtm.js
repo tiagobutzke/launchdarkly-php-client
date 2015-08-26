@@ -130,7 +130,7 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
             return;
         }
 
-        Cookies.expire('orderPay');
+        Cookies.remove('orderPay');
 
         data.event = 'transaction';
         data.sessionId = _.get(this, 'sessionId', sessionId);
