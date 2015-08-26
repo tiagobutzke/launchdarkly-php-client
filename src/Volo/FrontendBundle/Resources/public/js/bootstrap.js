@@ -180,7 +180,14 @@ VOLO.initIntl = function (configuration) {
 };
 
 VOLO.initCurrencyFormat = function (locale, currency_symbol) {
-    VOLO.formatCurrency = new Intl.NumberFormat(locale, {
+    var currencyLocale = locale;
+
+    if (locale === 'en-AU') {
+        currencyLocale = 'en-US';
+        currency_symbol = 'USD';
+    }
+
+    VOLO.formatCurrency = new Intl.NumberFormat(currencyLocale, {
         style: 'currency',
         minimumFractionDigits: 2,
         currency: currency_symbol
