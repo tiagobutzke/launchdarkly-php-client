@@ -1,4 +1,12 @@
-<h3 class="checkout__step__title">{% if not is_customer_authenticated_fully() %}<span class="checkout__title-link checkout__title-link--login">{% trans %}label.login_delivery_information{% endtrans %} <a  id="checkout-login-link">{% trans %}link.login_delivery_information{% endtrans %}</a></span> {% endif %}1. {% trans %}title.delivery_details{% endtrans %}</h3>
+<h3 class="checkout__step__title">
+    {% if not is_customer_authenticated_fully() %}
+        <span class="checkout__title-link checkout__title-link--login">
+            {% trans %}label.login_delivery_information{% endtrans %}
+            <a  id="checkout-login-link">{% trans %}link.login_delivery_information{% endtrans %}</a>
+        </span>
+    {% endif %}
+    1. {% trans %}title.delivery_details{% endtrans %}
+</h3>
 <div class="checkout__step__items">
     <div class="checkout__step__item">
         <h4 class="checkout__step__item-title">{% trans %}title.delivery_time{% endtrans %}</h4>
