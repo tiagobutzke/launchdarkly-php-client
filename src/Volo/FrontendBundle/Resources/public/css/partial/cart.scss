@@ -519,7 +519,10 @@ tr.summary__item__row_mobile {
   }
 }
 
-%desktop-cart__order__price {
+.desktop-cart__order__subtotal-price,
+.desktop-cart__order__delivery-price,
+.desktop-cart__order__voucher-price,
+.desktop-cart__order__total-price {
   display: inline-block;
   float: right;
 }
@@ -530,10 +533,6 @@ tr.summary__item__row_mobile {
   @include respond-from("screen-md") {
     padding: $space-md 0 0;
   }
-}
-
-.desktop-cart__order__subtotal-price {
-  @extend %desktop-cart__order__price;
 }
 
 .desktop-cart__order__subtotal-min-order {
@@ -550,10 +549,6 @@ tr.summary__item__row_mobile {
   }
 }
 
-.desktop-cart__order__delivery-price {
-  @extend %desktop-cart__order__price;
-}
-
 .desktop-cart__order__delivery-discount {
   color: $color-text-highlight;
   font-weight: normal;
@@ -565,10 +560,6 @@ tr.summary__item__row_mobile {
   @include respond-from("screen-md") {
     padding: 0;
   }
-}
-
-.desktop-cart__order__voucher-price {
-  @extend %desktop-cart__order__price;
 }
 
 .desktop-cart__order__total {
@@ -586,10 +577,6 @@ tr.summary__item__row_mobile {
   font-style: normal;
   font-size: $font-size-1_4rem;
   font-weight: normal;
-}
-
-.desktop-cart__order__total-price {
-  @extend %desktop-cart__order__price;
 }
 
 .desktop-cart__order__subtotal-container {
