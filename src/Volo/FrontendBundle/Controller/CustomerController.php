@@ -55,6 +55,14 @@ class CustomerController extends BaseController
                 $errors = json_decode($e->getMessage(), true)['data']['items'];
                 $errorMessages = $this->createErrors($errors);
                 $statusCode = Response::HTTP_BAD_REQUEST;
+            } catch (ApiErrorException $e) {
+                $decodedError = json_decode($e->getJsonErrorMessage(), true);
+                if ('ApiCustomerAlreadyExistsException' === $decodedError['data']['exception_type']) {
+                    $errorMessages[] = $decodedError['data']['message'];
+                    $statusCode = Response::HTTP_BAD_REQUEST;
+                } else {
+                    throw $e;
+                }
             }
 
             $customer = $request->request->get('customer', []);
