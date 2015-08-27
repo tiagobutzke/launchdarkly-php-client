@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+* 1.24.3
+
+  * Added SG, Changed locale AE
+  * INTVOLO-515: HK / Neighbourhood shown in saved addresses
+  * INTVOLO-438: AU: Wrong currency symbol (A$) shown in cart on menu and checkout page
+
 * 1.24.2
 
   * HK: Coming soon page reactivated
