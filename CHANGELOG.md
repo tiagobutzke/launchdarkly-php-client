@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.24.2
+
+  * HK: Coming soon page reactivated
+
 * 1.24.1
 
   * Removed HK coming soon page
