@@ -11,7 +11,7 @@
         </div>
         <div class="checkout__delivery-information__company"><%= company %></div>
         <div class="checkout__delivery-information__address-line"><%= address_line1 %> <%- address_line2 %></div>
-        <div class="checkout__delivery-information__address-line"><%- postcode %> <%- city %></div>
+        <div class="checkout__delivery-information__address-line">{% if not (address_config.hide_checkout_postal_code) %}<%- postcode %> {% endif %}<%- city %></div>
         <div class="checkout__delivery-information__notes"><%= delivery_instructions %></div>
         <a class="checkout__delivery-information__address-link checkout__delivery-information__address-link--cancel">
             <i class="icon-trash"></i>
