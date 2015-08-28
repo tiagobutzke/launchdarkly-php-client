@@ -119,7 +119,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         this.$('#contact-information-mobile-number-wrap').addClass('hide');
 
         this.$('.checkout__contact-information__password-wrapper').removeClass('hide');
-        this.$('.checkout__contact-information__login-warning').removeClass('hide');
+        this.$('.checkout__contact-information__login-hint-message').removeClass('hide');
         this.$('.checkout__contact-information__forgot-password').removeClass('hide');
 
         this.$('#contact-information-password').focus();
@@ -138,7 +138,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         this.contactInformationForm.constraints["customer[mobile_number]"] = { presence: true };
 
         this.$('.checkout__contact-information__password-wrapper').addClass('hide');
-        this.$('.checkout__contact-information__login-warning').addClass('hide');
+        this.$('.checkout__contact-information__login-hint-message').addClass('hide');
         this.$('.checkout__contact-information__server-error-message').addClass('hide');
         this.$('.checkout__contact-information__forgot-password').addClass('hide');
 

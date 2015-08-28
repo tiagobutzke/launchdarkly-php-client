@@ -38,7 +38,7 @@ VOLO.CheckoutContactInformationForm = VOLO.ContactInformationForm.extend({
     _xhrError: function(response) {
         var errorMsg = $(response.responseText).find('.modal-error-message').text().trim();
         this.$('.checkout__contact-information__server-error-message').text(errorMsg).removeClass('hide');
-        this.$('.checkout__contact-information__login-warning').hide();
+        this.$('.checkout__contact-information__login-hint-message').hide();
     },
 
     _prepareGuestAddressData: function(address) {

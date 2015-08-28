@@ -294,6 +294,13 @@ select {
   padding: $space-xs $input-padding-left;
 }
 
+.form__hint-message {
+  @extend %form-message;
+  font-size: $font-size-1_4rem;
+  color: $color-text-selection;
+  background-color: $color-bg-hint-message;
+  margin-bottom: $space-md;
+}
 
 .form__error-message {
   @extend %form-message;
