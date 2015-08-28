@@ -33,7 +33,8 @@ var CheckoutPageView = Backbone.View.extend({
             collection: this.userAddressCollection,
             customerModel: this.customerModel,
             locationModel: this.locationModel,
-            deliveryCheck: options.deliveryCheck
+            deliveryCheck: options.deliveryCheck,
+            loginView: options.loginView
         });
 
         this.timePickerView = new TimePickerView({

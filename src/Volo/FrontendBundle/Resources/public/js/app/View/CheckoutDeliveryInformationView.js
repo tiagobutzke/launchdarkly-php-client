@@ -9,7 +9,8 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
         "click .checkout__title-link__text--add-address-delivery": '_openAddressForm',
         "click .checkout__title-link--edit-address-guest": '_editGuestAddress',
         "click .checkout__title-link__text--cancel-delivery": '_closeAddressForm',
-        "submit #delivery-information-form": '_submit'
+        "submit #delivery-information-form": '_submit',
+        "click #checkout-login-link": '_showLoginModal'
     },
 
     initialize: function (options) {
@@ -19,6 +20,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
         this.template = _.template($('#template-delivery-address').html());
         this.locationModel = options.locationModel;
         this.customerModel = options.customerModel;
+        this.loginView = options.loginView;
 
         this.vendorId = options.vendorId;
 
@@ -175,6 +177,10 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
         this.$('#delivery-information-instructions').val('');
         this.$('#delivery-information-address-latitude').val('');
         this.$('#delivery-information-address-longitude').val('');
+    },
+
+    _showLoginModal: function () {
+        this.loginView.showLoginModal();
     },
 
     unbind: function () {
