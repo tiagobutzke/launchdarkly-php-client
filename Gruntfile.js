@@ -40,7 +40,7 @@ module.exports = function (grunt) {
     }
 
     var env = grunt.option('env') || 'dev',
-        allCountriesOption = grunt.option('sass-countries'),
+        allCountriesOption = ('dev' === env && !grunt.option('sass-countries')) ? 'de' : grunt.option('sass-countries'),
         debug = (env === 'dev'),
         allCountriesSass = grunt.file.readJSON('app/config/countries.json'),
         jsSources = {};
