@@ -182,7 +182,7 @@ VOLO.initIntl = function (configuration) {
 VOLO.initCurrencyFormat = function (locale, currency_symbol) {
     var currencyLocale = locale;
 
-    if (locale === 'en-AU') {
+    if (locale === 'en-AU' && window.navigator.userAgent.search(/chrome/i) !== -1) {
         currencyLocale = 'en-US';
         currency_symbol = 'USD';
     }
