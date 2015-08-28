@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.24.5
+
+  * INTVOLO-531: AU currency fix
+
 * 1.24.4
 
   * INTVOLO-528: Empty session fix
