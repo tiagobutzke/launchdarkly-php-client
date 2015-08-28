@@ -119,7 +119,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
     },
 
     _showCloseFormAddressLink: function () {
-        if (this.customerModel.isGuest && !this.model.get('address_id')) {
+        if (!this.model.get('address_id')) {
             this.$('.checkout__title-link__text--cancel-delivery').addClass('hide');
         } else {
             this.$('.checkout__title-link__text--cancel-delivery').removeClass('hide');
