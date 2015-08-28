@@ -20,8 +20,6 @@
 
 %footer__wrapper {
   @include make-row();
-  padding-top: $space-lg * 2;
-  padding-bottom: $space-lg * 2;
   margin: 0;
 }
 
@@ -47,6 +45,8 @@
 .footer__wrapper__bottom {
   @extend %footer__wrapper;
   border-top: $dropdown-border;
+  padding-top: $space-lg;
+  padding-bottom: $space-lg * 2;
 }
 
 .footer__subscribe {
@@ -225,7 +225,7 @@
 
 .footer__popular {
   @include make-xs-column(12);
-  @include make-md-column(4);
+  @include make-md-column(4, 0);
   text-align: center;
   @include respond-from("screen-md") {
     text-align: left;
