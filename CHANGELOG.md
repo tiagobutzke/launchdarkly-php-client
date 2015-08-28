@@ -1,6 +1,19 @@
 CHANGELOG
 =========
 
+* 1.25.0
+
+  * INTVOLO-286: Checkout remove cancel option when no addresses are saved
+  * INTVOLO-320: Cart make minimum order value visible
+  * INTVOLO-508: Existing user exception
+  * INTVOLO-321: Guest checkout login link
+  * INTVOLO-406: Safari listing page change text is not aligned
+  * INTVOLO-308: Refused payment fix
+  * INTVOLO-304: Redirect success page
+  * INTVOLO-396: Italian mobile fix
+  * INTVOLO-521: Compile country_de sass as default in dev mode
+  * INTVOLO-512: SEO city footer is gone
+
 * 1.24.5
 
   * INTVOLO-531: AU currency fix
