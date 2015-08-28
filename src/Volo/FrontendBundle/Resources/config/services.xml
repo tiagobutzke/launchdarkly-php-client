@@ -40,6 +40,7 @@
         <parameter key="volo_frontend.twig.customer_extension.class">Volo\FrontendBundle\Twig\CustomerExtension</parameter>
         <parameter key="volo_frontend.service.wti.class">Volo\FrontendBundle\Service\WTIService</parameter>
         <parameter key="volo_frontend.event_listener.coming_soon_listener.class">Volo\FrontendBundle\EventListener\ComingSoonListener</parameter>
+        <parameter key="volo_frontend.event_listener.customer_invalid_session_listener.class">Volo\FrontendBundle\EventListener\CustomerInvalidSessionListener</parameter>
         <parameter key="volo_frontend.security.ajax_authentication_success_handler.class">Volo\FrontendBundle\Security\AjaxAuthenticationSuccessListener</parameter>
         <parameter key="volo_frontend.security.ajax_authentication_failure_handler.class">Volo\FrontendBundle\Security\AjaxAuthenticationFailureListener</parameter>
         <parameter key="volo_frontend.event_listener.locale_listener.class">Volo\FrontendBundle\EventListener\LocaleListener</parameter>
@@ -70,6 +71,13 @@
                  class="Volo\FrontendBundle\EventListener\DefaultTimeZoneListener">
             <argument>%timezone%</argument>
             <tag name="kernel.event_listener" event="kernel.request" method="setDefaultTimeZone" priority="100" />
+        </service>
+
+        <service id="volo_frontend.event_listener.customer_invalid_session_listener"
+            class="%volo_frontend.event_listener.customer_invalid_session_listener.class%">
+            <argument type="service" id="session" />
+            <argument type="service" id="logger" />
+            <tag name="kernel.event_listener" event="kernel.request" method="handleInvalidSessionId" />
         </service>
 
         <service id="volo_frontend.twig.volo_extension" class="%volo_frontend.twig.volo_extension.class%">

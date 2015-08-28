@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.24.4
+
+  * INTVOLO-528: Empty session fix
+
 * 1.24.3
 
   * Added SG, Changed locale AE
