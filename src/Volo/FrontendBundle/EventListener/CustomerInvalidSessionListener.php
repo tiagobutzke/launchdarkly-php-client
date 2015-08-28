@@ -5,7 +5,6 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpFoundation\Request;
 
 class CustomerInvalidSessionListener
 {
@@ -55,13 +54,8 @@ class CustomerInvalidSessionListener
             return false;
         }
 
-        /** @var Request $request */
         $request = $event->getRequest();
         if ($request->isXmlHttpRequest()) {
-            return false;
-        }
-
-        if ($request->attributes->getBoolean('esi')) {
             return false;
         }
 
