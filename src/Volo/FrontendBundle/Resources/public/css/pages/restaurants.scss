@@ -130,8 +130,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  vertical-align: top;
   margin: 0;
+}
+.restaurants__tool-box--sticking .restaurants__location__address {
+  vertical-align: top;
 }
 .restaurants__location__address .restaurants__tool-box--sticking {
   max-width: 90%;
