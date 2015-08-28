@@ -10,8 +10,8 @@ parameters:
 framework:
     session:
         handler_id:     session.handler.redis
-        cookie_lifetime: 31536000 # 60 * 60 * 24 * 365 * 1 = one year
-        gc_maxlifetime: 31536000 # 60 * 60 * 24 * 365 * 1 = one year
+        cookie_lifetime: 1209600 # 60 * 60 * 24 * 14 = two weeks
+        gc_maxlifetime: 1209600 # 60 * 60 * 24 * 14 = two weeks
     validation:
         cache: apc
 
