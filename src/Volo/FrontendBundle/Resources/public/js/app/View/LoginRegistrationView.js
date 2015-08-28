@@ -244,7 +244,11 @@ var LoginRegistrationView = Backbone.View.extend({
 
                 this._fireFormSubmit($form, true);
 
-                window.location.replace(response.url);
+                if (window.location.href.search(/tracking/) !== -1) {
+                    window.location.reload(true);
+                } else {
+                    window.location.replace(response.url);
+                }
             }.bind(this),
             error: function (data) {
                 spinner.stop();
