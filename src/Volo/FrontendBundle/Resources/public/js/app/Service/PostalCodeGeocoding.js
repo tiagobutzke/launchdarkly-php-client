@@ -36,7 +36,8 @@ _.extend(PostalCodeGeocodingService.prototype, Backbone.Events, {
     },
 
     geocodeAddress: function(options) {
-        var requestParameters = this.createComponentRestrictions(options);
+        var requestParameters = this.createComponentRestrictions(options),
+            deferred = $.Deferred();
 
         if (this.bounds) {
             requestParameters.bounds = this.bounds;
@@ -44,11 +45,13 @@ _.extend(PostalCodeGeocodingService.prototype, Backbone.Events, {
 
         this.geocoder.geocode(requestParameters, function(results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
-                options.success(results[0].geometry.location);
+                deferred.resolve(results[0].geometry.location);
             } else {
-                options.error(results, status);
+                deferred.reject(results, status);
             }
         });
+
+        return deferred;
     },
 
     createComponentRestrictions: function(options) {
