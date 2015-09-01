@@ -71,7 +71,6 @@ class LocationController extends Controller
             'openVendors' => $openVendors,
             'closedVendors' => $closedVendorsWithPreorder,
             'city' => $city,
-            'hasQueryParams' => $request->query->count() > 0,
             'location' => $this->get('volo_frontend.service.customer_location')->get($request->getSession())
         ];
     }

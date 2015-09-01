@@ -3,8 +3,9 @@
 {% block title %}{{ cms('seo.title.vendor_page') | replace({'{city}': vendor.city.name, '{vendor}': vendor.name}) }}{% endblock %}
 
 {% block head_meta_seo %}
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="{{ app.request.query | length > 0 ? 'noindex' : 'index' }}, follow">
     <meta name="description" content="{{ cms('seo.description.vendor_page') | replace({'{city}': vendor.city.name, '{restaurant}': vendor.name}) }}">
+    <link rel="canonical" href="{{ app.request.uriForPath(app.request.pathInfo) }}" />
 {% endblock %}
 
 {% block content_wrapper_class %}menu-bg{% endblock content_wrapper_class %}
