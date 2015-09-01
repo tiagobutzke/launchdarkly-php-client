@@ -1,5 +1,7 @@
 CHANGELOG
 =========
+* 1.26.0
+  * INTVOLO-542: Adding address config for UAE
 
 * 1.25.0
 
