@@ -28,8 +28,9 @@ var HomeSearchView = CTATrackableView.extend({
     },
 
     render: function() {
-        if (!this.isIE()) {
-            this.$('.home__teaser__form-input').focus();
+        var node = this.$('.home__teaser__form-input');
+        if (!this.isIE() && node.val() === '') {
+            node.focus();
         }
     },
 
