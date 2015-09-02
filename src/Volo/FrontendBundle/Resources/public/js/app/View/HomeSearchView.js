@@ -92,12 +92,12 @@ var HomeSearchView = CTATrackableView.extend({
         var data = this.model.toJSON();
         Turbolinks.visit(Routing.generate('volo_location_search_vendors_by_gps', {
             city: data.city,
-            address: data.address,
+            address: encodeURIComponent(data.address),
             longitude: data.longitude,
             latitude: data.latitude,
             postcode: data.postcode,
-            street: data.street,
-            building: data.building
+            street: encodeURIComponent(data.street),
+            building: encodeURIComponent(data.building)
         }));
     },
 
