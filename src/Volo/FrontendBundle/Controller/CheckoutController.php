@@ -21,6 +21,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Volo\FrontendBundle\Service\CustomerLocationService;
 use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
+use Psr\Log\LoggerInterface;
 
 /**
  * @Route("/checkout")
@@ -138,16 +139,29 @@ class CheckoutController extends BaseController
         $location = $this->get('volo_frontend.service.customer_location')->get($session);
         $serializer = $this->get('volo_frontend.api.serializer');
 
-        $customerLocation = $this->get('volo_frontend.service.customer_location')->get($session);
         $restaurantLocation = [
             'city' => $vendor->getCity()->getName(),
-            'postcode' => $customerLocation[CustomerLocationService::KEY_PLZ],
-            'street' => $customerLocation[CustomerLocationService::KEY_STREET],
-            'building' => $customerLocation[CustomerLocationService::KEY_BUILDING],
+            'postcode' => $location[CustomerLocationService::KEY_PLZ],
+            'street' => $location[CustomerLocationService::KEY_STREET],
+            'building' => $location[CustomerLocationService::KEY_BUILDING],
         ];
 
+        // <INTVOLO-472>
+        // https://jira.rocket-internet.de/browse/INTVOLO-472
+        // Temporary fixing the state of system to find the root cause of the issue
+        $calculatedCart = $this->get('volo_frontend.service.cart_manager')->calculateCart($cart);
+        $this->locationMonitoringSaveState(
+            'paymentAction',
+            $location,
+            [
+                'vendor_code' => $vendor->getCode(),
+                $calculatedCart
+            ]
+        );
+        // </INTVOLO-472>
+
         $viewData = [
-            'cart'               => $this->get('volo_frontend.service.cart_manager')->calculateCart($cart),
+            'cart'               => $calculatedCart,
             'vendor'             => $vendor,
             'adyen_public_key'   => $configuration->getAdyenEncryptionPublicKey(),
             'address'            => is_array($location) ? $location[CustomerLocationService::KEY_ADDRESS] : '',
@@ -220,6 +234,19 @@ class CheckoutController extends BaseController
             return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
         }
         $cart = $this->getCart($request->getSession(), $vendor);
+
+        // <INTVOLO-472>
+        // https://jira.rocket-internet.de/browse/INTVOLO-472
+        // Temporary fixing the state of system to find the root cause of the issue
+        $this->locationMonitoringSaveState(
+            'paymentAction',
+            $cart['location'],
+            [
+                'vendor_code' => $vendor->getCode(),
+                $cart
+            ]
+        );
+        // </INTVOLO-472>
 
         $data['client_ip'] = $request->getClientIp();
 
@@ -343,6 +370,16 @@ class CheckoutController extends BaseController
             }
         }
 
+        // <INTVOLO-472>
+        // https://jira.rocket-internet.de/browse/INTVOLO-472
+        // Temporary fixing the state of system to find the root cause of the issue
+        $this->locationMonitoringSaveState(
+            'handleOrder',
+            $cart['location'],
+            array_diff_key($data, ['encrypted_payment_data' => ''])
+        );
+        // </INTVOLO-472>
+
         return $order;
     }
 
@@ -380,5 +417,36 @@ class CheckoutController extends BaseController
             // these endpoints are throwing exceptions if you try to unsubscribe while not being subscribed
             // or the other way around, we simply ignore that.
         }
+    }
+
+    /**
+     * @param string $logName
+     * @param array $location
+     * @param array $data
+     */
+    private function locationMonitoringSaveState($logName, array $location, array $data)
+    {
+        try {
+            $lat = (float) $location[CustomerLocationService::KEY_LAT];
+            $lng = (float) $location[CustomerLocationService::KEY_LNG];
+
+            if ($lat === .0 || $lng === .0) {
+                $this->getLogger()->error(
+                    serialize($data),
+                    [
+                        'type' => 'location_monitoring_save_state',
+                        'action_name' => $logName
+                    ]
+                );
+            }
+        } catch (\Exception $e) {}
+    }
+
+    /**
+     * @return LoggerInterface
+     */
+    private function getLogger()
+    {
+        return $this->get('logger');
     }
 }
