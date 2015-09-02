@@ -43,6 +43,7 @@
     <script data-turbolinks-eval=always>
         var VOLO = VOLO || {};
         VOLO.jsonCart = {{ cart|to_escaped_json}};
+        VOLO.timePickerValues = {{ getTimePickerJsonValues(vendor)|to_escaped_json}};
         VOLO.jsonLocation = {{ location|to_escaped_json }};
     </script>
 {% endblock %}

@@ -83,7 +83,6 @@
         <service id="volo_frontend.twig.volo_extension" class="%volo_frontend.twig.volo_extension.class%">
             <argument type="service" id="translator" />
             <argument type="service" id="volo_frontend.service.cart_manager" />
-            <argument>%timepicker_date_format%</argument>
             <tag name="twig.extension"/>
         </service>
 
@@ -112,7 +111,6 @@
         </service>
 
         <service id="volo_frontend.twig.vendor_extension" class="%volo_frontend.twig.vendor_extension.class%">
-            <argument>%locale%</argument>
             <argument type="service" id="volo_frontend.service.schedule" />
             <tag name="twig.extension" />
         </service>
@@ -221,6 +219,8 @@
 
         <service id="volo_frontend.service.schedule" class="%volo_frontend.service.schedule.class%">
             <argument type="service" id="doctrine_cache.providers.schedule_cache" />
+            <argument type="service" id="translator" />
+            <argument>%timepicker_date_format%</argument>
         </service>
 
         <service id="volo_frontend.event_listener.coming_soon_listener" class="%volo_frontend.event_listener.coming_soon_listener.class%">
