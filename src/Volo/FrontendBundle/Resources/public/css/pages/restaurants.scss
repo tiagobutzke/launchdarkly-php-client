@@ -190,14 +190,14 @@
 }
 
 
-.restaurants__location__input {
+.restaurants__location__input .restaurants__search__input {
   font-size: $font-size-1_4rem;
   @include centerTextVerticallyByHeight(30px);
   margin-top: 0;
   padding-top: 0;
   padding-bottom: 0;
 }
-.restaurants__tool-box--sticking .restaurants__location__input {
+.restaurants__tool-box--sticking .restaurants__location__input .restaurants__search__input {
   margin-top: 8px;
 }
 .show-ios-smart-banner .restaurants__tool-box--sticking .restaurants__location__input {
@@ -374,7 +374,7 @@
 
 // -------------------------- RESTAURANTS NOT AVAILABLE MESSAGE START --------------------------
 
-.restaurants__not-available-message {
+.restaurants__not-available-message .restaurants__search__not-found-message {
   @extend .restaurants__list;
   text-align: center;
   padding-top: 100px;

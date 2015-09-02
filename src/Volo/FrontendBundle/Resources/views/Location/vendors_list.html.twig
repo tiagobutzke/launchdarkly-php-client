@@ -71,6 +71,7 @@
         {% if gpsSearch %}
             <div class="restaurants__tool-box">
                 <div class="restaurants__location">
+                    <input type="text" class="restaurants__search__input form-control"/>
                     <form id="delivery-information-postal-index-form" method="GET">
                         <input
                                 id="delivery-information-postal-index"
@@ -121,6 +122,10 @@
                     {% set vendorIsOpen = 'open' %}
                     {{ block('vendor_description') }}
                 {% endfor %}
+                <div class="restaurants__search__not-found-message hide">
+                    <div class="restaurants__not-available-message__title">{% trans %}restaurant.search.not_found.title{% endtrans %}</div>
+                    <div class="restaurants__not-available-message__text">{% trans %}restaurants.search.not_found.text{% endtrans %}</div>
+                </div>
             </div>
             <div class="restaurants__list restaurants__list--closed">
                 {% for vendor in closedVendors %}

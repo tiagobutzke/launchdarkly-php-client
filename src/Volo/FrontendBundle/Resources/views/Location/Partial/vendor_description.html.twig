@@ -5,6 +5,7 @@
              data-code="{{ vendor.code }}"
              data-variant="{{ vendorIsOpen }}"
              data-position="{{ vendorsCounter }}"
+             data-search='{{ getVendorSearchData(vendor)|to_escaped_json }}'
         >
             <div class="restaurants__list__item-wrapper">
                 <div class="restaurants__list__item-image-wrapper">
