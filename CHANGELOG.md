@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.27.1
+
+  * INTVOLO-329: Previll zip code field
+
 * 1.27.0
 
   * INTVOLO-63: Dynamic timepicker
