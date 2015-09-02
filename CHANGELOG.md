@@ -1,6 +1,17 @@
 CHANGELOG
 =========
+
+* 1.27.0
+
+  * INTVOLO-63: Dynamic timepicker
+  * INTVOLO-312: Checkout contact UX improvement
+  * INTVOLO-529: Encode address
+  * INTVOLO-491: Restore legal disclaimer in menu checkout Norway
+  * INTVOLO-472: Lat/Lng orders zero ( log only )
+  * INTVOLO-565: Removed HK coming soon page
+
 * 1.26.0
+
   * INTVOLO-542: Adding address config for UAE
 
 * 1.25.0
