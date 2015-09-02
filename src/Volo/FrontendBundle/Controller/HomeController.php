@@ -5,6 +5,8 @@ namespace Volo\FrontendBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
+use Volo\FrontendBundle\Service\CustomerLocationService;
 
 class HomeController extends Controller
 {
@@ -13,12 +15,18 @@ class HomeController extends Controller
      * @Route("/filter/{postalCode}", name="filter_postalCode")
      * @Template()
      *
+     * @param Request $request
      * @param string $postalCode
      *
      * @return array
      */
-    public function homeAction($postalCode)
+    public function homeAction(Request $request, $postalCode)
     {
+        $location = $this->getCustomerLocationService()->get($request->getSession());
+        if ('' === $postalCode) {
+            $postalCode = $location[CustomerLocationService::KEY_PLZ];
+        }
+
         return [
             'postalCode' => $postalCode,
         ];
@@ -36,5 +44,13 @@ class HomeController extends Controller
         return [
             'code' => $code,
         ];
+    }
+
+    /**
+     * @return CustomerLocationService
+     */
+    private function getCustomerLocationService()
+    {
+        return $this->get('volo_frontend.service.customer_location');
     }
 }

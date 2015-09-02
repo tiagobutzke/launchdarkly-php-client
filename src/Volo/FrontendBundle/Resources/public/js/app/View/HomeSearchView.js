@@ -28,8 +28,15 @@ var HomeSearchView = CTATrackableView.extend({
     },
 
     render: function() {
-        if (!this.isIE()) {
-            this.$('.home__teaser__form-input').focus();
+        var node = this.$('.home__teaser__form-input');
+        var postcode = node.val();
+
+        if (postcode !== '') {
+            this.geocodingService.getLocationByZipCode(postcode);
+        }
+
+        if (!this.isIE() && postcode === '') {
+            node.focus();
         }
     },
 
