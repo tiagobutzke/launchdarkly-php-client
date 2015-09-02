@@ -28,6 +28,12 @@ var VendorGeocodingView = HomeSearchView.extend({
         'keyup #delivery-information-postal-index': '_inputChanged'
     },
 
+    render: function() {
+        if (!this.isIE()) {
+            this.$('.home__teaser__form-input').focus();
+        }
+    },
+
     /**
      * @override
      */

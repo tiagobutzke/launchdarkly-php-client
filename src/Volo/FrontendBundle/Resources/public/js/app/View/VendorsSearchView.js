@@ -4,6 +4,12 @@ var VendorsSearchView = HomeSearchView.extend({
         "click #change_user_location_box_button": "buttonClick"
     },
 
+    render: function() {
+        if (!this.isIE()) {
+            this.$('.home__teaser__form-input').focus();
+        }
+    },
+
     /**
      * @override
      */

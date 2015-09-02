@@ -29,7 +29,13 @@ var HomeSearchView = CTATrackableView.extend({
 
     render: function() {
         var node = this.$('.home__teaser__form-input');
-        if (!this.isIE() && node.val() === '') {
+        var postcode = node.val();
+
+        if (postcode !== '') {
+            this.geocodingService.getLocationByZipCode(postcode);
+        }
+
+        if (!this.isIE() && postcode === '') {
             node.focus();
         }
     },
