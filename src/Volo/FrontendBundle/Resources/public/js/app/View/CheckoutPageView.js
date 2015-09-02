@@ -21,9 +21,9 @@ var CheckoutPageView = Backbone.View.extend({
             vendorId: this.vendorId,
             customerModel: this.customerModel,
             userAddressCollection: this.userAddressCollection,
-            loginView: options.loginView,
             locationModel: this.locationModel,
-            checkoutModel: this.model
+            checkoutModel: this.model,
+            loginView: options.loginView
         });
 
         this.checkoutDeliveryInformationView = new VOLO.CheckoutDeliveryInformationView({

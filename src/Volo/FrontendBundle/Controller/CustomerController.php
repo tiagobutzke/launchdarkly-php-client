@@ -38,12 +38,16 @@ class CustomerController extends BaseController
 
             try {
                 $customerData = $request->request->get('customer');
+                $addressData = $request->request->get('guest_address');
                 $newCustomer = $customerService->createCustomer($customerData);
 
                 $credentials = new Credentials($newCustomer->getEmail(), $customerData['password']);
                 $token = $this->container->get('volo_frontend.security.authenticator')->login($credentials);
 
                 $this->get('security.token_storage')->setToken($token);
+                if ($addressData) {
+                    $customerService->saveCustomerAddressFromGuestCustomer($addressData, $token->getAccessToken());
+                }
 
                 return new JsonResponse([
                     'url' => $this->generateUrl('home')

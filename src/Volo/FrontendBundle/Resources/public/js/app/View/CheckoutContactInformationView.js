@@ -2,7 +2,11 @@ var VOLO = VOLO || {};
 
 VOLO.CheckoutContactInformationView = Backbone.View.extend({
     events: {
-        'click .checkout__contact-information__title-link': '_switchFormVisibility'
+        'click .checkout__contact-information__title-link': '_switchFormVisibility',
+        'click .checkout__contact-information__register-link': '_showRegistrationFields',
+        'click .checkout__contact-information__hide-register-link': '_hideRegisterFields',
+        'click .checkout__contact-information__forgot-password': '_openForgotPasswordModal',
+        'blur #contact-information-email': '_checkIfUserExists'
     },
 
     initialize: function(options) {
@@ -11,19 +15,25 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         this.vendorId = options.vendorId;
         this.customerModel = options.customerModel;
         this.userAddressCollection = options.userAddressCollection;
-        this.loginView = options.loginView;
         this.checkoutModel = options.checkoutModel;
         this.locationModel = options.locationModel;
+        this.loginView = options.loginView;
 
-        this.contactInformationForm = new VOLO.ContactInformatioForm({
+        this.contactInformationForm = new VOLO.CheckoutContactInformationForm({
             el: this.$('#contact-information-form'),
-            model: this.customerModel
+            model: this.customerModel,
+            userAddressCollection: this.userAddressCollection
         });
 
         this.listenTo(this.customerModel, 'change', this.renderContactInformation);
         this.listenTo(this.customerModel, 'customer:saved', this._onCustomerSaveSuccess);
-        this.listenTo(this.customerModel, 'customer:already_exist', this.openLoginModal);
+        this.listenTo(this.customerModel, 'customer:already_exist', this._showLoginField);
+        this.listenTo(this.customerModel, 'customer:new', this._showRegisterLink);
         this.listenTo(this.checkoutModel, 'change', this.render);
+    },
+
+    _checkIfUserExists: function() {
+        this.contactInformationForm._checkIfUserExists(this.$('#contact-information-email').val());
     },
 
     render: function () {
@@ -51,12 +61,8 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
                 this.checkoutModel.save('is_contact_information_valid', true);
                 this.renderContactInformation();
                 this._closeForm();
-                //this._showEditLink();
-                //this._hideCancelLink();
             } else {
                 this._openForm();
-                //this._showCancelLink();
-                //this._showEditLink();
             }
         }
     },
@@ -92,11 +98,79 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         this.$('.checkout__contact-information__phone-number').text(_.unescape(this.customerModel.getFullMobileNumber()));
     },
 
-    openLoginModal: function () {
-        this.loginView.showLoginModal();
-        this.loginView.setUsername(this.$('#contact-information-email').val());
-        this.loginView.setErrorMessage(this.$('#checkout-edit-contact-information').data('error-message-key'));
-        this.loginView.setAddress(this.userAddressCollection.get(this.checkoutModel.get('address_id')));
+    _showLoginField: function() {
+        this.customerModel.isRegistering = false;
+        this.customerModel.isExistingEmail = true;
+
+        //additional validation
+        this.contactInformationForm.constraints["customer[password]"] = {
+            presence: true
+        };
+
+        delete this.contactInformationForm.constraints["customer[mobile_number]"];
+        delete this.contactInformationForm.constraints["customer[first_name]"];
+        delete this.contactInformationForm.constraints["customer[last_name]"];
+
+
+        this.$('.checkout__contact-information__register-link-wrapper').addClass('hide');
+        this.$('.checkout__contact-information__hide-register-link-wrapper').addClass('hide');
+        this.$('.checkout__contact-information__form-first-name').addClass('hide');
+        this.$('.checkout__contact-information__form-last-name').addClass('hide');
+        this.$('#contact-information-mobile-number-wrap').addClass('hide');
+
+        this.$('.checkout__contact-information__password-wrapper').removeClass('hide');
+        this.$('.checkout__contact-information__login-hint-message').removeClass('hide');
+        this.$('.checkout__contact-information__forgot-password').removeClass('hide');
+
+        this.$('#contact-information-password').focus();
+    },
+
+    _showRegisterLink: function() {
+        if (this.customerModel.isRegistering) return;
+
+        this.customerModel.isExistingEmail = false;
+        this.customerModel.isRegistering = false;
+
+        delete this.contactInformationForm.constraints["customer[password]"];
+
+        this.contactInformationForm.constraints["customer[first_name]"] = { presence: true };
+        this.contactInformationForm.constraints["customer[last_name]"] = { presence: true };
+        this.contactInformationForm.constraints["customer[mobile_number]"] = { presence: true };
+
+        this.$('.checkout__contact-information__password-wrapper').addClass('hide');
+        this.$('.checkout__contact-information__login-hint-message').addClass('hide');
+        this.$('.checkout__contact-information__server-error-message').addClass('hide');
+        this.$('.checkout__contact-information__forgot-password').addClass('hide');
+
+        this.$('.checkout__contact-information__form-first-name').removeClass('hide');
+        this.$('.checkout__contact-information__form-last-name').removeClass('hide');
+        this.$('#contact-information-mobile-number-wrap').removeClass('hide');
+        this.$('.checkout__contact-information__register-link-wrapper').removeClass('hide');
+    },
+
+    _hideRegisterFields: function() {
+        this.customerModel.isExistingEmail = false;
+        this.customerModel.isRegistering = false;
+
+        this.$('.checkout__contact-information__password-wrapper').addClass('hide');
+        this.$('.checkout__contact-information__hide-register-link-wrapper').addClass('hide');
+        this.$('.checkout__contact-information__server-error-message').addClass('hide');
+
+        this.$('.checkout__contact-information__register-link-wrapper').removeClass('hide');
+    },
+
+    _showRegistrationFields: function() {
+        this.customerModel.isRegistering = true;
+        this.customerModel.isExistingEmail = false;
+
+        //additional validations
+        this.contactInformationForm.constraints["customer[password]"] = {
+            presence: true
+        };
+
+        this.$('.checkout__contact-information__register-link-wrapper').addClass('hide');
+        this.$('.checkout__contact-information__password-wrapper').removeClass('hide');
+        this.$('.checkout__contact-information__hide-register-link-wrapper').removeClass('hide');
     },
 
     unbind: function () {
@@ -162,6 +236,8 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
     },
 
     _hideEditLink: function () {
+        this._checkIfUserExists();
+
         this.$('.checkout__title-link__text--edit-contact').addClass('hide');
         this.$('.checkout__title-link__icon.icon-pencil').addClass('hide');
     },
@@ -181,5 +257,10 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         this.trigger('validationView:validateSuccessful', {
             newsletterSignup: this.customerModel.get('is_newsletter_subscribed')
         });
+    },
+
+    _openForgotPasswordModal: function() {
+        this.loginView.loginRegistrationView.render().renderForgotPassword();
+        $('#email').val(this.$('#contact-information-email').val());
     }
 });

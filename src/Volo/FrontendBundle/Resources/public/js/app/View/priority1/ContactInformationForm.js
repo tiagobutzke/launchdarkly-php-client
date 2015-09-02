@@ -1,6 +1,6 @@
 var VOLO = VOLO || {};
 
-VOLO.ContactInformatioForm = ValidationView.extend({
+VOLO.ContactInformationForm = ValidationView.extend({
     _defaultConstraints: {
         "customer[first_name]": {
             presence: true
@@ -43,6 +43,12 @@ VOLO.ContactInformatioForm = ValidationView.extend({
     },
 
     _submit: function() {
+        this._doGuestCheckout();
+
+        return false;
+    },
+
+    _doGuestCheckout: function () {
         var form = this.$el.serializeJSON({
                 checkboxUncheckedValue: 'false',
                 parseBooleans: true
@@ -52,9 +58,9 @@ VOLO.ContactInformatioForm = ValidationView.extend({
             routingParam = {phoneNumber: phoneNum};
 
         _.each(form.customer, function (val, key) {
-            customer[key] = _.isString(val) ? _.escape(val) : val; 
+            customer[key] = _.isString(val) ? _.escape(val) : val;
         });
-        
+
         this.$('.form__error-message').remove();
 
         this._checkIfUserExists(customer.email)
@@ -67,8 +73,6 @@ VOLO.ContactInformatioForm = ValidationView.extend({
                     });
                 }
             }.bind(this));
-
-        return false;
     },
 
     _checkIfUserExists: function (email) {
@@ -82,6 +86,8 @@ VOLO.ContactInformatioForm = ValidationView.extend({
             success: function (response) {
                 if (response.exists) {
                     this.model.trigger('customer:already_exist');
+                } else {
+                    this.model.trigger('customer:new');
                 }
             }.bind(this)
         });

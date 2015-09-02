@@ -526,6 +526,24 @@ textarea.checkout__step__item-textarea {
   }
 }
 
+.checkout__contact-information__register-link-wrapper, .checkout__contact-information__hide-register-link-wrapper {
+  margin-top: $space-sm;
+  padding-left: $space-sm;
+}
+
+.checkout__contact-information__forgot-password {
+  margin-bottom: $space-md;
+}
+
+.checkout__contact-information__server-error-message {
+  @extend %form-message;
+  @extend .form__error-message;
+}
+
+.profile__blocks .checkout__step__item-form-group--newsletter {
+  display: none;
+}
+
 // -------------------------- CHECKOUT CONTACT INFORMATION END --------------------------
 
 
