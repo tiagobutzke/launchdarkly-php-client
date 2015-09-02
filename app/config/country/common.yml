@@ -8,6 +8,8 @@ parameters:
     address_config:
         postal_code_field:
             - 'postal_code'
+        street_field:
+            - 'route'
         autocomplete_type:
             - "(regions)"
         hide_checkout_postal_code: false

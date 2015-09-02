@@ -424,6 +424,10 @@ VOLO.doBootstrap = function(configuration) {
     _.invoke(VOLO.gtmViews, 'onGtmServiceCreated');
 };
 
+VOLO.isFullAddressAutoComplete = function () {
+    return VOLO.configuration.address_config.autocomplete_type[0] !== '(regions)';
+};
+
 $(document).on('page:load page:restore', function () {
     console.log('page:load');
 

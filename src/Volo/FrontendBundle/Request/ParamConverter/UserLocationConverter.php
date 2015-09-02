@@ -184,7 +184,7 @@ class UserLocationConverter implements ParamConverterInterface
     {
         // this is to handle the case when the user select district / main area without a street address
         $deliveryAddress = trim(sprintf('%s %s, %s', $building, $street, $postcode));
-        $deliveryAddress = strpos($deliveryAddress, ',') ? substr($deliveryAddress, 1) : $deliveryAddress;
+        $deliveryAddress = strpos($deliveryAddress, ',') === 0 ? substr($deliveryAddress, 1) : $deliveryAddress;
 
         return [
             'type'             => $type,

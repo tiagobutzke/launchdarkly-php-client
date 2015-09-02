@@ -8,8 +8,12 @@ parameters:
     address_config:
         postal_code_field:
             - 'postal_code'
+            - 'sublocality'
+            - 'sublocality_level_1'
             - 'neighborhood'
             - 'administrative_area_level_1'
-        autocomplete_type:
-            - "address"
+        street_field:
+            - 'route'
+            - 'neighborhood'
+        autocomplete_type: []
         hide_checkout_postal_code: true

@@ -101,10 +101,6 @@ var HomeSearchView = CTATrackableView.extend({
         }));
     },
 
-    _isFullAddressAutocomplete: function() {
-        return VOLO.configuration.address_config.autocomplete_type[0] === 'address';
-    },
-
     _applyNewLocationData: function (locationMeta) {
         var data = this._getDataFromMeta(locationMeta);
 
@@ -123,9 +119,9 @@ var HomeSearchView = CTATrackableView.extend({
             longitude: data.lng,
             postcode: data.postcode,
             city: data.city,
-            address: this._isFullAddressAutocomplete() ? data.formattedAddress : data.postcode + ", " + data.city,
-            building: this._isFullAddressAutocomplete() ? data.building : null,
-            street: this._isFullAddressAutocomplete() ? data.street : null
+            address: VOLO.isFullAddressAutoComplete() ? data.formattedAddress : data.postcode + ", " + data.city,
+            building: VOLO.isFullAddressAutoComplete() ? data.building : null,
+            street: VOLO.isFullAddressAutoComplete() ? data.street : null
         });
 
         dataLayer.push({
@@ -137,7 +133,7 @@ var HomeSearchView = CTATrackableView.extend({
     _getDataFromMeta: function (locationMeta) {
         var formattedAddress = locationMeta.formattedAddress;
 
-        if (!formattedAddress.match(locationMeta.postalCode.value) && !this._isFullAddressAutocomplete()) {
+        if (!formattedAddress.match(locationMeta.postalCode.value) && !VOLO.isFullAddressAutoComplete()) {
             formattedAddress = locationMeta.postalCode.value + ", " + locationMeta.city;
         }
 
