@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+* 1.27.2
+
+  * INTVOLO-480: Address improvements
+  * INTVOLO-581: Js fix
+  * INTVOLO-529: Decode address when saved in session
+
 * 1.27.1
 
   * INTVOLO-329: Previll zip code field
