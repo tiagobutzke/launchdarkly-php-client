@@ -190,10 +190,10 @@ class UserLocationConverter implements ParamConverterInterface
             'type'             => $type,
             'city'             => $city,
             'postcode'         => $postcode,
-            'address'          => $address,
-            'street'           => $street,
-            'building'         => $building,
-            'delivery_address' => $deliveryAddress
+            'address'          => urldecode($address),
+            'street'           => urldecode($street),
+            'building'         => urldecode($building),
+            'delivery_address' => urldecode($deliveryAddress)
         ];
     }
 }
