@@ -5,7 +5,14 @@
 // ----------------------- FONTS START -----------------------
 $fontspath: "../../fonts/";
 
-// this value should be changed anytime fonts file are updated in order to avoid caching issues
+// icomoon font
+// For updating the icon font go to https://icomoon.io/app/#/projects
+// and import the file icomoon-foodora.json
+// !!! IMPORTANT: !!!
+// 1. download separately from the page the new json file and than generate the font
+// 2. overwrite the icomoon-foodora.json with the new generated one
+// 3. overwrite the fonts /web/fonts with the new generated fonts
+// 4. increase the value of $font-version because of caching issues
 $font-version: 10;
 
 @font-face {
