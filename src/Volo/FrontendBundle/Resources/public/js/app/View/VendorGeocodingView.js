@@ -129,7 +129,7 @@ var VendorGeocodingView = HomeSearchView.extend({
     },
 
     _prepareDeliveringToLabel: function () {
-        if (this._isFullAddressAutocomplete()) {
+        if (VOLO.isFullAddressAutoComplete()) {
             return this.model.get('building') + " " + this.model.get('street') + ", " + this.model.get('postcode');
         }
 
