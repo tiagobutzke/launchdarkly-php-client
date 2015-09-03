@@ -89,20 +89,20 @@ class UserLocationConverter implements ParamConverterInterface
                     $request->get(CustomerLocationService::KEY_LAT),
                     $request->get(CustomerLocationService::KEY_LNG),
                     $request->get(CustomerLocationService::KEY_PLZ),
-                    $request->get(CustomerLocationService::KEY_CITY),
-                    $request->get(CustomerLocationService::KEY_ADDRESS),
-                    $request->get(CustomerLocationService::KEY_STREET),
-                    $request->get(CustomerLocationService::KEY_BUILDING)
+                    urldecode($request->get(CustomerLocationService::KEY_CITY)),
+                    urldecode($request->get(CustomerLocationService::KEY_ADDRESS)),
+                    urldecode($request->get(CustomerLocationService::KEY_STREET)),
+                    urldecode($request->get(CustomerLocationService::KEY_BUILDING))
                 );
 
                 $this->customerLocationService->set($request->getSession(), $gpsLocation);
                 $formattedLocation = $this->createFormattedLocation(
                     $convertedParameter->getLocationType(),
-                    $gpsLocation[CustomerLocationService::KEY_CITY],
+                    urldecode($gpsLocation[CustomerLocationService::KEY_CITY]),
                     $gpsLocation[CustomerLocationService::KEY_PLZ],
-                    $gpsLocation[CustomerLocationService::KEY_ADDRESS],
-                    $gpsLocation[CustomerLocationService::KEY_STREET],
-                    $gpsLocation[CustomerLocationService::KEY_BUILDING]
+                    urldecode($gpsLocation[CustomerLocationService::KEY_ADDRESS]),
+                    urldecode($gpsLocation[CustomerLocationService::KEY_STREET]),
+                    urldecode($gpsLocation[CustomerLocationService::KEY_BUILDING])
                 );
 
                 try {
