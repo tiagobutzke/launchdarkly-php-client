@@ -3,6 +3,7 @@ var GeocodingService = function(locale) {
     this._listeners = [];
     this.locale = locale;
     this.postalCodeField = null;
+    this.streetField = null;
     this.addressComponentsForAutocomplete = ['(regions)'];
 };
 
@@ -10,6 +11,7 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
     init: function ($input, config) {
         _.bindAll(this);
         this.postalCodeField = config.postal_code_field || ['postal_code'];
+        this.streetField = config.street_field || ['route'];
         this.addressComponentsForAutocomplete = config.autocomplete_type || this.addressComponentsForAutocomplete;
         this.autocomplete = new google.maps.places.Autocomplete(
             $input[0],
@@ -194,7 +196,7 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
                 value: this._findPostalCodeInAddressComponents(place.address_components),
                 isReversed: false
             },
-            street: this._findFieldInAddressComponents(place.address_components, 'route'),
+            street: this._findStreetInAddressComponents(place.address_components),
             building: this._findFieldInAddressComponents(place.address_components, 'street_number'),
             lat: place.geometry.location.lat(),
             lng: place.geometry.location.lng()
@@ -245,6 +247,17 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
         }, this);
 
         return postalCode;
+    },
+
+    _findStreetInAddressComponents: function (addressComponents) {
+        var street = null;
+        _.each(this.streetField, function(type) {
+            if (!street) {
+                street = this._findFieldInAddressComponents(addressComponents, type, 'short_name');
+            }
+        }, this);
+
+        return street;
     },
 
     _findCityInAddressComponents: function (addressComponents) {

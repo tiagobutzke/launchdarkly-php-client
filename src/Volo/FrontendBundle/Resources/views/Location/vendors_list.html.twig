@@ -83,6 +83,10 @@
                             {{ 'address.delivery_by_gps %address%'|trans({
                                 '%address%': formattedLocation['address']
                             }) }}
+                        {% elseif gpsSearch %}
+                            {{ 'address.delivery_by_gps %address%'|trans({
+                                '%address%': formattedLocation['delivery_address']
+                            }) }}
                         {% else %}
                             {{ 'address.delivery_by_city %city%'|trans({
                                 '%city%': formattedLocation['city']

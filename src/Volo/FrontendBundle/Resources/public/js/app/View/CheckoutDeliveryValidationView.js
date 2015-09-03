@@ -125,10 +125,9 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
 
         console.log('_geocodePostalCode ', this.cid, locationData);
         //todo inject it, don't use global objects
-        var validateDeliveryWithAddressOnly = VOLO.configuration.address_config.autocomplete_type[0] === 'address';
 
         var addressGeocode = this._geocodeAddress();
-        if (validateDeliveryWithAddressOnly) {
+        if (VOLO.isFullAddressAutoComplete()) {
             addressGeocode.done(function(result) {
                 this._validateDelivery({lat: result.lat(), lng: result.lng()}).then(deferred.resolve);
             }.bind(this));

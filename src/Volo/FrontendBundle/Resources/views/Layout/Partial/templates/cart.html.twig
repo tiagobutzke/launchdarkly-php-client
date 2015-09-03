@@ -71,8 +71,13 @@
                 >
             </div>
         </form>
-        <div class="vendor__geocoding__tool-box__title{% if ((isDeliverable == false) or address_config.autocomplete_type|first != '(regions)') %} hide{% endif %}">
-            {{ 'cart.delivering_to'|trans }} <span class="location__address">{{ address }}</span>
+        <div class="vendor__geocoding__tool-box__title">
+            {% if ((isDeliverable == false) or address_config.autocomplete_type|first != '(regions)') %}
+                {{ 'cart.delivering_to'|trans }} <span class="location__address">{{ location['building'] }} {{ location['street'] }}, {{ location['postcode'] }}</span>
+            {% else %}
+                {{ 'cart.delivering_to'|trans }} <span class="location__address">{{ address }}</span>
+            {% endif %}
+
         </div>
         <div class="postal-index-form-overlay"></div>
     </div>

@@ -50,7 +50,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
     render: function () {
         console.log('CheckoutDeliveryInformationView.render ', this.cid);
 
-        this._emptyAddressForm(VOLO.configuration.address_config.autocomplete_type[0] === 'address');
+        this._emptyAddressForm(VOLO.isFullAddressAutoComplete());
 
         if (this.customerModel.isGuest && _.isNull(this.model.get('address_id'))) {
             this.$('.checkout__title-link__icon--plus').addClass('hide');
