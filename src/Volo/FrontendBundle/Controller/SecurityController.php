@@ -41,7 +41,7 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/login_check", name="login_check", options={"expose"=true})
+     * @Route("/login_check", name="login_check", options={"expose"=true, "i18n"=false})
      */
     public function loginCheckAction()
     {
