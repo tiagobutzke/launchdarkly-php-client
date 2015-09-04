@@ -233,6 +233,12 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
         });
     },
 
+    fireVirtualPageView: function () {
+        this._push({
+            'event': 'virtualPageView'
+        });
+    },
+
     _createCookieName: function (vendorId) {
         return 'gtm_event_addFirstProduct-' + vendorId;
     },

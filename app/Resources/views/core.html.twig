@@ -51,24 +51,20 @@
             <!-- Google Tag Manager -->
             {% block google_tag_manager_before %}{% endblock %}
             <script type="text/javascript" data-turbolinks-eval=always>
-                $(document).ready(function() {
-                    if (window.VOLO && VOLO.tagManager) {
-                        dataLayer.push({
-                            'event': 'virtualPageView',
-                            'pageType': VOLO.tagManager.pageType,
-                            'referralKeyword': '{{ gtm_get_referral_keyword() }}',
-                            'zipcode': '{{ customer_location().postcode }}',
-                            'city': '{{ customer_location().city }}',
-                            'country': '{{ gtm_get_country() }}',
-                            'loggedIn': '{{ is_customer_authenticated_fully() ? 'true' : 'false' }}',
-                            'customerId': '{{ is_customer_authenticated_fully() ? get_authenticated_customer().id }}',
-                            'referrer': VOLO.tagManager.referrer,
-                            'cartValue': '{{ get_default_cart_value(app.session) }}',
-                            'cartContents': '{{ get_default_cart_variations_ids(app.session) }}',
-                            'cartQuantity': '{{ get_default_cart_count(app.session) }}'
-                        });
-                    }
-                });
+                if (window.VOLO && VOLO.tagManager) {
+                    dataLayer.push({
+                        'pageType': VOLO.tagManager.pageType,
+                        'referralKeyword': '{{ gtm_get_referral_keyword() }}',
+                        'zipcode': '{{ customer_location().postcode }}',
+                        'city': '{{ customer_location().city }}',
+                        'country': '{{ gtm_get_country() }}',
+                        'loggedIn': '{{ is_customer_authenticated_fully() ? 'true' : 'false' }}',
+                        'customerId': '{{ is_customer_authenticated_fully() ? get_authenticated_customer().id }}',
+                        'cartValue': '{{ get_default_cart_value(app.session) }}',
+                        'cartContents': '{{ get_default_cart_variations_ids(app.session) }}',
+                        'cartQuantity': '{{ get_default_cart_count(app.session) }}'
+                    });
+                }
             </script>
             <script type="text/javascript" data-turbolinks-eval=false>
                 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
