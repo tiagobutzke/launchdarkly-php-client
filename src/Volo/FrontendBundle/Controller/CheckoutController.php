@@ -432,10 +432,10 @@ class CheckoutController extends BaseController
 
             if ($lat === .0 || $lng === .0) {
                 $this->getLogger()->error(
-                    serialize($data),
+                    "location_monitoring_save_state::$logName",
                     [
-                        'type' => 'location_monitoring_save_state',
-                        'action_name' => $logName
+                        'data' => $data,
+                        'location' => $location
                     ]
                 );
             }
