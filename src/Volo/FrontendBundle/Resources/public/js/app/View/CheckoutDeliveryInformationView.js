@@ -153,6 +153,9 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
         this._showCloseFormAddressLink();
 
         this.trigger('form:open', this);
+
+        console.debug('Checkout step 1');
+        this.model.trigger('checkoutModel:addressOpened');
     },
 
     _closeAddressForm: function () {

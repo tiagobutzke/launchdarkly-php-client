@@ -92,13 +92,19 @@ var CheckoutPageView = Backbone.View.extend({
     },
 
     _switchPaymentFormVisibility: function () {
-        if (!_.isNull(this.model.get('address_id')) && this.model.get('is_contact_information_valid') && this.customerModel.isValid()) {
+        if (!_.isNull(this.model.get('address_id')) &&
+            this.model.get('is_contact_information_valid') && this.customerModel.isValid()) {
             this.$('.checkout__payment').removeClass('checkout__step--reduced');
             this.$('.checkout__payment .checkout__step__items').removeClass('hide');
             this._refreshBlazy();
         } else {
             this.$('.checkout__payment').addClass('checkout__step--reduced');
             this.$('.checkout__payment .checkout__step__items').addClass('hide');
+        }
+
+        if (!this.$('.checkout__payment').hasClass('checkout__step--reduced')) {
+            console.debug('Checkout step 3');
+            this.model.trigger('checkoutModel:paymentOpened');
         }
     },
 

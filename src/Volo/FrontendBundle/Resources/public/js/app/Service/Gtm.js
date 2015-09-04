@@ -9,7 +9,6 @@ VOLO.GTMService = function (options) {
     this.sessionId = options.sessionId;
     this.checkoutModel = options.checkoutModel || null;
     this.checkoutPageView = options.checkoutPageView;
-    this.checkoutInformationValidationFormView = options.checkoutInformationValidationFormView;
     this.loginButtonView = options.loginButtonView;
     this.restaurantsView = options.restaurantsView;
     this.homeSearchView = options.homeSearchView;
@@ -33,12 +32,9 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
             );
         }
 
-        if (_.isObject(this.checkoutPageView)) {
-            this.listenTo(
-                this.checkoutPageView,
-                'validationView:validateSuccessful',
-                this.fireCheckoutContactDetailsSet
-            );
+        if (_.isObject(this.checkoutModel)) {
+            this.listenTo(this.checkoutModel, 'checkoutModel:addressOpened', this.fireCheckoutHasStarted);
+            this.listenTo(this.checkoutModel, 'checkoutModel:paymentOpened', this.fireCheckoutContactDetailsSet);
         }
 
         if (_.isObject(this.restaurantsView)) {
@@ -152,7 +148,19 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
         }
     },
 
+    fireCheckoutHasStarted: function () {
+        console.debug('GTM::fireCheckoutHasStarted');
+
+        this._push({
+            'event': 'checkout',
+            'checkoutStep': '1 - Checkout Started',
+            'sessionId': this.sessionId
+        });
+    },
+
     fireCheckoutDeliveryDetailsSet: function (data) {
+        console.debug('GTM::fireCheckoutDeliveryDetailsSet');
+
         this._push({
             'event': 'checkout',
             'checkoutStep': '2 - Delivery Details Set',
@@ -161,20 +169,24 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
         });
     },
 
-    fireCheckoutContactDetailsSet: function (data) {
+    fireCheckoutContactDetailsSet: function () {
+        console.debug('GTM::fireCheckoutContactDetailsSet');
+
         this._push({
             'event': 'checkout',
             'checkoutStep': '3 - Contact Info Provided',
-            'newsletterSignup': data.newsletterSignup,
             'sessionId': this.sessionId
         });
     },
 
     fireCheckoutPaymentDetailsSet: function (data) {
+        console.debug('GTM::fireCheckoutPaymentDetailsSet');
+
         this._push({
             'event': 'checkout',
             'checkoutStep': '4 - Payment Details Set',
             'paymentMethod': data.paymentMethod,
+            'newsletterSignup': data.newsletterSignup,
             'sessionId': this.sessionId
         });
     },
