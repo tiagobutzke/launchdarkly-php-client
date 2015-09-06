@@ -187,7 +187,8 @@ class OrderManagerService
 
             case array_key_exists('encrypted_payment_data', $order):
                 $paymentRequest['encrypted_payment_data']      = $order['encrypted_payment_data'];
-                $paymentRequest['is_credit_card_store_active'] = $order['is_credit_card_store_active'];
+//                $paymentRequest['is_credit_card_store_active'] = $order['is_credit_card_store_active'];
+                $paymentRequest['is_credit_card_store_active'] = false;
                 break;
 
             default:

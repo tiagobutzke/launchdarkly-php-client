@@ -31,15 +31,15 @@
                 <input type="hidden" id="checkout-adyen-encrypted-form-expiry-month" maxlength="4" size="4" data-encrypted-name="expiryMonth">
             </div>
 
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <div class="checkout__payment__credit-card-fields-form-group form-group sprite-form">
-                    <input type="checkbox" class="form-control sprite-form__checkbox" id="checkout-store-credit-card" checked="checked">
-                    <div class="sprite-form__sprite"></div>
-                    <label class="sprite-form__label" for="checkout-store-credit-card">
-                        {% trans %}form.label.store_credit_card{% endtrans %}
-                    </label>
-                </div>
-            {% endif %}
+            {#{% if is_granted('IS_AUTHENTICATED_FULLY') %}#}
+                {#<div class="checkout__payment__credit-card-fields-form-group form-group sprite-form">#}
+                    {#<input type="checkbox" class="form-control sprite-form__checkbox" id="checkout-store-credit-card" checked="checked">#}
+                    {#<div class="sprite-form__sprite"></div>#}
+                    {#<label class="sprite-form__label" for="checkout-store-credit-card">#}
+                        {#{% trans %}form.label.store_credit_card{% endtrans %}#}
+                    {#</label>#}
+                {#</div>#}
+            {#{% endif %}#}
 
         </div>
 

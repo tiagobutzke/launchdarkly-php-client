@@ -193,8 +193,9 @@ class CheckoutController extends BaseController
 
             $viewData['customer_addresses'] = $serializer->normalize($customerAddresses);
             $viewData['customer'] = $serializer->normalize($token->getAttributes()['customer']);
-            $viewData['customer_cards']
-                = $this->getCustomerProvider()->getAdyenCards($token->getAccessToken())['items'];
+            $viewData['customer_cards'] = [];
+//            $viewData['customer_cards']
+//                = $this->getCustomerProvider()->getAdyenCards($token->getAccessToken())['items'];
         }
 
         return $viewData;
