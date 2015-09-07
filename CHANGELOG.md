@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+* 1.27.4
+ * INTVOLO-542: Fixing the config for the hidden checkout postcode and city 
+
+* 1.27.3
+  * Temporary disabled saved CC
+
 * 1.27.2
 
   * INTVOLO-480: Address improvements
