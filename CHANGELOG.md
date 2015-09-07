@@ -1,5 +1,8 @@
 CHANGELOG
 =========
+* 1.28.0
+ * Removing coming soon page for dubai
+ * INTVOLO-608: Mult-line Timepicker for dubai
 
 * 1.27.4
  * INTVOLO-542: Fixing the config for the hidden checkout postcode and city 
