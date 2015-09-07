@@ -45,12 +45,17 @@
         <parameter key="volo_frontend.security.ajax_authentication_failure_handler.class">Volo\FrontendBundle\Security\AjaxAuthenticationFailureListener</parameter>
         <parameter key="volo_frontend.event_listener.locale_listener.class">Volo\FrontendBundle\EventListener\LocaleListener</parameter>
         <parameter key="volo_frontend.provider.locale_config_provider.class">Volo\FrontendBundle\Provider\LocaleConfigProvider</parameter>
+        <parameter key="volo_frontend.provider.address_config_provider.class">Volo\FrontendBundle\Provider\AddressConfigProvider</parameter>
         <parameter key="translator.class">Volo\FrontendBundle\Service\TranslatorService</parameter>
     </parameters>
 
     <services>
         <service id="volo_frontend.provider.locale_config_provider" class="%volo_frontend.provider.locale_config_provider.class%">
             <argument>%localeSettings%</argument>
+        </service>
+
+        <service id="volo_frontend.provider.address_config_provider" class="%volo_frontend.provider.address_config_provider.class%">
+            <argument>%address_config%</argument>
         </service>
 
         <service id="session.handler.redis" class="%framework.service.session_handler.class%">

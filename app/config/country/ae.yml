@@ -14,5 +14,7 @@ parameters:
             - 'administrative_area_level_1'
         street_field:
             - 'route'
+            - 'intersection'
+            - 'premise'
             - 'neighborhood'
         autocomplete_type: []
