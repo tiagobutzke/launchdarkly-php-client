@@ -16,4 +16,3 @@ parameters:
             - 'route'
             - 'neighborhood'
         autocomplete_type: []
-        hide_checkout_postal_code: true
