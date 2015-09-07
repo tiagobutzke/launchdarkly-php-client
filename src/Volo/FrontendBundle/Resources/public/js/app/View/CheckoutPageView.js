@@ -187,8 +187,6 @@ var CheckoutPageView = Backbone.View.extend({
         if (_.isObject(data) && _.isString(_.get(data, 'error.errors.message'))) {
             this.$('.form__error-message').html(data.error.errors.message);
             this.$('.form__error-message').removeClass('hide');
-        } else if (exists) {
-            this.contactInformationView.openLoginModal();
         } else {
             console.log(data);
         }
