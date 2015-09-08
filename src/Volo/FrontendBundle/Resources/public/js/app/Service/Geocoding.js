@@ -1,7 +1,7 @@
-var GeocodingService = function(locale) {
+var GeocodingService = function(countryCode) {
     this.autocomplete = null;
     this._listeners = [];
-    this.locale = locale;
+    this.countryCode = countryCode;
     this.postalCodeField = null;
     this.streetField = null;
     this.addressComponentsForAutocomplete = ['(regions)'];
@@ -18,7 +18,7 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
             {
                 types: this.addressComponentsForAutocomplete,
                 componentRestrictions: {
-                    country: this.locale
+                    country: this.countryCode
                 }
             }
         );
@@ -132,7 +132,7 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
         geocoder.geocode({
             "address": zipCode + '',
             componentRestrictions: {
-                country: this.locale
+                country: this.countryCode
             }
         }, function (results, status) {
             console.log(status);

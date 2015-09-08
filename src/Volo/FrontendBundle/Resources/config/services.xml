@@ -88,6 +88,7 @@
         <service id="volo_frontend.twig.volo_extension" class="%volo_frontend.twig.volo_extension.class%">
             <argument type="service" id="translator" />
             <argument type="service" id="volo_frontend.service.cart_manager" />
+            <argument type="service" id="volo_frontend.service.configuration" />
             <tag name="twig.extension"/>
         </service>
 

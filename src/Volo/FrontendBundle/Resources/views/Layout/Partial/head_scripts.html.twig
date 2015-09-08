@@ -1,5 +1,4 @@
 {% block head_scripts %}
-    {% set config = get_configuration() %}
     <script src="https://maps.googleapis.com/maps/api/js?v=3.2&amp;sensor=false&amp;libraries=places&amp;language={{ locale|replace('_', '-') }}&amp;client={{ google_api_client_id }}&amp;channel={{ google_api_channel }}"></script>
     <script src="{{ asset('js/dist/head.js') }}"></script>
     {% if app.debug == true %}
@@ -21,7 +20,6 @@
         VOLO.configuration = VOLO.configuration || {};
         VOLO.configuration.countryCode = '{{ country_code }}';
         VOLO.configuration.locale = '{{ locale }}';
-        VOLO.configuration.userLocale = '{{ app.request.locale }}';
         VOLO.configuration.address_config = {{ address_config|to_escaped_json }}
         VOLO.configuration.sessionId = '{{ app.session.id }}';
         VOLO.configuration.googleTagManagerContainerId = '{{ google_tag_manager_container_id }}';
@@ -33,7 +31,7 @@
         VOLO.configuration.cartBottomMargin = 50;
         VOLO.configuration.itemsOverflowingClassName = 'checkout__summary-overflowing';
         VOLO.configuration.timeZone = '{{ timezone }}';
-        VOLO.configuration.currencySymbol = '{{ config.currency.currency_symbol_iso }}';
+        VOLO.configuration.currencySymbol = '{{ get_currency_symbol_iso() }}';
         VOLO.configuration.averageDeliveryTime = '{{ average_delivery_time }}';
 
         dataLayer = [];
