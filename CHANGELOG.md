@@ -1,5 +1,8 @@
 CHANGELOG
 =========
+* 1.29.0
+ * INTVOLO-616: Dubai / Address Improvements and disabling prefilling
+
 * 1.28.0
  * Removing coming soon page for dubai
  * INTVOLO-608: Mult-line Timepicker for dubai
