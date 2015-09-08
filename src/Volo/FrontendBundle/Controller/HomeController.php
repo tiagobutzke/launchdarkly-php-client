@@ -23,7 +23,7 @@ class HomeController extends Controller
     public function homeAction(Request $request, $postalCode)
     {
         $location = $this->getCustomerLocationService()->get($request->getSession());
-        if ('' === $postalCode) {
+        if ('' === $postalCode && false === $this->getAddressConfigProvider()->isFullAddressAutocomplete()) {
             $postalCode = $location[CustomerLocationService::KEY_PLZ];
         }
 
@@ -52,5 +52,13 @@ class HomeController extends Controller
     private function getCustomerLocationService()
     {
         return $this->get('volo_frontend.service.customer_location');
+    }
+
+    /**
+     * @return \Volo\FrontendBundle\Provider\AddressConfigProvider
+     */
+    private function getAddressConfigProvider()
+    {
+        return $this->get('volo_frontend.provider.address_config_provider');
     }
 }
