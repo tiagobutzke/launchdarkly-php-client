@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <title>{% block title %}{{ 'general.default_page_title'|trans }}{% endblock %}</title>
 
-        {% if "es" == country_code or "se" == country_code or "au" == country_code %}
+        {% if "se" == country_code or "au" == country_code %}
             {% set faviconCountry = country_code %}
         {% else %}
             {% set faviconCountry = 'default' %}

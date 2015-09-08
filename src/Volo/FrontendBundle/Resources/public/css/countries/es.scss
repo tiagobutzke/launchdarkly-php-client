@@ -13,20 +13,6 @@
 
 // ----------------------- COUNTRY STYLES OVERRIDE START --------------------------
 
-.icon-logo {
-  &:before {
-    content: "\e61a" !important;
-  }
-}
-
-.header--white {
-  .header__logo__a {
-    i {
-      color: #000;
-    }
-  }
-}
-
 .footer__nav__press {
   display: none;
 }
