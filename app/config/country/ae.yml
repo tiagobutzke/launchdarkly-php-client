@@ -7,7 +7,7 @@ parameters:
     is_coming_soon_enabled: false
 
     short_to_full_locale_name_mapping:
-        - en: 'en_AE'
+        en: 'en_AE'
 
     address_config:
         postal_code_field:
