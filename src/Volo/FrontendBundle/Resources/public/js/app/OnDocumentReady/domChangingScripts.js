@@ -5,7 +5,13 @@ VOLO.initDomChangingScripts = function() {
     var homeTeaseFullWidth,
         headerAnimations,
         $window = $(window),
-        $document = $(document);
+        $document = $(document),
+        isMobile = new MobileDetect(window.navigator.userAgent).mobile(),
+        $body = $('body');
+
+    if (isMobile) {
+        $body.addClass('is-mobile');
+    }
 
     homeTeaseFullWidth = new VOLO.FullWindowHeight({
         $window: $window,

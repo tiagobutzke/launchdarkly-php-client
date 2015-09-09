@@ -34,6 +34,7 @@
                    data-gtm-cta="findRestaurant_main"
             >
         </form>
+        {{ cms('homepage-teaser-app-promo') }}
     </section>
 
     <div class="home__titles">
@@ -155,7 +156,5 @@
             {{ cms('homepage-cities') }}
         </div>
     </section>
-    {% if "de" == country_code %}
-        {{ cms('homepage-app-promo') }}
-    {% endif %}
+    {{ cms('homepage-app-promo') }}
 {% endblock %}
