@@ -79,6 +79,7 @@ VOLO.ContactInformationForm = ValidationView.extend({
         if (!this.model.isGuest) {
             return $.Deferred().resolve({exists: false});
         }
+        this.$('.form__error-message').remove();
 
         return $.ajax({
             url: Routing.generate('checkout_validate_email', {email: email}),
@@ -89,6 +90,9 @@ VOLO.ContactInformationForm = ValidationView.extend({
                 } else {
                     this.model.trigger('customer:new');
                 }
+            }.bind(this),
+            error: function(response) {
+                this._onCustomerSaveError(null, response);
             }.bind(this)
         });
     },

@@ -7,6 +7,7 @@ use Foodpanda\ApiSdk\Entity\Customer\Customer;
 use Foodpanda\ApiSdk\Entity\Order\GuestCustomer;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
+use Foodpanda\ApiSdk\Exception\ValidationEntityException;
 use Foodpanda\ApiSdk\Provider\CustomerProvider;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -97,6 +98,22 @@ class CheckoutController extends BaseController
                 ['email' => $email],
                 []
             );
+        } catch (ValidationEntityException $e) {
+            $errors = $e->getValidationMessages();
+
+            if (isset($errors['email'])) {
+                return new JsonResponse(
+                    [
+                        'exists' => false,
+                        'error' => [
+                            'errors' => [
+                                ['field_name' => 'email', 'violation_messages' => [$errors['email']]]
+                            ]
+                        ]
+                    ],
+                    Response::HTTP_BAD_REQUEST
+                );
+            }
         } catch (ApiErrorException $e) {
             $error = json_decode($e->getJsonErrorMessage(), true);
             if (isset($error['data']['exception_type']) &&
@@ -258,6 +275,8 @@ class CheckoutController extends BaseController
                     $data['customer'],
                     $data['address']
                 );
+            } catch (ValidationEntityException $e) {
+                return new JsonResponse(['errors' => $e->getValidationMessages()], Response::HTTP_BAD_REQUEST);
             } catch (ApiErrorException $e) {
                 $error = json_decode($e->getJsonErrorMessage(), true);
                 if (isset($error['data']['exception_type']) &&
