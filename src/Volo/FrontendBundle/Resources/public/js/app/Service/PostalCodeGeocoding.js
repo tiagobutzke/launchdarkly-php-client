@@ -1,5 +1,5 @@
-var PostalCodeGeocodingService = function(locale) {
-    this.locale = locale;
+var PostalCodeGeocodingService = function(countryCode) {
+    this.countryCode = countryCode;
     this.geocoder = new google.maps.Geocoder();
 };
 
@@ -53,7 +53,7 @@ _.extend(PostalCodeGeocodingService.prototype, Backbone.Events, {
 
     createComponentRestrictions: function(options) {
         var componentRestrictions = {
-            country: this.locale
+            country: this.countryCode
         };
         if (options.city) {
             componentRestrictions.locality = options.city;

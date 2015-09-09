@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Volo\FrontendBundle\Service\CartManagerService;
 use Symfony\Component\Intl\Intl;
+use Volo\FrontendBundle\Service\ConfigurationService;
 
 class VoloExtension extends \Twig_Extension
 {
@@ -21,14 +22,23 @@ class VoloExtension extends \Twig_Extension
     private $cartManager;
 
     /**
-     * @param TranslatorInterface $translator
-     * @param CartManagerService  $cartManager
-     * @param                     $datePickerDateFormat
+     * @var ConfigurationService
      */
-    public function __construct(TranslatorInterface $translator, CartManagerService $cartManager)
-    {
+    private $config;
+
+    /**
+     * @param TranslatorInterface $translator
+     * @param CartManagerService $cartManager
+     * @param ConfigurationService $config
+     */
+    public function __construct(
+        TranslatorInterface $translator,
+        CartManagerService $cartManager,
+        ConfigurationService $config
+    ) {
         $this->translator = $translator;
         $this->cartManager = $cartManager;
+        $this->config = $config;
     }
 
     /**
@@ -53,15 +63,23 @@ class VoloExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('get_configuration', array($this, 'getConfiguration')),
             new \Twig_SimpleFunction('get_default_cart_count', array($this, 'getDefaultCartCount')),
             new \Twig_SimpleFunction('get_default_cart_variations_ids', array($this, 'getDefaultCartVariationsIds')),
             new \Twig_SimpleFunction('get_default_cart_value', array($this, 'getDefaultCartValue')),
             new \Twig_SimpleFunction('get_default_cart_vendor_id', array($this, 'getDefaultCartVendorId')),
+            new \Twig_SimpleFunction('get_currency_symbol_iso', array($this, 'getCurrencySymbolIso')),
 
             new \Twig_SimpleFunction('gtm_delivery_day', array($this, 'createDeliveryDay')),
             new \Twig_SimpleFunction('gtm_delivery_weekday', array($this, 'createDeliveryWeekday')),
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrencySymbolIso()
+    {
+        return $this->config->getConfiguration()->getCurrencySymbolIso();
     }
 
     /**
@@ -73,29 +91,8 @@ class VoloExtension extends \Twig_Extension
     public function priceFilter($number)
     {
         $formatter = twig_get_number_formatter($this->translator->getLocale(), 'currency');
-        $currencyCode = $formatter->getTextAttribute(\NumberFormatter::CURRENCY_CODE);
 
-        // TODO: Temporary fix for Hong Kong
-        if ('en_HK' === $this->translator->getLocale()) {
-            $currencyCode = Intl::getCurrencyBundle()->getCurrencySymbol($currencyCode);
-        }
-
-        return $formatter->formatCurrency($number, $currencyCode);
-    }
-
-    /**
-     * @return array
-     */
-    public function getConfiguration()
-    {
-        $formatter = twig_get_number_formatter($this->translator->getLocale(), 'currency');
-        $currencyIso = $formatter->getTextAttribute(\NumberFormatter::CURRENCY_CODE);
-
-        return [
-            'currency' => [
-                'currency_symbol_iso' => $currencyIso,
-            ],
-        ];
+        return $formatter->formatCurrency($number, $this->getCurrencySymbolIso());
     }
 
     /**

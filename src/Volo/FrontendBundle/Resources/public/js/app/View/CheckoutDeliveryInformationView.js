@@ -42,8 +42,8 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
             el: this.$('#delivery-information-form'),
             deliveryCheck: options.deliveryCheck,
             locationModel: options.locationModel,
-            geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1]),
-            postalCodeGeocodingService: new PostalCodeGeocodingService(VOLO.configuration.locale.split('_')[1])
+            geocodingService: new GeocodingService(VOLO.configuration.countryCode),
+            postalCodeGeocodingService: new PostalCodeGeocodingService(VOLO.configuration.countryCode)
         });
     },
 

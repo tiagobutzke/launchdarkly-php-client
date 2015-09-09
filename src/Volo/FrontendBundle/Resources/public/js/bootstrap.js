@@ -202,7 +202,7 @@ VOLO.createHomeSearchView = function (locationModel) {
     var homeSearchView = new HomeSearchView({
         el: '.home__teaser__form',
         model: locationModel,
-        geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1])
+        geocodingService: new GeocodingService(VOLO.configuration.countryCode)
     });
 
     VOLO.views.push(homeSearchView);
@@ -242,7 +242,7 @@ VOLO.createVendorsListSearchView = function () {
     var vendorSearchView = new VendorsSearchView({
         el: '.restaurants__tool-box',
         model: VOLO.locationModel,
-        geocodingService: new GeocodingService(VOLO.configuration.locale.split('_')[1])
+        geocodingService: new GeocodingService(VOLO.configuration.countryCode)
     });
 
     VOLO.views.push(vendorSearchView);
