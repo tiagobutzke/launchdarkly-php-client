@@ -1,5 +1,12 @@
 CHANGELOG
 =========
+* 1.30.0
+ * INTVOLO-653 (address suggestions in safari on ios
+ * INTVOLO-564 (address logic in austria)
+ * INTVOLO-520 (mobile icons above fold) (edited)
+ * INTVOLO-606 Checkout payment error
+ * INTVOLO-614 Checkout payment error related to INVOLO-606
+ 
 * 1.29.0
  * INTVOLO-616: Dubai / Address Improvements and disabling prefilling
 
