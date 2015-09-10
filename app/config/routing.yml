@@ -10,6 +10,7 @@ volo_frontend:
 logout:
     path:     /logout
     schemes:  [%http_schema%]
+    options: { i18n: false }
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

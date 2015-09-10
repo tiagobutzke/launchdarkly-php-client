@@ -22,4 +22,4 @@ security:
 
             logout:
                 path:   /logout
-                target: / 
+                target: home
