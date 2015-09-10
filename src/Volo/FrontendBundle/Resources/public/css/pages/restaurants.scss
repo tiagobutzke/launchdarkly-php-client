@@ -6,8 +6,12 @@
   @include appear-from("screen-md");
 }
 
+
 .restaurants-container {
   position: relative;
+}
+.show-ios-smart-banner .restaurants-container {
+  top: $ios-smart-banner-height + 8px;
 }
 
 // -------------------------- RESTAURANTS TOOLS START --------------------------
@@ -79,7 +83,9 @@
 .restaurants__tool-box--sticking .restaurants__location__title {
   @include centerTextVerticallyByHeight($header-height-extra-small);
 }
-
+.show-ios-smart-banner .restaurants__tool-box--sticking .restaurants__location__title {
+  margin-top: $ios-smart-banner-height;
+}
 
 .restaurants__location__change-button {
   font-size: $restaurant-font-size;
@@ -153,7 +159,9 @@
 .restaurants__tool-box--sticking .restaurants__location__input {
   margin-top: 8px;
 }
-
+.show-ios-smart-banner .restaurants__tool-box--sticking .restaurants__location__input {
+  margin-top: $ios-smart-banner-height + 8px;
+}
 
 // -------------------------- RESTAURANTS LOCATION END --------------------------
 

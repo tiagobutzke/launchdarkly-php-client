@@ -55,6 +55,16 @@ VOLO.createCheckoutModel = function (cartModel) {
     return VOLO.checkoutModel;
 };
 
+VOLO.createIOSBannerView = function() {
+    var iOSBannerView = new VOLO.IOSBannerView({
+        el: '.ios-smart-banner',
+        $body: $('body')
+    });
+
+    VOLO.views.push(iOSBannerView);
+    return iOSBannerView;
+};
+
 VOLO.createCartViews = function (cartModel, locationModel, gtmService) {
     var $header = $('.header'),
         menuView = new MenuView({
@@ -71,6 +81,8 @@ VOLO.createCartViews = function (cartModel, locationModel, gtmService) {
             $header: $header,
             $menuMain: $('.menu__list-wrapper'),
             $window: $(window),
+            $iosBanner: $('.ios-smart-banner'),
+            $body: $('body'),
             gtmService: gtmService,
             smallScreenMaxSize: VOLO.configuration.smallScreenMaxSize,
             timePickerValues: VOLO.timePickerValues
@@ -332,6 +344,9 @@ VOLO.doBootstrap = function(configuration) {
         cartIconView = VOLO.createCartIconView();
         cartIconView.render();
     }
+
+    iOSBannerView = VOLO.createIOSBannerView();
+    iOSBannerView.render();
 
     cartModel = VOLO.createCartModel(VOLO.jsonCart);
     if ($('.menu__list-wrapper').length > 0) {

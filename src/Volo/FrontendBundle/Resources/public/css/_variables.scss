@@ -9,11 +9,12 @@ $fontspath: "../../fonts/";
 // For updating the icon font go to https://icomoon.io/app/#/projects
 // and import the file icomoon-foodora.json
 // !!! IMPORTANT: !!!
-// 1. download separately from the page the new json file and than generate the font
+// 1. download separately from the "manage projects" page the new json
+// 2. than click on "load" on the "manage projects" and download the font
 // 2. overwrite the icomoon-foodora.json with the new generated one
 // 3. overwrite the fonts /web/fonts with the new generated fonts
 // 4. increase the value of $font-version because of caching issues
-$font-version: 10;
+$font-version: 11;
 
 @font-face {
   font-family: 'icomoon';
@@ -130,6 +131,11 @@ $base-border-color: #bcbcbc;
 $base-border: 1px solid $base-border-color;
 // ----------------------- BORDER END -------------------
 
+// ----------------------- RATING START -----------------------
+$star-active-color: #FFBD00;
+$star-inactive-color: #808080;
+// ----------------------- RATING END -----------------------
+
 // ----------------------- FORM ELEMENTS START -----------------------
 $form-element-height-default: 44px;
 
@@ -230,3 +236,5 @@ $header-height-extra-small: 46px;
 $header-background: $color-bg-primary;
 $link-color-bg-dark: #fff;
 // ----------------------- HEADER END ------------------------
+
+$ios-smart-banner-height: 70px;

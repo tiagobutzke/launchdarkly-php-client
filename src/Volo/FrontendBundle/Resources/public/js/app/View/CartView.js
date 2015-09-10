@@ -138,6 +138,8 @@ var CartView = Backbone.View.extend({
         this.domObjects = {};
         this.domObjects.$header = options.$header;
         this.domObjects.$menuMain = options.$menuMain;
+        this.domObjects.$iosBanner = options.$iosBanner;
+        this.domObjects.$body = options.$body,
         this.$window = options.$window;
         this.smallScreenMaxSize = options.smallScreenMaxSize;
 
@@ -154,7 +156,11 @@ var CartView = Backbone.View.extend({
             $container: this.$(this.stickOnTopCartContainerSelector),
             noStickyBreakPoint: this.smallScreenMaxSize,
             stickOnTopValueGetter: function() {
-                return this.domObjects.$header.outerHeight();
+                if(this.domObjects.$body.hasClass('show-ios-smart-banner')) {
+                    return this.domObjects.$header.outerHeight() + this.domObjects.$iosBanner.outerHeight();
+                } else {
+                    return this.domObjects.$header.outerHeight();
+                }
             }.bind(this),
             startingPointGetter: function() {
                 return this.$(this.stickOnTopCartTargetSelector).offset().top;

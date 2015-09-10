@@ -10,6 +10,10 @@
     padding-bottom: $top-cart-height / 2;
   }
 }
+.show-ios-smart-banner .profile__blocks-wrapper {
+  margin-top: $header-height-small + $ios-smart-banner-height;
+}
+
 
 .profile__blocks {
   @include respond-from("screen-md") {

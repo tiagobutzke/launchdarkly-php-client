@@ -82,7 +82,8 @@ module.exports = function (grunt) {
         'web/bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js',
         'web/bower_components/js-cookie/src/js.cookie.js',
         'web/bower_components/promise-polyfill/Promise.js',
-        'web/bower_components/jquery.serializeJSON/jquery.serializejson.js'
+        'web/bower_components/jquery.serializeJSON/jquery.serializejson.js',
+        'web/bower_components/devicejs/lib/device.min.js'
     ]);
 
     jsSources.head = jsSources.allLibs.concat([

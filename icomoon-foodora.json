@@ -1,8 +1,8 @@
 {
 	"metadata": {
 		"name": "Foodora",
-		"lastOpened": 1439987036658,
-		"created": 1439987035100
+		"lastOpened": 1441367377191,
+		"created": 1441367373790
 	},
 	"iconSets": [
 		{
@@ -7351,12 +7351,12 @@
 				},
 				{
 					"name": "star",
-					"order": 0,
+					"order": 101,
 					"id": 6
 				},
 				{
 					"name": "star-o",
-					"order": 0,
+					"order": 102,
 					"id": 7
 				},
 				{

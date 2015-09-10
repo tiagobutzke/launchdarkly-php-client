@@ -33,6 +33,10 @@
     @include responsive-img();
   }
 }
+.show-ios-smart-banner .hero-banner-wrapper {
+  margin-top: $ios-smart-banner-height;
+}
+
 
 //adding a black to transparent over the menu hero banner
 .menu, .order-status-page {

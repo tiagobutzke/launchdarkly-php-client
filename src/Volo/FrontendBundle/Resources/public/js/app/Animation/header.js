@@ -107,6 +107,10 @@ VOLO.HeaderAnimations = (function() {
             $header = $('.header'),
             positionOfHeadline = $heroMenuInfoheadline.offset().top + $heroMenuInfoheadline.height() - $header.height();
 
+        if (this.$document.find('body').hasClass('show-ios-smart-banner')) {
+            positionOfHeadline -= this.$document.find('.ios-smart-banner').outerHeight();
+        }
+
         //if the Restaurant name is under the header switch the logo to restaurant name
         if ((positionOfHeadline <= this.$document.scrollTop()) && (this.$window.width() <= VOLO.configuration.smallScreenMaxSize && $('.menu').length)) {
             $header.addClass('header--logo-change');

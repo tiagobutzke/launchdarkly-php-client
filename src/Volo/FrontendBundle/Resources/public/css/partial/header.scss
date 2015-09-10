@@ -39,6 +39,10 @@
     height: $header-height-small;
   }
 }
+.show-ios-smart-banner .header {
+  top: $ios-smart-banner-height;
+}
+
 
 .header__wrapper {
   z-index: 1015;
