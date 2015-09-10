@@ -1,5 +1,9 @@
 CHANGELOG
 =========
+* 1.31.0
+ * INTVOLO-654 Changing Mobile Phone Promo Images
+ * INTVOLO-311 Mobile Smart Banner
+
 * 1.30.0
  * INTVOLO-653 (address suggestions in safari on ios
  * INTVOLO-564 (address logic in austria)
