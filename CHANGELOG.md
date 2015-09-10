@@ -1,5 +1,10 @@
 CHANGELOG
 =========
+
+* 1.31.1
+ * INTVOLO-671 HK 404 page fixed
+ * INTVOLO-584 HK Fix login/logout Server Error
+
 * 1.31.0
  * INTVOLO-654 Changing Mobile Phone Promo Images
  * INTVOLO-311 Mobile Smart Banner
