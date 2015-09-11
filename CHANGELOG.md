@@ -1,5 +1,9 @@
 CHANGELOG
 =========
+
+* 1.32.2
+ * INTVOLO-680 - smart banner layout fixes
+
 * 1.32.1
  * INTVOLO-530 - au checkout addresses geocoding fix
 
