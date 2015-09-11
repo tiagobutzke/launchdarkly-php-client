@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-* 1.14.0
+* 1.32.0
  * INTVOLO-615 shown strangers' credit card issue fixed
 
 * 1.31.1
