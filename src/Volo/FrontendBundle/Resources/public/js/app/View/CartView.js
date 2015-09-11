@@ -156,7 +156,7 @@ var CartView = Backbone.View.extend({
             $container: this.$(this.stickOnTopCartContainerSelector),
             noStickyBreakPoint: this.smallScreenMaxSize,
             stickOnTopValueGetter: function() {
-                if(this.domObjects.$body.hasClass('show-ios-smart-banner')) {
+                if (this.domObjects.$body.hasClass('show-ios-smart-banner')) {
                     return this.domObjects.$header.outerHeight() + this.domObjects.$iosBanner.outerHeight();
                 } else {
                     return this.domObjects.$header.outerHeight();
