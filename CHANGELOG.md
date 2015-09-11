@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.14.0
+ * INTVOLO-615 shown strangers' credit card issue fixed
+
 * 1.31.1
  * INTVOLO-671 HK 404 page fixed
  * INTVOLO-584 HK Fix login/logout Server Error
