@@ -11,6 +11,8 @@ VOLO.initDomChangingScripts = function() {
 
     if (isMobile) {
         $body.addClass('is-mobile');
+    } else {
+        $body.addClass('not-mobile');
     }
 
     homeTeaseFullWidth = new VOLO.FullWindowHeight({
