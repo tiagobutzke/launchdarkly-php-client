@@ -1,5 +1,7 @@
 CHANGELOG
 =========
+* 1.32.1
+ * INTVOLO-530 - au checkout addresses geocoding fix
 
 * 1.32.0
  * INTVOLO-615 shown strangers' credit card issue fixed
