@@ -12,7 +12,7 @@
         <parameter key="guzzle.ring.client.mock_handler.class">GuzzleHttp\Ring\Client\MockHandler</parameter>
         <parameter key="guzzle.ring.client.curl_handler.class">GuzzleHttp\Ring\Client\CurlHandler</parameter>
         <parameter key="guzzle.subscriber.cache.cache_storage.class">GuzzleHttp\Subscriber\Cache\CacheStorage</parameter>
-        <parameter key="guzzle.subscriber.cache.cache_subscriber.class">GuzzleHttp\Subscriber\Cache\CacheSubscriber</parameter>
+        <parameter key="guzzle.subscriber.cache.cache_subscriber.class">Volo\FrontendBundle\Cache\CacheSubscriber</parameter>
         <parameter key="volo_frontend.api.mock.handler_callable.class">Foodpanda\ApiSdk\Tests\MockHandlerCallable</parameter>
 
         <parameter key="volo_frontend.api.serializer.class">Foodpanda\ApiSdk\Serializer</parameter>
