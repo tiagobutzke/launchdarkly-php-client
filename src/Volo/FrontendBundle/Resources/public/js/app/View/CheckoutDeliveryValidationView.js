@@ -102,6 +102,8 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
                         } else {
                             reject('delivery not valid');
                         }
+                    }, function() {
+                        reject('delivery not valid');
                     });
                 }.bind(this));
             }.bind(this);
@@ -109,7 +111,7 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
     },
 
     _geoCodeAndValidateDelivery: function() {
-        return this._geocodePostalCode({
+        return this._geocode({
             city: this.$('#delivery-information-city').val(),
             postcode: this.$('#delivery-information-postal-index').val()
         });
@@ -120,42 +122,57 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
             this.$('#delivery-information-postal-index').val().length > 0 && this.$('#delivery-information-city').val().length > 0;
     },
 
-    _geocodePostalCode: function(locationData) {
-        var deferred = $.Deferred();
+    _geocode: function(locationData) {
 
-        console.log('_geocodePostalCode ', this.cid, locationData);
+        console.log('_geocode ', this.cid, locationData);
         //todo inject it, don't use global objects
 
         var addressGeocode = this._geocodeAddress();
         if (VOLO.isFullAddressAutoComplete()) {
+            var deferred = $.Deferred();
+
             addressGeocode.done(function(result) {
-                this._validateDelivery({lat: result.lat(), lng: result.lng()}).then(deferred.resolve);
+                this._validateDelivery({lat: result.lat(), lng: result.lng()}).done(deferred.resolve);
             }.bind(this));
 
-            addressGeocode.fail(function() {
-                deferred.resolve(false);
-            });
-        } else {
-            var getPostalCode = this._postalCodeGeocodingService.geocodeCenterPostalcode({
-                address: locationData.postcode + ", " + locationData.city,
-                postalCode: locationData.postcode,
-                city: locationData.city
-            });
-
-            getPostalCode.done(function(result) {
-                this._validateDelivery({lat: result.lat(), lng: result.lng()}).then(deferred.resolve);
-            }.bind(this));
-
-            getPostalCode.fail(function(results, status) {
-                if (_.isString(status) && status === 'ZERO_RESULTS') {
-                    deferred.resolve(false);
+            addressGeocode.fail(function(result) {
+                if (result && result === 'form not valid') {
+                    deferred.resolve(true);
                 } else {
-                    this._validateDelivery({lat: this._locationModel.get('latitude'), lng: this._locationModel.get('longitude')}).done(deferred.resolve).done(function(result) {
-                        deferred.resolve(this.isValidForm() && result);
-                    }.bind(this));
+                    deferred.resolve(false);
                 }
-            }.bind(this));
+            });
+
+            return deferred;
+        } else {
+            return this._geocodePostalCode(locationData);
         }
+    },
+
+    _geocodePostalCode: function(locationData) {
+        var deferred = $.Deferred(),
+            getPostalCode = this._postalCodeGeocodingService.geocodeCenterPostalcode({
+            address: locationData.postcode + ", " + locationData.city,
+            postalCode: locationData.postcode,
+            city: locationData.city
+        });
+
+        getPostalCode.done(function(result) {
+            this._validateDelivery({lat: result.lat(), lng: result.lng()}).then(function(result) {
+                console.log(result);
+                deferred.resolve(result);
+            });
+        }.bind(this));
+
+        getPostalCode.fail(function(results, status) {
+            if (_.isString(status) && status === 'ZERO_RESULTS') {
+                deferred.resolve(false);
+            } else {
+                this._validateDelivery({lat: this._locationModel.get('latitude'), lng: this._locationModel.get('longitude')}).done(function(result) {
+                    deferred.resolve(this.isValidForm() && result);
+                }.bind(this));
+            }
+        }.bind(this));
 
         return deferred;
     },
@@ -164,24 +181,31 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
         var deferred = $.Deferred();
 
         if (this.isValidForm()) {
-            this._postalCodeGeocodingService.geocodeAddress({
-                address: this.$('#delivery-information-address-line1').val() + ' ' + this.$('#delivery-information-address-line2').val() + ', ' + this.$('#delivery-information-postal-index').val() + ', ' + this.$('#delivery-information-city').val(),
+            var address = this.$('#delivery-information-address-line1').val() + ' ' +
+                          this.$('#delivery-information-address-line2').val() + ', ' +
+                          this.$('#delivery-information-postal-index').val() + ', ' +
+                          this.$('#delivery-information-city').val(),
+                geocode = this._postalCodeGeocodingService.geocodeAddress({
+                    address: address
+                });
 
-                success: function(result) {
-                    console.log(result);
-                    this.$("#delivery-information-address-latitude").val(result.lat());
-                    this.$("#delivery-information-address-longitude").val(result.lng());
-                    deferred.resolve(result);
-                }.bind(this),
+            console.log('getting lat/lng for: ' + address);
 
-                error: function() {
-                    this.$("#delivery-information-address-latitude").val('');
-                    this.$("#delivery-information-address-longitude").val('');
-                    deferred.reject();
-                }.bind(this)
-            });
+            geocode.done(function(result) {
+                console.log('lat/lng for ' + address);
+                console.log(result.lat(), result.lng());
+                this.$("#delivery-information-address-latitude").val(result.lat());
+                this.$("#delivery-information-address-longitude").val(result.lng());
+                deferred.resolve(result);
+            }.bind(this));
+
+            geocode.fail(function() {
+                this.$("#delivery-information-address-latitude").val('');
+                this.$("#delivery-information-address-longitude").val('');
+                deferred.reject();
+            }.bind(this));
         } else {
-            deferred.reject();
+            deferred.reject('form not valid');
         }
 
         return deferred;
