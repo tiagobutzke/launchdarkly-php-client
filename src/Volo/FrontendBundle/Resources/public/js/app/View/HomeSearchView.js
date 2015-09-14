@@ -67,8 +67,15 @@ var HomeSearchView = CTATrackableView.extend({
     _scrollToInput: function() {
         var md = new MobileDetect(window.navigator.userAgent);
         if (md.mobile()) {
+            var scrollPosition = this.$('#delivery-information-postal-index').offset().top - ($('.header').height() + 10),
+                $banner = $('.ios-smart-banner');
+
+            if ($banner.is(':visible')) {
+                scrollPosition -= $banner.height();
+            }
+
             $('html, body').animate({
-                scrollTop: this.$('#delivery-information-postal-index').offset().top - ($('.header').height() + 10)
+                scrollTop: scrollPosition
             }, VOLO.configuration.anchorScrollSpeed);
         }
     },
