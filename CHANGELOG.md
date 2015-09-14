@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.36.1
+ * INTVOLO-709 abosulte URL for robots meta tag
+
 * 1.36.0
  * INTVOLO-472 Better temporary logging for zero lat/lng
 
