@@ -25,6 +25,7 @@
         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/img/favicon/'~ faviconCountry ~'/favicon-16x16.png') }}">
         <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('/img/favicon/'~ faviconCountry ~'/favicon-96x96.png') }}">
         <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/img/favicon/'~ faviconCountry ~'/favicon-32x32.png') }}">
+
         <meta name="msapplication-TileColor" content="{{ 'default' == faviconCountry ? '#d70f64' : '#FFFFFF' }} ">
         <meta name="msapplication-square70x70logo" content="{{ asset('/img/favicon/'~ faviconCountry ~'/smalltile.png') }}">
         <meta name="msapplication-square150x150logo" content="{{ asset('/img/favicon/'~ faviconCountry ~'/mediumtile.png') }}">
@@ -33,6 +34,7 @@
 
         {% block head_meta_seo %}
             <meta name="robots" content="noindex, follow">
+            <link rel="canonical" href="{{ app.request.uriForPath(app.request.pathInfo) }}" />
         {% endblock %}
 
         {% block head_stylesheets %}{% endblock %}

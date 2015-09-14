@@ -5,8 +5,9 @@
 {% block body_class %}home{% endblock %}
 
 {% block head_meta_seo %}
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="{{ app.request.query | length > 0 ? 'noindex' : 'index' }}, follow">
     <meta name="description" content="{{ cms('seo.description.home_page') }}">
+    <link rel="canonical" href="{{ app.request.uriForPath(app.request.pathInfo) }}" />
 {% endblock %}
 
 {% block content %}

@@ -35,8 +35,7 @@
     {% else %}
         <meta name="description" content="{{ cms('seo.description.city_page') | replace({'{city}': city.name}) }}">
     {% endif %}
-
-    <meta name="robots" content="{{ not gpsSearch and not hasQueryParams ? 'index, follow' : 'noindex, follow' }}">
+    <meta name="robots" content="{{ app.request.query | length > 0  or gpsSearch ? 'noindex' : 'index' }}, follow">
 
     {% if city is not null %}
         <meta property="og:image" content="https://volo-images.s3.amazonaws.com/production/{{ country_code }}/city-{{ city.id }}.jpg" />
