@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.33.0
+ * INTVOLO-677 Show teaser app promo only when not mobile
+
 * 1.32.3
  * INTVOLO-615 enabled credit cards list in checkout page
 
