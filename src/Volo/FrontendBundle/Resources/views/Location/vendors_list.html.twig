@@ -41,7 +41,7 @@
         <meta property="og:image" content="https://volo-images.s3.amazonaws.com/production/{{ country_code }}/city-{{ city.id }}.jpg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="500" />
-        <link rel="canonical" href="{{ path('volo_location_search_vendors_by_city', {cityUrlKey: city.urlKey}) }}" />
+        <link rel="canonical" href="{{ url('volo_location_search_vendors_by_city', {cityUrlKey: city.urlKey}) }}" />
     {% endif %}
 {% endblock %}
 
