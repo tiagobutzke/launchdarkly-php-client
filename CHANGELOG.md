@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.32.3
+ * INTVOLO-615 enabled credit cards list in checkout page
+
 * 1.32.2
  * INTVOLO-680 - smart banner layout fixes
 
