@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.36.0
+ * INTVOLO-472 Better temporary logging for zero lat/lng
+
 * 1.35.0
  * INTVOLO-525 - set noindex for all sites with query param
 
