@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.33.1
+ * INTVOLO-680 - layout fixes for header image, slide in animation on home screen updated
+
 * 1.33.0
  * INTVOLO-677 Show teaser app promo only when not mobile
 
