@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.35.0
+ * INTVOLO-525 - set noindex for all sites with query param
+
 * 1.34.0
  * INTVOLO-533: ES / Rebrand to foodora
 
