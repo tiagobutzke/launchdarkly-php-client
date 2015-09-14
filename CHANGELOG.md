@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.34.0
+ * INTVOLO-533: ES / Rebrand to foodora
+
 * 1.33.1
  * INTVOLO-680 - layout fixes for header image, slide in animation on home screen updated
 
