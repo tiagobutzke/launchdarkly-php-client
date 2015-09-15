@@ -51,7 +51,10 @@ var LoginRegistrationView = Backbone.View.extend({
         options = options || {};
         console.log('LoginRegistrationView.initialize ', this.cid);
         _.bindAll(this);
+
         this.address = null;
+        this.spinner = null;
+
         this.customerModel = options.customerModel;
         this.templateLogin = _.template($('#template-login').html());
         this.templateRegistration = _.template($('#template-registration').html());
@@ -113,8 +116,8 @@ var LoginRegistrationView = Backbone.View.extend({
         'click .forgot-password-link': 'renderForgotPassword',
         'submit .forgot-password-form': '_handingSubmitOfLostPasswordForm',
         'submit .reset-password-form': '_handingSubmitOfResetPasswordForm',
-        'submit .login-form': '_handingSubmitOfLoginForm',
-        'submit .registration-form': '_handingSubmitOfRegistrationForm',
+        'submit .login-form': '_submitLoginForm',
+        'submit .registration-form': '_submitRegistrationForm',
         'click .modal-close-button': '_closeLoginRegistrationOverlay'
     },
 
@@ -202,76 +205,95 @@ var LoginRegistrationView = Backbone.View.extend({
         });
     },
 
-    _handingSubmitOfLoginForm: function(event) {
-        event.preventDefault();
-        var $form = this.$('.login-form');
-        this._handleFormSubmit($form, this.$('.modal-content'));
-    },
+    _submitLoginForm: function() {
+        var userService = new VOLO.UserService(),
+            userData = this.$('form').serializeJSON(),
+            addressData = this.address ? this.address.toJSON() : {},
+            login;
 
-    _handingSubmitOfRegistrationForm: function(event) {
-        event.preventDefault();
-        var $form = this.$('.registration-form');
-        this._handleFormSubmit($form, this.$('.modal-content'));
+        this._disableForm();
+        this._enableSpinner();
+
+        login = userService.login(userData, addressData);
+        login.then(this._loginSuccess, this._loginFail);
 
         return false;
+    },
+
+    _loginSuccess: function() {
+        this._fireSubmitEvent('loginRegistrationView:login', 'success');
+        window.location.reload(true);
+    },
+
+    _loginFail: function(response) {
+        this._replaceFormWithServerResponse(response);
+
+        this._bindLoginView();
+        this._fireSubmitEvent('loginRegistrationView:login', 'fail');
+    },
+
+    _disableForm: function() {
+        this.$('#spinner-wrapper').addClass('modal-content--loading');
+        this.$('button').prop("disabled", true);
+    },
+
+    _enableForm: function() {
+        this.$('#spinner-wrapper').removeClass('modal-content--loading');
+        this.$('button').prop("disabled", false);
+    },
+
+    _enableSpinner: function() {
+        if (!this.spinner) {
+            this.spinner = new Spinner();
+        }
+
+        this.spinner.spin(document.getElementById('spinner-wrapper'));
+    },
+
+    _disableSpinner: function() {
+        this.spinner && this.spinner.stop();
+        this.spinner = null;
+    },
+
+    _submitRegistrationForm: function() {
+        var userService = new VOLO.UserService(),
+            userData = this.$('form').serializeJSON(),
+            addressData = this.address ? this.address.toJSON() : {},
+            register;
+
+        this._disableForm();
+        this._enableSpinner();
+
+        register = userService.register(userData, addressData);
+        register.then(this._registerSuccess, this._registerFail);
+
+        return false;
+    },
+
+    _registerSuccess: function() {
+        this._fireSubmitEvent('loginRegistrationView:registration', 'success');
+
+        window.location.reload(true);
+    },
+
+    _registerFail: function(response) {
+        this._replaceFormWithServerResponse(response);
+
+        this._bindRegisterValidationView();
+        this._fireSubmitEvent('loginRegistrationView:registration', 'fail');
+    },
+
+    _replaceFormWithServerResponse: function(response) {
+        this._disableSpinner();
+        this._enableForm();
+
+        this.$('.modal-content').html(response.responseText);
     },
 
     _closeLoginRegistrationOverlay: function() {
         this.$el.modal('hide');
         this.$('.modal-error-message').text('').addClass('hide');
         this.address = null;
-    },
-
-    _handleFormSubmit: function($form, $modalContent) {
-        var target = document.getElementById('spinner-wrapper'),
-            spinner = new Spinner(),
-            data = $form.serializeJSON();
-
-        if (this.address) {
-            data.guest_address = this.address.toJSON();
-        }
-
-        $.ajax({
-            type: $form.attr('method'),
-            url: $form.attr('action'),
-            data: $.param(data),
-            dataType: 'json',
-            beforeSend: function(xhr) {
-                $(target).addClass('modal-content--loading');
-                spinner.spin(target);
-                $form.find('button').prop("disabled", true);
-            }.bind(this),
-            success: function(response) {
-                this._unbindLoginView();
-                this._unbindRegisterValidationView();
-
-                this._fireFormSubmit($form, true);
-
-                if (window.location.href.search(/tracking/) !== -1) {
-                    window.location.reload(true);
-                } else {
-                    window.location.replace(response.url);
-                }
-            }.bind(this),
-            error: function (data) {
-                spinner.stop();
-                $(target).removeClass('modal-content--loading');
-                $modalContent.html(data.responseText);
-                this._rebindValidations($form);
-                $form.find('button').prop("disabled", false);
-
-                this._fireFormSubmit($form, false);
-            }.bind(this)
-        });
-    },
-
-
-    _rebindValidations: function($form) {
-        if ($form.attr('id') === 'login-form') {
-            this._bindLoginView();
-        } else {
-            this._bindRegisterValidationView();
-        }
     },
 
     _bindLoginView: function() {
@@ -304,17 +326,10 @@ var LoginRegistrationView = Backbone.View.extend({
         }
     },
 
-    _fireFormSubmit: function ($form, isSuccess) {
-        if ($form.attr('id') === 'login-form') {
-            this.trigger('loginRegistrationView:login', {
-                'method': 'email',
-                'result': isSuccess ? 'success' : 'fail'
-            });
-        } else {
-            this.trigger('loginRegistrationView:registration', {
-                'method': 'email',
-                'result': isSuccess ? 'success' : 'fail'
-            });
-        }
+    _fireSubmitEvent: function(name, result) {
+        this.trigger(name, {
+            'method': 'email',
+            'result': result
+        });
     }
 });

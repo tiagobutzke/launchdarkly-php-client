@@ -153,7 +153,7 @@
 .checkout__step__item {
   @include make-xs-column(12, 0);
   padding-bottom: $space-sm;
-  @include respond-from("screen-md") {   
+  @include respond-from("screen-md") {
     font-size: $font-size-1_4rem;
     padding-bottom: $space-lg;
   }
@@ -272,17 +272,6 @@ textarea.checkout__step__item-textarea {
   }
 }
 
-.checkout__title-link--login {
-  display: block;
-  float: none;
-  padding-bottom: $space-sm;
-  @include respond-from("screen-sm") {
-    display: inline-block;
-    float: right;
-    padding-bottom: 0;
-  }
-}
-
 .checkout__title-link__icon {
   display: inline-block;
   margin-right: 2px;
@@ -332,6 +321,47 @@ textarea.checkout__step__item-textarea {
 
 // -------------------------- CHECKOUT DELIVERY INFORMATION START --------------------------
 
+
+.checkout__login-register-cta {
+  @include respond-from("screen-md") {
+    padding-top: $space-lg;
+  }
+}
+
+.checkout__login-register-cta__text {
+  @include make-xs-column(12);
+  @include make-md-column(4);
+  padding: 10px 0;
+}
+
+.checkout__login-link-wrapper,
+.checkout__register-link-wrapper {
+  @include make-xs-column(12, 0);
+  @include make-sm-column(6, 0);
+  @include make-md-column(4, 0);
+  margin-bottom: $space-sm;
+  display: inline-block;
+  @include respond-from("screen-md") {
+    margin-bottom: 0;
+  }
+}
+
+.checkout__register-link-wrapper {
+  @include respond-from("screen-sm") {
+    padding-right: $space-xs;
+  }
+}
+
+.checkout__login-link-wrapper {
+  @include respond-from("screen-sm") {
+    padding-left: $space-xs;
+  }
+}
+
+.checkout__login-link,
+.checkout__register-link {
+  width: 100%;
+}
 
 .checkout__delivery-information__address {
   @include make-xs-column(6, 0);

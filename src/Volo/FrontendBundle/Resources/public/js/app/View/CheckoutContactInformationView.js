@@ -102,9 +102,6 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
     },
 
     _showLoginField: function() {
-        this.customerModel.isRegistering = false;
-        this.customerModel.isExistingEmail = true;
-
         //additional validation
         this.contactInformationForm.constraints["customer[password]"] = {
             presence: true
@@ -129,10 +126,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
     },
 
     _showRegisterLink: function() {
-        if (this.customerModel.isRegistering) return;
-
-        this.customerModel.isExistingEmail = false;
-        this.customerModel.isRegistering = false;
+        if (this.contactInformationForm.isUserRegistering()) return;
 
         delete this.contactInformationForm.constraints["customer[password]"];
 
@@ -152,9 +146,6 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
     },
 
     _hideRegisterFields: function() {
-        this.customerModel.isExistingEmail = false;
-        this.customerModel.isRegistering = false;
-
         this.$('.checkout__contact-information__password-wrapper').addClass('hide');
         this.$('.checkout__contact-information__hide-register-link-wrapper').addClass('hide');
         this.$('.checkout__contact-information__server-error-message').addClass('hide');
@@ -163,9 +154,6 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
     },
 
     _showRegistrationFields: function() {
-        this.customerModel.isRegistering = true;
-        this.customerModel.isExistingEmail = false;
-
         //additional validations
         this.contactInformationForm.constraints["customer[password]"] = {
             presence: true
