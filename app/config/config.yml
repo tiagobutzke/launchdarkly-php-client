@@ -210,7 +210,7 @@ volo_frontend:
             life_time: %volo_frontend_configuration_cache_life_time%
 
 foodpanda_api_health:
-    enabled: ['version', 'session', 'cache']
+    enabled: ['version', 'session', 'cache', 'api']
     prefix: 'health_check.'
 #    sqs_endpoint: %aws_sqs_elasticsearch_update_queue%
 

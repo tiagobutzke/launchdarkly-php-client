@@ -10,5 +10,6 @@
         <service id="health_check.version" alias="foodpanda.core.health.service.version"/>
         <service id="health_check.session" alias="foodpanda.core.health.service.session"/>
         <service id="health_check.cache" alias="foodpanda.core.health.service.cache"/>
+        <service id="health_check.api" alias="foodpanda.core.health.service.api"/>
     </services>
 </container>

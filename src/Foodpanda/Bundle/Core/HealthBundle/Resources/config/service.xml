@@ -19,6 +19,11 @@
             <argument type="service" id="doctrine_cache.providers.health_check_redis"/>
         </service>
 
+        <service id="foodpanda.core.health.service.api"
+                 class="Foodpanda\Bundle\Core\HealthBundle\Services\ApiService">
+            <argument type="service" id="volo_frontend.provider.configuration"/>
+        </service>
+
         <service id="foodpanda.core.health.service"
                  class="Foodpanda\Bundle\Core\HealthBundle\Services\HealthService">
             <argument type="service" id="service_container" />
