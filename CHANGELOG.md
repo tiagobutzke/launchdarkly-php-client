@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.37.0
+ * INTVOLO-713 API health check
+ * INTVOLO-729 trackjs integration
+
 * 1.36.1
  * INTVOLO-709 abosulte URL for robots meta tag
 
