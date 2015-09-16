@@ -45,4 +45,17 @@
         {% endif %}
         VOLO.createCustomerModel({{ customer|raw }}, {{ isGuest }});
     </script>
+
+    <!-- BEGIN TRACKJS -->
+    <script type="text/javascript">
+        window._trackJs = {
+            token: '{{ trackjs_token }}',
+            application: '{{ trackjs_application }}',
+            enabled: {{ (app.debug == false)|json_encode }},
+            userId: '{{ get_authenticated_customer().id|default('anonymous') }}',
+            sessionId: '{{ app.request.session.id }}'
+        };
+    </script>
+    <script type="text/javascript" src="https://d2zah9y47r7bi2.cloudfront.net/releases/current/tracker.js"></script>
+    <!-- END TRACKJS -->
 {% endblock %}

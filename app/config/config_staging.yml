@@ -3,6 +3,7 @@ imports:
 
 parameters:
     google_tag_manager_container_id: 'GTM-MMWRXS'
+    trackjs_application: 'foodora-staging'
 
 monolog:
     handlers:
