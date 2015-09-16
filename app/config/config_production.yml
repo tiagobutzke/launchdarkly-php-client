@@ -6,6 +6,7 @@ parameters:
     google_api_client_id: 'gme-rocketinternetag'
     google_api_channel: 'foodora'
     google_tag_manager_container_id: 'GTM-5WN2Q7'
+    trackjs_application: 'foodora-live'
 
 framework:
     session:

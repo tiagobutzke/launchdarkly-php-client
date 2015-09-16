@@ -83,7 +83,8 @@ module.exports = function (grunt) {
         'web/bower_components/js-cookie/src/js.cookie.js',
         'web/bower_components/promise-polyfill/Promise.js',
         'web/bower_components/jquery.serializeJSON/jquery.serializejson.js',
-        'web/bower_components/devicejs/lib/device.min.js'
+        'web/bower_components/devicejs/lib/device.min.js',
+        frontendAssetPath('/js/app/trackjs-backbone.js')
     ]);
 
     jsSources.head = jsSources.allLibs.concat([

@@ -8,6 +8,8 @@ parameters:
     google_api_client_id: ''
     google_api_channel: ''
     google_tag_manager_container_id: ''
+    trackjs_token: '5fd69569810247f6b32ca1b8cfa0b22b'
+    trackjs_application: ''
     monolog.handler.newrelic.class: Volo\FrontendBundle\EventListener\NewRelicHandler
     monolog.handler.slack.class: Volo\FrontendBundle\EventListener\SlackHandler
     localeSettings:
@@ -55,6 +57,8 @@ twig:
         blazy_placeholder: 'data:image/gif;base64,R0lGODdhAQABAIAAAMzMzJaWliwAAAAAAQABAAACAkQBADs='
         google_api_client_id: "%google_api_client_id%"
         google_api_channel: '%google_api_channel%'
+        trackjs_token: '%trackjs_token%'
+        trackjs_application: '%trackjs_application%'
         timezone: '%timezone%'
         google_tag_manager_container_id: %google_tag_manager_container_id%
         average_delivery_time: '%average_delivery_time%'
