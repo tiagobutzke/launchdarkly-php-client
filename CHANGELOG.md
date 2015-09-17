@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.37.1
+ * INTVOLO-729 TrackJS improvements
+
 * 1.37.0
  * INTVOLO-713 API health check
  * INTVOLO-729 trackjs integration
