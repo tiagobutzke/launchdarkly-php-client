@@ -83,11 +83,11 @@ module.exports = function (grunt) {
         'web/bower_components/js-cookie/src/js.cookie.js',
         'web/bower_components/promise-polyfill/Promise.js',
         'web/bower_components/jquery.serializeJSON/jquery.serializejson.js',
-        'web/bower_components/devicejs/lib/device.min.js',
-        frontendAssetPath('/js/app/trackjs-backbone.js')
+        'web/bower_components/devicejs/lib/device.min.js'
     ]);
 
-    jsSources.head = jsSources.allLibs.concat([
+    jsSources.head = [].concat([
+        frontendAssetPath('/js/app/trackjs-backbone.js'),
         // if a priorityN (priority0, priority1 etc...) subfolder is found anywhere
         // than the script inside it are loaded before all the other scripts in the containing folder
         // Example: js/app/Views/priority0/utility.js will be loaded before js/app/Views/myView.js
@@ -164,18 +164,26 @@ module.exports = function (grunt) {
             beautify: debug,
             mangle: !debug
         },
-        libs: {
-            src: jsSources.libs,
-            dest: frontendWebPath('/js/dist/libs.js')
+        dist: {
+            src: jsSources.allLibs.concat(jsSources.head),
+            dest: frontendWebPath('/js/dist/dist.js')
         },
+
         head: {
             src: jsSources.head,
             dest: frontendWebPath('/js/dist/head.js')
         },
+
+        libs: {
+            src: jsSources.allLibs,
+            dest: frontendWebPath('/js/dist/libs.js')
+        },
+
         intl: {
             src: 'web/bower_components/intl/Intl.js',
             dest: frontendWebPath('/js/dist/intl.js')
         },
+
         commingSoon: {
             src: jsSources.comingSoon,
             dest: frontendWebPath('/js/dist/coming-soon.js')
@@ -221,12 +229,26 @@ module.exports = function (grunt) {
             files: frontendAssetPath('/css/**/*.{scss,css}'),
             tasks: ['sass']
         },
-        js: {
+
+        jsHead: {
             files: [
-                'Gruntfile.js',
                 '<%= uglify.head.src %>'
             ],
-            tasks: ['uglify', 'jshint']
+            tasks: ['uglify:head', 'jshint:head']
+        },
+
+        jsLib: {
+            files: [
+                '<%= uglify.libs.src %>'
+            ],
+            tasks: ['uglify:libs']
+        },
+
+        jsAll: {
+            files: [
+                'Gruntfile.js'
+            ],
+            tasks: ['uglify:head', 'uglify:libs', 'jshint']
         }
     };
 
