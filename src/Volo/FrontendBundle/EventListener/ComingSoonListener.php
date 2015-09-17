@@ -5,6 +5,8 @@ namespace Volo\FrontendBundle\EventListener;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class ComingSoonListener
 {
@@ -48,9 +50,15 @@ class ComingSoonListener
         $request = $event->getRequest();
 
         if ($this->isMaintenanceEnabled && !$request->cookies->has('coming-soon-disabled')) {
-            $match = $this->router->match($request->getPathInfo());
-            if (isset($match['_route']) && in_array($match['_route'], $this->whitelistedRoutes)) {
-                return;
+            try {
+                $match = $this->router->match($request->getPathInfo());
+                if (isset($match['_route']) && in_array($match['_route'], $this->whitelistedRoutes)) {
+                    return;
+                }
+            } catch(MethodNotAllowedException $e) {
+
+            } catch(ResourceNotFoundException $e) {
+
             }
             $response = $this->templateEngine->renderResponse('VoloFrontendBundle:SplashScreen:coming_soon.html.twig');
 
