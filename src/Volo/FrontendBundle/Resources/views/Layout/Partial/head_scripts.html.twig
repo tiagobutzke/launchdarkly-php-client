@@ -53,7 +53,19 @@
             application: '{{ trackjs_application }}',
             enabled: {{ (app.debug == false)|json_encode }},
             userId: '{{ get_authenticated_customer().id|default('anonymous') }}',
-            sessionId: '{{ app.request.session.id }}'
+            sessionId: '{{ app.request.session.id }}',
+            onError: function (payload, error) {
+                if (_.isString(error)) {
+                    if (null !== error.match('^400 Bad Request:')) {
+                        return false
+                    }
+                    if (null !== error.match('^412 Precondition Failed:')) {
+                        return false
+                    }
+                }
+
+                return true;
+            }
         };
     </script>
     <script type="text/javascript" src="https://d2zah9y47r7bi2.cloudfront.net/releases/current/tracker.js"></script>
