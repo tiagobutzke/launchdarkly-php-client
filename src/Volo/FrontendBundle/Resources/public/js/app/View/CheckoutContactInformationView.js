@@ -33,7 +33,10 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
     },
 
     _checkIfUserExists: function() {
-        this.contactInformationForm._checkIfUserExists(this.$('#contact-information-email').val());
+        var email = this.$('#contact-information-email').val();
+        if (email) {
+            this.contactInformationForm._checkIfUserExists(email);
+        }
     },
 
     render: function () {
@@ -236,8 +239,6 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
     },
 
     _hideEditLink: function () {
-        this._checkIfUserExists();
-
         this.$('.checkout__title-link__text--edit-contact').addClass('hide');
         this.$('.checkout__title-link__icon.icon-pencil').addClass('hide');
     },
