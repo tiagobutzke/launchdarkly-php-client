@@ -45,7 +45,7 @@ VOLO.CustomerModel = Backbone.Model.extend({
 
         if (this.get('mobile_country_code') && cleanMobileNumber) {
             mobileNumber = VOLO.configuration.countryCode === 'it' ? '0' + cleanMobileNumber : cleanMobileNumber;
-            mobileNumber = '+' + this.get('mobile_country_code') + ' ' + mobileNumber;
+            mobileNumber = this.get('mobile_country_code') + ' ' + mobileNumber;
         }
 
         return mobileNumber;
