@@ -11,14 +11,13 @@ use Symfony\Component\Validator\Validator;
 use Symfony\Component\HttpFoundation\Request;
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @Route("/payment-gateway")
  */
-class PaymentGatewayController extends Controller
+class PaymentGatewayController extends BaseController
 {
     const ORDER_PAID_STATUS = 'paid';
     

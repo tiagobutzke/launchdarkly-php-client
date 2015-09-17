@@ -3,12 +3,11 @@
 namespace Volo\FrontendBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ComingSoonController extends Controller
+class ComingSoonController extends BaseController
 {
     /**
      * @Route("/testing-mode", name="_coming-soon-disable")

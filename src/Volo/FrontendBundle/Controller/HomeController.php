@@ -2,13 +2,12 @@
 
 namespace Volo\FrontendBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Volo\FrontendBundle\Service\CustomerLocationService;
 
-class HomeController extends Controller
+class HomeController extends BaseController
 {
     /**
      * @Route("/", name="home", defaults={"postalCode": ""})

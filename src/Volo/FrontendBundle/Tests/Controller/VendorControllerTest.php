@@ -18,12 +18,12 @@ class VendorControllerTest extends VoloTestCase
 
     public function testVendorByCode()
     {
-        $path = '/restaurant/s9iz';
-        $target = '/restaurant/s9iz/la-piccola';
-
         $client = static::createClient();
 
+        $path = '/restaurant/s9iz';
         $client->request('GET', $path);
+
+        $target = $client->getRequest()->getSchemeAndHttpHost() . '/restaurant/s9iz/la-piccola';
 
         $this->assertEquals(Response::HTTP_FOUND,
             $client->getResponse()->getStatusCode(),
@@ -41,12 +41,12 @@ class VendorControllerTest extends VoloTestCase
 
     public function testVendorByUrlKey()
     {
-        $path = '/restaurant/la-piccola';
-        $target = '/restaurant/s9iz/la-piccola';
-
         $client = static::createClient();
 
+        $path = '/restaurant/la-piccola';
+
         $client->request('GET', $path);
+        $target = $client->getRequest()->getSchemeAndHttpHost() . '/restaurant/s9iz/la-piccola';
 
         $this->assertEquals(
             Response::HTTP_FOUND,
@@ -110,7 +110,7 @@ class VendorControllerTest extends VoloTestCase
 
         $client->request('GET', '/restaurant/S9Iz');
 
-        $this->assertTrue($client->getResponse()->isRedirect('/restaurant/s9iz/la-piccola'));
+        $this->assertTrue($client->getResponse()->isRedirect($client->getRequest()->getSchemeAndHttpHost() . '/restaurant/s9iz/la-piccola'));
     }
 
     public function testVendorByUpperCaseUrlKey()
@@ -119,7 +119,7 @@ class VendorControllerTest extends VoloTestCase
 
         $client->request('GET', '/restaurant/LA-PICCOLA');
 
-        $this->assertTrue($client->getResponse()->isRedirect('/restaurant/s9iz/la-piccola'));
+        $this->assertTrue($client->getResponse()->isRedirect($client->getRequest()->getSchemeAndHttpHost() . '/restaurant/s9iz/la-piccola'));
     }
 
     public function testVendorPageSeoIndexFollow()
@@ -139,9 +139,7 @@ class VendorControllerTest extends VoloTestCase
 
         $client->request('GET', '/restaurant/S9IZ/la-piccola');
 
-        $test = $client->getResponse();
-
-        $this->assertTrue($client->getResponse()->isRedirect('/restaurant/s9iz/la-piccola'));
+        $this->assertTrue($client->getResponse()->isRedirect($client->getRequest()->getSchemeAndHttpHost() . '/restaurant/s9iz/la-piccola'));
     }
 
     public function testVendorByUpperCaseUrlKeyAndCode()
@@ -150,6 +148,6 @@ class VendorControllerTest extends VoloTestCase
 
         $client->request('GET', '/restaurant/s9iz/LA-PICCOLA');
 
-        $this->assertTrue($client->getResponse()->isRedirect('/restaurant/s9iz/la-piccola'));
+        $this->assertTrue($client->getResponse()->isRedirect($client->getRequest()->getSchemeAndHttpHost() . '/restaurant/s9iz/la-piccola'));
     }
 }

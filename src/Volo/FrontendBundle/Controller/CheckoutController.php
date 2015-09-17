@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Volo\FrontendBundle\Service\CustomerLocationService;
 use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
@@ -29,22 +28,6 @@ use Psr\Log\LoggerInterface;
  */
 class CheckoutController extends BaseController
 {
-    /**
-     * @deprecated Deprecated route, please remove it in the next release
-     *
-     * @Route("/{vendorCode}/delivery", name="checkout_delivery_information", options={"expose"=true})
-     * @Method({"GET", "POST"})
-     *
-     * @param string $vendorCode
-     *
-     * @return array
-     */
-    public function deliveryInformationAction($vendorCode)
-    {
-        return $this->redirectToRoute('checkout_payment', ['vendorCode' => $vendorCode]);
-
-    }
-
     /**
      * @Route(
      *      "/validate/mobile-number/{phoneNumber}",
