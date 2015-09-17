@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.38.0
+ * INTVOLO-793 - grunt dev improvements
+
 * 1.37.1
  * INTVOLO-729 TrackJS improvements
 
