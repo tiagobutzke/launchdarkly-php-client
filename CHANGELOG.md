@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.38.1
+ * INTVOLO-788 Fixed 404 for empty email in checkout page
+
 * 1.38.0
  * INTVOLO-793 - grunt dev improvements
 
