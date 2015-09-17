@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.38.2
+ * INTVOLO-605 Fixed double plus in the phone number
+ * INTVOLO-767 Fixed 404 if coming soon page enabled
+
 * 1.38.1
  * INTVOLO-788 Fixed 404 for empty email in checkout page
 
