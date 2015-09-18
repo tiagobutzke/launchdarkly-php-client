@@ -2,7 +2,7 @@
 * vendor-listing-page declarations
 */
 
-.restaurants .hero-banner-wrapper {
+.restaurants .hero-banner-content {
   @include appear-from("screen-md");
 }
 
@@ -116,6 +116,43 @@
 }
 
 
+.restaurants__search-bar {
+  @extend .clearfix;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 0 $space-sm;
+  text-align: center;
+}
+.sticking-on-top .restaurants__search-bar {
+  bottom: inherit;
+  z-index: 999;
+}
+
+
+.restaurants__search-bar__message {
+  position: relative;
+  top: 7px;
+  vertical-align: super;
+  color: $color-text-selection;
+  margin-right: $space-xs;
+  @include respond-from("screen-md") {
+    display: inline;
+  }
+}
+
+.restaurants__search-bar__form {
+  @extend .clearfix;
+  @include respond-from("screen-sm") {
+    vertical-align: middle;
+  }
+  @include respond-from("screen-md") {
+    display: inline-block;
+  }
+}
+
+
 .restaurants__change-button__arrow {
   display: none;
   line-height: $form-element-height-default;
@@ -173,9 +210,14 @@
   margin: 0;
   padding-top: 50px;
 }
-
 .restaurants__list--closed {
   padding-top: 0;
+}
+.restaurants--no-address .restaurants__list {
+  padding-top: 65px;
+  @include respond-from("screen-md") {
+    padding-top: $grid-gutter-width;
+  }
 }
 
 .restaurants__list__item {

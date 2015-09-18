@@ -21,7 +21,6 @@ var CheckoutCartView = CartView.extend({
  
     /**
      * @override
-     * @private
      */
     renderTimePicker: $.noop,
 
@@ -41,6 +40,12 @@ var CheckoutCartView = CartView.extend({
      * @override
      * @private
      */
-    renderCheckoutButton: $.noop
+    renderCheckoutButton: $.noop,
+
+    /**
+     * @override
+     * @private
+     */
+    _initVendorGeocodingSubView: $.noop
 });
 

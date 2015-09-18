@@ -1,3 +1,4 @@
+//todo refactor this to stateless object or use bootstrap stickiness
 var StickOnTop  = (function() {
     'use strict';
 
@@ -13,8 +14,8 @@ var StickOnTop  = (function() {
         this.endPointGetter = options.endPointGetter;
         //-16 is for the scrollbar width, this magic number can be solved with modernizr.mq
         this.noStickyBreakPoint = options.noStickyBreakPoint || 0;
-        this.isActiveGetter = options.isActiveGetter || function() { return true; };
-        this.stickingOnTopClass = 'stickingOnTop';
+        this.isActiveGetter = options.isActiveGetter;
+        this.stickingOnTopClass = 'sticking-on-top';
 
         this.targetHeight = null;
         this.windowScrollTop = null;
@@ -26,7 +27,7 @@ var StickOnTop  = (function() {
 
     // reset state, recalculate the starting values and save a new target
     StickOnTop.prototype.init = function(newTarget) {
-        if (!this.isActiveGetter()) {
+        if (this.isActiveGetter && !this.isActiveGetter()) {
             return;
         }
         this.domObjects.$target = newTarget;
@@ -41,15 +42,24 @@ var StickOnTop  = (function() {
 
     // reset state, recalculate the starting values and save a new target
     StickOnTop.prototype.updateCoordinates = function() {
-        if (!this.isActiveGetter()) {
+        if (this.isActiveGetter && !this.isActiveGetter()) {
             return;
         }
         this._removeSticking();
         this.stickOnTopValue = this.stickOnTopValueGetter();
         this.startingPoint = this.startingPointGetter();
-        this.endpoint = this.endPointGetter();
+        this.endpoint = this.endPointGetter ? this.endPointGetter() : null;
         this.maxHeight = this.$window.outerHeight() - this.stickOnTopValue;
         this.redraw();
+    };
+
+    // set top position of target
+    StickOnTop.prototype._setTargetTop = function(newValue) {
+        if (this.domObjects.$target) {
+            this.domObjects.$target.css({
+                top: newValue
+            });
+        }
     };
 
     // rendering the position of the sticking element
@@ -64,20 +74,14 @@ var StickOnTop  = (function() {
 
                 if (this.domObjects.$target && this.domObjects.$target.length) {
                     this.targetHeight = this.domObjects.$target.outerHeight();
-                    // target is before end point
-                    if (this.endpoint > this.windowScrollTop + this.stickOnTopValue + this.targetHeight) {
-                        // reset this.target position to normal if just exited the 'under the endpoint area'
-                        if (this.domObjects.$target && this.domObjects.$target.length) {
-                            this.domObjects.$target.css({
-                                top: this.stickOnTopValue
-                            });
-                        }
-                    // target is after end point, stopping scroll by scrolling in opposite direction
-                    } else {
-                        if (this.domObjects.$target && this.domObjects.$target.length) {
-                            this.domObjects.$target.css({
-                                top: -(this.targetHeight - (this.endpoint - this.windowScrollTop))
-                            });
+                    if (this.endpoint) {
+                        // target is before end point
+                        if (this.endpoint > this.windowScrollTop + this.stickOnTopValue + this.targetHeight) {
+                            // reset this.target position to normal if just exited the 'under the endpoint area'
+                            this._setTargetTop(this.stickOnTopValue);
+                        // target is after end point, stopping scroll by scrolling in opposite direction
+                        } else {
+                            this._setTargetTop(-(this.targetHeight - (this.endpoint - this.windowScrollTop)));
                         }
                     }
                 }
@@ -91,7 +95,7 @@ var StickOnTop  = (function() {
 
     // adding sticking behaviour
     StickOnTop.prototype._addSticking = function() {
-        if (!this.isActiveGetter()) {
+        if (this.isActiveGetter && !this.isActiveGetter()) {
             return;
         }
         if (this.domObjects.$target && this.domObjects.$target.length &&
@@ -101,7 +105,6 @@ var StickOnTop  = (function() {
                 position: 'fixed',
                 top: this.stickOnTopValue,
                 'max-height': this.maxHeight,
-                overflow: 'auto',
                 width: this.domObjects.$target.innerWidth()
             });
         this.domObjects.$target.scrollTop(0); // resetting the inner scrolling of the target
@@ -116,8 +119,7 @@ var StickOnTop  = (function() {
                 position: '',
                 top: '',
                 'max-height': '',
-                width: '',
-                overflow: ''
+                width: ''
             });
         }
     };

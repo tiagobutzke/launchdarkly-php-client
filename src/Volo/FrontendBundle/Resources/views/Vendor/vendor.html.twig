@@ -50,132 +50,155 @@
 {% endblock %}
 
 {% block content %}
-<div class="hero-banner-wrapper">
-    {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {type: 'hero', 'vendorCode' : vendor.code, 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
-    <div class="hero-menu__info">
-        <h2 class="hero-menu__info__headline">
-            {% if  richDescription is not empty %}
-                <a data-toggle="modal" data-target="#rich-description" class="hero-menu__headline__icon icon-info-circled"></a>
-            {%  endif %}
-            {{ vendor.name }}
-        </h2>
-        <h4 class="hero-menu__info__description">{{ vendor.description }}</h4>
-    </div>
-    <div class="hero-menu__info-extra">
-        {{ include('VoloFrontendBundle:Vendor/Partial:time_info.html.twig') }}
-        {% if vendor.address is not empty %}
-            <i class="hero-menu__info-extra__icon icon-pin-map"></i> {{ vendor.address }}
-        {% endif %}
-        {% if vendor.customerPhone is not empty %}
-            <i class="hero-menu__info-extra__icon icon-call-phone"></i> {{ vendor.customerPhone }}
-        {% endif %}
-        {% if  richDescription is not empty %}
-            <a data-toggle="modal" data-target="#rich-description" class="hero-menu__info-extra__rich-description">{% trans %}link.rich_description{% endtrans %}</a>
-        {%  endif %}
-    </div>
-</div>
-<div class="menu__blocks-wrapper">
-    <div class="menu__blocks">
-        <div class="menu__list-wrapper" data-vendor_id="{{ vendor.id }}" >
-            <div class="menu__list">
-                {{ include('VoloFrontendBundle:Vendor:allergyLegend.html.twig') }}
-                <div class="menu__categories">
-                    {% if vendor.logo is not empty %}
-                        <div class="menu__categories__vendor-logo">
-                            <img class="menu__categories__vendor-logo-img" src="{{ vendor.logo|prepareLogoUrl(logo_image_dimensions) }}" alt="{{ vendor.name }}">
-                        </div>
-                    {% endif %}
-                    <nav class="menu__categories__list-wrapper">
-                        <ul>
-                            {% for menuCategory in vendor.menus.first.menuCategories %}
-                                <li>
-                                    <a class="menu__categories__list-item anchorNavigation" data-id="{{ menuCategory.id }}" href="#menu__category-id-{{ menuCategory.id }}">
-                                        {{ menuCategory.name }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </nav>
+    <div class="menu-wrapper{{ isDeliverable ? '' : ' menu__blocks--address-form-visible' }}">
+        <div class="hero-banner-wrapper">
+            <div class="hero-banner-content">
+                {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {type: 'hero', 'vendorCode' : vendor.code, 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
+                <div class="hero-menu__info">
+                    <h2 class="hero-menu__info__headline">
+                        {% if  richDescription is not empty %}
+                            <a data-toggle="modal" data-target="#rich-description"
+                               class="hero-menu__headline__icon icon-info-circled"></a>
+                        {% endif %}
+                        {{ vendor.name }}
+                    </h2>
+                    <h4 class="hero-menu__info__description">{{ vendor.description }}</h4>
                 </div>
-                <div class="menu__items">
-                    {% for menuCategory in vendor.menus.first.menuCategories %}
-                        <h3 class="menu__items__title" id="menu__category-id-{{ menuCategory.id }}">{{ menuCategory.name }}</h3>
-                        {% for product in menuCategory.products %}
-                            {# ------ Please toggle "menu__item--selected" class on click to style selected item  #}
-                            <div class="menu__item" data-object='{{ serialize(product) }}' data-variation-id='{{ product.productVariations.first.id }}'>
-                                <div class="menu__item__wrapper">
-                                    <div class="menu__item__name">
-                                        {{ product.name }}
-                                        {% if product.productVariations.first.name %}
-                                                <sup class="menu__item__product-variation"> {{ product.productVariations.first.name }}</sup>
-                                        {% endif %}
-                                    </div>
-                                    <div class="menu__item__description">
-                                        {{ product.description }}
-                                    </div>
-                                </div>
-                                <div class="menu__item__price">
-                                    {{ product.productVariations.first.price|price }}
-                                    <button class="menu__item__price-button">
-                                        <i class="menu__item__price-button-icon icon-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                        {% endfor %}
-                    {% endfor %}
-                    <div class="menu__icon-legend">
-                        <i class="menu__icon-legend__info-icon icon-info-circled"></i>
-                        <a class="menu__icon-legend__link">{% trans %}allergy.headline{% endtrans %}</a>
-                    </div>
-                    {% set specialNote = cms('vendor-' ~ vendor.code ~ '-special-note') %}
-                    {% if specialNote is not empty %}
-                        <div class="menu__special-note"><span>{{ specialNote }}</span></div>
+                <div class="hero-menu__info-extra{{ isDeliverable ? '' : ' hidden-to-user' }}">
+                    {{ include('VoloFrontendBundle:Vendor/Partial:time_info.html.twig') }}
+                    {% if vendor.address is not empty %}
+                        <i class="hero-menu__info-extra__icon icon-pin-map"></i> {{ vendor.address }}
                     {% endif %}
-                    {% if country_code != 'se' %}
-                        <div class="menu__legal">
-                            <span class="menu__legal__vendor-name">{% trans with {'%legal_name%': vendor.addressLine2 }%}vendor.sold_by %legal_name%{% endtrans %}</span>
-                        </div>
+                    {% if vendor.customerPhone is not empty %}
+                        <i class="hero-menu__info-extra__icon icon-call-phone"></i> {{ vendor.customerPhone }}
+                    {% endif %}
+                    {% if richDescription is not empty %}
+                        <a data-toggle="modal" data-target="#rich-description"
+                           class="hero-menu__info-extra__rich-description">{% trans %}
+                            link.rich_description{% endtrans %}</a>
                     {% endif %}
                 </div>
-
+            </div>
+            <div class="postal-index-form-overlay"></div>
+            <div class="menu__postal-code-bar{{ isDeliverable ? ' hide' : '' }}">
+                <div class="menu__postal-code-bar__message">{% trans %}
+                    menu.check_restaurant_delivers_to{% endtrans %}</div>
+                <div class="menu__postal-code-bar__form">
+                    {% include('VoloFrontendBundle:Search/Partial:restaurants_search_form.html.twig') with {'buttonText': 'menu.check_now'|trans } %}
+                </div>
             </div>
         </div>
-        <div id="cart">
-            <div class="desktop-cart mobile-cart__hidden" data-minimum_order_amount="{{ vendor.minimumOrderAmount}}" data-vendor_id="{{ vendor.id }}">{# cart from template#}</div>
-        </div>
-    </div>
-    <div class="menu__bottom-info">
-        <div class="menu__bottom-info__openings">
-            <h3 class="menu__bottom-info__openings-title">{% trans %}opening_times.title{% endtrans %}</h3>
-            <ul class="menu__bottom-info__openings-days">
-                {% for weekdayIndex in 1..7 %}
-                    {% set schedules = getDailySchedules(vendor.schedules, weekdayIndex) %}
-                    {% if (schedules|length > 0) %}
-                        <li class="menu__bottom-info__openings-day">
-                            <span class="menu__bottom-info__openings-day-name">{{ weekdayIndex|dayOfTheWeek }}</span>
-                            <span class="menu__bottom-info__openings-time">
-                                {% for schedule in schedules %}
-                                    {{ schedule.openingTime }} - {{ schedule.closingTime }}{% if not loop.last %}, {% endif %}
+        <div class="menu__blocks-wrapper">
+            <div class="menu__blocks">
+                <div class="menu__list-wrapper" data-vendor_id="{{ vendor.id }}">
+                    <div class="menu__list">
+                        {{ include('VoloFrontendBundle:Vendor:allergyLegend.html.twig') }}
+                        <div class="menu__categories">
+                            {% if vendor.logo is not empty %}
+                                <div class="menu__categories__vendor-logo">
+                                    <img class="menu__categories__vendor-logo-img"
+                                         src="{{ vendor.logo|prepareLogoUrl(logo_image_dimensions) }}"
+                                         alt="{{ vendor.name }}">
+                                </div>
+                            {% endif %}
+                            <nav class="menu__categories__list-wrapper">
+                                <ul>
+                                    {% for menuCategory in vendor.menus.first.menuCategories %}
+                                        <li>
+                                            <a class="menu__categories__list-item anchorNavigation"
+                                               data-id="{{ menuCategory.id }}"
+                                               href="#menu__category-id-{{ menuCategory.id }}">
+                                                {{ menuCategory.name }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="menu__items">
+                            {% for menuCategory in vendor.menus.first.menuCategories %}
+                                <h3 class="menu__items__title"
+                                    id="menu__category-id-{{ menuCategory.id }}">{{ menuCategory.name }}</h3>
+                                {% for product in menuCategory.products %}
+                                    {# ------ Please toggle "menu__item--selected" class on click to style selected item  #}
+                                    <div class="menu__item" data-object='{{ serialize(product) }}'
+                                         data-variation-id='{{ product.productVariations.first.id }}'>
+                                        <div class="menu__item__wrapper">
+                                            <div class="menu__item__name">
+                                                {{ product.name }}
+                                                {% if product.productVariations.first.name %}
+                                                    <sup class="menu__item__product-variation"> {{ product.productVariations.first.name }}</sup>
+                                                {% endif %}
+                                            </div>
+                                            <div class="menu__item__description">
+                                                {{ product.description }}
+                                            </div>
+                                        </div>
+                                        <div class="menu__item__price">
+                                            {{ product.productVariations.first.price|price }}
+                                            <button class="menu__item__price-button">
+                                                <i class="menu__item__price-button-icon icon-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
                                 {% endfor %}
-                            </span>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
+                            {% endfor %}
+                        </div>
+                        <div class="menu__icon-legend">
+                            <i class="menu__icon-legend__info-icon icon-info-circled"></i>
+                            <a class="menu__icon-legend__link">{% trans %}allergy.headline{% endtrans %}</a>
+                        </div>
+                        {% set specialNote = cms('vendor-' ~ vendor.code ~ '-special-note') %}
+                        {% if specialNote is not empty %}
+                            <div class="menu__special-note"><span>{{ specialNote }}</span></div>
+                        {% endif %}
+                        {% if country_code != 'se' %}
+                            <div class="menu__legal">
+                                <span class="menu__legal__vendor-name">{% trans with {'%legal_name%': vendor.addressLine2 } %}
+                                    vendor.sold_by %legal_name%{% endtrans %}</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div id="cart">
+                    <div class="desktop-cart mobile-cart__hidden"
+                         data-minimum_order_amount="{{ vendor.minimumOrderAmount }}"
+                         data-vendor_id="{{ vendor.id }}">{# cart from template#}</div>
+                </div>
+            </div>
+            <div class="menu__bottom-info">
+                <div class="menu__bottom-info__openings">
+                    <h3 class="menu__bottom-info__openings-title">{% trans %}opening_times.title{% endtrans %}</h3>
+                    <ul class="menu__bottom-info__openings-days">
+                        {% for weekdayIndex in 1..7 %}
+                            {% set schedules = getDailySchedules(vendor.schedules, weekdayIndex) %}
+                            {% if (schedules|length > 0) %}
+                                <li class="menu__bottom-info__openings-day">
+                                    <span class="menu__bottom-info__openings-day-name">{{ weekdayIndex|dayOfTheWeek }}</span>
+                                <span class="menu__bottom-info__openings-time">
+                                    {% for schedule in schedules %}
+                                        {{ schedule.openingTime }} - {{ schedule.closingTime }}{% if not loop.last %}, {% endif %}
+                                    {% endfor %}
+                                </span>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="menu__bottom-info__restaurant-description">
+                    {{ cms('restaurant-description-' ~ vendor.code, 'restaurant-description') }}
+                </div>
+            </div>
         </div>
-        <div class="menu__bottom-info__restaurant-description">
-            {{ cms('restaurant-description-' ~ vendor.code, 'restaurant-description') }}
-        </div>
-    </div>
-</div>
 
-    {{ include('VoloFrontendBundle:Layout/Partial/templates:cart.html.twig') }}
-    {{ include('VoloFrontendBundle:Layout/Partial/templates:toppings.html.twig') }}
-    {{ include('VoloFrontendBundle:Layout/Partial/templates/popups:vendor.html.twig') }}
-    {% if  richDescription is not empty %}
-        {{ include('VoloFrontendBundle:Vendor/Partial:rich_description.html.twig') }}
-    {% endif %}
+        {{ include('VoloFrontendBundle:Layout/Partial/templates:cart.html.twig') }}
+        {{ include('VoloFrontendBundle:Layout/Partial/templates:toppings.html.twig') }}
+        {{ include('VoloFrontendBundle:Layout/Partial/templates/popups:vendor.html.twig') }}
+        {% if  richDescription is not empty %}
+            {{ include('VoloFrontendBundle:Vendor/Partial:rich_description.html.twig') }}
+        {% endif %}
+    </div>
 {% endblock %}
 
 {% block footer_bottom %}

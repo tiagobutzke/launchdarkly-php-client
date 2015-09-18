@@ -96,6 +96,51 @@
 // -------------------------- MENU HERO BANNER END --------------------------
 
 
+// -------------------------- POSTAL CODE SELECTION BAR START --------------------------
+
+.menu__postal-code-bar {
+  @extend .clearfix;
+  position: absolute;
+  bottom: -89px;
+  width: 100%;
+  background-color: rgba(41, 41, 41, 1);
+  padding: 0 $space-sm;
+  text-align: center;
+  z-index: 1041;
+  @include respond-from("screen-md") {
+    background-color: rgba(41, 41, 41, 0.75);
+    bottom: 0;
+  }
+}
+.sticking-on-top .menu__postal-code-bar {
+  bottom: inherit;
+}
+
+
+.menu__postal-code-bar__message {
+  position: relative;
+  top: 7px;
+  vertical-align: super;
+  color: $color-text-selection;
+  margin-right: $space-xs;
+  @include respond-from("screen-md") {
+    display: inline;
+  }
+}
+
+.menu__postal-code-bar__form {
+  @extend .clearfix;
+  @include respond-from("screen-sm") {
+    vertical-align: middle;
+  }
+  @include respond-from("screen-md") {
+    display: inline-block;
+  }
+}
+
+// -------------------------- POSTAL CODE SELECTION BAR END --------------------------
+
+
 // -------------------------- MENU START --------------------------
 
 .menu__blocks-wrapper {

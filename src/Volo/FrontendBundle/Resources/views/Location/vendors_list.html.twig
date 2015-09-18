@@ -9,7 +9,7 @@
         {{ cms('seo.title.city_page') | replace({'{city}': city.name}) }}
     {% endif %}
 {% endblock %}
-{% block body_class %}restaurants{% endblock %}
+{% block body_class %}restaurants {% if not gpsSearch %}restaurants--no-address{% endif %}{% endblock %}
 {% block gtm_page_type %}Restaurant List Page{% endblock %}
 {% block google_tag_manager_before %}
 <script type="text/javascript" data-turbolinks-eval=always>
@@ -56,49 +56,60 @@
 
 {% block content %}
     <div class="hero-banner-wrapper">
-        {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {vendorCode : 'list', type: 'hero', 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
-        <h1>{{ 'address.promo %city%'|trans({'%city%': promoAddress})|nl2br }}</h1>
-    </div>
-    <div class="restaurants-container wrapper-fluid">
-        <div class="restaurants__tool-box">
-            <div class="restaurants__location">
-                <form id="delivery-information-postal-index-form" method="GET">
-                    <input
-                            id="delivery-information-postal-index"
-                            type="text"
-                            class="restaurants__location__input form-control hide"
-                            name="location_set"
-                            value=""
-                            placeholder="{% trans %}postal_code.your_postal_code{% endtrans %}"
-                            data-msg_error_not_found="{% trans %}postal_code.not_found{% endtrans %}"
-                            data-msg_you_probably_mean="{% trans %}postal_code.you_probably_mean{% endtrans %}"
-                            required="true"
-                    >
-                </form>
-
-                <div class="restaurants__location__title">
-                    <span class="restaurants__location__address">
-                        {% if gpsSearch and (address_config.autocomplete_type|first == '(regions)') %}
-                            {{ 'address.delivery_by_gps %address%'|trans({
-                                '%address%': formattedLocation['address']
-                            }) }}
-                        {% elseif gpsSearch %}
-                            {{ 'address.delivery_by_gps %address%'|trans({
-                                '%address%': formattedLocation['delivery_address']
-                            }) }}
-                        {% else %}
-                            {{ 'address.delivery_by_city %city%'|trans({
-                                '%city%': formattedLocation['city']
-                            }) }}
-                        {% endif %}
-                    </span>
-                    <a class="restaurants__location__change-button" id="change_user_location_box_button">
-                        <span class="restaurants__change-button__text">{{ 'buttons.change'|trans }}</span>
-                        <span class="restaurants__change-button__arrow icon-down-open-big"></span>
-                    </a>
+        <div class="hero-banner-content">
+            {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {vendorCode : 'list', type: 'hero', 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
+            <h1>{{ 'address.promo %city%'|trans({'%city%': promoAddress})|nl2br }}</h1>
+        </div>
+        {% if not gpsSearch %}
+            <div class="restaurants__search-bar">
+                <div class="restaurants__search-bar__message">{% trans %}restaurants_search.show_restaurants_delivering_to{% endtrans %}</div>
+                <div class="restaurants__search-bar__form">
+                    {% include('VoloFrontendBundle:Search/Partial:restaurants_search_form.html.twig') with {'buttonText': 'buttons.find_food'|trans } %}
                 </div>
             </div>
-        </div>
+        {% endif %}
+    </div>
+    <div class="restaurants-container wrapper-fluid">
+        {% if gpsSearch and (address_config.autocomplete_type|first == '(regions)') %}
+            <div class="restaurants__tool-box">
+                <div class="restaurants__location">
+                    <form id="delivery-information-postal-index-form" method="GET">
+                        <input
+                                id="delivery-information-postal-index"
+                                type="text"
+                                class="restaurants__location__input form-control hide"
+                                name="location_set"
+                                value=""
+                                placeholder="{% trans %}postal_code.your_postal_code{% endtrans %}"
+                                data-msg_error_not_found="{% trans %}postal_code.not_found{% endtrans %}"
+                                data-msg_you_probably_mean="{% trans %}postal_code.you_probably_mean{% endtrans %}"
+                                required="true"
+                        >
+                    </form>
+                    <div class="restaurants__location__title">
+                            <span class="restaurants__location__address">
+                               {% if gpsSearch and (address_config.autocomplete_type|first == '(regions)') %}
+                                   {{ 'address.delivery_by_gps %address%'|trans({
+                                       '%address%': formattedLocation['address']
+                                   }) }}
+                               {% elseif gpsSearch %}
+                                   {{ 'address.delivery_by_gps %address%'|trans({
+                                       '%address%': formattedLocation['delivery_address']
+                                   }) }}
+                               {% else %}
+                                   {{ 'address.delivery_by_city %city%'|trans({
+                                       '%city%': formattedLocation['city']
+                                   }) }}
+                               {% endif %}
+                            </span>
+                            <a class="restaurants__location__change-button" id="change_user_location_box_button">
+                                <span class="restaurants__change-button__text">{{ 'buttons.change'|trans }}</span>
+                                <span class="restaurants__change-button__arrow icon-down-open-big"></span>
+                            </a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
         {% if openVendors.count() == 0 and closedVendors.count() == 0 %}
             <div class="restaurants__not-available-message">
                 <div class="restaurants__not-available-message__title">{% trans %}restaurant.not_available.title{% endtrans %}</div>

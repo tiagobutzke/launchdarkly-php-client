@@ -62,24 +62,13 @@
         </div>
     </div>
     <div class="vendor__geocoding__tool-box">
-        <form>
-            <div class="form-group">
-                <input id="delivery-information-postal-index"
-                       type="text"
-                       class="form-control menu__input__postcode input__postcode{{ isDeliverable ? ' hide' }}"
-                       placeholder="{% trans %}postal_code.your_postal_code{% endtrans %}"
-                >
-            </div>
-        </form>
-        <div class="vendor__geocoding__tool-box__title">
+        <div class="vendor__geocoding__tool-box__title{{ isDeliverable ? '' : ' hide' }}">
             {% if ((isDeliverable == false) or address_config.autocomplete_type|first != '(regions)') %}
                 {{ 'cart.delivering_to'|trans }} <span class="location__address">{{ location['building'] }} {{ location['street'] }}, {{ location['postcode'] }}</span>
             {% else %}
                 {{ 'cart.delivering_to'|trans }} <span class="location__address">{{ address }}</span>
             {% endif %}
-
         </div>
-        <div class="postal-index-form-overlay"></div>
     </div>
     <div class="cart__time-picker"></div>
     <div class="desktop-cart-container">

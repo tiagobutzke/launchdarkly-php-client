@@ -41,10 +41,20 @@ li {
   height: 5px;
 }
 
+
 .menu.show-ios-smart-banner .header--mobile + main,
 .checkout.show-ios-smart-banner .header--mobile + main {
   margin-top: $ios-smart-banner-height + $header-height-extra-small;
 }
 .show-ios-smart-banner main {
   margin-top: $ios-smart-banner-height;
+}
+
+.hidden-to-user {
+  position: absolute !important;
+  top: -9999px !important;
+}
+
+.pac-container {
+  z-index: 2000 !important;
 }

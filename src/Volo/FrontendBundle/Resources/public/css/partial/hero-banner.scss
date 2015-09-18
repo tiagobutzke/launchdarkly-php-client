@@ -2,9 +2,6 @@
   width: 100%;
   position: relative;
   max-height: 400px;
-  @include respond-to-custom(1400px) {
-    overflow: hidden;
-  }
 
   h1 {
     color: $color-text-selection;
@@ -33,10 +30,22 @@
     @include responsive-img();
   }
 }
+
 .show-ios-smart-banner .hero-banner-wrapper {
   margin-top: $ios-smart-banner-height;
 }
 
+.menu .menu__blocks--address-form-visible .hero-banner-wrapper {
+  margin-bottom: 89px;
+  @include respond-from("screen-md") {
+    margin-bottom: 0;
+  }
+}
+
+.hero-banner-content {
+  max-height: inherit;
+  overflow: hidden;
+}
 
 //adding a black to transparent over the menu hero banner
 .menu, .order-status-page {

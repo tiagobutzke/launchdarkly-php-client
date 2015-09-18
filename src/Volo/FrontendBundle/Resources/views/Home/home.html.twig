@@ -18,23 +18,7 @@
         <div class="home__teaser__slogan">
             <h2 class="home__teaser__slogan-text">{{ 'general.slogan'|trans }}</h2>
         </div>
-        <form class="home__teaser__form" id="delivery-information-postal-index-form" method="GET">
-            <div class="home__teaser__form-input-wrapper">
-                <input type="text" class="home__teaser__form-input"
-                       id="delivery-information-postal-index"
-                       value="{{ postalCode|default('') }}"
-                       placeholder="{% trans %}postal_code.your_postal_code{% endtrans %}"
-                       data-msg_error_not_found="{% trans %}postal_code.not_found{% endtrans %}"
-                       data-msg_you_probably_mean="{% trans %}postal_code.you_probably_mean{% endtrans %}"
-                       data-msg_error_empty="{% trans %}postal_code.empty{% endtrans %}"
-                       >
-            </div>
-            <input class="home__teaser__button button button--inline"
-                   type="submit"
-                   value="{{ 'buttons.find_food'|trans }}"
-                   data-gtm-cta="findRestaurant_main"
-            >
-        </form>
+        {% include('VoloFrontendBundle:Search/Partial:restaurants_search_form.html.twig') with {'buttonText': 'buttons.find_food'|trans } %}
         {{ cms('homepage-teaser-app-promo') }}
     </section>
 
