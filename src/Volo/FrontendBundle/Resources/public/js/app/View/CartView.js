@@ -125,6 +125,7 @@ var CartView = Backbone.View.extend({
         this.vendor_id = this.$('.desktop-cart').data().vendor_id;
         this.model.getCart(this.vendor_id).set('minimum_order_amount', this.$('.desktop-cart').data().minimum_order_amount);
         this.model.getCart(this.vendor_id).set('location', {
+            location_type: this.locationModel.defaults.location_type,
             latitude:  this.locationModel.get('latitude'),
             longitude: this.locationModel.get('longitude')
         });
