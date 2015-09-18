@@ -109,7 +109,7 @@ VOLO.ContactInformationForm = ValidationView.extend({
 
     _onSuccessMobileNumberValidation: function (customer, response) {
         customer.mobile_number = response.mobile_number;
-        customer.mobile_country_code = response.mobile_country_code;
+        customer.mobile_country_code = '+' + response.mobile_country_code;
 
         this.model.save(customer, {
             success: function () {
