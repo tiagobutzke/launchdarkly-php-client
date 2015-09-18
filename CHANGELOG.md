@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.39.0
+ * INTVOLO-821 Austria / Redirect Banner
+ * INTVOLO-828 mobile country code issue fixed
+
 * 1.38.2
  * INTVOLO-605 Fixed double plus in the phone number
  * INTVOLO-767 Fixed 404 if coming soon page enabled
