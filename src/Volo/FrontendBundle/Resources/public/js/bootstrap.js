@@ -65,6 +65,15 @@ VOLO.createIOSBannerView = function() {
     return iOSBannerView;
 };
 
+VOLO.createVendorPopupView = function() {
+    var vendorPopupView = new VOLO.VendorPopupView({
+        el: '.vendor-popup__modal'
+    });
+
+    VOLO.views.push(vendorPopupView);
+    return vendorPopupView;
+};
+
 VOLO.createCartViews = function (cartModel, locationModel, gtmService) {
     var $header = $('.header'),
         menuView = new MenuView({
@@ -347,6 +356,11 @@ VOLO.doBootstrap = function(configuration) {
 
     iOSBannerView = VOLO.createIOSBannerView();
     iOSBannerView.render();
+
+    if ($('.vendor-popup__modal').length > 0) {
+        vendorPopupView = VOLO.createVendorPopupView();
+        vendorPopupView.render();
+    }
 
     cartModel = VOLO.createCartModel(VOLO.jsonCart);
     if ($('.menu__list-wrapper').length > 0) {
