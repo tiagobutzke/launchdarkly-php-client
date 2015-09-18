@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.41.0
+ * INTVOLO-831 Activated full address for FR (staging)
+
 * 1.40.0
  * INTVOLO-64 Restaurant Listing / Ask user for zipcode on city page
 
