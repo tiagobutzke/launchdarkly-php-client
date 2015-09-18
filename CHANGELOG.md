@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.41.1
+ * INTVOLO-64 fixed missing location_type in checkout page
+
 * 1.41.0
  * INTVOLO-831 Activated full address for FR (staging)
 
