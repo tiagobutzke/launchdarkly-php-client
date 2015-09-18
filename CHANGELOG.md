@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.40.0
+ * INTVOLO-64 Restaurant Listing / Ask user for zipcode on city page
+
 * 1.39.0
  * INTVOLO-821 Austria / Redirect Banner
  * INTVOLO-828 mobile country code issue fixed
