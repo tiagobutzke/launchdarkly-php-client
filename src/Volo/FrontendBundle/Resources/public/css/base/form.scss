@@ -329,6 +329,21 @@ select {
   margin-bottom: $space-md;
 }
 
+.form__error-message a {
+  @include make-link($error-msg-color-text, $error-msg-color-text);
+  text-decoration: underline;
+  &:hover, &:focus {
+    text-decoration: underline;
+  }
+}
+
+.form__success-message a {
+  @include make-link($success-msg-color-text, $success-msg-color-text);
+  text-decoration: underline;
+  &:hover, &:focus {
+    text-decoration: underline;
+  }
+}
 
 // ----------------------- FORM ERRORS END -----------------------------
 
