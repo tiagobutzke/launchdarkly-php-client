@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.41.2
+ * INTVOLO-731 Alignment of Area ond restaurant list page fix
+
 * 1.41.1
  * INTVOLO-64 fixed missing location_type in checkout page
 
