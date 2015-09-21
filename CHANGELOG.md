@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.41.3
+ * INTVOLO-848 Restaurant list page | Delivery address field is missing
+
 * 1.41.2
  * INTVOLO-731 Alignment of Area ond restaurant list page fix
 
