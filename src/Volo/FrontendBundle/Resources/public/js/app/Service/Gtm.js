@@ -246,9 +246,19 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
     },
 
     fireVirtualPageView: function () {
-        this._push({
-            'event': 'virtualPageView'
-        });
+        var updates = {
+                'event': 'virtualPageView'
+            },
+            isECommerceExists = _.some(dataLayer, function (el) {
+                return _.isObject(el.ecommerce);
+            })
+        ;
+
+        if (!isECommerceExists) {
+            updates.ecommerce = {};
+        }
+
+        this._push(updates);
     },
 
     _createCookieName: function (vendorId) {
