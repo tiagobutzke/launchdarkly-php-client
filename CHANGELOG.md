@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.41.4
+ * INTVOLO-839 Voucher error message is displayed as HTML
+
 * 1.41.3
  * INTVOLO-848 Restaurant list page | Delivery address field is missing
 
