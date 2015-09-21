@@ -70,7 +70,7 @@
         {% endif %}
     </div>
     <div class="restaurants-container wrapper-fluid">
-        {% if gpsSearch and (address_config.autocomplete_type|first == '(regions)') %}
+        {% if gpsSearch %}
             <div class="restaurants__tool-box">
                 <div class="restaurants__location">
                     <form id="delivery-information-postal-index-form" method="GET">
