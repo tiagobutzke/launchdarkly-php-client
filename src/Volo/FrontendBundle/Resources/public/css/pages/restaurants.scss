@@ -33,6 +33,7 @@
   width: 77%;
   margin: auto;
   @include respond-from("screen-md") {
+    width: 100%;
     position: absolute;
     z-index: 1;
   }
@@ -85,6 +86,9 @@
 }
 .show-ios-smart-banner .restaurants__tool-box--sticking .restaurants__location__title {
   margin-top: $ios-smart-banner-height;
+  @include respond-from("screen-md") {
+    margin-top: 0;
+  }
 }
 
 .restaurants__location__change-button {

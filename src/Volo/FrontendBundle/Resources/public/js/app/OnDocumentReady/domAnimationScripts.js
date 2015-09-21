@@ -67,11 +67,13 @@ VOLO.initDomAnimationScripts = function() {
             return $('.restaurants__list').length && $('.header').length && !$('body').hasClass('restaurants--no-address');
         },
         startingPointGetter: function() {
+            var startingPoint = $('.restaurants__list').offset().top - $('.header').height() + 30;
+
             if ($document.find('body.show-ios-smart-banner').length) {
-                return $('.restaurants__list').offset().top - $('.header').height() - $('.ios-smart-banner').height() + 30;
-            } else {
-                return $document.find('.header').outerHeight();
+                startingPoint -= $('.ios-smart-banner').height();
             }
+
+            return startingPoint;
         }
     });
 
