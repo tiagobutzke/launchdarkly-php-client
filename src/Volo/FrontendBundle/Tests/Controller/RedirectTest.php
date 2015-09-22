@@ -58,12 +58,12 @@ class RedirectTest extends VoloTestCase
 
     public function testLocation()
     {
-        $path = '/location/la-piccola';
-        $target = '/restaurant/s9iz/la-piccola';
-
         $client = static::createClient();
 
+        $path = '/location/la-piccola';
         $client->request('GET', $path);
+
+        $target = $client->getRequest()->getSchemeAndHttpHost() . '/restaurant/s9iz/la-piccola';
 
         $this->assertEquals(Response::HTTP_MOVED_PERMANENTLY,
             $client->getResponse()->getStatusCode(),

@@ -22,7 +22,7 @@ class CmsControllerTest extends VoloTestCase
 
         $client->request('GET', '/contents/PRIVACY.htm');
 
-        $this->assertTrue($client->getResponse()->isRedirect('/contents/privacy.htm'));
+        $this->assertTrue($client->getResponse()->isRedirect($client->getRequest()->getSchemeAndHttpHost() . '/contents/privacy.htm'));
     }
 
     public function testPrivacyPath()

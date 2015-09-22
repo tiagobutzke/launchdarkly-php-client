@@ -23,7 +23,7 @@ class LocationControllerTest extends VoloTestCase
 
         $response = $client->getResponse();
 
-        $this->assertTrue($response->isRedirect('/city/berlin'));
+        $this->assertTrue($response->isRedirect($client->getRequest()->getSchemeAndHttpHost() . '/city/berlin'));
     }
 
     public function testCityPageSeoIndexFollow()
@@ -45,6 +45,6 @@ class LocationControllerTest extends VoloTestCase
 
         $response = $client->getResponse();
 
-        $this->assertTrue($response->isRedirect('/city/berlin'));
+        $this->assertTrue($response->isRedirect($client->getRequest()->getSchemeAndHttpHost() . '/city/berlin'));
     }
 }

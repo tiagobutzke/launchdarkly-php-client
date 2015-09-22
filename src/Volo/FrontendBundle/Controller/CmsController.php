@@ -3,11 +3,10 @@
 namespace Volo\FrontendBundle\Controller;
 
 use Foodpanda\ApiSdk\Exception\EntityNotFoundException;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class CmsController extends Controller
+class CmsController extends BaseController
 {
     /**
      * @Route("/contents/{code}", name="cms")

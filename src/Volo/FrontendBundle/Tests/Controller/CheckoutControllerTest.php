@@ -29,7 +29,7 @@ class CheckoutControllerTest extends VoloTestCase
 
         $client->request('GET', sprintf('/checkout/%s/delivery', $vendorCode));
 
-        $this->isTrue($client->getResponse()->isRedirect('/restaurant/m2hc/magda_cafe'));
+        $this->isTrue($client->getResponse()->isRedirect($client->getRequest()->getSchemeAndHttpHost() . '/restaurant/m2hc/magda_cafe'));
     }
 
     public function testGuestPost()

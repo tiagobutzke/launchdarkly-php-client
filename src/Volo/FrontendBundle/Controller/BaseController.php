@@ -5,8 +5,10 @@ namespace Volo\FrontendBundle\Controller;
 use Foodpanda\ApiSdk\Entity\Customer\Customer;
 use Foodpanda\ApiSdk\Serializer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Volo\FrontendBundle\Security\Token;
 use Volo\FrontendBundle\Service\CustomerService;
 
@@ -88,5 +90,19 @@ class BaseController extends Controller
     protected function getToken()
     {
         return $this->get('security.token_storage')->getToken();
+    }
+
+    /**
+     * Returns a RedirectResponse to the given route with the given parameters with an absolute URL.
+     *
+     * @param string $route The name of the route
+     * @param array $parameters An array of parameters
+     * @param int $status The status code to use for the Response
+     *
+     * @return RedirectResponse
+     */
+    protected function redirectToRoute($route, array $parameters = array(), $status = 302)
+    {
+        return $this->redirect($this->generateUrl($route, $parameters, UrlGeneratorInterface::ABSOLUTE_URL), $status);
     }
 }

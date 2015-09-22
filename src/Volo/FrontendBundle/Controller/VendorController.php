@@ -4,19 +4,17 @@ namespace Volo\FrontendBundle\Controller;
 
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Volo\FrontendBundle\Service\CustomerLocationService;
 
 /**
  * @Route("/restaurant")
  */
-class VendorController extends Controller
+class VendorController extends BaseController
 {
     /**
      * @Route(
@@ -41,10 +39,7 @@ class VendorController extends Controller
         try {
             $vendor = $this->get('volo_frontend.provider.vendor')->find($vendorCode);
             if ($vendor->getUrlKey() !== $urlKey || $vendorCode !== $code) {
-                return $this->redirectToRoute('vendor', [
-                    'code' => $vendor->getCode(),
-                    'urlKey' => $vendor->getUrlKey()
-                ]);
+                return $this->redirectToVendorPage($vendor->getCode(), $vendor->getUrlKey());
             }
         } catch (ApiErrorException $exception) {
             throw $this->createNotFoundException('Vendor not found!', $exception);
@@ -179,7 +174,6 @@ class VendorController extends Controller
      */
     protected function redirectToVendorPage($code, $urlKey)
     {
-
         return $this->redirectToRoute(
             'vendor',
             ['code' => $code, 'urlKey' => $urlKey]
