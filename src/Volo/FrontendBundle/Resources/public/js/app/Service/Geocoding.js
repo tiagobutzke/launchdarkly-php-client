@@ -43,14 +43,16 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
 
     _initListeners: function ($input) {
         this._listeners.push(this.autocomplete.addListener('place_changed', this._onPlaceChanged));
-        this._listeners.push(google.maps.event.addDomListener($input[0], 'blur', this._onBlur));
+        this._listeners.push(google.maps.event.addDomListener($input[0], 'keydown', this._onKeyDown));
     },
 
-    _onBlur: function(e) {
-        google.maps.event.trigger(e.target, 'focus');
-        google.maps.event.trigger(e.target, 'keydown', {
-            keyCode: 13 //enter
-        });
+    _onKeyDown: function(e) {
+        if (e.keyCode === 9) { // tab
+            google.maps.event.trigger(e.target, 'focus');
+            google.maps.event.trigger(e.target, 'keydown', {
+                keyCode: 13 // enter
+            });
+        }
     },
 
     _onPlaceChanged: function () {
