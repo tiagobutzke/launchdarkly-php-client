@@ -25,7 +25,7 @@
                 <div class="restaurants__list__item-time">
                     <i class="icon-clock-o"></i>
                     {% if (vendor.metadata.availableIn is not null) %}
-                        {% set availableIn = getNextDayPeriods(vendor, date('now'))|first|first %}
+                        {% set availableIn = date(vendor.metadata.availableIn, vendor.metadata.timezone) %}
                         {% if (availableIn|date('d-m-Y') == 'now'|date('d-m-Y')) %}
                             {% trans with {'%time%': availableIn|formatTime} %}restaurant.open_at_time{% endtrans %}
                         {% else %}
