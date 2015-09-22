@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.42.0
+ * INTVOLO-786 Redirects always using absolute URL
+
 * 1.41.4
  * INTVOLO-839 Voucher error message is displayed as HTML
 
