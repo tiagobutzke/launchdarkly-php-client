@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.42.1
+ * INTVOLO-439 using vendor opening time from API
+ 
 * 1.42.0
  * INTVOLO-786 Redirects always using absolute URL
 
