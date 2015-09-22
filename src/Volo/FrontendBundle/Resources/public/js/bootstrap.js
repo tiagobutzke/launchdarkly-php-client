@@ -356,7 +356,7 @@ VOLO.createProfileView = function(customerModel) {
     var profilePasswordFormView = new VOLO.ProfilePasswordFormView({
         el: '#profile-contact-information-form'
     });
-    var profileContactView = new VOLO.ContactInformationForm({
+    var profileContactView = new VOLO.ProfileContactInformationForm({
         el: $('#contact-information-form'),
         model: customerModel
     });
@@ -475,7 +475,7 @@ VOLO.doBootstrap = function(configuration) {
     }
 
     if ($('.profile__blocks-wrapper').length > 0) {
-        VOLO.createProfileView(VOLO.customer).profileContactView.fillUpForm();
+        VOLO.createProfileView(VOLO.customer).profileContactView.render();
     }
 
     var GTMServiceInstance = VOLO.initGTMService({
