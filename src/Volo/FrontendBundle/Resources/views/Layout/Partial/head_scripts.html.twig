@@ -59,7 +59,7 @@
             userId: '{{ get_authenticated_customer().id|default('anonymous') }}',
             sessionId: '{{ app.request.session.id }}',
             onError: function (payload, error) {
-                if (_.isString(error)) {
+                if (typeof error === 'string') {
                     if (null !== error.match('^400 Bad Request:')) {
                         return false
                     }
