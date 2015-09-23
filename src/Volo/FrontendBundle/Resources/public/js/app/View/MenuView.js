@@ -129,7 +129,7 @@ var MenuItemView = Backbone.View.extend({
                 this.createViewDialog();
             } else {
                 var model = CartItemModel.createFromMenuItem(this.model.toJSON());
-                this.gtmService.fireAddProduct(this.vendor_id, {
+                this.gtmService && this.gtmService.fireAddProduct(this.vendor_id, {
                     id: model.get('product_variation_id'),
                     name: model.get('name')
                 });
