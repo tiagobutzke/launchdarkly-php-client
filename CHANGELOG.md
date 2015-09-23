@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.42.2
+ * tackJS onError fix
+
 * 1.42.1
  * INTVOLO-439 using vendor opening time from API
  
