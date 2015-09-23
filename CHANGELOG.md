@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.42.5
+ * INTVOLO-83: Vendor listing search
+
 * 1.42.4
  * INTVOLO-595 Restaurants are now shown on TL page change GTM
 
