@@ -16,6 +16,7 @@ var LoginButtonView = Backbone.View.extend({
         this.listenTo(this.loginRegistrationView, 'loginRegistrationView:registration', function(data) {
             this.trigger('loginRegistrationView:registration', data);
         }.bind(this));
+        this.listenTo(this.customerModel, 'change:first_name', this.updateCustomerName);
     },
 
     events: {
@@ -44,6 +45,10 @@ var LoginButtonView = Backbone.View.extend({
 
     showModalResetPassword: function() {
         this.loginRegistrationView.renderResetPassword();
+    },
+
+    updateCustomerName: function() {
+        this.$('.header__account__open').text(this.customerModel.get('first_name'));
     },
 
     unbind: function() {
