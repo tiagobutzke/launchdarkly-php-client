@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.42.6
+ * INTVOLO-870-fr-full-address-live
+
 * 1.42.5
  * INTVOLO-83: Vendor listing search
 
