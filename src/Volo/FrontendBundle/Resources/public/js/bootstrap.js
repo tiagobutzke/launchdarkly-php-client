@@ -274,7 +274,7 @@ VOLO.createCartIconView = function () {
 
 VOLO.createVendorsListSearchView = function () {
     var vendorSearchView = new VendorsSearchView({
-        el: '.restaurants__tool-box',
+        el: '.restaurants-container',
         model: VOLO.locationModel,
         geocodingService: new GeocodingService(VOLO.configuration.countryCode)
     });

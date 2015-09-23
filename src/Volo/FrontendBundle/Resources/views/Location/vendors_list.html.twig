@@ -70,12 +70,25 @@
     <div class="restaurants-container wrapper-fluid">
         {% if gpsSearch %}
             <div class="restaurants__tool-box">
+                {% if openVendors.count() > 0 and closedVendors.count() > 0 %}
+                    <div class="restaurants__search-filter-wrapper">
+                        <div class="restaurants__search">
+                            <i class="icon-cancel restaurants__search__cancel-icon"></i>
+                            <span class="restaurants__search__label">
+                                <i class="icon-search restaurants__search__label-icon"></i>
+                                <span class="restaurants__search__label-text">{% trans %}restaurants_search.button_label{% endtrans %}</span>
+                            </span>
+                            <input type="text" class="restaurants__search__input form-control" placeholder="{% trans %}restaurants_search.input_label{% endtrans %}" />
+                        </div>
+                    </div>
+                {% endif %}
                 <div class="restaurants__location">
-                    <form id="delivery-information-postal-index-form" method="GET">
+                    <form id="delivery-information-postal-index-form" class="restaurants__location__form hide" method="GET">
+                        <i class="icon-cancel restaurants__location__cancel-icon"></i>
                         <input
                                 id="delivery-information-postal-index"
                                 type="text"
-                                class="restaurants__location__input form-control hide"
+                                class="restaurants__location__input form-control"
                                 name="location_set"
                                 value=""
                                 placeholder="{% trans %}postal_code.your_postal_code{% endtrans %}"
@@ -84,26 +97,27 @@
                                 required="true"
                         >
                     </form>
+    
                     <div class="restaurants__location__title">
-                            <span class="restaurants__location__address">
-                               {% if gpsSearch and (address_config.autocomplete_type|first == '(regions)') %}
-                                   {{ 'address.delivery_by_gps %address%'|trans({
-                                       '%address%': formattedLocation['address']
-                                   }) }}
-                               {% elseif gpsSearch %}
-                                   {{ 'address.delivery_by_gps %address%'|trans({
-                                       '%address%': formattedLocation['delivery_address']
-                                   }) }}
-                               {% else %}
-                                   {{ 'address.delivery_by_city %city%'|trans({
-                                       '%city%': formattedLocation['city']
-                                   }) }}
-                               {% endif %}
-                            </span>
-                            <a class="restaurants__location__change-button" id="change_user_location_box_button">
-                                <span class="restaurants__change-button__text">{{ 'buttons.change'|trans }}</span>
-                                <span class="restaurants__change-button__arrow icon-down-open-big"></span>
-                            </a>
+                        <span class="restaurants__location__address">
+                            {% if gpsSearch and (address_config.autocomplete_type|first == '(regions)') %}
+                                {{ 'address.delivery_by_gps %address%'|trans({
+                                    '%address%': formattedLocation['address']
+                                }) }}
+                            {% elseif gpsSearch %}
+                                {{ 'address.delivery_by_gps %address%'|trans({
+                                    '%address%': formattedLocation['delivery_address']
+                                }) }}
+                            {% else %}
+                                {{ 'address.delivery_by_city %city%'|trans({
+                                    '%city%': formattedLocation['city']
+                                }) }}
+                            {% endif %}
+                        </span>
+                        <a class="restaurants__location__change-button" id="change_user_location_box_button">
+                            <span class="restaurants__change-button__text">{{ 'buttons.change'|trans }}</span>
+                            <span class="restaurants__change-button__arrow icon-down-open-big"></span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -121,6 +135,10 @@
                     {% set vendorIsOpen = 'open' %}
                     {{ block('vendor_description') }}
                 {% endfor %}
+                <div class="restaurants__search__not-found-message hide">
+                    <div class="restaurants__not-available-message__title">{% trans %}restaurant.search.not_found.title{% endtrans %}</div>
+                    <div class="restaurants__not-available-message__text">{% trans %}restaurants.search.not_found.text{% endtrans %}</div>
+                </div>
             </div>
             <div class="restaurants__list restaurants__list--closed">
                 {% for vendor in closedVendors %}
