@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.42.8
+ * INTVOLO-83: vendor search fix
+
 * 1.42.7
  * INTVOLO-536 added success message for contact information form
 
