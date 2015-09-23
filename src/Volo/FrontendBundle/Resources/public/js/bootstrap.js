@@ -493,6 +493,8 @@ VOLO.doBootstrap = function(configuration) {
 
     _.invoke(VOLO.gtmViews, 'setGtmService', GTMServiceInstance);
     _.invoke(VOLO.gtmViews, 'onGtmServiceCreated');
+
+    GTMServiceInstance.fireVirtualPageView();
 };
 
 VOLO.isFullAddressAutoComplete = function () {

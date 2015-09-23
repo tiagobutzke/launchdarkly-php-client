@@ -13,18 +13,16 @@
 {% block gtm_page_type %}Restaurant List Page{% endblock %}
 {% block google_tag_manager_before %}
 <script type="text/javascript" data-turbolinks-eval=always>
-    $(document).ready(function() {
-        dataLayer.push({
-            'totalRestaurants': {{ vendors.count() }},
-            'openRestaurants': {{ openVendors.count() }}
-        });
-        dataLayer.push({
-            'event': 'enterZipcode',
-            'zipcode': '{{ formattedLocation['postcode'] }}',
-            'city': '{{ formattedLocation['city'] }}',
-            'referrer': VOLO.tagManager.referrer,
-            'serviceArea': '{% if (openVendors.count() > 0) or (closedVendors.count() > 0) %}True{% else %}False{% endif %}'
-        });
+    dataLayer.push({
+        'totalRestaurants': {{ vendors.count() }},
+        'openRestaurants': {{ openVendors.count() }}
+    });
+    dataLayer.push({
+        'event': 'enterZipcode',
+        'zipcode': '{{ formattedLocation['postcode'] }}',
+        'city': '{{ formattedLocation['city'] }}',
+        'referrer': VOLO.tagManager.referrer,
+        'serviceArea': '{% if (openVendors.count() > 0) or (closedVendors.count() > 0) %}True{% else %}False{% endif %}'
     });
 </script>
 {% endblock %}
