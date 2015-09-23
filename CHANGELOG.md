@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.42.3
+ * HOTFIX: check for gtm service before using it on add product
+ * HOTFIX: set zip code from parameter on menu page
+
 * 1.42.2
  * tackJS onError fix
 
