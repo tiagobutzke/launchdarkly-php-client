@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.42.7
+ * INTVOLO-536 added success message for contact information form
+
 * 1.42.6
  * INTVOLO-870-fr-full-address-live
 
