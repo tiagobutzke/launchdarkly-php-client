@@ -357,7 +357,7 @@ var CartView = Backbone.View.extend({
     },
 
     setZipCode: function (zipCode) {
-        this.vendorGeocodingSubView.setZipCode(zipCode);
+        this.vendorGeocodingView.setZipCode(zipCode);
     },
 
     _updateStickingOnTopCoordinates: function() {
