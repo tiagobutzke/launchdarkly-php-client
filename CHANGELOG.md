@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.42.4
+ * INTVOLO-595 Restaurants are now shown on TL page change GTM
+
 * 1.42.3
  * HOTFIX: check for gtm service before using it on add product
  * HOTFIX: set zip code from parameter on menu page
