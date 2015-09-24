@@ -282,7 +282,7 @@ var CartView = Backbone.View.extend({
 
         if ($productCounter) {
             $productCounter.toggleClass('hidden', productsCount < 1);
-            $productCounter.text(productsCount);
+            $productCounter.text(Math.min(productsCount, 99));
             this._animateAddToCart($productCounter);
         }
     },
@@ -517,7 +517,7 @@ var VendorCartIconView = Backbone.View.extend({
         $.get(Routing.generate('default_cart_values'))
             .done(function (response) {
                 that.$el.data('vendor_id', response.vendor_id);
-                that.$('.header__cart__products__count').html(response.products_count);
+                that.$('.header__cart__products__count').html(Math.min(response.products_count, 99));
             });
     },
 
