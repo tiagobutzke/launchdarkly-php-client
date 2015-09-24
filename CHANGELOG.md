@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.44.0
+ * INTVOLO-656 - register and login button on top of checkout
+ * INTVOLO-884 addresses autocomplete fixed
+
 * 1.43.1
  * INTVOLO-71: Address duplication
 
