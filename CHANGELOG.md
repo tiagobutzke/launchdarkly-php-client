@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.43.0
+ * INTVOLO-715: Free delivery design fix
+ * INTVOLO-213: Count to 99
+
 * 1.42.8
  * INTVOLO-83: vendor search fix
 
