@@ -4,80 +4,68 @@ VOLO.CheckoutContactInformationForm = VOLO.ContactInformationForm.extend({
     initialize: function(options) {
         VOLO.ContactInformationForm.prototype.initialize.apply(this, arguments);
 
+        this.userService = new VOLO.UserService();
         this.userAddressCollection = options.userAddressCollection;
     },
 
+    isUserRegistering: function() {
+        return this.$('.checkout__contact-information__hide-register-link-wrapper').is(':visible');
+    },
+
+    isUserLoggingIn: function() {
+        return this.$('.checkout__contact-information__login-hint-message').is(':visible');
+    },
+
     _submit: function() {
-        var usedAddress = this.userAddressCollection.at(VOLO.userAddressCollection.length -1).toJSON(),
-            addressData = this._prepareGuestAddressData(usedAddress),
-            xhr;
+        var addressData = this.userAddressCollection.last().toJSON();
 
         this.$('.form__error-message').remove();
-
-        if (this.model.isExistingEmail) {
-            xhr = this._loginUser(addressData);
-        } else if (this.model.isRegistering) {
-            xhr = this._registerUser(addressData);
+        if (this.isUserLoggingIn()) {
+            this._loginUser(addressData);
+        } else if (this.isUserRegistering()) {
+            this._registerUser(addressData);
         } else {
             this._doGuestCheckout();
         }
 
-        xhr && xhr.done(this._xhrSuccess);
-        xhr && xhr.fail(this._xhrError);
-
         return false;
     },
 
-    _xhrSuccess: function() {
-        this.trigger('validationView:validateSuccessful', {
-            newsletterSignup: this.$('#contact-information-newsletter-checkbox').prop('checked')
-        });
-        window.location.reload();
-    },
-
-    _xhrError: function(response) {
-        var errorMsg = $(response.responseText).find('.modal-error-message').text().trim();
-        this.$('.checkout__contact-information__server-error-message').text(errorMsg).removeClass('hide');
-        this.$('.checkout__contact-information__login-hint-message').hide();
-    },
-
-    _prepareGuestAddressData: function(address) {
-        var result = {};
-
-        _.each(_.keys(address), function(key) {
-            result['guest_address['+key+']'] = address[key];
-        });
-
-        return result;
-    },
-
     _loginUser: function(addressData) {
-        var data = _.extend(addressData, {
-            _username: this.$('#contact-information-email').val(),
-            _password: this.$('#contact-information-password').val()
-        });
+        var loginData = {
+                _username: this.$('#contact-information-email').val(),
+                _password: this.$('#contact-information-password').val()
+            },
+            loginPromise = this.userService.login(loginData, addressData);
 
-        return $.ajax({
-            type: "POST",
-            url: Routing.generate('login_check'),
-            data: data
-        });
+        loginPromise.then(this._registerSuccess, this._registerError);
     },
 
     _registerUser: function(addressData) {
-        var data = _.extend(addressData, {
+        var userData = {
             'customer[first_name]': this.$('#contact-information-first-name').val(),
             'customer[last_name]': this.$('#contact-information-last-name').val(),
             'customer[email]': this.$('#contact-information-email').val(),
             'customer[mobile_number]': this.$('#contact-information-mobile-number').val(),
             'customer[password]': this.$('#contact-information-password').val(),
             'customer[confirm_password]': this.$('#contact-information-password').val()
+        };
+
+        var registerPromise = this.userService.register(userData, addressData);
+        registerPromise.then(this._registerSuccess, this._registerError);
+    },
+
+    _registerSuccess: function() {
+        this.trigger('validationView:validateSuccessful', {
+            newsletterSignup: this.$('#contact-information-newsletter-checkbox').prop('checked')
         });
 
-        return $.ajax({
-            type: "POST",
-            url: Routing.generate('customer.create'),
-            data: data
-        });
+        window.location.reload(true);
+    },
+
+    _registerError: function(response) {
+        var errorMsg = $(response.responseText).find('.modal-error-message').text().trim();
+        this.$('.checkout__contact-information__server-error-message').text(errorMsg).removeClass('hide');
+        this.$('.checkout__contact-information__login-hint-message').hide();
     }
 });
