@@ -134,7 +134,8 @@
         {{ 'cart.delivery'|trans }}
         <span class="desktop-cart__order__delivery-price">
             <% if (delivery_fee_discount > delivery_fee) { %>
-                <s><%= VOLO.formatCurrency(delivery_fee_discount) %></s> <b class="desktop-cart__order__delivery-discount"><%= VOLO.formatCurrency(delivery_fee) %><b>
+                <s><%= VOLO.formatCurrency(delivery_fee_discount) %></s>
+                <b class="desktop-cart__order__delivery-discount"><%= VOLO.formatCurrency(delivery_fee) %></b>
             <% } else { %>
                 <%= VOLO.formatCurrency(delivery_fee) %>
             <% } %>
