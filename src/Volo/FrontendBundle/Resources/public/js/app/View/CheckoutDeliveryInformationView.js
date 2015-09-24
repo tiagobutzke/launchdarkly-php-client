@@ -74,6 +74,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
     },
 
     _renderAddressList: function () {
+        this.$('#checkout-delivery-information-list').empty();
         _.invoke(this.subViews, 'remove');
         _.each(this.collection.filterByCityAndVendorId(this.locationModel.get('city'), this.vendorId), this._renderAddress);
     },
