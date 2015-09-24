@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.43.1
+ * INTVOLO-71: Address duplication
+
 * 1.43.0
  * INTVOLO-715: Free delivery design fix
  * INTVOLO-213: Count to 99
