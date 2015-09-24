@@ -10,7 +10,7 @@
 .restaurants-container {
   position: relative;
 }
-.show-ios-smart-banner .restaurants-container {
+.show-banner .restaurants-container {
   top: 50px;
   @include respond-from("screen-md") {
     top: 0;
@@ -187,8 +187,8 @@
     text-align: right;
   }
 }
-.show-ios-smart-banner .restaurants__tool-box--sticking .restaurants__location__title {
-  margin-top: $ios-smart-banner-height;
+.show-banner .restaurants__tool-box--sticking .restaurants__location__title {
+  margin-top: $banner-height;
   @include respond-from("screen-md") {
     margin-top: 0;
   }
@@ -316,8 +316,8 @@
 .restaurants__tool-box--sticking .restaurants__location__input .restaurants__search__input {
   margin-top: 8px;
 }
-.show-ios-smart-banner .restaurants__tool-box--sticking .restaurants__location__input {
-  margin-top: $ios-smart-banner-height + 8px;
+.show-banner .restaurants__tool-box--sticking .restaurants__location__input {
+  margin-top: $banner-height + 8px;
 }
 
 .restaurants__location__input {

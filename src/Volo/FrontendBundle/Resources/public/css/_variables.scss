@@ -69,6 +69,7 @@ $color-text-inactive: #bcbcbc;
 $color-text-selection: #fff;
 $color-text-link: #d70f64;
 $color-text-link-hover: #ac0c50;
+$color-text-flood-banner: #fff;
 
 $bold-font-family: 'Avenir Heavy', Arial, sans-serif;
 $satisfy-font-family: 'Satisfy Regular', Arial, sans-serif;
@@ -108,6 +109,7 @@ $color-bg-secondary: #f7f7f7;
 $color-bg-footer: #5e5e5e;
 $color-bg-text-selection: #d70f64;
 $color-bg-hint-message: #7fbd56;
+$color-bg-flood-banner: #d70f64;
 // ----------------------- BACKGROUND COLORS END -------------------------
 
 // ----------------------- SPACES START -----------------------
@@ -237,4 +239,4 @@ $header-background: $color-bg-primary;
 $link-color-bg-dark: #fff;
 // ----------------------- HEADER END ------------------------
 
-$ios-smart-banner-height: 70px;
+$banner-height: 70px;

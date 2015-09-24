@@ -6,26 +6,26 @@ VOLO.IOSBannerView = Backbone.View.extend({
     },
 
     events: {
-        'click .ios-smart-banner__close-button': '_hideBanner'
+        'click .ios-smart-banner__close-button': 'hide'
     },
 
-    render: function() {
-        if (this._shouldRender()) {
-            this.$body.addClass('show-ios-smart-banner');
-        }
-
-        return this;
-    },
-
-    _hideBanner: function() {
+    hide: function() {
         Cookies.set(VOLO.IOSBannerView.HIDE_IOS_BANNER_COOKIE_NAME, '1', { expires: 1 });
-        this.$body.removeClass('show-ios-smart-banner');
-        this.$body.resize(); //trigger the event for updating position of sticky items in DOM
+        this.$body.removeClass('show-ios-banner');
 
+        this.trigger('ios-banner:hide');
         this.unbind();
     },
 
-    _shouldRender: function() {
+    show: function() {
+        this.$body.addClass('show-ios-banner');
+        this.$body.addClass('show-banner');
+
+        //resize called because sticky parts of site needs to be updated
+        this.$body.resize();
+    },
+
+    shouldBeDisplayed: function() {
         return device.ios() && !Cookies.get(VOLO.IOSBannerView.HIDE_IOS_BANNER_COOKIE_NAME) && this.$body.find('.ios-smart-banner').length;
     },
 

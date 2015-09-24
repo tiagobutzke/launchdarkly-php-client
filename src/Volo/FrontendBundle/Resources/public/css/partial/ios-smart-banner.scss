@@ -1,7 +1,7 @@
 .ios-smart-banner {
   display: none;
 }
-.show-ios-smart-banner .ios-smart-banner {
+.show-banner.show-ios-banner .ios-smart-banner {
   display: block;
 }
 
@@ -10,7 +10,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  height: $ios-smart-banner-height;
+  height: $banner-height;
   width: 100%;
   z-index: 1030;
   background-color: $header-background;
@@ -19,7 +19,7 @@
 
 .ios-smart-banner__close-button {
   float: left;
-  line-height: $ios-smart-banner-height;
+  line-height: $banner-height;
   padding: 0 $space-sm;
   @include make-link();
 }
@@ -34,7 +34,7 @@
   background: $color-bg-text-selection;
   padding: $space-xs;
   border-radius: $border-radius-medium;
-  line-height: $ios-smart-banner-height;
+  line-height: $banner-height;
   font-size: $font-size-2_4rem;
 }
 
@@ -42,7 +42,7 @@
   padding: 9px $space-xs;
   font-size: $font-size-1_4rem;
   float: left;
-  height: $ios-smart-banner-height;
+  height: $banner-height;
   line-height: 1.3;
 }
 

@@ -10,13 +10,7 @@ VOLO.PostalCodeStickingOnTopView = Backbone.View.extend({
         this.stickOnTopSearch = new StickOnTop({
             $container: this.domObjects.$container,
             stickOnTopValueGetter: function() {
-                var stickOnTopValue = this.domObjects.$header.outerHeight();
-
-                if ($('body').hasClass('show-ios-smart-banner')) {
-                    stickOnTopValue += $('.ios-smart-banner').outerHeight();
-                }
-
-                return stickOnTopValue;
+                return this.domObjects.$header.outerHeight() + $('.top-banner:visible').outerHeight();
             }.bind(this),
             startingPointGetter: function() {
                 return this.$el.offset().top;

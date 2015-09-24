@@ -105,10 +105,11 @@ VOLO.HeaderAnimations = (function() {
     HeaderAnimations.prototype._changeLogoToRestaurantName = function() {
         var $heroMenuInfoheadline = $('.hero-menu__info__headline'),
             $header = $('.header'),
-            positionOfHeadline = $heroMenuInfoheadline.offset().top + $heroMenuInfoheadline.height() - $header.height();
+            heroMenuOffset = $heroMenuInfoheadline.length ? $heroMenuInfoheadline.offset().top : 0,
+            positionOfHeadline = heroMenuOffset + $heroMenuInfoheadline.height() - $header.height();
 
-        if (this.$document.find('body').hasClass('show-ios-smart-banner')) {
-            positionOfHeadline -= this.$document.find('.ios-smart-banner').outerHeight();
+        if (this.$document.find('body').hasClass('show-banner')) {
+            positionOfHeadline -= $('.top-banner:visible').outerHeight();
         }
 
         //if the Restaurant name is under the header switch the logo to restaurant name

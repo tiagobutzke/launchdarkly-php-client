@@ -42,12 +42,12 @@ li {
 }
 
 
-.menu.show-ios-smart-banner .header--mobile + main,
-.checkout.show-ios-smart-banner .header--mobile + main {
-  margin-top: $ios-smart-banner-height + $header-height-extra-small;
+.menu.show-banner .header--mobile + main,
+.checkout.show-banner .header--mobile + main {
+  margin-top: $banner-height + $header-height-extra-small;
 }
-.show-ios-smart-banner main {
-  margin-top: $ios-smart-banner-height;
+.show-banner main {
+  margin-top: $banner-height;
 }
 
 .hidden-to-user {

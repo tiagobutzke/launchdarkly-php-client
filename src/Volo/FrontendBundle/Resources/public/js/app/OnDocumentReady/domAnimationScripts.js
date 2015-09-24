@@ -69,8 +69,8 @@ VOLO.initDomAnimationScripts = function() {
         startingPointGetter: function() {
             var startingPoint = $('.restaurants__list').offset().top - $('.header').height() + 30;
 
-            if ($document.find('body.show-ios-smart-banner').length) {
-                startingPoint -= $('.ios-smart-banner').height();
+            if ($document.find('body.show-banner').length) {
+                startingPoint -= $('.top-banner:visible').outerHeight();
             }
 
             return startingPoint;
