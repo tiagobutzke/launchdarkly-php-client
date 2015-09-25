@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.45.0
+ * INTVOLO-236 VWO code
+
 * 1.44.0
  * INTVOLO-656 - register and login button on top of checkout
  * INTVOLO-884 addresses autocomplete fixed
