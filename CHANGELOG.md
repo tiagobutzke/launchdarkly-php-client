@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.46.0
+ * INTVOLO-894 Fixes negative total_value voucher calculation
+
 * 1.45.1
  * INTVOLO-567 Fixing the broken checkout GTM
 
