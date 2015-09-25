@@ -495,6 +495,7 @@ VOLO.doBootstrap = function(configuration) {
     _.invoke(VOLO.gtmViews, 'onGtmServiceCreated');
 
     GTMServiceInstance.fireVirtualPageView();
+    VWOExecuteTrackingCode();
 };
 
 VOLO.isFullAddressAutoComplete = function () {
