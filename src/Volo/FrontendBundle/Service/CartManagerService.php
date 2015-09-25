@@ -136,6 +136,7 @@ class CartManagerService
 
         if (count($response['vendorCart']) > 0) {
             $response['vendorCart'][0] = $this->unMergeSimilarProducts($response['vendorCart'][0], $jsonCart);
+            $response['vendorCart'][0] = $this->fixFixedVoucherCalculations($response['vendorCart'][0]);
         }
 
         if (array_key_exists('vendorCart', $response)) {
@@ -344,5 +345,19 @@ class CartManagerService
             $ignoreQuantity ? 1 : $product['quantity'],
             implode('_', array_column($product['toppings'], 'id'))
         );
+    }
+
+    /**
+     * @param array $vendorCart
+     *
+     * @return array
+     */
+    protected function fixFixedVoucherCalculations($vendorCart)
+    {
+        foreach (['total_value', 'group_joiner_total'] as $key) {
+            $vendorCart[$key] = max($vendorCart[$key], .0);
+        }
+
+        return $vendorCart;
     }
 }
