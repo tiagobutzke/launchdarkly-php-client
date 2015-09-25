@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.45.1
+ * INTVOLO-567 Fixing the broken checkout GTM
+
 * 1.45.0
  * INTVOLO-236 VWO code
 
