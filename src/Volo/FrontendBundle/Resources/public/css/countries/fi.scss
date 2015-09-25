@@ -12,5 +12,15 @@
 
 
 // ----------------------- COUNTRY STYLES OVERRIDE START --------------------------
+.tracking-hero__pay_cash-on-delivery {
+  display: none;
+}
 
+.cod {
+  display: none;
+}
+
+.checkout__payment__zero-price-message {
+  margin-bottom: -20px;
+}
 // ----------------------- COUNTRY STYLES OVERRIDE END ----------------------------

@@ -11,7 +11,13 @@ var PaymentTypeView = Backbone.View.extend({
                 customerModel: options.customerModel
             });
         }
-        this.$('.checkout__payment__option-wrapper').first().click();
+
+        if (options.cartModel.getCart(options.vendorId).get('total_value') > 0 || VOLO.configuration.countryCode !== 'fi') {
+            this.$('.checkout__payment__option-wrapper').first().click();
+        } else {
+            this.$('.cod').click();
+        }
+
     },
 
     events: {
