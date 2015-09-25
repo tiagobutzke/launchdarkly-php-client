@@ -164,7 +164,9 @@ VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel, us
         views.paymentTypeView = new PaymentTypeView({
             el: '.checkout__payment',
             checkoutModel: checkoutModel,
-            customerModel: customerModel
+            customerModel: customerModel,
+            cartModel: cartModel,
+            vendorId: $('.checkout__steps').data('vendor_id')
         });
     }
 

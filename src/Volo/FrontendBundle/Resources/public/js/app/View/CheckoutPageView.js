@@ -16,6 +16,7 @@ var CheckoutPageView = Backbone.View.extend({
         this.customerModel = options.customerModel;
         this.userAddressCollection = options.userAddressCollection;
         this.locationModel = options.locationModel;
+        this.cartModel = options.cartModel;
         this.contactInformationView = new VOLO.CheckoutContactInformationView({
             el: this.$('.checkout__contact-information'),
             vendorId: this.vendorId,
@@ -66,6 +67,28 @@ var CheckoutPageView = Backbone.View.extend({
 
         this.listenTo(this.contactInformationView, 'all', this.trigger);
         this.listenTo(this.checkoutDeliveryInformationView, 'all', this.trigger);
+
+        if (options.configuration.countryCode === 'fi') {
+            this.listenTo(this.cartModel.getCart(this.vendorId), 'cart:ready', this._updatePaymentsMethod);
+            this._updatePaymentsMethod();
+        }
+    },
+
+    _updatePaymentsMethod: function() {
+        var totalValue = this.cartModel.getCart(this.vendorId).get('total_value');
+
+        if (totalValue > 0) {
+            if (this.model.get('payment_type_code') === 'cod') {
+                this.$('.checkout__payment__option-wrapper').first().click();
+            }
+
+            this.$('.checkout__payment__zero-price-message').addClass('hide');
+            this.$('.checkout__payment__options-list').removeClass('hide');
+        } else {
+            this.$('.checkout__payment__zero-price-message').removeClass('hide');
+            this.$('.checkout__payment__options-list').addClass('hide');
+            this.$('.cod').click();
+        }
     },
 
     render: function () {
@@ -80,6 +103,7 @@ var CheckoutPageView = Backbone.View.extend({
 
         return this;
     },
+
 
     renderPayButton: function () {
         var isButtonDisabled = !this.model.get('address_id') ||
