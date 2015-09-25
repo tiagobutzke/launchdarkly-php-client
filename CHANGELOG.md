@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.47.0
+ * INTVOLO-897 - zero price payment ui
+
 * 1.46.0
  * INTVOLO-894 Fixes negative total_value voucher calculation
 
