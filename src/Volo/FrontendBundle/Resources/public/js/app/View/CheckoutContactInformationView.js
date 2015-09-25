@@ -171,13 +171,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
     },
 
     _switchFormVisibility: function () {
-        if (!this.customerModel.isValid()) {
-            this._openForm();
-
-            return;
-        }
-
-        if (this.$('#checkout-edit-contact-information').hasClass('hide')) {
+        if (!this.customerModel.isValid() || this.$('#checkout-edit-contact-information').hasClass('hide')) {
             this._openForm();
         } else {
             this._closeForm();
@@ -194,6 +188,8 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         this._hideEditLink();
         this.hideContactInformation();
         this.trigger('form:open', this);
+
+        console.debug('Checkout step 2');
     },
 
     _closeForm: function () {

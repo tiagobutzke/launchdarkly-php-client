@@ -76,7 +76,8 @@ var CheckoutModel = Backbone.Model.extend({
         };
 
         this.trigger('payment:attempt_to_pay', {
-            paymentMethod: this.get('payment_type_code')
+            paymentMethod: this.get('payment_type_code'),
+            newsletterSignup: isSubscribedNewsletter
         });
 
         if (this.get('payment_type_code') === 'adyen') {

@@ -435,7 +435,6 @@ VOLO.doBootstrap = function(configuration) {
         cartModel.getCart($checkoutMain.data('vendor_id')).set('location', locationModel.attributes);
 
         checkoutViews = VOLO.createCheckoutViews(cartModel, checkoutModel, locationModel, userAddressCollection, loginButtonView, VOLO.customer);
-        VOLO.renderCheckoutViews(checkoutViews);
     }
 
     if ($('.home .restaurants-search-form').length > 0) {
@@ -493,6 +492,10 @@ VOLO.doBootstrap = function(configuration) {
 
     _.invoke(VOLO.gtmViews, 'setGtmService', GTMServiceInstance);
     _.invoke(VOLO.gtmViews, 'onGtmServiceCreated');
+
+    if ($checkoutMain.length > 0) {
+        VOLO.renderCheckoutViews(checkoutViews);
+    }
 
     GTMServiceInstance.fireVirtualPageView();
     VWOExecuteTrackingCode();
