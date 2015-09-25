@@ -4,10 +4,12 @@ var ValidationView = Backbone.View.extend({
     _errorMessages: null,
     _defaultConstraints: {},
 
-    events: {
-        'blur input[name], select[name]': '_validateField',
-        'keyup input[name], select[name]': '_hideMessage',
-        'click button': '_validateForm'
+    events: function() {
+        return {
+            'blur input[name], select[name]': '_validateField',
+            'keyup input[name], select[name]': '_hideMessage',
+            'click button': '_validateForm'
+        };
     },
 
     initialize: function(options) {
@@ -21,13 +23,15 @@ var ValidationView = Backbone.View.extend({
     _validateField: function(e) {
         var target = e.target,
             $target = $(target),
-            value = target.value || '',
             formValues = validate.collectFormValues(this.el),
             doValidate = validate.async(formValues, this.constraints);
 
-        doValidate.then($.noop, function(invalidObj) {
-            if (invalidObj && invalidObj[target.name] && value !== '') {
+        doValidate.then(function() {
+            this.trigger('form:valid');
+        }.bind(this), function(invalidObj) {
+            if (invalidObj && invalidObj[target.name]) {
                 this._displayMessage(target);
+                this.trigger('form:error');
             }
 
             $target.toggleClass(this.inputErrorClass, !!invalidObj);
@@ -46,6 +50,10 @@ var ValidationView = Backbone.View.extend({
                     this._displayMessage(input);
                 }
             }, this);
+            this.trigger('form:error');
+        } else {
+            this.trigger('form:valid');
+            this.cleanErrorMessages();
         }
 
         return true;
@@ -73,9 +81,13 @@ var ValidationView = Backbone.View.extend({
         }
     },
 
-    unbind: function() {
+    cleanErrorMessages: function() {
         _.invoke(this._errorMessages, 'remove');
+        this._errorMessages = {};
+    },
 
+    unbind: function() {
+        this.cleanErrorMessages();
         this.undelegateEvents();
     }
 });

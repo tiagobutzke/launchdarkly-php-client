@@ -27,7 +27,11 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
     },
 
     events: function() {
-        return _.extend({}, ValidationView.prototype.events, {
+        return _.extend({}, ValidationView.prototype.events.apply(this), {
+            'blur input[name], select[name]': $.noop(),
+            'keyup input[name]': _.debounce(this._validateField, 200, {
+                leading: false
+            }),
             'click button': $.noop
         });
     },
@@ -36,14 +40,16 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
         this._validateForm().done(callback);
     },
 
-    toggleContinueButton: function() {
-        var doValidate = this._doValidate();
+    validateForm: function() {
+        this._doValidate().then(this._enableContinueButton, this._disableContinueButton);
+    },
 
-        doValidate.then(function() {
-            this.$("#delivery-information-form-button").removeClass('button--disabled');
-        }.bind(this), function() {
-            this.$("#delivery-information-form-button").addClass('button--disabled');
-        }.bind(this));
+    _enableContinueButton: function() {
+        this.$("#delivery-information-form-button").removeClass('button--disabled');
+    },
+
+    _disableContinueButton: function() {
+        this.$("#delivery-information-form-button").addClass('button--disabled');
     },
 
     _validateField: function (e) {
@@ -52,13 +58,10 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
             value = target.value || '',
             doValidate = this._doValidate();
 
-        doValidate.then(
-            function() {
-                this.$("#delivery-information-form-button").removeClass('button--disabled');
-            }.bind(this),
+        doValidate.then(this._enableContinueButton,
             function(invalidObj) {
                 if (invalidObj) {
-                    this.$("#delivery-information-form-button").addClass('button--disabled');
+                    this._disableContinueButton();
                 }
 
                 if (invalidObj && invalidObj[target.name] && value !== '') {
