@@ -32,6 +32,7 @@
         <meta name="msapplication-square310x310logo" content="{{ asset('/img/favicon/'~ faviconCountry ~'/largetile.png') }}">
         <meta name="msapplication-wide310x150logo" content="{{ asset('/img/favicon/'~ faviconCountry ~'/widetile.png') }}">
 
+        {{ cms('seo-header-meta') }}
         {% block head_meta_seo %}
             <meta name="robots" content="noindex, follow">
             <link rel="canonical" href="{{ app.request.uriForPath(app.request.pathInfo) }}" />
