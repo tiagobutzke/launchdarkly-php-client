@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.47.2
+ * INTVOLO-710 CMS block for header's metas
+ * INTVOLO-912 fetch https vendor logo
+
 * 1.47.1
  * Updated foodpanda/api-sdk
 
