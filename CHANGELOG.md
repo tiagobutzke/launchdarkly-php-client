@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.47.1
+ * Updated foodpanda/api-sdk
+
 * 1.47.0
  * INTVOLO-897 - zero price payment ui
 
