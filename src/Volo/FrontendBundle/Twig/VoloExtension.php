@@ -218,6 +218,8 @@ class VoloExtension extends \Twig_Extension
      */
     public function prepareLogoUrl($logoUrl, $dimensions)
     {
+        $logoUrl = preg_replace('/^http:/', 'https:', $logoUrl);
+
         return sprintf($logoUrl, $dimensions[0], $dimensions[1]);
     }
 
