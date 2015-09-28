@@ -47,7 +47,16 @@ class CustomerController extends BaseController
 
             return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
         } catch (PhoneNumberValidationException $e) {
-            return new JsonResponse(['invalidPhoneError' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+            return new JsonResponse([
+                'error' => [
+                    'errors' => [
+                        [
+                            'field_name' => 'mobile_number',
+                            'violation_messages' => [$e->getMessage()]
+                        ]
+                    ]
+                ]
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         $customer->setPassword('');
