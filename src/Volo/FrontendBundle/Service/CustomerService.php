@@ -11,10 +11,10 @@ use Foodpanda\ApiSdk\Entity\Customer\CustomerPassword;
 use Foodpanda\ApiSdk\Entity\Order\GuestCustomer;
 use Foodpanda\ApiSdk\Provider\CustomerProvider;
 use Foodpanda\ApiSdk\Serializer;
-use libphonenumber\PhoneNumber;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Volo\FrontendBundle\Security\Token;
 use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
+use Volo\FrontendBundle\ValidPhoneNumber;
 
 class CustomerService
 {
@@ -132,9 +132,9 @@ class CustomerService
 
     /**
      * @param Customer $customer
-     * @param PhoneNumber $parsedNumber
+     * @param ValidPhoneNumber $parsedNumber
      */
-    protected function setParsedMobileNumber($customer, PhoneNumber $parsedNumber)
+    protected function setParsedMobileNumber($customer, ValidPhoneNumber $parsedNumber)
     {
         $customer->setMobileCountryCode($parsedNumber->getCountryCode());
         $customer->setMobileNumber($parsedNumber->getNationalNumber());
@@ -143,14 +143,14 @@ class CustomerService
     /**
      * @param string $mobileNumber
      *
-     * @return PhoneNumber
+     * @return ValidPhoneNumber
      */
     public function validatePhoneNumber($mobileNumber)
     {
         $parsedNumber = $this->phoneService->parsePhoneNumber($mobileNumber);
         $this->phoneService->validateNumber($parsedNumber);
 
-        return $parsedNumber;
+        return new ValidPhoneNumber($parsedNumber);
     }
 
     /**

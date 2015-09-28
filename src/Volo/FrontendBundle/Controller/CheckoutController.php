@@ -50,8 +50,8 @@ class CheckoutController extends BaseController
         }
 
         return new JsonResponse([
+            'mobile_country_code' => $validPhoneNumber->getCountryCode(),
             'mobile_number' => $validPhoneNumber->getNationalNumber(),
-            'mobile_country_code' => $validPhoneNumber->getCountryCode()
         ]);
     }
 
