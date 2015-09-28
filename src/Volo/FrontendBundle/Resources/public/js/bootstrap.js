@@ -106,6 +106,10 @@ VOLO.createCartViews = function (cartModel, locationModel, gtmService) {
             gtmService: gtmService,
             vendorGeocodingView: vendorGeocodingView
         }),
+        confirmBelowMinimumAmountView = new ConfirmBelowMinimumAmountView({
+            el: '.modal-confirm-below-minimum-amount',
+            model: cartModel.getCart($menuMain.data('vendor_id'))
+        }),
         cartView = new CartView({
             el: '#cart',
             model: cartModel,
@@ -117,20 +121,23 @@ VOLO.createCartViews = function (cartModel, locationModel, gtmService) {
             gtmService: gtmService,
             smallScreenMaxSize: VOLO.configuration.smallScreenMaxSize,
             timePickerValues: VOLO.timePickerValues,
-            vendorGeocodingView: vendorGeocodingView
+            vendorGeocodingView: vendorGeocodingView,
+            confirmBelowMinimumAmountView: confirmBelowMinimumAmountView,
+            minimum_order_value_setting: VOLO.configuration.minimum_order_value_setting
         }),
         cartErrorModalView = new CartErrorModalView({
             el: '#cartCalculationErrorModal',
             model: cartModel
         });
 
-    VOLO.views.push(menuView, cartView, cartErrorModalView, vendorGeocodingView);
+    VOLO.views.push(menuView, cartView, cartErrorModalView, vendorGeocodingView, confirmBelowMinimumAmountView);
     VOLO.gtmViews.push(menuView, cartView);
 
     return {
         cartView: cartView,
         menuView: menuView,
-        cartErrorModalView: cartErrorModalView
+        cartErrorModalView: cartErrorModalView,
+        confirmBelowMinimumAmountView: confirmBelowMinimumAmountView
     };
 };
 
@@ -145,7 +152,8 @@ VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel, us
         locationModel: locationModel,
         $menuMain: $('.checkout__steps'),
         $window: $(window),
-        timePickerValues: VOLO.timePickerValues
+        timePickerValues: VOLO.timePickerValues,
+        minimum_order_value_setting: VOLO.configuration.minimum_order_value_setting
     });
 
     if ($('.checkout__payment__voucher').length > 0) {

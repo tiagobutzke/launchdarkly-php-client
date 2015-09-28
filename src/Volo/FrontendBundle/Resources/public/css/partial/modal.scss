@@ -53,3 +53,27 @@
 .spinner {
   opacity: 1 !important;
 }
+
+//--------------------------- modal with headline body content and footer - start -------------------------------
+
+.headline-content-footer-modal .modal-content {
+  padding-bottom: $space-sm;
+}
+
+.headline-content-footer-modal .modal-body {
+  padding-top: 0;
+}
+
+.headline-content-footer-modal .modal__h4 {
+  margin-bottom: $space-lg;
+}
+
+.headline-content-footer-modal .modal-footer {
+  padding-bottom: 0;
+}
+
+.headline-content-footer-modal .modal-footer button {
+  margin-bottom: $space-sm;
+}
+
+//--------------------------- modal with headline body content and footer - end -------------------------------

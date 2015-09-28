@@ -38,6 +38,8 @@
         VOLO.configuration.currencySymbol = '{{ get_currency_symbol_iso() }}';
         VOLO.configuration.averageDeliveryTime = '{{ average_delivery_time }}';
 
+        VOLO.configuration.minimum_order_value_setting = '{{ get_minimum_order_value_setting() }}';
+
         dataLayer = [];
 
         {% if is_customer_authenticated_fully() %}
