@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.47.3
+ * INTVOLO-916 it phone number validation
+ * INTVOLO-915 API validation error messages are not shown
+
 * 1.47.2
  * INTVOLO-710 CMS block for header's metas
  * INTVOLO-912 fetch https vendor logo
