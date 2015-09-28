@@ -50,12 +50,12 @@ class VendorController extends BaseController
             $vendor->getId()
         );
 
-        $location = $this->get('volo_frontend.service.customer_location')->get($request->getSession());
-        $isDeliverable = is_array($location) ? $this->get('volo_frontend.service.deliverability')
+        $customerLocation = $this->get('volo_frontend.service.customer_location')->get($request->getSession());
+        $isDeliverable = is_array($customerLocation) ? $this->get('volo_frontend.service.deliverability')
             ->isDeliverableLocation(
                 $vendor->getId(),
-                $location[CustomerLocationService::KEY_LAT],
-                $location[CustomerLocationService::KEY_LNG]
+                $customerLocation[CustomerLocationService::KEY_LAT],
+                $customerLocation[CustomerLocationService::KEY_LNG]
             ) : false;
 
         if ($cart) {
@@ -75,9 +75,9 @@ class VendorController extends BaseController
         return [
             'vendor'        => $vendor,
             'cart'          => $cart,
-            'address'       => is_array($location) ? $location[CustomerLocationService::KEY_PLZ] : '',
-            'location'      => $location,
-            'isDeliverable' => $isDeliverable
+            'address'       => is_array($customerLocation) ? $customerLocation[CustomerLocationService::KEY_PLZ] : '',
+            'location'      => $customerLocation,
+            'isDeliverable' => $isDeliverable,
         ];
     }
 
