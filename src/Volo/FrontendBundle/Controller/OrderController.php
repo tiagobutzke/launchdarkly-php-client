@@ -70,10 +70,10 @@ class OrderController extends BaseController
         AccessToken $accessToken
     )
     {
-        if ($session->get(static::SESSION_ORDER_PAYMENT_CODE) === 'cod') {
+        if (in_array($session->get(static::SESSION_ORDER_PAYMENT_CODE), ['cod', 'invoice'])) {
             $orderPayment = new OrderPayment();
             $orderPayment->setStatus('pending');
-            $orderPayment->setReference('cod');
+            $orderPayment->setReference(($session->get(static::SESSION_ORDER_PAYMENT_CODE)));
             $orderPayment->setAmount($status['total_value']);
 
             return $orderPayment;

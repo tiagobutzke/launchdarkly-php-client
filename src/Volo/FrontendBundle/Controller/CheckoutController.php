@@ -5,6 +5,7 @@ namespace Volo\FrontendBundle\Controller;
 use CommerceGuys\Guzzle\Oauth2\AccessToken;
 use Foodpanda\ApiSdk\Entity\Customer\Customer;
 use Foodpanda\ApiSdk\Entity\Order\GuestCustomer;
+use Foodpanda\ApiSdk\Entity\PaymentType\PaymentType;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Foodpanda\ApiSdk\Exception\ValidationEntityException;
@@ -159,6 +160,11 @@ class CheckoutController extends BaseController
             ]
         );
         // </INTVOLO-472>
+
+        if ($this->container->getParameter('country_code') === 'fi') {
+            $invoice = $this->getSerializer()->denormalize(['id' => 6, 'payment_type_code' => 'invoice'], PaymentType::class);
+            $vendor->getPaymentTypes()->add($invoice);
+        }
 
         $viewData = [
             'cart'               => $calculatedCart,
@@ -357,7 +363,7 @@ class CheckoutController extends BaseController
                 $cart
             );
 
-            if ($order['hosted_payment_page_redirect'] === null && $data['payment_type_code'] !== 'cod') {
+            if ($order['hosted_payment_page_redirect'] === null && !in_array($data['payment_type_code'], ['cod', 'invoice'])) {
                 $orderManager->payment($token->getAccessToken(), $data + $order);
             }
         } else {
@@ -368,7 +374,7 @@ class CheckoutController extends BaseController
                 $cart
             );
 
-            if ($order['hosted_payment_page_redirect'] === null && $data['payment_type_code'] !== 'cod') {
+            if ($order['hosted_payment_page_redirect'] === null && !in_array($data['payment_type_code'], ['cod', 'invoice'])) {
                 $orderManager->guestPayment($order, $data['encrypted_payment_data'], $data['client_ip']);
             }
         }

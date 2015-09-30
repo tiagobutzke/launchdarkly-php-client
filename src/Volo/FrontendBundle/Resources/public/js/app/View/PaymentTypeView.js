@@ -15,7 +15,7 @@ var PaymentTypeView = Backbone.View.extend({
         if (options.cartModel.getCart(options.vendorId).get('total_value') > 0 || VOLO.configuration.countryCode !== 'fi') {
             this.$('.checkout__payment__option-wrapper').first().click();
         } else {
-            this.$('.cod').click();
+            this.$('.invoice').click();
         }
 
     },
@@ -25,6 +25,7 @@ var PaymentTypeView = Backbone.View.extend({
         'click .adyen': '_displayCreditCard',
         'click .adyen_hpp': '_displayAdyenHpp',
         'click .cod': '_displayCashOnDelivery',
+        'click .invoice': '_displayInvoice',
         'click .checkout__payment__credit-card-fields-help-toggle': '_toggleCreditCardHelp',
         'click #checkout-add-credit-card-link': '_toggleNewCreditCard',
         'click .checkout__saved-payment-options__credit-card-radio': '_selectSavedCreditCard'
@@ -37,6 +38,15 @@ var PaymentTypeView = Backbone.View.extend({
 
     _toggleCreditCardHelp: function() {
         this.$('.checkout__payment__credit-card-fields-help').toggle();
+    },
+
+    _displayInvoice: function() {
+        var $invoice = this.$('.invoice');
+
+        this.checkoutModel.save('payment_type_code', $invoice.data('payment_type_code'));
+        this.checkoutModel.save('payment_type_id', $invoice.data('payment_type_id'));
+
+        this._activatePaymentMethod($invoice);
     },
 
     _displayCashOnDelivery: function() {

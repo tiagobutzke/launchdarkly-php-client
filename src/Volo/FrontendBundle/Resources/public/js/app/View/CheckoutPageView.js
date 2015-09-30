@@ -78,7 +78,7 @@ var CheckoutPageView = Backbone.View.extend({
         var totalValue = this.cartModel.getCart(this.vendorId).get('total_value');
 
         if (totalValue > 0) {
-            if (this.model.get('payment_type_code') === 'cod') {
+            if (this.model.get('payment_type_code') === 'invoice') {
                 this.$('.checkout__payment__option-wrapper').first().click();
             }
 
@@ -87,7 +87,7 @@ var CheckoutPageView = Backbone.View.extend({
         } else {
             this.$('.checkout__payment__zero-price-message').removeClass('hide');
             this.$('.checkout__payment__options-list').addClass('hide');
-            this.$('.cod').click();
+            this.$('.invoice').click();
         }
     },
 
