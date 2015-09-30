@@ -164,6 +164,16 @@ var VendorCartModel = Backbone.Model.extend({
         return parseInt(count, 10);
     },
 
+    getProductsIds: function() {
+        var ids = [];
+
+        this.products.each(function(product) {
+            ids.push(product.get('product_variation_id'));
+        });
+
+        return ids;
+    },
+
     validate: function(attrs) {
         if (_.isNull(attrs.location.latitude) || _.isNull(attrs.location.longitude) || _.isNull(attrs.location.location_type)) {
             return 'location_not_set';

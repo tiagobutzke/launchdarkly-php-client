@@ -30,7 +30,7 @@
                     'products': [{
                         'name': '{{ vendor.name }}',
                         'id': '{{ vendor.code }}',
-                        'variant': '{{ isVendorOpen(vendor, date('now')) ? 'open' : 'closed' }}'
+                        'variant': '{{ gtm_is_vendor_open_now(vendor) }}'
                     }]
                 }
             }
@@ -90,7 +90,9 @@
         </div>
         <div class="menu__blocks-wrapper">
             <div class="menu__blocks">
-                <div class="menu__list-wrapper" data-vendor_id="{{ vendor.id }}">
+                <div class="menu__list-wrapper"
+                    data-vendor='{{ gtm_extract_vendor_fields(vendor) | to_escaped_json }}'
+                    data-vendor-is-open="{{ gtm_is_vendor_open_now(vendor) }}">
                     <div class="menu__list">
                         {{ include('VoloFrontendBundle:Vendor:allergyLegend.html.twig') }}
                         <div class="menu__categories">
@@ -163,8 +165,11 @@
                 </div>
                 <div id="cart">
                     <div class="desktop-cart mobile-cart__hidden"
-                         data-minimum_order_amount="{{ vendor.minimumOrderAmount }}"
-                         data-vendor_id="{{ vendor.id }}">{# cart from template#}</div>
+                        data-minimum_order_amount="{{ vendor.minimumOrderAmount}}"
+                        data-vendor='{{ gtm_extract_vendor_fields(vendor) | to_escaped_json }}'
+                        data-vendor-is-open="{{ gtm_is_vendor_open_now(vendor) }}">
+                        {# cart from template#}
+                    </div>
                 </div>
             </div>
             <div class="menu__bottom-info">

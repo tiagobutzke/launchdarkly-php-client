@@ -141,6 +141,25 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
                 'event': 'addToCart',
                 'productName': data.name,
                 'productId': data.id,
+
+                'productPrice': data.productPrice,
+                'cartValue': data.cart.value,
+                'cartContents': data.cart.contents,
+                'cartQuantity': data.cart.quantity,
+                'actionLocation': data.actionLocation,
+                'ecommerce': {
+                    'currencyCode': this.options.currency,
+                    'add': {
+                        'products': [{
+                            'name': data.vendor.name,
+                            'id': data.vendor.id,
+                            'category': data.vendor.category,
+                            'variant': data.vendor.variant,
+                            'quantity': 1
+                        }]
+                    }
+                },
+
                 'sessionId': this.sessionId
             });
 
