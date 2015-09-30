@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.47.4
+ * INTVOLO-851 eCommerce in GTM
+ * INVOLO-9 Extra information on the first product
+
 * 1.47.3
  * INTVOLO-916 it phone number validation
  * INTVOLO-915 API validation error messages are not shown
