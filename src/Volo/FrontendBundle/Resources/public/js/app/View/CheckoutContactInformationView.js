@@ -107,6 +107,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
             presence: true
         };
 
+        this.contactInformationForm.cleanErrorMessages();
         delete this.contactInformationForm.constraints["customer[mobile_number]"];
         delete this.contactInformationForm.constraints["customer[first_name]"];
         delete this.contactInformationForm.constraints["customer[last_name]"];
@@ -128,6 +129,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
     _showRegisterLink: function() {
         if (this.contactInformationForm.isUserRegistering()) return;
 
+        this.contactInformationForm.cleanErrorMessages();
         delete this.contactInformationForm.constraints["customer[password]"];
 
         this.contactInformationForm.constraints["customer[first_name]"] = { presence: true };

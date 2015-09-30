@@ -25,7 +25,7 @@ VOLO.CheckoutContactInformationForm = VOLO.ContactInformationForm.extend({
         } else if (this.isUserRegistering()) {
             this._registerUser(addressData);
         } else {
-            this._doGuestCheckout();
+            this.saveCustomerInformation();
         }
 
         return false;

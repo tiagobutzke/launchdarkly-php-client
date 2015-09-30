@@ -45,9 +45,6 @@
                value=""
                required="true" placeholder="{% trans %}form.placeholder.mobile_number{% endtrans %}"
                data-validation-msg="{% trans %}validations.error.checkout.customer_mobile_number{% endtrans %}">
-        {% if phoneNumberError|default('') %}
-            <span class="checkout__step__item-content-row form__error-message invalid_number">{{ phoneNumberError|trans|raw }}</span>
-        {% endif %}
     </div>
 
     <div class="form-group checkout__step__item-form-group--newsletter sprite-form">

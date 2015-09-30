@@ -20,16 +20,23 @@ VOLO.ContactInformationForm = ValidationView.extend({
     initialize: function () {
         _.bindAll(this);
         ValidationView.prototype.initialize.apply(this, arguments);
+        this.listenTo(this, 'form:error', this._disableContinueButton);
+        this.listenTo(this, 'form:valid', this._enableContinueButton);
     },
 
-    events: _.extend({
-            'submit': '_submit',
-            'keydown #contact-information-mobile-number': '_hideErrorMsg'
-        }, ValidationView.prototype.events
-    ),
+    events: function() {
+        return _.extend({
+                'submit': '_submit'
+            }, ValidationView.prototype.events.apply(this)
+        );
+    },
 
-    _hideErrorMsg: function() {
-        this.$('.invalid_number').hide();
+    _enableContinueButton: function() {
+        this.$(".button").removeClass('button--disabled');
+    },
+
+    _disableContinueButton: function() {
+        this.$(".button").addClass('button--disabled');
     },
 
     fillUpForm: function () {
@@ -39,16 +46,18 @@ VOLO.ContactInformationForm = ValidationView.extend({
             this.$('#contact-information-email').val(_.unescape(this.model.get('email')));
             this.$('#contact-information-mobile-number').val(_.unescape(this.model.getFullMobileNumber()));
             this.$('#contact-information-newsletter-checkbox').prop('checked', this.model.get('is_newsletter_subscribed'));
+        } else {
+            this._disableContinueButton();
         }
     },
 
     _submit: function() {
-        this._doGuestCheckout();
+        this.saveCustomerInformation();
 
         return false;
     },
 
-    _doGuestCheckout: function () {
+    saveCustomerInformation: function () {
         var form = this.$el.serializeJSON({
                 checkboxUncheckedValue: 'false',
                 parseBooleans: true
@@ -104,6 +113,7 @@ VOLO.ContactInformationForm = ValidationView.extend({
                 _.get(response, 'responseJSON.error.mobile_number'),
                 this.$('#contact-information-mobile-number')[0]
             );
+            this.trigger('form:error');
         }
     },
 

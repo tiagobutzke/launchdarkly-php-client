@@ -66,7 +66,7 @@ VOLO.CheckoutDeliveryInformationView = Backbone.View.extend({
             }
         }
 
-        this.checkoutDeliveryValidationView.toggleContinueButton();
+        this.checkoutDeliveryValidationView.validateForm();
 
         this._renderAddressList();
         this._renderAddNewAddressLink();
