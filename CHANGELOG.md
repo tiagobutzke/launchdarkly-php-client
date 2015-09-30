@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.49.1
+ * INTVOLO-857 hotfix
+ * updated foodpanda/api-sdk
+
 * 1.49.0
  * INTVOLO-317 Cart / Difference to minimum order value
  * INTVOLO-127 fixed button behavior for contact form
