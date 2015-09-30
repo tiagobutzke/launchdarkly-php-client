@@ -8,6 +8,13 @@ VOLO.views = []; //all create views should go here
 VOLO.gtmViews = []; //all views, which needs GTM should go here
 
 $(document).ready(VOLO.documentReadyFunction);
+VOLO.createFloodBannerModel = function() {
+    VOLO.floodBannerModel = VOLO.floodBannerModel || new Backbone.Model({
+        hiddenByUser: false
+    });
+
+    return VOLO.floodBannerModel;
+};
 
 VOLO.createCustomerModel = function (jsonCustomer, isGuest) {
     VOLO.customer = new VOLO.CustomerModel(jsonCustomer, {
@@ -55,14 +62,15 @@ VOLO.createCheckoutModel = function (cartModel) {
     return VOLO.checkoutModel;
 };
 
-VOLO.createIOSBannerView = function() {
-    var iOSBannerView = new VOLO.IOSBannerView({
-        el: '.ios-smart-banner',
-        $body: $('body')
+VOLO.createBannersView = function(locationModel, floodBannerModel) {
+    var bannersView = new VOLO.BannersView({
+        el: 'body',
+        locationModel: locationModel,
+        floodBannerModel: floodBannerModel
     });
 
-    VOLO.views.push(iOSBannerView);
-    return iOSBannerView;
+    VOLO.views.push(bannersView);
+    return bannersView;
 };
 
 VOLO.createVendorPopupView = function() {
@@ -79,6 +87,7 @@ VOLO.createCartViews = function (cartModel, locationModel, gtmService) {
         $menuMain = $('.menu__list-wrapper'),
         $postalCodeBar = $('.menu__postal-code-bar'),
         vendor = $menuMain.data('vendor'),
+        $body = $('body'),
         vendorGeocodingView = new VendorGeocodingView({
             el: $postalCodeBar,
             geocodingService: new GeocodingService(VOLO.configuration.countryCode),
@@ -93,6 +102,7 @@ VOLO.createCartViews = function (cartModel, locationModel, gtmService) {
             locationModel: locationModel,
             $header: $header,
             $postalCodeBar: $postalCodeBar,
+            $body: $body,
             gtmService: gtmService,
             vendorGeocodingView: vendorGeocodingView
         }),
@@ -101,8 +111,7 @@ VOLO.createCartViews = function (cartModel, locationModel, gtmService) {
             model: cartModel,
             locationModel: locationModel,
             $window: $(window),
-            $iosBanner: $('.ios-smart-banner'),
-            $body: $('body'),
+            $body: $body,
             $header: $header,
             $menuMain: $menuMain,
             gtmService: gtmService,
@@ -393,9 +402,6 @@ VOLO.doBootstrap = function(configuration) {
         cartIconView.render();
     }
 
-    iOSBannerView = VOLO.createIOSBannerView();
-    iOSBannerView.render();
-
     if ($('.vendor-popup__modal').length > 0) {
         vendorPopupView = VOLO.createVendorPopupView();
         vendorPopupView.render();
@@ -502,6 +508,10 @@ VOLO.doBootstrap = function(configuration) {
 
     GTMServiceInstance.fireVirtualPageView();
     VWOExecuteTrackingCode();
+
+    var floodBannerModel = VOLO.createFloodBannerModel(),
+        bannersView = VOLO.createBannersView(locationModel, floodBannerModel);
+    bannersView.render();
 };
 
 VOLO.isFullAddressAutoComplete = function () {

@@ -69,11 +69,13 @@ var HomeSearchView = CTATrackableView.extend({
     _scrollToInput: function() {
         var md = new MobileDetect(window.navigator.userAgent);
         if (md.mobile()) {
-            var scrollPosition = this.$('#delivery-information-postal-index').offset().top - ($('.header').height() + 10),
-                $banner = $('.ios-smart-banner');
+            var $form = this.$('#delivery-information-postal-index'),
+                formOffset = $form.length ? $form.offset().top : 0,
+                scrollPosition = formOffset - ($('.header').height() + 10),
+                isBannerVisible = $('.show-banner');
 
-            if ($banner.is(':visible')) {
-                scrollPosition -= $banner.height();
+            if (isBannerVisible) {
+                scrollPosition -= $('.top-banner:visible').outerHeight();
             }
 
             $('html, body').animate({

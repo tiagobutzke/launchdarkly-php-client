@@ -1,5 +1,13 @@
 {% block header %}
-    {{ cms('ios-smart-banner') }}
+    <div class="top-banner-container">
+        {{ cms('ios-smart-banner') }}
+        <div class="flood-banner top-banner">
+            <div class="flood-banner__content"></div>
+            <div class="flood-banner__close-button">
+                <i class="icon-cancel"></i>
+            </div>
+        </div>
+    </div>
     <header class="header {% block headerClass %}{% endblock headerClass %}">
         <div class="header__wrapper">
             <h1 class="header__logo">

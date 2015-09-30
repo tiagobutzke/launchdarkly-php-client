@@ -142,8 +142,8 @@ var CartView = Backbone.View.extend({
         this.domObjects = {};
         this.domObjects.$header = options.$header;
         this.domObjects.$menuMain = options.$menuMain;
-        this.domObjects.$iosBanner = options.$iosBanner;
-        this.domObjects.$body = options.$body,
+        this.domObjects.$topBanner = options.$topBanner;
+        this.domObjects.$body = options.$body;
         this.$window = options.$window;
         this.smallScreenMaxSize = options.smallScreenMaxSize;
 
@@ -160,13 +160,7 @@ var CartView = Backbone.View.extend({
             $container: this.$(this.stickOnTopCartContainerSelector),
             noStickyBreakPoint: this.smallScreenMaxSize,
             stickOnTopValueGetter: function() {
-                var stickOnTopValue;
-                if (this.domObjects.$body.hasClass('show-ios-smart-banner')) {
-                    stickOnTopValue = this.domObjects.$header.outerHeight() + this.domObjects.$iosBanner.outerHeight();
-                } else {
-                    stickOnTopValue = this.domObjects.$header.outerHeight();
-                }
-
+                var stickOnTopValue = this.domObjects.$header.outerHeight() + $('.top-banner:visible').outerHeight();
                 var $postalCodeBar = this.domObjects.$body.find('.menu__postal-code-bar');
                 if (!$postalCodeBar.hasClass('hidden')) {
                     stickOnTopValue += $postalCodeBar.outerHeight();

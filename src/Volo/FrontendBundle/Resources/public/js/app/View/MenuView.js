@@ -7,6 +7,7 @@ var MenuView = Backbone.View.extend({
         this.navigateToAnchorBuffer = 30;
         this.domObjects.$header = options.$header;
         this.domObjects.$postalCodeBar = options.$postalCodeBar;
+        this.domObjects.$el = options.$el;
 
         this.subViews = [];
         this.vendor = this.$el.data().vendor;
@@ -26,7 +27,8 @@ var MenuView = Backbone.View.extend({
                 var $postalCodeBar = this.domObjects.$postalCodeBar;
 
                 return this.domObjects.$header.outerHeight() +
-                    ($postalCodeBar.hasClass('hidden') ? 0 : $postalCodeBar.outerHeight());
+                    ($postalCodeBar.hasClass('hidden') ? 0 : $postalCodeBar.outerHeight()) +
+                    $('.top-banner:visible').outerHeight();
             }.bind(this),
             startingPointGetter: function() {
                 var vendorLogo = this.$('.menu__categories__vendor-logo'),
