@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.48.1
+ * INTVOLO-914 Voucher total update
+
 * 1.48.0
  * INTVOLO-657 Fetching action events from the API
  * INTVOLO-857 [frontend] Flood feature
