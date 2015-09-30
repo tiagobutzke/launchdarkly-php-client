@@ -1,5 +1,6 @@
 VOLO.BannersView = Backbone.View.extend({
     initialize: function(options) {
+        _.bindAll(this);
         this.iOSBanner = new VOLO.IOSBannerView({
             el: '.ios-smart-banner',
             $body: this.$el
