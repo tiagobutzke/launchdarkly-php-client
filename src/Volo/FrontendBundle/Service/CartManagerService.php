@@ -358,6 +358,11 @@ class CartManagerService
             $vendorCart[$key] = max($vendorCart[$key], .0);
         }
 
+        $vendorCart['voucher_total'] = min(
+            $vendorCart['voucher_total'],
+            $vendorCart['subtotal_after_discount_and_delivery_fee_and_service_fee']
+        );
+
         return $vendorCart;
     }
 }
