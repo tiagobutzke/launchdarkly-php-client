@@ -1,0 +1,23 @@
+{# confirm below minimum amount modal #}
+<script type="text/template" id="template-confirm-below-minimum-amount">
+    <div class="modal fade confirm-below-minimum-amount-modal headline-content-footer-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <h4 class="modal__h4 text-center">{% trans %}headline.confirm_below_minimum_amount{% endtrans %}</h4>
+                <div class="modal-body">
+                    {% trans %}content.confirm_below_minimum_amount{% endtrans %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="button button--full-width allow-below-minimum-amount-checkout">
+                        {% trans %}label.continue_with_checkout{% endtrans %}
+                    </button>
+
+                    <button type="button" class="button button--full-width button-secondary" data-dismiss="modal">
+                        {% trans %}label.continue_with_shopping{% endtrans %}
+                    </button>
+                </div>
+                <div class="modal-close-button" data-dismiss="modal"></div>
+            </div>
+        </div>
+    </div>
+</script>

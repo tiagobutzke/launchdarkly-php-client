@@ -309,6 +309,22 @@ var VendorCartModel = Backbone.Model.extend({
         return this.products.find(function(product) {
             return product.isSimilar(productToSearch);
         });
+    },
+
+    isSubtotalLessMinOrderAmount: function() {
+        return this.get('subtotal') < this.get('minimum_order_amount');
+    },
+
+    isSubtotalGreaterZero: function() {
+        return this.get('subtotal') > 0;
+    },
+
+    isSubtotalIsZero: function() {
+        return this.get('subtotal') === 0;
+    },
+
+    isSubtotalGreaterEqualMinOrderAmount: function() {
+        return this.get('subtotal') >= this.get('minimum_order_amount');
     }
 });
 

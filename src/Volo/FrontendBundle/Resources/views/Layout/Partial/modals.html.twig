@@ -1,6 +1,8 @@
 {% block modals %}
     <div class="modal-dialogs"><!-- here you can define your modals --></div>
 
+    <div class="modal-confirm-below-minimum-amount"></div>
+
     {% if vendor is defined %}
         <div class="modal fade" id="cartCalculationErrorModal" tabindex="-1" role="dialog"
              aria-labelledby="cartCalculationErrorModalLabel" aria-hidden="true" data-vendor_id="{{ vendor.id }}"

@@ -106,30 +106,36 @@
 {% include('VoloFrontendBundle:Layout/Partial/templates:timepicker.html.twig') %}
 
 <script type="text/template" id="template-cart-checkout-button">
-    <% if (subtotal >= minimum_order_amount && subtotal > 0) { %>
-        <button class="button btn-checkout button--full-width" data-vendor-code="{{ vendor.code }}">
-            <span class="button__text">{% trans %}cart.checkout_link{% endtrans %}</span>
-        </button>
-    <% } else { %>
-        <button class="button btn-below-minimum-amount button--disabled btn-checkout button--full-width disabled">
-            <span class="button__text">
-                {% trans with {'%min%': vendor.minimumOrderAmount|price} %}cart.cart_below_mininum_total_amount %min%{% endtrans %}
-            </span>
-        </button>
-        <span class="desktop-cart__error__below-minimum-amount form__error-message hide">{% trans %}cart.need_add_more_products_to_place_order{% endtrans %}</span>
-    <% }; %>
+    <button class="button btn-confirm-below-minimum-amount btn-checkout button--full-width hide" data-vendor-code="{{ vendor.code }}">
+        <span class="button__text">{% trans %}cart.checkout_link{% endtrans %}</span>
+    </button>
+
+    <button class="button btn-checkout btn-to-checkout button--full-width hide" data-vendor-code="{{ vendor.code }}">
+        <span class="button__text">{% trans %}cart.checkout_link{% endtrans %}</span>
+    </button>
+
+    <button class="button btn-below-minimum-amount button--disabled btn-checkout button--full-width disabled hide">
+        <span class="button__text">{% trans %}cart.checkout_link{% endtrans %}</span>
+    </button>
+    <span class="desktop-cart__error__below-minimum-amount form__error-message hide">{% trans %}cart.need_add_more_products_to_place_order{% endtrans %}</span>
 </script>
 
 <script type="text/template" id="template-cart-subtotal">
     <div class="desktop-cart__order__subtotal">
         {{ 'cart.subtotal'|trans }}
         <span class="desktop-cart__order__subtotal-price"><%= VOLO.formatCurrency(subtotal_after_discount) %></span>
-        <em class="desktop-cart__order__subtotal-min-order">
-            <% if (minimum_order_amount) { %>
-                ({% trans with {'%min%': vendor.minimumOrderAmount|price} %}cart.cart_subtotal_mininum_total_amount %min%{% endtrans %})
-            <% }; %>
-        </em>
     </div>
+
+    <div class="desktop-cart__order__min-order hide">
+        {% trans %}label.cart_minimum_order{% endtrans %}
+        <span class="desktop-cart__order__min-order-value">{{ vendor.minimumOrderAmount|price }}</span>
+    </div>
+
+    <div class="desktop-cart__order__min-diff-order hide">
+        {% trans %}label.cart_difference_to_minimum{% endtrans %}
+        <span class="desktop-cart__order__min-order-value"><%= VOLO.formatCurrency(minimum_order_amount_difference) %></span>
+    </div>
+
     <div class="desktop-cart__order__delivery">
         {{ 'cart.delivery'|trans }}
         <span class="desktop-cart__order__delivery-price">

@@ -139,6 +139,9 @@ var CartView = Backbone.View.extend({
         });
         this.vendorGeocodingView = options.vendorGeocodingView;
 
+        this.confirmBelowMinimumAmountView = options.confirmBelowMinimumAmountView;
+        this.minimumOrderValueSetting = options.minimum_order_value_setting;
+
         this.domObjects = {};
         this.domObjects.$header = options.$header;
         this.domObjects.$menuMain = options.$menuMain;
@@ -261,6 +264,8 @@ var CartView = Backbone.View.extend({
         this.$window.off('resize', this.boundUpdateCartHeight).on('resize', this.boundUpdateCartHeight);
         this.$window.off('scroll', this.boundUpdateCartHeight).on('scroll', this.boundUpdateCartHeight);
 
+        this.listenTo(this.confirmBelowMinimumAmountView, 'confirm_below_minimum_amount:allow_below_minimum_amount_checkout', this._goToCheckout, this);
+
         this.listenTo(this.vendorGeocodingView, 'vendor_geocoding_view:postcode_toggle', this._updateStickingOnTopCoordinates);
         this._initializeMobileCartIcon();
     },
@@ -323,15 +328,22 @@ var CartView = Backbone.View.extend({
     },
 
     _handleCartSubmit: function() {
-        var vendorCode = this.$('.btn-checkout').data('vendor-code');
-
         if (!this.$('.btn-checkout').hasClass('disabled')) {
-            Turbolinks.visit(Routing.generate('checkout_payment', {
-                vendorCode: vendorCode
-            }));
+            if (this.$('.btn-checkout').hasClass('btn-confirm-below-minimum-amount')) {
+                this.confirmBelowMinimumAmountView.render();
+            } else {
+                this._goToCheckout();
+            }
         }
 
         return false;
+    },
+
+    _goToCheckout: function() {
+        var vendorCode = this.$('.btn-checkout').data('vendor-code');
+        Turbolinks.visit(Routing.generate('checkout_payment', {
+            vendorCode: vendorCode
+        }));
     },
 
     render: function() {
@@ -361,17 +373,55 @@ var CartView = Backbone.View.extend({
     },
 
     renderCheckoutButton: function() {
+        var cachedVendorCart = this.model.getCart(this.vendor.id),
+            cacheCheckoutButtons = $('<div/>').html(
+            this.templateCheckoutButton(cachedVendorCart.attributes)
+            ),
+            errorMessage = cacheCheckoutButtons.find('.desktop-cart__error__below-minimum-amount');
+
+        if (this.isMinOrderSetToDenyBellowMinimum() && cachedVendorCart.isSubtotalGreaterEqualMinOrderAmount() && cachedVendorCart.isSubtotalGreaterZero()) {
+            cacheCheckoutButtons.find('.btn-checkout.btn-to-checkout').removeClass('hide');
+        } else if (this.isMinOrderSetToAlwaysAsk() && cachedVendorCart.isSubtotalLessMinOrderAmount() && cachedVendorCart.isSubtotalGreaterZero()) {
+            cacheCheckoutButtons.find('.btn-checkout.btn-confirm-below-minimum-amount').removeClass('hide');
+        } else if (this.isMinOrderSetToAlwaysAsk() && cachedVendorCart.isSubtotalGreaterEqualMinOrderAmount() && cachedVendorCart.isSubtotalGreaterZero()) {
+            cacheCheckoutButtons.find('.btn-checkout.btn-to-checkout').removeClass('hide');
+        } else {
+            cacheCheckoutButtons.find('.btn-checkout.btn-below-minimum-amount').removeClass('hide');
+        }
+
         this.$('.desktop-cart__order__checkout_button_container').html(
-            this.templateCheckoutButton(this.model.getCart(this.vendor.id).attributes)
+            cacheCheckoutButtons.find('button').not('.hide').add(errorMessage)
         );
     },
 
     renderSubTotal: function () {
+        var cachedVendorCart = this.model.getCart(this.vendor.id);
+
         this.$('.desktop-cart__order__subtotal-container').html(
-            this.templateSubTotal(this.model.getCart(this.vendor.id).attributes)
+            this.templateSubTotal(cachedVendorCart.attributes)
         );
 
+        if (this.isMinOrderSetToDenyBellowMinimum() && cachedVendorCart.isSubtotalLessMinOrderAmount()) {
+            this.$('.desktop-cart__order__min-order').removeClass('hide');
+        }
+
+        if (this.isMinOrderSetToAlwaysAsk() && cachedVendorCart.isSubtotalLessMinOrderAmount()) {
+            if (cachedVendorCart.isSubtotalIsZero()) {
+                this.$('.desktop-cart__order__min-order').removeClass('hide');
+            } else {
+                this.$('.desktop-cart__order__min-diff-order').removeClass('hide');
+            }
+        }
+
         return this;
+    },
+
+    isMinOrderSetToAlwaysAsk: function() {
+        return 'always_ask' === this.minimumOrderValueSetting;
+    },
+
+    isMinOrderSetToDenyBellowMinimum: function() {
+        return 'deny_bellow_minimum' === this.minimumOrderValueSetting;
     },
 
     renderProducts: function () {
