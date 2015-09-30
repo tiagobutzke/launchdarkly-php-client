@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.49.2
+ * Translations updated
+
 * 1.49.1
  * INTVOLO-857 hotfix
  * updated foodpanda/api-sdk
