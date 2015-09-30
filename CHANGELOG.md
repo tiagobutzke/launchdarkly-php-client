@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.48.0
+ * INTVOLO-657 Fetching action events from the API
+ * INTVOLO-857 [frontend] Flood feature
+
 * 1.47.4
  * INTVOLO-851 eCommerce in GTM
  * INVOLO-9 Extra information on the first product
