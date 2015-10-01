@@ -39,7 +39,7 @@ var CheckoutModel = Backbone.Model.extend({
         }
 
         if (this.get('is_guest_user')) {
-            if (_.indexOf(['paypal', 'adyen_hpp', 'cod'], this.get('payment_type_code')) != -1) {
+            if (_.indexOf(['paypal', 'adyen_hpp', 'cod', 'invoice'], this.get('payment_type_code')) != -1) {
                 return true;
             }
 
