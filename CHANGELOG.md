@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+* 1.50.0
+ * INTVOLO-242 - special instructions tutorial
+
+* 1.49.3
+ * INTVOLO-974 fixes success page gtm transaction id
+
 * 1.49.2
  * Translations updated
 
