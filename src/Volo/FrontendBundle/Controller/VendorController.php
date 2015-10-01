@@ -91,7 +91,8 @@ class VendorController extends BaseController
             'address'       => is_array($customerLocation) ? $customerLocation[CustomerLocationService::KEY_PLZ] : '',
             'location'      => $customerLocation,
             'isDeliverable' => $isDeliverable,
-            'showSpecialInstructionsTutorial' => $specialInstructionsTutorialEnabled
+            // Temporary disabled
+            'showSpecialInstructionsTutorial' => false && $specialInstructionsTutorialEnabled
         ];
     }
 
