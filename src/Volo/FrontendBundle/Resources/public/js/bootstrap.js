@@ -390,6 +390,16 @@ VOLO.createProfileView = function(customerModel) {
     };
 };
 
+VOLO.createSpecialInstructionsTutorialView = function() {
+    var view = new VOLO.SpecialInstructionsTutorialView({
+        el: '.desktop-cart__special-instructions-tutorial'
+    });
+
+    VOLO.views.push(view);
+
+    return view;
+};
+
 VOLO.doBootstrap = function(configuration) {
     moment.tz.setDefault(VOLO.configuration.timeZone);
     window.blazy.revalidate();
@@ -492,6 +502,10 @@ VOLO.doBootstrap = function(configuration) {
 
     if ($('.profile__blocks-wrapper').length > 0) {
         VOLO.createProfileView(VOLO.customer).profileContactView.render();
+    }
+
+    if ($('.desktop-cart__special-instructions-tutorial').length) {
+        VOLO.createSpecialInstructionsTutorialView();
     }
 
     var GTMServiceInstance = VOLO.initGTMService({

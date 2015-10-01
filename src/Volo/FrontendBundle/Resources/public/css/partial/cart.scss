@@ -257,6 +257,7 @@ td.summary__item__sign {
 
 td.summary__item__name {
   width: 78%;
+  @include make-link()
 }
 
 .summary__item__extra {
@@ -307,9 +308,6 @@ tr.summary__item__row_desktop {
     &:hover {
       .summary__item__quantity-icons, .summary__item__remove-icon {
         display: block;
-      }
-      .summary__item__name {
-        color: $color-text-highlight;
       }
 
       .summary__item__remove-icon:before {
@@ -619,6 +617,30 @@ tr.summary__item__row_mobile {
     padding: 0;
     margin: 0;
   }
+}
+
+.desktop-cart__special-instructions-tutorial {
+  border: $base-border;
+  border-radius: $border-radius-default;
+  padding: 10px;
+  margin-top: $space-sm;
+  text-align: center;
+  background-color: $color-bg-primary;
+}
+
+.desktop-cart__special-instructions-tutorial__text {
+  line-height: 1.3em;
+  font-size: 0.857em;
+}
+
+.desktop-cart__special-instructions-tutorial__dismiss {
+  border: $cta-secondary-border;
+  border-radius: $border-radius-default;
+  color: $color-text-link;
+  background-color: transparent;
+  height: 25px;
+  margin: 5px auto 0;
+  padding: 5px 10px 3px;
 }
 
 // ------------------------------------------ checkout page variations -------------------------------------------------//

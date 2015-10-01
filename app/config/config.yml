@@ -107,6 +107,9 @@ doctrine_cache:
         vendor_cache:
             namespace: %country_code%_%kernel.environment%_vendor_cache
             type: file_system
+        special_instructions_cache:
+            namespace: %country_code%_%kernel.environment%_special_instructions_cache
+            type: file_system
         health_check_redis:
             redis:
                 connection_id: volo_frontend_redis_connection_service
