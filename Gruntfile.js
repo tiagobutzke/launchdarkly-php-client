@@ -45,6 +45,10 @@ module.exports = function (grunt) {
         allCountriesSass = grunt.file.readJSON('app/config/countries.json'),
         jsSources = {};
 
+    if (allCountriesOption === 'all') {
+        allCountriesOption = null;
+    }
+
     if (allCountriesOption) {
         allCountriesSass = allCountriesOption.split(',');
     }
