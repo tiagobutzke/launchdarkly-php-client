@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+* 1.50.2
+ * INTVOLO-980: Invoice payment method
+
+* 1.50.1
+ * INTVOLO-988 Special instruction disabled
+
 * 1.50.0
  * INTVOLO-242 - special instructions tutorial
 
