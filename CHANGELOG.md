@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.50.3
+ * INVOLO 989 Restaurant Search: "No restaurant found message" stays
+
 * 1.50.2
  * INTVOLO-980: Invoice payment method
 
