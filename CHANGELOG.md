@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.51.1
+ * Updated composer
+
 * 1.51.0
  * INTVOLO-691 Smart Banner for Android
 
