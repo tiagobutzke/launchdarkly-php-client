@@ -1,12 +1,15 @@
-.ios-smart-banner {
+.ios-smart-banner,
+.android-smart-banner {
   display: none;
 }
-.show-banner.show-ios-banner .ios-smart-banner {
+
+.show-banner.show-ios-banner .ios-smart-banner,
+.show-banner.show-android-banner .android-smart-banner {
   display: block;
 }
 
-
-.ios-smart-banner {
+.ios-smart-banner,
+.android-smart-banner {
   position: fixed;
   top: 0;
   left: 0;
@@ -17,19 +20,22 @@
   border-bottom: $base-border;
 }
 
-.ios-smart-banner__close-button {
+.ios-smart-banner__close-button,
+.android-smart-banner__close-button {
   float: left;
   line-height: $banner-height;
   padding: 0 $space-sm;
   @include make-link();
 }
 
-.ios-smart-banner__logo-icon-wrapper {
+.ios-smart-banner__logo-icon-wrapper,
+.android-smart-banner__logo-icon-wrapper {
   float: left;
   padding-right: $space-sm;
 }
 
-.ios-smart-banner__logo-icon {
+.ios-smart-banner__logo-icon,
+.android-smart-banner__logo-icon {
   color: $color-bg-primary;
   background: $color-bg-text-selection;
   padding: $space-xs;
@@ -38,7 +44,8 @@
   font-size: $font-size-2_4rem;
 }
 
-.ios-smart-banner__information-wrapper {
+.ios-smart-banner__information-wrapper,
+.android-smart-banner__information-wrapper {
   padding: 9px $space-xs;
   font-size: $font-size-1_4rem;
   float: left;
@@ -46,7 +53,8 @@
   line-height: 1.3;
 }
 
-.ios-smart-banner__view-app-link {
+.ios-smart-banner__view-app-link,
+.android-smart-banner__view-app-link {
   @extend .button-secondary;
   height: 25px;
   line-height: 25px;
@@ -56,19 +64,23 @@
   padding: 0 $space-xs !important;
 }
 
-.ios-smart-banner__free-message {
+.ios-smart-banner__free-message,
+.android-smart-banner__free-message {
   color: $color-text-light;
   font-size: $font-size-1_2rem;
 }
 
-.ios-smart-banner__title {
+.ios-smart-banner__title,
+.android-smart-banner__title {
   font-family: $bold-font-family;
 }
 
-.ios-smart-banner__ratings__star {
+.ios-smart-banner__ratings__star,
+.android-smart-banner__ratings__star {
   color: $star-active-color;
 }
 
-.ios-smart-banner__ratings__star--inactive {
+.ios-smart-banner__ratings__star--inactive,
+.android-smart-banner__ratings__star--inactive {
   color: $star-inactive-color;
 }

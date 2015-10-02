@@ -5,6 +5,10 @@ VOLO.BannersView = Backbone.View.extend({
             el: '.ios-smart-banner',
             $body: this.$el
         });
+        this.androidBanner = new VOLO.AndroidBannerView({
+            el: '.android-smart-banner',
+            $body: this.$el
+        });
         this.floodBanner = new VOLO.FloodBannerView({
             el: '.flood-banner',
             $body: this.$el,
@@ -16,6 +20,7 @@ VOLO.BannersView = Backbone.View.extend({
         this.locationModel = options.locationModel;
 
         this.listenTo(this.iOSBanner, 'ios-banner:hide', this._updateFloodBannerState);
+        this.listenTo(this.androidBanner, 'android-banner:hide', this._updateFloodBannerState);
         this.listenTo(this.floodBanner, 'flood-banner:hide', this._hideAllBanners);
         this.listenTo(this.locationModel, 'change', this._locationChanged);
     },
@@ -23,6 +28,8 @@ VOLO.BannersView = Backbone.View.extend({
     render: function() {
         if (this.iOSBanner.shouldBeDisplayed()) {
             this.iOSBanner.show();
+        } else if (this.androidBanner.shouldBeDisplayed()) {
+            this.androidBanner.show();
         } else {
             this.floodBanner.shouldBeDisplayed().then(function(result) {
                 result && this.floodBanner.show();
@@ -35,7 +42,7 @@ VOLO.BannersView = Backbone.View.extend({
     _locationChanged: function() {
         this.floodBannerModel.set('hiddenByUser', false);
 
-        if (this.iOSBanner.shouldBeDisplayed()) {
+        if (this.iOSBanner.shouldBeDisplayed() || this.androidBanner.shouldBeDisplayed()) {
             return;
         }
 
@@ -68,6 +75,7 @@ VOLO.BannersView = Backbone.View.extend({
         this.undelegateEvents();
 
         this.iOSBanner.unbind();
+        this.androidBanner.unbind();
         this.floodBanner.unbind();
     }
 });
