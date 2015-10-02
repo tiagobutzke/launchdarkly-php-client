@@ -34,6 +34,7 @@ var VendorsSearchView = HomeSearchView.extend({
     hideRestaurantsSearch: function() {
         this.$('.restaurants__tool-box').removeClass('active-search');
         this.$('.restaurants__list__item').removeClass('hide');
+        this.$('.restaurants__search__not-found-message').addClass('hide');
         this.$('.restaurants__search__input').val('').blur();
         return false;
     },
