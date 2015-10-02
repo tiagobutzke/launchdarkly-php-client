@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+* 1.51.0
+ * INTVOLO-691 Smart Banner for Android
+
+* 1.50.4
+ * INTVOLO-938 loading images on vendor search
+
 * 1.50.3
  * INVOLO 989 Restaurant Search: "No restaurant found message" stays
 
