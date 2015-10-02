@@ -87,6 +87,7 @@ var VendorsSearchView = HomeSearchView.extend({
         });
 
         this.$('.restaurants__search__not-found-message').toggleClass('hide', restaurants.not('.hide').length > 0);
+        window.blazy.revalidate();
     }
 });
 
