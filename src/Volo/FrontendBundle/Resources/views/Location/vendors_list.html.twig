@@ -67,6 +67,26 @@
             </div>
         {% endif %}
     </div>
+    <form class="" id="form-filters">
+        {% for filter in filters %}
+            <div class="form-group checkout__step__item-form-group--newsletter sprite-form">
+                <input type="checkbox"
+                       style="-webkit-transition: checkbox;
+                             -webkit-appearance: checkbox;
+                             -moz-appearance: checkbox;
+                             appearance: checkbox;
+                             width: 13px;
+                             height: 13px;
+                             "
+                       value="{{ filter.id }}" name="filter-{{ filter.id }}" id="filter-{{ filter.id }}">
+                <label class="sprite-form__label" for="filter-{{ filter.id }}">
+                    {{ filter.name }} - {{ filter.id }}
+                </label>
+            </div>
+            {#<input type="checkbox" name="cuisines" value="{{ filter.id }}" />{{ filter.name }}#}
+        {% endfor %}
+        <button type="button" class="btn btn-primary" id="button-filter">Filter</button>
+    </form>
     <div class="restaurants-container wrapper-fluid">
         {% if gpsSearch %}
             <div class="restaurants__tool-box">
@@ -157,6 +177,47 @@
             </div>
         {% endif %}
     </div>
+
+    <script type="text/template" id="template-restaurant-details">
+        <a href="<%= Routing.generate('vendor', {code: code, urlKey: url_key}) %>">
+            <div class="restaurants__list__item"
+                 data-name="<%= name %>"
+                 data-code="<%= code %>"
+                 data-variant="true"
+                 data-position="0">
+                <div class="restaurants__list__item-wrapper">
+                    <div class="restaurants__list__item-image-wrapper">
+                        <div class="restaurants__list__item-preorder">
+                            <i class="restaurants__list__item-preorder-icon icon-preorder"></i>
+                            <span class="restaurants__list__item-preorder-label">{% trans %}vendor_closed_preorder_available{% endtrans %}</span>
+                        </div>
+                        {% set imageUrl = asset('nb0o-listing.jpg', 'cdn_s3') %}
+                        <div class="b-lazy restaurants__list__item-image aspect-ratio-100-52"
+                             src="{{ blazy_placeholder }}"
+                             data-src="{{ thumbor(imageUrl, '500' )}}|{{ thumbor(imageUrl, '500_retina' )}}">
+                        </div>
+                    </div>
+                    <h3 class="restaurants__list__item-name">
+                        <%= name %>
+                    </h3>
+                    <h4 class="restaurants__list__item-description"><%= description %></h4>
+                    <div class="restaurants__list__item-time">
+                        <i class="icon-clock-o"></i>
+                        {#{% if (vendor.metadata.availableIn is not null) %}#}
+                            {#{% set availableIn = date(vendor.metadata.availableIn, vendor.metadata.timezone) %}#}
+                            {#{% if (availableIn|date('d-m-Y') == 'now'|date('d-m-Y')) %}#}
+                                {#{% trans with {'%time%': availableIn|formatTime} %}restaurant.open_at_time{% endtrans %}#}
+                            {#{% else %}#}
+                                {#{% trans with {'%time%': availableIn|formatTime, '%day%': availableIn|localisedDay} %}#}
+                                {#restaurant.open_at_day_time#}
+                                {#{% endtrans %}#}
+                            {#{% endif %}#}
+                        {#{% endif %}#}
+                    </div>
+                </div>
+            </div>
+        </a>
+    </script>
 {% endblock %}
 
 {% block footer_bottom %}

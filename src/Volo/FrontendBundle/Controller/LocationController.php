@@ -62,6 +62,14 @@ class LocationController extends BaseController
                 return $this->get('volo_frontend.service.schedule')->isVendorOpen($vendor, new \DateTime());
             });
 
+        $filters = [];
+        foreach ($vendors->getItems() as $item) {
+            /** @var Vendor $item */
+            foreach ($item->getCuisines() as $cuisine) {
+                $filters[$cuisine->getId()] = $cuisine;
+            }
+        }
+
         return [
             'hasQueryParams' => $request->query->count() > 0,
             'gpsSearch' => $location->getLocationType() === 'polygon',
@@ -70,7 +78,8 @@ class LocationController extends BaseController
             'openVendors' => $openVendors,
             'closedVendors' => $closedVendorsWithPreorder,
             'city' => $city,
-            'location' => $this->get('volo_frontend.service.customer_location')->get($request->getSession())
+            'location' => $this->get('volo_frontend.service.customer_location')->get($request->getSession()),
+            'filters' => $filters
         ];
     }
 }

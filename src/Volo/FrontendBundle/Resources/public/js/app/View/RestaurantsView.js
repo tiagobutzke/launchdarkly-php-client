@@ -1,5 +1,20 @@
 var VOLO = VOLO || {};
 
+VOLO.FiltersView = Backbone.View.extend({
+    events: {
+        "click #button-filter": "_onClick"
+    },
+
+    initialize: function(options) {
+        _.bindAll(this);
+    },
+
+    _onClick: function() {
+        var cuisines = _.values($('#form-filters').serializeJSON()).join(',');
+        this.model.set('cuisines', cuisines);
+    }
+});
+
 VOLO.RestaurantsView = Backbone.View.extend({
     events: {
         "click .restaurants__list__item": "_restaurantClick"
@@ -13,6 +28,32 @@ VOLO.RestaurantsView = Backbone.View.extend({
         this._displayedRestaurants = [];
         this.$window = $(window);
         this._scrollEvent = this.$window.on('scroll resize', this._onScrollResize);
+        this.collection = new VOLO.FilterVendorCollection();
+        VOLO.filterVendorCollection = this.collection;
+        this.template = _.template($('#template-restaurant-details').html());
+
+        this.listenTo(VOLO.filterModel, 'change', this.render);
+        this.listenTo(this.collection, 'all', this.debug);
+        this.listenTo(this.collection, 'reset', this.renderVendors);
+    },
+
+    debug: function() {
+        console.log(arguments);
+    },
+
+    render: function() {
+        this.collection.fetch({reset: true});
+
+        return this;
+    },
+
+    renderVendors: function() {
+        this.$el.empty();
+        this.collection.each(this.renderVendor);
+    },
+
+    renderVendor: function(vendor) {
+        this.$el.append(this.template(vendor.toJSON()));
     },
 
     onGtmServiceCreated: function() {

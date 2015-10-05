@@ -309,12 +309,20 @@ VOLO.createVendorsListSearchNoLocationView = function (locationModel) {
 };
 
 VOLO.createRestaurantsView = function() {
+    var filterssView = new VOLO.FiltersView({
+        el: '#form-filters',
+        model: VOLO.filterModel
+    });
+
     var restaurantsView = new VOLO.RestaurantsView({
         el: '.restaurants__list'
     });
 
     VOLO.views.push(restaurantsView);
     VOLO.gtmViews.push(restaurantsView);
+
+    VOLO.restaurantsView = restaurantsView;
+
     return restaurantsView;
 };
 

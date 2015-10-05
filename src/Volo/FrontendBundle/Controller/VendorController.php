@@ -20,6 +20,7 @@ class VendorController extends BaseController
      * @Route(
      *      "/{code}/{urlKey}",
      *      name="vendor",
+     *      options={"expose"=true},
      *      requirements={
      *          "code": "([A-Za-z][A-Za-z0-9]{3})"
      *      }
