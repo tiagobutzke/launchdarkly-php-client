@@ -9,7 +9,6 @@ var VoucherView = Backbone.View.extend({
     initialize: function() {
         _.bindAll(this);
         this.vendor_id = this.$el.data().vendor_id;
-        this.voucherError = null;
 
         this._initListeners();
         this._enableVoucher();
@@ -89,7 +88,6 @@ var VoucherView = Backbone.View.extend({
         }
 
         vendorCart = this.model.getCart(this.vendor_id);
-        this.voucherError = null;
         vendorCart.set('voucher', $voucher.val());
         vendorCart.updateCart();
 
@@ -118,22 +116,18 @@ var VoucherView = Backbone.View.extend({
         ];
 
         if (_.isObject(data) && _.indexOf(supportedErrors, _.get(data, 'error.errors.exception_type')) !== -1) {
-            var vendorCart = this.model.getCart(this.vendor_id);
-            var errorMessage = this._getErrorMessage(data);
-
-            if (_.isString(errorMessage)) {
-                this.voucherError = errorMessage;
-            }
+            var vendorCart = this.model.getCart(this.vendor_id),
+                errorMessage = this._getErrorMessage(data);
 
             this._triggerVoucherErrorEvent(errorMessage, vendorCart.get('voucher'));
 
             vendorCart.set('voucher', null);
-            this._showErrorMsg(this.voucherError);
+            this._showErrorMsg(errorMessage);
         }
     },
 
     _getErrorMessage: function (data) {
-        return _.get(data, 'error.errors.message');
+        return _.get(data, 'error.errors.message', null);
     },
 
     _triggerVoucherErrorEvent: function (message, voucher) {
