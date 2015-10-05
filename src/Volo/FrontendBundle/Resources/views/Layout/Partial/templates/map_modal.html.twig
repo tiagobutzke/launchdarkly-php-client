@@ -1,0 +1,22 @@
+<script type="text/template" id="template-map-modal-dialog">
+    <div class="modal map-modal">
+        <div class="modal-dialog">
+            <div class="modal-content map-modal__content">
+                <div class="modal-close-button" data-dismiss="modal"></div>
+                <div class="modal-body clearfix">
+                    <div class="map-modal__header">header</div>
+                    <div class="map-modal__map">
+                        <!-- map goes here -->
+                        <form class="map-modal__autocomplete">
+                            <input type="text" class="map-modal__autocomplete__input" data-error-msg="{% trans %}map.address-not-valid{% endtrans %}"/>
+                        </form>
+                        <i class="map-modal__map-center-icon icon-help-circled"></i>
+                        <form class="map-modal__submit">
+                            <button class="map-modal__submit__button button">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

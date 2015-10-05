@@ -1,0 +1,38 @@
+.map-modal {
+  height: 100%;
+}
+
+.map-modal__map {
+  width: 100%;
+  height: 400px;
+
+  @include respond-from("screen-md") {
+    height: 600px;
+  }
+
+  @include respond-from("screen-large") {
+    height: 800px;
+  }
+}
+
+.map-modal__map-center-icon {
+  font-size: 30px;
+  z-index: 1;
+  @include horizontal-vertical-center-absolute();
+}
+
+.map-modal__autocomplete__input {
+  z-index: 1;
+  position: absolute;
+  top: 5px;
+  width: 80%;
+  margin: 0 10%;
+}
+
+.map-modal__submit__button {
+  z-index: 1;
+  position: absolute;
+  bottom: 20px;
+  width: 60%;
+  margin: 0 20%;
+}

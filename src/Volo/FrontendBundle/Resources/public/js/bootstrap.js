@@ -532,11 +532,22 @@ VOLO.doBootstrap = function(configuration) {
     }
 
     if ($('.home .restaurants-search-form').length > 0) {
-        var homeSearchView = VOLO.createHomeSearchView(locationModel),
-            homeView = VOLO.createHomeView();
+        if (VOLO.isFullAddressAutoComplete()) {
+            var fullAddressHomeSearchView = new VOLO.FullAddressHomeSearchView({
+                el: '.restaurants-search-form',
+                appConfig: VOLO.configuration,
+                model: locationModel
+            });
+            fullAddressHomeSearchView.render();
 
-        homeSearchView.render();
-        homeView.render();
+            VOLO.views.push(fullAddressHomeSearchView);
+        } else {
+            var homeSearchView = VOLO.createHomeSearchView(locationModel),
+                homeView = VOLO.createHomeView();
+
+            homeSearchView.render();
+            homeView.render();
+        }
     }
 
     if ($('.restaurants .restaurants-search-form').length > 0) {

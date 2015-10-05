@@ -93,6 +93,8 @@ module.exports = function (grunt) {
 
     jsSources.head = [].concat([
         frontendAssetPath('/js/app/trackjs-backbone.js'),
+        // mixins go first
+        frontendAssetPath('/js/app/Mixin/**/*.js'),
         // if a priorityN (priority0, priority1 etc...) subfolder is found anywhere
         // than the script inside it are loaded before all the other scripts in the containing folder
         // Example: js/app/Views/priority0/utility.js will be loaded before js/app/Views/myView.js
@@ -101,10 +103,6 @@ module.exports = function (grunt) {
         // js/app/Models/priority0
         // js/app/Models/priority1 (scripts inside this are loaded after priority0)
         frontendAssetPath('/js/app/**/priority*/**/*.js'),
-
-        // after all priorityN folders are loaded (if any) the scripts in mixin folder are loaded
-        frontendAssetPath('/js/app/mixin/**/*.js'),
-
         // than all the other (normal priority) scripts are loaded
         frontendAssetPath('/js/**/*.js')
     ]);
