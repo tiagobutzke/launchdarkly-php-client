@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.51.2
+ * INTVOLO-925 adds address logic to geocoding (staging)
+
 * 1.51.1
  * Updated composer
 
