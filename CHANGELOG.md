@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.51.3
+ * INTVOLO-317 Fixed JS error in menu page
+
 * 1.51.2
  * INTVOLO-925 adds address logic to geocoding (staging)
 
