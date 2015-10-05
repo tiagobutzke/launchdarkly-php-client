@@ -108,7 +108,7 @@ VOLO.createCartViews = function (cartModel, locationModel, gtmService) {
         }),
         confirmBelowMinimumAmountView = new ConfirmBelowMinimumAmountView({
             el: '.modal-confirm-below-minimum-amount',
-            model: cartModel.getCart($menuMain.data('vendor_id'))
+            model: cartModel.getCart($menuMain.data('vendor').id)
         }),
         cartView = new CartView({
             el: '#cart',
