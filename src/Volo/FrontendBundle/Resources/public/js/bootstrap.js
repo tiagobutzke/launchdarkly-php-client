@@ -82,56 +82,49 @@ VOLO.createVendorPopupView = function() {
     return vendorPopupView;
 };
 
-VOLO.createCartViews = function (cartModel, locationModel, gtmService) {
+VOLO.createCartViews = function (options) {
     var $header = $('.header'),
         $menuMain = $('.menu__list-wrapper'),
-        $postalCodeBar = $('.menu__postal-code-bar'),
-        vendor = $menuMain.data('vendor'),
         $body = $('body'),
-        vendorGeocodingView = new VendorGeocodingView({
-            el: $postalCodeBar,
-            geocodingService: new GeocodingService(VOLO.configuration.countryCode),
-            model: locationModel,
-            modelCart: cartModel.getCart(vendor.id),
-            smallScreenMaxSize: VOLO.configuration.smallScreenMaxSize,
-            $window: $(window)
-        }),
-        menuView = new MenuView({
-            el: '.menu__list-wrapper',
-            cartModel: cartModel,
-            locationModel: locationModel,
-            $header: $header,
-            $postalCodeBar: $postalCodeBar,
-            $body: $body,
-            gtmService: gtmService,
-            vendorGeocodingView: vendorGeocodingView
-        }),
-        confirmBelowMinimumAmountView = new ConfirmBelowMinimumAmountView({
-            el: '.modal-confirm-below-minimum-amount',
-            model: cartModel.getCart($menuMain.data('vendor').id)
-        }),
-        cartView = new CartView({
-            el: '#cart',
-            model: cartModel,
-            locationModel: locationModel,
-            $window: $(window),
-            $body: $body,
-            $header: $header,
-            $menuMain: $menuMain,
-            gtmService: gtmService,
-            smallScreenMaxSize: VOLO.configuration.smallScreenMaxSize,
-            timePickerValues: VOLO.timePickerValues,
-            vendorGeocodingView: vendorGeocodingView,
-            confirmBelowMinimumAmountView: confirmBelowMinimumAmountView,
-            minimum_order_value_setting: VOLO.configuration.minimum_order_value_setting
-        }),
-        cartErrorModalView = new CartErrorModalView({
-            el: '#cartCalculationErrorModal',
-            model: cartModel
-        });
+        menuView, cartView, cartErrorModalView, confirmBelowMinimumAmountView;
 
-    VOLO.views.push(menuView, cartView, cartErrorModalView, vendorGeocodingView, confirmBelowMinimumAmountView);
-    VOLO.gtmViews.push(menuView, cartView);
+    menuView = new MenuView({
+        el: '.menu__list-wrapper',
+        cartModel: options.cartModel,
+        locationModel: options.locationModel,
+        $header: $header,
+        $postalCodeBar: options.$postalCodeBar,
+        $body: $body,
+        gtmService: options.gtmService,
+        vendorGeocodingView: options.vendorGeocodingView
+    }),
+
+    confirmBelowMinimumAmountView = new ConfirmBelowMinimumAmountView({
+        el: '.modal-confirm-below-minimum-amount',
+        model: options.cartModel.getCart(options.vendor.id)
+    }),
+    cartErrorModalView = new CartErrorModalView({
+        el: '#cartCalculationErrorModal',
+        model: options.cartModel
+    });
+
+    cartView = new CartView({
+        el: '#cart',
+        model: options.cartModel,
+        locationModel: options.locationModel,
+        $window: $(window),
+        $body: $body,
+        $header: $header,
+        $menuMain: $menuMain,
+        gtmService: options.gtmService,
+        smallScreenMaxSize: VOLO.configuration.smallScreenMaxSize,
+        timePickerValues: VOLO.timePickerValues,
+        vendorGeocodingView: options.vendorGeocodingView,
+        confirmBelowMinimumAmountView: confirmBelowMinimumAmountView,
+        minimum_order_value_setting: VOLO.configuration.minimum_order_value_setting
+    });
+
+    VOLO.views.push(menuView, cartView, cartErrorModalView, confirmBelowMinimumAmountView);
 
     return {
         cartView: cartView,
@@ -400,6 +393,20 @@ VOLO.createSpecialInstructionsTutorialView = function() {
     return view;
 };
 
+VOLO.createVendorGeocodingView = function($postalCodeBar, locationModel, cartModel, vendor) {
+    vendorGeocodingView = new VendorGeocodingView({
+        el: $postalCodeBar,
+        geocodingService: new GeocodingService(VOLO.configuration.countryCode),
+        model: locationModel,
+        modelCart: cartModel.getCart(vendor.id),
+        smallScreenMaxSize: VOLO.configuration.smallScreenMaxSize,
+        $window: $(window)
+    });
+    VOLO.views.push(vendorGeocodingView);
+
+    return vendorGeocodingView;
+};
+
 VOLO.doBootstrap = function(configuration) {
     moment.tz.setDefault(VOLO.configuration.timeZone);
     window.blazy.revalidate();
@@ -410,7 +417,8 @@ VOLO.doBootstrap = function(configuration) {
         checkoutModel,
         loginButtonView,
         cartIconView,
-        restaurantsView
+        restaurantsView,
+        vendorGeocodingView
     ;
 
     userAddressCollection = VOLO.createUserAddressCollection(VOLO.jsonUserAddress, VOLO.customer);
@@ -427,12 +435,26 @@ VOLO.doBootstrap = function(configuration) {
 
     cartModel = VOLO.createCartModel(VOLO.jsonCart);
     if ($('.menu__list-wrapper').length > 0) {
-        var cartViews = VOLO.createCartViews(cartModel, locationModel, VOLO.GTMServiceInstance),
-            urlZipCode = window.location.search.split('zip=')[1];
+        var $postalCodeBar = $('.menu__postal-code-bar'),
+            vendor = $('.menu__list-wrapper').data('vendor');
 
-        cartViews.cartView.render();
-        if (urlZipCode) {
-            cartViews.cartView.setZipCode(urlZipCode);
+        vendorGeocodingView = VOLO.createVendorGeocodingView($postalCodeBar, locationModel, cartModel, vendor);
+
+        if ($('#cart').length) {
+            var cartViews = VOLO.createCartViews({
+                    cartModel: cartModel,
+                    locationModel: locationModel,
+                    gtmService: VOLO.GTMServiceInstance,
+                    vendorGeocodingView: vendorGeocodingView,
+                    $postalCodeBar: $postalCodeBar,
+                    vendor: vendor
+                }),
+                urlZipCode = window.location.search.split('zip=')[1];
+
+            cartViews.cartView.render();
+            if (urlZipCode) {
+                cartViews.cartView.setZipCode(urlZipCode);
+            }
         }
     }
 
