@@ -3,8 +3,11 @@
 namespace Volo\FrontendBundle\Service;
 
 use Doctrine\Common\Cache\Cache;
+use Foodpanda\ApiSdk\Entity\Cart\AbstractLocation;
 use Foodpanda\ApiSdk\Entity\Product\Product;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
+use Foodpanda\ApiSdk\Entity\Vendor\VendorResults;
+use Foodpanda\ApiSdk\Entity\Vendor\VendorsCollection;
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Foodpanda\ApiSdk\Provider\CityProvider;
 use Foodpanda\ApiSdk\Provider\VendorProvider;
@@ -155,5 +158,28 @@ class VendorService
         }
 
         throw new \RuntimeException(sprintf('Product with variation %s not found!', $variationId));
+    }
+
+    /**
+     * @param AbstractLocation $location
+     *
+     * @return array
+     */
+    public function findOpenClosedVendors(AbstractLocation $location)
+    {
+        $vendors = $this->vendorProvider->findVendorsByLocation($location);
+
+        $openClosed = $vendors->getItems()
+            ->filter(function (Vendor $vendor) {
+                return !$vendor->getSchedules()->isEmpty();
+            })->partition(function ($key, Vendor $vendor) {
+                return $this->scheduleService->isVendorOpen($vendor, new \DateTime());
+            });
+
+        return [
+            $openClosed[0],
+            $openClosed[1],
+            $vendors
+        ];
     }
 }

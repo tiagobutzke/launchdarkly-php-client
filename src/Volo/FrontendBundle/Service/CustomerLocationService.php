@@ -63,6 +63,14 @@ class CustomerLocationService
     }
 
     /**
+     * @return array
+     */
+    public function createEmpty()
+    {
+        return $this->create(null, null, null, null, null);
+    }
+
+    /**
      * @param array $location
      *
      * @throws MissingKeysException

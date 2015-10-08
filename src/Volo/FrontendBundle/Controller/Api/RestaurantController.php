@@ -2,9 +2,11 @@
 
 namespace Volo\FrontendBundle\Controller\Api;
 
-use Foodpanda\ApiSdk\Entity\Cart\CityLocation;
+use Foodpanda\ApiSdk\Entity\Cart\AbstractLocation;
 use Foodpanda\ApiSdk\Entity\City\City;
+use Foodpanda\ApiSdk\Provider\VendorProvider;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,20 +21,28 @@ class RestaurantController extends BaseController
     /**
      * @Route("/", name="api_restaurants_list", options={"expose"=true})
      * @Method({"GET"})
+     * @ParamConverter("location", converter="user_location_converter")
+     *
      *
      * @param Request $request
+     * @param AbstractLocation $location
+     *
      * @return JsonResponse
      * @throws NotFoundHttpException
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request, AbstractLocation $location)
     {
-        $location = new CityLocation(7);
-
         $cuisines = $request->query->get('cuisine');
-        $food_characteristics = $request->query->get('food_characteristic');
+        $foodCharacteristics = $request->query->get('food_characteristic');
         $includes = $request->query->get('includes', ['cuisines', 'food_characteristics']);
 
-        $vendors = $this->get('volo_frontend.provider.vendor')->findVendorsByLocation($location, $includes, $cuisines, $food_characteristics);
+        $vendors = $this->getVendorProvider()->findVendorsByLocation(
+            $location,
+            $includes,
+            $cuisines,
+            $foodCharacteristics
+        );
+
         $serializer = $this->getSerializer();
 
         return new JsonResponse($serializer->normalize($vendors));
@@ -54,29 +64,10 @@ class RestaurantController extends BaseController
     }
 
     /**
-     * @param string $type
-     * @param string $city
-     * @param string $postcode
-     * @param string $address
-     * @param string $street
-     * @param string $building
-     *
-     * @return array
+     * @return VendorProvider
      */
-    protected function createFormattedLocation($type, $city, $postcode, $address, $street = '', $building = '')
+    private function getVendorProvider()
     {
-        // this is to handle the case when the user select district / main area without a street address
-        $deliveryAddress = trim(sprintf('%s %s, %s', $building, $street, $postcode));
-        $deliveryAddress = strpos($deliveryAddress, ',') === 0 ? substr($deliveryAddress, 1) : $deliveryAddress;
-
-        return [
-            'type'             => $type,
-            'city'             => $city,
-            'postcode'         => $postcode,
-            'address'          => urldecode($address),
-            'street'           => urldecode($street),
-            'building'         => urldecode($building),
-            'delivery_address' => urldecode($deliveryAddress)
-        ];
+        return $this->get('volo_frontend.provider.vendor');
     }
 }
