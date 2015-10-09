@@ -529,7 +529,6 @@ VOLO.doBootstrap = function(configuration) {
     }
 
     GTMServiceInstance.fireVirtualPageView();
-    VWOExecuteTrackingCode();
 
     var floodBannerModel = VOLO.createFloodBannerModel(),
         bannersView = VOLO.createBannersView(locationModel, floodBannerModel);
