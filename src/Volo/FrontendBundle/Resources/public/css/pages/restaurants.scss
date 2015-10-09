@@ -49,8 +49,14 @@
 
 .restaurants__search-filter-wrapper {
   position: absolute;
+  width: 100%;
+  padding-right: $space-lg;
+  @include respond-from("screen-sm") {
+    padding-right: 40px;
+  }
   @include respond-from("screen-md") {
-    width: 50%;
+    padding-right: 0;
+    width: 60%;
     position: relative;
     float: left;
   }
@@ -61,31 +67,24 @@
     display: block;
   }
 }
-.active-search .restaurants__search-filter-wrapper {
-  position: absolute;
-  width: 100%;
-  padding-right: 20px;
-  @include respond-from("screen-sm") {
-    padding-right: 40px;
-  }
-  @include respond-from("screen-md") {
-    width: 50%;
-  }
-}
 
 
 .restaurants__search {
   position: relative;
   cursor: pointer;
   float: left;
-  width: 40px;
+  width: 13%;
+  left: 2%;
   @include transition(width .4s ease);
   @include respond-from("screen-md") {
-    width: 140px;
+    width: 25%;
   }
 }
 .active-search .restaurants__search {
-  width: 100%;
+    width: 85%;
+  @include respond-from("screen-md") {
+    width: 75%;
+  }
   @include transition(width .4s ease);
 }
 
@@ -148,12 +147,126 @@
   &::-webkit-input-placeholder  { opacity: 1; }
 }
 
+.restaurants__filter {
+  width: 13%;
+  position: relative;
+  cursor: pointer;
+  height: 40px;
+  border: $input-border;
+  border-radius: $border-radius-default;
+  float: left;
+  @include transition(width .4s ease);
+
+  @include respond-from("screen-md") {
+    width: 25%;
+  }
+}
+
+.restaurants__filter--active {
+  color: $color-text-highlight;
+  border-color: $color-text-highlight;
+}
+
+.restaurants__filter__label {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  font-size: $font-size-1_4rem;
+  white-space: nowrap;
+}
+
+.restaurants__filter__label-icon {
+  line-height: 40px;
+}
+
+.restaurants__filter__label-text {
+  display: none;
+  @include respond-from("screen-md") {
+    display: inline-block;
+  }
+}
+
+.restaurants__filter-tooltip.tooltip {
+  width: 100%;
+  top: 52px;
+  height: 100%;
+  @include respond-from("screen-sm") {
+    width: 350px;
+    height: auto;
+    left: 20px !important;
+  }
+  @include respond-from("screen-lg") {
+    width: 30%;
+  }
+}
+
+.restaurants__filter-tooltip.tooltip.in {
+  opacity: 1;
+}
+
+.restaurants__filter-tooltip .tooltip-inner {
+  max-width: initial;
+  border-left: none;
+  border-right: none;
+  text-align: left;
+  padding-right: $space-lg;
+  height: 100%;
+  @include respond-from("screen-sm") {
+    border: 1px solid #c8c8c8;
+    height: auto;
+  }
+}
+
+.restaurants__filter-tooltip .tooltip-inner--white-with-border:after {
+  left: 6%;
+  @include respond-from("screen-md") {
+    left: 8%;
+  }
+}
+
+.restaurants__filter-form-border-top {
+  border-top: $base-border;
+  margin-top: $space-md;
+  padding-top: $space-md;
+}
+
+.restaurants__filter-form-group {
+  width: 50%;
+  float: left;
+  clear: none;
+  margin-bottom: $space-sm;
+}
+
+.restaurants__filter-form__head-line {
+  text-transform: uppercase;
+  margin-bottom: $space-sm;
+  float: left;
+}
+
+.restaurants__filter-form__head-cancel-cuisines,
+.restaurants__filter-form__head-cancel-food-characteristics {
+  float: right;
+  @include make-link();
+  margin-left: $space-sm;
+}
+
+.restaurants__filter-form__head-show-all,
+.restaurants__filter-form__head-show-less {
+  float: right;
+  @include make-link();
+  cursor: pointer;
+}
 
 .restaurants__location {
-  float: right;
-  width: 70%;
+  position: absolute;
+  right: 10px;
+  width: 66%;
+  @include respond-from("screen-sm") {
+    right: 20px;
+    width: 64%;
+  }
   @include respond-from("screen-md") {
-    width: 50%;
+    width: 35%;
   }
 }
 .restaurants__tool-box--sticking .restaurants__location {
@@ -166,9 +279,17 @@
     text-align: right;
   }
 }
+.active-search .restaurants__location {
+  z-index: -1;
+}
+
 
 .restaurants__location__form {
+  display: none;
   position: relative;
+}
+.active-location-form .restaurants__location__form {
+  display: block;
 }
 
 .restaurants__location__title {
@@ -176,6 +297,7 @@
   height: 44px;
   line-height: 44px;
   white-space: nowrap;
+  display: block;
   @include respond-from("screen-md") {
     text-align: right;
   }
@@ -192,6 +314,9 @@
   @include respond-from("screen-md") {
     margin-top: 0;
   }
+}
+.active-location-form .restaurants__location__title {
+  display: none;
 }
 
 .restaurants__location__change-button {

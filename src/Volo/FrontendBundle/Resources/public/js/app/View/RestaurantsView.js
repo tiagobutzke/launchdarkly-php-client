@@ -2,17 +2,105 @@ var VOLO = VOLO || {};
 
 VOLO.FiltersView = Backbone.View.extend({
     events: {
-        "click #button-filter": "_onClick"
+        'click .restaurants__filter': 'showOrHideFilter',
+        'click .restaurants__filter-tooltip': 'filterRestaurants',
+        'click .restaurants__filter-form__head-cancel-cuisines': 'clearFilterCuisines',
+        'click .restaurants__filter-form__head-cancel-food-characteristics': 'clearFilterFoodCharacteristics',
+        'click .restaurants__filter-form__head-show-all': 'showFilterAboveCertainAmount',
+        'click .restaurants__filter-form__head-show-less': 'hideFilterAboveCertainAmount'
     },
 
-    initialize: function(options) {
+    initialize: function() {
+        this.cuisines = "";
+        this.foodCharacteristics = "";
         _.bindAll(this);
+        $('body').on('click', this.hideFilter);
     },
 
-    _onClick: function() {
-        var cuisines = _.values($('#form-filters').serializeJSON()).join(',');
-        this.model.set('cuisines', cuisines);
+    filterRestaurants: function(e) {
+        e.stopPropagation();
+        this.cuisines = _.values($('.restaurants__filter-form-cuisines').serializeJSON()).join(',');
+        this.foodCharacteristics = _.values($('.restaurants__filter-form-food-characteristics').serializeJSON()).join(',');
+        this.model.set('cuisines', this.cuisines);
+        this.model.set('food_characteristics', this.foodCharacteristics);
+        this.checkCuisinesCancelButtonState();
+        this.checkFoodCharacteristicsCancelButtonState();
+    },
+
+    showOrHideFilter: function() {
+        if (this.$('.restaurants__filter-tooltip').hasClass('hide')) {
+            this.$('.restaurants__filter-tooltip').removeClass('hide');
+        } else {
+            this.$('.restaurants__filter-tooltip').addClass('hide');
+            this.showFilterButtonState();
+        }
+
+        return false;
+    },
+
+    hideFilter: function(e) {
+        if (!this.$('.restaurants__filter-tooltip').hasClass('hide')) {
+            this.$('.restaurants__filter-tooltip').addClass('hide');
+            this.showFilterButtonState();
+        }
+    },
+
+    showFilterButtonState: function() {
+        if (this.cuisines !== "" || this.foodCharacteristics !== "") {
+            this.$('.restaurants__filter').addClass('restaurants__filter--active');
+        } else {
+            this.$('.restaurants__filter').removeClass('restaurants__filter--active');
+        }
+    },
+
+    checkCuisinesCancelButtonState: function() {
+        if (this.cuisines !== "") {
+            this.$('.restaurants__filter-form__head-cancel-cuisines').removeClass('hide');
+        } else {
+            this.$('.restaurants__filter-form__head-cancel-cuisines').addClass('hide');
+        }
+    },
+
+    checkFoodCharacteristicsCancelButtonState: function() {
+        if (this.foodCharacteristics !== "") {
+            this.$('.restaurants__filter-form__head-cancel-food-characteristics').removeClass('hide');
+        } else {
+            this.$('.restaurants__filter-form__head-cancel-food-characteristics').addClass('hide');
+        }
+    },
+
+    clearFilterCuisines: function(e) {
+        $('.restaurants__filter-form-cuisines .form-control').attr("checked", false);
+        this.filterRestaurants(e);
+    },
+
+    clearFilterFoodCharacteristics: function(e) {
+        $('.restaurants__filter-form-food-characteristics .form-control').attr("checked", false);
+        this.filterRestaurants(e);
+    },
+
+    showFilterAboveCertainAmount: function (e) {
+        var $e = $(e.target),
+            $form = $e.closest('form');
+        $e.addClass('hide');
+        $form.find('.restaurants__filter-form__head-show-less').removeClass('hide');
+        $form.closest('form').find('.filter-form-group-hidden').removeClass('hide');
+    },
+
+    hideFilterAboveCertainAmount: function (e) {
+        var $e = $(e.target),
+            $form = $e.closest('form');
+        $e.addClass('hide');
+        $form.closest('form').find('.restaurants__filter-form__head-show-all').removeClass('hide');
+        $form.closest('form').find('.filter-form-group-hidden').addClass('hide');
+    },
+
+    unbind: function() {
+        this.stopListening();
+        this.undelegateEvents();
+        $('body').off('click', this.hideFilter);
     }
+
 });
 
 VOLO.RestaurantsView = Backbone.View.extend({
@@ -28,8 +116,7 @@ VOLO.RestaurantsView = Backbone.View.extend({
         this._displayedRestaurants = [];
         this.$window = $(window);
         this._scrollEvent = this.$window.on('scroll resize', this._onScrollResize);
-        this.collection = new VOLO.FilterVendorCollection();
-        VOLO.filterVendorCollection = this.collection;
+        this.collection = options.filterVendorCollection;
         this.template = _.template($('#template-restaurant-details').html());
 
         this.listenTo(VOLO.filterModel, 'change', this.render);
@@ -50,6 +137,7 @@ VOLO.RestaurantsView = Backbone.View.extend({
     renderVendors: function() {
         this.$el.empty();
         this.collection.each(this.renderVendor);
+        window.blazy.revalidate();
     },
 
     renderVendor: function(vendor) {

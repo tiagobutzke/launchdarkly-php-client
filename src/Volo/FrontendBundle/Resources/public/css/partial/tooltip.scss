@@ -75,3 +75,22 @@
   border-color: transparent;
   border-style: solid;
 }
+
+.tooltip-inner--white-with-border {
+  color: #222;
+  padding: $space-md $space-sm $space-sm;
+  background-color: #fff;
+  border: 1px solid #c8c8c8;
+}
+
+.tooltip-inner--white-with-border:after {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 2px;
+  width: 12px;
+  height: 12px;
+  background: inherit;
+  transform: rotate(45deg);
+  box-shadow: -2px -2px 0px -1px #c8c8c8;
+}

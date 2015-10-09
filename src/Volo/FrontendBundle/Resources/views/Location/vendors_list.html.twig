@@ -2,6 +2,7 @@
 {% use 'VoloFrontendBundle:Location:Partial/vendor_description.html.twig' %}
 
 {% set promoAddress = formattedLocation.city == '-' ? formattedLocation.postcode : formattedLocation.city  %}
+{% set filterToShow = 5 %}
 {% block title %}
     {% if gpsSearch %}
         {{ cms('seo.title.vendor_listing_page') | replace({'{city}': formattedLocation.city, '{zipcode}': formattedLocation.postcode}) }}
@@ -67,43 +68,71 @@
             </div>
         {% endif %}
     </div>
-    <form class="" id="form-filters">
-        {% for filter in filters.cuisine %}
-            <div class="form-group checkout__step__item-form-group--newsletter sprite-form">
-                <input type="checkbox"
-                       style="-webkit-transition: checkbox;
-                             -webkit-appearance: checkbox;
-                             -moz-appearance: checkbox;
-                             appearance: checkbox;
-                             width: 13px;
-                             height: 13px;
-                             "
-                       value="{{ filter.id }}" name="filter-{{ filter.id }}" id="filter-{{ filter.id }}">
-                <label class="sprite-form__label" for="filter-{{ filter.id }}">
-                    {{ filter.name }} - {{ filter.id }}
-                </label>
-            </div>
-            {#<input type="checkbox" name="cuisines" value="{{ filter.id }}" />{{ filter.name }}#}
-        {% endfor %}
-        <button type="button" class="btn btn-primary" id="button-filter">Filter</button>
-    </form>
     <div class="restaurants-container wrapper-fluid">
         {% if gpsSearch %}
+            <div class="restaurants__filter-tooltip tooltip tooltip--align-left bottom in hide">
+                <div class="tooltip-inner tooltip-inner--white-with-border">
+                    <form class="restaurants__filter-form-cuisines clearfix">
+                        <div class="restaurants__filter-form__head clearfix">
+                            <div class="restaurants__filter-form__head-line">{% trans %}Cuisines{% endtrans %}</div>
+                            <div class="restaurants__filter-form__head-cancel-cuisines hide">{% trans %}cancel{% endtrans %}</div>
+                            {% if filters.cuisine|length > filterToShow %}
+                                <div class="restaurants__filter-form__head-show-all">{% trans %}show all{% endtrans %}</div>
+                                <div class="restaurants__filter-form__head-show-less hide">{% trans %}show less{% endtrans %}</div>
+                            {% endif %}
+                        </div>
+                        {% for filter in filters.cuisine %}
+                            <div class="form-group sprite-form restaurants__filter-form-group {{ (loop.index > filterToShow) ? 'hide filter-form-group-hidden' : ''}}">
+                                <input type="checkbox" class="form-control sprite-form__checkbox" value="{{ filter.id }}" name="filter-{{ filter.id }}" id="filter-{{ filter.id }}">
+                                <div class="sprite-form__sprite"></div>
+                                <label class="sprite-form__label" for="filter-{{ filter.id }}">
+                                    {{ filter.name }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </form>
+                    <form class="restaurants__filter-form-food-characteristics restaurants__filter-form-border-top clearfix">
+                        <div class="restaurants__filter-form__head clearfix">
+                            <div class="restaurants__filter-form__head-line">{% trans %}Attributes{% endtrans %}</div>
+                            <div class="restaurants__filter-form__head-cancel-food-characteristics hide">{% trans %}cancel{% endtrans %}</div>
+                            {% if filters.food_characteristics|length > filterToShow %}
+                                <div class="restaurants__filter-form__head-show-all">{% trans %}show all{% endtrans %}</div>
+                                <div class="restaurants__filter-form__head-show-less hide">{% trans %}show less{% endtrans %}</div>
+                            {% endif %}
+                        </div>
+                        {% for filter in filters.food_characteristics %}
+                            <div class="form-group sprite-form restaurants__filter-form-group {{ (loop.index > filterToShow) ? 'hide filter-form-group-hidden' : ''}}">
+                                <input type="checkbox" class="form-control sprite-form__checkbox" value="{{ filter.id }}" name="filter-{{ filter.id }}" id="filter-{{ filter.id }}">
+                                <div class="sprite-form__sprite"></div>
+                                <label class="sprite-form__label" for="filter-{{ filter.id }}">
+                                    {{ filter.name }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </form>
+                </div>
+            </div>
             <div class="restaurants__tool-box">
                 {% if openVendors.count() > 0 or closedVendors.count() > 0 %}
                     <div class="restaurants__search-filter-wrapper">
+                        <div class="restaurants__filter">
+                            <span class="restaurants__filter__label">
+                                <i class="icon-sliders restaurants__filter__label-icon"></i>
+                                <span class="restaurants__filter__label-text">{% trans %}Filter{% endtrans %}</span>
+                            </span>
+                        </div>
                         <div class="restaurants__search">
                             <i class="icon-cancel restaurants__search__cancel-icon"></i>
                             <span class="restaurants__search__label">
                                 <i class="icon-search restaurants__search__label-icon"></i>
-                                <span class="restaurants__search__label-text">{% trans %}restaurants_search.button_label{% endtrans %}</span>
+                                <span class="restaurants__search__label-text">{% trans %}Search{% endtrans %}</span>
                             </span>
                             <input type="text" class="restaurants__search__input form-control" placeholder="{% trans %}restaurants_search.input_label{% endtrans %}" />
                         </div>
                     </div>
                 {% endif %}
                 <div class="restaurants__location">
-                    <form id="delivery-information-postal-index-form" class="restaurants__location__form hide" method="GET">
+                    <form id="delivery-information-postal-index-form" class="restaurants__location__form" method="GET">
                         <i class="icon-cancel restaurants__location__cancel-icon"></i>
                         <input
                                 id="delivery-information-postal-index"

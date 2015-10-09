@@ -10,16 +10,23 @@ VOLO.VendorModel = Backbone.Model.extend({
     }
 });
 
-VOLO.filterModel = new VOLO.FilterModel();
-
 VOLO.FilterVendorCollection = Backbone.Collection.extend({
     model: VOLO.VendorModel,
     initialize: function (data, options) {
         _.bindAll(this);
+        this.locationModel = options.locationModel;
     },
 
     url: function() {
-        return Routing.generate('api_restaurants_list', {cuisine: VOLO.filterModel.get('cuisines'), food_characteristic: VOLO.filterModel.get('food_characteristics')});
+        return Routing.generate(
+            'api_restaurants_list',
+                {
+                    cuisine: VOLO.filterModel.get('cuisines'),
+                    food_characteristic: VOLO.filterModel.get('food_characteristics'),
+                    latitude: this.locationModel.get('latitude'),
+                    longitude: this.locationModel.get('longitude')
+                }
+        );
     },
 
     parse: function(response, options) {

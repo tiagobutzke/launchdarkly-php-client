@@ -16,6 +16,12 @@ VOLO.createFloodBannerModel = function() {
     return VOLO.floodBannerModel;
 };
 
+VOLO.createFilterModel = function (locationModel) {
+     VOLO.filterModel = new VOLO.FilterModel({}, {locationModel: locationModel});
+
+    return VOLO.filterModel;
+};
+
 VOLO.createCustomerModel = function (jsonCustomer, isGuest) {
     VOLO.customer = new VOLO.CustomerModel(jsonCustomer, {
         isGuest: isGuest
@@ -308,22 +314,27 @@ VOLO.createVendorsListSearchNoLocationView = function (locationModel) {
     return vendorSearchView;
 };
 
-VOLO.createRestaurantsView = function() {
-    var filterssView = new VOLO.FiltersView({
-        el: '#form-filters',
-        model: VOLO.filterModel
-    });
+VOLO.createRestaurantsView = function(locationModel) {
+    var filterModel = this.createFilterModel(locationModel),
+        filtersView = new VOLO.FiltersView({
+            el: '.restaurants-container',
+            model: filterModel
+        }),
+        restaurantsView = new VOLO.RestaurantsView({
+            el: '.restaurants__list',
+            filterVendorCollection: new VOLO.FilterVendorCollection({}, {locationModel: locationModel})
+        });
 
-    var restaurantsView = new VOLO.RestaurantsView({
-        el: '.restaurants__list'
-    });
-
-    VOLO.views.push(restaurantsView);
+    VOLO.views.push(restaurantsView, filtersView);
     VOLO.gtmViews.push(restaurantsView);
 
     VOLO.restaurantsView = restaurantsView;
 
-    return restaurantsView;
+    return {
+        restaurantsView: restaurantsView,
+        filtersView: filtersView
+
+    };
 };
 
 VOLO.createRestaurantsSearchView = function() {
@@ -473,7 +484,7 @@ VOLO.doBootstrap = function(configuration) {
     }
 
     if ($('.restaurants__list').length > 0) {
-        restaurantsView = VOLO.createRestaurantsView();
+        restaurantsView = VOLO.createRestaurantsView(locationModel).restaurantsView;
     }
 
     if ($('.header__account').length > 0) {

@@ -40,19 +40,18 @@ var VendorsSearchView = HomeSearchView.extend({
     },
 
     showPostalCodeForm: function() {
-        this.$('#delivery-information-postal-index-form').removeClass('hide');
+        this.$('.restaurants__tool-box').addClass('active-location-form');
+
         if (!this.isIE()) {
             this.$('#delivery-information-postal-index').focus();
         }
-        this.$('.restaurants__location__title').hide();
 
         return false;
     },
 
     hidePostalCodeForm: function() {
-        this.$('#delivery-information-postal-index-form').addClass('hide');
+        this.$('.restaurants__tool-box').removeClass('active-location-form');
         this.$('#delivery-information-postal-index').val('').blur();
-        this.$('.restaurants__location__title').show();
 
         return false;
     },
