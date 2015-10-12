@@ -1,9 +1,9 @@
 {% block vendor_description %}
-    <a href="{{ path('vendor', {code: vendor.code, urlKey: vendor.urlKey}) }}">
+    <a href="{{ path('vendor', {code: vendor.code, urlKey: vendor.urlKey}) }}" class="restaurants__list__item_a">
         <div class="restaurants__list__item"
-             data-name="{{ vendor.name }}"
+             data-vendor='{{ serialize(vendor) }}'
              data-code="{{ vendor.code }}"
-             data-variant="{{ vendorIsOpen }}"
+             data-variant="{{ vendor.metadata.availableIn is null ? 'open' : 'closed' }}"
              data-position="{{ vendorsCounter }}"
              data-search='{{ getVendorSearchData(vendor)|to_escaped_json }}'
         >
@@ -25,16 +25,7 @@
                 <h4 class="restaurants__list__item-description">{{ vendor.description }}</h4>
                 <div class="restaurants__list__item-time">
                     <i class="icon-clock-o"></i>
-                    {% if (vendor.metadata.availableIn is not null) %}
-                        {% set availableIn = date(vendor.metadata.availableIn, vendor.metadata.timezone) %}
-                        {% if (availableIn|date('d-m-Y') == 'now'|date('d-m-Y')) %}
-                            {% trans with {'%time%': availableIn|formatTime} %}restaurant.open_at_time{% endtrans %}
-                        {% else %}
-                            {% trans with {'%time%': availableIn|formatTime, '%day%': availableIn|localisedDay} %}
-                            restaurant.open_at_day_time
-                            {% endtrans %}
-                        {% endif %}
-                    {% endif %}
+                    {{ vendor.metadata.availableIn }}
                 </div>
             </div>
         </div>

@@ -66,11 +66,6 @@ twig:
         address_config: '%address_config%'
         assets_version: asset_version_placeholder
 
-# Assetic Configuration
-assetic:
-    debug:          "%kernel.debug%"
-    use_controller: false
-
 monolog:
     channels: ["api", "wit"]
     handlers:

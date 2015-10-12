@@ -3,6 +3,7 @@
 namespace Volo\FrontendBundle\Controller;
 
 use Foodpanda\ApiSdk\Entity\Customer\Customer;
+use Foodpanda\ApiSdk\Provider\VendorProvider;
 use Foodpanda\ApiSdk\Serializer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -82,6 +83,22 @@ class BaseController extends Controller
     protected function getSerializer()
     {
         return $this->get('volo_frontend.api.serializer');
+    }
+
+    /**
+     * @return VendorProvider
+     */
+    protected function getVendorProvider()
+    {
+        return $this->get('volo_frontend.provider.vendor');
+    }
+
+    /**
+     * @return \Volo\FrontendBundle\Service\VendorService
+     */
+    protected function getVendorService()
+    {
+        return $this->get('volo_frontend.service.vendor');
     }
 
     /**

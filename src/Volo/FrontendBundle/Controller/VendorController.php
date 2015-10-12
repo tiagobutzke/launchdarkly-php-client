@@ -136,7 +136,7 @@ class VendorController extends BaseController
     public function vendorByIdAction($id)
     {
         try {
-            $vendorIdentifierCache = $this->get('volo_frontend.service.vendor')->getVendorCodeById($id);
+            $vendorIdentifierCache = $this->get('volo_frontend.service.vendor')->getCachedVendorCodeById($id);
         } catch (\RuntimeException $e) {
             throw $this->createNotFoundException('Vendor not found!', $e);
         }
@@ -174,7 +174,7 @@ class VendorController extends BaseController
     public function vendorByUrlKeyAction($urlKey)
     {
         try {
-            $code = $this->get('volo_frontend.service.vendor')->getVendorCodeByUrlKey($urlKey);
+            $code = $this->get('volo_frontend.service.vendor')->getCachedVendorCodeByUrlKey($urlKey);
         } catch (\RuntimeException $e) {
             throw $this->createNotFoundException('Vendor not found!', $e);
         }

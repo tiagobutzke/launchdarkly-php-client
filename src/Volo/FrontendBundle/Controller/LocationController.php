@@ -8,8 +8,8 @@ use Foodpanda\ApiSdk\Entity\Cart\GpsLocation;
 use Foodpanda\ApiSdk\Entity\City\City;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
 use Foodpanda\ApiSdk\Entity\Vendor\VendorResults;
+use Foodpanda\ApiSdk\Entity\Vendor\VendorsCollection;
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
-use Foodpanda\ApiSdk\Provider\VendorProvider;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -17,7 +17,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Volo\FrontendBundle\Service\CustomerLocationService;
-use Volo\FrontendBundle\Service\VendorService;
 
 class LocationController extends BaseController
 {
@@ -75,7 +74,7 @@ class LocationController extends BaseController
             'hasQueryParams' => $request->query->count() > 0,
             'gpsSearch' => $location->getLocationType() === 'polygon',
             'formattedLocation' => $formattedLocation,
-            'vendors' => $allVendors->getItems(),
+            'vendors' => $allVendors,
             'openVendors' => $openVendors,
             'closedVendors' => $closedVendorsWithPreorder,
             'city' => $city,
@@ -85,11 +84,11 @@ class LocationController extends BaseController
     }
 
     /**
-     * @param VendorResults $vendors
+     * @param VendorsCollection $vendors
      *
      * @return array
      */
-    private function createFilters(VendorResults $vendors)
+    private function createFilters(VendorsCollection $vendors)
     {
         $filters = [
             'cuisine' => [],
@@ -97,7 +96,7 @@ class LocationController extends BaseController
         ];
 
         /** @var Vendor $item */
-        foreach ($vendors->getItems() as $item) {
+        foreach ($vendors as $item) {
             foreach ($item->getCuisines() as $cuisine) {
                 $filters['cuisine'][$cuisine->getId()] = $cuisine;
             }
@@ -182,20 +181,6 @@ class LocationController extends BaseController
 
         $this->getCustomerLocationService()->set($request->getSession(), $gpsLocation);
         return $gpsLocation;
-    }
-
-    /**
-     * @return VendorProvider
-     */
-    private function getVendorProvider() {
-        return $this->get('volo_frontend.provider.vendor');
-    }
-
-    /**
-     * @return VendorService
-     */
-    private function getVendorService() {
-        return $this->get('volo_frontend.service.vendor');
     }
 
     /**

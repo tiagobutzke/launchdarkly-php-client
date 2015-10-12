@@ -5,11 +5,6 @@ VOLO.FilterModel = Backbone.Model.extend({
     }
 });
 
-VOLO.VendorModel = Backbone.Model.extend({
-    defaults: {
-    }
-});
-
 VOLO.FilterVendorCollection = Backbone.Collection.extend({
     model: VOLO.VendorModel,
     initialize: function (data, options) {
@@ -27,9 +22,6 @@ VOLO.FilterVendorCollection = Backbone.Collection.extend({
                     longitude: this.locationModel.get('longitude')
                 }
         );
-    },
-
-    parse: function(response, options) {
-        return response.items;
     }
+
 });

@@ -111,21 +111,34 @@ VOLO.RestaurantsView = Backbone.View.extend({
     initialize: function(options) {
         _.bindAll(this);
 
+        this.subViews = [];
         this._eventTriggerDelay = options.triggerDelay || 300;
         this._lastTimeOut = null;
         this._displayedRestaurants = [];
         this.$window = $(window);
         this._scrollEvent = this.$window.on('scroll resize', this._onScrollResize);
         this.collection = options.filterVendorCollection;
-        this.template = _.template($('#template-restaurant-details').html());
 
         this.listenTo(VOLO.filterModel, 'change', this.render);
         this.listenTo(this.collection, 'all', this.debug);
         this.listenTo(this.collection, 'reset', this.renderVendors);
+
+        _.each(this.$('.restaurants__list a > div'), this._initVendorModels);
     },
 
     debug: function() {
         console.log(arguments);
+    },
+
+    _initVendorModels: function(item) {
+        var vendor = $(item).data().vendor;
+        var model = new VOLO.VendorModel(vendor);
+        var view = new VOLO.RestaurantView({
+            model: model,
+            el: item
+        });
+        this.subViews.push(view);
+        this.listenTo(view, 'restaurantsView:restaurantClicked', this._fetchDataFromNode);
     },
 
     render: function() {
@@ -135,13 +148,24 @@ VOLO.RestaurantsView = Backbone.View.extend({
     },
 
     renderVendors: function() {
-        this.$el.empty();
+        this.$('.restaurants__list').empty();
+
+        _.invoke(this.subViews, 'remove');
+        this.subViews.length = 0;
+
         this.collection.each(this.renderVendor);
         window.blazy.revalidate();
+        this._onScrollResize();
     },
 
     renderVendor: function(vendor) {
-        this.$el.append(this.template(vendor.toJSON()));
+        var view = new VOLO.RestaurantView({
+            model: vendor
+        });
+
+        this.$('.restaurants__list').append(view.render().$el);
+        this.subViews.push(view);
+        this.listenTo(view, 'restaurantsView:restaurantClicked', this._fetchDataFromNode);
     },
 
     onGtmServiceCreated: function() {
@@ -161,6 +185,7 @@ VOLO.RestaurantsView = Backbone.View.extend({
     },
 
     _triggerImageVisible: function() {
+        console.log('_triggerImageVisible');
         var newRestaurants = this._checkNewDisplayedRestaurants();
 
         if (newRestaurants.length) {
@@ -183,31 +208,33 @@ VOLO.RestaurantsView = Backbone.View.extend({
     },
 
     _getVisibleRestaurants: function() {
-        var $restaurants = this.$('.restaurants__list__item');
-
-        return _.filter($.makeArray($restaurants), this._isElOnScreen);
+        return _.filter(this.subViews, this._isElOnScreen);
     },
 
-    _isElOnScreen: function(element) {
-        var elementTop = $(element).offset().top,
+    _isElOnScreen: function(view) {
+        var elementTop = view.$el.offset().top,
             scrolled = this.$window.height() + this.$window.scrollTop();
 
         return elementTop <= scrolled;
     },
 
-    _restaurantClick: function(event) {
-        this.trigger('restaurantsView:restaurantClicked', this._fetchDataFromNode(event.currentTarget));
-    },
+    _fetchDataFromNode: function (view) {
+        var position = -1;
 
-    _fetchDataFromNode: function (node) {
-        var jNode = $(node);
+        if (view.model.isOpen()) {
+            position = this.$('.restaurants__list--open a').index(view.$el.parent());
+        } else {
+            position = this.$('.restaurants__list--open a').length + this.$el.find('.restaurants__list--closed a').index(view.$el.parent());
+        }
 
-        return {
-            name: jNode.data('name'),
-            id: jNode.data('code'),
-            variant: jNode.data('variant'),
-            position: jNode.data('position')
+        var foo = {
+            name: view.model.get('name'),
+            id: view.model.get('code'),
+            variant: view.model.isOpen() ? 'open' : 'closed',
+            position: position
         };
+        console.log('_fetchDataFromNode ', foo);
+        return foo;
     },
 
     unbind: function() {
@@ -219,5 +246,29 @@ VOLO.RestaurantsView = Backbone.View.extend({
 
         this.stopListening();
         this.undelegateEvents();
+    }
+});
+
+VOLO.RestaurantView = Backbone.View.extend({
+    tagName: 'a',
+
+    events: {
+        "click": "_restaurantClick"
+    },
+
+    initialize: function() {
+        _.bindAll(this);
+        this.template = _.template($('#template-restaurant-details').html());
+    },
+
+    render: function() {
+        this.$el.html(this.template(this.model.toJSON()));
+        this.$el.attr('href', Routing.generate('vendor', {code: this.model.get('code'), urlKey: this.model.get('url_key')}));
+
+        return this;
+    },
+
+    _restaurantClick: function() {
+        this.trigger('restaurantsView:restaurantClicked', this);
     }
 });

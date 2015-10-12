@@ -321,7 +321,7 @@ VOLO.createRestaurantsView = function(locationModel) {
             model: filterModel
         }),
         restaurantsView = new VOLO.RestaurantsView({
-            el: '.restaurants__list',
+            el: '.restaurants-container',
             filterVendorCollection: new VOLO.FilterVendorCollection({}, {locationModel: locationModel})
         });
 

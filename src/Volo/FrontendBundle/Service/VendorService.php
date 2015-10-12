@@ -6,11 +6,12 @@ use Doctrine\Common\Cache\Cache;
 use Foodpanda\ApiSdk\Entity\Cart\AbstractLocation;
 use Foodpanda\ApiSdk\Entity\Product\Product;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
-use Foodpanda\ApiSdk\Entity\Vendor\VendorResults;
 use Foodpanda\ApiSdk\Entity\Vendor\VendorsCollection;
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Foodpanda\ApiSdk\Provider\CityProvider;
 use Foodpanda\ApiSdk\Provider\VendorProvider;
+use Symfony\Component\Translation\TranslatorInterface;
+use Volo\FrontendBundle\Twig\VoloExtension;
 
 class VendorService
 {
@@ -36,21 +37,45 @@ class VendorService
     private $scheduleService;
 
     /**
+     * @var ThumborService
+     */
+    private $thumborService;
+
+    /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
+    /**
+     * @var VoloExtension
+     */
+    protected $voloExtension;
+
+    /**
      * @param CityProvider $cityProvider
      * @param VendorProvider $vendorProvider
      * @param ScheduleService $scheduleService
      * @param Cache $cache
+     * @param ThumborService $thumborService
+     * @param TranslatorInterface $translator
+     * @param VoloExtension $voloExtension
      */
     public function __construct(
         CityProvider $cityProvider,
         VendorProvider $vendorProvider,
         ScheduleService $scheduleService,
-        Cache $cache
+        Cache $cache,
+        ThumborService $thumborService,
+        TranslatorInterface $translator,
+        VoloExtension $voloExtension
     ) {
         $this->cityProvider = $cityProvider;
         $this->vendorProvider = $vendorProvider;
         $this->cache = $cache;
         $this->scheduleService = $scheduleService;
+        $this->thumborService = $thumborService;
+        $this->translator = $translator;
+        $this->voloExtension = $voloExtension;
     }
 
     /**
@@ -65,7 +90,7 @@ class VendorService
      * @return string
      * @throws \RuntimeException
      */
-    public function getVendorCodeByUrlKey($urlKey)
+    public function getCachedVendorCodeByUrlKey($urlKey)
     {
         $lowercaseUrlKey = strtolower($urlKey);
         if (!$this->cache->contains($lowercaseUrlKey)) {
@@ -91,7 +116,7 @@ class VendorService
      * @return array
      * @throws \RuntimeException
      */
-    public function getVendorCodeById($id)
+    public function getCachedVendorCodeById($id)
     {
         $key = static::VENDOR_ID_CACHE_KEY_PREFIX . $id;
 
@@ -167,19 +192,96 @@ class VendorService
      */
     public function findOpenClosedVendors(AbstractLocation $location)
     {
-        $vendors = $this->vendorProvider->findVendorsByLocation($location);
+        $vendors = $this->findAll($location);
 
-        $openClosed = $vendors->getItems()
-            ->filter(function (Vendor $vendor) {
-                return !$vendor->getSchedules()->isEmpty();
-            })->partition(function ($key, Vendor $vendor) {
-                return $this->scheduleService->isVendorOpen($vendor, new \DateTime());
-            });
+        $openClosed = $vendors->partition(
+            function ($key, Vendor $vendor) {
+                return $vendor->getMetadata()->getAvailableIn() === null;
+            }
+        );
 
         return [
             $openClosed[0],
             $openClosed[1],
             $vendors
         ];
+    }
+
+    /**
+     * @param AbstractLocation $location
+     * @param array $includes
+     * @param string $cuisines
+     * @param string $foodCharacteristics
+     *
+     * @return VendorsCollection
+     */
+    public function findAll(
+        AbstractLocation $location,
+        array $includes = ['cuisines', 'metadata', 'food_characteristics'],
+        $cuisines = '',
+        $foodCharacteristics = ''
+    )
+    {
+        $vendors = $this->vendorProvider->findVendorsByLocation(
+            $location,
+            array_merge($includes, ['schedules']),
+            $cuisines,
+            $foodCharacteristics
+        );
+
+        $vendors = $vendors->getItems()->filter(
+            function (Vendor $vendor) {
+                return !$vendor->getSchedules()->isEmpty();
+            }
+        );
+
+        $this->updateExtraProperties($vendors);
+
+        return $vendors;
+    }
+
+    /**
+     * @param Vendor $vendor
+     */
+    private function updateAvailableInProperty(Vendor $vendor)
+    {
+        if ($vendor->getMetadata()->getAvailableIn()) {
+            $availableIn = new \DateTime($vendor->getMetadata()->getAvailableIn());
+            if ($availableIn->format('d-m-Y') == (new \DateTime('now'))->format('d-m-Y')) {
+                $message = $this->translator->trans(
+                    'restaurant.open_at_time',
+                    [
+                        '%time%' => $this->voloExtension->formatTime($availableIn)
+                    ]
+                );
+                $vendor->getMetadata()->setAvailableIn($message);
+            } else {
+                $message = $this->translator->trans(
+                    'restaurant.open_at_day_time',
+                    [
+                        '%time%' => $this->voloExtension->formatTime($availableIn),
+                        '%day%' => $this->voloExtension->localisedDay($availableIn)
+                    ]
+                );
+                $vendor->getMetadata()->setAvailableIn($message);
+            }
+        }
+    }
+
+    /**
+     * @param VendorsCollection $vendors
+     */
+    private function updateExtraProperties(VendorsCollection $vendors)
+    {
+        foreach ($vendors as $vendor) {
+            /** @var Vendor $vendor */
+            $image = $this->thumborService->generateUrl($vendor, '500');
+            $vendor->setImageLowResolution((string)$image);
+
+            $image = $this->thumborService->generateUrl($vendor, '500_retina');
+            $vendor->setImageHighResolution((string)$image);
+
+            $this->updateAvailableInProperty($vendor);
+        }
     }
 }

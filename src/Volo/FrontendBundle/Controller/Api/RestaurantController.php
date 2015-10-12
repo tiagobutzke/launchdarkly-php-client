@@ -3,8 +3,6 @@
 namespace Volo\FrontendBundle\Controller\Api;
 
 use Foodpanda\ApiSdk\Entity\Cart\AbstractLocation;
-use Foodpanda\ApiSdk\Entity\City\City;
-use Foodpanda\ApiSdk\Provider\VendorProvider;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -34,40 +32,15 @@ class RestaurantController extends BaseController
     {
         $cuisines = $request->query->get('cuisine');
         $foodCharacteristics = $request->query->get('food_characteristic');
-        $includes = $request->query->get('includes', ['cuisines', 'food_characteristics']);
+        $includes = $request->query->get('includes', ['cuisines', 'metadata', 'food_characteristics']);
 
-        $vendors = $this->getVendorProvider()->findVendorsByLocation(
+        $vendors = $this->getVendorService()->findAll(
             $location,
             $includes,
             $cuisines,
             $foodCharacteristics
         );
 
-        $serializer = $this->getSerializer();
-
-        return new JsonResponse($serializer->normalize($vendors));
-    }
-
-    /**
-     * @param string $cityUrlKey
-     *
-     * @return City
-     */
-    protected function findCityByCode($cityUrlKey)
-    {
-        $filtered = $this->get('volo_frontend.provider.city')->findAll()->getItems()->filter(function($element) use ($cityUrlKey) {
-            /** @var City $element */
-            return strtolower($element->getUrlKey()) === strtolower($cityUrlKey);
-        });
-
-        return $filtered->first();
-    }
-
-    /**
-     * @return VendorProvider
-     */
-    private function getVendorProvider()
-    {
-        return $this->get('volo_frontend.provider.vendor');
+        return new JsonResponse($this->getSerializer()->normalize($vendors));
     }
 }
