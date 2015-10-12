@@ -288,8 +288,7 @@ class CheckoutController extends BaseController
         }
 
         try {
-            $mergedCart = $this->get('volo_frontend.service.cart_manager')->mergeSimilarProducts($cart);
-            $apiResult = $this->handleOrder($request->getSession(), $mergedCart, $data, $guestCustomer);
+            $apiResult = $this->handleOrder($request->getSession(), $cart, $data, $guestCustomer);
         } catch (ApiErrorException $e) {
             return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
         }

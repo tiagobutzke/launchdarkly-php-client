@@ -3,7 +3,6 @@
 namespace Volo\FrontendBundle\Service;
 
 use CommerceGuys\Guzzle\Oauth2\AccessToken;
-use Foodpanda\ApiSdk\Provider\CartProvider;
 use Foodpanda\ApiSdk\Provider\OrderProvider;
 use Foodpanda\ApiSdk\Provider\CustomerProvider;
 use Foodpanda\ApiSdk\Entity\Order\GuestCustomer;
@@ -22,9 +21,9 @@ class OrderManagerService
     protected $customerProvider;
 
     /**
-     * @var CartProvider
+     * @var CartManagerService
      */
-    protected $cartProvider;
+    protected $cartManager;
 
     /**
      * @var string
@@ -37,22 +36,22 @@ class OrderManagerService
     protected $vendorService;
 
     /**
-     * @param OrderProvider    $orderProvider
-     * @param CustomerProvider $customerProvider
-     * @param CartProvider     $cartProvider
-     * @param VendorService    $vendorService
-     * @param string           $apiClientId
+     * @param OrderProvider      $orderProvider
+     * @param CustomerProvider   $customerProvider
+     * @param CartManagerService $cartManagerService
+     * @param VendorService      $vendorService
+     * @param string             $apiClientId
      */
     public function __construct(
         OrderProvider $orderProvider,
         CustomerProvider $customerProvider,
-        CartProvider $cartProvider,
+        CartManagerService $cartManagerService,
         VendorService $vendorService,
         $apiClientId
     ) {
         $this->orderProvider    = $orderProvider;
         $this->customerProvider = $customerProvider;
-        $this->cartProvider     = $cartProvider;
+        $this->cartManager      = $cartManagerService;
         $this->apiClientId      = $apiClientId;
         $this->vendorService    = $vendorService;
     }
@@ -70,6 +69,10 @@ class OrderManagerService
      */
     public function placeGuestOrder(GuestCustomer $guestCustomer, $expectedAmount, $paymentTypeId, array $cart)
     {
+        // First get comment then merge, when we merge the products we loose the comments.
+        $customerComment = $this->buildCustomerComment($cart);
+        $cart = $this->cartManager->mergeSimilarProducts($cart);
+
         $order = [
             'location'                             => $cart['location'],
             'products'                             => $cart['products'],
@@ -79,7 +82,7 @@ class OrderManagerService
             'customer_address_id'                  => $guestCustomer->getCustomerAddress()->getId(),
             'customer_id'                          => $guestCustomer->getCustomer()->getId(),
             'customer_mail'                        => $guestCustomer->getCustomer()->getEmail(),
-            'customer_comment'                     => $this->buildCustomerComment($cart),
+            'customer_comment'                     => $customerComment,
             'expected_total_amount'                => $expectedAmount,
             'source'                               => $this->apiClientId,
             'trigger_hosted_payment_page_handling' => true,
@@ -128,6 +131,10 @@ class OrderManagerService
      */
     public function placeOrder(AccessToken $accessToken, $addressId, $expectedAmount, $paymentTypeId, array $cart)
     {
+        // First get comment then merge, when we merge the products we loose the comments.
+        $customerComment = $this->buildCustomerComment($cart);
+        $cart = $this->cartManager->mergeSimilarProducts($cart);
+
         $order = [
             'location'                             => $cart['location'],
             'products'                             => $cart['products'],
@@ -135,7 +142,7 @@ class OrderManagerService
             'expedition_type'                      => 'delivery',
             'payment_type_id'                      => $paymentTypeId,
             'customer_address_id'                  => $addressId,
-            'customer_comment'                     => $this->buildCustomerComment($cart),
+            'customer_comment'                     => $customerComment,
             'expected_total_amount'                => $expectedAmount,
             'source'                               => $this->apiClientId,
             'trigger_hosted_payment_page_handling' => true,
