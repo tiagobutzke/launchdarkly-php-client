@@ -30,7 +30,8 @@ framework:
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
-        assets_version: asset_version_placeholder
+    assets:
+        version: asset_version_placeholder
         packages:
             cdn_s3:
                 version: '1'
@@ -197,11 +198,11 @@ jb_phumbor:
                 - { name: "quality", arguments: [40] }
         # end of the breakpoints definition
 
-        500:
+        vendor_image:
             resize: { width: 400, height: 0 }
             filters:
                 - { name: "quality", arguments: [80] }
-        500_retina:
+        vendor_image_retina:
             resize: { width: 800, height: 0 }
             filters:
                 - { name: "quality", arguments: [45] }

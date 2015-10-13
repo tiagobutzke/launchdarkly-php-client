@@ -1,90 +1,5 @@
 var VOLO = VOLO || {};
 
-VOLO.FiltersView = Backbone.View.extend({
-    events: {
-        'click .restaurants__filter': 'showOrHideFilter',
-        'click .restaurants__filter-tooltip': 'filterRestaurants',
-        'click .restaurants__filter-form__head-cancel-cuisines': 'clearFilterCuisines',
-        'click .restaurants__filter-form__head-cancel-food-characteristics': 'clearFilterFoodCharacteristics'
-    },
-
-    initialize: function() {
-        this.cuisines = "";
-        this.foodCharacteristics = "";
-        _.bindAll(this);
-        $('body').on('click', this.hideFilter);
-    },
-
-    filterRestaurants: function(e) {
-        e.stopPropagation();
-        this.cuisines = _.values($('.restaurants__filter-form-cuisines').serializeJSON()).join(',');
-        this.foodCharacteristics = _.values($('.restaurants__filter-form-food-characteristics').serializeJSON()).join(',');
-        this.model.set('cuisines', this.cuisines);
-        this.model.set('food_characteristics', this.foodCharacteristics);
-        this.checkCuisinesCancelButtonState();
-        this.checkFoodCharacteristicsCancelButtonState();
-    },
-
-    showOrHideFilter: function() {
-        if (this.$('.restaurants__filter-tooltip').hasClass('hide')) {
-            this.$('.restaurants__filter-tooltip').removeClass('hide');
-        } else {
-            this.$('.restaurants__filter-tooltip').addClass('hide');
-            this.showFilterButtonState();
-        }
-
-        return false;
-    },
-
-    hideFilter: function(e) {
-        if (!this.$('.restaurants__filter-tooltip').hasClass('hide')) {
-            this.$('.restaurants__filter-tooltip').addClass('hide');
-            this.showFilterButtonState();
-        }
-    },
-
-    showFilterButtonState: function() {
-        if (this.cuisines !== "" || this.foodCharacteristics !== "") {
-            this.$('.restaurants__filter').addClass('restaurants__filter--active');
-        } else {
-            this.$('.restaurants__filter').removeClass('restaurants__filter--active');
-        }
-    },
-
-    checkCuisinesCancelButtonState: function() {
-        if (this.cuisines !== "") {
-            this.$('.restaurants__filter-form__head-cancel-cuisines').removeClass('hide');
-        } else {
-            this.$('.restaurants__filter-form__head-cancel-cuisines').addClass('hide');
-        }
-    },
-
-    checkFoodCharacteristicsCancelButtonState: function() {
-        if (this.foodCharacteristics !== "") {
-            this.$('.restaurants__filter-form__head-cancel-food-characteristics').removeClass('hide');
-        } else {
-            this.$('.restaurants__filter-form__head-cancel-food-characteristics').addClass('hide');
-        }
-    },
-
-    clearFilterCuisines: function(e) {
-        $('.restaurants__filter-form-cuisines .form-control').attr("checked", false);
-        this.filterRestaurants(e);
-    },
-
-    clearFilterFoodCharacteristics: function(e) {
-        $('.restaurants__filter-form-food-characteristics .form-control').attr("checked", false);
-        this.filterRestaurants(e);
-    },
-
-    unbind: function() {
-        this.stopListening();
-        this.undelegateEvents();
-        $('body').off('click', this.hideFilter);
-    }
-
-});
-
 VOLO.RestaurantsView = Backbone.View.extend({
     events: {
         "click .restaurants__list__item": "_restaurantClick"
@@ -99,37 +14,27 @@ VOLO.RestaurantsView = Backbone.View.extend({
         this._displayedRestaurants = [];
         this.$window = $(window);
         this._scrollEvent = this.$window.on('scroll resize', this._onScrollResize);
-        this.collection = options.filterVendorCollection;
 
-        this.listenTo(VOLO.filterModel, 'change', this.render);
-        this.listenTo(this.collection, 'all', this.debug);
-        this.listenTo(this.collection, 'reset', this.renderVendors);
+        this.listenTo(options.filterModel, 'change', this._refreshVendors);
+        this.listenTo(this.collection, 'reset', this.render);
 
-        _.each(this.$('.restaurants__list a > div'), this._initVendorModels);
+        _.each(this.$('.restaurants__list a > div'), this._initVendorModel);
     },
 
-    debug: function() {
-        console.log(arguments);
-    },
-
-    _initVendorModels: function(item) {
-        var vendor = $(item).data().vendor;
-        var model = new VOLO.VendorModel(vendor);
-        var view = new VOLO.RestaurantView({
+    _initVendorModel: function(item) {
+        var vendor = $(item).data().vendor,
+            model = new VOLO.VendorModel(vendor),
+            view = new VOLO.RestaurantView({
             model: model,
-            el: item
+            el: item.parentNode
         });
+
         this.subViews.push(view);
         this.listenTo(view, 'restaurantsView:restaurantClicked', this._fetchDataFromNode);
+        this.collection.add(model);
     },
 
     render: function() {
-        this.collection.fetch({reset: true});
-
-        return this;
-    },
-
-    renderVendors: function() {
         this.$('.restaurants__list--open').empty();
         this.$('.restaurants__list--closed').empty();
 
@@ -137,17 +42,23 @@ VOLO.RestaurantsView = Backbone.View.extend({
         this.subViews.length = 0;
 
         if (this.collection.length === 0) {
-            this.$('.restaurants__filter__not-found-message').removeClass('hide');
+            this.$('.restaurants__search__not-found-message').removeClass('hide');
         } else {
-            this.$('.restaurants__filter__not-found-message').addClass('hide');
+            this.$('.restaurants__search__not-found-message').addClass('hide');
         }
 
-        this.collection.each(this.renderVendor);
+        this.collection.each(this._renderVendor);
         window.blazy.revalidate();
         this._onScrollResize();
+
+        return this;
     },
 
-    renderVendor: function(vendor) {
+    _refreshVendors: function() {
+        this.collection.fetch({reset: true});
+    },
+
+    _renderVendor: function(vendor) {
         var view = new VOLO.RestaurantView({
             model: vendor
         });
@@ -179,7 +90,6 @@ VOLO.RestaurantsView = Backbone.View.extend({
     },
 
     _triggerImageVisible: function() {
-        console.log('_triggerImageVisible');
         var newRestaurants = this._checkNewDisplayedRestaurants();
 
         if (newRestaurants.length) {
@@ -206,29 +116,27 @@ VOLO.RestaurantsView = Backbone.View.extend({
     },
 
     _isElOnScreen: function(view) {
-        var elementTop = view.$el.offset().top,
+        var elementTop = view.$('.restaurants__list__item').offset() || {top: 0},
             scrolled = this.$window.height() + this.$window.scrollTop();
 
-        return elementTop <= scrolled;
+        return elementTop.top <= scrolled;
     },
 
     _fetchDataFromNode: function (view) {
-        var position = -1;
+        var position = 1;
 
         if (view.model.isOpen()) {
-            position = this.$('.restaurants__list--open a').index(view.$el.parent());
+            position += this.$('.restaurants__list--open a').index(view.$el);
         } else {
-            position = this.$('.restaurants__list--open a').length + this.$el.find('.restaurants__list--closed a').index(view.$el.parent());
+            position += this.$('.restaurants__list--open a').length + this.$el.find('.restaurants__list--closed a').index(view.$el);
         }
 
-        var foo = {
+        return {
             name: view.model.get('name'),
             id: view.model.get('code'),
             variant: view.model.isOpen() ? 'open' : 'closed',
             position: position
         };
-        console.log('_fetchDataFromNode ', foo);
-        return foo;
     },
 
     unbind: function() {
@@ -240,6 +148,7 @@ VOLO.RestaurantsView = Backbone.View.extend({
 
         this.stopListening();
         this.undelegateEvents();
+        _.invoke(this.subViews, 'unbind');
     }
 });
 
@@ -253,16 +162,34 @@ VOLO.RestaurantView = Backbone.View.extend({
     initialize: function() {
         _.bindAll(this);
         this.template = _.template($('#template-restaurant-details').html());
+        this.listenTo(this.model, 'view:show', this._show);
+        this.listenTo(this.model, 'view:hide', this._hide);
     },
 
     render: function() {
         this.$el.html(this.template(this.model.toJSON()));
-        this.$el.attr('href', Routing.generate('vendor', {code: this.model.get('code'), urlKey: this.model.get('url_key')}));
+        this.$el.attr('href', Routing.generate('vendor', {
+            code: this.model.get('code'),
+            urlKey: this.model.get('url_key')
+        }));
 
         return this;
     },
 
+    unbind: function() {
+        this.stopListening();
+        this.undelegateEvents();
+    },
+
     _restaurantClick: function() {
         this.trigger('restaurantsView:restaurantClicked', this);
+    },
+
+    _show: function() {
+        this.$el.removeClass('hide');
+    },
+
+    _hide: function() {
+        this.$el.addClass('hide');
     }
 });

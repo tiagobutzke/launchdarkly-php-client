@@ -624,9 +624,7 @@
 
 // -------------------------- RESTAURANTS NOT AVAILABLE MESSAGE START --------------------------
 
-.restaurants__not-available-message,
-.restaurants__search__not-found-message,
-.restaurants__filter__not-found-message {
+.restaurants__no-result-message {
   @extend .restaurants__list;
   text-align: center;
   padding-top: 100px;

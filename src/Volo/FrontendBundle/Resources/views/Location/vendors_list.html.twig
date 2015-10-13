@@ -1,5 +1,16 @@
 {% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
-{% use 'VoloFrontendBundle:Location:Partial/vendor_description.html.twig' %}
+
+{% set openVendors = [] %}
+{% set closedVendors = [] %}
+{% set cuisineFilterMaximum = 14 %}
+{% set foodCharacteristicsFilterMaximum = 6 %}
+{% for vendor in vendors %}
+    {% if vendor.metadata.availableIn is null %}
+        {% set openVendors = openVendors|merge([vendor]) %}
+    {% else %}
+        {% set closedVendors = closedVendors|merge([vendor]) %}
+    {% endif %}
+{% endfor %}
 
 {% set promoAddress = formattedLocation.city == '-' ? formattedLocation.postcode : formattedLocation.city  %}
 {% block title %}
@@ -14,15 +25,15 @@
 {% block google_tag_manager_before %}
 <script type="text/javascript" data-turbolinks-eval=always>
     dataLayer.push({
-        'totalRestaurants': {{ vendors.count() }},
-        'openRestaurants': {{ openVendors.count() }}
+        'totalRestaurants': {{ vendors|length }},
+        'openRestaurants': {{ openVendors|length }}
     });
     dataLayer.push({
         'event': 'enterZipcode',
         'zipcode': '{{ formattedLocation['postcode'] }}',
         'city': '{{ formattedLocation['city'] }}',
         'referrer': VOLO.tagManager.referrer,
-        'serviceArea': '{% if (openVendors.count() > 0) or (closedVendors.count() > 0) %}True{% else %}False{% endif %}'
+        'serviceArea': '{% if (openVendors|length > 0) or (closedVendors|length > 0) %}True{% else %}False{% endif %}'
     });
 </script>
 {% endblock %}
@@ -49,6 +60,10 @@
     <script data-turbolinks-eval=always>
         var VOLO = VOLO || {};
         VOLO.jsonLocation = {{ location|to_escaped_json }};
+    </script>
+
+    <script type="text/template" id="template-restaurant-details">
+        {{ include('VoloFrontendBundle:Layout/Partial/templates:vendor_detail.html.twig') }}
     </script>
 {% endblock %}
 
@@ -77,7 +92,7 @@
                             <div class="restaurants__filter-form__head-cancel-cuisines hide">{% trans %}restaurants_filter.clear{% endtrans %}</div>
                         </div>
                         {% for filter in filters.cuisine %}
-                            {% if (loop.index <= 14) %}
+                            {% if (loop.index <= cuisineFilterMaximum) %}
                                 <div class="form-group sprite-form restaurants__filter-form-group">
                                     <input type="checkbox" class="form-control sprite-form__checkbox" value="{{ filter.id }}" name="filter-{{ filter.id }}" id="filter-{{ filter.id }}">
                                     <div class="sprite-form__sprite"></div>
@@ -94,7 +109,7 @@
                             <div class="restaurants__filter-form__head-cancel-food-characteristics hide">{% trans %}restaurants_filter.clear{% endtrans %}</div>
                         </div>
                         {% for filter in filters.food_characteristics %}
-                            {% if (loop.index <= 6) %}
+                            {% if (loop.index <= foodCharacteristicsFilterMaximum) %}
                                 <div class="form-group sprite-form restaurants__filter-form-group">
                                     <input type="checkbox" class="form-control sprite-form__checkbox" value="{{ filter.id }}" name="filter-{{ filter.id }}" id="filter-{{ filter.id }}">
                                     <div class="sprite-form__sprite"></div>
@@ -108,19 +123,19 @@
                 </div>
             </div>
             <div class="restaurants__tool-box">
-                {% if openVendors.count() > 0 or closedVendors.count() > 0 %}
+                {% if openVendors|length > 0 or closedVendors|length > 0 %}
                     <div class="restaurants__search-filter-wrapper">
                         <div class="restaurants__filter">
                             <span class="restaurants__filter__label">
                                 <i class="icon-sliders restaurants__filter__label-icon"></i>
-                                <span class="restaurants__filter__label-text">{% trans %}Filter{% endtrans %}</span>
+                                <span class="restaurants__filter__label-text">{% trans %}restaurants_filter.button_label{% endtrans %}</span>
                             </span>
                         </div>
                         <div class="restaurants__search">
                             <i class="icon-cancel restaurants__search__cancel-icon"></i>
                             <span class="restaurants__search__label">
                                 <i class="icon-search restaurants__search__label-icon"></i>
-                                <span class="restaurants__search__label-text">{% trans %}Search{% endtrans %}</span>
+                                <span class="restaurants__search__label-text">{% trans %}restaurants_search.button_label{% endtrans %}</span>
                             </span>
                             <input type="text" class="restaurants__search__input form-control" placeholder="{% trans %}restaurants_search.input_label{% endtrans %}" />
                         </div>
@@ -166,31 +181,29 @@
                 </div>
             </div>
         {% endif %}
-        {% if openVendors.count() == 0 and closedVendors.count() == 0 %}
-            <div class="restaurants__not-available-message">
+        {% if openVendors|length == 0 and closedVendors|length == 0 %}
+            <div class="restaurants__not-available-message restaurants__no-result-message">
                 <div class="restaurants__not-available-message__title">{% trans %}restaurant.not_available.title{% endtrans %}</div>
                 <div class="restaurants__not-available-message__text">{% trans %}restaurants.not_available{% endtrans %}</div>
             </div>
         {% else %}
             <div class="restaurants__list restaurants__list--open">
                 {% for vendor in openVendors %}
-                    {% set vendorsCounter = loop.index %}
-                    {{ block('vendor_description') }}
+                    <a href="{{ path('vendor', {code: vendor.code, urlKey: vendor.urlKey}) }}">
+                        {{ include('VoloFrontendBundle:Layout/Partial/templates:vendor_detail.html.twig', {'serialized_vendor': serialize(vendor) }) }}
+                    </a>
                 {% endfor %}
-                <div class="restaurants__search__not-found-message hide">
-                    <div class="restaurants__not-available-message__title">{% trans %}restaurant.search.not_found.title{% endtrans %}</div>
-                    <div class="restaurants__not-available-message__text">{% trans %}restaurants.search.not_found.text{% endtrans %}</div>
-                </div>
             </div>
             <div class="restaurants__list restaurants__list--closed">
                 {% for vendor in closedVendors %}
-                    {% set vendorsCounter = openVendors.count() + loop.index %}
-                    {{ block('vendor_description') }}
+                    <a href="{{ path('vendor', {code: vendor.code, urlKey: vendor.urlKey}) }}">
+                        {{ include('VoloFrontendBundle:Layout/Partial/templates:vendor_detail.html.twig', {'serialized_vendor': serialize(vendor) }) }}
+                    </a>
                 {% endfor %}
             </div>
-            <div class="restaurants__filter__not-found-message hide">
-                <div class="restaurants__not-available-message__title">{% trans %}restaurant.filter.not_found.title{% endtrans %}</div>
-                <div class="restaurants__not-available-message__text">{% trans %}restaurants.filter.not_found.text{% endtrans %}</div>
+            <div class="restaurants__search__not-found-message restaurants__no-result-message hide">
+                <div class="restaurants__not-available-message__title">{% trans %}restaurant.search.not_found.title{% endtrans %}</div>
+                <div class="restaurants__not-available-message__text">{% trans %}restaurants.search.not_found.text{% endtrans %}</div>
             </div>
         {% endif %}
         {% set citySeoText = cms('city-description' ~ (city is null ? '' : '-' ~ city.id), 'city-description') %}
@@ -202,34 +215,6 @@
             </div>
         {% endif %}
     </div>
-
-    <script type="text/template" id="template-restaurant-details">
-        <div class="restaurants__list__item"
-             data-name="<%= name %>"
-             data-code="<%= code %>"
-             data-variant="true"
-             data-position="0">
-            <div class="restaurants__list__item-wrapper">
-                <div class="restaurants__list__item-image-wrapper">
-                    <div class="restaurants__list__item-preorder">
-                        <i class="restaurants__list__item-preorder-icon icon-preorder"></i>
-                        <span class="restaurants__list__item-preorder-label">{% trans %}vendor_closed_preorder_available{% endtrans %}</span>
-                    </div>
-                    <div class="b-lazy restaurants__list__item-image aspect-ratio-100-52"
-                         src="{{ blazy_placeholder }}"
-                         data-src="<%= image_low_resolution %>|<%= image_high_resolution %>">
-                    </div>
-                </div>
-                <h3 class="restaurants__list__item-name">
-                    <%= name %>
-                </h3>
-                <h4 class="restaurants__list__item-description"><%= description %></h4>
-                <div class="restaurants__list__item-time">
-                    <i class="icon-clock-o"></i>
-                </div>
-            </div>
-        </div>
-    </script>
 {% endblock %}
 
 {% block footer_bottom %}

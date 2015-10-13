@@ -6,13 +6,19 @@
 
     <parameters>
         <parameter key="volo_frontend.request.param_converter.user_location_converter.class">Volo\FrontendBundle\Request\ParamConverter\UserLocationConverter</parameter>
+        <parameter key="volo_frontend.request.param_converter.city_location_converter.class">Volo\FrontendBundle\Request\ParamConverter\CityLocationConverter</parameter>
     </parameters>
 
     <services>
         <service id="volo_frontend.request.param_converter.user_location_converter" class="%volo_frontend.request.param_converter.user_location_converter.class%">
-            <argument type="service" id="volo_frontend.provider.city" />
+            <argument type="service" id="volo_frontend.service.city" />
             <argument type="service" id="translator.default" />
             <tag name="request.param_converter" priority="100" converter="user_location_converter" />
+        </service>
+        <service id="volo_frontend.request.param_converter.city_location_converter" class="%volo_frontend.request.param_converter.city_location_converter.class%">
+            <argument type="service" id="volo_frontend.service.city" />
+            <argument type="service" id="translator.default" />
+            <tag name="request.param_converter" priority="200" converter="city_location_converter" />
         </service>
     </services>
 </container>

@@ -4,6 +4,7 @@ namespace Volo\FrontendBundle\Service;
 
 use Doctrine\Common\Cache\Cache;
 use Foodpanda\ApiSdk\Entity\Cart\AbstractLocation;
+use Foodpanda\ApiSdk\Entity\Cart\LocationInterface;
 use Foodpanda\ApiSdk\Entity\Product\Product;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
 use Foodpanda\ApiSdk\Entity\Vendor\VendorsCollection;
@@ -186,40 +187,18 @@ class VendorService
     }
 
     /**
-     * @param AbstractLocation $location
-     *
-     * @return array
-     */
-    public function findOpenClosedVendors(AbstractLocation $location)
-    {
-        $vendors = $this->findAll($location);
-
-        $openClosed = $vendors->partition(
-            function ($key, Vendor $vendor) {
-                return $vendor->getMetadata()->getAvailableIn() === null;
-            }
-        );
-
-        return [
-            $openClosed[0],
-            $openClosed[1],
-            $vendors
-        ];
-    }
-
-    /**
-     * @param AbstractLocation $location
+     * @param LocationInterface $location
      * @param array $includes
-     * @param string $cuisines
-     * @param string $foodCharacteristics
+     * @param array $cuisines
+     * @param array $foodCharacteristics
      *
      * @return VendorsCollection
      */
     public function findAll(
-        AbstractLocation $location,
+        LocationInterface $location,
         array $includes = ['cuisines', 'metadata', 'food_characteristics'],
-        $cuisines = '',
-        $foodCharacteristics = ''
+        array $cuisines = [],
+        array $foodCharacteristics = []
     )
     {
         $vendors = $this->vendorProvider->findVendorsByLocation(
@@ -275,10 +254,10 @@ class VendorService
     {
         foreach ($vendors as $vendor) {
             /** @var Vendor $vendor */
-            $image = $this->thumborService->generateUrl($vendor, '500');
+            $image = $this->thumborService->generateUrl($vendor, 'vendor_image');
             $vendor->setImageLowResolution((string)$image);
 
-            $image = $this->thumborService->generateUrl($vendor, '500_retina');
+            $image = $this->thumborService->generateUrl($vendor, 'vendor_image_retina');
             $vendor->setImageHighResolution((string)$image);
 
             $this->updateAvailableInProperty($vendor);

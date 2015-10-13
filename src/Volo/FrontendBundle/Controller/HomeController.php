@@ -46,20 +46,4 @@ class HomeController extends BaseController
             'code' => $code,
         ];
     }
-
-    /**
-     * @return CustomerLocationService
-     */
-    private function getCustomerLocationService()
-    {
-        return $this->get('volo_frontend.service.customer_location');
-    }
-
-    /**
-     * @return \Volo\FrontendBundle\Provider\AddressConfigProvider
-     */
-    private function getAddressConfigProvider()
-    {
-        return $this->get('volo_frontend.provider.address_config_provider');
-    }
 }

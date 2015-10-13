@@ -12,12 +12,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Volo\FrontendBundle\Controller\BaseController;
 
 /**
- * @Route("/api/v1/restaurants", defaults={"_format": "json"})
+ * @Route("/api/v1/vendors", defaults={"_format": "json"})
  */
-class RestaurantController extends BaseController
+class VendorController extends BaseController
 {
     /**
-     * @Route("/", name="api_restaurants_list", options={"expose"=true})
+     * @Route("/", name="api_vendors_list", options={"expose"=true})
      * @Method({"GET"})
      * @ParamConverter("location", converter="user_location_converter")
      *
@@ -37,8 +37,8 @@ class RestaurantController extends BaseController
         $vendors = $this->getVendorService()->findAll(
             $location,
             $includes,
-            $cuisines,
-            $foodCharacteristics
+            explode(',', $cuisines),
+            explode(',', $foodCharacteristics)
         );
 
         return new JsonResponse($this->getSerializer()->normalize($vendors));

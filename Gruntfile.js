@@ -87,6 +87,7 @@ module.exports = function (grunt) {
         'web/bower_components/js-cookie/src/js.cookie.js',
         'web/bower_components/promise-polyfill/Promise.js',
         'web/bower_components/jquery.serializeJSON/jquery.serializejson.js',
+        'web/bower_components/fuse.js/src/fuse.js',
         'web/bower_components/devicejs/lib/device.min.js'
     ]);
 
