@@ -5,9 +5,7 @@ VOLO.FiltersView = Backbone.View.extend({
         'click .restaurants__filter': 'showOrHideFilter',
         'click .restaurants__filter-tooltip': 'filterRestaurants',
         'click .restaurants__filter-form__head-cancel-cuisines': 'clearFilterCuisines',
-        'click .restaurants__filter-form__head-cancel-food-characteristics': 'clearFilterFoodCharacteristics',
-        'click .restaurants__filter-form__head-show-all': 'showFilterAboveCertainAmount',
-        'click .restaurants__filter-form__head-show-less': 'hideFilterAboveCertainAmount'
+        'click .restaurants__filter-form__head-cancel-food-characteristics': 'clearFilterFoodCharacteristics'
     },
 
     initialize: function() {
@@ -79,22 +77,6 @@ VOLO.FiltersView = Backbone.View.extend({
         this.filterRestaurants(e);
     },
 
-    showFilterAboveCertainAmount: function (e) {
-        var $e = $(e.target),
-            $form = $e.closest('form');
-        $e.addClass('hide');
-        $form.find('.restaurants__filter-form__head-show-less').removeClass('hide');
-        $form.closest('form').find('.filter-form-group-hidden').removeClass('hide');
-    },
-
-    hideFilterAboveCertainAmount: function (e) {
-        var $e = $(e.target),
-            $form = $e.closest('form');
-        $e.addClass('hide');
-        $form.closest('form').find('.restaurants__filter-form__head-show-all').removeClass('hide');
-        $form.closest('form').find('.filter-form-group-hidden').addClass('hide');
-    },
-
     unbind: function() {
         this.stopListening();
         this.undelegateEvents();
@@ -148,10 +130,17 @@ VOLO.RestaurantsView = Backbone.View.extend({
     },
 
     renderVendors: function() {
-        this.$('.restaurants__list').empty();
+        this.$('.restaurants__list--open').empty();
+        this.$('.restaurants__list--closed').empty();
 
         _.invoke(this.subViews, 'remove');
         this.subViews.length = 0;
+
+        if (this.collection.length === 0) {
+            this.$('.restaurants__filter__not-found-message').removeClass('hide');
+        } else {
+            this.$('.restaurants__filter__not-found-message').addClass('hide');
+        }
 
         this.collection.each(this.renderVendor);
         window.blazy.revalidate();
@@ -163,7 +152,12 @@ VOLO.RestaurantsView = Backbone.View.extend({
             model: vendor
         });
 
-        this.$('.restaurants__list').append(view.render().$el);
+        if (vendor.isOpen()) {
+            this.$('.restaurants__list--open').append(view.render().$el);
+        } else {
+            this.$('.restaurants__list--closed').append(view.render().$el);
+        }
+
         this.subViews.push(view);
         this.listenTo(view, 'restaurantsView:restaurantClicked', this._fetchDataFromNode);
     },

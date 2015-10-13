@@ -2,7 +2,6 @@
 {% use 'VoloFrontendBundle:Location:Partial/vendor_description.html.twig' %}
 
 {% set promoAddress = formattedLocation.city == '-' ? formattedLocation.postcode : formattedLocation.city  %}
-{% set filterToShow = 5 %}
 {% block title %}
     {% if gpsSearch %}
         {{ cms('seo.title.vendor_listing_page') | replace({'{city}': formattedLocation.city, '{zipcode}': formattedLocation.postcode}) }}
@@ -74,40 +73,36 @@
                 <div class="tooltip-inner tooltip-inner--white-with-border">
                     <form class="restaurants__filter-form-cuisines clearfix">
                         <div class="restaurants__filter-form__head clearfix">
-                            <div class="restaurants__filter-form__head-line">{% trans %}Cuisines{% endtrans %}</div>
-                            <div class="restaurants__filter-form__head-cancel-cuisines hide">{% trans %}cancel{% endtrans %}</div>
-                            {% if filters.cuisine|length > filterToShow %}
-                                <div class="restaurants__filter-form__head-show-all">{% trans %}show all{% endtrans %}</div>
-                                <div class="restaurants__filter-form__head-show-less hide">{% trans %}show less{% endtrans %}</div>
-                            {% endif %}
+                            <div class="restaurants__filter-form__head-line">{% trans %}restaurants_filter.cuisines{% endtrans %}</div>
+                            <div class="restaurants__filter-form__head-cancel-cuisines hide">{% trans %}restaurants_filter.clear{% endtrans %}</div>
                         </div>
                         {% for filter in filters.cuisine %}
-                            <div class="form-group sprite-form restaurants__filter-form-group {{ (loop.index > filterToShow) ? 'hide filter-form-group-hidden' : ''}}">
-                                <input type="checkbox" class="form-control sprite-form__checkbox" value="{{ filter.id }}" name="filter-{{ filter.id }}" id="filter-{{ filter.id }}">
-                                <div class="sprite-form__sprite"></div>
-                                <label class="sprite-form__label" for="filter-{{ filter.id }}">
-                                    {{ filter.name }}
-                                </label>
-                            </div>
+                            {% if (loop.index <= 14) %}
+                                <div class="form-group sprite-form restaurants__filter-form-group">
+                                    <input type="checkbox" class="form-control sprite-form__checkbox" value="{{ filter.id }}" name="filter-{{ filter.id }}" id="filter-{{ filter.id }}">
+                                    <div class="sprite-form__sprite"></div>
+                                    <label class="sprite-form__label" for="filter-{{ filter.id }}">
+                                        {{ filter.name }}
+                                    </label>
+                                </div>
+                            {% endif %}
                         {% endfor %}
                     </form>
                     <form class="restaurants__filter-form-food-characteristics restaurants__filter-form-border-top clearfix">
                         <div class="restaurants__filter-form__head clearfix">
-                            <div class="restaurants__filter-form__head-line">{% trans %}Attributes{% endtrans %}</div>
-                            <div class="restaurants__filter-form__head-cancel-food-characteristics hide">{% trans %}cancel{% endtrans %}</div>
-                            {% if filters.food_characteristics|length > filterToShow %}
-                                <div class="restaurants__filter-form__head-show-all">{% trans %}show all{% endtrans %}</div>
-                                <div class="restaurants__filter-form__head-show-less hide">{% trans %}show less{% endtrans %}</div>
-                            {% endif %}
+                            <div class="restaurants__filter-form__head-line">{% trans %}restaurants_filter.attributes{% endtrans %}</div>
+                            <div class="restaurants__filter-form__head-cancel-food-characteristics hide">{% trans %}restaurants_filter.clear{% endtrans %}</div>
                         </div>
                         {% for filter in filters.food_characteristics %}
-                            <div class="form-group sprite-form restaurants__filter-form-group {{ (loop.index > filterToShow) ? 'hide filter-form-group-hidden' : ''}}">
-                                <input type="checkbox" class="form-control sprite-form__checkbox" value="{{ filter.id }}" name="filter-{{ filter.id }}" id="filter-{{ filter.id }}">
-                                <div class="sprite-form__sprite"></div>
-                                <label class="sprite-form__label" for="filter-{{ filter.id }}">
-                                    {{ filter.name }}
-                                </label>
-                            </div>
+                            {% if (loop.index <= 6) %}
+                                <div class="form-group sprite-form restaurants__filter-form-group">
+                                    <input type="checkbox" class="form-control sprite-form__checkbox" value="{{ filter.id }}" name="filter-{{ filter.id }}" id="filter-{{ filter.id }}">
+                                    <div class="sprite-form__sprite"></div>
+                                    <label class="sprite-form__label" for="filter-{{ filter.id }}">
+                                        {{ filter.name }}
+                                    </label>
+                                </div>
+                            {% endif %}
                         {% endfor %}
                     </form>
                 </div>
@@ -192,6 +187,10 @@
                     {% set vendorsCounter = openVendors.count() + loop.index %}
                     {{ block('vendor_description') }}
                 {% endfor %}
+            </div>
+            <div class="restaurants__filter__not-found-message hide">
+                <div class="restaurants__not-available-message__title">{% trans %}restaurant.filter.not_found.title{% endtrans %}</div>
+                <div class="restaurants__not-available-message__text">{% trans %}restaurants.filter.not_found.text{% endtrans %}</div>
             </div>
         {% endif %}
         {% set citySeoText = cms('city-description' ~ (city is null ? '' : '-' ~ city.id), 'city-description') %}
