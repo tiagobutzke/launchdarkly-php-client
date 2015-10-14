@@ -1,4 +1,0 @@
-parameters:
-    address_config:
-        autocomplete_type:
-            - "address"
