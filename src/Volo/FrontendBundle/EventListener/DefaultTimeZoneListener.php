@@ -2,8 +2,6 @@
 
 namespace Volo\FrontendBundle\EventListener;
 
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-
 class DefaultTimeZoneListener
 {
     /**
@@ -19,10 +17,7 @@ class DefaultTimeZoneListener
         $this->timeZone = $timeZone;
     }
 
-    /**
-     * @param GetResponseEvent $event
-     */
-    public function setDefaultTimeZone(GetResponseEvent $event)
+    public function setDefaultTimeZone()
     {
         date_default_timezone_set($this->timeZone);
     }

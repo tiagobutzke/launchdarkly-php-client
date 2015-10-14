@@ -5,6 +5,7 @@ namespace Volo\FrontendBundle\Controller;
 use CommerceGuys\Guzzle\Oauth2\AccessToken;
 use Foodpanda\ApiSdk\Entity\Order\OrderPayment;
 use Foodpanda\ApiSdk\Exception\OrderNotFoundException;
+use Foodpanda\ApiSdk\Provider\OrderProvider;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,7 +58,7 @@ class OrderController extends BaseController
      * @param string $orderCode
      * @param SessionInterface $session
      * @param array $status
-     * @param string $orderProvider
+     * @param OrderProvider $orderProvider
      * @param AccessToken $accessToken
      *
      * @return OrderPayment
@@ -66,7 +67,7 @@ class OrderController extends BaseController
         $orderCode,
         SessionInterface $session,
         array $status,
-        $orderProvider,
+        OrderProvider $orderProvider,
         AccessToken $accessToken
     )
     {
