@@ -4,4 +4,3 @@ parameters:
     locale: en_SG
     timezone: "Asia/Singapore"
     average_delivery_time: 30
-    is_coming_soon_enabled: true
