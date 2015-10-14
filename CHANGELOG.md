@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.52.1
+ * INTVOLO-1106 Removed Coming Soon Page in SG
+
 * 1.52.0
  * INTVOLO-924 adds voucher gtm dataLayer
  * INTVOLO-1091: Singapore's Multiline Time Picker CSS
