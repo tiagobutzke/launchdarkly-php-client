@@ -9,7 +9,6 @@ var VoucherView = Backbone.View.extend({
     initialize: function() {
         _.bindAll(this);
         this.vendor_id = this.$el.data().vendor_id;
-        this.voucherError = null;
 
         this._initListeners();
         this._enableVoucher();
@@ -51,9 +50,9 @@ var VoucherView = Backbone.View.extend({
         this.$('.checkout__error-empty-voucher').addClass('hide');
     },
 
-    _showErrorMsg: function() {
+    _showErrorMsg: function(errorMessage) {
         this.$('.form__error-message--invalid-voucher').removeClass('hide');
-        this.$('.form__error-message--invalid-voucher').html(this.voucherError);
+        this.$('.form__error-message--invalid-voucher').html(errorMessage);
     },
 
     _showEmptyFieldErrorMsg: function() {
@@ -89,7 +88,6 @@ var VoucherView = Backbone.View.extend({
         }
 
         vendorCart = this.model.getCart(this.vendor_id);
-        this.voucherError = null;
         vendorCart.set('voucher', $voucher.val());
         vendorCart.updateCart();
 
@@ -118,15 +116,24 @@ var VoucherView = Backbone.View.extend({
         ];
 
         if (_.isObject(data) && _.indexOf(supportedErrors, _.get(data, 'error.errors.exception_type')) !== -1) {
-            var vendorCart = this.model.getCart(this.vendor_id);
-            var errorMessage = _.get(data, 'error.errors.message');
-            vendorCart.set('voucher', null);
+            var vendorCart = this.model.getCart(this.vendor_id),
+                errorMessage = this._getErrorMessage(data);
 
-            if (_.isString(errorMessage)) {
-                this.voucherError = errorMessage;
-            }
-            
-            this._showErrorMsg();
+            this._triggerVoucherErrorEvent(errorMessage, vendorCart.get('voucher'));
+
+            vendorCart.set('voucher', null);
+            this._showErrorMsg(errorMessage);
         }
+    },
+
+    _getErrorMessage: function (data) {
+        return _.get(data, 'error.errors.message', null);
+    },
+
+    _triggerVoucherErrorEvent: function (message, voucher) {
+        this.trigger('voucherView:voucherError', {
+            'message': message,
+            'voucher': voucher
+        });
     }
 });

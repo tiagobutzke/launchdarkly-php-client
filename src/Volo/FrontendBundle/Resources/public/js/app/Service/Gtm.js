@@ -13,6 +13,7 @@ VOLO.GTMService = function (options) {
     this.restaurantsView = options.restaurantsView;
     this.homeSearchView = options.homeSearchView;
     this.homeView = options.homeView;
+    this.checkoutVoucherView = options.checkoutVoucherView;
 
     this.initialize();
 };
@@ -29,6 +30,14 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
                 this.checkoutPageView,
                 'delivery:submit:successful_before',
                 this.fireCheckoutDeliveryDetailsSet
+            );
+        }
+
+        if (_.isObject(this.checkoutVoucherView)) {
+            this.listenTo(
+                this.checkoutVoucherView,
+                'voucherView:voucherError',
+                this.fireVoucherError
             );
         }
 
@@ -103,6 +112,14 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
         }
 
         return detectionResult;
+    },
+
+    fireVoucherError: function (data) {
+        this._push({
+            'event': 'errorVoucher',
+            'coupon': data.voucher,
+            'apiErrorMessage': data.message
+        });
     },
 
     fireLogin: function (data) {

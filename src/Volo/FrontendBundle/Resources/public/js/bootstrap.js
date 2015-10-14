@@ -517,6 +517,7 @@ VOLO.doBootstrap = function(configuration) {
         checkoutModel: checkoutModel,
         sessionId: configuration.sessionId,
         checkoutPageView: checkoutViews.checkoutPageView,
+        checkoutVoucherView: checkoutViews.voucherView,
         loginButtonView: loginButtonView,
         restaurantsView: restaurantsView
     });
