@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+* 1.52.0
+ * INTVOLO-924 adds voucher gtm dataLayer
+ * INTVOLO-1091: Singapore's Multiline Time Picker CSS
+ * INTVOLO-236 doomes the VWO code
+ * INTVOLO-928 INTVOLO-932 enabled full address dor ES and SE
+
 * 1.51.3
  * INTVOLO-317 Fixed JS error in menu page
 
