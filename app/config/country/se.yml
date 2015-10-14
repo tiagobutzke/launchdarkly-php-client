@@ -4,3 +4,6 @@ parameters:
     locale: sv_SE
     timezone: "Europe/Stockholm"
     average_delivery_time: 30
+    address_config:
+        autocomplete_type:
+            - "address"
