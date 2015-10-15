@@ -5,3 +5,6 @@ parameters:
     timezone: "Europe/Helsinki"
     average_delivery_time: 30
     timepicker_date_format: 'eee d LLL'
+    address_config:
+        autocomplete_type:
+            - "address"
