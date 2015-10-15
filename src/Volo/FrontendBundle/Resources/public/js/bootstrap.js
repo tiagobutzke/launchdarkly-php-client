@@ -453,6 +453,12 @@ VOLO.doBootstrap = function(configuration) {
         if ($registerButton.length > 0) {
             VOLO.createRegistrationEvent($registerButton, loginButtonView);
         }
+
+        $(document).off('click.openRegistrationPopup').on('click.openRegistrationPopup', '.openRegistrationPopup', function() {
+            loginButtonView.showRegistrationModal();
+
+            return false;
+        });
     }
 
     var $checkoutMain = $('.checkout__steps');
