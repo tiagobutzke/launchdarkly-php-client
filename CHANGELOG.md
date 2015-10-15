@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.53.0
+ * INTVOLO-927 enabled full address in FI
+
 * 1.52.1
  * INTVOLO-1106 Removed Coming Soon Page in SG
 
