@@ -123,9 +123,12 @@
 .restaurants__search__cancel-icon {
   display: none;
   position: absolute;
-  right: 10px;
-  line-height: 40px;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  padding-top: 7px;
   z-index: 1;
+  cursor: pointer;
 }
 .active-search .restaurants__search__cancel-icon {
   display: block;
@@ -189,10 +192,8 @@
 .restaurants__filter-tooltip.tooltip {
   width: 100%;
   top: 52px;
-  height: 100%;
   @include respond-from("screen-sm") {
     width: 350px;
-    height: auto;
     left: 20px !important;
   }
   @include respond-from("screen-lg") {
@@ -205,7 +206,7 @@
 }
 
 .restaurants__filter-tooltip .tooltip-inner {
-  max-width: initial;
+  max-width: inherit;
   border-left: none;
   border-right: none;
   text-align: left;
@@ -255,6 +256,13 @@
   float: right;
   @include make-link();
   cursor: pointer;
+}
+
+.filter__mobile-button {
+  margin: $space-sm 0 $space-xs;
+  @include respond-from("screen-sm") {
+    display: none;
+  }
 }
 
 .restaurants__location {
@@ -338,8 +346,10 @@
 
 .restaurants__location__cancel-icon {
   position: absolute;
-  right: 10px;
-  line-height: 40px;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  padding-top: 7px;
   cursor: pointer;
   z-index: 1;
 }

@@ -25,9 +25,9 @@ VOLO.RestaurantsView = Backbone.View.extend({
         var vendor = $(item).data().vendor,
             model = new VOLO.VendorModel(vendor),
             view = new VOLO.RestaurantView({
-            model: model,
-            el: item.parentNode
-        });
+                model: model,
+                el: item.parentNode
+            });
 
         this.subViews.push(view);
         this.listenTo(view, 'restaurantsView:restaurantClicked', this._fetchDataFromNode);

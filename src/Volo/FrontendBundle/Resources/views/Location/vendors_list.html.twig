@@ -86,40 +86,47 @@
         {% if gpsSearch %}
             <div class="restaurants__filter-tooltip tooltip tooltip--align-left bottom in hide">
                 <div class="tooltip-inner tooltip-inner--white-with-border">
-                    <form class="restaurants__filter-form-cuisines clearfix">
-                        <div class="restaurants__filter-form__head clearfix">
-                            <div class="restaurants__filter-form__head-line">{% trans %}restaurants_filter.cuisines{% endtrans %}</div>
-                            <div class="restaurants__filter-form__head-cancel-cuisines hide">{% trans %}restaurants_filter.clear{% endtrans %}</div>
-                        </div>
-                        {% for filter in filters.cuisine %}
-                            {% if (loop.index <= cuisineFilterMaximum) %}
-                                <div class="form-group sprite-form restaurants__filter-form-group">
-                                    <input type="checkbox" class="form-control sprite-form__checkbox" value="{{ filter.id }}" name="filter-{{ filter.id }}" id="filter-{{ filter.id }}">
-                                    <div class="sprite-form__sprite"></div>
-                                    <label class="sprite-form__label" for="filter-{{ filter.id }}">
-                                        {{ filter.name }}
-                                    </label>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    </form>
-                    <form class="restaurants__filter-form-food-characteristics restaurants__filter-form-border-top clearfix">
-                        <div class="restaurants__filter-form__head clearfix">
-                            <div class="restaurants__filter-form__head-line">{% trans %}restaurants_filter.attributes{% endtrans %}</div>
-                            <div class="restaurants__filter-form__head-cancel-food-characteristics hide">{% trans %}restaurants_filter.clear{% endtrans %}</div>
-                        </div>
-                        {% for filter in filters.food_characteristics %}
-                            {% if (loop.index <= foodCharacteristicsFilterMaximum) %}
-                                <div class="form-group sprite-form restaurants__filter-form-group">
-                                    <input type="checkbox" class="form-control sprite-form__checkbox" value="{{ filter.id }}" name="filter-{{ filter.id }}" id="filter-{{ filter.id }}">
-                                    <div class="sprite-form__sprite"></div>
-                                    <label class="sprite-form__label" for="filter-{{ filter.id }}">
-                                        {{ filter.name }}
-                                    </label>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    </form>
+                    {% if (filters.cuisine|length > 0) %}
+                        <form class="restaurants__filter-form-cuisines clearfix">
+                            <div class="restaurants__filter-form__head clearfix">
+                                <div class="restaurants__filter-form__head-line">{% trans %}restaurants_filter.cuisines{% endtrans %}</div>
+                                <div class="restaurants__filter-form__head-cancel-cuisines hide">{% trans %}restaurants_filter.clear{% endtrans %}</div>
+                            </div>
+                            {% for filter in filters.cuisine %}
+                                {% if (loop.index <= cuisineFilterMaximum) %}
+                                    <div class="form-group sprite-form restaurants__filter-form-group">
+                                        <input type="checkbox" class="form-control sprite-form__checkbox" value="{{ filter.id }}" name="filter-{{ filter.id }}" id="filter-{{ filter.id }}">
+                                        <div class="sprite-form__sprite"></div>
+                                        <label class="sprite-form__label" for="filter-{{ filter.id }}">
+                                            {{ filter.name }}
+                                        </label>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </form>
+                    {% endif %}
+                    {% if (filters.food_characteristics|length > 0) %}
+                        <form class="restaurants__filter-form-food-characteristics restaurants__filter-form-border-top clearfix">
+                            <div class="restaurants__filter-form__head clearfix">
+                                <div class="restaurants__filter-form__head-line">{% trans %}restaurants_filter.attributes{% endtrans %}</div>
+                                <div class="restaurants__filter-form__head-cancel-food-characteristics hide">{% trans %}restaurants_filter.clear{% endtrans %}</div>
+                            </div>
+                            {% for filter in filters.food_characteristics %}
+                                {% if (loop.index <= foodCharacteristicsFilterMaximum) %}
+                                    <div class="form-group sprite-form restaurants__filter-form-group">
+                                        <input type="checkbox" class="form-control sprite-form__checkbox" value="{{ filter.id }}" name="filter-{{ filter.id }}" id="filter-{{ filter.id }}">
+                                        <div class="sprite-form__sprite"></div>
+                                        <label class="sprite-form__label" for="filter-{{ filter.id }}">
+                                            {{ filter.name }}
+                                        </label>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </form>
+                    {% endif %}
+                    <button class="filter__mobile-button button-secondary button button--full-width">
+                        {% trans %}restaurants_filter.button_close{% endtrans %}
+                    </button>
                 </div>
             </div>
             <div class="restaurants__tool-box">
@@ -132,7 +139,7 @@
                             </span>
                         </div>
                         <div class="restaurants__search">
-                            <i class="icon-cancel restaurants__search__cancel-icon"></i>
+                            <button class="button--fake restaurants__search__cancel-icon"><i class="icon-cancel"></i></button>
                             <span class="restaurants__search__label">
                                 <i class="icon-search restaurants__search__label-icon"></i>
                                 <span class="restaurants__search__label-text">{% trans %}restaurants_search.button_label{% endtrans %}</span>
@@ -143,7 +150,7 @@
                 {% endif %}
                 <div class="restaurants__location">
                     <form id="delivery-information-postal-index-form" class="restaurants__location__form" method="GET">
-                        <i class="icon-cancel restaurants__location__cancel-icon"></i>
+                        <button class="button--fake restaurants__location__cancel-icon"><i class="icon-cancel"></i></button>
                         <input
                                 id="delivery-information-postal-index"
                                 type="text"
@@ -181,26 +188,26 @@
                 </div>
             </div>
         {% endif %}
+        <div class="restaurants__list restaurants__list--open">
+            {% for vendor in openVendors %}
+                <a href="{{ path('vendor', {code: vendor.code, urlKey: vendor.urlKey}) }}">
+                    {{ include('VoloFrontendBundle:Layout/Partial/templates:vendor_detail.html.twig', {'serialized_vendor': serialize(vendor) }) }}
+                </a>
+            {% endfor %}
+        </div>
+        <div class="restaurants__list restaurants__list--closed">
+            {% for vendor in closedVendors %}
+                <a href="{{ path('vendor', {code: vendor.code, urlKey: vendor.urlKey}) }}">
+                    {{ include('VoloFrontendBundle:Layout/Partial/templates:vendor_detail.html.twig', {'serialized_vendor': serialize(vendor) }) }}
+                </a>
+            {% endfor %}
+        </div>
         {% if openVendors|length == 0 and closedVendors|length == 0 %}
             <div class="restaurants__not-available-message restaurants__no-result-message">
                 <div class="restaurants__not-available-message__title">{% trans %}restaurant.not_available.title{% endtrans %}</div>
                 <div class="restaurants__not-available-message__text">{% trans %}restaurants.not_available{% endtrans %}</div>
             </div>
         {% else %}
-            <div class="restaurants__list restaurants__list--open">
-                {% for vendor in openVendors %}
-                    <a href="{{ path('vendor', {code: vendor.code, urlKey: vendor.urlKey}) }}">
-                        {{ include('VoloFrontendBundle:Layout/Partial/templates:vendor_detail.html.twig', {'serialized_vendor': serialize(vendor) }) }}
-                    </a>
-                {% endfor %}
-            </div>
-            <div class="restaurants__list restaurants__list--closed">
-                {% for vendor in closedVendors %}
-                    <a href="{{ path('vendor', {code: vendor.code, urlKey: vendor.urlKey}) }}">
-                        {{ include('VoloFrontendBundle:Layout/Partial/templates:vendor_detail.html.twig', {'serialized_vendor': serialize(vendor) }) }}
-                    </a>
-                {% endfor %}
-            </div>
             <div class="restaurants__search__not-found-message restaurants__no-result-message hide">
                 <div class="restaurants__not-available-message__title">{% trans %}restaurant.search.not_found.title{% endtrans %}</div>
                 <div class="restaurants__not-available-message__text">{% trans %}restaurants.search.not_found.text{% endtrans %}</div>

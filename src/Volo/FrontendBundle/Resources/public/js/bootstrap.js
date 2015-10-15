@@ -339,10 +339,11 @@ VOLO.createRestaurantsView = function(vendorCollection, filterModel) {
     return restaurantsView;
 };
 
-VOLO.createFilterView = function(filterModel) {
+VOLO.createFilterView = function(vendorCollection, filterModel) {
     var filtersView = new VOLO.FiltersView({
             el: '.restaurants-container',
-            model: filterModel
+            model: filterModel,
+            vendorCollection: vendorCollection
         });
 
     VOLO.views.push(filtersView);
@@ -505,8 +506,11 @@ VOLO.doBootstrap = function(configuration) {
         vendorCollection = VOLO.createVendorCollection(locationModel, filterModel);
 
         restaurantsView = VOLO.createRestaurantsView(vendorCollection, filterModel);
-        VOLO.createFilterView(filterModel);
-        VOLO.createVendorsListSearchView(locationModel, vendorCollection).render();
+
+        if ($('.restaurants__tool-box').length > 0) {
+            VOLO.createFilterView(vendorCollection, filterModel);
+            VOLO.createVendorsListSearchView(locationModel, vendorCollection).render();
+        }
     }
 
     if ($('.header__account').length > 0) {

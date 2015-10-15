@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Volo\FrontendBundle\Exception\CityNotFoundException;
 use Volo\FrontendBundle\Service\CustomerLocationService;
 
 class LocationController extends BaseController
@@ -47,7 +48,7 @@ class LocationController extends BaseController
         $city = null;
         try {
             $city = $this->getCityService()->findCityByGpsLocation($location);
-        } catch (\RuntimeException $e) {
+        } catch (CityNotFoundException $e) {
             // do nothing
         }
 
@@ -177,7 +178,7 @@ class LocationController extends BaseController
         LocationInterface $location,
         array $formattedLocation,
         VendorsCollection $vendors,
-        City $city
+        $city
     )
     {
         return [

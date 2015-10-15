@@ -6,7 +6,7 @@ VOLO.VendorsSearchView = HomeSearchView.extend({
             'submit': '_submitPressed',
             'click #change_user_location_box_button': '_handleClickOnLocationChangeButton',
             'keyup .restaurants__search__input': _.debounce(this.search, 150, {leading: false}),
-            'click .restaurants__location__cancel-icon': 'hidePostalCodeForm',
+            'click .restaurants__location__cancel-icon': '_hidePostalCodeForm',
             'click .restaurants__search': '_handleClickOnSearchButton',
             'click .restaurants__search__cancel-icon': '_handleClickOnSearchCancelButton'
         };
@@ -17,6 +17,8 @@ VOLO.VendorsSearchView = HomeSearchView.extend({
         this.vendorCollection = options.vendorCollection;
 
         this.listenTo(this.vendorCollection, 'reset', this._hideRestaurantsSearch);
+
+        this._clearPostalCodeForm();
     },
 
     /**
@@ -57,9 +59,13 @@ VOLO.VendorsSearchView = HomeSearchView.extend({
 
     _hidePostalCodeForm: function() {
         this.$('.restaurants__tool-box').removeClass('active-location-form');
-        this.$('#delivery-information-postal-index').val('').blur();
+        this._clearPostalCodeForm();
 
         return false;
+    },
+
+    _clearPostalCodeForm: function() {
+        this.$('#delivery-information-postal-index').val('').blur();
     },
 
     _handleClickOnLocationChangeButton: function() {
@@ -88,7 +94,7 @@ VOLO.VendorsSearchView = HomeSearchView.extend({
             this._hideNotFoundMessage();
         }
 
-        if (!query) {
+        if (_.isEmpty(query)) {
             this._displayAllRestaurants();
 
             return;

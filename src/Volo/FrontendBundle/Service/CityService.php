@@ -70,13 +70,13 @@ class CityService
         try {
             $cities = $this->cityProvider->findCitiesByLocation($location);
         } catch (ApiErrorException $e) {
-            throw new \RuntimeException(
+            throw new CityNotFoundException(
                 sprintf('No cities found with coordinates : %f/%f', $location->getLatitude(), $location->getLongitude())
             );
         }
 
         if ($cities->getAvailableCount() === 0) {
-            throw new \RuntimeException(
+            throw new CityNotFoundException(
                 sprintf('No cities found with coordinates : %f/%f', $location->getLatitude(), $location->getLongitude())
             );
         }

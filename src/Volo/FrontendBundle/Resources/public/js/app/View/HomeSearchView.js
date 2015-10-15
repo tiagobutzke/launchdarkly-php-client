@@ -15,6 +15,7 @@ var HomeSearchView = CTATrackableView.extend({
         this.listenTo(this.geocodingService, 'autocomplete:place_changed', this._applyNewLocationData);
         this.listenTo(this.geocodingService, 'autocomplete:not_found', this._notFound);
 
+        this.$('#delivery-information-postal-index').val(this.model.get('formattedAddress'));
         this.postInit();
     },
 
@@ -50,9 +51,7 @@ var HomeSearchView = CTATrackableView.extend({
         this.$('#delivery-information-postal-index').val('');
     },
 
-    postInit: function() {
-        this.model.set(this.model.defaults);
-    },
+    postInit: $.noop,
 
     _notFound: function() {
         var value = this.$('#delivery-information-postal-index').val() || '';
@@ -108,6 +107,13 @@ var HomeSearchView = CTATrackableView.extend({
 
     _afterSubmit: function() {
         var data = this.model.toJSON();
+
+        if (!this.model.isValid()) {
+            this._notFound();
+
+            return;
+        }
+
         Turbolinks.visit(Routing.generate('volo_location_search_vendors_by_gps', {
             city: data.city,
             address: encodeURIComponent(data.address),

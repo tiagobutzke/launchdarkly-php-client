@@ -91,6 +91,9 @@
   width: 12px;
   height: 12px;
   background: inherit;
-  transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
   box-shadow: -2px -2px 0px -1px #c8c8c8;
 }
