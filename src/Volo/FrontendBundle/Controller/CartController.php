@@ -28,6 +28,11 @@ class CartController extends BaseController
             $apiResult = $cartManager->calculateCart($data);
             $cartManager->saveCart($request->getSession(), $data['vendor_id'], $data);
         } catch (ApiErrorException $e) {
+            $errorMessages = json_decode($e->getJsonErrorMessage(), true);
+            if (isset($errorMessages['data']['exception_type']) && $errorMessages['data']['exception_type'] === 'ApiVoucherCustomerRequiredException') {
+                $cartManager->saveCart($request->getSession(), $data['vendor_id'], $data);
+            }
+
             return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
         }
 
