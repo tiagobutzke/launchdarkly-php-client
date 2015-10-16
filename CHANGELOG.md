@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.53.1
+ * INTVOLO-1056 - different phone images for different countries
+
 * 1.53.0
  * INTVOLO-927 enabled full address in FI
 
