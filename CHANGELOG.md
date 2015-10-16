@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.53.3
+ * INTVOLO-1121 removed "asset_version_cdn_s3_placeholder"
+ 
 * 1.53.2
  * INTVOLO-1056 added DE images
 
