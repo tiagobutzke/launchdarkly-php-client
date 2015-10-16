@@ -64,6 +64,7 @@ var ValidationView = Backbone.View.extend({
         if (view) {
             view.removeClass('hide');
         } else {
+            this.removeCurrentErrorMessage(target);
             this._errorMessages[target.name] = this.createErrorMessage(target.getAttribute('data-validation-msg'), target);
         }
     },
@@ -73,6 +74,10 @@ var ValidationView = Backbone.View.extend({
         msg.insertAfter(target);
 
         return msg;
+    },
+
+    removeCurrentErrorMessage: function(target) {
+        $(target).next('.form__error-message').remove();
     },
 
     _hideMessage: function(e) {

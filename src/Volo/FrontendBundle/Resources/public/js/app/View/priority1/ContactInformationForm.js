@@ -108,11 +108,11 @@ VOLO.ContactInformationForm = ValidationView.extend({
 
     _onErrorMobileNumberValidation: function (response) {
         var errorMessage = _.get(response, 'responseJSON.error.mobile_number');
+        var field;
         if (errorMessage) {
-            this.createErrorMessage(
-                _.get(response, 'responseJSON.error.mobile_number'),
-                this.$('#contact-information-mobile-number')[0]
-            );
+            field = this.$('#contact-information-mobile-number')[0];
+            this.removeCurrentErrorMessage(field);
+            this.createErrorMessage(_.get(response, 'responseJSON.error.mobile_number'), field);
             this.trigger('form:error');
         }
     },
@@ -135,6 +135,7 @@ VOLO.ContactInformationForm = ValidationView.extend({
             var selector = 'input[name=\'customer['+ error.field_name +']\']',
                 element = this.$(selector);
             _.each(_.get(error, 'violation_messages', []), function (message) {
+                this.removeCurrentErrorMessage(element[0]);
                 this.createErrorMessage(message, element[0]);
             }, this);
         }, this);
