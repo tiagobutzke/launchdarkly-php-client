@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.53.2
+ * INTVOLO-1056 added DE images
+
 * 1.53.1
  * INTVOLO-1056 - different phone images for different countries
 
