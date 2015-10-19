@@ -1,6 +1,17 @@
 CHANGELOG
 =========
 
+* 1.56.0
+ * INTVOLO-1111 localStorage fallback
+ * INTVOLO-1112 Added click listener to open Registration form
+
+* 1.55.0
+ * INTVOLO-122 indicates vendor as inactive
+ * INTVOLO-1036: Fix Multiple Error Messages
+
+* 1.54.0
+ * INTVOLO-926 full address enabled in IT
+
 * 1.53.3
  * INTVOLO-1121 removed "asset_version_cdn_s3_placeholder"
  
