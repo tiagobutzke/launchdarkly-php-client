@@ -108,7 +108,8 @@ class GTMExtension extends Twig_Extensions_Extension_Intl
             'id' => $vendor->getId(),
             'name' => $vendor->getName(),
             'code' => $vendor->getCode(),
-            'category' => implode(',', $cuisines)
+            'category' => implode(',', $cuisines),
+            'is_active' => $vendor->isIsActive()
         ];
     }
 
