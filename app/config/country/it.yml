@@ -4,3 +4,6 @@ parameters:
     locale: it_IT
     timezone: "Europe/Rome"
     average_delivery_time: 30
+    address_config:
+        autocomplete_type:
+            - "address"
