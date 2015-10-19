@@ -1,6 +1,7 @@
 var CheckoutPageView = Backbone.View.extend({
     events: {
-        'click #checkout-finish-and-pay-button': '_submitOrder'
+        'click #checkout-finish-and-pay-button': '_submitOrder',
+        'click .openRegistrationPopup': '_openRegistrationModal'
     },
 
     initialize: function (options) {
@@ -72,6 +73,12 @@ var CheckoutPageView = Backbone.View.extend({
             this.listenTo(this.cartModel.getCart(this.vendorId), 'cart:ready', this._updatePaymentsMethod);
             this._updatePaymentsMethod();
         }
+    },
+
+    _openRegistrationModal: function() {
+        this.checkoutDeliveryInformationView._showRegistrationModal();
+
+        return false;
     },
 
     _updatePaymentsMethod: function() {
