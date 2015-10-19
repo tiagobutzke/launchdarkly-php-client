@@ -1,10 +1,13 @@
 _.extend(Backbone.LocalStorage.prototype, {
     localStorage: function() {
         try {
-            if (!window.fakeLocalStorage) {
+            if (window.fakeLocalStorage) {
+                return window.fakeLocalStorage;
+            } else {
                 // localStorage.setItem throws an exception during private browsing
                 // this is just a test to see if localStorage.setItem works
                 localStorage.setItem('test', 'test');
+                localStorage.removeItem('test');
             }
 
             return localStorage;
