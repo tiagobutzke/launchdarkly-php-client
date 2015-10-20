@@ -49,6 +49,8 @@
         <parameter key="volo_frontend.service.event_service.class">Volo\FrontendBundle\Service\EventService</parameter>
         <parameter key="translator.class">Volo\FrontendBundle\Service\TranslatorService</parameter>
         <parameter key="volo_frontend.service.special_instructions_tutorial.class">Volo\FrontendBundle\Service\SpecialInstructionsTutorialService</parameter>
+        <parameter key="volo_frontend.service.thumbor_service.class">Volo\FrontendBundle\Service\ThumborService</parameter>
+        <parameter key="volo_frontend.service.city.class">Volo\FrontendBundle\Service\CityService</parameter>
     </parameters>
 
     <services>
@@ -187,6 +189,9 @@
             <argument type="service" id="volo_frontend.provider.vendor" />
             <argument type="service" id="volo_frontend.service.schedule" />
             <argument type="service" id="doctrine_cache.providers.vendor_cache" />
+            <argument type="service" id="volo_frontend.service.thumbor_service" />
+            <argument type="service" id="translator" />
+            <argument type="service" id="volo_frontend.twig.volo_extension" />
         </service>
 
         <service id="volo_frontend.twig.serializer_extension" class="%volo_frontend.twig.serializer_extension.class%">
@@ -252,6 +257,15 @@
 
         <service id="volo_frontend.service.event_service" class="%volo_frontend.service.event_service.class%">
             <argument type="service" id="volo_frontend.provider.vendor"/>
+        </service>
+
+        <service id="volo_frontend.service.thumbor_service" class="%volo_frontend.service.thumbor_service.class%">
+            <argument id="phumbor.url.transformer" type="service"/>
+            <argument id="assets.packages" type="service"/>
+        </service>
+
+        <service id="volo_frontend.service.city" class="%volo_frontend.service.city.class%">
+            <argument type="service" id="volo_frontend.provider.city"/>
         </service>
     </services>
 </container>

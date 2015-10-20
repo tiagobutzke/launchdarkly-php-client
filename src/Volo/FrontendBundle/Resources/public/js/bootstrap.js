@@ -16,6 +16,17 @@ VOLO.createFloodBannerModel = function() {
     return VOLO.floodBannerModel;
 };
 
+VOLO.createFilterModel = function () {
+    return new VOLO.FilterModel();
+};
+
+VOLO.createVendorCollection = function(locationModel, filterModel) {
+    return new VOLO.VendorCollection([], {
+        locationModel: locationModel,
+        filterModel: filterModel
+    });
+};
+
 VOLO.createCustomerModel = function (jsonCustomer, isGuest) {
     VOLO.customer = new VOLO.CustomerModel(jsonCustomer, {
         isGuest: isGuest
@@ -273,6 +284,7 @@ VOLO.createLoginButtonView = function (customerModel) {
     });
 
     VOLO.views.push(loginButtonView);
+
     return loginButtonView;
 };
 
@@ -282,17 +294,20 @@ VOLO.createCartIconView = function () {
     });
 
     VOLO.views.push(cartIconView);
+
     return cartIconView;
 };
 
-VOLO.createVendorsListSearchView = function () {
-    var vendorSearchView = new VendorsSearchView({
+VOLO.createVendorsListSearchView = function (locationModel, vendorCollection) {
+    var vendorSearchView = new VOLO.VendorsSearchView({
         el: '.restaurants-container',
-        model: VOLO.locationModel,
+        model: locationModel,
+        vendorCollection: vendorCollection,
         geocodingService: new GeocodingService(VOLO.configuration.countryCode)
     });
 
     VOLO.views.push(vendorSearchView);
+
     return vendorSearchView;
 };
 
@@ -305,17 +320,35 @@ VOLO.createVendorsListSearchNoLocationView = function (locationModel) {
     });
 
     VOLO.views.push(vendorSearchView);
+
     return vendorSearchView;
 };
 
-VOLO.createRestaurantsView = function() {
+VOLO.createRestaurantsView = function(vendorCollection, filterModel) {
     var restaurantsView = new VOLO.RestaurantsView({
-        el: '.restaurants__list'
+        el: '.restaurants-container',
+        collection: vendorCollection,
+        filterModel: filterModel
     });
 
     VOLO.views.push(restaurantsView);
     VOLO.gtmViews.push(restaurantsView);
+
+    VOLO.restaurantsView = restaurantsView;
+
     return restaurantsView;
+};
+
+VOLO.createFilterView = function(vendorCollection, filterModel) {
+    var filtersView = new VOLO.FiltersView({
+            el: '.restaurants-container',
+            model: filterModel,
+            vendorCollection: vendorCollection
+        });
+
+    VOLO.views.push(filtersView);
+
+    return filtersView;
 };
 
 VOLO.createRestaurantsSearchView = function() {
@@ -418,7 +451,11 @@ VOLO.doBootstrap = function(configuration) {
         loginButtonView,
         cartIconView,
         restaurantsView,
-        vendorGeocodingView
+        vendorGeocodingView,
+        vendorPopupView,
+        userAddressCollection,
+        filterModel,
+        vendorCollection
     ;
 
     userAddressCollection = VOLO.createUserAddressCollection(VOLO.jsonUserAddress, VOLO.customer);
@@ -465,7 +502,15 @@ VOLO.doBootstrap = function(configuration) {
     }
 
     if ($('.restaurants__list').length > 0) {
-        restaurantsView = VOLO.createRestaurantsView();
+        filterModel = VOLO.createFilterModel();
+        vendorCollection = VOLO.createVendorCollection(locationModel, filterModel);
+
+        restaurantsView = VOLO.createRestaurantsView(vendorCollection, filterModel);
+
+        if ($('.restaurants__tool-box').length > 0) {
+            VOLO.createFilterView(vendorCollection, filterModel);
+            VOLO.createVendorsListSearchView(locationModel, vendorCollection).render();
+        }
     }
 
     if ($('.header__account').length > 0) {
@@ -505,11 +550,6 @@ VOLO.doBootstrap = function(configuration) {
         }
     }
 
-    if ($('.restaurants__tool-box').length > 0) {
-        var vendorSearchView = VOLO.createVendorsListSearchView();
-        vendorSearchView.render();
-    }
-
     if ($('.order-status-wrapper').length > 0) {
         /**
          * Temporary disabled
@@ -545,7 +585,6 @@ VOLO.doBootstrap = function(configuration) {
     });
 
     _.invoke(VOLO.gtmViews, 'setGtmService', GTMServiceInstance);
-    _.invoke(VOLO.gtmViews, 'onGtmServiceCreated');
 
     if ($checkoutMain.length > 0) {
         VOLO.renderCheckoutViews(checkoutViews);
@@ -556,6 +595,8 @@ VOLO.doBootstrap = function(configuration) {
     var floodBannerModel = VOLO.createFloodBannerModel(),
         bannersView = VOLO.createBannersView(locationModel, floodBannerModel);
     bannersView.render();
+
+    _.invoke(VOLO.gtmViews, 'onGtmServiceCreated');
 };
 
 VOLO.isFullAddressAutoComplete = function () {

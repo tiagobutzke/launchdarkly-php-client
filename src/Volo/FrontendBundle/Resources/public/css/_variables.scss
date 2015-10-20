@@ -13,8 +13,9 @@ $fontspath: "../../fonts/";
 // 2. than click on "load" on the "manage projects" and download the font
 // 2. overwrite the icomoon-foodora.json with the new generated one
 // 3. overwrite the fonts /web/fonts with the new generated fonts
-// 4. increase the value of $font-version because of caching issues
-$font-version: 12;
+// 5. add new css font styles to foodora-font.scss
+// 6. increase the value of $font-version because of caching issues
+$font-version: 13;
 
 @font-face {
   font-family: 'icomoon';

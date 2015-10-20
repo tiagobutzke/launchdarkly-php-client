@@ -102,6 +102,11 @@ a.button {
   color: $cta-color-text-primary;
 }
 
+.button--fake {
+  border: none;
+  background: transparent;
+}
+
 // ----------------------- BUTTONS END -----------------------
 
 

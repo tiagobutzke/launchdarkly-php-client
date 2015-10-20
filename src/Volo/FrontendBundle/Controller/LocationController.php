@@ -4,6 +4,8 @@ namespace Volo\FrontendBundle\Controller;
 
 use Foodpanda\ApiSdk\Entity\Cart\AbstractLocation;
 use Foodpanda\ApiSdk\Entity\Cart\CityLocation;
+use Foodpanda\ApiSdk\Entity\Cart\GpsLocation;
+use Foodpanda\ApiSdk\Entity\Cart\LocationInterface;
 use Foodpanda\ApiSdk\Entity\City\City;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
 use Foodpanda\ApiSdk\Entity\Vendor\VendorsCollection;
@@ -12,15 +14,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Volo\FrontendBundle\Exception\CityNotFoundException;
+use Volo\FrontendBundle\Service\CustomerLocationService;
 
 class LocationController extends BaseController
 {
     /**
-     * @Route(
-     *      "/city/{cityUrlKey}",
-     *      name="volo_location_search_vendors_by_city",
-     *      requirements={"cityUrlKey"="[a-zA-Z-]+"}
-     * )
      * @Route(
      *      "/restaurants/lat/{latitude}/lng/{longitude}/plz/{postcode}/city/{city}/address/{address}/{street}/{building}",
      *      name="volo_location_search_vendors_by_gps",
@@ -37,40 +36,159 @@ class LocationController extends BaseController
      * @ParamConverter("location", converter="user_location_converter")
      *
      * @param Request $request
-     * @param AbstractLocation $location
-     * @param array $formattedLocation
+     * @param GpsLocation $location
      *
      * @return array
      */
-    public function locationAction(Request $request, AbstractLocation $location, array $formattedLocation)
+    public function locationAction(Request $request, GpsLocation $location)
     {
-        /** @var City $city */
-        $city = $request->attributes->get('cityObj');
+        $gpsLocation = $this->saveCustomerLocation($request);
+        $formattedLocation = $this->createFormattedLocation($gpsLocation, $location);
 
-        if ($location instanceof CityLocation && $request->attributes->get('cityUrlKey') !== $city->getUrlKey()) {
+        $city = null;
+        try {
+            $city = $this->getCityService()->findCityByGpsLocation($location);
+        } catch (CityNotFoundException $e) {
+            // do nothing
+        }
+
+        $vendors = $this->getVendorService()->findAll($location);
+
+        return $this->prepareViewData($request, $location, $formattedLocation, $vendors, $city);
+    }
+
+    /**
+     * @Route(
+     *      "/city/{cityUrlKey}",
+     *      name="volo_location_search_vendors_by_city",
+     *      requirements={"cityUrlKey"="[a-zA-Z-]+"}
+     * )
+     * @Method({"GET"})
+     * @Template("VoloFrontendBundle:Location:vendors_list.html.twig")
+     * @ParamConverter("location", converter="user_location_converter")
+     * @ParamConverter("city", converter="city_location_converter")
+     *
+     * @param Request $request
+     * @param CityLocation $location
+     * @param City $city
+     *
+     * @return array
+     */
+    public function cityAction(Request $request, CityLocation $location, City $city)
+    {
+        $formattedLocation = $this->getCustomerLocationService()->createEmpty();
+
+        if ($request->attributes->get('cityUrlKey') !== $city->getUrlKey()) {
             return $this->redirectToRoute('volo_location_search_vendors_by_city', ['cityUrlKey' => $city->getUrlKey()]);
         }
 
-        $vendors = $this->get('volo_frontend.provider.vendor')->findVendorsByLocation($location);
+        $vendors = $this->getVendorService()->findAll($location);
 
-        /** @var $openVendors VendorsCollection */
-        /** @var $closedVendorsWithPreorder VendorsCollection */
-        list($openVendors, $closedVendorsWithPreorder) = $vendors->getItems()
-            ->filter(function (Vendor $vendor) { // filter restaurant closed
-                return !$vendor->getSchedules()->isEmpty();
-            })->partition(function ($key, Vendor $vendor) {
-                return $this->get('volo_frontend.service.schedule')->isVendorOpen($vendor, new \DateTime());
-            });
+        return $this->prepareViewData($request, $location, $formattedLocation, $vendors, $city);
+    }
 
+    /**
+     * @param VendorsCollection $vendors
+     *
+     * @return array
+     */
+    private function createFilters(VendorsCollection $vendors)
+    {
+        $filters = [
+            'cuisine' => [],
+            'food_characteristics' => [],
+        ];
+
+        /** @var Vendor $item */
+        foreach ($vendors as $item) {
+            foreach ($item->getCuisines() as $cuisine) {
+                $filters['cuisine'][$cuisine->getId()] = $cuisine;
+            }
+
+            foreach ($item->getFoodCharacteristics() as $characteristics) {
+                $filters['food_characteristics'][$characteristics->getId()] = $characteristics;
+            }
+        }
+
+        return $filters;
+    }
+
+    /**
+     * @param array $gpsLocation
+     * @param AbstractLocation $location
+     *
+     * @return array
+     */
+    private function createFormattedLocation(array $gpsLocation, AbstractLocation $location)
+    {
+        // this is to handle the case when the user select district / main area without a street address
+        $deliveryAddress = trim(
+            sprintf(
+                '%s %s, %s',
+                urldecode($gpsLocation[CustomerLocationService::KEY_BUILDING]),
+                urldecode($gpsLocation[CustomerLocationService::KEY_STREET]),
+                urldecode($gpsLocation[CustomerLocationService::KEY_PLZ])
+            )
+        );
+        $deliveryAddress = strpos($deliveryAddress, ',') === 0 ? substr($deliveryAddress, 1) : $deliveryAddress;
+
+        return [
+            'type'             => $location->getLocationType(),
+            'city'             => urldecode($gpsLocation[CustomerLocationService::KEY_CITY]),
+            'postcode'         => $gpsLocation[CustomerLocationService::KEY_PLZ],
+            'address'          => urldecode($gpsLocation[CustomerLocationService::KEY_ADDRESS]),
+            'street'           => urldecode($gpsLocation[CustomerLocationService::KEY_STREET]),
+            'building'         => urldecode($gpsLocation[CustomerLocationService::KEY_BUILDING]),
+            'delivery_address' => urldecode($deliveryAddress)
+        ];
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    private function saveCustomerLocation(Request $request)
+    {
+        $gpsLocation = $this->getCustomerLocationService()->create(
+            $request->get(CustomerLocationService::KEY_LAT),
+            $request->get(CustomerLocationService::KEY_LNG),
+            $request->get(CustomerLocationService::KEY_PLZ),
+            urldecode($request->get(CustomerLocationService::KEY_CITY)),
+            urldecode($request->get(CustomerLocationService::KEY_ADDRESS)),
+            urldecode($request->get(CustomerLocationService::KEY_STREET)),
+            urldecode($request->get(CustomerLocationService::KEY_BUILDING))
+        );
+
+        $this->getCustomerLocationService()->set($request->getSession(), $gpsLocation);
+
+        return $gpsLocation;
+    }
+
+    /**
+     * @param Request $request
+     * @param LocationInterface $location
+     * @param array $formattedLocation
+     * @param VendorsCollection $vendors
+     * @param City $city
+     *
+     * @return array
+     */
+    private function prepareViewData(
+        Request $request,
+        LocationInterface $location,
+        array $formattedLocation,
+        VendorsCollection $vendors,
+        $city
+    )
+    {
         return [
             'hasQueryParams' => $request->query->count() > 0,
             'gpsSearch' => $location->getLocationType() === 'polygon',
             'formattedLocation' => $formattedLocation,
-            'vendors' => $vendors->getItems(),
-            'openVendors' => $openVendors,
-            'closedVendors' => $closedVendorsWithPreorder,
+            'vendors' => $vendors,
             'city' => $city,
-            'location' => $this->get('volo_frontend.service.customer_location')->get($request->getSession())
+            'location' => $this->getCustomerLocationService()->get($request->getSession()),
+            'filters' => $this->createFilters($vendors)
         ];
     }
 }

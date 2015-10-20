@@ -7,7 +7,7 @@
   z-index: 800;
   display: block;
   // Reset font and text properties given new insertion method
-  font-family: $font-family-base;
+  font-family: $base-font-family;
   font-size: $font-size-1_2rem;
   font-weight: normal;
   line-height: 1.4;
@@ -74,4 +74,26 @@
   height: 0;
   border-color: transparent;
   border-style: solid;
+}
+
+.tooltip-inner--white-with-border {
+  color: #222;
+  padding: $space-md $space-sm $space-sm;
+  background-color: #fff;
+  border: 1px solid #c8c8c8;
+}
+
+.tooltip-inner--white-with-border:after {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 2px;
+  width: 12px;
+  height: 12px;
+  background: inherit;
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  box-shadow: -2px -2px 0px -1px #c8c8c8;
 }

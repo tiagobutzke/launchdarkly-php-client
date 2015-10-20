@@ -67,7 +67,7 @@ VOLO.initDomAnimationScripts = function() {
             return $('.restaurants__list').length && $('.header').length && !$('body').hasClass('restaurants--no-address');
         },
         startingPointGetter: function() {
-            var startingPoint = $('.restaurants__list').offset().top - $('.header').height() + 30;
+            var startingPoint = $('.restaurants__list').offset().top - $('.header').height() + $('.restaurants__search-filter-wrapper').height();
 
             if ($document.find('body.show-banner').length) {
                 startingPoint -= $('.top-banner:visible').outerHeight();

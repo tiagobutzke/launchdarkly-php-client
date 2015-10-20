@@ -1,8 +1,8 @@
 {
 	"metadata": {
 		"name": "Foodora",
-		"lastOpened": 1441367377191,
-		"created": 1441367373790
+		"lastOpened": 1444037287746,
+		"created": 1444037285461
 	},
 	"iconSets": [
 		{
@@ -157,7 +157,7 @@
 					"prevSize": 20,
 					"code": 68,
 					"name": "down-open-mini",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 37,
@@ -165,7 +165,7 @@
 					"prevSize": 20,
 					"code": 99,
 					"name": "left-open-mini",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 38,
@@ -173,7 +173,7 @@
 					"prevSize": 20,
 					"code": 104,
 					"name": "right-open-mini",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 39,
@@ -181,7 +181,7 @@
 					"prevSize": 20,
 					"code": 107,
 					"name": "up-open-mini",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 40,
@@ -189,7 +189,7 @@
 					"prevSize": 20,
 					"code": 69,
 					"name": "down-open-big",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 41,
@@ -197,7 +197,7 @@
 					"prevSize": 20,
 					"code": 67,
 					"name": "left-open-big",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 42,
@@ -205,7 +205,7 @@
 					"prevSize": 20,
 					"code": 97,
 					"name": "right-open-big",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 43,
@@ -213,7 +213,7 @@
 					"prevSize": 20,
 					"code": 66,
 					"name": "up-open-big",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 44,
@@ -361,7 +361,7 @@
 					"prevSize": 20,
 					"code": 58909,
 					"name": "trash",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 80,
@@ -553,7 +553,7 @@
 					"prevSize": 20,
 					"code": 120,
 					"name": "cancel-circled",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 127,
@@ -561,7 +561,7 @@
 					"prevSize": 20,
 					"code": 105,
 					"name": "circle-with-minus",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 128,
@@ -569,7 +569,7 @@
 					"prevSize": 20,
 					"code": 117,
 					"name": "plus-circled",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 129,
@@ -625,7 +625,7 @@
 					"prevSize": 20,
 					"code": 58880,
 					"name": "cancel",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 142,
@@ -677,7 +677,7 @@
 					"prevSize": 20,
 					"code": 58881,
 					"name": "pencil",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 154,
@@ -797,7 +797,7 @@
 					"prevSize": 20,
 					"code": 72,
 					"name": "help-circled",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 183,
@@ -837,7 +837,7 @@
 					"prevSize": 20,
 					"code": 102,
 					"name": "info-circled",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 192,
@@ -913,7 +913,7 @@
 					"prevSize": 20,
 					"code": 111,
 					"name": "pin-map",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 210,
@@ -989,7 +989,7 @@
 					"prevSize": 20,
 					"code": 45,
 					"name": "minus",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 228,
@@ -1021,7 +1021,7 @@
 					"prevSize": 20,
 					"code": 58907,
 					"name": "edit-frame",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 235,
@@ -1077,7 +1077,7 @@
 					"prevSize": 20,
 					"code": 43,
 					"name": "plus",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 248,
@@ -1525,7 +1525,7 @@
 					"prevSize": 20,
 					"code": 58882,
 					"name": "facebook-circled",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 359,
@@ -1561,7 +1561,7 @@
 					"prevSize": 20,
 					"code": 58883,
 					"name": "instagram-circled",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 367,
@@ -1589,7 +1589,7 @@
 					"prevSize": 20,
 					"code": 58905,
 					"name": "pinterest-with-circle",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 373,
@@ -1621,7 +1621,7 @@
 					"prevSize": 20,
 					"code": 58884,
 					"name": "twitter-circled",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 380,
@@ -6328,7 +6328,7 @@
 					"prevSize": 32,
 					"code": 58911,
 					"name": "suppertime",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 98,
@@ -6336,7 +6336,7 @@
 					"prevSize": 32,
 					"code": 58910,
 					"name": "COD",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 95,
@@ -6344,7 +6344,7 @@
 					"prevSize": 32,
 					"code": 58908,
 					"name": "logo-se",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 93,
@@ -6352,7 +6352,7 @@
 					"prevSize": 32,
 					"code": 58906,
 					"name": "logo-LaNeveraRoja",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 90,
@@ -6360,7 +6360,7 @@
 					"prevSize": 32,
 					"code": 58886,
 					"name": "foodinfo-hot3",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 72,
@@ -6368,7 +6368,7 @@
 					"prevSize": 32,
 					"code": 58887,
 					"name": "foodinfo-vegetarian",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 73,
@@ -6376,7 +6376,7 @@
 					"prevSize": 32,
 					"code": 58888,
 					"name": "foodinfo-eggs",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 74,
@@ -6384,7 +6384,7 @@
 					"prevSize": 32,
 					"code": 58889,
 					"name": "foodinfo-milk",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 75,
@@ -6392,7 +6392,7 @@
 					"prevSize": 32,
 					"code": 58890,
 					"name": "foodinfo-sesame",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 76,
@@ -6400,7 +6400,7 @@
 					"prevSize": 32,
 					"code": 58891,
 					"name": "foodinfo-peanuts",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 77,
@@ -6408,7 +6408,7 @@
 					"prevSize": 32,
 					"code": 58892,
 					"name": "foodinfo-fish",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 78,
@@ -6416,7 +6416,7 @@
 					"prevSize": 32,
 					"code": 58893,
 					"name": "foodinfo-celery",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 79,
@@ -6424,7 +6424,7 @@
 					"prevSize": 32,
 					"code": 58894,
 					"name": "foodinfo-crustaceans",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 80,
@@ -6432,7 +6432,7 @@
 					"prevSize": 32,
 					"code": 58895,
 					"name": "foodinfo-gluten",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 81,
@@ -6440,7 +6440,7 @@
 					"prevSize": 32,
 					"code": 58896,
 					"name": "foodinfo-nuts",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 82,
@@ -6448,7 +6448,7 @@
 					"prevSize": 32,
 					"code": 58897,
 					"name": "foodinfo-lupin",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 83,
@@ -6456,7 +6456,7 @@
 					"prevSize": 32,
 					"code": 58898,
 					"name": "foodinfo-molluscs",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 84,
@@ -6464,7 +6464,7 @@
 					"prevSize": 32,
 					"code": 58899,
 					"name": "foodinfo-soy",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 85,
@@ -6472,7 +6472,7 @@
 					"prevSize": 32,
 					"code": 58900,
 					"name": "foodinfo-vegan",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 86,
@@ -6480,7 +6480,7 @@
 					"prevSize": 32,
 					"code": 58901,
 					"name": "foodinfo-so2",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 87,
@@ -6488,7 +6488,7 @@
 					"prevSize": 32,
 					"code": 58902,
 					"name": "foodinfo-mustard",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 88,
@@ -6496,7 +6496,7 @@
 					"prevSize": 32,
 					"code": 58903,
 					"name": "foodinfo-hot1",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 89,
@@ -6504,7 +6504,7 @@
 					"prevSize": 32,
 					"code": 58904,
 					"name": "foodinfo-hot2",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 67,
@@ -6512,7 +6512,7 @@
 					"prevSize": 32,
 					"code": 58885,
 					"name": "check",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 0,
@@ -6532,7 +6532,7 @@
 					"prevSize": 32,
 					"code": 81,
 					"name": "logo",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 18,
@@ -6540,7 +6540,7 @@
 					"prevSize": 32,
 					"code": 119,
 					"name": "profile",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 19,
@@ -6548,7 +6548,7 @@
 					"prevSize": 32,
 					"code": 122,
 					"name": "logo-icon",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 8,
@@ -6556,7 +6556,7 @@
 					"prevSize": 32,
 					"code": 113,
 					"name": "cart",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 9,
@@ -6564,7 +6564,7 @@
 					"prevSize": 32,
 					"code": 114,
 					"name": "delivery",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 0,
@@ -6588,7 +6588,7 @@
 					"prevSize": 32,
 					"code": 116,
 					"name": "preorder",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 13,
@@ -6596,7 +6596,7 @@
 					"prevSize": 32,
 					"code": 83,
 					"name": "search",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 0,
@@ -7352,12 +7352,18 @@
 				{
 					"name": "star",
 					"order": 101,
-					"id": 6
+					"id": 6,
+					"prevSize": 28,
+					"code": 61445,
+					"tempChar": ""
 				},
 				{
 					"name": "star-o",
 					"order": 102,
-					"id": 7
+					"id": 7,
+					"prevSize": 28,
+					"code": 61446,
+					"tempChar": ""
 				},
 				{
 					"name": "user",
@@ -7440,7 +7446,7 @@
 					"id": 23,
 					"prevSize": 28,
 					"code": 61463,
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"name": "road",
@@ -7853,7 +7859,7 @@
 					"id": 105,
 					"prevSize": 28,
 					"code": 108,
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"name": "eye-slash-close",
@@ -7861,7 +7867,7 @@
 					"id": 106,
 					"prevSize": 28,
 					"code": 109,
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"name": "attention",
@@ -7869,7 +7875,7 @@
 					"id": 107,
 					"prevSize": 28,
 					"code": 103,
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"name": "plane",
@@ -8042,7 +8048,7 @@
 					"id": 141,
 					"prevSize": 28,
 					"code": 100,
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"name": "square-o",
@@ -8065,7 +8071,7 @@
 					"id": 145,
 					"prevSize": 28,
 					"code": 84,
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"name": "facebook",
@@ -8073,7 +8079,7 @@
 					"id": 146,
 					"prevSize": 28,
 					"code": 70,
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"name": "github",
@@ -8651,7 +8657,7 @@
 					"id": 261,
 					"prevSize": 28,
 					"code": 76,
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"name": "crop",
@@ -8999,7 +9005,7 @@
 					"id": 330,
 					"prevSize": 28,
 					"code": 73,
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"name": "flickr",
@@ -9528,8 +9534,11 @@
 				},
 				{
 					"name": "sliders",
-					"order": 0,
-					"id": 436
+					"order": 103,
+					"id": 436,
+					"prevSize": 28,
+					"code": 61918,
+					"tempChar": ""
 				},
 				{
 					"name": "share-alt",

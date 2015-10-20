@@ -36,6 +36,7 @@
     "promise-polyfill": "~2.1.0",
     "jquery.serializeJSON": "~2.6.1",
     "backbone.localStorage": "~1.1.16",
-    "devicejs": "~0.2.7"
+    "devicejs": "~0.2.7",
+    "fuse.js": "krisk/Fuse#26f9ec4264"
   }
 }

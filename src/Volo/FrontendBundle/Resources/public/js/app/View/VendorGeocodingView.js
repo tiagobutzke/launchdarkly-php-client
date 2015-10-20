@@ -51,7 +51,6 @@ var VendorGeocodingView = HomeSearchView.extend({
      * @override
      */
     postInit: function() {
-        this.modelCart.set('location', this.modelCart.defaults.location);
         if (this.model.isValid()) {
             this.modelCart.set('location', {
                 location_type: this.model.defaults.location_type,

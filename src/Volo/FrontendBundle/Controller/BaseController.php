@@ -9,8 +9,12 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Volo\FrontendBundle\Provider\AddressConfigProvider;
 use Volo\FrontendBundle\Security\Token;
+use Volo\FrontendBundle\Service\CityService;
+use Volo\FrontendBundle\Service\CustomerLocationService;
 use Volo\FrontendBundle\Service\CustomerService;
+use Volo\FrontendBundle\Service\VendorService;
 
 class BaseController extends Controller
 {
@@ -82,6 +86,38 @@ class BaseController extends Controller
     protected function getSerializer()
     {
         return $this->get('volo_frontend.api.serializer');
+    }
+
+    /**
+     * @return VendorService
+     */
+    protected function getVendorService()
+    {
+        return $this->get('volo_frontend.service.vendor');
+    }
+
+    /**
+     * @return CityService
+     */
+    protected function getCityService()
+    {
+        return $this->get('volo_frontend.service.city');
+    }
+
+    /**
+     * @return CustomerLocationService
+     */
+    protected function getCustomerLocationService()
+    {
+        return $this->get('volo_frontend.service.customer_location');
+    }
+
+    /**
+     * @return AddressConfigProvider
+     */
+    protected function getAddressConfigProvider()
+    {
+        return $this->get('volo_frontend.provider.address_config_provider');
     }
 
     /**
