@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+* 1.57.0
+ * INTVOLO-534 filters
+
+* 1.56.1
+ * INTVOLO-996: Order comment fix
+
 * 1.56.0
  * INTVOLO-1111 localStorage fallback
  * INTVOLO-1112 Added click listener to open Registration form
