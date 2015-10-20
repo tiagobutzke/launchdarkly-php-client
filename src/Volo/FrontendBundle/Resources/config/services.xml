@@ -148,7 +148,7 @@
         <service id="volo_frontend.service.order_manager" class="%volo_frontend.service.order_manager.class%">
             <argument type="service" id="volo_frontend.provider.order" />
             <argument type="service" id="volo_frontend.provider.customer" />
-            <argument type="service" id="volo_frontend.provider.cart" />
+            <argument type="service" id="volo_frontend.service.cart_manager" />
             <argument type="service" id="volo_frontend.service.vendor" />
             <argument>%foodpanda.api.client_id%</argument>
         </service>
