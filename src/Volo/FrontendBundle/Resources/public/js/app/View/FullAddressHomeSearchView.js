@@ -40,9 +40,8 @@ VOLO.FullAddressHomeSearchView = Backbone.View.extend({
     },
 
     _displayError: function(error) {
-        var $input = this.$('.restaurants-search-form__input');
         if (error === 'ZERO_RESULTS') {
-            this._showInputMsg($input.data('msg_error_not_found'));
+            this._showInputMsg(this.$('.restaurants-search-form__input').data('msg_error_not_found'));
         } else {
             console.log(error);
         }
@@ -148,8 +147,6 @@ VOLO.FullAddressHomeSearchView = Backbone.View.extend({
     _submitAddress: function(address) {
         this.model.set(address);
         this.$('.restaurants-search-form__input').val(address.formattedAddress);
-        this.mapModalView.hide();
-
         Turbolinks.visit(this._getVendorsRoute(address));
     },
 
@@ -168,6 +165,7 @@ VOLO.FullAddressHomeSearchView = Backbone.View.extend({
     unbind: function() {
         this.autocomplete.unbind();
         this.mapModalView && this.mapModalView.unbind();
+        this.mapModalView && this.mapModalView.hide();
 
         this.stopListening();
         this.undelegateEvents();

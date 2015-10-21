@@ -35,6 +35,7 @@ VOLO.MapModalView = Backbone.View.extend({
 
     _submit: function() {
         this.trigger('map-dialog:address-submit', this.address);
+        this._disableSubmitButton();
 
         return false;
     },
@@ -56,6 +57,8 @@ VOLO.MapModalView = Backbone.View.extend({
     },
 
     render: function() {
+        this._enableSubmitButton();
+
         if (!this.$('.map-modal').length) {
             this.$el.append(this.template());
         }
@@ -63,10 +66,17 @@ VOLO.MapModalView = Backbone.View.extend({
             this.map = new VOLO.Geocoding.Map();
             this.map.insert(this.$('.map-modal__map'), {
                 zoom: 16,
+                disableDefaultUI: true,
                 streetViewControl: false,
                 rotateControlOptions: false,
                 mapTypeControl: false,
-                noClear: true
+                noClear: true,
+                zoomControl: true,
+                zoomControlOptions: {
+                    position: google.maps.ControlPosition.RIGHT_BOTTOM,
+                    style: google.maps.ZoomControlStyle.SMALL
+                },
+                scrollwheel: false
             });
         }
 
@@ -91,6 +101,14 @@ VOLO.MapModalView = Backbone.View.extend({
 
     hide: function() {
         this.$('.map-modal').modal('hide');
+    },
+
+    _disableSubmitButton: function() {
+        this.$('.map-modal__submit__button').attr("disabled","disabled").addClass('button--disabled');
+    },
+
+    _enableSubmitButton: function() {
+        this.$('.map-modal__submit__button').removeAttr("disabled").removeClass('button--disabled');
     },
 
     _dialogShown: function(address) {

@@ -34,6 +34,11 @@
     width: 280px;
   }
 }
+.is-full-address .restaurants-search-form__input-wrapper {
+  @include respond-from('screen-md') {
+    width: 450px;
+  }
+}
 
 
 .restaurants-search-form__input {
