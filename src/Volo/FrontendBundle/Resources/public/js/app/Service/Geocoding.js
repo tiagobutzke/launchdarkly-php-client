@@ -157,20 +157,26 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
 
         var geocoder = new google.maps.Geocoder();
 
-        geocoder.geocode({"address": [place,region].join(' ')}, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                $(".pac-container .pac-item:first").addClass("pac-selected");
-                $(".pac-container").css("display", "none");
+        geocoder.geocode(
+            {
+                "address": [place,region].join(' '),
+                componentRestrictions: { country: this.countryCode }
+            },
+            function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    $(".pac-container .pac-item:first").addClass("pac-selected");
+                    $(".pac-container").css("display", "none");
 
-                results[0].place = {
-                    geometry: results[0].geometry
-                };
+                    results[0].place = {
+                        geometry: results[0].geometry
+                    };
 
-                deferred.resolve(results[0]);
-            } else {
-                deferred.reject();
+                    deferred.resolve(results[0]);
+                } else {
+                    deferred.reject();
+                }
             }
-        });
+        );
 
         return deferred;
     },
