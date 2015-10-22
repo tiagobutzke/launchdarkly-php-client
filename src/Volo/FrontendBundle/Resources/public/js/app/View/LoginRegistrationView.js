@@ -28,29 +28,6 @@ var LoginRegistrationView = Backbone.View.extend({
         }
     },
 
-    _registrationConstraints: {
-        'customer[first_name]': {
-            presence: true
-        },
-        'customer[last_name]': {
-            presence: true
-        },
-        'customer[email]': {
-            presence: true,
-            email: true
-        },
-        'customer[mobile_number]': {
-            presence: true
-        },
-        'customer[password]': {
-            presence: true
-        },
-        'customer[confirm_password]': {
-            presence: true,
-            equality: "customer[password]"
-        }
-    },
-
     initialize: function (options) {
         options = options || {};
         console.log('LoginRegistrationView.initialize ', this.cid);
@@ -118,7 +95,6 @@ var LoginRegistrationView = Backbone.View.extend({
         'submit .forgot-password-form': '_handingSubmitOfLostPasswordForm',
         'submit .reset-password-form': '_handingSubmitOfResetPasswordForm',
         'submit .login-form': '_submitLoginForm',
-        'submit .registration-form': '_submitRegistrationForm',
         'click .modal-close-button': '_closeLoginRegistrationOverlay'
     },
 
@@ -310,9 +286,9 @@ var LoginRegistrationView = Backbone.View.extend({
 
     _bindRegisterValidationView: function() {
         this._unbindRegisterValidationView();
-        this._registerValidationView = new ValidationView({
+        this._registerValidationView = new VOLO.LoginRegistrationForm({
             el: this.$('.registration-form'),
-            constraints: this._registrationConstraints
+            loginRegistrationView: this
         });
     },
 

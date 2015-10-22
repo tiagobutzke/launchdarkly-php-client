@@ -21,17 +21,23 @@ var ValidationView = Backbone.View.extend({
     },
 
     _validateField: function(e) {
+        var constraint = {},
+            name = e.currentTarget.name;
+
+        constraint[name] = this.constraints[name];
+
         var target = e.target,
             $target = $(target),
             formValues = validate.collectFormValues(this.el),
-            doValidate = validate.async(formValues, this.constraints);
+            doValidate = validate.async(formValues, constraint);
 
         doValidate.then(function() {
-            this.trigger('form:valid');
+            this.trigger('form-field:valid');
+            this.onFieldSuccessValidation(target);
         }.bind(this), function(invalidObj) {
             if (invalidObj && invalidObj[target.name]) {
                 this._displayMessage(target);
-                this.trigger('form:error');
+                this.trigger('form-field:error');
             }
 
             $target.toggleClass(this.inputErrorClass, !!invalidObj);
@@ -44,19 +50,26 @@ var ValidationView = Backbone.View.extend({
 
         if (errors) {
             e.preventDefault();
-
-            _.each(this.$("input[name], select[name]"), function(input) {
-                if (errors[input.name]) {
-                    this._displayMessage(input);
-                }
-            }, this);
-            this.trigger('form:error');
+            this._showErrorMessages(errors);
         } else {
-            this.trigger('form:valid');
-            this.cleanErrorMessages();
+            this._hideErrorMessages();
         }
 
         return true;
+    },
+
+    _hideErrorMessages: function () {
+        this.trigger('form:valid');
+        this.cleanErrorMessages();
+    },
+
+    _showErrorMessages: function (errors) {
+        this.trigger('form:error');
+        _.each(this.$("input[name], select[name]"), function(input) {
+            if (errors[input.name]) {
+                this._displayMessage(input);
+            }
+        }, this);
     },
 
     _displayMessage: function(target) {
@@ -79,6 +92,12 @@ var ValidationView = Backbone.View.extend({
     removeCurrentErrorMessage: function(target) {
         $(target).next('.form__error-message').remove();
     },
+
+    hideCurrentErrorMessage: function(target) {
+        $(target).next('.form__error-message').addClass('hide');
+    },
+
+    onFieldSuccessValidation: $.noop,
 
     _hideMessage: function(e) {
         if (e.keyCode !== 13 && this._errorMessages[e.target.name]) {

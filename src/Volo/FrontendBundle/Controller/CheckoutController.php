@@ -30,6 +30,7 @@ use Psr\Log\LoggerInterface;
 class CheckoutController extends BaseController
 {
     /**
+     * @deprecated: moved to Volo\FrontendBundle\Controller\Api\Customer
      * @Route(
      *      "/validate/mobile-number/{phoneNumber}",
      *      name="checkout_validate_phone_number",
@@ -57,6 +58,7 @@ class CheckoutController extends BaseController
     }
 
     /**
+     * @deprecated: moved to Volo\FrontendBundle\Controller\Api\Customer
      * @Route(
      *      "/validate/customer-email/{email}",
      *      name="checkout_validate_email",

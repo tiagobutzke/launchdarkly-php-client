@@ -20,7 +20,7 @@ VOLO.ContactInformationForm = ValidationView.extend({
     initialize: function () {
         _.bindAll(this);
         ValidationView.prototype.initialize.apply(this, arguments);
-        this.listenTo(this, 'form:error', this._disableContinueButton);
+        this.listenTo(this, 'form-field:error', this._disableContinueButton);
         this.listenTo(this, 'form:valid', this._enableContinueButton);
     },
 
@@ -39,6 +39,10 @@ VOLO.ContactInformationForm = ValidationView.extend({
         this.$(".button").addClass('button--disabled');
     },
 
+    _canBeSubmitted: function () {
+        return !this.$(".button").hasClass('button--disabled');
+    },
+
     fillUpForm: function () {
         if (this.model.isValid()) {
             this.$('#contact-information-first-name').val(_.unescape(this.model.get('first_name')));
@@ -52,8 +56,6 @@ VOLO.ContactInformationForm = ValidationView.extend({
     },
 
     _submit: function() {
-        this.saveCustomerInformation();
-
         return false;
     },
 
@@ -76,7 +78,7 @@ VOLO.ContactInformationForm = ValidationView.extend({
             .then(function (response) {
                 if (!response.exists) {
                     return $.ajax({
-                        url: Routing.generate('checkout_validate_phone_number', routingParam),
+                        url: Routing.generate('customer_validate_phone_number', routingParam),
                         success: _.curry(this._onSuccessMobileNumberValidation, 2)(customer),
                         error: this._onErrorMobileNumberValidation
                     });
@@ -91,7 +93,7 @@ VOLO.ContactInformationForm = ValidationView.extend({
         this.$('.form__error-message').remove();
 
         return $.ajax({
-            url: Routing.generate('checkout_validate_email', {email: email}),
+            url: Routing.generate('customer_validate_email', {email: encodeURIComponent(email)}),
             dataType: 'json',
             success: function (response) {
                 if (response.exists) {
@@ -139,5 +141,36 @@ VOLO.ContactInformationForm = ValidationView.extend({
                 this.createErrorMessage(message, element[0]);
             }, this);
         }, this);
+    },
+    _validateForm: function () {
+        if (!this._canBeSubmitted()) {
+            return false;
+        }
+
+        var formValues = validate.collectFormValues(this.el),
+            promise = validate.async(formValues, this.constraints);
+
+        promise.then(function () {
+            this._hideErrorMessages();
+            this.saveCustomerInformation();
+        }.bind(this), function (errors) {
+            this._showErrorMessages(errors);
+        }.bind(this));
+
+        return false;
+    },
+
+    /**
+     * @override
+     */
+    onFieldSuccessValidation: function (target) {
+        if (!this.hasErrors($(target).closest('form'))) {
+            this.trigger('form:valid');
+        }
+    },
+
+    hasErrors:function($form){
+        return $form.find('span.form__error-message:visible').size();
     }
 });
+
