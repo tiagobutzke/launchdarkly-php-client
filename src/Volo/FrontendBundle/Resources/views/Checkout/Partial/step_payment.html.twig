@@ -35,11 +35,19 @@
                                 {% set label_credit_cart = 'payment.paymentTypeCode' %}
                             {% endif %}
                             {% if payment.paymentTypeCode == 'adyen_hpp' %}
-                                <img class="checkout__payment__option-image b-lazy"
-                                     src={{ blazy_placeholder }}
-                                     data-src="{{ asset('img/checkout/ideal.png') }}|{{ asset('img/checkout/ideal-2x.png') }}"
-                                     alt="alt-text"/>
-                                {% set label_credit_cart = 'payment.label_adyen_hpp' %}
+                                {% if payment.name == 'Sofortueberweisung' %}
+                                    <img class="checkout__payment__option-image b-lazy"
+                                         src={{ blazy_placeholder }}
+                                         data-src="{{ asset('img/checkout/sofort.png') }}|{{ asset('img/checkout/sofort-2x.png') }}"
+                                         alt="alt-text"/>
+                                    {% set label_credit_cart = 'payment.label_sofortueberweisung' %}
+                                {% else %}
+                                    <img class="checkout__payment__option-image b-lazy"
+                                         src={{ blazy_placeholder }}
+                                         data-src="{{ asset('img/checkout/ideal.png') }}|{{ asset('img/checkout/ideal-2x.png') }}"
+                                         alt="alt-text"/>
+                                    {% set label_credit_cart = 'payment.label_adyen_hpp' %}
+                                {% endif %}
                             {% endif %}
                             {% if payment.paymentTypeCode == 'cod' %}
                                 <img class="checkout__payment__option-image b-lazy"
