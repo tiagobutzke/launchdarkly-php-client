@@ -13,11 +13,17 @@
                         <!-- map goes here -->
                         <form class="map-modal__autocomplete">
                             <i class="map-modal__form-icon-search icon-search"></i>
-                            <input type="text" class="map-modal__autocomplete__input" data-error-msg="{% trans %}map.address-not-valid{% endtrans %}"/>
+                            <input type="text" class="map-modal__autocomplete__input"
+                                   data-msg_error_empty="{% trans %}map.errors.address_empty{% endtrans %}"
+                                   data-msg_error_postcode="{% trans %}map.errors.postcode{% endtrans %}"
+                                   data-msg_error_city="{% trans %}map.errors.city{% endtrans %}"
+                                   data-msg_error_building="{% trans %}map.errors.building{% endtrans %}"
+                                   data-msg_error_not_found="{% trans %}map.errors.address_not_found{% endtrans %}"/>
+                            <div class="form__error-message map-modal__error-message hide"></div>
                         </form>
                         <i class="map-modal__map-center-icon"></i>
                         <form class="map-modal__submit">
-                            <button class="map-modal__submit__button button">{% trans %}map.submit{% endtrans %}</button>
+                            <button type="button" class="map-modal__submit__button button button--disabled" disabled="disabled">{% trans %}map.submit{% endtrans %}</button>
                         </form>
                     </div>
                 </div>

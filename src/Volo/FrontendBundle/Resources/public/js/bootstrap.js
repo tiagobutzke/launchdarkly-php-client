@@ -532,7 +532,7 @@ VOLO.doBootstrap = function(configuration) {
     }
 
     if ($('.home .restaurants-search-form').length > 0) {
-        if (VOLO.isFullAddressAutoComplete()) {
+        if (VOLO.isMapEnabled()) {
             var fullAddressHomeSearchView = new VOLO.FullAddressHomeSearchView({
                 el: '.restaurants-search-form',
                 appConfig: VOLO.configuration,
@@ -612,6 +612,10 @@ VOLO.doBootstrap = function(configuration) {
 
 VOLO.isFullAddressAutoComplete = function () {
     return VOLO.configuration.address_config.autocomplete_type[0] !== '(regions)';
+};
+
+VOLO.isMapEnabled = function () {
+    return _.get(VOLO, 'configuration.address_config.map_enabled', false);
 };
 
 $(document).on('page:load page:restore', function () {

@@ -108,3 +108,12 @@
   z-index: 2;
   font-size: 2rem;
 }
+
+.map-modal__error-message {
+  z-index: 1;
+  position: absolute;
+  width: 90%;
+  margin: 0 5%;
+  top: 58px;
+}
+

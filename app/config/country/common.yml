@@ -6,6 +6,7 @@ parameters:
     short_to_full_locale_name_mapping: []
     supported_locales: [%locale%]
     address_config:
+        map_enabled: false
         postal_code_field:
             - 'postal_code'
         street_field:

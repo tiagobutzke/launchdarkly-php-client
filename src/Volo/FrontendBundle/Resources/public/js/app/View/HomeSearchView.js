@@ -33,7 +33,11 @@ var HomeSearchView = CTATrackableView.extend({
         var node = this.$('.restaurants-search-form__input');
         var postcode = node.val();
 
-        if (postcode) {
+        if (VOLO.isFullAddressAutoComplete()) {
+            node.val(this.model.get('address'));
+        }
+
+        if (postcode && !VOLO.isFullAddressAutoComplete()) {
             this.geocodingService.getLocationByZipCode(postcode);
         }
 

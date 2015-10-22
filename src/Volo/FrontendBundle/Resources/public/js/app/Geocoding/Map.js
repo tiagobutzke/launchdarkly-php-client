@@ -40,7 +40,7 @@ _.extend(VOLO.Geocoding.Map.prototype, Backbone.Events, {
     },
 
     _triggerDragEnd: function() {
-        console.log('center changed');
+        console.log('center changed', this.getCenter());
         this.trigger('map:center-changed', this.getCenter());
     },
 

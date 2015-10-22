@@ -26,9 +26,9 @@ _.extend(VOLO.Geocoding.Autocomplete.prototype, Backbone.Events, {
     },
 
     unbind: function() {
-        google.maps.event.clearInstanceListeners(this.autocomplete);
-        google.maps.event.clearListeners(this.$node[0]);
-        google.maps.event.removeListener(this.placeChanged);
+        this.autocomplete && google.maps.event.clearInstanceListeners(this.autocomplete);
+        this.$node && google.maps.event.clearListeners(this.$node[0]);
+        this.placeChanged && google.maps.event.removeListener(this.placeChanged);
 
         $('.pac-container').remove();
     },
@@ -37,7 +37,11 @@ _.extend(VOLO.Geocoding.Autocomplete.prototype, Backbone.Events, {
         var address = $('.pac-container .pac-item:first .pac-item-query').text(),
             region = $(".pac-container .pac-item:first span:not(.pac-matched):last").text();
 
-        return [address, region].join(',');
+        if (_.isEmpty(address) && _.isEmpty(region)) {
+            return this.$node.val();
+        } else {
+            return [address, region].join(',');
+        }
     },
 
     _placeChanged: function() {
