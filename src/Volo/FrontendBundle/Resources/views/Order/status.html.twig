@@ -39,16 +39,17 @@
                 </h2>
                 {% if (order.reference == 'cod') %}
                     {% set totalAmount = status.total_value|price %}
-                    <span class="tracking-hero__pay_cash-on-delivery">
+                    <div class="tracking-hero__pay_cash-on-delivery">
                         {% trans with {'%totalAmount%': totalAmount }%}title.please_pay_the_driver %totalAmount%{% endtrans %}
-                    </span>
+                    </div>
                 {% endif %}
-
-                {#TODO app - show app info when app is available #}
-                {#<div class="tracking-header__app">#}
-                    {#<button class="tracking-header__app__button">{% trans %}button.download_app{% endtrans %}</button>#}
-                    {#<div class="tracking-header__app__message">{% trans %}general.to_get_real_time_updates_on_your_order{% endtrans %}.</div>#}
-                {#</div>#}
+                {% set appPromo = cms('homepage-teaser-app-promo') %}
+                {% if appPromo is not empty %}
+                    <div class="tracking-hero__app-promo-headline">
+                        {% trans %}success_page.title_download_app{% endtrans %}
+                    </div>
+                    {{ appPromo|raw }}
+                {% endif %}
             </div>
         </div>
     </div>

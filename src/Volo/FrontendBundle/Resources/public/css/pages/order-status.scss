@@ -19,11 +19,28 @@
 }
 
 .tracking-hero__info {
+  line-height: 1;
   padding: 0;
   text-align: center;
   width: 96%;
-  max-height: 90px;
-  @include absolute-center-box();
+  @include vertical-center-absolute();
+  margin-top: 10px;
+
+  @include respond-from("screen-sm") {
+    margin-top: 0;
+  }
+}
+
+.tracking-hero__info .home__teaser__app-logo-wrapper {
+  display: block;
+  position: relative;
+}
+
+.tracking-hero__info .home__teaser__app-logo {
+  width: 30%;
+  @include respond-from("screen-sm") {
+    width: 164px;
+  }
 }
 
 .tracking-hero__title {
@@ -41,33 +58,17 @@
   }
 }
 
-.tracking-header__app {
-  margin: auto;
-  overflow: auto;
-  width: 380px;
-  padding-top: $space-xs;
-  @include respond-from("screen-md") {
-    padding-top: $space-lg;
-  }
-  @include respond-from("screen-lg") {
-    width: 450px;
-  }
+.tracking-hero__pay_cash-on-delivery {
+  margin-top: 10px;
 }
 
-.tracking-header__app__message {
-  @extend .pull-left;
-  text-align: left;
-  line-height: 1.21;
-  padding-left: $space-sm;
-  padding-top: $space-xs;
-  width: 50%;
-  font-size: $font-size-1_4rem;
-}
-
-.tracking-header__app__button {
-  @extend .button;
-  @extend .pull-left;
-  width: 50%;
+.tracking-hero__app-promo-headline {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  @include respond-from("screen-sm") {
+    margin-top: 20px;
+    margin-bottom: 15px;
+  }
 }
 
 .order-status-wrapper {
