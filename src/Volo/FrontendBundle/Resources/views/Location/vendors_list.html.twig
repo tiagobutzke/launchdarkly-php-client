@@ -12,7 +12,14 @@
     {% endif %}
 {% endfor %}
 
-{% set promoAddress = formattedLocation.city == '-' ? formattedLocation.postcode : formattedLocation.city  %}
+{% if formattedLocation.city == '-' %}
+    {% set promoAddress = formattedLocation.postcode %}
+{% elseif formattedLocation.city is empty and city is not empty %}
+    {% set promoAddress = city.name %}
+{% else %}
+    {% set promoAddress = formattedLocation.city %}
+{% endif %}
+
 {% block title %}
     {% if gpsSearch %}
         {{ cms('seo.title.vendor_listing_page') | replace({'{city}': formattedLocation.city, '{zipcode}': formattedLocation.postcode}) }}
