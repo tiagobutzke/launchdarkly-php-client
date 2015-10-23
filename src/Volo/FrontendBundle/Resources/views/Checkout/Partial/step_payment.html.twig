@@ -118,7 +118,14 @@
             <a id="checkout-remove-selected-voucher-link">{% trans %}link.remove_voucher{% endtrans %}</a>
         </div>
     </div>
-
+    {% if (checkout_invoice_message == true) %}
+        <div class="checkout__step__item-content">
+            <div class="checkout__payment__invoice-message">
+                {% set emailLink = '<a href="mailto:%s">%s</a>'|format('checkout.support_email'|trans, 'checkout.support_email'|trans) %}
+                {% trans with {'%email_link%': emailLink }%}checkout.invoice_message{% endtrans %}
+            </div>
+        </div>
+    {% endif %}
     <div class="checkout__step__item checkout__payment__finish-and-pay">
         <div class="checkout__step__item-content">
             {% set hostedPaymentError = app.session.flashbag.get('payment_error') %}
