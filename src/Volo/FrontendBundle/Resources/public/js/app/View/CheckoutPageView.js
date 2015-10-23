@@ -222,8 +222,8 @@ var CheckoutPageView = Backbone.View.extend({
         var exists = _.get(data, 'exists', {exists: false});
 
         if (_.isObject(data) && _.isString(_.get(data, 'error.errors.message'))) {
-            this.$('.form__error-message').html(data.error.errors.message);
-            this.$('.form__error-message').removeClass('hide');
+            this.$('.checkout__payment__finish-and-pay .form__error-message').html(data.error.errors.message);
+            this.$('.checkout__payment__finish-and-pay .form__error-message').removeClass('hide');
         } else {
             console.log(data);
         }
