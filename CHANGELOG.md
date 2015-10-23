@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.59.1
+ * INTVOLO-1224 Add missing city name parameter
+
 * 1.59.0
  * INTVOLO-1194: Singapore Zipcode fix
  * INTVOLO-998: Fix for multiple repeated error message related to voucher
