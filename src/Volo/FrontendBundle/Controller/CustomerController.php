@@ -148,7 +148,7 @@ class CustomerController extends BaseController
                 $errors[] = $e->getExceptionType();
                 $httpCode = Response::HTTP_BAD_REQUEST;
             } catch (ValidationEntityException $e) {
-                $errors = (array) $this->get('translator')->trans('customer.validation.password.password_too_short');
+                $errors = [ $this->get('translator')->trans('customer.validation.password.password_too_short') ];
                 $httpCode = Response::HTTP_BAD_REQUEST;
             }
         }
