@@ -209,20 +209,21 @@ var LoginRegistrationView = Backbone.View.extend({
         var userService = new VOLO.UserService(),
             userData = this.$('form').serializeJSON(),
             addressData = this.address ? this.address.toJSON() : {},
+            redirectTo = $('body').hasClass('order-status-page') ? Routing.generate('home') : null,
             login;
 
         this._disableForm();
         this._enableSpinner();
 
-        login = userService.login(userData, addressData);
+        login = userService.login(userData, addressData, redirectTo);
         login.then(this._loginSuccess, this._loginFail);
 
         return false;
     },
 
-    _loginSuccess: function() {
+    _loginSuccess: function(result) {
         this._fireSubmitEvent('loginRegistrationView:login', 'success');
-        window.location.reload(true);
+        window.location.replace(result.url);
     },
 
     _loginFail: function(response) {

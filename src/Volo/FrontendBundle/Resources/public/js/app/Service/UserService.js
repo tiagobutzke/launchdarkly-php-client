@@ -13,8 +13,11 @@ _.extend(VOLO.UserService.prototype, {
         });
     },
 
-    login: function(userData, addressData) {
+    login: function(userData, addressData, redirectTo) {
         var requestData = this._prepareData(userData, addressData);
+        if (_.isString(redirectTo)) {
+            requestData._target_path = redirectTo;
+        }
 
         return $.ajax({
             type: 'POST',

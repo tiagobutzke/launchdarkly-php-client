@@ -10,7 +10,7 @@ use Volo\FrontendBundle\Service\CustomerLocationService;
 class HomeController extends BaseController
 {
     /**
-     * @Route("/", name="home", defaults={"postalCode": ""})
+     * @Route("/", name="home", defaults={"postalCode": ""}, options={"expose"=true})
      * @Route("/filter/{postalCode}", name="filter_postalCode")
      * @Template()
      *
