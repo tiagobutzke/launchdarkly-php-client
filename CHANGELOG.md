@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+* 1.59.0
+ * INTVOLO-1194: Singapore Zipcode fix
+ * INTVOLO-998: Fix for multiple repeated error message related to voucher
+ * INTVOLO-146 redirects user to homepage at success page
+
 * 1.58.0
  * INTVOLO-1012 Post order push customers to download the app
 
