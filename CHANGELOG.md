@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.58.0
+ * INTVOLO-1012 Post order push customers to download the app
+
 * 1.57.0
  * INTVOLO-534 filters
 
