@@ -60,6 +60,10 @@ VOLO.MapModalView = Backbone.View.extend({
     },
     _displayErrorMessage: function(model, error) {
         var errorMessage = _.get(this.$('.map-modal__autocomplete__input').data(), 'msg_error_' + error, 'msg_error_not_found');
+        this.trigger('map-dialog:gtm-error-shown', {
+            event: 'errorMap',
+            errorCode: errorMessage
+        });
         this._showInputError(errorMessage);
     },
 

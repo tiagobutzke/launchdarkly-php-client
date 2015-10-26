@@ -23,12 +23,20 @@ VOLO.FullAddressHomeSearchView = Backbone.View.extend({
     },
 
     _submitGeocode: function() {
-        var $input = this.$('.restaurants-search-form__input');
+        var $input = this.$('.restaurants-search-form__input'),
+            userAddress = $input.val();
 
         this._hideTooltip();
-        if ($input.val()) {
+        if (userAddress) {
             this._geocode().then(function(address) {
                 $input.val(address.formattedAddress);
+
+                this.trigger('home-search-view:gtm-open-map', {
+                    event: 'openMap',
+                    userAddress: userAddress,
+                    address: address.formattedAddress
+                });
+
                 if (!this.mapModalView.isOpen()) {
                     this.autocomplete.unbind();
                     this._openMapModalDialog(address);
@@ -150,6 +158,10 @@ VOLO.FullAddressHomeSearchView = Backbone.View.extend({
     _submitAddress: function(address) {
         this.model.set(address);
         this.$('.restaurants-search-form__input').val(address.formattedAddress);
+        this.trigger('home-search-view:gtm-submit', {
+            event: 'submitMap',
+            fullAddress: address.formattedAddress
+        });
 
         Turbolinks.visit(this._getVendorsRoute(address));
     },

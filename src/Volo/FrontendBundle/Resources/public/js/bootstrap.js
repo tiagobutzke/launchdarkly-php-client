@@ -531,9 +531,10 @@ VOLO.doBootstrap = function(configuration) {
         checkoutViews = VOLO.createCheckoutViews(cartModel, checkoutModel, locationModel, userAddressCollection, loginButtonView, VOLO.customer);
     }
 
+    var fullAddressHomeSearchView;
     if ($('.home .restaurants-search-form').length > 0) {
         if (VOLO.isMapEnabled()) {
-            var fullAddressHomeSearchView = new VOLO.FullAddressHomeSearchView({
+            fullAddressHomeSearchView = new VOLO.FullAddressHomeSearchView({
                 el: '.restaurants-search-form',
                 appConfig: VOLO.configuration,
                 model: locationModel
@@ -592,7 +593,8 @@ VOLO.doBootstrap = function(configuration) {
         checkoutPageView: checkoutViews.checkoutPageView,
         checkoutVoucherView: checkoutViews.voucherView,
         loginButtonView: loginButtonView,
-        restaurantsView: restaurantsView
+        restaurantsView: restaurantsView,
+        fullAddressHomeSearchView: fullAddressHomeSearchView
     });
 
     _.invoke(VOLO.gtmViews, 'setGtmService', GTMServiceInstance);

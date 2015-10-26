@@ -18,7 +18,7 @@ _.extend(VOLO.Geocoding.Autocomplete.prototype, Backbone.Events, {
         //because of inconsistency of click and enter in dropdown
         google.maps.event.addDomListener($inputNode[0], 'keydown', function(e) {
             if (e.keyCode == 13) {
-                return false;
+                // return false;
             }
         });
 
