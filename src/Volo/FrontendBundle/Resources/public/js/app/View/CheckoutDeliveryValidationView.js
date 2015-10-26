@@ -6,7 +6,7 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
         this.constraints = {
             "customer_address[postcode]": {
                 presence: true,
-                deliveryValidation: true
+                deliveryLocation: true
             },
             "customer_address[city]": {
                 presence: true
@@ -22,8 +22,6 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
         this._deliveryCheck = options.deliveryCheck;
         this._locationModel = options.locationModel;
         this._postalCodeGeocodingService = options.postalCodeGeocodingService;
-
-        this._createDeliveryAsyncValidation();
     },
 
     events: function() {
@@ -41,7 +39,12 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
     },
 
     validateForm: function() {
-        this._doValidate().then(this._enableContinueButton, this._disableContinueButton);
+        this._doValidate().then(this._onValidationSuccess, this._disableContinueButton);
+    },
+
+    _onValidationSuccess: function () {
+        this._geoCodeAndValidateDelivery();
+        this._enableContinueButton();
     },
 
     _enableContinueButton: function() {
@@ -93,24 +96,6 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
         var formValues = validate.collectFormValues(this.el);
 
         return validate.async(formValues, this.constraints);
-    },
-
-    _createDeliveryAsyncValidation: function() {
-        if (!validate.validators.deliveryValidation) {
-            validate.validators.deliveryValidation = function() {
-                return new Promise(function(resolve, reject) {
-                    this._geoCodeAndValidateDelivery().then(function(res) {
-                        if (res) {
-                            resolve();
-                        } else {
-                            reject('delivery not valid');
-                        }
-                    }, function() {
-                        reject('delivery not valid');
-                    });
-                }.bind(this));
-            }.bind(this);
-        }
     },
 
     _geoCodeAndValidateDelivery: function() {
