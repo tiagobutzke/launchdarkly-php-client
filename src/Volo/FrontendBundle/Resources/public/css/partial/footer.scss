@@ -25,10 +25,8 @@
 
 .footer__wrapper__top {
   @extend %footer__wrapper;
+  padding: 30px 0;
   border-top: $dropdown-border;
-  //TODO: footer__subscribe enable - remove padding top and bottom again
-  padding-top: $space-sm;
-  padding-bottom: $space-sm;
 }
 
 .footer__wrapper__middle {
@@ -53,11 +51,43 @@
   @include make-xs-column(12);
   @include make-md-column(6);
   margin-bottom: $space-lg;
+  text-align: center;
+  overflow: hidden;
   @include respond-from('screen-md') {
     margin-bottom: 0;
   }
   @extend .col-md-push-3;
 }
+
+
+.footer__subscribe__form {
+  opacity: 1;
+  @include transition(opacity 0.2s ease-out);
+}
+.show-subscribe-message .footer__subscribe__form {
+  opacity: 0;
+}
+
+
+.footer__subscribe__success-message {
+  text-align: center;
+  width: 0;
+  position: absolute;
+  opacity: 0;
+  height: 0;
+  @include transition(opacity 1.2s ease-out);
+  font-size: $font-size-1_4rem;
+  text-transform: uppercase;
+  @include respond-from("screen-md") {
+    padding-top: 5px;
+  }
+}
+.show-subscribe-message .footer__subscribe__success-message {
+  opacity: 1;
+  height: auto;
+  width: 95%;
+}
+
 
 .footer__subscribe__txt {
   @include make-xs-column(12);
@@ -65,12 +95,8 @@
   padding-bottom: $space-md;
 
   p {
-    width: 55%;
     margin: 0 auto;
-    @include respond-from("screen-sm") {
-      width: 100%;
-    }
-
+    width: 100%;
     b {
       display: block;
       font-family: $bold-font-family;
@@ -122,14 +148,12 @@
 .footer__logo {
   @include make-xs-column(6);
   @include make-md-column(3);
-  //TODO: footer__subscribe enable - remove comment
-  //@extend .col-md-pull-6;
+  @extend .col-md-pull-6;
   overflow: hidden;
   height: 45px;
   margin-top: 10px;
   @include respond-from("screen-md") {
-    //TODO: footer__subscribe enable - remove comment
-    //margin-top: 0;
+    margin-top: 0;
   }
 
   i {
@@ -146,8 +170,7 @@
 
 .footer__social {
   @include make-xs-column(6);
-  //TODO: footer__subscribe enable - change to make-md-column(3)
-  @include make-md-column(9, 0);
+  @include make-md-column(3);
   text-align: right;
   height: 42px;
 
@@ -156,8 +179,7 @@
     margin-top: 10px;
     margin-right: $space-sm;
     @include respond-from("screen-md") {
-      //TODO: footer__subscribe enable - comment in again
-      //margin-top: 1px;
+      margin-top: 1px;
     }
 
     i {

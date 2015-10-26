@@ -1,19 +1,42 @@
 <div class="footer__wrapper__top">
-    {#TODO footer__subscribe enable #}
-    {#<div class="footer__subscribe">#}
-        {#<div class="footer__subscribe__txt">#}
-            {#<p>{% trans %}footer_subscribe_text{% endtrans %}  <b>{% trans %}get_weekly_email{% endtrans %}</b></p>#}
-        {#</div>#}
-        {#<div class="footer__subscribe__city">#}
-            {#<input type="text" class="form-control" id="subscribe_city" name="subscribe_city" value="" required="true" placeholder="{% trans %}form.placeholder.subscribe_city{% endtrans %}">#}
-        {#</div>#}
-        {#<div class="footer__subscribe__email">#}
-            {#<input type="text" class="form-control" id="subscribe_email" name="subscribe_email" value="" required="true" placeholder="{% trans %}form.placeholder.email_address{% endtrans %}">#}
-        {#</div>#}
-        {#<div class="footer__subscribe__button">#}
-            {#<button class="button">{% trans %}button.signup_now{% endtrans %}</button>#}
-        {#</div>#}
-    {#</div>#}
+    <div class="footer__subscribe__txt">
+        <p>{% trans %}footer_subscribe_text{% endtrans %}  <b>{% trans %}get_weekly_email{% endtrans %}</b></p>
+    </div>
+    <div class="footer__subscribe">
+        <form class="footer__subscribe__form" action="{{ path('newsletter.subscribe') }}" method="post" role="form" novalidate>
+            <div class="footer__subscribe__city">
+                <select class="form-control" id="newsletter-city" name="newsletter[city]">
+                    {% set currentCity = city|default(false) %}
+                    <option value="" {% if not currentCity %}selected="selected"{% endif %}>{% trans %}form.placeholder.subscribe_city{% endtrans %}</option>
+                    {% for selectedCity in getFilteredCities() %}
+                        <option {% if currentCity and selectedCity.id == currentCity.id %}selected="selected"{% endif %}
+                            value="{{ selectedCity.id }}">{{ selectedCity.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="footer__subscribe__email">
+                <input type="text"
+                   id="newsletter-email"
+                   name="newsletter[email]"
+                   class="form-control"
+                   value="{{ newsletter.email|default('') }}"
+                   required="true"
+                   placeholder="{% trans %}form.placeholder.email_address{% endtrans %}"
+                   data-toggle="tooltip"
+                   data-validation-msg="{% trans %}validations.error.newsletter.email{% endtrans %}"
+                />
+            </div>
+            <div class="footer__subscribe__button">
+                <button class="button" type="submit" id="newsletter-form-submit">
+                   {% trans %}button.signup_now{% endtrans %}
+                </button>
+            </div>
+        </form>
+        <div class="footer__subscribe__success-message">
+            {% trans %}text.signup_now.success_message{% endtrans %}
+        </div>
+    </div>
     <div class="footer__logo">
         <i class="icon-logo"></i>
     </div>

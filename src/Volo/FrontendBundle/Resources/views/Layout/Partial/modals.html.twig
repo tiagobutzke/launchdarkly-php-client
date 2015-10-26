@@ -49,6 +49,23 @@
         </div>
     {% endif %}
 
+    {% if showUnsubscribePopup is defined and showUnsubscribePopup %}
+        <div class="modal fade vendor-popup__modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body clearfix">
+                        {% if isUnsubscribed %}
+                            {{ cms('homepage-unsubscribed-successfully-popup') }}
+                        {% else %}
+                            {{ cms('homepage-unsubscribed-not-successfully-popup') }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="modal-close-button close" data-dismiss="modal"></div>
+            </div>
+        </div>
+    {% endif %}
+
     <script type="text/template" id="template-login">
         {% render(controller('VoloFrontendBundle:Security:login')) %}
     </script>

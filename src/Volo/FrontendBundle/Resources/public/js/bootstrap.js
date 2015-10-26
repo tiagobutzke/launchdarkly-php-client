@@ -349,6 +349,16 @@ VOLO.createFilterView = function(vendorCollection, filterModel) {
     return filtersView;
 };
 
+VOLO.createNewsLetterView = function() {
+    var newsLetterView = new VOLO.NewsLetterView({
+        el: '.footer__subscribe'
+    });
+
+    VOLO.views.push(newsLetterView);
+
+    return newsLetterView;
+};
+
 VOLO.createRestaurantsSearchView = function() {
     var restaurantsSearchView = new VOLO.AddressFormStickingOnTop({
         el: '.restaurants__search-bar',
@@ -462,6 +472,11 @@ VOLO.doBootstrap = function(configuration) {
     if ($('.header__cart').length > 0 && $('#cart').length === 0) {
         cartIconView = VOLO.createCartIconView(VOLO.defaultCartValues);
         cartIconView.render();
+    }
+
+    if ($('.footer__subscribe').length) {
+        newsLetterView = VOLO.createNewsLetterView();
+        newsLetterView.render();
     }
 
     if ($('.vendor-popup__modal').length > 0) {
