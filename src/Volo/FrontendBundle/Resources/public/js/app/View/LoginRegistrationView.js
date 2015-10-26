@@ -127,6 +127,7 @@ var LoginRegistrationView = Backbone.View.extend({
         this._unbindRegisterValidationView();
         this.stopListening();
         this.undelegateEvents();
+        this._unbindResetPasswordValidationView();
     },
 
     renderForgotPassword: function() {
