@@ -10,6 +10,7 @@ VOLO.FullAddressHomeSearchView = Backbone.View.extend({
         });
 
         this.listenTo(this.autocomplete, 'autocomplete-search:place-found', this._placeFound);
+        this.listenTo(this.autocomplete, 'autocomplete-search:enter-pressed', this._submitGeocode);
     },
 
     events: function() {
@@ -91,7 +92,7 @@ VOLO.FullAddressHomeSearchView = Backbone.View.extend({
     _handleKeyDown: function(e) {
         this._hideTooltip();
 
-        if(e.keyCode === 9) {
+        if (e.keyCode === 9) { // tab
             this._geocode().then(this._updateInputFromAddress, this._displayError);
         }
     },

@@ -17,10 +17,10 @@ _.extend(VOLO.Geocoding.Autocomplete.prototype, Backbone.Events, {
 
         //because of inconsistency of click and enter in dropdown
         google.maps.event.addDomListener($inputNode[0], 'keydown', function(e) {
-            if (e.keyCode == 13) {
-                // return false;
+            if (e.keyCode === 13) { // enter
+                this.trigger('autocomplete-search:enter-pressed');
             }
-        });
+        }.bind(this));
 
         this.placeChanged = google.maps.event.addListener(this.autocomplete, 'place_changed', this._placeChanged);
     },

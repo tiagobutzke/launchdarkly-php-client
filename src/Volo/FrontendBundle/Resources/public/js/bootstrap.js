@@ -455,7 +455,8 @@ VOLO.doBootstrap = function(configuration) {
         vendorPopupView,
         userAddressCollection,
         filterModel,
-        vendorCollection
+        vendorCollection,
+        fullAddressHomeSearchView
     ;
 
     userAddressCollection = VOLO.createUserAddressCollection(VOLO.jsonUserAddress, VOLO.customer);
@@ -531,7 +532,6 @@ VOLO.doBootstrap = function(configuration) {
         checkoutViews = VOLO.createCheckoutViews(cartModel, checkoutModel, locationModel, userAddressCollection, loginButtonView, VOLO.customer);
     }
 
-    var fullAddressHomeSearchView;
     if ($('.home .restaurants-search-form').length > 0) {
         if (VOLO.isMapEnabled()) {
             fullAddressHomeSearchView = new VOLO.FullAddressHomeSearchView({

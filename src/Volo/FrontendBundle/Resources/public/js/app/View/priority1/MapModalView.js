@@ -22,8 +22,11 @@ VOLO.MapModalView = Backbone.View.extend({
         this.listenTo(this.model, 'change', this._enableSubmitButton);
     },
 
-    _onAutocompleteKeyDown: function() {
+    _onAutocompleteKeyDown: function(e) {
         this._hideInputError();
+        if (e.keyCode === 9) { // tab
+            this._updatePositionFromInput();
+        }
     },
 
     _updatePositionFromInput: function() {
@@ -51,7 +54,9 @@ VOLO.MapModalView = Backbone.View.extend({
     },
 
     _submit: function() {
-        if (this.model.isValid()) {
+        if (this.model.get('formattedAddress') !== this.$('.map-modal__autocomplete__input').val()) {
+            this._updatePositionFromInput();
+        } else if (this.model.isValid()) {
             this.trigger('map-dialog:address-submit', this.model.toJSON());
             this.unbind();
         }
@@ -115,7 +120,6 @@ VOLO.MapModalView = Backbone.View.extend({
         modalDialog.on('hide.bs.modal', this._dialogHide);
 
         modalDialog.modal();
-        this.model.set(address, {validate: true});
     },
 
     hide: function() {
