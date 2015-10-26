@@ -329,19 +329,33 @@ textarea.checkout__step__item-textarea {
 }
 
 .checkout__login-register-cta__text {
-  @include make-xs-column(12);
-  @include make-md-column(4);
-  padding: 10px 0;
+  font-size: $font-size-1_4rem;
+  font-family: "Avenir Heavy",Arial,sans-serif;
+  margin: $space-md 0 $space-md 0;
+  @include respond-from("screen-md") {
+    margin-top: 0;
+  }
+}
+
+.checkout__register-link-divider {
+  display: none;
+  text-align: center;
+  line-height: 43px;
+  @include make-sm-column(1, 0);
+
+  @include respond-from("screen-sm") {
+    display: block;
+  }
 }
 
 .checkout__login-link-wrapper,
 .checkout__register-link-wrapper {
   @include make-xs-column(12, 0);
-  @include make-sm-column(6, 0);
+  @include make-sm-column(5, 0);
   @include make-md-column(4, 0);
   margin-bottom: $space-sm;
   display: inline-block;
-  @include respond-from("screen-md") {
+  @include respond-from("screen-sm") {
     margin-bottom: 0;
   }
 }
