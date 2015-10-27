@@ -472,30 +472,6 @@ VOLO.doBootstrap = function(configuration) {
     }
 
     cartModel = VOLO.createCartModel(VOLO.jsonCart);
-    if ($('.menu__list-wrapper').length > 0) {
-        var $postalCodeBar = $('.menu__postal-code-bar'),
-            vendor = $('.menu__list-wrapper').data('vendor');
-
-        vendorGeocodingView = VOLO.createVendorGeocodingView($postalCodeBar, locationModel, cartModel, vendor);
-
-        if ($('#cart').length) {
-            var cartViews = VOLO.createCartViews({
-                    cartModel: cartModel,
-                    locationModel: locationModel,
-                    gtmService: VOLO.GTMServiceInstance,
-                    vendorGeocodingView: vendorGeocodingView,
-                    $postalCodeBar: $postalCodeBar,
-                    vendor: vendor
-                }),
-                urlZipCode = window.location.search.split('zip=')[1];
-
-            cartViews.cartView.render();
-            if (urlZipCode) {
-                cartViews.cartView.setZipCode(urlZipCode);
-            }
-        }
-    }
-
     checkoutModel = VOLO.createCheckoutModel(cartModel, locationModel);
 
     if ($('.menu__list-wrapper').length > 0) {
@@ -596,6 +572,30 @@ VOLO.doBootstrap = function(configuration) {
         restaurantsView: restaurantsView,
         fullAddressHomeSearchView: fullAddressHomeSearchView
     });
+
+    if ($('.menu__list-wrapper').length > 0) {
+        var $postalCodeBar = $('.menu__postal-code-bar'),
+            vendor = $('.menu__list-wrapper').data('vendor');
+
+        vendorGeocodingView = VOLO.createVendorGeocodingView($postalCodeBar, locationModel, cartModel, vendor);
+
+        if ($('#cart').length) {
+            var cartViews = VOLO.createCartViews({
+                    cartModel: cartModel,
+                    locationModel: locationModel,
+                    gtmService: GTMServiceInstance,
+                    vendorGeocodingView: vendorGeocodingView,
+                    $postalCodeBar: $postalCodeBar,
+                    vendor: vendor
+                }),
+                urlZipCode = window.location.search.split('zip=')[1];
+
+            cartViews.cartView.render();
+            if (urlZipCode) {
+                cartViews.cartView.setZipCode(urlZipCode);
+            }
+        }
+    }
 
     _.invoke(VOLO.gtmViews, 'setGtmService', GTMServiceInstance);
 
