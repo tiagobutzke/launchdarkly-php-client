@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+* 1.60.2
+ * INTVOLO-1284 Fixes "Add to Cart" DataLayer event not being fired
+
+* 1.60.1
+ * INTVOLO-1295 cleaned up error messages in the map 
+
 * 1.60.0
  * INTVOLO-618 - new geocoding order 
 
