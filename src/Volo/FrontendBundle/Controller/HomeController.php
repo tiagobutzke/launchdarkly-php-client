@@ -23,13 +23,15 @@ class HomeController extends BaseController
     {
         $utmSource = $request->query->get('utm_source');
         $location = $this->getCustomerLocationService()->get($request->getSession());
-        if ('' === $postalCode && false === $this->getAddressConfigProvider()->isFullAddressAutocomplete()) {
+        $isFullAddressAutocomplete = $this->getAddressConfigProvider()->isFullAddressAutocomplete();
+        if ('' === $postalCode && false === $isFullAddressAutocomplete) {
             $postalCode = $location[CustomerLocationService::KEY_PLZ];
         }
 
         return [
             'postalCode' => $postalCode,
-            'showVendorPopup' => $utmSource === 'heimschmecker.at' ? true : false
+            'showVendorPopup' => $utmSource === 'heimschmecker.at' ? true : false,
+            'isFullAddressAutocomplete' => $isFullAddressAutocomplete,
         ];
     }
 

@@ -82,6 +82,17 @@
 }
 // ----------- CENTERS ABSOLUTE POSITIONED ELEMENT VERTICALLY END ----------
 
+// ----------- CENTERS ABSOLUTE POSITIONED ELEMENT VERTICALLY AND HORIZONTALY START ----------
+@mixin horizontal-vertical-center-absolute {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+// ----------- CENTERS ABSOLUTE POSITIONED ELEMENT VERTICALLY AND HORIZONTALY END ----------
+
 
 // ----------- ASPECT RATIO START ----------
 @mixin aspect-ratio($width, $height) {

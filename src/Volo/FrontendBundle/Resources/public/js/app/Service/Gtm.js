@@ -14,6 +14,7 @@ VOLO.GTMService = function (options) {
     this.homeSearchView = options.homeSearchView;
     this.homeView = options.homeView;
     this.checkoutVoucherView = options.checkoutVoucherView;
+    this.fullAddressHomeSearchView = options.fullAddressHomeSearchView;
 
     this.initialize();
 };
@@ -84,6 +85,12 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
 
         if (_.isObject(this.loginButtonView)) {
             this._bindLoginRegistrationEvents();
+        }
+
+        if (_.isObject(this.fullAddressHomeSearchView)) {
+            this.listenTo(this.fullAddressHomeSearchView, 'home-search-view:gtm-open-map', this._push);
+            this.listenTo(this.fullAddressHomeSearchView, 'home-search-view:gtm-submit', this._push);
+            this.listenTo(this.fullAddressHomeSearchView.mapModalView, 'map-dialog:gtm-error-shown', this._push);
         }
 
         this._push(this.doMobileDetection(window.navigator.userAgent));
@@ -331,6 +338,7 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
     _push: function(data, referrer) {
         data.referrer = _.get(this, 'options.referrer', referrer);
         console.log('GTM referrer ', data.referrer);
+        console.log('GTM log', data);
         dataLayer.push(data);
     }
 });

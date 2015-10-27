@@ -8,7 +8,6 @@ var HomeSearchView = CTATrackableView.extend({
         console.log('HomeSearchView.initialize ', this.cid);
         _.bindAll(this);
 
-
         this.geocodingService = options.geocodingService;
         this.geocodingService.init(this.$('#delivery-information-postal-index'), VOLO.configuration.address_config);
 
@@ -34,7 +33,11 @@ var HomeSearchView = CTATrackableView.extend({
         var node = this.$('.restaurants-search-form__input');
         var postcode = node.val();
 
-        if (postcode) {
+        if (VOLO.isFullAddressAutoComplete()) {
+            node.val(this.model.get('address'));
+        }
+
+        if (postcode && !VOLO.isFullAddressAutoComplete()) {
             this.geocodingService.getLocationByZipCode(postcode);
         }
 

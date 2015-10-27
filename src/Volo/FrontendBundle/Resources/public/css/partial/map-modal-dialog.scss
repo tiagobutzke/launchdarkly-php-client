@@ -1,0 +1,119 @@
+.map-modal .modal-dialog {
+  height: 100%;
+  border-radius: 2px;
+  @include respond-from("screen-sm") {
+    margin-top: 0;
+    max-width: 500px;
+    height: 90%;
+    width: auto;
+  }
+}
+
+.map-modal .modal-content {
+  height: 100%;
+  padding: 0;
+  border-radius: 3px;
+  @include respond-from("screen-sm") {
+    height: 85%;
+    margin-top: 10%;
+    max-height: 450px;
+  }
+}
+
+.map-modal .modal-body {
+  height: 100%;
+  position: relative;
+  padding: 0;
+}
+
+.map-modal .map-modal__header {
+  height: 6%;
+  min-height: 40px;
+  text-align: center;
+}
+
+.map-modal__header-content {
+  @include vertical-center-element();
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0 45px;
+  padding-top: 6px;
+  font-family: $bold-font-family;
+  font-size: $font-size-1_4rem;
+}
+
+.map-modal__map {
+  height: 92%;
+  position: absolute;
+  border-radius: 2px;
+    border: 4px solid #fff;
+  @include respond-from("screen-sm") {
+    border-width: 7px;
+  }
+}
+
+.map-modal__map {
+  width: 100%;
+}
+
+.map-modal__map-center-icon {
+  @include retina-sprite($pink-pin-group);
+  @include horizontal-vertical-center-absolute();
+  z-index: 1;
+  margin-left: 2px;
+  margin-top: -22px;
+}
+
+.map-modal__autocomplete__input {
+  z-index: 1;
+  position: absolute;
+  top: 15px;
+  width: 90%;
+  margin: 0 5%;
+  padding-left: 35px;
+}
+
+.map-modal__submit__button {
+  z-index: 1;
+  position: absolute;
+  bottom: 30px;
+  width: 60%;
+  margin: 0 20%;
+}
+
+.map-modal .tooltip {
+  margin-left: 5%;
+}
+
+.map-modal .modal-close-button {
+  z-index: 1;
+}
+
+.map-modal__form-icon-search {
+  position: absolute;
+  z-index: 2;
+  top: 28px;
+  margin-left: 5%;
+  left: 10px;
+  font-weight: bold;
+}
+
+.map-modal__form-icon-location {
+  right: 11px;
+  left: auto;
+  margin-right: 5%;
+  color: $color-text-link;
+  position: absolute;
+  top: 26px;
+  z-index: 2;
+  font-size: 2rem;
+}
+
+.map-modal__error-message {
+  z-index: 1;
+  position: absolute;
+  width: 90%;
+  margin: 0 5%;
+  top: 58px;
+}
+

@@ -455,7 +455,8 @@ VOLO.doBootstrap = function(configuration) {
         vendorPopupView,
         userAddressCollection,
         filterModel,
-        vendorCollection
+        vendorCollection,
+        fullAddressHomeSearchView
     ;
 
     userAddressCollection = VOLO.createUserAddressCollection(VOLO.jsonUserAddress, VOLO.customer);
@@ -532,11 +533,22 @@ VOLO.doBootstrap = function(configuration) {
     }
 
     if ($('.home .restaurants-search-form').length > 0) {
-        var homeSearchView = VOLO.createHomeSearchView(locationModel),
-            homeView = VOLO.createHomeView();
+        if (VOLO.isMapEnabled()) {
+            fullAddressHomeSearchView = new VOLO.FullAddressHomeSearchView({
+                el: '.restaurants-search-form',
+                appConfig: VOLO.configuration,
+                model: locationModel
+            });
+            fullAddressHomeSearchView.render();
 
-        homeSearchView.render();
-        homeView.render();
+            VOLO.views.push(fullAddressHomeSearchView);
+        } else {
+            var homeSearchView = VOLO.createHomeSearchView(locationModel),
+                homeView = VOLO.createHomeView();
+
+            homeSearchView.render();
+            homeView.render();
+        }
     }
 
     if ($('.restaurants .restaurants-search-form').length > 0) {
@@ -581,7 +593,8 @@ VOLO.doBootstrap = function(configuration) {
         checkoutPageView: checkoutViews.checkoutPageView,
         checkoutVoucherView: checkoutViews.voucherView,
         loginButtonView: loginButtonView,
-        restaurantsView: restaurantsView
+        restaurantsView: restaurantsView,
+        fullAddressHomeSearchView: fullAddressHomeSearchView
     });
 
     _.invoke(VOLO.gtmViews, 'setGtmService', GTMServiceInstance);
@@ -601,6 +614,10 @@ VOLO.doBootstrap = function(configuration) {
 
 VOLO.isFullAddressAutoComplete = function () {
     return VOLO.configuration.address_config.autocomplete_type[0] !== '(regions)';
+};
+
+VOLO.isMapEnabled = function () {
+    return _.get(VOLO, 'configuration.address_config.map_enabled', false);
 };
 
 $(document).on('page:load page:restore', function () {
