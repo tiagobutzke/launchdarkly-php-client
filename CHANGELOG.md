@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.60.0
+ * INTVOLO-618 - new geocoding order 
+
 * 1.59.2
  * INTVOLO-131 translate reset password form
 
