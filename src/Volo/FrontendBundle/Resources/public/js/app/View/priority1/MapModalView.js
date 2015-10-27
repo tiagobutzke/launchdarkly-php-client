@@ -162,6 +162,10 @@ VOLO.MapModalView = Backbone.View.extend({
         console.log('MapDialog._updateAddress', address);
         this.$('.map-modal__autocomplete__input').val(address.formattedAddress);
         this.model.set(address, {validate: true});
+        if (_.isNull(this.model.validationError)) {
+            this._hideInputError();
+            this._enableSubmitButton();
+        }
     },
 
     _centerChanged: function(center) {
