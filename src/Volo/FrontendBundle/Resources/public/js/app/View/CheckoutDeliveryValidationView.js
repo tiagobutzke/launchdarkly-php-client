@@ -5,8 +5,7 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
         ValidationView.prototype.initialize.apply(this, arguments);
         this.constraints = {
             "customer_address[postcode]": {
-                presence: true,
-                deliveryLocation: true
+                presence: true
             },
             "customer_address[city]": {
                 presence: true
@@ -39,10 +38,10 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
     },
 
     validateForm: function() {
-        this._doValidate().then(this._onValidationSuccess, this._disableContinueButton);
+        this._doValidate().then(this._continueCheckout, this._disableContinueButton);
     },
 
-    _onValidationSuccess: function () {
+    _continueCheckout: function () {
         this._geoCodeAndValidateDelivery();
         this._enableContinueButton();
     },
@@ -76,7 +75,7 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
     },
 
     _validateForm: function() {
-        var doValidate = this._doValidate(),
+        var doValidate = this._preValidateLocation().then(this._doValidate),
             deferred = $.Deferred();
 
         doValidate.then(deferred.resolve, function(errors) {
@@ -92,7 +91,13 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
         return deferred;
     },
 
-    _doValidate: function() {
+    _preValidateLocation: function () {
+        var address = this._getAddressValues();
+
+        return validate.async({address: address}, {address: {deliveryLocation: true}});
+    },
+
+    _doValidate: function () {
         var formValues = validate.collectFormValues(this.el);
 
         return validate.async(formValues, this.constraints);
@@ -165,14 +170,18 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
         return deferred;
     },
 
+    _getAddressValues: function() {
+        return this.$('#delivery-information-address-line1').val() + ' ' +
+            this.$('#delivery-information-address-line2').val() + ', ' +
+            this.$('#delivery-information-postal-index').val() + ', ' +
+            this.$('#delivery-information-city').val();
+    },
+
     _geocodeAddress: function() {
         var deferred = $.Deferred();
 
         if (this.isValidForm()) {
-            var address = this.$('#delivery-information-address-line1').val() + ' ' +
-                          this.$('#delivery-information-address-line2').val() + ', ' +
-                          this.$('#delivery-information-postal-index').val() + ', ' +
-                          this.$('#delivery-information-city').val(),
+            var address = this._getAddressValues(),
                 geocode = this._postalCodeGeocodingService.geocodeAddress({
                     address: address
                 });
