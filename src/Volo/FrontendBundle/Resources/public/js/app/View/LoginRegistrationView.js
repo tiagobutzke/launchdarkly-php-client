@@ -1,6 +1,7 @@
 var LoginRegistrationView = Backbone.View.extend({
     _loginValidationView: null,
     _registerValidationView: null,
+    _resetPasswordValidationView: null,
 
     _loginConstraints: {
         _username: {
@@ -20,7 +21,10 @@ var LoginRegistrationView = Backbone.View.extend({
 
     _resetPasswordConstraints: {
         '_password': {
-            presence: true
+            presence: true,
+            length: {
+                minimum: 6
+            }
         }
     },
 
@@ -102,10 +106,7 @@ var LoginRegistrationView = Backbone.View.extend({
         this.$('.modal-content').html(this.templateResetPassword());
 
         this.$el.modal();
-        this._registerValidationView = new ValidationView({
-            el: this.$('.reset-password-form'),
-            constraints: this._resetPasswordConstraints
-        });
+        this._bindResetPasswordValidationView();
 
         return this;
     },
@@ -126,6 +127,7 @@ var LoginRegistrationView = Backbone.View.extend({
         this._unbindRegisterValidationView();
         this.stopListening();
         this.undelegateEvents();
+        this._unbindResetPasswordValidationView();
     },
 
     renderForgotPassword: function() {
@@ -201,7 +203,8 @@ var LoginRegistrationView = Backbone.View.extend({
                 $(target).removeClass('modal-content--loading');
                 $modalContent.html(data.responseText);
                 $form.find('button').prop("disabled", false);
-            }
+                this._bindResetPasswordValidationView();
+            }.bind(this)
         });
     },
 
@@ -313,6 +316,14 @@ var LoginRegistrationView = Backbone.View.extend({
         });
     },
 
+    _bindResetPasswordValidationView: function() {
+        this._unbindResetPasswordValidationView();
+        this._resetPasswordValidationView = new ValidationView({
+            el: this.$('.reset-password-form'),
+            constraints: this._resetPasswordConstraints
+        });
+    },
+
     _unbindLoginView: function() {
         if (this._loginValidationView) {
             console.log('unbind login validation view');
@@ -324,6 +335,12 @@ var LoginRegistrationView = Backbone.View.extend({
         if (this._registerValidationView) {
             console.log('unbind register validation view');
             this._registerValidationView.unbind();
+        }
+    },
+
+    _unbindResetPasswordValidationView: function() {
+        if (this._resetPasswordValidationView) {
+            this._resetPasswordValidationView.unbind();
         }
     },
 
