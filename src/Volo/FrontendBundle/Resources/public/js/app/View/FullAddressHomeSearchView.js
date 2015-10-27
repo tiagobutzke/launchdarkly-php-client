@@ -32,15 +32,9 @@ VOLO.FullAddressHomeSearchView = Backbone.View.extend({
             this._geocode().then(function(address) {
                 $input.val(address.formattedAddress);
 
-                this.trigger('home-search-view:gtm-open-map', {
-                    event: 'openMap',
-                    userAddress: userAddress,
-                    address: address.formattedAddress
-                });
-
                 if (!this.mapModalView.isOpen()) {
                     this.autocomplete.unbind();
-                    this._openMapModalDialog(address);
+                    this._openMapModalDialog(address, userAddress);
                 }
             }.bind(this), this._displayError);
         } else {
@@ -84,7 +78,7 @@ VOLO.FullAddressHomeSearchView = Backbone.View.extend({
             address = deserializer.deserialize(geocodingPlace, this.appConfig);
 
         this.autocomplete.unbind();
-        this._openMapModalDialog(address);
+        this._openMapModalDialog(address, address.formattedAddress);
 
         console.log('VOLO.homeSearch - autocomplete address', address);
     },
@@ -105,8 +99,13 @@ VOLO.FullAddressHomeSearchView = Backbone.View.extend({
         this.$('.restaurants-search-form__input').tooltip('destroy');
     },
 
-    _openMapModalDialog: function(address) {
+    _openMapModalDialog: function(address, userAddress) {
         this.mapModalView.show(address);
+        this.trigger('home-search-view:gtm-open-map', {
+            event: 'openMap',
+            userAddress: userAddress,
+            address: address.formattedAddress
+        });
 
         this.listenToOnce(this.mapModalView, 'map-dialog:hide', this._dialogHide);
         this.listenToOnce(this.mapModalView, 'map-dialog:address-submit', this._submitAddress);
