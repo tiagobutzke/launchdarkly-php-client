@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.59.2
+ * INTVOLO-131 translate reset password form
+
 * 1.59.1
  * INTVOLO-1224 Add missing city name parameter
 
