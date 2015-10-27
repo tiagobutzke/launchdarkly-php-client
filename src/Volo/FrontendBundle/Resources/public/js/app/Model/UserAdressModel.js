@@ -77,7 +77,7 @@ VOLO.UserAddressCollection = Backbone.Collection.extend({
             if (this.isGuest) {
                 isDeliverable = address.get('vendor_id') === vendorId;
             } else {
-                isDeliverable = address.isNew() || address.get('is_delivery_available') || address.get('city') === currentCity;
+                isDeliverable = address.isNew() || address.get('is_delivery_available');
             }
 
             return isDeliverable;
