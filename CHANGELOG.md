@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.60.4
+ * INTVOLO-1310 Increase assets version in config
+
 * 1.60.3
  * INTVOLO-1311 Activate Map+full address in Staging DE
 
