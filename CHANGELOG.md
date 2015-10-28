@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+* 1.60.6
+ * INTVOLO-1301 User can use address outside delivery area
+ 
+* 1.60.5
+ * INTVOLO-1292 restaurant search improved
+
 * 1.60.4
  * INTVOLO-1310 Increase assets version in config
 
