@@ -1,5 +1,13 @@
 parameters:
     address_config:
+        map_enabled: true
+        postal_code_field:
+            - 'postal_code'
         autocomplete_type:
             - "address"
         hide_checkout_postal_code: false
+        required_fields:
+            - "street"
+            - "building"
+            - "postcode"
+            - "city"
