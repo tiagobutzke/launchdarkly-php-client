@@ -34,7 +34,7 @@ framework:
         version: asset_version_placeholder
         packages:
             cdn_s3:
-                version: '1'
+                version: '2'
                 base_urls:
                     [ "%volo_frontend.image_server_base_url%/%country_code%" ]
     default_locale:  "%locale%"
