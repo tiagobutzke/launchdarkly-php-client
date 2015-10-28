@@ -33,6 +33,7 @@
 }
 
 .hero-menu__info__headline {
+  @extend .h2;
   font-family: $bold-font-family;
   font-size: $font-size-1_6rem;
   text-transform: uppercase;

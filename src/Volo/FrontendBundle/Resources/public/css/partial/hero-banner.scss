@@ -3,31 +3,31 @@
   position: relative;
   max-height: 400px;
 
-  h1 {
-    color: $color-text-selection;
-    text-transform: uppercase;
-    width: 96%;
-    text-align: center;
-    height: 32px;
-    line-height: 2.2;
-    font-size: $font-size-1_6rem;
-    @include absolute-center-box();
-
-    @include respond-from("screen-sm") {
-      font-size: $font-size-2_2rem;
-      line-height: 1.6;
-    }
-    @include respond-from("screen-md") {
-      font-size: $font-size-2_4rem;
-    }
-    @include respond-from("screen-lg") {
-      font-size: $font-size-3_2rem;
-      line-height: 1.1;
-    }
-  }
-
   img {
     @include responsive-img();
+  }
+}
+
+.hero-banner-content__header {
+  color: $color-text-selection;
+  text-transform: uppercase;
+  width: 96%;
+  text-align: center;
+  height: 32px;
+  line-height: 2.2;
+  font-size: $font-size-1_6rem;
+  @include absolute-center-box();
+
+  @include respond-from("screen-sm") {
+    font-size: $font-size-2_2rem;
+    line-height: 1.6;
+  }
+  @include respond-from("screen-md") {
+    font-size: $font-size-2_4rem;
+  }
+  @include respond-from("screen-lg") {
+    font-size: $font-size-3_2rem;
+    line-height: 1.1;
   }
 }
 
