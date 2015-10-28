@@ -2,3 +2,4 @@ parameters:
     address_config:
         autocomplete_type:
             - "address"
+        hide_checkout_postal_code: false
