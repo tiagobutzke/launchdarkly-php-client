@@ -42,8 +42,7 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
     },
 
     _continueCheckout: function () {
-        this._geoCodeAndValidateDelivery();
-        this._enableContinueButton();
+        this._geoCodeAndValidateDelivery().then(this._enableContinueButton);
     },
 
     _enableContinueButton: function() {
