@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.60.3
+ * INTVOLO-1311 Activate Map+full address in Staging DE
+
 * 1.60.2
  * INTVOLO-1284 Fixes "Add to Cart" DataLayer event not being fired
 
