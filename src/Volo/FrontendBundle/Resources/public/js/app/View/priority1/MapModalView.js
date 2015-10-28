@@ -31,7 +31,7 @@ VOLO.MapModalView = Backbone.View.extend({
 
     _updatePositionFromInput: function() {
         var firstResultValue = this.autocomplete.getFirstResultValue(),
-            geocoder = new VOLO.Geocoding.Geocoder();
+            geocoder = new VOLO.Geocoding.Geocoder(this.appConfig);
 
         if (this.$('.map-modal__autocomplete__input').val()) {
             geocoder.geocodeAddress(firstResultValue).then(this._centerMapOnFirstAddress, function(error) {
