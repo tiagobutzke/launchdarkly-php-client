@@ -54,7 +54,7 @@ VOLO.FullAddressHomeSearchView = Backbone.View.extend({
 
     _geocode: function() {
         var firstResultValue = this.autocomplete.getFirstResultValue(),
-            geocoder = new VOLO.Geocoding.Geocoder(),
+            geocoder = new VOLO.Geocoding.Geocoder(this.appConfig),
             deferred = $.Deferred();
 
         geocoder.geocodeAddress(firstResultValue)
