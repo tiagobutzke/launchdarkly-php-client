@@ -14,6 +14,7 @@ parameters:
         autocomplete_type:
             - "address"
         hide_checkout_postal_code: true
+        format: ':building :street, :plz'
 
     short_to_full_locale_name_mapping:
         zh: zh_HK

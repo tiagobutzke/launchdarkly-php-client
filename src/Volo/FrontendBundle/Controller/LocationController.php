@@ -122,15 +122,7 @@ class LocationController extends BaseController
     private function createFormattedLocation(array $gpsLocation, AbstractLocation $location)
     {
         // this is to handle the case when the user select district / main area without a street address
-        $deliveryAddress = trim(
-            sprintf(
-                '%s %s, %s',
-                urldecode($gpsLocation[CustomerLocationService::KEY_BUILDING]),
-                urldecode($gpsLocation[CustomerLocationService::KEY_STREET]),
-                urldecode($gpsLocation[CustomerLocationService::KEY_PLZ])
-            )
-        );
-        $deliveryAddress = strpos($deliveryAddress, ',') === 0 ? substr($deliveryAddress, 1) : $deliveryAddress;
+        $deliveryAddress = $this->getCustomerLocationService()->format($gpsLocation);
 
         return [
             'type'             => $location->getLocationType(),
@@ -179,8 +171,7 @@ class LocationController extends BaseController
         array $formattedLocation,
         VendorsCollection $vendors,
         $city
-    )
-    {
+    ) {
         return [
             'hasQueryParams' => $request->query->count() > 0,
             'gpsSearch' => $location->getLocationType() === 'polygon',

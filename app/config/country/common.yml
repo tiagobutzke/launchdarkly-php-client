@@ -15,5 +15,6 @@ parameters:
         autocomplete_type:
             - "(regions)"
         hide_checkout_postal_code: false
+        format: ':building :street, :plz'
 
     sitemap.s3.base_url: https://foodora-sitemap.s3.eu-central-1.amazonaws.com/production/%country_code%

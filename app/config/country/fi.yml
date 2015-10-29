@@ -8,3 +8,4 @@ parameters:
     address_config:
         autocomplete_type:
             - "address"
+        format: ':building :street, :plz'

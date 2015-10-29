@@ -37,6 +37,8 @@ class VendorController extends BaseController
     public function vendorAction(Request $request, $code, $urlKey)
     {
         $vendorCode = strtolower($code);
+        $customerLocationService = $this->getCustomerLocationService();
+
         try {
             $vendor = $this->get('volo_frontend.provider.vendor')->find($vendorCode);
             if ($vendor->getUrlKey() !== $urlKey || $vendorCode !== $code) {
@@ -51,7 +53,9 @@ class VendorController extends BaseController
             $vendor->getId()
         );
 
-        $customerLocation = $this->get('volo_frontend.service.customer_location')->get($request->getSession());
+        $customerLocation = $customerLocationService->get($request->getSession());
+        $formattedLocation = $customerLocationService->format($customerLocation);
+
         $isDeliverable = is_array($customerLocation) ? $this->get('volo_frontend.service.deliverability')
             ->isDeliverableLocation(
                 $vendor->getId(),
@@ -90,7 +94,7 @@ class VendorController extends BaseController
             'vendor'        => $vendor,
             'cart'          => $cart,
             'address'       => is_array($customerLocation) ? $customerLocation[CustomerLocationService::KEY_PLZ] : '',
-            'location'      => $customerLocation,
+            'location'      => $formattedLocation,
             'isDeliverable' => $isDeliverable,
             // Temporary disabled
             'showSpecialInstructionsTutorial' => false && $specialInstructionsTutorialEnabled

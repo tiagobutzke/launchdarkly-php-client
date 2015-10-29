@@ -18,6 +18,19 @@ class CustomerLocationService
     const KEY_BUILDING = 'building';
 
     /**
+     * @var array
+     */
+    protected $locationConfig;
+
+    /**
+     * @param array $locationConfig
+     */
+    public function __construct(array $locationConfig)
+    {
+        $this->locationConfig = $locationConfig;
+    }
+
+    /**
      * @param SessionInterface $session
      * @param array $location
      */
@@ -85,5 +98,27 @@ class CustomerLocationService
         if (count($missingKeys) > 0) {
             throw new MissingKeysException($missingKeys);
         }
+    }
+
+    /**
+     * @param array $location
+     *
+     * @return string
+     */
+    public function format(array $location)
+    {
+        $deliveryAddress = trim(
+            str_replace(
+                [':building', ':street', ':plz'],
+                [
+                    urldecode($location[self::KEY_BUILDING]),
+                    urldecode($location[self::KEY_STREET]),
+                    urldecode($location[self::KEY_PLZ]),
+                ],
+                $this->locationConfig['format']
+            )
+        );
+
+        return trim($deliveryAddress, ',');
     }
 }

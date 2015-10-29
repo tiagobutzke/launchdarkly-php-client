@@ -157,10 +157,18 @@ var VendorGeocodingView = HomeSearchView.extend({
 
     _prepareDeliveringToLabel: function () {
         if (VOLO.isFullAddressAutoComplete()) {
-            return this.model.get('building') + " " + this.model.get('street') + ", " + this.model.get('postcode');
+            return this._formatDeliveryLocation();
         }
 
         return this.model.get('postcode');
+    },
+
+    _formatDeliveryLocation: function(){
+        var format = _.get(VOLO, 'configuration.address_config.format');
+
+        return format.replace(':building', this.model.get('building'))
+            .replace(':street', this.model.get('street'))
+            .replace(':plz', this.model.get('postcode'));
     },
 
     _parseIsDeliverable: function (response) {
