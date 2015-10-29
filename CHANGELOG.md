@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.60.9
+ * INTVOLO-1332 - map error translation fix
+
 * 1.60.8
  * INTVOLO-1327 Activate Map+full address in Live DE
 
