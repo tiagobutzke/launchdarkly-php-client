@@ -65,6 +65,7 @@ twig:
         average_delivery_time: '%average_delivery_time%'
         locales: "%supported_locales%"
         address_config: '%address_config%'
+        cart_vat_enabled: '%cart_vat_enabled%'
         assets_version: asset_version_placeholder
 
 monolog:

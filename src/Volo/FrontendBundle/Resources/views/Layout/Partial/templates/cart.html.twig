@@ -154,7 +154,7 @@
         </span>
     </div>
 
-    {% if vendor.isIsVatVisible() and 'sg' == country_code %}
+    {% if vendor.isIsVatVisible() and cart_vat_enabled %}
     <div class="desktop-cart__order__vat">
         {{ 'cart.vat'|trans }}
         <span class="desktop-cart__order__vat-price"><%= VOLO.formatCurrency(vat_total) %></span>

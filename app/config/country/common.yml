@@ -1,4 +1,5 @@
 parameters:
+    cart_vat_enabled: false
     is_coming_soon_enabled: false
     timepicker_date_format: 'eee MMM d'
     detect_browser_language_enabled: true
