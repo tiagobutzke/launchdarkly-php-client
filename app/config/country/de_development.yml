@@ -1,2 +1,0 @@
-imports:
-    - { resource: de_staging.yml }
