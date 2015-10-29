@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.60.7
+ * INTVOLO-1315 - country restriction for geocoder
+
 * 1.60.6
  * INTVOLO-1301 User can use address outside delivery area
  
