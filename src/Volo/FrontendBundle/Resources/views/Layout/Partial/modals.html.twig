@@ -30,15 +30,17 @@
     </div>
 
     {% if showVendorPopup is defined and showVendorPopup %}
-        <div class="modal fade vendor-popup__modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal fade vendor-popup__modal" tabindex="-1" role="dialog" aria-hidden="true" data-utm-source="{{utmSource}}">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body clearfix">
-                        <div class="home__titles__main-title">
-                            {% trans %}vendor.popup_title{% endtrans %}
+                        <div class="home__titles__main-title"
+                            data-heimschmecker.at="{% trans %}vendor.popup_title{% endtrans %}"
+                            data-urbantaste.de="{% trans %}vendor.popup_urban_taste_title{% endtrans %}">
                         </div>
-                        <div class="home__titles__subtitle">
-                            {% trans %}vendor.popup_text{% endtrans %}
+                        <div class="home__titles__subtitle"
+                            data-heimschmecker.at="{% trans %}vendor.popup_text{% endtrans %}"
+                            data-urbantaste.de="{% trans %}vendor.popup_urban_taste_text{% endtrans %}">
                         </div>
                     </div>
                 </div>
