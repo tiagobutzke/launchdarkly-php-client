@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.60.8
+ * INTVOLO-1327 Activate Map+full address in Live DE
+
 * 1.60.7
  * INTVOLO-1315 - country restriction for geocoder
 
