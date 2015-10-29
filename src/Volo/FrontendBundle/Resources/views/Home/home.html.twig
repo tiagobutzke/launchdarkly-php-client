@@ -142,4 +142,24 @@
         </div>
     </section>
     {{ cms('homepage-app-promo') }}
+
+    {% set homepageCorporate = cms('homepage-corporate') %}
+    {% if homepageCorporate is not empty %}
+        <section class="home__corporate">
+            <div class="home__corporate-background b-lazy"
+                 data-src="{{ asset('img/homepage/corporate-banner.jpg') }}"
+                 data-src-bp_300="{{ asset('img/homepage/corporate-banner-mobile.jpg') }}"
+                 data-src-bp_400="{{ asset('img/homepage/corporate-banner-mobile.jpg') }}"
+                 data-src-bp_600="{{ asset('img/homepage/corporate-banner-mobile.jpg') }}"
+                 data-src-bp_800="{{ asset('img/homepage/corporate-banner-mobile.jpg') }}"
+                 data-src-bp_1000="{{ asset('img/homepage/corporate-banner.jpg') }}"
+                 data-src-bp_1200="{{ asset('img/homepage/corporate-banner.jpg') }}"
+                 data-src-bp_1400="{{ asset('img/homepage/corporate-banner.jpg') }}"
+                 data-src-bp_biggest="{{ asset('img/homepage/corporate-banner.jpg') }}">
+                <div class="home__corporate__content">
+                    {{ homepageCorporate|raw }}
+                </div>
+            </div>
+        </section>
+    {% endif %}
 {% endblock %}
