@@ -51,6 +51,8 @@
         <parameter key="volo_frontend.service.special_instructions_tutorial.class">Volo\FrontendBundle\Service\SpecialInstructionsTutorialService</parameter>
         <parameter key="volo_frontend.service.thumbor_service.class">Volo\FrontendBundle\Service\ThumborService</parameter>
         <parameter key="volo_frontend.service.city.class">Volo\FrontendBundle\Service\CityService</parameter>
+        <parameter key="volo_frontend.site_map.client.class">GuzzleHttp\Client</parameter>
+        <parameter key="volo_frontend.service.site_map.class">Volo\FrontendBundle\Service\SiteMapService</parameter>
     </parameters>
 
     <services>
@@ -266,6 +268,16 @@
 
         <service id="volo_frontend.service.city" class="%volo_frontend.service.city.class%">
             <argument type="service" id="volo_frontend.provider.city"/>
+        </service>
+
+        <service id="volo_frontend.site_map.client" class="%volo_frontend.site_map.client.class%" public="false">
+            <argument type="collection">
+                <argument key="base_url" type="string">%sitemap.s3.base_url%/</argument>
+            </argument>
+        </service>
+
+        <service id="volo_frontend.service.site_map" class="%volo_frontend.service.site_map.class%">
+            <argument id="volo_frontend.site_map.client" type="service"/>
         </service>
     </services>
 </container>

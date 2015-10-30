@@ -19,3 +19,5 @@ parameters:
         autocomplete_type:
             - "(regions)"
         hide_checkout_postal_code: false
+
+    sitemap.s3.base_url: https://localhost/production/%country_code%
