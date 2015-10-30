@@ -1,7 +1,3 @@
-if (!validate.Promise) {
-    validate.Promise = window.Promise;
-}
-
 var VOLO = VOLO || {};
 
 VOLO.views = []; //all create views should go here

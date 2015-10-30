@@ -5,8 +5,7 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
         ValidationView.prototype.initialize.apply(this, arguments);
         this.constraints = {
             "customer_address[postcode]": {
-                presence: true,
-                deliveryValidation: true
+                presence: true
             },
             "customer_address[city]": {
                 presence: true
@@ -22,8 +21,6 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
         this._deliveryCheck = options.deliveryCheck;
         this._locationModel = options.locationModel;
         this._postalCodeGeocodingService = options.postalCodeGeocodingService;
-
-        this._createDeliveryAsyncValidation();
     },
 
     events: function() {
@@ -41,7 +38,11 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
     },
 
     validateForm: function() {
-        this._doValidate().then(this._enableContinueButton, this._disableContinueButton);
+        this._doValidate().then(this._continueCheckout, this._disableContinueButton);
+    },
+
+    _continueCheckout: function () {
+        this._geoCodeAndValidateDelivery().then(this._enableContinueButton);
     },
 
     _enableContinueButton: function() {
@@ -73,7 +74,7 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
     },
 
     _validateForm: function() {
-        var doValidate = this._doValidate(),
+        var doValidate = this._preValidateLocation().then(this._doValidate),
             deferred = $.Deferred();
 
         doValidate.then(deferred.resolve, function(errors) {
@@ -89,28 +90,16 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
         return deferred;
     },
 
-    _doValidate: function() {
+    _preValidateLocation: function () {
+        var address = this._getAddressValues();
+
+        return validate.async({address: address}, {address: {deliveryLocation: true}});
+    },
+
+    _doValidate: function () {
         var formValues = validate.collectFormValues(this.el);
 
         return validate.async(formValues, this.constraints);
-    },
-
-    _createDeliveryAsyncValidation: function() {
-        if (!validate.validators.deliveryValidation) {
-            validate.validators.deliveryValidation = function() {
-                return new Promise(function(resolve, reject) {
-                    this._geoCodeAndValidateDelivery().then(function(res) {
-                        if (res) {
-                            resolve();
-                        } else {
-                            reject('delivery not valid');
-                        }
-                    }, function() {
-                        reject('delivery not valid');
-                    });
-                }.bind(this));
-            }.bind(this);
-        }
     },
 
     _geoCodeAndValidateDelivery: function() {
@@ -180,14 +169,18 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
         return deferred;
     },
 
+    _getAddressValues: function() {
+        return this.$('#delivery-information-address-line1').val() + ' ' +
+            this.$('#delivery-information-address-line2').val() + ', ' +
+            this.$('#delivery-information-postal-index').val() + ', ' +
+            this.$('#delivery-information-city').val();
+    },
+
     _geocodeAddress: function() {
         var deferred = $.Deferred();
 
         if (this.isValidForm()) {
-            var address = this.$('#delivery-information-address-line1').val() + ' ' +
-                          this.$('#delivery-information-address-line2').val() + ', ' +
-                          this.$('#delivery-information-postal-index').val() + ', ' +
-                          this.$('#delivery-information-city').val(),
+            var address = this._getAddressValues(),
                 geocode = this._postalCodeGeocodingService.geocodeAddress({
                     address: address
                 });
