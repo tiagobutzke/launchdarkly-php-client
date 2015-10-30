@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.60.11
+ * INTVOLO-472 Address Saving / Some orders don't have a lat/long
+
 * 1.60.10
  * INTVOLO-1227 facebook connected user fix
 
