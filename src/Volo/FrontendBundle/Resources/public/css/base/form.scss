@@ -19,16 +19,13 @@ button:disabled {
   font-size: $cta-font-size;
   text-align: $cta-text-align;
   text-transform: $cta-text-transform;
-  padding-left: $cta-padding-left;
-  padding-right: $cta-padding-right;
+  padding: 0 $cta-padding-right 0 $cta-padding-left;
   border-radius: $cta-border-radius;
   height: $cta-height;
   display: block;
   border: 0;
   color: $cta-color-text-primary;
   background-color: $cta-color-bg-primary;
-  line-height: 1;
-  padding-top: $space-xs;
   position: relative;
   @include transition(all .1s linear);
 }
