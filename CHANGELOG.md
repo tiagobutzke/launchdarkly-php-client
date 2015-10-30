@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.61.0
+ * INTVOLO-707 sitemap.xml
+
 * 1.60.11
  * INTVOLO-472 Address Saving / Some orders don't have a lat/long
 
