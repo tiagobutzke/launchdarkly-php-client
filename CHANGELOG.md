@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.60.10
+ * INTVOLO-1227 facebook connected user fix
+
 * 1.60.9
  * INTVOLO-1332 - map error translation fix
 
