@@ -862,6 +862,13 @@ textarea.checkout__step__item-textarea {
   }
 }
 
+.checkout__payment__invoice-message {
+  clear: both;
+  font-size: $font-size-1_4rem;
+  color: $color-text-secondary;
+  line-height: 1.4;
+}
+
 .checkout__payment__finish-and-pay-disclaimer {
   @include make-xs-column(12);
   @include make-md-column(6);

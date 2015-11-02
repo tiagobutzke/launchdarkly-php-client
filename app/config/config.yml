@@ -66,6 +66,7 @@ twig:
         locales: "%supported_locales%"
         address_config: '%address_config%'
         assets_version: asset_version_placeholder
+        checkout_invoice_message: '%show_checkout_invoice_message%'
 
 monolog:
     channels: ["api", "wit"]

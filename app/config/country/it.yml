@@ -4,6 +4,12 @@ parameters:
     locale: it_IT
     timezone: "Europe/Rome"
     average_delivery_time: 30
+    show_checkout_invoice_message: true
     address_config:
         autocomplete_type:
             - "address"
+        postal_code_field:
+            - 'postal_code'
+        street_field:
+            - 'route'
+        hide_checkout_postal_code: false
