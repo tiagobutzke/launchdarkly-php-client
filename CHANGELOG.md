@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.61.1
+ * INTVOLO-118 Registration: Validations and Errormessages
+
 * 1.61.0
  * INTVOLO-707 sitemap.xml
 
