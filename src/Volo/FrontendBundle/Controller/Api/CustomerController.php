@@ -3,6 +3,7 @@
 namespace Volo\FrontendBundle\Controller\Api;
 
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
+use Foodpanda\ApiSdk\Exception\ValidationEntityException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -82,5 +83,85 @@ class CustomerController extends BaseController
         $customer = $request->getSession()->get(CustomerService::SESSION_CONTACT_KEY_TEMPLATE);
 
         return new JsonResponse($this->getSerializer()->normalize($customer));
+    }
+
+    /**
+     * @Route(
+     *      "/validate/mobile-number/{phoneNumber}",
+     *      name="customer_validate_phone_number",
+     *      options={"expose"=true}
+     * )
+     * @Method({"GET"})
+     *
+     * @param string $phoneNumber
+     *
+     * @return JsonResponse
+     */
+    public function validatePhoneNumberAction($phoneNumber)
+    {
+        try {
+            $validPhoneNumber = $this->getCustomerService()->validatePhoneNumber(urldecode($phoneNumber));
+        } catch (PhoneNumberValidationException $e) {
+            return new JsonResponse(['error' => ['mobile_number' => $e->getMessage()]], Response::HTTP_BAD_REQUEST);
+        }
+
+        return new JsonResponse([
+            'mobile_country_code' => $validPhoneNumber->getCountryCode(),
+            'mobile_number' => $validPhoneNumber->getNationalNumber(),
+        ]);
+    }
+
+    /**
+     * @Route(
+     *      "/validate/customer-email/{email}",
+     *      name="customer_validate_email",
+     *      options={"expose"=true}
+     * )
+     * @Method({"GET"})
+     *
+     * @param string $email
+     *
+     * @return JsonResponse
+     */
+    public function validateEmailAction($email)
+    {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createNotFoundException('User is logged in.');
+        }
+
+        $isExistingUser = false;
+        try {
+            $this->getCustomerService()->createGuestCustomer(
+                ['email' => urldecode($email)],
+                []
+            );
+        } catch (ValidationEntityException $e) {
+            $errors = $e->getValidationMessages();
+
+            if (isset($errors['email'])) {
+                return new JsonResponse(
+                    [
+                        'exists' => false,
+                        'error' => [
+                            'errors' => [
+                                ['field_name' => 'email', 'violation_messages' => [$errors['email']]]
+                            ]
+                        ]
+                    ],
+                    Response::HTTP_BAD_REQUEST
+                );
+            }
+        } catch (ApiErrorException $e) {
+            $error = json_decode($e->getJsonErrorMessage(), true);
+            if (isset($error['data']['exception_type']) &&
+                'ApiCustomerAlreadyExistsException' === $error['data']['exception_type']
+            ) {
+                $isExistingUser = true;
+            }
+        }
+
+        return new JsonResponse([
+            'exists' => $isExistingUser
+        ]);
     }
 }

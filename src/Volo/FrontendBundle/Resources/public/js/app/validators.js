@@ -1,7 +1,9 @@
+var VOLO = VOLO || {};
+
 if (!validate.Promise) {
     validate.Promise = window.Promise;
 }
 
-var VOLO = VOLO || {};
-
 validate.validators.deliveryLocation = VOLO.deliveryLocationValidator;
+validate.validators.mobileNumber = VOLO.mobileNumberValidator;
+validate.validators.emailApi = VOLO.emailApiValidator;

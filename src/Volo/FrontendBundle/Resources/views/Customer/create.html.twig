@@ -2,15 +2,6 @@
     <form class="registration-form" action="{{ path('customer.create') }}" method="post" role="form" novalidate>
         <h4 class="modal__h4 text-center">{% trans %}title.register{% endtrans %}</h4>
         <div class="modal__padding-left-right">
-
-            {% if errors %}
-                    <div class="modal-error-message">
-                {% for message in errors %}
-                        <div>{{ message }}</div>
-                {% endfor %}
-                    </div>
-            {% endif %}
-
             <div class="form-group">
                 <input type="text"
                        id="contact-information-first-name"
@@ -22,6 +13,7 @@
                        data-toggle="tooltip"
                        data-validation-msg="{% trans %}validations.error.register.first_name{% endtrans %}"
                 />
+                {% if errors.first_name|default('') %}<span class="form__error-message">{{ errors.first_name }}</span>{% endif %}
             </div>
             <div class="form-group">
                 <input type="text"
@@ -34,6 +26,7 @@
                        data-toggle="tooltip"
                        data-validation-msg="{% trans %}validations.error.register.last_name{% endtrans %}"
                 />
+                {% if errors.last_name|default('') %}<span class="form__error-message">{{ errors.last_name }}</span>{% endif %}
             </div>
             <div class="form-group">
                 <input type="email"
@@ -46,6 +39,7 @@
                        data-toggle="tooltip"
                        data-validation-msg="{% trans %}validations.error.register.email{% endtrans %}"
                 />
+                {% if errors.email|default('') %}<span class="form__error-message">{{ errors.email }}</span>{% endif %}
             </div>
             <div class="form-group">
                 <input type="tel"
@@ -58,6 +52,7 @@
                        data-toggle="tooltip"
                        data-validation-msg="{% trans %}validations.error.register.mobile_number{% endtrans %}"
                 />
+                {% if errors.mobile_number|default('') %}<span class="form__error-message">{{ errors.mobile_number }}</span>{% endif %}
             </div>
             <div class="form-group">
                 <input type="password"
@@ -67,10 +62,10 @@
                        required="true"
                        placeholder="{% trans %}form.placeholder.password{% endtrans %}"
                        data-toggle="tooltip"
-                       data-validation-msg="{% trans %}validations.error.register.password{% endtrans %}"
+                       data-validation-msg="{% trans %}customer.validation.password.password_too_short{% endtrans %}"
                 />
+                {% if errors.password|default('') %}<span class="form__error-message">{{ errors.password }}</span>{% endif %}
             </div>
-            <!-- TODO: JS validate that password is equivalent to repeat_password -->
             <div class="form-group">
                 <input type="password"
                        name="customer[confirm_password]"
@@ -81,6 +76,7 @@
                        data-toggle="tooltip"
                        data-validation-msg="{% trans %}validations.error.register.confirm_password{% endtrans %}"
                 />
+                {% if errors.confirm_password|default('') %}<span class="form__error-message">{{ errors.confirm_password }}</span>{% endif %}
             </div>
             <button type="submit" class="button button--full-width">{% trans %}button.register{% endtrans %}</button>
         </div>

@@ -53,7 +53,7 @@ class CustomerController extends BaseController
                     'url' => $this->generateUrl('home')
                 ]);
             } catch (PhoneNumberValidationException $e) {
-                $errorMessages[] = $e->getMessage();
+                $errorMessages['mobile_number'] = $e->getMessage();
                 $statusCode = Response::HTTP_BAD_REQUEST;
             } catch (ValidationEntityException $e) {
                 $errors = json_decode($e->getMessage(), true)['data']['items'];
@@ -62,7 +62,7 @@ class CustomerController extends BaseController
             } catch (ApiErrorException $e) {
                 $decodedError = json_decode($e->getJsonErrorMessage(), true);
                 if ('ApiCustomerAlreadyExistsException' === $decodedError['data']['exception_type']) {
-                    $errorMessages[] = $decodedError['data']['message'];
+                    $errorMessages['email'] = $decodedError['data']['message'];
                     $statusCode = Response::HTTP_BAD_REQUEST;
                 } else {
                     throw $e;
@@ -217,7 +217,7 @@ class CustomerController extends BaseController
         $errorMessages = [];
         foreach ($errors as $error) {
             foreach ($error['violation_messages'] as $violationMessage) {
-                $errorMessages[] = $violationMessage;
+                $errorMessages[$error["field_name"]] = $violationMessage;
             }
         }
 
