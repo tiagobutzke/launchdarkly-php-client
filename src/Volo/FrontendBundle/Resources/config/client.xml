@@ -34,7 +34,7 @@
         <service id="guzzle.subscriber.cache.cache_subscriber" class="%guzzle.subscriber.cache.cache_subscriber.class%">
             <argument type="service" id="guzzle.subscriber.cache.cache_storage"/>
             <argument type="collection">
-                <argument type="string">GuzzleHttp\Subscriber\Cache\Utils</argument>
+                <argument type="string">Volo\FrontendBundle\Cache\CacheStrategy</argument>
                 <argument type="string">canCacheRequest</argument>
             </argument>
         </service>
