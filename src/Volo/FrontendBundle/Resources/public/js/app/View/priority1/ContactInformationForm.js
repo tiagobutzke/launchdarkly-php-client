@@ -24,13 +24,6 @@ VOLO.ContactInformationForm = ValidationView.extend({
         this.listenTo(this, 'form:valid', this._enableContinueButton);
     },
 
-    events: function() {
-        return _.extend({
-                'submit': '_submit'
-            }, ValidationView.prototype.events.apply(this)
-        );
-    },
-
     _enableContinueButton: function() {
         this.$(".button").removeClass('button--disabled');
     },
@@ -53,10 +46,6 @@ VOLO.ContactInformationForm = ValidationView.extend({
         } else {
             this._disableContinueButton();
         }
-    },
-
-    _submit: function() {
-        return false;
     },
 
     saveCustomerInformation: function () {
@@ -150,16 +139,17 @@ VOLO.ContactInformationForm = ValidationView.extend({
         var formValues = validate.collectFormValues(this.el),
             promise = validate.async(formValues, this.constraints);
 
-        promise.then(function () {
-            this._hideErrorMessages();
-            this.saveCustomerInformation();
-        }.bind(this), function (errors) {
+        promise.then(this.processForm, function (errors) {
             this._showErrorMessages(errors);
         }.bind(this));
 
         return false;
     },
 
+    processForm: function () {
+        this._hideErrorMessages();
+        this.saveCustomerInformation();
+    },
     /**
      * @override
      */

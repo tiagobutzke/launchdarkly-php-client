@@ -16,7 +16,7 @@ VOLO.CheckoutContactInformationForm = VOLO.ContactInformationForm.extend({
         return this.$('.checkout__contact-information__login-hint-message').is(':visible');
     },
 
-    _submit: function() {
+    processForm: function() {
         var addressData = this.userAddressCollection.last().toJSON();
 
         this.$('.form__error-message').remove();
