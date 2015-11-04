@@ -1,10 +1,14 @@
 CHANGELOG
 =========
+* 1.63.0
+ * INTVOLO-1083 - urban taste redirect popup
+ * INTVOLO-1329 Fix for the previous issue related to address in restaurant page when refreshing
+
 * 1.62.0
-	* INTVOLO-1329: Street name and house number should be interchanged
-	* INTVOLO-413:  Checkout page layout / Text not in the middle of the button
-	* INTVOLO-1232: display VAT if VAT visible option is checked for sg
-	* INTVOLO-1361: Registration/Login bug in personal information section
+ * INTVOLO-1329: Street name and house number should be interchanged
+ * INTVOLO-413:  Checkout page layout / Text not in the middle of the button
+ * INTVOLO-1232: display VAT if VAT visible option is checked for sg
+ * INTVOLO-1361: Registration/Login bug in personal information section
 	
 * 1.61.1
  * INTVOLO-118 Registration: Validations and Errormessages
