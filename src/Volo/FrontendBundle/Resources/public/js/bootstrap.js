@@ -90,6 +90,15 @@ VOLO.createVendorPopupView = function() {
     return vendorPopupView;
 };
 
+VOLO.createUnsubscribePopupView = function() {
+    var unsubscribePopupView = new VOLO.UnsubscribePopupView({
+        el: '.unsubscribe__modal'
+    });
+
+    VOLO.views.push(unsubscribePopupView);
+    return unsubscribePopupView;
+};
+
 VOLO.createCartViews = function (options) {
     var $header = $('.header'),
         $menuMain = $('.menu__list-wrapper'),
@@ -482,6 +491,11 @@ VOLO.doBootstrap = function(configuration) {
     if ($('.vendor-popup__modal').length > 0) {
         vendorPopupView = VOLO.createVendorPopupView();
         vendorPopupView.render();
+    }
+
+    if ($('.unsubscribe__modal').length > 0) {
+        unsubscribePopupView = VOLO.createUnsubscribePopupView();
+        unsubscribePopupView.render();
     }
 
     cartModel = VOLO.createCartModel(VOLO.jsonCart, VOLO.defaultCartValues);

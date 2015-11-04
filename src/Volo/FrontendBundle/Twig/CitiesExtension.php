@@ -26,10 +26,10 @@ class CitiesExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             new \Twig_SimpleFunction('getCities', [$this, 'getCities']),
             new \Twig_SimpleFunction('getFilteredCities', [$this, 'getFilteredCities']),
-        );
+        ];
     }
 
     /**
@@ -47,7 +47,7 @@ class CitiesExtension extends \Twig_Extension
     }
 
     /**
-     * @return array|\Foodpanda\ApiSdk\Entity\City\CitiesCollection|\Foodpanda\ApiSdk\Entity\City\City[]
+     * @return City[]
      */
     public function getFilteredCities()
     {

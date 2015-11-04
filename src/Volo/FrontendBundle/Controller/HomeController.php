@@ -22,7 +22,6 @@ class HomeController extends BaseController
     public function homeAction(Request $request, $postalCode)
     {
         $utmSource = $request->query->get('utm_source');
-        $unsubscribe = $request->query->get('unsubscribe');
         $location = $this->getCustomerLocationService()->get($request->getSession());
         $isFullAddressAutocomplete = $this->getAddressConfigProvider()->isFullAddressAutocomplete();
         if ('' === $postalCode && false === $isFullAddressAutocomplete) {
@@ -31,8 +30,8 @@ class HomeController extends BaseController
 
         return [
             'postalCode' => $postalCode,
-            'showVendorPopup' => $utmSource === 'heimschmecker.at' ? true : false,
-            'showUnsubscribePopup' => $unsubscribe ? true : false,
+            'showVendorPopup' => in_array($utmSource, ['heimschmecker.at', 'urbantaste.de']) ? true : false,
+            'showUnsubscribePopup' => $request->query->has('showUnsubscribePopup'),
             'isUnsubscribed' => $request->query->get('isUnsubscribed'),
             'utmSource' => $utmSource,
             'isFullAddressAutocomplete' => $isFullAddressAutocomplete,
