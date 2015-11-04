@@ -7,6 +7,8 @@ use Doctrine\Common\Cache\RedisCache;
 
 class CacheService implements CheckInterface
 {
+    use StatsTrait;
+
     /**
      * @var RedisCache
      */
@@ -35,6 +37,10 @@ class CacheService implements CheckInterface
         $this->redisCache->save($cacheKey, $cacheKey, 5);
         $storedValue = $this->redisCache->fetch($cacheKey);
         $this->status->setStatus($storedValue === $cacheKey);
+        foreach ($this->doGetStats($this->redisCache->getRedis()->info()) as $k => $v) {
+            $this->status->addMessage($k . ': ' . $v);
+        }
+
         return $this->status;
     }
 }

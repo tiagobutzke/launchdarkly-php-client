@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SessionService implements CheckInterface
 {
+    use StatsTrait;
+
     /**
      * @var SessionInterface
      */
@@ -14,13 +16,17 @@ class SessionService implements CheckInterface
 
     protected $status;
 
+    protected $connectOptions;
+
     /**
      * @param SessionInterface $session
+     * @param string $connectOptions
      */
-    public function __construct(SessionInterface $session)
+    public function __construct(SessionInterface $session, $connectOptions)
     {
         $this->session = $session;
         $this->status = new Status();
+        $this->connectOptions = $connectOptions;
     }
 
     /**
@@ -34,6 +40,12 @@ class SessionService implements CheckInterface
         $this->session->start();
         $storedValue = $this->session->get($sessionValue, null);
         $this->status->setStatus($storedValue === $sessionValue);
+        $redis = new \Redis();
+        $redis->connect($this->connectOptions);
+        foreach ($this->doGetStats($redis->info()) as $k => $v) {
+            $this->status->addMessage($k . ': ' . $v);
+        }
+
         return $this->status;
     }
 }
