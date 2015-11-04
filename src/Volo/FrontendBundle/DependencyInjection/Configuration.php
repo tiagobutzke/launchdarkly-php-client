@@ -20,22 +20,6 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('volo_frontend');
 
-        $rootNode
-            ->children()
-                ->arrayNode('api')
-                    ->isRequired()
-                    ->children()
-                        ->arrayNode('configuration')
-                            ->isRequired()
-                            ->children()
-                                ->integerNode('life_time')->isRequired()->end()
-                            ->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end()
-        ;
-
         return $treeBuilder;
     }
 }

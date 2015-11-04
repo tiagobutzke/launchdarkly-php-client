@@ -65,11 +65,6 @@ doctrine_cache:
             redis:
               host: %redis_cache_host%
               port: %redis_cache_port%
-        configuration_cache:
-            type: redis
-            redis:
-              host: %redis_cache_host%
-              port: %redis_cache_port%
         vendor_cache:
             type: redis
             redis:
