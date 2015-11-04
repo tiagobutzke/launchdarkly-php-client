@@ -90,12 +90,15 @@ class VendorController extends BaseController
             $specialInstructionsTutorialEnabled = $specialInstructionsService->isTutorialEnabledForGuest($request);
         }
 
+        $address = is_array($customerLocation) ? $customerLocation[CustomerLocationService::KEY_PLZ] : '';
+
         return [
-            'vendor'        => $vendor,
-            'cart'          => $cart,
-            'address'       => is_array($customerLocation) ? $customerLocation[CustomerLocationService::KEY_PLZ] : '',
-            'location'      => $formattedLocation,
-            'isDeliverable' => $isDeliverable,
+            'vendor'            => $vendor,
+            'cart'              => $cart,
+            'address'           => $address,
+            'location'          => $customerLocation,
+            'formattedLocation' => $formattedLocation,
+            'isDeliverable'     => $isDeliverable,
             // Temporary disabled
             'showSpecialInstructionsTutorial' => false && $specialInstructionsTutorialEnabled
         ];
