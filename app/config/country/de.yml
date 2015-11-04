@@ -16,3 +16,4 @@ parameters:
             - "building"
             - "postcode"
             - "city"
+        format: ':street :building, :plz'

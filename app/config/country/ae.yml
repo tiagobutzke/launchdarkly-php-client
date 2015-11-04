@@ -23,3 +23,4 @@ parameters:
             - 'neighborhood'
         autocomplete_type: []
         hide_checkout_postal_code: false
+        format: ':building :street, :plz'

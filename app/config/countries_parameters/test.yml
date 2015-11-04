@@ -20,6 +20,7 @@ parameters:
         autocomplete_type:
             - "(regions)"
         hide_checkout_postal_code: false
+        format: ':building :street, :plz'
     show_checkout_invoice_message: true
 
     sitemap.s3.base_url: https://localhost/production/%country_code%
