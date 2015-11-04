@@ -518,6 +518,7 @@ tr.summary__item__row_mobile {
 .desktop-cart__order__delivery-price,
 .desktop-cart__order__voucher-price,
 .desktop-cart__order__total-price,
+.desktop-cart__order__vat-price,
 .desktop-cart__order__min-order-value {
   display: inline-block;
   float: right;
@@ -539,6 +540,7 @@ tr.summary__item__row_mobile {
   }
 }
 
+.desktop-cart__order__vat,
 .desktop-cart__order__delivery {
   color: $color-text-secondary;
   padding: 0 $space-sm;
@@ -785,6 +787,3 @@ tr.summary__item__row_mobile {
     padding: 10px 0;
   }
 }
-
-
-
