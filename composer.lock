@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7648336bf3258e69eaa40ecf07940ccb",
-    "content-hash": "fdf567e4c6dac5eafff60a8bba925f09",
+    "hash": "c50eea0c8a0709483e00339d97174ec6",
+    "content-hash": "cceacbc5bdb1ce7b336782d07272310c",
     "packages": [
         {
             "name": "99designs/phumbor",
@@ -850,13 +850,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/guzzle/cache-subscriber.git",
-                "reference": "487b846c"
+                "url": "git@github.com:odracci/cache-subscriber.git",
+                "reference": "25b4856"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/guzzle/cache-subscriber/zipball/487b846c91fd0034ecd0225ee53927c93bd21586",
-                "reference": "487b846c",
+                "reference": "25b4856",
                 "shasum": ""
             },
             "require": {
@@ -895,7 +895,7 @@
                 "Guzzle",
                 "cache"
             ],
-            "time": "2015-08-05 21:32:58"
+            "time": "2015-11-04 15:40:19"
         },
         {
             "name": "guzzlehttp/guzzle",
