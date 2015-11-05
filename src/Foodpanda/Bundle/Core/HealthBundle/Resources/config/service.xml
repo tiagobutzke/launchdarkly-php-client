@@ -12,6 +12,7 @@
         <service id="foodpanda.core.health.service.session"
                  class="Foodpanda\Bundle\Core\HealthBundle\Services\SessionService">
             <argument type="service" id="session" />
+            <argument type="string">%session_handler_redis_save_path%</argument>
         </service>
 
         <service id="foodpanda.core.health.service.cache"
