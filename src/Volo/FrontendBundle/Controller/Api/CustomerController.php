@@ -154,7 +154,7 @@ class CustomerController extends BaseController
         } catch (ApiErrorException $e) {
             $error = json_decode($e->getJsonErrorMessage(), true);
             if (isset($error['data']['exception_type']) &&
-                'ApiCustomerAlreadyExistsException' === $error['data']['exception_type']
+                in_array($error['data']['exception_type'], ['ApiCustomerAlreadyExistsException', 'ApiFacebookCustomerAlreadyExistsException'])
             ) {
                 $isExistingUser = true;
             }
