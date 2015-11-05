@@ -134,7 +134,7 @@
 
     <div class="desktop-cart__order__min-order hide">
         {% trans %}label.cart_minimum_order{% endtrans %}
-        <span class="desktop-cart__order__min-order-value">{{ vendor.minimumOrderAmount|price }}</span>
+        <span class="desktop-cart__order__min-order-value"><%= VOLO.formatCurrency({{ vendor.minimumOrderAmount }}) %></span>
     </div>
 
     <div class="desktop-cart__order__min-diff-order hide">
