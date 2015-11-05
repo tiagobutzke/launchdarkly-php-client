@@ -139,7 +139,9 @@ class CheckoutController extends BaseController
         }
 
         $configuration = $this->get('volo_frontend.service.configuration')->getConfiguration();
-        $location = $this->get('volo_frontend.service.customer_location')->get($session);
+        $customerLocationService = $this->get('volo_frontend.service.customer_location');
+        $location = $customerLocationService->get($session);
+        $formattedLocation = $customerLocationService->format($location);
         $serializer = $this->get('volo_frontend.api.serializer');
 
         $restaurantLocation = [
@@ -174,6 +176,7 @@ class CheckoutController extends BaseController
             'adyen_public_key'   => $configuration->getAdyenEncryptionPublicKey(),
             'address'            => is_array($location) ? $location[CustomerLocationService::KEY_ADDRESS] : '',
             'location'           => $location,
+            'formattedLocation'  => $formattedLocation,
             'isDeliverable'      => is_array($location),
             'default_address'    => $restaurantLocation,
             'customer'           => $serializer->normalize(new Customer()),
