@@ -27,9 +27,12 @@ $ brew install php55 --with-fpm
 $ brew install php55-xdebug
 $ brew install nginx
 $ # TODO: install node/npm instructions go here
+$ gem install sass -v '~> 3.4.13'
 $ npm install -g grunt-cli
 $ npm install -g bower
-$ gem install sass -v '~> 3.4.13'
+$ # Install Image Magick
+$ sudo apt-get install graphicsmagick # linux
+$ brew install imagemagick            # OSX
 ```
 
 **Setup the project (dependecies and assets):**
@@ -97,6 +100,15 @@ echo "127.0.0.1 de.volo.dev" >> /etc/hosts
 ```
 
 Go to http://de.volo.dev/ in your browser.
+
+Deploy
+---
+
+```
+$ gem install --user-install capistrano
+$ gem install --user-install capistrano-symfony
+$ gem install --user-install capistrano-composer
+$ gem install --user-install capistrano-file-permissions
 
 Parameters
 ---
