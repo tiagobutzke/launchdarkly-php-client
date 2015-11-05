@@ -13,8 +13,6 @@ parameters:
     foodpanda_web_translate_it_private_api_key: q0fqpiQyalsumAPeA5zEvw
     foodpanda_web_translate_it_main_translation_label: ~
 
-    volo_frontend_configuration_cache_life_time: 1200
-
     session_handler_redis_save_path: "tcp://127.0.0.1:6379?prefix=%kernel.environment%_%country_code%"
 
     redis_cache_host: 127.0.0.1

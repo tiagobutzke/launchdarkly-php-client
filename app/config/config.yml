@@ -209,11 +209,6 @@ jb_phumbor:
             filters:
                 - { name: "quality", arguments: [45] }
 
-volo_frontend:
-    api:
-        configuration:
-            life_time: %volo_frontend_configuration_cache_life_time%
-
 foodpanda_api_health:
     enabled: ['version', 'session', 'cache', 'api']
     prefix: 'health_check.'
