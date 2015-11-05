@@ -231,6 +231,10 @@
   }
 }
 
+.checkout .show-login-modal {
+  display: none;
+}
+
 // adding different styles for the header with white background
 .header--white {
   &.header  {
