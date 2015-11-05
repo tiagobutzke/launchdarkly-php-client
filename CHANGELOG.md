@@ -1,5 +1,13 @@
 CHANGELOG
 =========
+* 1.66.0
+  * INTVOLO-1378 ConfigurationService: remove cache
+  * INTVOLO-1379 Health check / cache information
+
+* 1.65.0
+  * INTVOLO-1092 Checkout | Guest User Flow and New customer Voucher Hand…
+  * INTVOLO-1396 Master is broken
+
 * 1.64.0
  * Intvolo 1377 guzzle cache disabled for vendors
 
