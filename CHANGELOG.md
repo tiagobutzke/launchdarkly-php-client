@@ -1,5 +1,8 @@
 CHANGELOG
 =========
+* 1.67.0
+  *  INTVOLO-1392 Facebook connect fix in the checkout page
+
 * 1.66.0
   * INTVOLO-1378 ConfigurationService: remove cache
   * INTVOLO-1379 Health check / cache information
