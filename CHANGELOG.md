@@ -1,5 +1,8 @@
 CHANGELOG
 =========
+* 1.64.0
+ * Intvolo 1377 guzzle cache disabled for vendors
+
 * 1.63.0
  * INTVOLO-1083 - urban taste redirect popup
  * INTVOLO-1329 Fix for the previous issue related to address in restaurant page when refreshing
