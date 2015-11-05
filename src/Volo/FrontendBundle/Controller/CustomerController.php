@@ -90,13 +90,13 @@ class CustomerController extends BaseController
      */
     public function forgotPasswordAction(Request $request)
     {
-        $email = '';
+        $email = $request->request->get('_email', '');
         $errorMessages = [];
         $statusCode = Response::HTTP_OK;
 
         if ($request->isMethod(Request::METHOD_POST)) {
             try {
-                $data = $this->get('volo_frontend.provider.customer')->forgotPassword($request->request->get('_email'));
+                $data = $this->get('volo_frontend.provider.customer')->forgotPassword($email);
 
                 if ($data) {
                     return new Response(
