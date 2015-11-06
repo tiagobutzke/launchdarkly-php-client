@@ -47,6 +47,8 @@ class CheckoutController extends BaseController
             throw new NotFoundHttpException('Vendor invalid', $exception);
         }
         $session = $request->getSession();
+        $usedVoucher = '';
+        $paymentErrorMessage = null;
         try {
             $cart = $this->getCart($session, $vendor);
         } catch (\RuntimeException $exception) {
@@ -66,10 +68,25 @@ class CheckoutController extends BaseController
             'building' => $location[CustomerLocationService::KEY_BUILDING],
         ];
 
+        try {
+            $calculatedCart = $this->get('volo_frontend.service.cart_manager')->calculateCart($cart);
+        } catch (ApiErrorException $e) {
+            $calculatedCart = null;
+
+            $error = json_decode($e->getJsonErrorMessage(), true);
+            if (isset($error['data']['exception_type'])) {
+                $paymentErrorMessage = $this->get('translator')->trans($error['data']['exception_type']);
+            };
+
+            // Show invalid voucher to the user
+            if (isset($cart['vouchers'][0])) {
+                $usedVoucher = $cart['vouchers'][0];
+            }
+        }
+
         // <INTVOLO-472>
         // https://jira.rocket-internet.de/browse/INTVOLO-472
         // Temporary fixing the state of system to find the root cause of the issue
-        $calculatedCart = $this->get('volo_frontend.service.cart_manager')->calculateCart($cart);
         $this->locationMonitoringSaveState(
             'paymentAction',
             $location,
@@ -96,7 +113,9 @@ class CheckoutController extends BaseController
             'default_address'    => $restaurantLocation,
             'customer'           => $serializer->normalize(new Customer()),
             'customer_addresses' => [],
-            'showSpecialInstructionsTutorial' => false
+            'usedVoucher'        => $usedVoucher,
+            'paymentErrorMessage' => $paymentErrorMessage,
+            'showSpecialInstructionsTutorial' => false,
         ];
 
         $viewData = $this->addViewDataForAuthenticatedUser($vendor, $viewData);
