@@ -23,7 +23,7 @@ VOLO.VendorCollection = Backbone.Collection.extend({
         this.locationModel = options.locationModel;
         this.filterModel = options.filterModel;
         this.fuzzySearch = new Fuse([], {
-            keys: ['name', 'description', 'cuisines.name', 'food_characteristics'],
+            keys: ['name', 'description', 'cuisines.name', 'food_characteristics.name'],
             id: 'id',
             threshold: 0.25,
             distance: 1000
