@@ -1,5 +1,14 @@
 CHANGELOG
 =========
+
+* 1.69.0
+ * INTVOLO-1347 fixed search food characteristic
+ * INTVOLO-1388: Singapore min-order currency fix
+ * INTVOLO-105 - return false email to input field
+
+* 1.68.0
+ * INTVOLO-1355-cache-API
+
 * 1.67.0
   *  INTVOLO-1392 Facebook connect fix in the checkout page
 
