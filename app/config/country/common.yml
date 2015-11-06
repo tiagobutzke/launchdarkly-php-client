@@ -17,5 +17,6 @@ parameters:
             - "(regions)"
         hide_checkout_postal_code: false
         format: ':building :street, :plz'
+        valid_address_input: '.*'
 
     sitemap.s3.base_url: https://foodora-sitemap.s3.eu-central-1.amazonaws.com/production/%country_code%

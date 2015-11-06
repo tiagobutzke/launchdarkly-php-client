@@ -26,13 +26,19 @@ _.extend(VOLO.Geocoding.Geocoder.prototype, Backbone.Events, {
         }
 
         googleGeocoder.geocode(criteria, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
+            if (this._isCountryAddressOnly(results)) {
+                deferred.reject('ZERO_RESULTS');
+            } else if (status == google.maps.GeocoderStatus.OK) {
                 deferred.resolve(results);
             } else {
                 deferred.reject(status);
             }
-        });
+        }.bind(this));
 
         return deferred;
-    }
+    },
+
+    _isCountryAddressOnly: function(results) {
+        return _.get(results, '[0]address_components.length') === 1 && _.get(results, '[0]address_components[0].types').indexOf('country') !== -1;
+    },
 });

@@ -6,6 +6,7 @@ parameters:
     average_delivery_time: 30
     address_config:
         map_enabled: true
+        update_map_input: true
         postal_code_field:
             - 'postal_code'
         autocomplete_type:
@@ -17,3 +18,4 @@ parameters:
             - "postcode"
             - "city"
         format: ':street :building, :plz'
+        valid_address_input: "\\D+"

@@ -22,6 +22,7 @@ parameters:
             - "(regions)"
         hide_checkout_postal_code: false
         format: ':building :street, :plz'
+        valid_address_input: '.*'
     show_checkout_invoice_message: true
 
     sitemap.s3.base_url: https://localhost/production/%country_code%

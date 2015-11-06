@@ -5,9 +5,7 @@
                 <div class="modal-close-button" data-dismiss="modal"></div>
                 <div class="modal-body clearfix">
                     <div class="map-modal__header">
-                        <div class="map-modal__header-content">
-                            {% trans %}map.title{% endtrans %}
-                        </div>
+                        <div class="map-modal__header-content"></div>
                     </div>
                     <div class="map-modal__map">
                         <!-- map goes here -->
@@ -18,12 +16,15 @@
                                    data-msg_error_postcode="{% trans %}map.errors.postcode{% endtrans %}"
                                    data-msg_error_city="{% trans %}map.errors.city{% endtrans %}"
                                    data-msg_error_building="{% trans %}map.errors.building{% endtrans %}"
-                                   data-msg_error_not_found="{% trans %}map.errors.address_not_found{% endtrans %}"/>
+                                   data-msg_error_not_found="{% trans %}map.errors.address_not_found{% endtrans %}"
+                                   data-msg_title_building="{% trans %}map.title.building{% endtrans %}"
+                                   data-msg_title_default="{% trans %}map.title{% endtrans %}"
+                                   />
                             <div class="form__error-message map-modal__error-message hide"></div>
                         </form>
                         <i class="map-modal__map-center-icon"></i>
                         <form class="map-modal__submit">
-                            <button type="button" class="map-modal__submit__button button button--disabled" disabled="disabled">{% trans %}map.submit{% endtrans %}</button>
+                            <button type="button" class="map-modal__submit__button button button--disabled">{% trans %}map.submit{% endtrans %}</button>
                         </form>
                     </div>
                 </div>
