@@ -17,7 +17,7 @@
         "friendsofsymfony/jsrouting-bundle": "1.5.4",
         "guzzlehttp/guzzle": "5.3.*",
         "guzzlehttp/log-subscriber": "1.0.*",
-        "guzzlehttp/cache-subscriber": "dev-master#487b846c",
+        "guzzlehttp/cache-subscriber": "dev-master#25b4856",
         "commerceguys/guzzle-oauth2-plugin": "2.1.*",
         "helthe/turbolinks-bundle": "1.1.*",
         "foodpanda/translation-library": "~1.1",
@@ -177,6 +177,10 @@
         {
             "type": "git",
             "url": "git@github.com:foodpanda/api-sdk.git"
+        },
+        {
+            "type": "git",
+            "url": "git@github.com:odracci/cache-subscriber.git"
         }
     ]
 }
