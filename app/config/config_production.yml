@@ -44,7 +44,9 @@ monolog:
             level:      error
             channel:    C08U6G1A6
             icon_emoji: ':scream:'
-            bot_name:   'Foodora %country_code% %environment%'
+            bot_name:   '%country_code%'
+            include_extra: true
+            use_short_attachment: true
         console:
             type:  console
 

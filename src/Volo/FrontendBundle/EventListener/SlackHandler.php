@@ -19,4 +19,28 @@ class SlackHandler extends BaseSlackHandler
             parent::write($record);
         }
     }
+
+    /**
+     * Prepares content data
+     *
+     * @param  array $record
+     *
+     * @return array
+     */
+    protected function prepareContentData($record)
+    {
+        $data = parent::prepareContentData($record);
+        $attachments = json_decode($data['attachments'], true);
+
+        $prefix = sprintf('%s :flag-%s:', strtoupper($data['username']), $data['username']);
+        foreach ($attachments as &$attachment) {
+            if (isset($attachment['fields'][0]['title'])) {
+                $attachment['fields'][0]['title'] = $attachment['fields'][0]['title'] . ' ' . $prefix;
+            }
+        }
+        $data['attachments'] = json_encode($attachments);
+
+        return $data;
+    }
+
 }
