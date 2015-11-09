@@ -62,7 +62,11 @@ describe('A cart', function () {
 
         dataProvider = new CartDataProvider();
         cart = new CartModel({}, {
-            dataProvider: dataProvider
+            dataProvider: dataProvider,
+            defaultCartValues: {
+                vendor_id: vendorId,
+                products_count: 1
+            }
         });
 
         spyOn(dataProvider, 'calculateCart').and.callFake(function (data) {

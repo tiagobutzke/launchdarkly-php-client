@@ -240,16 +240,16 @@ class CartManagerService
      */
     public function getDefaultCart($session)
     {
-        $cartCollection = $this->getCartCollection($session);
-        $defaultCart = null;
+        $cart = null;
 
-        foreach ($cartCollection as $values) {
-            if ($values[static::DEFAULT_CART_FLAG] || count($defaultCart) === 0) {
-                $defaultCart = $values[static::CART_KEY];
+        foreach ($this->getCartCollection($session) as $item) {
+            if ($item[static::DEFAULT_CART_FLAG]) {
+                $cart = $item[static::CART_KEY];
+                break;
             }
         }
 
-        return $defaultCart;
+        return $cart;
     }
 
     /**

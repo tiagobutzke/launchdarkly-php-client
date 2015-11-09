@@ -547,8 +547,10 @@ var VendorCartIconView = Backbone.View.extend({
         'click' : '_gotoMenuPage'
     },
 
-    initialize: function() {
+    initialize: function(options) {
         _.bindAll(this);
+
+        this.defaultCartValues = options.defaultCartValues || {};
     },
 
     _gotoMenuPage: function() {
@@ -558,21 +560,14 @@ var VendorCartIconView = Backbone.View.extend({
         }
     },
 
-    _reloadCartIconValues: function () {
-        var that = this;
-        $.get(Routing.generate('default_cart_values'))
-            .done(function (response) {
-                that.$el.data('vendor_id', response.vendor_id);
-                that.$('.header__cart__products__count').html(Math.min(response.products_count, 99));
-            });
-    },
-
     unbind: function() {
         this.undelegateEvents();
     },
 
     render: function() {
-        this._reloadCartIconValues();
+        this.$el.data('vendor_id', this.defaultCartValues.vendor_id);
+        this.$('.header__cart__products__count').html(Math.min(this.defaultCartValues.products_count, 99));
+
         return this;
     }
 });

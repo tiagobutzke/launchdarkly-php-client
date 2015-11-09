@@ -148,7 +148,7 @@ var VendorCartModel = Backbone.Model.extend({
     },
     idAttribute: 'vendor_id',
 
-    initialize: function() {
+    initialize: function(data, options) {
         _.bindAll(this);
         this.products = new CartProductCollection();
         this._xhr = null;
@@ -235,6 +235,13 @@ var VendorCartModel = Backbone.Model.extend({
         data.voucher = _.isString(this.get('voucher')) ? [this.get('voucher')] : [];
 
         this._xhr = this.collection.cart.dataProvider.calculateCart(data).done(function(calculatedData) {
+            if (_.isObject(this.collection.cart.defaultCartValues)) {
+                this.collection.cart.defaultCartValues.vendor_id = _.get(calculatedData, 'vendorCart.[0].vendor_id');
+                this.collection.cart.defaultCartValues.products_count = _.sum(_.get(calculatedData, 'vendorCart[0].products'), function (product) {
+                    return product.quantity;
+                });
+            }
+
             this.collection.cart.parse(calculatedData);
             this.trigger('cart:ready');
             console.log('cart:ready fired');

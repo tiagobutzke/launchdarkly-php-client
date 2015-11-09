@@ -42,11 +42,7 @@
             {% set cartProductCount = get_default_cart_count(app.session) %}
             <a class="header__cart" data-vendor_id="{{ get_default_cart_vendor_id(app.session) }}">
                 <i class="icon-cart"></i>
-                {% if cartProductCount > 0 %}
-                    <span class="header__cart__products__count">{{ cartProductCount }}</span>
-                {% else %}
-                    <span class="header__cart__products__count hidden">{{ cartProductCount }}</span>
-                {% endif %}
+                <span class="header__cart__products__count {% if cartProductCount < 1 %}hidden{% endif %}">{{ cartProductCount }}</span>
             </a>
             {% for locale in locales %}
                 {% if locale != app.request.locale %}
