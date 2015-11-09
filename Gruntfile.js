@@ -7,7 +7,7 @@ var _ = require('lodash');
 module.exports = function (grunt) {
 
     function frontendAssetPath(path) {
-        var assetsPath = 'src/Volo/FrontendBundle/Resources/public';
+        var assetsPath = 'web/bundles/volofrontend';
         return getPath(path, assetsPath);
     }
 
