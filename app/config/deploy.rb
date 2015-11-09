@@ -2,6 +2,7 @@
 lock '3.4.0'
 
 #variables:
+server 'foodoraqa.de', roles: [:volofront], primary: true
 set :branch, ENV['branch'] || "master"
 # Default value for :log_level is :debug; will probably set to error only eventually but for now
 set :log_level, ENV['loglevel'] || "debug"
@@ -11,12 +12,13 @@ set :platform, ENV['platform'] || "volo"
 set :cleanup, ENV['cleanup'] || "no"
 
 # Deployment server info
-set :application,  "volofront"
-set :app_path,     "app"
-set :web_path, 	   "web"
-set :symfony_env,  "prod"
-set :deploy_to,    "/var/www/#{fetch :stage}"
-set :tmp_dir,      "#{fetch :deploy_to}/shared/tmp"
+set :application,   "volofront"
+set :app_path,      "app"
+set :web_path, 	    "web"
+set :symfony_env,   "prod"
+set :deploy_to,     "/var/www/#{fetch :stage}"
+set :tmp_dir,       "#{fetch :deploy_to}/shared/tmp"
+set :revision_file, "app/config/revision.yml"
 set :filter, roles: [:"volofront" ]
 
 # composer
@@ -28,10 +30,10 @@ set :application, 'volo-frontend'
 set :repo_url, 'git@github.com:foodpanda/volo-frontend.git'
 
 # General config stuff
-set :keep_releases, 2   #because of a bug with this feature just running it manulally, below in the deploy 'after' namespace
+set :keep_releases, 1
 set :linked_dirs, fetch(:linked_dirs, []).push("#{fetch :app_path}/logs", "node_modules", "#{fetch :web_path}/bower_components", "#{fetch :app_path}/config/countries_parameters")
-
 set :permission_method, :acl
+set :slack_web_hook, 'https://hooks.slack.com/services/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'
 
 # Confirmations will not be requested from the command line.
 set :interactive_mode, false
@@ -48,9 +50,17 @@ set :ssh_options, {
   user: 'ubuntu'
 }
 
+local_user = fetch(:local_user)
+
 SSHKit.config.command_map[:php] = "/usr/bin/env php"
 SSHKit.config.command_map[:php_de] = "COUNTRY_CODE=de /usr/bin/env php"
 SSHKit.config.command_map[:grunt] = "grunt"
+
+def send_slack_message(message)
+  run_locally do
+    execute "curl -s -X POST --data-urlencode 'payload={\"channel\": \"#deploy\", \"username\": \"Mario\", \"text\": \":star: #{message}\", \"icon_emoji\": \":ghost:\"}' #{fetch(:slack_web_hook)}"
+  end
+end
 
 namespace :foodora do
   set :app_dir, "/var/www/#{fetch :stage}"
@@ -71,18 +81,21 @@ namespace :foodora do
     total_deploy_time = time_finish.to_i - fetch(:time_start).to_i
 
     set :total_deploy_time, total_deploy_time
-    #invoke 'foodora:notify:send_skype_message_success'
-
-#    run_locally do
-#      execute :"logger -p local7.info -t \"symfony_deploy_#{fetch :stage}\" -- \"deploy completed by #{local_user} - tag: #{fetch :tag_name} - revision: #{fetch :current_revision} - Total time: #{total_deploy_time} seconds\""
-#    end
+    invoke 'foodora:notify:send_slack_message_success'
     puts ""
   end
 
+  task :setup_slot do
+    on primary(:volofront) do
+      within shared_path do
+        if test("[ ! -d #{shared_path}/app/config/countries_parameters/dist ]")
+          execute "cp -r /var/www/countries_parameters/* #{shared_path}/app/config/countries_parameters"
+        end
+      end
+    end
+  end
+
   task :assets_install do
-#    invoke 'symfony:console', 'assets:install'
-#    invoke 'symfony:console', 'fos:js-routing:dump'
-#    invoke 'symfony:console', 'volo:thumbor:dump'
     on roles(:all) do
       within release_path do
         execute :php_de, "#{release_path}/app/console assets:install"
@@ -96,8 +109,13 @@ namespace :foodora do
 
   task :updated_version do
     on roles(:all) do
+
       within release_path do
         execute "sed", "s/asset_version_placeholder/#{fetch(:current_revision)}/g", "-i" ,"#{release_path}/app/config/config.yml"
+
+        execute "echo 'parameters:' > #{release_path}/#{fetch(:revision_file)}" 
+        execute "echo '  health_check_branch_name: #{fetch(:branch)}' >> #{release_path}/#{fetch(:revision_file)}" 
+        execute "echo '  health_check_branch_commit: #{fetch(:current_revision)}' >> #{release_path}/#{fetch(:revision_file)}" 
       end
     end
   end
@@ -128,11 +146,6 @@ namespace :foodora do
     desc 'various post deploy cleanup tasks'
     #clean up release dir
     invoke 'deploy:cleanup'
-
-    on roles(:"all") do |host|
-      #clean up crap, might not be needed anymore??
-      execute :"for t in test tests Tests; do find #{fetch :app_dir}/shared/* -type d -name ${t} -exec rm -r {} + ; done || true"
-    end
     puts "post deploy clean up completed"
   end
 
@@ -140,19 +153,14 @@ namespace :foodora do
     desc 'notification tasks'
     desc 'notify skype successful deploy'
     task :send_slack_message_success do
-#      run_locally do
-#        set :skype_message, "(*) Deployment of volofront in euvolo by #{local_user} to #{fetch :stage} (tag: #{fetch :tag_name}) successful. Total Time #{fetch :total_deploy_time} seconds 8-)"
-#        execute :"curl -s --data-urlencode chat_id=\"e2b173d52ac5f86d4c493982ffb10c8b\" --data-urlencode message=\"#{fetch :skype_message}\" --data-urlencode shared_secret=\"phaereoPaileir6TuLowouzong\" http://skypebot.foodora.com:5000/message/ &"
-#      end
+      slack_message = "Deployment of foodora by #{local_user} to *#{fetch :stage}* (branch: *#{fetch :tag_name}*) successful. Total Time #{fetch :total_deploy_time} seconds :sweat_smile:"
+      send_slack_message slack_message
     end
 
     desc 'notify slack failed deploy'
     task :send_slack_message_failed do
-#      run_locally do
-#        #skype message
-#        set :skype_message, "(*) Deployment of volofront in euvolo by #{local_user} to #{fetch :stage} (tag: #{fetch :tag_name}) failed :("
-#        execute :"curl -s --data-urlencode chat_id=\"e2b173d52ac5f86d4c493982ffb10c8b\" --data-urlencode message=\"#{fetch :skype_message}\" --data-urlencode shared_secret=\"phaereoPaileir6TuLowouzong\" http://skypebot.foodora.com:5000/message/ &"
-#      end
+     message = "Deployment of foodora by #{local_user} to *#{fetch :stage}* (branch: *#{fetch :tag_name}*) failed. :sob:"
+     send_slack_message message
     end
 
     desc 'notify newrelic api and front'
@@ -179,12 +187,13 @@ end
 before :deploy, 'foodora:start'
 
 namespace :deploy do
-  before 'symfony:cache:warmup',   'foodora:translation_sync'
-  before 'composer:install',   'foodora:updated_version'
+  before 'symfony:cache:warmup', 'foodora:translation_sync'
+  before 'composer:install', 'foodora:updated_version'
 
-  after 'deploy:updated',   'foodora:assets_install'
+  after 'deploy:updated', 'foodora:assets_install'
 
-  #after :published, 'foodora:apc_clear'        #APC clear
+  after 'deploy:check:make_linked_dirs', 'foodora:setup_slot'
+  after :published, 'foodora:apc_clear'        #APC clear
 
   if fetch(:cleanup) == 'yes'
     after :finishing, 'foodora:deploy_cleanup'   #clean up old releases
@@ -193,9 +202,7 @@ namespace :deploy do
   #after :finishing, 'foodora:notify:send_newrelic_message'
 
   task :failed do
-#    invoke 'foodora:notify:send_skype_message_failed'
-
-    puts "deploy failed by #{local_user} for #{fetch :rails_env} #{fetch :tag_name} #{fetch :current_revision}"
+   invoke 'foodora:notify:send_slack_message_failed'
   end
 end
 
