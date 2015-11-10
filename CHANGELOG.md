@@ -1,5 +1,7 @@
 CHANGELOG
 =========
+* 1.70.0
+ * INTVOLO-219 New Payment Method "Sofortüberweisung"
 
 * 1.69.0
  * INTVOLO-1347 fixed search food characteristic
