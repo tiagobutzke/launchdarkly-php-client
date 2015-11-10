@@ -4,9 +4,9 @@ parameters:
 
     # 'guzzle.ring.client.curl_handler' or 'guzzle.ring.client.mock_handler'
     foodpanda.api.handler: guzzle.ring.client.curl_handler
-    foodpanda.api.base_url: 'http://%country_code%.front.fp/api/v4'
-    foodpanda.api.client_id: android
-    foodpanda.api.client_secret: xvvebcx9ahww0scwkogwc8g8gs8wc4gow8s0sckw0k4s4s00c
+    foodpanda.api.base_url: 'https://api-st.foodora.%country_code%/api/v4'
+    foodpanda.api.client_id: volo
+    foodpanda.api.client_secret: ~
 
     foodpanda_web_translate_it_base_url: 'https://webtranslateit.com'
     foodpanda_web_translate_it_public_api_key: 3K--aY26LoDVtJGL1mk-1Q
@@ -21,7 +21,7 @@ parameters:
     redis_sessions_host: 127.0.0.1
     redis_sessions_port: 6379
 
-    volo_frontend.thumbor_base_url: '/app_%kernel.environment%.php/thumbor/fake'
+    volo_frontend.thumbor_base_url: 'https://euvolo-vpc-imageservice-lb.foodpanda.com'
     volo_frontend.thumbor_secret: ~
-    volo_frontend.image_server_base_url: https://volo-image.s3.amazonaws.com
-    timezone: "Europe/Berlin"
+    volo_frontend.image_server_base_url: 'https://volo-images.s3.amazonaws.com/production'
+

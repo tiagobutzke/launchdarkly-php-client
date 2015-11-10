@@ -6,6 +6,7 @@ parameters:
     country_domain: localhost
     environment: test
     locale: de
+    timezone: Europe/Berlin
 
     # 'guzzle.ring.client.curl_handler' or 'guzzle.ring.client.mock_handler'
     foodpanda.api.handler: guzzle.ring.client.mock_handler

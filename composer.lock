@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c50eea0c8a0709483e00339d97174ec6",
-    "content-hash": "cceacbc5bdb1ce7b336782d07272310c",
+    "hash": "01f7803ec0c8d4357b692e09e9da7bc8",
+    "content-hash": "fb298e59b078e98d611e3e46239216d7",
     "packages": [
         {
             "name": "99designs/phumbor",
@@ -3351,6 +3351,7 @@
         "php": ">=5.5"
     },
     "platform-dev": {
+        "ext-curl": "*",
         "ext-intl": "*"
     }
 }
