@@ -55,13 +55,16 @@
             <div class="hero-banner-content">
                 {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {type: 'hero', 'vendorCode' : vendor.code, 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
                 <div class="hero-menu__info">
-                    <h2 class="hero-menu__info__headline">
+                    <h1 class="hero-menu__info__headline">
                         {% if  richDescription is not empty %}
                             <a data-toggle="modal" data-target="#rich-description"
                                class="hero-menu__headline__icon icon-info-circled"></a>
                         {% endif %}
-                        {{ vendor.name }}
-                    </h2>
+                        {{ cms('seo.h1.vendor_page') |
+                            replace({'{vendor}': vendor.name})|
+                            default(vendor.name)
+                        }}
+                    </h1>
                     <h4 class="hero-menu__info__description">{{ vendor.description }}</h4>
                 </div>
                 <div class="hero-menu__info-extra{{ isDeliverable ? '' : ' hidden-to-user' }}">

@@ -102,6 +102,7 @@
 }
 
 .home__teaser__slogan-text {
+  @extend .h2;
   font-family: $base-font-family;
   line-height: 1.2;
   font-size: $font-size-1_9rem;

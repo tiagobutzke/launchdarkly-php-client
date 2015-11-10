@@ -78,7 +78,16 @@
     <div class="hero-banner-wrapper">
         <div class="hero-banner-content">
             {% include 'VoloFrontendBundle:Layout/ImageTag:thumbor_image_background.html.twig' with {vendorCode : 'list', type: 'hero', 'aspectRatioClass' : 'aspect-ratio-40-11'} %}
-            <h1>{{ 'address.promo %city%'|trans({'%city%': promoAddress})|nl2br }}</h1>
+            {% set h1CMSBlockName = gpsSearch ? 'seo.h1.vendor_listing_page' : 'seo.h1.city_page' %}
+
+            <h1 class="hero-banner-content__header">
+                {{ cms(h1CMSBlockName)|
+                    replace({'{city}': promoAddress})|
+                    default('address.promo %city%'|
+                        trans({'%city%': promoAddress})|nl2br
+                    )
+                }}
+            </h1>
         </div>
         {% if not gpsSearch %}
             <div class="restaurants__search-bar">
@@ -170,7 +179,7 @@
                                 required="true"
                         >
                     </form>
-    
+
                     <div class="restaurants__location__title">
                         <span class="restaurants__location__address">
                             {% if gpsSearch and (address_config.autocomplete_type|first == '(regions)') %}
