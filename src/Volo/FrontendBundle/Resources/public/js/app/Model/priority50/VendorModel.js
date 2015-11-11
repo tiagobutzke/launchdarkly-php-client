@@ -3,7 +3,8 @@ var VOLO = VOLO || {};
 VOLO.VendorModel = Backbone.Model.extend({
     defaults: {
         metadata: {
-            available_in: null
+            available_in: null,
+            events: []
         }
     },
 
@@ -13,6 +14,10 @@ VOLO.VendorModel = Backbone.Model.extend({
 
     isOpen: function() {
         return this.get('metadata').available_in === null;
+    },
+
+    isFloodFeatureClosed: function() {
+        return _.indexOf(this.get('metadata').close_reasons, 'event') >= 0;
     }
 });
 

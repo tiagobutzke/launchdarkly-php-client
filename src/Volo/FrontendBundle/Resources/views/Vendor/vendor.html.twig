@@ -170,7 +170,7 @@
                         {% endif %}
                     </div>
                 </div>
-                {% if vendor.isIsActive() %}
+                {% if vendor.isIsActive() and not isVendorFloodFeatureClosed(vendor) %}
                 <div id="cart">
                     <div class="desktop-cart mobile-cart__hidden"
                         data-minimum_order_amount="{{ vendor.minimumOrderAmount}}"
