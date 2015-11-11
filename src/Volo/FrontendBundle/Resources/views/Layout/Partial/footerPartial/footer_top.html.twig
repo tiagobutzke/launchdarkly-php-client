@@ -5,7 +5,7 @@
     <div class="footer__subscribe">
         <form class="footer__subscribe__form" action="{{ path('newsletter.subscribe') }}" method="post" role="form" novalidate>
             <div class="footer__subscribe__city">
-                <select class="form-control" id="newsletter-city" name="newsletter[city_id]" data-validation-msg="{% trans %}validations.error.newsletter.city{% endtrans %}">
+                <select class="form-control selectpicker" name="newsletter[city_id]" data-validation-msg="{% trans %}validations.error.newsletter.city{% endtrans %}">
                     {% set currentCity = city|default(false) %}
                     <option value="" {% if not currentCity %}selected="selected"{% endif %}>{% trans %}form.placeholder.subscribe_city{% endtrans %}</option>
                     {% for selectedCity in getFilteredCities() %}
@@ -18,7 +18,6 @@
             </div>
             <div class="footer__subscribe__email">
                 <input type="text"
-                   id="newsletter-email"
                    name="newsletter[email]"
                    class="form-control"
                    value="{{ newsletter.email|default('') }}"

@@ -52,7 +52,7 @@
   @include make-md-column(6);
   margin-bottom: $space-lg;
   text-align: center;
-  overflow: hidden;
+  overflow: visible;
   @include respond-from('screen-md') {
     margin-bottom: 0;
   }

@@ -82,8 +82,13 @@ var ValidationView = Backbone.View.extend({
     },
 
     createErrorMessage: function(errorMessage, target) {
+        debugger;
         var msg = $('<span class="form__error-message"></span>').text(errorMessage);
-        msg.insertAfter(target);
+        if (target.tagName === 'SELECT') {
+            msg.insertAfter($(target.parentNode).find('.bootstrap-select'));
+        } else {
+            msg.insertAfter(target);
+        }
 
         return msg;
     },
