@@ -1,5 +1,13 @@
 CHANGELOG
 =========
+
+* 1.72.1
+ * INTVOLO-1403 Exceptions on Checkout: handle invalid vouchers
+ * INTVOLO-1402 Handle /login_check url
+
+* 1.72.0
+ * INTVOLO-1451 fixed empty function call by checking if targets are empty
+
 * 1.71.0
   * INTVOLO-1312: Create cms block for corporate platform.
   * INTVOLO-874:  Proper H1 on vendors/menu page, remove h1 from logo.
