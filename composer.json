@@ -34,6 +34,7 @@
         "phpunit/php-code-coverage": "2.0.*",
         "phpmd/phpmd": "2.2.*",
         "squizlabs/php_codesniffer": "2.3.*",
+        "ext-curl" : "*",
         "ext-intl" : "*"
     },
     "scripts": {
@@ -160,19 +161,12 @@
                 "dist-file": "app/config/countries_parameters/dist/sg.yml.dist",
                 "keep-outdated": true
             }
-        ],
-        "branch-alias": {
-            "dev-master": "2.6-dev"
-        }
+        ]
     },
     "repositories": [
         {
             "type": "git",
             "url": "https://github.com/foodpanda/translation-library.git"
-        },
-        {
-            "type": "git",
-            "url": "https://github.com/foodpanda/translation-bundle.git"
         },
         {
             "type": "git",
