@@ -19,7 +19,7 @@ VOLO.FiltersView = Backbone.View.extend({
         this._updateFilterButton();
     },
 
-    _serializeJSONSafe: function(selector) {
+    _getFormValueFrom: function(selector) {
         var elements = $(selector);
         if (elements.length) {
             return _.values(elements.serializeJSON()).join(',')
@@ -29,11 +29,11 @@ VOLO.FiltersView = Backbone.View.extend({
     },
 
     _getCuisinesFormValues: function () {
-        return this._serializeJSONSafe('.restaurants__filter-form-cuisines');
+        return this._getFormValueFrom('.restaurants__filter-form-cuisines');
     },
 
     _getFoodCharacteristicsFormValues: function () {
-        return this._serializeJSONSafe('.restaurants__filter-form-food-characteristics');
+        return this._getFormValueFrom('.restaurants__filter-form-food-characteristics');
     },
 
     _updateFilterModelWithFormValues: function () {
