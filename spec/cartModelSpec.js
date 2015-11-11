@@ -66,7 +66,8 @@ describe('A cart', function () {
             defaultCartValues: {
                 vendor_id: vendorId,
                 products_count: 1
-            }
+            },
+            timezone: VOLO.configuration.timeZone
         });
 
         spyOn(dataProvider, 'calculateCart').and.callFake(function (data) {

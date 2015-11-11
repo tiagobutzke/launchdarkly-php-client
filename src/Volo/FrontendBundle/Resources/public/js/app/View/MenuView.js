@@ -1,5 +1,5 @@
 var MenuView = Backbone.View.extend({
-    initialize : function (options) {
+    initialize: function (options) {
         console.log('MenuView.initialize ', this.cid);
         this.cartModel = options.cartModel;
 
@@ -23,20 +23,20 @@ var MenuView = Backbone.View.extend({
 
         this.stickOnTopMenu = new StickOnTop({
             $container: this.$('.menu__categories'),
-            stickOnTopValueGetter: function() {
+            stickOnTopValueGetter: function () {
                 var $postalCodeBar = this.domObjects.$postalCodeBar;
 
                 return this.domObjects.$header.outerHeight() +
                     ($postalCodeBar.hasClass('hidden') ? 0 : $postalCodeBar.outerHeight()) +
                     $('.top-banner:visible').outerHeight();
             }.bind(this),
-            startingPointGetter: function() {
+            startingPointGetter: function () {
                 var vendorLogo = this.$('.menu__categories__vendor-logo'),
                     vendorLogoHeight = vendorLogo.length ? vendorLogo.outerHeight() : 0;
 
                 return this.$el.offset().top + vendorLogoHeight;
             }.bind(this),
-            endPointGetter: function() {
+            endPointGetter: function () {
                 return this.$el.offset().top + this.$el.outerHeight();
             }.bind(this)
         });
@@ -62,7 +62,7 @@ var MenuView = Backbone.View.extend({
         'click .menu__icon-legend__link': 'showAllergyModal'
     },
 
-    unbind: function() {
+    unbind: function () {
         console.log('MenuView.unbind', this.cid);
         // unbinding cart sticking behaviour
 
@@ -82,7 +82,7 @@ var MenuView = Backbone.View.extend({
         }
     },
 
-    initSubViews: function(item) {
+    initSubViews: function (item) {
         var object = this.$(item).data().object;
         this.subViews.push(new MenuItemView({
             el: $(item),
@@ -93,7 +93,7 @@ var MenuView = Backbone.View.extend({
         }));
     },
 
-    _navigateToAnchor: function(event) {
+    _navigateToAnchor: function (event) {
         var offset,
             targetTop;
 
@@ -116,7 +116,7 @@ var MenuView = Backbone.View.extend({
         return false;
     },
 
-    showAllergyModal: function() {
+    showAllergyModal: function () {
         this.$('#allergyModal').modal();
     }
 });
@@ -126,17 +126,34 @@ var MenuItemView = Backbone.View.extend({
         'click': 'addProduct'
     },
 
-    initialize : function (options) {
+    initialize: function (options) {
         this.cartModel = options.cartModel;
         this.vendor = options.vendor;
         this.gtmService = options.gtmService;
+
+        this.listenTo(this.cartModel.getCart(this.vendor.id), 'cart:productInvalid', this._isMenuItemInvalid);
     },
 
     setGtmService: function (gtmService) {
         this.gtmService = gtmService;
     },
 
-    addProduct: function() {
+    _isMenuItemInvalid: function (invalidIDArray) {
+        var variationIDs = _.map(this.model.get('product_variations'), function (variation) {
+            return variation.id;
+        });
+
+        if (_.intersection(variationIDs, invalidIDArray).length > 0) {
+            this._disableMenuItem();
+        }
+    },
+
+    _disableMenuItem: function () {
+        this.unbind();
+        this.remove();
+    },
+
+    addProduct: function () {
         var model, cart;
 
         console.log('MenuItemView.addProduct ', this.cid);
@@ -148,7 +165,7 @@ var MenuItemView = Backbone.View.extend({
                 model = CartItemModel.createFromMenuItem(this.model.toJSON());
                 cart = this.cartModel.getCart(this.vendor.id);
 
-                this.listenToOnce(cart, 'cart:ready', function () {
+                this.listenToOnce(cart, 'cart:isValid', function () {
                     this._fireAddToCartEvent(model.get('product_variation_id'));
                 }.bind(this));
 
@@ -157,7 +174,7 @@ var MenuItemView = Backbone.View.extend({
         }
     },
 
-    createViewDialog: function() {
+    createViewDialog: function () {
         var cartItemModel = CartItemModel.createFromMenuItem(this.model.toJSON());
 
         var view = new ToppingsView({
@@ -172,13 +189,13 @@ var MenuItemView = Backbone.View.extend({
         $('#choices-toppings-modal').modal(); //show dialog
     },
 
-    unbind: function() {
+    unbind: function () {
         console.log('MenuItemView.unbind', this.cid);
         this.stopListening();
         this.undelegateEvents();
     },
 
-    _fireAddToCartEvent: function(productVariationId) {
+    _fireAddToCartEvent: function (productVariationId) {
         var cart = this.cartModel.getCart(this.vendor.id),
             model = _.findWhere(cart.products.models, {attributes: {product_variation_id: productVariationId}});
 

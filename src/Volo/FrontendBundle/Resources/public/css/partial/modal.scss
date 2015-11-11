@@ -54,6 +54,10 @@
   opacity: 1 !important;
 }
 
+.modal-footer {
+  position: relative;
+}
+
 //--------------------------- modal with headline body content and footer - start -------------------------------
 
 .headline-content-footer-modal .modal-content {
@@ -77,3 +81,41 @@
 }
 
 //--------------------------- modal with headline body content and footer - end -------------------------------
+
+//--------------------------- error modal - start -------------------------------
+.error-modal {
+  font-size: $font-size-1_6rem;
+}
+
+.error-modal__invalid-product-list-headline {
+  font-size: $font-size-1_6rem;
+  margin: 0;
+}
+
+.error-modal__body p:first-of-type {
+  margin-top: 0;
+}
+
+.error-modal__body p:last-of-type {
+  margin-bottom: 0;
+}
+
+.error-modal__body ul {
+  padding-left: 15px;
+}
+
+.error-modal__body li {
+  font-size: $font-size-1_4rem;
+  list-style-type: disc;
+}
+//--------------------------- error modal - end -------------------------------
+
+//--------------------------- payment error modal - start -------------------------------
+.modal-payment-error--cannot-checkout .modal-payment-error__continue-checkout-button {
+  display: none;
+}
+
+.modal-payment-error__loading-footer button {
+  visibility: hidden;
+}
+//--------------------------- payment error modal - end -------------------------------

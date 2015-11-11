@@ -14,19 +14,19 @@ var CartItemModel = Backbone.Model.extend({
         description: ""
     },
 
-    initialize: function() {
+    initialize: function () {
         this.toppings = new ToppingCollection(_.cloneDeep(this.get('toppings')));
     },
 
-    isValid: function() {
-        var notValidTopping = this.toppings.find(function(topping) {
+    isValid: function () {
+        var notValidTopping = this.toppings.find(function (topping) {
             return !topping.isValid();
         });
 
         return !notValidTopping;
     },
 
-    toJSON: function() {
+    toJSON: function () {
         var json = Backbone.Model.prototype.toJSON.call(this);
 
         json.toppings = this.toppings.toJSON();
@@ -34,13 +34,13 @@ var CartItemModel = Backbone.Model.extend({
         return json;
     },
 
-    transformToppingsToServerFormat: function() {
+    transformToppingsToServerFormat: function () {
         var selectedToppings = this.getSelectedToppings();
 
         this.toppings = new ToppingCollection(selectedToppings);
     },
 
-    transformToppingsToMenuFormat: function(menuToppings) {
+    transformToppingsToMenuFormat: function (menuToppings) {
         var clone = _.cloneDeep(menuToppings),
             newToppings = _.each(clone, function (topping) {
                 _.each(topping.options, function (option) {
@@ -55,16 +55,16 @@ var CartItemModel = Backbone.Model.extend({
         this.toppings = new ToppingCollection(newToppings);
     },
 
-    getSelectedToppings: function() {
+    getSelectedToppings: function () {
         return _.chain(this.toppings.toJSON())
-            .map(function(item) {
+            .map(function (item) {
                 return item.options || [];
             })
-            .reduce(function(memo, item) {
+            .reduce(function (memo, item) {
                 return memo.concat(item);
             }, [])
             .where({selected: true})
-            .map(function(option) {
+            .map(function (option) {
                 return {
                     id: option.id,
                     type: 'full',
@@ -74,8 +74,8 @@ var CartItemModel = Backbone.Model.extend({
             .value();
     },
 
-    isSimilar: function(objectToCompare) {
-        var compareArrays = function(arr1, arr2) {
+    isSimilar: function (objectToCompare) {
+        var compareArrays = function (arr1, arr2) {
                 return _.isMatch(arr1, arr2) && _.isMatch(arr2, arr1);
             },
             sameVariation = this.get('product_variation_id') === objectToCompare.get('product_variation_id'),
@@ -85,7 +85,7 @@ var CartItemModel = Backbone.Model.extend({
         return sameVariation && sameToppings && sameInstructions;
     },
 
-    clone: function() {
+    clone: function () {
         var clone = Backbone.Model.prototype.clone.call(this);
         clone.toppings = new ToppingCollection(this.toppings.toJSON());
 
@@ -93,7 +93,7 @@ var CartItemModel = Backbone.Model.extend({
     }
 });
 
-CartItemModel.createFromMenuItem = function(menuItem) {
+CartItemModel.createFromMenuItem = function (menuItem) {
     var productVariation = menuItem.product_variations[0];
 
     return new CartItemModel({
@@ -148,33 +148,34 @@ var VendorCartModel = Backbone.Model.extend({
     },
     idAttribute: 'vendor_id',
 
-    initialize: function(data, options) {
+    initialize: function (data, options) {
         _.bindAll(this);
         this.products = new CartProductCollection();
         this._xhr = null;
         this.timeoutReference = null;
+        this._timezone = options.timezone;
     },
 
-    getProductsCount: function() {
+    getProductsCount: function () {
         var count = 0;
-        this.products.each(function(product) {
+        this.products.each(function (product) {
             count += product.get('quantity');
         });
 
         return parseInt(count, 10);
     },
 
-    getProductsIds: function() {
+    getProductsIds: function () {
         var ids = [];
 
-        this.products.each(function(product) {
+        this.products.each(function (product) {
             ids.push(product.get('product_variation_id'));
         });
 
         return ids;
     },
 
-    validate: function(attrs) {
+    validate: function (attrs) {
         if (_.isNull(attrs.location.latitude) || _.isNull(attrs.location.longitude) || _.isNull(attrs.location.location_type)) {
             return 'location_not_set';
         }
@@ -209,7 +210,7 @@ var VendorCartModel = Backbone.Model.extend({
         return xhr;
     },
 
-    updateCart: function() {
+    updateCart: function () {
         console.log('CartModel.updateCart ', this.cid);
         this.trigger('cart:dirty');
 
@@ -223,40 +224,91 @@ var VendorCartModel = Backbone.Model.extend({
         this.timeoutReference = setTimeout(this._sendRequest, 500);
     },
 
-    _sendRequest: function() {
-        var orderTime = this.get('order_time'),
-            data = {
-                products: this.products.toJSON(),
-                vendor_id: this.id,
-                location: this.get('location')
+    _handleCartErrors: function (rawErrorData) {
+        var errorObject = _.get(rawErrorData, 'error.errors', null),
+            processedError = {},
+            developerMessage,
+            invalidProductList
+        ;
+
+        if (!errorObject) {
+            return {};
+        }
+
+        if (errorObject.exception_type === 'ApiProductInvalidForVendorException') {
+            //  parsing the developer_message to get names of invalid products. Should be removed once API answers with array of invalid products.
+            processedError = {
+                ApiProductInvalidForVendorException: true
             };
+            developerMessage = errorObject.developer_message || '';
+            invalidProductList = developerMessage.replace('Unfortunately, ', '').replace(' is no longer available', '').split(', ');
+            processedError.invalidProducts = this.products.filter(function (product) {
+                var productName = product.get('name'),
+                    productIndex = _.findIndex(invalidProductList, function (invalidProductName) {
+                        return invalidProductName === productName;
+                    });
 
-        data.order_time = orderTime ? orderTime : moment().tz(VOLO.configuration.timeZone).format();
-        data.voucher = _.isString(this.get('voucher')) ? [this.get('voucher')] : [];
+                return productIndex >= 0;
+            });
 
-        this._xhr = this.collection.cart.dataProvider.calculateCart(data).done(function(calculatedData) {
-            if (_.isObject(this.collection.cart.defaultCartValues)) {
-                this.collection.cart.defaultCartValues.vendor_id = _.get(calculatedData, 'vendorCart.[0].vendor_id');
-                this.collection.cart.defaultCartValues.products_count = _.sum(_.get(calculatedData, 'vendorCart[0].products'), function (product) {
-                    return product.quantity;
-                });
-            }
+            this.removeItems(processedError.invalidProducts);
+            this.trigger('cart:productInvalid', _.map(processedError.invalidProducts, function (product) {
+                return product.get('product_variation_id');
+            }));
 
-            this.collection.cart.parse(calculatedData);
-            this.trigger('cart:ready');
-            console.log('cart:ready fired');
-            this._xhr = null;
-            this.timeoutReference = null;
-        }.bind(this)).error(function(jqXHR) {
-            if (jqXHR.statusText !== 'abort') {
-                this.trigger('cart:error', jqXHR.responseJSON);
-                console.log('cart:error fired');
-                this.trigger('cart:ready');
-            }
-        }.bind(this));
+        } else {
+            processedError = rawErrorData;
+        }
+
+        this.trigger('cart:error', processedError);
     },
 
-    addItem: function(newProduct) {
+    calculateCart: function (onSuccess, onError) {
+        var orderTime = this.get('order_time'),
+            data = {
+            products: this.products.toJSON(),
+            vendor_id: this.id,
+            location: this.get('location'),
+            order_time: orderTime ? orderTime : moment().tz(this._timezone).format(),
+            voucher: _.isString(this.get('voucher')) ? [this.get('voucher')] : []
+        };
+
+        return this.collection.cart.dataProvider.calculateCart(data)
+            .done(function (calculatedData) {
+                if (_.isObject(this.collection.cart.defaultCartValues)) {
+                    this.collection.cart.defaultCartValues.vendor_id = _.get(calculatedData, 'vendorCart.[0].vendor_id');
+                    this.collection.cart.defaultCartValues.products_count = _.sum(_.get(calculatedData, 'vendorCart[0].products'), function (product) {
+                        return product.quantity;
+                    });
+                }
+
+                this.collection.cart.parse(calculatedData);
+                if (_.isFunction(onSuccess)) {
+                    onSuccess();
+                }
+            }.bind(this))
+            .error(onError);
+    },
+
+    _sendRequest: function () {
+        this._xhr = this.calculateCart(
+            function () {
+                this._xhr = null;
+                this.timeoutReference = null;
+                this.trigger('cart:ready');
+                this.trigger('cart:isValid');
+                console.log('cart:ready fired');
+                console.log('cart:isValid fired');
+            }.bind(this),
+            function (jqXHR) {
+                if (jqXHR.statusText !== 'abort') {
+                    this._handleCartErrors(jqXHR.responseJSON || {});
+                    this.trigger('cart:ready');
+                }
+            }.bind(this));
+    },
+
+    addItem: function (newProduct) {
         var clone = newProduct.clone(),
             similarProduct;
 
@@ -272,14 +324,15 @@ var VendorCartModel = Backbone.Model.extend({
         this.updateCart();
     },
 
-    updateItem: function(itemToUpdate, updatedItem) {
-        var clone = updatedItem.clone();
+    updateItem: function (itemToUpdate, updatedItem) {
+        var clone = updatedItem.clone(),
+            productFromCart;
         clone.transformToppingsToServerFormat();
 
         if (updatedItem.get('quantity') === 0) {
             this.removeItem(itemToUpdate);
         } else {
-            var productFromCart = this.findSimilarProduct(clone);
+            productFromCart = this.findSimilarProduct(clone);
 
             if (productFromCart && productFromCart.cid !== itemToUpdate.cid) {
                 this.removeItem(itemToUpdate);
@@ -294,12 +347,16 @@ var VendorCartModel = Backbone.Model.extend({
         this.updateCart();
     },
 
-    removeItem: function(productToRemove) {
+    removeItem: function (productToRemove) {
         this.products.remove(productToRemove);
         this.updateCart();
     },
 
-    increaseQuantity: function(product, quantityDifference) {
+    removeItems: function (productsToRemove) {
+        _.each(productsToRemove, this.removeItem);
+    },
+
+    increaseQuantity: function (product, quantityDifference) {
         var oldQuantity = product.get('quantity'),
             newQuantity = parseInt(oldQuantity + quantityDifference, 10);
 
@@ -312,32 +369,32 @@ var VendorCartModel = Backbone.Model.extend({
         this.updateCart();
     },
 
-    findSimilarProduct: function(productToSearch) {
-        return this.products.find(function(product) {
+    findSimilarProduct: function (productToSearch) {
+        return this.products.find(function (product) {
             return product.isSimilar(productToSearch);
         });
     },
 
-    isSubtotalLessMinOrderAmount: function() {
+    isSubtotalLessMinOrderAmount: function () {
         return this.get('subtotal') < this.get('minimum_order_amount');
     },
 
-    isSubtotalGreaterZero: function() {
+    isSubtotalGreaterZero: function () {
         return this.get('subtotal') > 0;
     },
 
-    isSubtotalIsZero: function() {
+    isSubtotalIsZero: function () {
         return this.get('subtotal') === 0;
     },
 
-    isSubtotalGreaterEqualMinOrderAmount: function() {
+    isSubtotalGreaterEqualMinOrderAmount: function () {
         return this.get('subtotal') >= this.get('minimum_order_amount');
     }
 });
 
 var VendorCartCollection = Backbone.Collection.extend({
     model: VendorCartModel,
-    initialize: function(models, options) {
+    initialize: function (models, options) {
         this.cart = options.cart;
     }
 });
@@ -364,19 +421,22 @@ var CartModel = Backbone.Model.extend({
         "voucher": []
     },
 
-    initialize: function(data, options) {
+    initialize: function (data, options) {
         this.dataProvider = options.dataProvider;
         this.vendorCarts = this.vendorCarts || new VendorCartCollection([], {
-            cart: this
-        });
+                cart: this
+            });
+        this._timezone = options.timezone;
     },
 
-    parse: function (cart) {
+    parse: function (cart, options) {
+        options = options || {};
         if (_.isUndefined(this.vendorCarts)) {
             this.vendorCarts = new VendorCartCollection([], {
                 cart: this
             });
         }
+
         if (_.isObject(cart) && _.isArray(cart.vendorCart)) {
             cart = _.cloneDeep(cart);
             var vendorCarts = cart.vendorCart;
@@ -384,8 +444,8 @@ var CartModel = Backbone.Model.extend({
             this.set(cart);
 
             _.each(vendorCarts, function (vendorCart) {
-                vendorCart.products = vendorCart.products.map(function(product) {
-                    product.toppings = product.toppings.map(function(topping) {
+                vendorCart.products = vendorCart.products.map(function (product) {
+                    product.toppings = product.toppings.map(function (topping) {
                         return {
                             id: topping.id,
                             type: 'full',
@@ -396,7 +456,7 @@ var CartModel = Backbone.Model.extend({
                     return product;
                 });
 
-                this.getCart(vendorCart.vendor_id).products.set(vendorCart.products);
+                this.getCart(vendorCart.vendor_id, options.timezone).products.set(vendorCart.products);
                 delete vendorCart.products;
                 this.getCart(vendorCart.vendor_id).set(vendorCart);
                 this.getCart(vendorCart.vendor_id).set(
@@ -408,7 +468,7 @@ var CartModel = Backbone.Model.extend({
 
             //clear all carts
             if (vendorCarts.length === 0) {
-                this.vendorCarts.each(function(vendorCart) {
+                this.vendorCarts.each(function (vendorCart) {
                     vendorCart.set(cart);
                     vendorCart.products.reset();
                 });
@@ -416,15 +476,15 @@ var CartModel = Backbone.Model.extend({
         }
     },
 
-    getCart: function(vendorId) {
+    getCart: function (vendorId, timezone) {
         if (_.isUndefined(this.vendorCarts.get(vendorId))) {
-            this.vendorCarts.add({vendor_id: vendorId}, {cart: this});
+            this.vendorCarts.add({vendor_id: vendorId}, {cart: this,  timezone: timezone || this._timezone});
         }
 
         return this.vendorCarts.get(vendorId);
     },
 
-    emptyCart: function(vendorId) {
+    emptyCart: function (vendorId) {
         this.vendorCarts.remove(vendorId);
     }
 });
