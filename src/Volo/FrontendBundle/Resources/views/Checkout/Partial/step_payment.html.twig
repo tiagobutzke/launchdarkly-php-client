@@ -111,7 +111,7 @@
         <div class="checkout__step__item-content">
             <form class="checkout__payment__voucher-form" action="#" id="checkout-voucher-form" role="form" novalidate>
                 <div class="form-group checkout__payment__voucher-code">
-                    <input type="text" class="form-control" id="checkout-voucher-input" name="voucher"
+                    <input type="text" class="form-control" id="checkout-voucher-input" name="voucher" value="{{ usedVoucher|default('') }}"
                            required="true" placeholder="{% trans %}form.label.enter_voucher{% endtrans %}">
                     <div class="form__error-message form__error-message--invalid-voucher hide"></div>
                     <div class="form__error-message checkout__error-empty-voucher hide">{% trans %}error.please_insert_voucher_code{% endtrans %}</div>
@@ -136,6 +136,7 @@
     {% endif %}
     <div class="checkout__step__item checkout__payment__finish-and-pay">
         <div class="checkout__step__item-content">
+            {% if paymentErrorMessage|default(false) %}<div class="form__error-message">{{ paymentErrorMessage }}</div>{% endif %}
             {% set hostedPaymentError = app.session.flashbag.get('payment_error') %}
             <div class="form__error-message {{ hostedPaymentError|length > 0 ? '' : 'hide' }}">
                 {% if hostedPaymentError|length > 0 %}{{ hostedPaymentError|first|trans }}{% endif %}
