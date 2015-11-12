@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.72.2
+ * INTVOLO-1338 Cart icon bug if opening several restaurant pages before checkout
+ * INTVOLO-1415 Cart is emptied after closing/reopening browser
+
 * 1.72.1
  * INTVOLO-1403 Exceptions on Checkout: handle invalid vouchers
  * INTVOLO-1402 Handle /login_check url
