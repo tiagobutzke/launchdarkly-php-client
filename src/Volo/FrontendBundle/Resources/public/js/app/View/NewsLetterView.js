@@ -1,6 +1,8 @@
 VOLO = VOLO || {};
 VOLO.NewsLetterView = Backbone.View.extend({
     initialize: function() {
+        _.bindAll(this);
+
         this.validationView = new ValidationView({
             el: '.footer__subscribe__form',
             constraints: {
@@ -14,13 +16,18 @@ VOLO.NewsLetterView = Backbone.View.extend({
             }
         });
 
-        this.listenTo(this.validationView, 'form:valid', this._onFormValid);
-        this.listenTo(this.validationView, 'form:error', this._onFormError);
+        this.listenTo(this.validationView, 'form:valid', this._subscribe);
+    },
+
+    render: function() {
+        var $select = this.$('.footer__subscribe__form__select'),
+            mobileDetect = new MobileDetect(window.navigator.userAgent);
+
+        mobileDetect.mobile() ? $select.selectpicker('mobile') : $select.selectpicker();
     },
 
     events: {
-        'submit .footer__subscribe__form': '_onFormSubmit',
-        'click #newsletter-form-submit': '_onFormSubmit'
+        'submit .footer__subscribe__form': '_onFormSubmit'
     },
 
     unbind: function() {
@@ -28,85 +35,46 @@ VOLO.NewsLetterView = Backbone.View.extend({
         this.stopListening();
     },
 
-    _onFormValid: function() {
-        debugger;
-
-        return false;
-    },
-
-    _onFormError: function() {
-        debugger;
-
-        return false;
-    },
-
     _onFormSubmit: function() {
         return false;
-    }
+    },
 
+    _subscribe: function() {
+        var data = JSON.stringify(this.$('.footer__subscribe__form').serializeJSON().newsletter),
+            ajax = $.ajax({
+                url: Routing.generate('newsletter.subscribe'),
+                dataType: 'json',
+                data: data,
+                method: 'POST'
+            });
+
+        this._disableSubmitButton();
+        ajax.then(this._showSubsribeSuccess, this._showSubscribeError);
+    },
+
+    _disableSubmitButton: function() {
+        this.$('.newsletter-form-submit').addClass('button--disabled');
+    },
+
+    _enableSubmitButton: function() {
+        this.$('.newsletter-form-submit').removeClass('button--disabled');
+    },
+
+    _showSubsribeSuccess: function () {
+        this.$el.addClass('show-subscribe-message').animate({
+            height: $('.footer__subscribe__success-message').outerHeight()
+        }, 500);
+        this._enableSubmitButton();
+    },
+
+    _showSubscribeError: function(response) {
+        var errors = _.get(response, 'responseJSON.error.errors');
+
+        this._enableSubmitButton();
+        this.$('.form__error-message').remove();
+        _.each(errors, function(error) {
+            var $target = $('[name="newsletter[{fieldName}]"'.replace('{fieldName}', error.field_name));
+            this.validationView.createErrorMessage(error.violation_messages[0], $target);
+        }.bind(this));
+    }
 });
-// VOLO.NewsLetterView = ValidationView.extend({
-//     _defaultConstraints: {
-//         "newsletter[email]": {
-//             presence: true,
-//             email: true
-//         },
-//         "newsletter[city_id]": {
-//             presence: true
-//         }
-//     },
-//
-//     initialize: function () {
-//         _.bindAll(this);
-//         ValidationView.prototype.initialize.apply(this, arguments);
-//
-//         this.mobileDetect = new MobileDetect(window.navigator.userAgent);
-//     },
-//
-//     render: function() {
-//         // this.mobileDetect.mobile() ? this.$('select').selectpicker('mobile') : this.$('select').selectpicker();
-//         // this.$('select').selectpicker('refresh');
-//
-//         return this;
-//     },
-//
-//     _submitNewsLetterForm: function () {
-//         $.ajax({
-//             url: Routing.generate('newsletter.subscribe'),
-//             dataType: 'json',
-//             data: JSON.stringify(this.$('.footer__subscribe__form').serializeJSON().newsletter),
-//             method: 'POST',
-//             success: function () {
-//                 this._showSignupSuccessMessage();
-//             }.bind(this),
-//             error: function (response) {
-//                 _.each(_.get(response, 'responseJSON.error.errors', []), function (error) {
-//                     var element = this.$('input[name="newsletter[' + error.field_name + ']"]');
-//                     _.each(_.get(error, 'violation_messages', []), function (message) {
-//                         this.removeCurrentErrorMessage(element[0]);
-//                         this.createErrorMessage(message, element[0]);
-//                     }, this);
-//                 }, this);
-//             }.bind(this)
-//         });
-//
-//         return false;
-//     },
-//
-//     _validateForm: function () {
-//         var formValues = validate.collectFormValues(this.el),
-//             promise = validate.async(formValues, this.constraints);
-//
-//         promise.then(this._submitNewsLetterForm, function (errors) {
-//             this._showErrorMessages(errors);
-//         }.bind(this));
-//
-//         return false;
-//     },
-//
-//     _showSignupSuccessMessage: function () {
-//         this.$el.addClass('show-subscribe-message').animate({
-//             height: $('.footer__subscribe__success-message').outerHeight()
-//         }, 500);
-//     },
-// });

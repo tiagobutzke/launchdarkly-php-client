@@ -5,7 +5,6 @@
 
 .footer {
   margin-top: $space-lg * 2;
-  overflow: auto;
   font-size: $font-size-1_4rem;
   line-height: 1.5;
   padding-bottom: $top-cart-height / 2 + $space-lg;
@@ -13,10 +12,6 @@
     @include fluid-container();
   }
 }
-.error-page .footer {
-  overflow: visible;
-}
-
 
 %footer__wrapper {
   @include make-row();
@@ -25,7 +20,10 @@
 
 .footer__wrapper__top {
   @extend %footer__wrapper;
-  padding: 30px 0;
+  //TODO: footer__subscribe enable - remove comment and remove padding-top and bottom
+  //padding: 30px 0;
+  padding-top: $space-sm;
+  padding-bottom: $space-sm;
   border-top: $dropdown-border;
 }
 
@@ -49,14 +47,17 @@
 
 .footer__subscribe {
   @include make-xs-column(12);
+  //TODO: footer__subscribe enable - remove comment and column(6), push(2)
+  //@include make-md-column(8);
+  //@extend .col-md-push-2;
   @include make-md-column(6);
+  @extend .col-md-push-3;
   margin-bottom: $space-lg;
   text-align: center;
   overflow: visible;
   @include respond-from('screen-md') {
     margin-bottom: 0;
   }
-  @extend .col-md-push-3;
 }
 
 
@@ -75,6 +76,7 @@
   position: absolute;
   opacity: 0;
   height: 0;
+  margin-left: -999999px;
   @include transition(opacity 1.2s ease-out);
   font-size: $font-size-1_4rem;
   text-transform: uppercase;
@@ -83,6 +85,7 @@
   }
 }
 .show-subscribe-message .footer__subscribe__success-message {
+  margin-left: auto;
   opacity: 1;
   height: auto;
   width: 95%;
@@ -96,6 +99,11 @@
 
   p {
     margin: 0 auto;
+    //TODO: footer__subscribe enable - remove width, include (line 103 - 106)
+    width: 55%;
+    @include respond-from("screen-sm") {
+      width: 100%;
+    }
     b {
       display: block;
       font-family: $bold-font-family;
@@ -147,12 +155,14 @@
 .footer__logo {
   @include make-xs-column(6);
   @include make-md-column(3);
-  @extend .col-md-pull-6;
+  //TODO: footer__subscribe enable - remove comment
+  //@extend .col-md-pull-8;
   overflow: hidden;
   height: 45px;
   margin-top: 10px;
   @include respond-from("screen-md") {
-    margin-top: 0;
+    //TODO: footer__subscribe enable - remove comment
+    //margin-top: -57px;
   }
 
   i {
@@ -168,17 +178,25 @@
 }
 
 .footer__social {
-  @include make-xs-column(6);
-  @include make-md-column(3);
+  //TODO: footer__subscribe enable - remove comment and remove md column(9,0)
+  //@include make-xs-column(6);
+  //@include make-md-column(3);
+  @include make-md-column(9, 0);
   text-align: right;
   height: 42px;
+  //TODO: footer__subscribe enable - remove comment
+  //@include respond-from("screen-md") {
+  //  margin-top: -57px;
+  //  float: right;
+  //}
 
   a {
     display: inline-block;
     margin-top: 10px;
     margin-right: $space-sm;
     @include respond-from("screen-md") {
-      margin-top: 1px;
+      //TODO: footer__subscribe enable - remove comment
+      //margin-top: 1px;
     }
 
     i {

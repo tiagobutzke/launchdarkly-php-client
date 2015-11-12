@@ -163,6 +163,10 @@ select {
   appearance: none;
 }
 
+.form__select-wrapper {
+  height: $input-height;
+}
+
 .form-group {
   clear: both;
   position: relative;
@@ -254,6 +258,10 @@ select {
 .bootstrap-select > .dropdown-toggle:hover,
 .bootstrap-select > .dropdown-toggle:focus {
   outline: none !important;
+}
+
+.dropup .dropdown-menu {
+  margin-bottom: -2px;
 }
 
 

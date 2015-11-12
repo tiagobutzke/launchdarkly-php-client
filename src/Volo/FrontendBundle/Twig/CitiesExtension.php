@@ -5,6 +5,7 @@ namespace Volo\FrontendBundle\Twig;
 use Foodpanda\ApiSdk\Entity\City\City;
 use Foodpanda\ApiSdk\Exception\EntityNotFoundException;
 use Foodpanda\ApiSdk\Provider\CityProvider;
+use Foodpanda\ApiSdk\Entity\City\CitiesCollection;
 
 class CitiesExtension extends \Twig_Extension
 {
@@ -33,7 +34,7 @@ class CitiesExtension extends \Twig_Extension
     }
 
     /**
-     * @return City[]
+     * @return CitiesCollection|City[]
      */
     public function getCities()
     {
@@ -47,7 +48,7 @@ class CitiesExtension extends \Twig_Extension
     }
 
     /**
-     * @return City[]
+     * @return CitiesCollection|City[]
      */
     public function getFilteredCities()
     {
