@@ -20,7 +20,7 @@ VOLO.FiltersView = Backbone.View.extend({
     },
 
     _getFormValueFrom: function(selector) {
-        var elements = $(selector);
+        var elements = this.$(selector);
         if (elements.length) {
             return _.values(elements.serializeJSON()).join(',')
         }
