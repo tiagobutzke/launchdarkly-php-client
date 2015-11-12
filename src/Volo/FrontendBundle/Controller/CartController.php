@@ -40,6 +40,7 @@ class CartController extends BaseController
     }
 
     /**
+     * @deprecated
      * @Route(
      *      "/default-cart", name="default_cart_values",
      *      defaults={"_format": "json"},

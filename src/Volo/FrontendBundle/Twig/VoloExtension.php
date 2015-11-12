@@ -63,6 +63,7 @@ class VoloExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
+            new \Twig_SimpleFunction('get_default_cart_values', array($this, 'getDefaultCart')),
             new \Twig_SimpleFunction('get_default_cart_count', array($this, 'getDefaultCartCount')),
             new \Twig_SimpleFunction('get_default_cart_variations_ids', array($this, 'getDefaultCartVariationsIds')),
             new \Twig_SimpleFunction('get_default_cart_value', array($this, 'getDefaultCartValue')),
@@ -114,6 +115,21 @@ class VoloExtension extends \Twig_Extension
         $cart = $this->cartManager->getDefaultCart($session);
 
         return $cart === null ? 0 : array_sum(array_column($cart['products'], 'quantity'));
+    }
+
+    /**
+     * @param SessionInterface $session
+     *
+     * @return array
+     */
+    public function getDefaultCart(SessionInterface $session)
+    {
+        $cart = $this->cartManager->getDefaultCart($session);
+
+        return [
+            'vendor_id'      => empty($cart['vendor_id']) ? '' : $cart['vendor_id'],
+            'products_count' => empty($cart['products']) ? 0 : array_sum(array_column($cart['products'], 'quantity')),
+        ];
     }
 
     /**

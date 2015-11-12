@@ -47,9 +47,10 @@ VOLO.createUserAddressCollection = function (jsonUserAddress, customerModel) {
     return VOLO.userAddressCollection;
 };
 
-VOLO.createCartModel = function (jsonCart) {
-    VOLO.cartModel = VOLO.cartModel || new CartModel(jsonCart, {
+VOLO.createCartModel = function (jsonCart, defaultCartValues) {
+    VOLO.cartModel = new CartModel(jsonCart, {
         dataProvider: new CartDataProvider(),
+        defaultCartValues: defaultCartValues,
         parse: true
     });
 
@@ -284,9 +285,10 @@ VOLO.createLoginButtonView = function (customerModel) {
     return loginButtonView;
 };
 
-VOLO.createCartIconView = function () {
+VOLO.createCartIconView = function (defaultCartValues) {
     var cartIconView = new VendorCartIconView({
-        el: '.header__cart'
+        el: '.header__cart',
+        defaultCartValues: defaultCartValues
     });
 
     VOLO.views.push(cartIconView);
@@ -458,7 +460,7 @@ VOLO.doBootstrap = function(configuration) {
     userAddressCollection = VOLO.createUserAddressCollection(VOLO.jsonUserAddress, VOLO.customer);
 
     if ($('.header__cart').length > 0 && $('#cart').length === 0) {
-        cartIconView = VOLO.createCartIconView();
+        cartIconView = VOLO.createCartIconView(VOLO.defaultCartValues);
         cartIconView.render();
     }
 
@@ -467,7 +469,7 @@ VOLO.doBootstrap = function(configuration) {
         vendorPopupView.render();
     }
 
-    cartModel = VOLO.createCartModel(VOLO.jsonCart);
+    cartModel = VOLO.createCartModel(VOLO.jsonCart, VOLO.defaultCartValues);
     checkoutModel = VOLO.createCheckoutModel(cartModel, locationModel);
 
     if ($('.menu__list-wrapper').length > 0) {
