@@ -17,6 +17,36 @@
         window.volo_thumbor_transformations = {};
         window.volo_thumbor_transformations.breakpoints = [
             {
+                "width": 300,
+                "src": "data-src-bp_300",
+                "mode": "viewport"
+            },
+            {
+                "width": 400,
+                "src": "data-src-bp_400",
+                "mode": "viewport"
+            },
+            {
+                "width": 600,
+                "src": "data-src-bp_600",
+                "mode": "viewport"
+            },
+            {
+                "width": 800,
+                "src": "data-src-bp_800",
+                "mode": "viewport"
+            },
+            {
+                "width": 1000,
+                "src": "data-src-bp_1000",
+                "mode": "viewport"
+            },
+            {
+                "width": 1200,
+                "src": "data-src-bp_1200",
+                "mode": "viewport"
+            },
+            {
                 "width": 1400,
                 "src": "data-src-bp_1400",
                 "mode": "viewport"
@@ -30,18 +60,7 @@
 
         $(document).ready(function() {
             window.blazy = new Blazy({
-                breakpoints: [
-                    {
-                        "width": 1400,
-                        "src": "data-src-bp_1400",
-                        "mode": "viewport"
-                    },
-                    {
-                        "width": 2000,
-                        "src": "data-src-bp_biggest",
-                        "mode": "viewport"
-                    }
-                ],
+                breakpoints: window.volo_thumbor_transformations.breakpoints,
                 offset: 400
             });
             var homeTeaseFullWidth = new VOLO.FullWindowHeight({
@@ -57,6 +76,12 @@
 {% block content %}
     <section class="coming-soon__container fullWindowHeight b-lazy"
              data-src="{{ asset('img/homepage/teaser_4000.jpg') }}"
+             data-src-bp_300="{{ asset('img/homepage/teaser_2400.jpg') }}"
+             data-src-bp_400="{{ asset('img/homepage/teaser_2400.jpg') }}"
+             data-src-bp_600="{{ asset('img/homepage/teaser_2400.jpg') }}"
+             data-src-bp_800="{{ asset('img/homepage/teaser_2400.jpg') }}"
+             data-src-bp_1000="{{ asset('img/homepage/teaser_2400.jpg') }}"
+             data-src-bp_1200="{{ asset('img/homepage/teaser_2400.jpg') }}"
              data-src-bp_1400="{{ asset('img/homepage/teaser_2800.jpg') }}"
              data-src-bp_biggest="{{ asset('img/homepage/teaser_4000.jpg') }}">
         <div class="coming-soon__logo">
