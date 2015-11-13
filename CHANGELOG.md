@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.72.3
+ * Revert "INTVOLO-1451 fixed empty function call by checking if targets are empty"
+
 * 1.72.2
  * INTVOLO-1338 Cart icon bug if opening several restaurant pages before checkout
  * INTVOLO-1415 Cart is emptied after closing/reopening browser
