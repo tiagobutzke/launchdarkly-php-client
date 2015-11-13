@@ -42,7 +42,7 @@ var StickOnTop  = (function() {
 
     // reset state, recalculate the starting values and save a new target
     StickOnTop.prototype.updateCoordinates = function() {
-        if (this.isActiveGetter && !this.isActiveGetter() || !this.stickOnTopValueGetter) {
+        if (this.isActiveGetter && !this.isActiveGetter()) {
             return;
         }
         this._removeSticking();
@@ -95,7 +95,7 @@ var StickOnTop  = (function() {
 
     // adding sticking behaviour
     StickOnTop.prototype._addSticking = function() {
-        if (_.result(this.isActiveGetter) || this.domObjects.$target) {
+        if (this.isActiveGetter && !this.isActiveGetter()) {
             return;
         }
         if (this.domObjects.$target && this.domObjects.$target.length &&
