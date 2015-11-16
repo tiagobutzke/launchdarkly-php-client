@@ -2,6 +2,9 @@
     <div class="form__error-message form__error-message--delivery-not-saved hide" id="error-message-delivery-not-saved">
         {% trans %}delivery_information.needs_to_be_saved{% endtrans %}
     </div>
+    <div class="form__error-message form__error-message--address-not-valid">
+        {% trans %}delivery_information.address_not_valid{% endtrans %}
+    </div>
     <div class="form-group hide">
         <input  type="hidden"
                 class="form-control"
@@ -57,6 +60,7 @@
         <textarea class="checkout__step__item-textarea form-control" cols="30" rows="10" id="delivery-information-instructions" name="customer_address[delivery_instructions]"
                   placeholder="{% trans %}form.placeholder.delivery_instructions{% endtrans %}">{{ customer_address.delivery_instructions|default('') }}</textarea>
     </div>
+
     <input id="delivery-information-address-latitude" name="customer_address[latitude]" type="hidden" value="">
     <input id="delivery-information-address-longitude" name="customer_address[longitude]" type="hidden" value="">
     <input id="delivery-information-address_id" name="customer_address[id]" type="hidden" value="">

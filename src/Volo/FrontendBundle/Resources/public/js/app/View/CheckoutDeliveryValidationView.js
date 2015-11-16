@@ -26,7 +26,7 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
     events: function() {
         return _.extend({}, ValidationView.prototype.events.apply(this), {
             'blur input[name], select[name]': $.noop(),
-            'keyup input[name]': _.debounce(this._validateField, 200, {
+            'keyup input[name]': _.debounce(this._validateField, 300, {
                 leading: false
             }),
             'click button': $.noop
@@ -34,7 +34,9 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
     },
 
     submit: function(callback) {
-        this._validateForm().done(callback);
+        this._validateForm()
+            .then(this._geoCodeAndValidateDelivery, this._disableContinueButton)
+            .then(_.curry(this._afterValidate, 2)(callback), this._disableContinueButton);
     },
 
     validateForm: function() {
@@ -42,7 +44,26 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
     },
 
     _continueCheckout: function () {
-        this._geoCodeAndValidateDelivery().then(this._enableContinueButton);
+        this._geoCodeAndValidateDelivery()
+            .then(_.curry(this._afterValidate, 2)(this._enableContinueButton), this._disableContinueButton);
+    },
+
+    _afterValidate: function(callback, result) {
+        if (result) {
+            this._hideNotValidAddressError();
+            callback(result);
+        } else {
+            this._displayNotValidAddressError();
+            this._disableContinueButton();
+        }
+    },
+
+    _displayNotValidAddressError: function() {
+        this.$('.form__error-message--address-not-valid').removeClass('hide');
+    },
+
+    _hideNotValidAddressError: function() {
+        this.$('.form__error-message--address-not-valid').addClass('hide');
     },
 
     _enableContinueButton: function() {
@@ -59,7 +80,7 @@ VOLO.CheckoutDeliveryValidationView = ValidationView.extend({
             value = target.value || '',
             doValidate = this._doValidate();
 
-        doValidate.then(this._enableContinueButton,
+        doValidate.then(this._continueCheckout,
             function(invalidObj) {
                 if (invalidObj) {
                     this._disableContinueButton();
