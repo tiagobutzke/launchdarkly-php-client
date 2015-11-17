@@ -1,7 +1,7 @@
 var ValidationView = Backbone.View.extend({
     constraints: {},
     inputErrorClass: null, //error class for input
-    _errorMessages: null,
+    _errorMessages: {},
     _defaultConstraints: {},
 
     events: function() {
@@ -17,7 +17,6 @@ var ValidationView = Backbone.View.extend({
 
         this.constraints = _.assign(_.cloneDeep(this._defaultConstraints), options.constraints);
         this.inputErrorClass = options.errorClass || 'validation__error';
-        this._errorMessages = {};
     },
 
     _validateField: function(e) {
@@ -100,7 +99,7 @@ var ValidationView = Backbone.View.extend({
     onFieldSuccessValidation: $.noop,
 
     _hideMessage: function(e) {
-        if (e.keyCode !== 13 && this._errorMessages[e.target.name]) {
+        if (e.keyCode !== 13 && _.isObject(this._errorMessages) && this._errorMessages[e.target.name]) {
             this._errorMessages[e.target.name].addClass('hide');
         }
     },
