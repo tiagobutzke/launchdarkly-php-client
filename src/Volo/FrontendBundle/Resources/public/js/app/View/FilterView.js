@@ -19,21 +19,12 @@ VOLO.FiltersView = Backbone.View.extend({
         this._updateFilterButton();
     },
 
-    _getFormValueFrom: function(selector) {
-        var elements = this.$(selector);
-        if (elements.length) {
-            return _.values(elements.serializeJSON()).join(',')
-        }
-
-        return '';
-    },
-
     _getCuisinesFormValues: function () {
-        return this._getFormValueFrom('.restaurants__filter-form-cuisines');
+        return _.values(this.$('.restaurants__filter-form-cuisines').serializeJSON()).join(',');
     },
 
     _getFoodCharacteristicsFormValues: function () {
-        return this._getFormValueFrom('.restaurants__filter-form-food-characteristics');
+        return _.values(this.$('.restaurants__filter-form-food-characteristics').serializeJSON()).join(',');
     },
 
     _updateFilterModelWithFormValues: function () {
@@ -96,12 +87,12 @@ VOLO.FiltersView = Backbone.View.extend({
     },
 
     _clearFilterCuisines: function(e) {
-        $('.restaurants__filter-form-cuisines .form-control').attr("checked", false);
+        this.$('.restaurants__filter-form-cuisines .form-control').attr("checked", false);
         this._filterRestaurants(e);
     },
 
     _clearFilterFoodCharacteristics: function(e) {
-        $('.restaurants__filter-form-food-characteristics .form-control').attr("checked", false);
+        this.$('.restaurants__filter-form-food-characteristics .form-control').attr("checked", false);
         this._filterRestaurants(e);
     },
 
