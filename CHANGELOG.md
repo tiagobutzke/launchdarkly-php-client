@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.74.0
+ * INTVOLO-1534 Checkout contact form hot fix
+
 * 1.73.0
  * INTVOLO-1400 Images are not loaded correctly regarding the image size
  * INTVOLO-1446 JS error in email validation
