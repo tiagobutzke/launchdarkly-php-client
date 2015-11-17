@@ -313,6 +313,7 @@ select {
 .form__error-message--above-form {
   margin-bottom: $space-md;
 }
+.form__error-message--address-not-valid,
 .form__error-message.form__error-message--delivery-not-saved {
   margin-top: $space-sm;
   margin-bottom: 15px;
@@ -348,4 +349,3 @@ select {
 }
 
 // ----------------------- FORM ERRORS END -----------------------------
-
