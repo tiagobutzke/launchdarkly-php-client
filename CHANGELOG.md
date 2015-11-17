@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.73.0
+ * INTVOLO-1400 Images are not loaded correctly regarding the image size
+ * INTVOLO-1446 JS error in email validation
+
 * 1.72.3
  * Revert "INTVOLO-1451 fixed empty function call by checking if targets are empty"
 
