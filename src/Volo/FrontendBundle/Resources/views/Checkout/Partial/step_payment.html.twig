@@ -138,7 +138,8 @@
         <div class="checkout__step__item-content">
             {% if paymentErrorMessage|default(false) %}<div class="form__error-message">{{ paymentErrorMessage }}</div>{% endif %}
             {% set hostedPaymentError = app.session.flashbag.get('payment_error') %}
-            <div class="form__error-message {{ hostedPaymentError|length > 0 ? '' : 'hide' }}">
+            <div class="form__error-message {{ hostedPaymentError|length > 0 ? '' : 'hide' }}"
+                 data-error-message-unknown="{% trans %}payment.unknown_error{% endtrans %}">
                 {% if hostedPaymentError|length > 0 %}{{ hostedPaymentError|first|trans }}{% endif %}
             </div>
             <div class="checkout__payment__finish-and-pay-submit">

@@ -229,6 +229,7 @@
 
         <service id="volo_frontend.service.api_error_translator" class="%volo_frontend.service.api_error_translator.class%">
             <argument type="service" id="translator" />
+            <argument type="service" id="logger" />
         </service>
 
         <service id="volo_frontend.service.schedule" class="%volo_frontend.service.schedule.class%">
