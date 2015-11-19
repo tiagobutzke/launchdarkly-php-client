@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.75.1
+ * INTVOLO-1523 fix stickOnTop
+
 * 1.75.0
  * INTVOLO-1031 flood feature closed restaurants
 
