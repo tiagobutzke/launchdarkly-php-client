@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.75.0
+ * INTVOLO-1031 flood feature closed restaurants
+
 * 1.74.0
  * INTVOLO-1534 Checkout contact form hot fix
 
