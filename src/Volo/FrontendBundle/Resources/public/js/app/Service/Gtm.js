@@ -234,6 +234,15 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
         });
     },
 
+    fireSurchargeAction: function (data) {
+        this._push({
+            'event': 'surchargePopup',
+            'clickTarget': data.clickTarget,
+            'differenceToMinimumAmount': data.differenceToMinimumAmount,
+            'minimumOrderValue': data.minimumOrderValue
+        });
+    },
+
     fireCheckoutPaymentFailed: function (data) {
         this._push({
             'event': 'paymentFailed',
