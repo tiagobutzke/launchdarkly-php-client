@@ -11,6 +11,7 @@ use Foodpanda\ApiSdk\Provider\VendorProvider;
 class EventService
 {
     const ACTION_TYPE_MESSAGE = 'message';
+    const CLOSE_REASON_EVENT = 'event';
 
     /**
      * @var VendorProvider
@@ -56,5 +57,15 @@ class EventService
         }
 
         return array_unique($eventMessages);
+    }
+
+    /**
+     * @param Vendor $vendor
+     *
+     * @return bool
+     */
+    public function isVendorFloodFeatureClosed(Vendor $vendor)
+    {
+        return in_array(static::CLOSE_REASON_EVENT, $vendor->getMetadata()->getCloseReasons(), true);
     }
 }

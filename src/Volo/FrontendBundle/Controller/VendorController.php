@@ -2,6 +2,7 @@
 
 namespace Volo\FrontendBundle\Controller;
 
+use Foodpanda\ApiSdk\Entity\Cart\GpsLocation;
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -38,9 +39,14 @@ class VendorController extends BaseController
     {
         $vendorCode = strtolower($code);
         $customerLocationService = $this->getCustomerLocationService();
+        $customerLocation = $customerLocationService->get($request->getSession());
 
         try {
-            $vendor = $this->get('volo_frontend.provider.vendor')->find($vendorCode);
+            $vendor = $this->getVendorService()->findByIdAndLocation(
+                $vendorCode,
+                $customerLocation[CustomerLocationService::KEY_LAT],
+                $customerLocation[CustomerLocationService::KEY_LNG]
+            );
             if ($vendor->getUrlKey() !== $urlKey || $vendorCode !== $code) {
                 return $this->redirectToVendorPage($vendor->getCode(), $vendor->getUrlKey());
             }
@@ -53,7 +59,6 @@ class VendorController extends BaseController
             $vendor->getId()
         );
 
-        $customerLocation = $customerLocationService->get($request->getSession());
         $formattedLocation = $customerLocationService->format($customerLocation);
 
         $isDeliverable = is_array($customerLocation) ? $this->get('volo_frontend.service.deliverability')

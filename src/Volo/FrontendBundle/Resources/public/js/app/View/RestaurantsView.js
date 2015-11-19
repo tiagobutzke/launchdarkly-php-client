@@ -63,7 +63,7 @@ VOLO.RestaurantsView = Backbone.View.extend({
             model: vendor
         });
 
-        if (vendor.isOpen()) {
+        if (vendor.isOpen() && !vendor.isFloodFeatureClosed()) {
             this.$('.restaurants__list--open').append(view.render().$el);
         } else {
             this.$('.restaurants__list--closed').append(view.render().$el);
@@ -172,6 +172,12 @@ VOLO.RestaurantView = Backbone.View.extend({
             code: this.model.get('code'),
             urlKey: this.model.get('url_key')
         }));
+
+        if (this.model.isFloodFeatureClosed()) {
+            console.debug(this.$el);
+            this.$el.find('.restaurants__list__item-preorder-label').html(this.$el.find('.restaurants__list__item').data('flood-closed-message'));
+            this.$el.find('.restaurants__list__item-time').html('');
+        }
 
         return this;
     },

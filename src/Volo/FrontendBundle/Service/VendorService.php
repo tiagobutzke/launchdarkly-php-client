@@ -3,10 +3,14 @@
 namespace Volo\FrontendBundle\Service;
 
 use Doctrine\Common\Cache\Cache;
-use Foodpanda\ApiSdk\Entity\Cart\AbstractLocation;
+use Foodpanda\ApiSdk\Entity\Cart\GpsLocation;
 use Foodpanda\ApiSdk\Entity\Cart\LocationInterface;
+use Foodpanda\ApiSdk\Entity\Event\Event;
+use Foodpanda\ApiSdk\Entity\Event\EventsCollection;
 use Foodpanda\ApiSdk\Entity\Product\Product;
+use Foodpanda\ApiSdk\Entity\Vendor\MetaData;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
+use Foodpanda\ApiSdk\Entity\Vendor\VendorResults;
 use Foodpanda\ApiSdk\Entity\Vendor\VendorsCollection;
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Foodpanda\ApiSdk\Provider\CityProvider;
@@ -201,22 +205,55 @@ class VendorService
         array $foodCharacteristics = []
     )
     {
-        $vendors = $this->vendorProvider->findVendorsByLocation(
+        $vendorsResult = $this->vendorProvider->findVendorsByLocation(
             $location,
             array_merge($includes, ['schedules']),
             $cuisines,
             $foodCharacteristics
         );
 
-        $vendors = $vendors->getItems()->filter(
+        /** @var VendorsCollection $vendorsCollection */
+        $vendorsCollection = $vendorsResult->getItems()->filter(
             function (Vendor $vendor) {
                 return !$vendor->getSchedules()->isEmpty();
             }
         );
 
-        $this->updateExtraProperties($vendors);
+        $this->updateExtraProperties($vendorsCollection);
 
-        return $vendors;
+        if (
+            $location instanceof GpsLocation
+            && $location->getLatitude() !== null
+            && $location->getLongitude() !== null
+        ) {
+            $vendorsWithMetaDataResult = $this->vendorProvider->findVendorsMetaData($location);
+            $this->mergeMetaData($vendorsCollection, $vendorsWithMetaDataResult);
+        }
+
+        return $vendorsCollection;
+    }
+
+    /**
+     * @param mixed $id
+     * @param float $latitude
+     * @param float $longitude
+     * @param mixed $id
+     *
+     * @return Vendor
+     */
+    public function findByIdAndLocation($id, $latitude, $longitude)
+    {
+        $vendor = $this->vendorProvider->find($id);
+
+        if ($latitude !== null && $longitude !== null) {
+            // Needed because vendor API call doesn't return all events metadata
+            $vendorMeta = $this->vendorProvider->findMetaData($vendor->getId(), $latitude, $longitude);
+
+            $vendor->getMetadata()->setEvents($vendorMeta->getMetadata()->getEvents());
+            $vendor->getMetadata()->setCloseReasons($vendorMeta->getMetadata()->getCloseReasons());
+        }
+
+        return $vendor;
     }
 
     /**
@@ -262,5 +299,72 @@ class VendorService
 
             $this->updateAvailableInProperty($vendor);
         }
+    }
+
+    /**
+     * @param VendorsCollection $vendors
+     * @param VendorResults $vendorsWithMetaDataResult
+     */
+    private function mergeMetaData(VendorsCollection $vendors, VendorResults $vendorsWithMetaDataResult)
+    {
+        $userEvents = $vendorsWithMetaDataResult->getEvents();
+        $closeReasons = $vendorsWithMetaDataResult->getCloseReasons();
+        $vendorsWithMetaDataCollection = $vendorsWithMetaDataResult->getItems();
+
+        /** @var Vendor $vendor */
+        foreach ($vendors as $vendor) {
+            $vendorWithMetaData = $this->findVendorById($vendorsWithMetaDataCollection, $vendor->getId());
+            $vendorMetaData = $vendorWithMetaData ? $vendorWithMetaData->getMetadata() : new MetaData();
+
+            $this->mergeUserAndVendorEvents($vendor, $vendorMetaData, $userEvents);
+            $this->mergeCloseReasons($vendor, $vendorMetaData, $closeReasons);
+        }
+    }
+
+    /**
+     * @param VendorsCollection $vendorsWithMetaDataCollection
+     * @param int $id
+     *
+     * @return Vendor
+     */
+    private function findVendorById(VendorsCollection $vendorsWithMetaDataCollection, $id)
+    {
+        return $vendorsWithMetaDataCollection->filter(function (Vendor $vendorMeta) use ($id) {
+            return $vendorMeta->getId() === $id;
+        })->first();
+    }
+
+    /**
+     * @param Vendor $vendor
+     * @param MetaData $vendorMetaData
+     * @param EventsCollection $userEvents
+     *
+     * @return EventsCollection
+     */
+    private function mergeUserAndVendorEvents(Vendor $vendor, MetaData $vendorMetaData, EventsCollection $userEvents)
+    {
+        $userEventsNames = $userEvents->map(function (Event $event) {
+            return $event->getName();
+        })->getValues();
+
+        foreach ($userEvents as $event) {
+            $hasEvent = $vendorMetaData->getEvents()->contains(function (Event $event) use ($userEventsNames) {
+                return !in_array($event->getName(), $userEventsNames, true);
+            });
+            if (!$hasEvent) {
+                $vendor->getMetadata()->setEvents($event);
+            }
+        }
+    }
+
+    /**
+     * @param Vendor $vendor
+     * @param MetaData $vendorMetaData
+     * @param array $closeReasons
+     */
+    private function mergeCloseReasons($vendor, MetaData $vendorMetaData, array $closeReasons)
+    {
+        $mergedCloseReasons = array_unique($vendorMetaData->getCloseReasons() + $closeReasons);
+        $vendor->getMetadata()->setCloseReasons($mergedCloseReasons);
     }
 }
