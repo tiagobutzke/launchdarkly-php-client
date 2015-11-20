@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.75.3
+ * Updated asset version
+
 * 1.75.2
  * INTVOLO-1607: Error message when clicking on undeliverable vendor
 
