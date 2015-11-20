@@ -203,8 +203,7 @@ class VendorService
         array $includes = ['cuisines', 'metadata', 'food_characteristics'],
         array $cuisines = [],
         array $foodCharacteristics = []
-    )
-    {
+    ) {
         $vendorsResult = $this->vendorProvider->findVendorsByLocation(
             $location,
             array_merge($includes, ['schedules']),
@@ -234,17 +233,14 @@ class VendorService
     }
 
     /**
-     * @param mixed $id
+     * @param Vendor $vendor
      * @param float $latitude
      * @param float $longitude
-     * @param mixed $id
      *
      * @return Vendor
      */
-    public function findByIdAndLocation($id, $latitude, $longitude)
+    public function attachMetaData(Vendor $vendor, $latitude, $longitude)
     {
-        $vendor = $this->vendorProvider->find($id);
-
         if ($latitude !== null && $longitude !== null) {
             // Needed because vendor API call doesn't return all events metadata
             $vendorMeta = $this->vendorProvider->findMetaData($vendor->getId(), $latitude, $longitude);
@@ -254,6 +250,16 @@ class VendorService
         }
 
         return $vendor;
+    }
+
+    /**
+     * @param int|string $id vendorId/vendorCode
+     *
+     * @return Vendor
+     */
+    public function findById($id)
+    {
+        return $this->vendorProvider->find($id);
     }
 
     /**
