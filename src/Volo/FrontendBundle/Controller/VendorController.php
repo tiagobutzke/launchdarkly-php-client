@@ -40,15 +40,28 @@ class VendorController extends BaseController
         $vendorCode = strtolower($code);
         $customerLocationService = $this->getCustomerLocationService();
         $customerLocation = $customerLocationService->get($request->getSession());
+        $vendorService = $this->getVendorService();
 
         try {
-            $vendor = $this->getVendorService()->findByIdAndLocation(
-                $vendorCode,
-                $customerLocation[CustomerLocationService::KEY_LAT],
-                $customerLocation[CustomerLocationService::KEY_LNG]
-            );
-            if ($vendor->getUrlKey() !== $urlKey || $vendorCode !== $code) {
+            $vendor = $vendorService->findById($vendorCode);
+
+            if ($vendorCode !== $code || $vendor->getUrlKey() !== $urlKey) {
                 return $this->redirectToVendorPage($vendor->getCode(), $vendor->getUrlKey());
+            }
+
+            $isDeliverable = is_array($customerLocation) ? $this->get('volo_frontend.service.deliverability')
+                ->isDeliverableLocation(
+                    $vendor->getId(),
+                    $customerLocation[CustomerLocationService::KEY_LAT],
+                    $customerLocation[CustomerLocationService::KEY_LNG]
+                ) : false;
+
+            if ($isDeliverable) {
+                $vendorService->attachMetaData(
+                    $vendor,
+                    $customerLocation[CustomerLocationService::KEY_LAT],
+                    $customerLocation[CustomerLocationService::KEY_LNG]
+                );
             }
         } catch (ApiErrorException $exception) {
             throw $this->createNotFoundException('Vendor not found!', $exception);
@@ -60,13 +73,6 @@ class VendorController extends BaseController
         );
 
         $formattedLocation = $customerLocationService->format($customerLocation);
-
-        $isDeliverable = is_array($customerLocation) ? $this->get('volo_frontend.service.deliverability')
-            ->isDeliverableLocation(
-                $vendor->getId(),
-                $customerLocation[CustomerLocationService::KEY_LAT],
-                $customerLocation[CustomerLocationService::KEY_LNG]
-            ) : false;
 
         if ($cart) {
             $cartManager = $this->get('volo_frontend.service.cart_manager');
