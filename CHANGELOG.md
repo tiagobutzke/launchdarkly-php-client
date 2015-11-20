@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.75.2
+ * INTVOLO-1607: Error message when clicking on undeliverable vendor
+
 * 1.75.1
  * INTVOLO-1523 fix stickOnTop
 
