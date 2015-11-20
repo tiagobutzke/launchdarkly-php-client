@@ -1,9 +1,16 @@
-<div class="restaurants__list__item" data-vendor='{{ serialized_vendor|default('{}')|raw }}'>
+{% set vendor_flood_feature_closed = vendor_flood_feature_closed|default(false) %}
+<div class="restaurants__list__item" data-vendor='{{ serialized_vendor|default('{}')|raw }}' data-flood-closed-message="{{ flood_feature_closed_message|default('') }}">
     <div class="restaurants__list__item-wrapper">
         <div class="restaurants__list__item-image-wrapper">
             <div class="restaurants__list__item-preorder">
                 <i class="restaurants__list__item-preorder-icon icon-preorder"></i>
-                <span class="restaurants__list__item-preorder-label">{% trans %}vendor_closed_preorder_available{% endtrans %}</span>
+                <span class="restaurants__list__item-preorder-label">
+                    {% if vendor_flood_feature_closed %}
+                        {% trans %}vendor.closed_flood_feature{% endtrans %}
+                    {% else %}
+                        {% trans %}vendor_closed_preorder_available{% endtrans %}
+                    {% endif %}
+                </span>
             </div>
             <div class="b-lazy restaurants__list__item-image aspect-ratio-100-52"
                  src="{{ blazy_placeholder }}"
@@ -15,8 +22,10 @@
         </h3>
         <h4 class="restaurants__list__item-description">{{ vendor.description|default('<%= description %>')|raw }}</h4>
         <div class="restaurants__list__item-time">
+            {% if not vendor_flood_feature_closed %}
             <i class="icon-clock-o"></i>
             {{ vendor.metadata.availableIn|default('<%= metadata.available_in %>')|raw }}
+            {% endif %}
         </div>
     </div>
 </div>

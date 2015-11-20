@@ -40,9 +40,18 @@ var StickOnTop  = (function() {
         this.redraw();
     };
 
+    StickOnTop.prototype._canUpdateCoordinates = function() {
+        return (
+            this.isActiveGetter &&
+            this.isActiveGetter() &&
+            this.stickOnTopValueGetter &&
+            this.startingPointGetter
+        );
+    };
+
     // reset state, recalculate the starting values and save a new target
     StickOnTop.prototype.updateCoordinates = function() {
-        if (this.isActiveGetter && !this.isActiveGetter()) {
+        if (!this._canUpdateCoordinates()) {
             return;
         }
         this._removeSticking();
@@ -93,13 +102,21 @@ var StickOnTop  = (function() {
         }
     };
 
+    StickOnTop.prototype._canChangeSticking = function(add) {
+        add = add ? true : false;
+        return (
+            this.domObjects.$target &&
+            this.domObjects.$target.length &&
+            this.domObjects.$container.hasClass(this.stickingOnTopClass) != add
+        );
+    };
+
     // adding sticking behaviour
     StickOnTop.prototype._addSticking = function() {
         if (this.isActiveGetter && !this.isActiveGetter()) {
             return;
         }
-        if (this.domObjects.$target && this.domObjects.$target.length &&
-            !this.domObjects.$container.hasClass(this.stickingOnTopClass)) {
+        if (this._canChangeSticking(true)) {
             this.domObjects.$container.addClass(this.stickingOnTopClass);
             this.domObjects.$target.css({
                 position: 'fixed',
@@ -107,13 +124,13 @@ var StickOnTop  = (function() {
                 'max-height': this.maxHeight,
                 width: this.domObjects.$target.innerWidth()
             });
-        this.domObjects.$target.scrollTop(0); // resetting the inner scrolling of the target
+            this.domObjects.$target.scrollTop(0); // resetting the inner scrolling of the target
         }
     };
 
     // removing sticking behaviour
     StickOnTop.prototype._removeSticking = function() {
-        if (this.domObjects.$target && this.domObjects.$target.length && this.domObjects.$container.hasClass(this.stickingOnTopClass)) {
+        if (this._canChangeSticking()) {
             this.domObjects.$container.removeClass(this.stickingOnTopClass);
             this.domObjects.$target.css({
                 position: '',

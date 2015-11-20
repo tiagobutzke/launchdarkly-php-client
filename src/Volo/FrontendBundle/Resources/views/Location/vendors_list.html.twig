@@ -5,7 +5,7 @@
 {% set cuisineFilterMaximum = 14 %}
 {% set foodCharacteristicsFilterMaximum = 6 %}
 {% for vendor in vendors %}
-    {% if vendor.metadata.availableIn is null %}
+    {% if vendor.metadata.availableIn is null and not isVendorFloodFeatureClosed(vendor) %}
         {% set openVendors = openVendors|merge([vendor]) %}
     {% else %}
         {% set closedVendors = closedVendors|merge([vendor]) %}
@@ -70,7 +70,9 @@
     </script>
 
     <script type="text/template" id="template-restaurant-details">
-        {{ include('VoloFrontendBundle:Layout/Partial/templates:vendor_detail.html.twig') }}
+        {{ include('VoloFrontendBundle:Layout/Partial/templates:vendor_detail.html.twig', {
+            'flood_feature_closed_message': 'vendor.closed_flood_feature'|trans
+        }) }}
     </script>
 {% endblock %}
 
@@ -214,7 +216,11 @@
         <div class="restaurants__list restaurants__list--closed">
             {% for vendor in closedVendors %}
                 <a href="{{ path('vendor', {code: vendor.code, urlKey: vendor.urlKey}) }}">
-                    {{ include('VoloFrontendBundle:Layout/Partial/templates:vendor_detail.html.twig', {'serialized_vendor': serialize(vendor) }) }}
+                    {{ include('VoloFrontendBundle:Layout/Partial/templates:vendor_detail.html.twig', {
+                        'serialized_vendor': serialize(vendor),
+                        'vendor_flood_feature_closed': isVendorFloodFeatureClosed(vendor),
+                        'flood_feature_closed_message': 'vendor.closed_flood_feature'|trans
+                    }) }}
                 </a>
             {% endfor %}
         </div>
