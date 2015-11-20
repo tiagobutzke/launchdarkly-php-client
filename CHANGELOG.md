@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.74.1
+ * Updated asset version
+
 * 1.74.0
  * INTVOLO-1534 Checkout contact form hot fix
 
