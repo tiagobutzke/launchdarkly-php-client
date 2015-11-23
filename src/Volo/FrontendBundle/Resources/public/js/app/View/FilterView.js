@@ -20,11 +20,11 @@ VOLO.FiltersView = Backbone.View.extend({
     },
 
     _getCuisinesFormValues: function () {
-        return _.values($('.restaurants__filter-form-cuisines').serializeJSON()).join(',');
+        return _.values(this.$('.restaurants__filter-form-cuisines').serializeJSON()).join(',');
     },
 
     _getFoodCharacteristicsFormValues: function () {
-        return _.values($('.restaurants__filter-form-food-characteristics').serializeJSON()).join(',');
+        return _.values(this.$('.restaurants__filter-form-food-characteristics').serializeJSON()).join(',');
     },
 
     _updateFilterModelWithFormValues: function () {
@@ -87,12 +87,12 @@ VOLO.FiltersView = Backbone.View.extend({
     },
 
     _clearFilterCuisines: function(e) {
-        $('.restaurants__filter-form-cuisines .form-control').attr("checked", false);
+        this.$('.restaurants__filter-form-cuisines .form-control').attr("checked", false);
         this._filterRestaurants(e);
     },
 
     _clearFilterFoodCharacteristics: function(e) {
-        $('.restaurants__filter-form-food-characteristics .form-control').attr("checked", false);
+        this.$('.restaurants__filter-form-food-characteristics .form-control').attr("checked", false);
         this._filterRestaurants(e);
     },
 
