@@ -56,6 +56,7 @@ notifications:
 
 before_deploy:
     - $TRAVIS_BUILD_DIR/build-tools/create-artifact-archive -o $TRAVIS_BUILD_DIR/build-tools/build.tar.gz -b $TRAVIS_BRANCH -c $TRAVIS_COMMIT
+    - gem install mime-types -v 2.6.2
 
 deploy:
     provider: releases
