@@ -90,6 +90,15 @@ VOLO.createVendorPopupView = function() {
     return vendorPopupView;
 };
 
+VOLO.createUnsubscribePopupView = function() {
+    var unsubscribePopupView = new VOLO.UnsubscribePopupView({
+        el: '.unsubscribe__modal'
+    });
+
+    VOLO.views.push(unsubscribePopupView);
+    return unsubscribePopupView;
+};
+
 VOLO.createCartViews = function (options) {
     var $header = $('.header'),
         $menuMain = $('.menu__list-wrapper'),
@@ -349,6 +358,16 @@ VOLO.createFilterView = function(vendorCollection, filterModel) {
     return filtersView;
 };
 
+VOLO.createNewsLetterView = function() {
+    var newsLetterView = new VOLO.NewsLetterView({
+        el: '.footer__subscribe'
+    });
+
+    VOLO.views.push(newsLetterView);
+
+    return newsLetterView;
+};
+
 VOLO.createRestaurantsSearchView = function() {
     var restaurantsSearchView = new VOLO.AddressFormStickingOnTop({
         el: '.restaurants__search-bar',
@@ -464,9 +483,19 @@ VOLO.doBootstrap = function(configuration) {
         cartIconView.render();
     }
 
+    if ($('.footer__subscribe').length) {
+        newsLetterView = VOLO.createNewsLetterView();
+        newsLetterView.render();
+    }
+
     if ($('.vendor-popup__modal').length > 0) {
         vendorPopupView = VOLO.createVendorPopupView();
         vendorPopupView.render();
+    }
+
+    if ($('.unsubscribe__modal').length > 0) {
+        unsubscribePopupView = VOLO.createUnsubscribePopupView();
+        unsubscribePopupView.render();
     }
 
     cartModel = VOLO.createCartModel(VOLO.jsonCart, VOLO.defaultCartValues);

@@ -1,0 +1,12 @@
+{% block title %}
+    {% trans %}newsletter.unsubscribed_successfully_page_title{% endtrans %}
+{% endblock %}
+
+{% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
+{% block content %}
+    <div class="newsletter-unsubscribe-container wrapper-fluid">
+        <div class="newsletter-unsubscribe-container__success-message">
+            {% trans %}newsletter.unsubscribed_successfully{% endtrans %}
+        </div>
+    </div>
+{% endblock %}

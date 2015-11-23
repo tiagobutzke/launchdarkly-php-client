@@ -7,8 +7,9 @@ var ValidationView = Backbone.View.extend({
     events: function() {
         return {
             'blur input[name], select[name]': '_validateField',
+            'click .dropdown-menu.open': '_validateBootstrapSelect',
             'keyup input[name], select[name]': '_hideMessage',
-            'click button': '_validateForm'
+            'click button[type=submit]': '_validateForm'
         };
     },
 
@@ -17,6 +18,13 @@ var ValidationView = Backbone.View.extend({
 
         this.constraints = _.assign(_.cloneDeep(this._defaultConstraints), options.constraints);
         this.inputErrorClass = options.errorClass || 'validation__error';
+    },
+
+    _validateBootstrapSelect: function(e) {
+        var selectWrapper = $(e.currentTarget.parentElement.parentElement);
+
+        selectWrapper.next('.form__error-message').addClass('hide');
+        selectWrapper.find('select').blur(); //trigger _validateField
     },
 
     _validateField: function(e) {
@@ -83,7 +91,11 @@ var ValidationView = Backbone.View.extend({
 
     createErrorMessage: function(errorMessage, target) {
         var msg = $('<span class="form__error-message"></span>').text(errorMessage);
-        msg.insertAfter(target);
+        if (target.tagName === 'SELECT') {
+            msg.insertAfter($(target).closest('.form__select-wrapper'));
+        } else {
+            msg.insertAfter(target);
+        }
 
         return msg;
     },

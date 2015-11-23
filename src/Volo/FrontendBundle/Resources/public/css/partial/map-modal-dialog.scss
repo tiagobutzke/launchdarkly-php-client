@@ -117,3 +117,27 @@
   top: 58px;
 }
 
+//----------- MODAL ALERT START --------------------------
+
+.modal.modal-alert .modal-dialog {
+  @include translate(0, 0);
+
+  @include respond-from("screen-sm") {
+    @include horizontal-vertical-center-absolute();
+  }
+  margin-top: 0;
+}
+
+.modal-alert__headline {
+  font-size: $font-size-2_4rem;
+  text-align: center;
+  font-family: $satisfy-font-family;
+  color: $color-text-highlight;
+  margin-bottom: 20px;
+}
+
+.modal-alert__content {
+  text-align: center;
+}
+
+//----------- MODAL ALERT END --------------------------
