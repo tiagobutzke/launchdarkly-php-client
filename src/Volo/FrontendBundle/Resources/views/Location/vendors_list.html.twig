@@ -86,8 +86,8 @@
                 {{ cms(h1CMSBlockName)|
                     replace({'{city}': promoAddress})|
                     default('address.promo %city%'|
-                        trans({'%city%': promoAddress})|nl2br
-                    )
+                        trans({'%city%': promoAddress})
+                    )|nl2br
                 }}
             </h1>
         </div>
