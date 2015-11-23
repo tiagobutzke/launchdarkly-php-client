@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.77.1
+ * Fixed ruby dependencies in travis
+
 * 1.77.0
  * INTVOLO-1486: User logout endless loop fix
 
