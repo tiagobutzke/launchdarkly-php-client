@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.78.0
+ * INTVOLO-164 newsletter footer form
+
 * 1.77.1
  * Fixed ruby dependencies in travis
 
