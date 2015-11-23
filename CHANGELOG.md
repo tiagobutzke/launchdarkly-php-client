@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.79.0
+ * INTVOLO-1341 map improvements
+
 * 1.78.0
  * INTVOLO-164 newsletter footer form
 
