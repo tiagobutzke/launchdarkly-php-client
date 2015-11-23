@@ -306,12 +306,23 @@ VOLO.createCartIconView = function (defaultCartValues) {
 };
 
 VOLO.createVendorsListSearchView = function (locationModel, vendorCollection) {
-    var vendorSearchView = new VOLO.VendorsSearchView({
-        el: '.restaurants-container',
-        model: locationModel,
-        vendorCollection: vendorCollection,
-        geocodingService: new GeocodingService(VOLO.configuration.countryCode)
-    });
+    var vendorSearchView;
+
+    if (VOLO.isMapEnabled()) {
+        vendorSearchView = new VOLO.FullAddressVendorsSearchView({
+            el: '.restaurants-container',
+            model: locationModel,
+            vendorCollection: vendorCollection,
+            appConfig: VOLO.configuration
+        });
+    } else {
+        vendorSearchView = new VOLO.VendorsSearchView({
+            el: '.restaurants-container',
+            model: locationModel,
+            vendorCollection: vendorCollection,
+            geocodingService: new GeocodingService(VOLO.configuration.countryCode)
+        });
+    }
 
     VOLO.views.push(vendorSearchView);
 
@@ -319,12 +330,22 @@ VOLO.createVendorsListSearchView = function (locationModel, vendorCollection) {
 };
 
 VOLO.createVendorsListSearchNoLocationView = function (locationModel) {
-    var vendorSearchView = new VendorsSearchNoLocationView({
-        el: '.restaurants .hero-banner-wrapper ',
-        model: locationModel,
-        geocodingService: new GeocodingService(VOLO.configuration.countryCode),
-        $window: $(window)
-    });
+    var vendorSearchView;
+    if (VOLO.isMapEnabled()) {
+        vendorSearchView = new VOLO.FullAddressVendorsSearchNoLocationView({
+            el: '.restaurants .hero-banner-wrapper',
+            model: locationModel,
+            $window: $(window),
+            appConfig: VOLO.configuration
+        });
+    } else {
+        vendorSearchView = new VendorsSearchNoLocationView({
+            el: '.restaurants .hero-banner-wrapper ',
+            model: locationModel,
+            geocodingService: new GeocodingService(VOLO.configuration.countryCode),
+            $window: $(window)
+        });
+    }
 
     VOLO.views.push(vendorSearchView);
 
@@ -444,14 +465,25 @@ VOLO.createSpecialInstructionsTutorialView = function() {
 };
 
 VOLO.createVendorGeocodingView = function($postalCodeBar, locationModel, cartModel, vendor) {
-    vendorGeocodingView = new VendorGeocodingView({
-        el: $postalCodeBar,
-        geocodingService: new GeocodingService(VOLO.configuration.countryCode),
-        model: locationModel,
-        modelCart: cartModel.getCart(vendor.id),
-        smallScreenMaxSize: VOLO.configuration.smallScreenMaxSize,
-        $window: $(window)
-    });
+    var vendorGeocodingView;
+    if (VOLO.isMapEnabled()) {
+        vendorGeocodingView = new VOLO.FullAddressVendorSearchView({
+            model: locationModel,
+            el: $postalCodeBar,
+            modelCart: cartModel.getCart(vendor.id),
+            $window: $(window),
+            appConfig: VOLO.configuration
+        });
+    } else {
+        vendorGeocodingView = new VendorGeocodingView({
+            el: $postalCodeBar,
+            geocodingService: new GeocodingService(VOLO.configuration.countryCode),
+            model: locationModel,
+            modelCart: cartModel.getCart(vendor.id),
+            $window: $(window)
+        });
+    }
+
     VOLO.views.push(vendorGeocodingView);
 
     return vendorGeocodingView;
@@ -605,6 +637,7 @@ VOLO.doBootstrap = function(configuration) {
             vendor = $('.menu__list-wrapper').data('vendor');
 
         vendorGeocodingView = VOLO.createVendorGeocodingView($postalCodeBar, locationModel, cartModel, vendor);
+        vendorGeocodingView.render();
 
         if ($('#cart').length) {
             var cartViews = VOLO.createCartViews({
