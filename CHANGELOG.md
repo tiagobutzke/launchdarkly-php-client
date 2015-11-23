@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+* 1.77.0
+ * INTVOLO-1486: User logout endless loop fix
+
+* 1.76.0
+ * INTVOLO-1449 added new method to serializeJSON from an element safely
+ * INTVOLO-1591 - missing header in content pages, correct escape of header on vendor list
+
 * 1.75.3
  * Updated asset version
 
