@@ -15,6 +15,7 @@ parameters:
             - "address"
         hide_checkout_postal_code: true
         format: ':building :street, :plz'
+        valid_address_input: '.*'
 
     short_to_full_locale_name_mapping:
         zh: zh_HK

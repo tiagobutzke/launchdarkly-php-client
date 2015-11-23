@@ -9,3 +9,4 @@ parameters:
         autocomplete_type:
             - "address"
         format: ':building :street, :plz'
+        valid_address_input: '.*'

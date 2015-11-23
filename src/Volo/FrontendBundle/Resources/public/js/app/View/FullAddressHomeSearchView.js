@@ -25,23 +25,39 @@ VOLO.FullAddressHomeSearchView = Backbone.View.extend({
 
     _submitGeocode: function() {
         var $input = this.$('.restaurants-search-form__input'),
-            userAddress = $input.val();
+            userAddress = $input.val(),
+            locationModel = new VOLO.FullAddressLocationModel({}, this.appConfig);
 
         this._hideTooltip();
-        if (userAddress) {
+        if(!userAddress) {
+            this._showInputMsg($input.data('msg_error_empty'));
+        } else if (!this._isValidUserInput(userAddress, this.appConfig)) {
+            this._showInputMsg($input.data('msg_error_postal_code'));
+        } else if (userAddress) {
             this._geocode().then(function(address) {
                 $input.val(address.formattedAddress);
 
                 if (!this.mapModalView.isOpen()) {
                     this.autocomplete.unbind();
-                    this._openMapModalDialog(address, userAddress);
+                    locationModel.set(address);
+                    if (locationModel.isValid()) {
+                        this._submitInput(address);
+                    } else {
+                        this._openMapModalDialog(address, userAddress);
+                    }
+
                 }
             }.bind(this), this._displayError);
-        } else {
-            this._showInputMsg($input.data('msg_error_empty'));
         }
 
         return false;
+    },
+
+    _isValidUserInput: function(value, appConfig) {
+        var validAddressRegex = _.get(appConfig, 'address_config.valid_address_input'),
+            trimmedValue = _.trim(value);
+
+        return !!trimmedValue.match(validAddressRegex);
     },
 
     _displayError: function(error) {
@@ -78,16 +94,33 @@ VOLO.FullAddressHomeSearchView = Backbone.View.extend({
             address = deserializer.deserialize(geocodingPlace, this.appConfig);
 
         this.autocomplete.unbind();
-        this._openMapModalDialog(address, address.formattedAddress);
+
+        var locationModel = new VOLO.FullAddressLocationModel(address, this.appConfig);
+        if (locationModel.isValid()) {
+            this._submitInput(address);
+        } else {
+            this._openMapModalDialog(address, address.formattedAddress);
+        }
 
         console.log('VOLO.homeSearch - autocomplete address', address);
     },
 
     _handleKeyDown: function(e) {
-        this._hideTooltip();
+        if (e.keyCode !== 13 ) { //enter
+            this._hideTooltip();
+        }
 
         if (e.keyCode === 9) { // tab
-            this._geocode().then(this._updateInputFromAddress, this._displayError);
+            var $input = this.$('.restaurants-search-form__input'),
+                userAddress = this.$('.restaurants-search-form__input').val();
+
+            if (!userAddress) {
+                this._showInputMsg($input.data('msg_error_empty'));
+            } else if (!this._isValidUserInput(userAddress, this.appConfig)) {
+                this._showInputMsg($input.data('msg_error_postal_code'));
+            } else {
+                this._geocode().then(this._updateInputFromAddress, this._displayError);
+            }
         }
     },
 
@@ -108,7 +141,7 @@ VOLO.FullAddressHomeSearchView = Backbone.View.extend({
         });
 
         this.listenToOnce(this.mapModalView, 'map-dialog:hide', this._dialogHide);
-        this.listenToOnce(this.mapModalView, 'map-dialog:address-submit', this._submitAddress);
+        this.listenToOnce(this.mapModalView, 'map-dialog:address-submit', this._submitMap);
     },
 
     _dialogHide: function(address) {
@@ -155,14 +188,28 @@ VOLO.FullAddressHomeSearchView = Backbone.View.extend({
         this.autocomplete.init($node, this.appConfig);
     },
 
-    _submitAddress: function(address) {
-        this.model.set(address);
-        this.$('.restaurants-search-form__input').val(address.formattedAddress);
+    _submitMap: function(address) {
         this.trigger('home-search-view:gtm-submit', {
             event: 'submitMap',
             fullAddress: address.formattedAddress
         });
+        this._submitAddress(address);
+    },
 
+    _submitInput: function(address) {
+        this.trigger('home-search-view:gtm-submit', {
+            event: 'submitInput',
+            fullAddress: address.formattedAddress
+        });
+        this.model.set(address);
+        this._submitAddress(address);
+    },
+
+    _submitAddress: function(address) {
+        this.model.set(address);
+        this.$('.restaurants-search-form__input').val(address.formattedAddress);
+
+        console.log('Going to: ', this._getVendorsRoute(address));
         Turbolinks.visit(this._getVendorsRoute(address));
     },
 

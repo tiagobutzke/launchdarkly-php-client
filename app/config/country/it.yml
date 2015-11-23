@@ -14,3 +14,4 @@ parameters:
             - 'route'
         hide_checkout_postal_code: false
         format: ':street, :building :plz'
+        valid_address_input: '.*'

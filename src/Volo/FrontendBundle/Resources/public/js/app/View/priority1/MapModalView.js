@@ -10,10 +10,12 @@ VOLO.MapModalView = Backbone.View.extend({
         });
     },
 
-    events: {
-        'keydown .map-modal__autocomplete__input': '_onAutocompleteKeyDown',
-        'submit .map-modal__autocomplete': '_updatePositionFromInput',
-        'click .map-modal__submit': '_submit'
+    events: function() {
+        return {
+            'keydown .map-modal__autocomplete__input': '_onAutocompleteKeyDown',
+            'submit .map-modal__autocomplete': '_onAutocompleteSubmit',
+            'click .map-modal__submit': _.throttle(this._submit, 400, {trailing: false})
+        };
     },
 
     _initListeners: function () {
@@ -23,27 +25,59 @@ VOLO.MapModalView = Backbone.View.extend({
     },
 
     _onAutocompleteKeyDown: function(e) {
+        if(!this.autocomplete) {
+            this.autocomplete = new VOLO.Geocoding.Autocomplete();
+            this.autocomplete.init(this.$('.map-modal__autocomplete__input'), this.appConfig);
+
+            this.listenTo(this.autocomplete, 'autocomplete-search:place-found', this._placeFound);
+            this.listenTo(this.autocomplete, 'geocoder-search:place-found', this._placeFound);
+        }
+
         this._hideInputError();
         if (e.keyCode === 9) { // tab
             this._updatePositionFromInput();
         }
     },
 
+    _onAutocompleteSubmit: function() {
+        this._updatePositionFromInput();
+
+        return false;
+    },
+
     _updatePositionFromInput: function() {
         var firstResultValue = this.autocomplete.getFirstResultValue(),
-            geocoder = new VOLO.Geocoding.Geocoder(this.appConfig);
+            geocoder = new VOLO.Geocoding.Geocoder(this.appConfig),
+            deferred = $.Deferred(),
+            $input = this.$('.map-modal__autocomplete__input');
 
-        if (this.$('.map-modal__autocomplete__input').val()) {
-            geocoder.geocodeAddress(firstResultValue).then(this._centerMapOnFirstAddress, function(error) {
+        if (this.model.get('formattedAddress') === firstResultValue) {
+            deferred.resolve(this.model.toJSON());
+        } else if ($input.val()) {
+            geocoder.geocodeAddress(firstResultValue).then(function(addresses) {
+                this._centerMapOnFirstAddress(addresses);
+                deferred.resolve(this.deserializer.deserialize(addresses[0]));
+            }.bind(this), function(error) {
                 console.log('submit error', error);
-                this._showInputError(this.$('.map-modal__autocomplete__input').data('msg_error_not_found'));
+                deferred.reject($input.data('msg_error_not_found'));
             }.bind(this));
         } else {
             console.log('empty input');
-            this._showInputError(this.$('.map-modal__autocomplete__input').data('msg_error_empty'));
+            deferred.reject($input.data('msg_error_empty'));
         }
 
-        return false;
+        return deferred;
+    },
+
+    _initAutocomplete: function() {
+        if (!this.autocomplete) {
+            this.autocomplete = new VOLO.Geocoding.Autocomplete();
+            this.autocomplete.init(this.$('.map-modal__autocomplete__input'), this.appConfig);
+
+            this.listenTo(this.autocomplete, 'autocomplete-search:place-found', this._placeFound);
+            this.listenTo(this.autocomplete, 'geocoder-search:place-found', this._placeFound);
+            this.$('.map-modal__autocomplete__input').blur();
+        }
     },
 
     _centerMapOnFirstAddress: function(addresses) {
@@ -54,15 +88,19 @@ VOLO.MapModalView = Backbone.View.extend({
     },
 
     _submit: function() {
-        if (this.model.get('formattedAddress') !== this.$('.map-modal__autocomplete__input').val()) {
-            this._updatePositionFromInput();
-        } else if (this.model.isValid()) {
-            this.trigger('map-dialog:address-submit', this.model.toJSON());
-            this.unbind();
-        }
+        this._initAutocomplete();
+        this._updatePositionFromInput().then(function() {
+            if (!this.model.validationError) {
+                this.trigger('map-dialog:address-submit', this.model.toJSON());
+                this.unbind();
+            } else {
+                this._displayErrorMessage(this.model, this.model.validationError);
+            }
+        }.bind(this), this._showInputError);
 
         return false;
     },
+
     _displayErrorMessage: function(model, error) {
         var data = this.$('.map-modal__autocomplete__input').data(),
             errorMessage = _.get(data, 'msg_error_' + error, data.msg_error_not_found);
@@ -72,6 +110,30 @@ VOLO.MapModalView = Backbone.View.extend({
             errorCode: errorMessage
         });
         this._showInputError(errorMessage);
+
+        if (error === 'building' && _.get(this.appConfig, 'address_config.update_map_input')) {
+            this._updateTitle(error);
+            this._updateInputField();
+        }
+    },
+
+    _updateTitle: function(titleId) {
+        var titleMsg = this.$('.map-modal__autocomplete__input').data('msg_title_' + titleId),
+            $title = this.$('.map-modal__header-content');
+
+        if (!titleMsg) {
+            titleMsg = this.$('.map-modal__autocomplete__input').data('msg_title_default');
+        }
+
+        $title.text(titleMsg);
+        this.map.resize();
+    },
+
+    _updateInputField: function() {
+        var $input = this.$('.map-modal__autocomplete__input'),
+            inputVal = $input.val().split(',')[0].trim() + ' ';
+
+        $input.val(inputVal);
     },
 
     _showInputError: function(text) {
@@ -104,8 +166,6 @@ VOLO.MapModalView = Backbone.View.extend({
             });
         }
 
-        this.autocomplete = new VOLO.Geocoding.Autocomplete();
-
         return this;
     },
 
@@ -120,8 +180,15 @@ VOLO.MapModalView = Backbone.View.extend({
         this._initListeners();
         modalDialog.on('shown.bs.modal', this.curriedDialogShown);
         modalDialog.on('hide.bs.modal', this._dialogHide);
-
         modalDialog.modal();
+
+        if (this.model.validationError === 'building' && _.get(this.appConfig, 'address_config.update_map_input')) {
+            this._hideInputError();
+            this._updateTitle(this.model.validationError);
+            this._updateInputField();
+
+            this.$('.map-modal__autocomplete__input').focus();
+        }
     },
 
     hide: function() {
@@ -129,11 +196,11 @@ VOLO.MapModalView = Backbone.View.extend({
     },
 
     _disableSubmitButton: function() {
-        this.$('.map-modal__submit__button').attr("disabled","disabled").addClass('button--disabled');
+        this.$('.map-modal__submit__button').addClass('button--disabled');
     },
 
     _enableSubmitButton: function() {
-        this.$('.map-modal__submit__button').removeAttr("disabled").removeClass('button--disabled');
+        this.$('.map-modal__submit__button').removeClass('button--disabled');
     },
 
     isOpen: function() {
@@ -141,15 +208,18 @@ VOLO.MapModalView = Backbone.View.extend({
     },
 
     _dialogShown: function(address) {
+        this._updateTitle('default');
         this.map.resize(); //because of maps bug
         this.map.setCenter(address.latitude, address.longitude);
         this.listenTo(this.map, 'map:center-changed', _.debounce(this._centerChanged, 400, {leading: false}));
+        this.listenTo(this.map, 'map:drag-start', this._onMapDragStart);
 
-        this.autocomplete.init(this.$('.map-modal__autocomplete__input'), this.appConfig);
+
         this._updateAddress(address);
+    },
 
-        this.listenTo(this.autocomplete, 'autocomplete-search:place-found', this._placeFound);
-        this.listenTo(this.autocomplete, 'geocoder-search:place-found', this._placeFound);
+    _onMapDragStart: function() {
+        this.$('.map-modal__autocomplete__input').blur();
     },
 
     _placeFound: function(place) {
@@ -164,7 +234,9 @@ VOLO.MapModalView = Backbone.View.extend({
         console.log('MapDialog._updateAddress', address);
         this.$('.map-modal__autocomplete__input').val(address.formattedAddress);
         this.model.set(address, {validate: true});
+
         if (_.isNull(this.model.validationError)) {
+            this._updateTitle('default');
             this._hideInputError();
             this._enableSubmitButton();
         }
@@ -197,7 +269,7 @@ VOLO.MapModalView = Backbone.View.extend({
     },
 
     _dialogHide: function() {
-        this.autocomplete && this.autocomplete.unbind();
+        this._unbindAutocomplete();
         this.map.cleanLocation();
 
         this.stopListening();
@@ -207,12 +279,15 @@ VOLO.MapModalView = Backbone.View.extend({
         this.trigger('map-dialog:hide', this.model.toJSON());
     },
 
+    _unbindAutocomplete: function() {
+        this.autocomplete && this.autocomplete.unbind();
+        this.autocomplete = null;
+    },
+
     unbind: function() {
         this.map && this.map.unbind();
-        this.autocomplete && this.autocomplete.unbind();
+        this._unbindAutocomplete();
         this.stopListening();
         this.undelegateEvents();
     }
 });
-
-_.extend(VOLO.MapModalView.prototype, VOLO.TooltipAlignMixin);
