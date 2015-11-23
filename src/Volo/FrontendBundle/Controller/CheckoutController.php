@@ -10,9 +10,6 @@ use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Foodpanda\ApiSdk\Exception\ValidationEntityException;
 use Foodpanda\ApiSdk\Provider\CustomerProvider;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,9 +17,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Volo\FrontendBundle\Exception\Payment\PaymentMethodException;
 use Volo\FrontendBundle\Service\CustomerLocationService;
-use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
-use Psr\Log\LoggerInterface;
 
 /**
  * @Route("/checkout")
@@ -228,6 +224,8 @@ class CheckoutController extends BaseController
 
         try {
             $apiResult = $this->handleOrder($request->getSession(), $cart, $data, $guestCustomer);
+        } catch (PaymentMethodException $e) {
+            return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
         } catch (ApiErrorException $e) {
             return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
         }
@@ -300,7 +298,6 @@ class CheckoutController extends BaseController
                 $paymentTypeId,
                 $cart
             );
-
             if ($order['hosted_payment_page_redirect'] === null && !in_array($data['payment_type_code'], ['cod', 'invoice'])) {
                 $orderManager->payment($token->getAccessToken(), $data + $order);
             }
@@ -311,7 +308,6 @@ class CheckoutController extends BaseController
                 $paymentTypeId,
                 $cart
             );
-
             if ($order['hosted_payment_page_redirect'] === null && !in_array($data['payment_type_code'], ['cod', 'invoice'])) {
                 $orderManager->guestPayment($order, $data['encrypted_payment_data'], $data['client_ip']);
             }
@@ -386,7 +382,8 @@ class CheckoutController extends BaseController
                     ]
                 );
             }
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
     }
 
     /**

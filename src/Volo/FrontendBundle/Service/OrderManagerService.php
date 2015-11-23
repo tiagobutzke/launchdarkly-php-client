@@ -6,6 +6,7 @@ use CommerceGuys\Guzzle\Oauth2\AccessToken;
 use Foodpanda\ApiSdk\Provider\OrderProvider;
 use Foodpanda\ApiSdk\Provider\CustomerProvider;
 use Foodpanda\ApiSdk\Entity\Order\GuestCustomer;
+use Volo\FrontendBundle\Exception\Payment\PaymentMethodException;
 
 class OrderManagerService
 {
@@ -177,6 +178,8 @@ class OrderManagerService
      * @param AccessToken $accessToken
      * @param array       $order
      *
+     * @throws PaymentMethodException
+     *
      * @return array
      */
     public function payment(AccessToken $accessToken, array $order)
@@ -198,7 +201,7 @@ class OrderManagerService
                 break;
 
             default:
-                throw new \RuntimeException('No recurring or CSE payment information provided');
+                throw new PaymentMethodException('No recurring or CSE payment information provided');
         }
 
         return $this->orderProvider->payment($accessToken, $paymentRequest);
