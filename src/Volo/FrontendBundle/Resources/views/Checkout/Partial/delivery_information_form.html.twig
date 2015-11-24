@@ -65,7 +65,7 @@
     <input id="delivery-information-address-longitude" name="customer_address[longitude]" type="hidden" value="">
     <input id="delivery-information-address_id" name="customer_address[id]" type="hidden" value="">
     <input type="hidden" name="customer_address[city_id]" value="{{ vendor.city.id }}">
-    <button class="checkout__step__item-button button button--disabled" id="delivery-information-form-button">
+    <button type="submit" class="checkout__step__item-button button button--disabled" id="delivery-information-form-button">
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             {% trans %}button.save{% endtrans %}
         {% else %}
