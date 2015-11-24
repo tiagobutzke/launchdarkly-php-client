@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.79.1
+ * INTVOLO-164: Hot fix
+
 * 1.79.0
  * INTVOLO-1341 map improvements
 
