@@ -6,6 +6,7 @@ CHANGELOG
 
 * 1.79.0
  * INTVOLO-1341 map improvements
+ * INTVOLO-1524 Geocoding improvement - do not open map when user fill in full address
 
 * 1.78.0
  * INTVOLO-164 newsletter footer form
