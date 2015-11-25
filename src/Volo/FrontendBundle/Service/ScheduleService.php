@@ -13,7 +13,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class ScheduleService
 {
-    const CACHE_TTL = 82800; // 1 day
+    const CACHE_TTL = 82800; // 23 Hours
 
     /**
      * @var Cache
@@ -116,7 +116,7 @@ class ScheduleService
         $hash = md5(serialize($vendor->getSchedules()) . serialize($vendor->getSpecialDays()) . serialize($collection));
 
         if (!$this->cache->contains($hash)) {
-            $results = $collection->filter(function(\DateTime $time) use ($vendor) {
+            $results = $collection->filter(function (\DateTime $time) use ($vendor) {
                 if (in_array($time->format('H:i'), ['00:00', '23:59'])) {
                     return true;
                 }
@@ -189,6 +189,7 @@ class ScheduleService
     /**
      * @param Vendor    $vendor
      * @param \DateTime $start
+     * @param \DateInterval $interval
      * @param int       $openingOffset
      * @param int       $closingOffset
      *
@@ -205,7 +206,10 @@ class ScheduleService
         $time->setTime(0, 0);
         $schedules   = serialize($vendor->getSchedules());
         $specialDays = serialize($vendor->getSpecialDays());
-        $hash = md5($schedules . $specialDays . strval($openingOffset) . strval($closingOffset) . serialize($interval). serialize($time));
+        $hash = md5(
+            $schedules . $specialDays . strval($openingOffset) . strval($closingOffset)
+            . serialize($interval). serialize($time)
+        );
 
         if (!$this->cache->contains($hash)) {
             $results = $this->calculateOpening($vendor, $time, $interval, $openingOffset, $closingOffset);
@@ -235,7 +239,9 @@ class ScheduleService
         $results = new ArrayCollection();
 
         $end = clone $start;
-        $end->modify('+1 year');
+        $end->modify('+1 month');
+
+        $this->filterSpecialDays($vendor, $end);
         /** @var \DateTime $day */
         foreach (new \DatePeriod($start, new \DateInterval('P1D'), $end) as $day) {
             $dailyResults = new ArrayCollection();
@@ -289,7 +295,11 @@ class ScheduleService
      */
     public function getTimePickerTimeValues(ArrayCollection $times)
     {
-        $intl = \IntlDateFormatter::create($this->translator->getLocale(), \IntlDateFormatter::NONE, \IntlDateFormatter::SHORT);
+        $intl = \IntlDateFormatter::create(
+            $this->translator->getLocale(),
+            \IntlDateFormatter::NONE,
+            \IntlDateFormatter::SHORT
+        );
 
         $results = [];
         foreach ($times as $time) {
@@ -314,7 +324,13 @@ class ScheduleService
     {
         /** @var ArrayCollection $openingPeriods */
         // We exclude the last closing interval of all periods by adding a 1 min offset.
-        $openingPeriods = $this->getNextFourDaysOpenings($vendor, $start, new \DateInterval('PT30M'), $vendor->getMinimumDeliveryTime(), -1);
+        $openingPeriods = $this->getNextFourDaysOpenings(
+            $vendor,
+            $start,
+            new \DateInterval('PT30M'),
+            $vendor->getMinimumDeliveryTime(),
+            -1
+        );
 
         if ($openingPeriods->isEmpty()) {
             return new ArrayCollection();
@@ -352,7 +368,7 @@ class ScheduleService
                 $times['now'] = $this->translator->trans('time_picker.now');
             }
 
-            $dayKey = $day->isEmpty() ? new \DateTime : $day->first(); 
+            $dayKey = $day->isEmpty() ? new \DateTime : $day->first();
             $days[$dayKey->format('Y-m-d')] = [
                 'text' => $this->formatOpeningDay($dayKey),
                 'times'   => array_merge($times, $this->getTimePickerTimeValues($day)),
@@ -369,11 +385,28 @@ class ScheduleService
      */
     public function formatOpeningDay(\DateTime $day)
     {
-        $formatter = \IntlDateFormatter::create($this->translator->getLocale(), \IntlDateFormatter::GREGORIAN, \IntlDateFormatter::NONE);
+        $formatter = \IntlDateFormatter::create(
+            $this->translator->getLocale(),
+            \IntlDateFormatter::GREGORIAN,
+            \IntlDateFormatter::NONE
+        );
 
         // @see http://userguide.icu-project.org/formatparse/datetime for formats
         $formatter->setPattern($this->timePickerDateFormat);
 
         return $formatter->format($day);
+    }
+
+    /**
+     * @param Vendor $vendor
+     * @param \DateTime $end
+     */
+    private function filterSpecialDays(Vendor $vendor, \DateTime $end)
+    {
+        foreach ($vendor->getSpecialDays() as $i => $specialDay) {
+            if ($i > 2 || $end->getTimestamp() < strtotime($specialDay->getDate())) {
+                $vendor->getSpecialDays()->removeElement($specialDay);
+            }
+        }
     }
 }
