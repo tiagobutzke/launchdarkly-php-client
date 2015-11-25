@@ -15,7 +15,7 @@ class CmsController extends BaseController
     public function indexAction($code)
     {
         try {
-            $element = $this->get('volo_frontend.provider.cms')->findByCode($code, false);
+            $element = $this->get('volo_frontend.service.cms')->findByCode($code, false);
         } catch (EntityNotFoundException $exception) {
             throw $this->createNotFoundException('CMS item not found!', $exception);
         }

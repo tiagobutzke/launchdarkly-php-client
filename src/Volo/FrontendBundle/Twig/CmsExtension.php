@@ -3,21 +3,21 @@
 namespace Volo\FrontendBundle\Twig;
 
 use Foodpanda\ApiSdk\Exception\EntityNotFoundException;
-use Foodpanda\ApiSdk\Provider\CmsProvider;
+use Volo\FrontendBundle\Service\CmsService;
 
 class CmsExtension extends \Twig_Extension
 {
     /**
-     * @var CmsProvider
+     * @var CmsService
      */
-    protected $cmsApiProvider;
+    protected $cmsService;
 
     /**
-     * @param CmsProvider $cmsApiProvider
+     * @param CmsService $cmsService
      */
-    public function __construct(CmsProvider $cmsApiProvider)
+    public function __construct(CmsService $cmsService)
     {
-        $this->cmsApiProvider = $cmsApiProvider;
+        $this->cmsService = $cmsService;
     }
 
     /**
@@ -39,14 +39,14 @@ class CmsExtension extends \Twig_Extension
     public function getCmsContent($code, $fallback = null)
     {
         try {
-            $content =  $this->cmsApiProvider->findByCode($code)->getContent();
+            $content =  $this->cmsService->findByCode($code)->getContent();
         } catch (EntityNotFoundException $exception) {
             $content =  '';
         }
 
         if ('' === $content && null !== $fallback) {
             try {
-                $content =  $this->cmsApiProvider->findByCode($fallback)->getContent();
+                $content =  $this->cmsService->findByCode($fallback)->getContent();
             } catch (EntityNotFoundException $exception) {
                 $content =  '';
             }
