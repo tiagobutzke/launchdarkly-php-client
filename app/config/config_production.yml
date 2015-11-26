@@ -55,25 +55,24 @@ doctrine_cache:
         api_cache:
             type: redis
             redis:
-              host: %redis_cache_host%
-              port: %redis_cache_port%
+              connection_id: volo_frontend_redis_connection_service
         translator_cache:
             type: redis
             redis:
-              host: %redis_cache_host%
-              port: %redis_cache_port%
+              connection_id: volo_frontend_redis_connection_service
         schedule_cache:
             type: redis
             redis:
-              host: %redis_cache_host%
-              port: %redis_cache_port%
+              connection_id: volo_frontend_redis_connection_service
         vendor_cache:
             type: redis
             redis:
-              host: %redis_cache_host%
-              port: %redis_cache_port%
+              connection_id: volo_frontend_redis_connection_service
         special_instructions_cache:
             type: redis
             redis:
-              host: %redis_cache_host%
-              port: %redis_cache_port%
+              connection_id: volo_frontend_redis_connection_service
+        cms:
+            type: redis
+            redis:
+              connection_id: volo_frontend_redis_connection_service

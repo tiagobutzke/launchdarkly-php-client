@@ -103,7 +103,7 @@
 
         <service id="volo_frontend.service.customer_manager" alias="volo_frontend.provider.customer" />
         <service id="volo_frontend.twig.cms_extension" class="%volo_frontend.twig.cms_extension.class%">
-            <argument type="service" id="volo_frontend.provider.cms" />
+            <argument type="service" id="volo_frontend.service.cms" />
             <tag name="twig.extension" />
         </service>
 
@@ -271,6 +271,10 @@
 
         <service id="volo_frontend.service.site_map" class="%volo_frontend.service.site_map.class%">
             <argument id="volo_frontend.site_map.client" type="service"/>
+        </service>
+        <service id="volo_frontend.service.cms" class="Volo\FrontendBundle\Service\CmsService">
+            <argument type="service" id="volo_frontend.provider.cms" />
+            <argument type="service" id="doctrine_cache.providers.cms" />
         </service>
     </services>
 </container>

@@ -32,8 +32,7 @@ class CacheStrategy
     {
         $resource = self::extractResource($request->getPath());
 
-        return 'vendors' === $resource
-           && ($request->getQuery()->hasKey('latitude') && $request->getQuery()->hasKey('longitude'));
+        return self::isVendorWithLatLng($request, $resource) || self::isCms($resource);
     }
 
     /**
@@ -45,5 +44,28 @@ class CacheStrategy
     private static function extractResource($resource)
     {
         return preg_replace('/^\/api\/v\d./', '', $resource);
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @param string $resource
+     *
+     * @return bool
+     */
+    private static function isVendorWithLatLng(RequestInterface $request, $resource)
+    {
+        return 'vendors' === $resource
+            && ($request->getQuery()->hasKey('latitude')
+            && $request->getQuery()->hasKey('longitude'));
+    }
+
+    /**
+     * @param string $resource
+     *
+     * @return bool
+     */
+    private static function isCms($resource)
+    {
+        return 'cms' === $resource;
     }
 }
