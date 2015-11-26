@@ -27,31 +27,36 @@ class EventService
     }
 
     /**
-     * @param float $latitude
-     * @param float $longitude
+     * @param GpsLocation $location
      *
      * @return array
      */
-    public function getActionMessages($latitude, $longitude) {
+    public function getActionMessages(GpsLocation $location) {
         $eventMessages = [];
 
-        if ($latitude === null || $longitude === null) {
+        if ($location->getLatitude() === null || $location->getLongitude() === null) {
             return $eventMessages;
         }
 
-        $vendorItems = $this->vendorService->findAll(new GpsLocation($latitude, $longitude));
+        $vendorItems = $this->vendorService->findAll($location);
 
         /** @var Vendor $vendor */
         foreach ($vendorItems as $vendor) {
-            $event = $vendor->getMetadata()->getEvents();
-            /** @var Event $event */
-            $messages = $event->getActions()->filter(function(EventAction $action) {
-                return $action->getType() === static::ACTION_TYPE_MESSAGE;
-            })->map(function(EventAction $action) {
-                return $action->getMessage();
-            });
+            $events = $vendor->getMetadata()->getEvents();
+            foreach ($events as $event) {
+                /** @var Event $event */
+                $messages = $event->getActions()->filter(
+                    function (EventAction $action) {
+                        return $action->getType() === static::ACTION_TYPE_MESSAGE;
+                    }
+                )->map(
+                    function (EventAction $action) {
+                        return $action->getMessage();
+                    }
+                );
 
-            $eventMessages = array_merge($eventMessages, $messages->toArray());
+                $eventMessages = array_merge($eventMessages, $messages->toArray());
+            }
         }
 
         return array_unique($eventMessages);
