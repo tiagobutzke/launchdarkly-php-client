@@ -3,6 +3,8 @@
 namespace Volo\FrontendBundle\Service;
 
 use CommerceGuys\Guzzle\Oauth2\AccessToken;
+use Foodpanda\ApiSdk\Entity\Order\OrderHistory;
+use Foodpanda\ApiSdk\Entity\Order\OrdersHistoryCollection;
 use Foodpanda\ApiSdk\Provider\OrderProvider;
 use Foodpanda\ApiSdk\Provider\CustomerProvider;
 use Foodpanda\ApiSdk\Entity\Order\GuestCustomer;
@@ -11,6 +13,7 @@ use Volo\FrontendBundle\Exception\Payment\PaymentMethodException;
 class OrderManagerService
 {
     const ORDER_NOW_TIME_PICKER_IDENTIFIER = 'now';
+    const ORDER_STATUS_DELIVERED = '621';
     /**
      * @var OrderProvider
      */
@@ -238,5 +241,54 @@ class OrderManagerService
         }
 
         return $customerComment;
+    }
+
+    /**
+     * @param AccessToken $accessToken
+     *
+     * @return \Foodpanda\ApiSdk\Entity\Order\OrderHistory[]|OrdersHistoryCollection
+     */
+    public function retrieveAllDeliveredUserOrders(
+        AccessToken $accessToken
+    ) {
+        // 10,000 is just a quite big number to retrieve all the old orders
+        return $this->retrieveOrdersHistory($accessToken, static::ORDER_STATUS_DELIVERED, 10000);
+    }
+
+    /**
+     * @param AccessToken $accessToken
+     * @param int $filterByStatus
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return OrdersHistoryCollection|OrderHistory[]
+     */
+    public function retrieveOrdersHistory(
+        AccessToken $accessToken,
+        $filterByStatus = null,
+        $limit = 10,
+        $offset = 0
+    ) {
+        $orders = $this->orderProvider->retrieveOrdersHistory($accessToken, $limit, $offset);
+        $ordersCollection = $orders->getOrders();
+        if (null !== $filterByStatus) {
+            $ordersCollection = $this->filterOrderHistoryByStatus($ordersCollection, $filterByStatus);
+        }
+
+        return $ordersCollection;
+    }
+
+    /**
+     * @param OrdersHistoryCollection $ordersCollection
+     * @param int $orderStatus
+     *
+     * @return OrdersHistoryCollection|OrderHistory[]
+     */
+    private function filterOrderHistoryByStatus($ordersCollection, $orderStatus)
+    {
+        /** @var OrderHistory $orderHistory */
+        return $ordersCollection->filter(function (OrderHistory $orderHistory) use ($orderStatus) {
+            return strpos($orderHistory->getCurrentStatus()->getInternalStatusCode(), $orderStatus) === 0;
+        });
     }
 }
