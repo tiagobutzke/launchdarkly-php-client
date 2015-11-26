@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.80.0
+ * INTVOLO-1670 Temporary workaround to solve Redis issue
+
 * 1.79.1
  * INTVOLO-164: Hot fix
 
