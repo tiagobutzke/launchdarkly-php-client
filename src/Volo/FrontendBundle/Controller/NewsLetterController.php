@@ -43,22 +43,7 @@ class NewsLetterController extends BaseController
                 ]
             ], Response::HTTP_BAD_REQUEST);
         } catch (ApiException $e) {
-            // Here as per the api the only error you get in this case is related to email.
-            return new JsonResponse(
-                [
-                    'error' => [
-                        'errors' => [
-                            [
-                                'field_name' => 'email',
-                                'violation_messages' => [
-                                    $this->get('translator')->trans($e->getMessage()),
-                                ],
-                            ]
-                        ]
-                    ]
-                ],
-                Response::HTTP_BAD_REQUEST
-            );
+            return $this->get('volo_frontend.service.api_error_translator')->createJsonErrorResponse($e);
         }
 
         return new JsonResponse(['success' => true], Response::HTTP_OK);

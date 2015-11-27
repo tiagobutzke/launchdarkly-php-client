@@ -42,8 +42,7 @@ class ApiErrorTranslator
     {
         if ($exception instanceof ApiErrorException) {
             $response =$this->createResponseforApiErrorException($exception);
-        }
-        else if ($exception instanceof ApiException) {
+        } elseif ($exception instanceof ApiException) {
             $response = $this->createResponseForUnknownError($exception);
         } else {
             $response = $this->createResponseForUnknownError($exception);
@@ -82,9 +81,12 @@ class ApiErrorTranslator
 
         if (isset($errors['exception_type'])) {
             $exceptionType = $errors['exception_type'];
-            if (in_array($exceptionType, ['ApiCustomerAlreadyExistsException', 'ApiFacebookCustomerAlreadyExistsException'])) {
+            $customerExists = ['ApiCustomerAlreadyExistsException', 'ApiFacebookCustomerAlreadyExistsException'];
+
+            if (in_array($exceptionType, $customerExists, true)) {
                 $exceptionType = 'ApiCustomerAlreadyExistsException';
             }
+
             $errors['message'] = $this->translator->trans($exceptionType);
             if ($errors['message'] === $errors['exception_type']) {
                 $errors['message'] = $this->translator->trans(self::UNKNOWN_PAYMENT_ERROR_MESSAGE);
