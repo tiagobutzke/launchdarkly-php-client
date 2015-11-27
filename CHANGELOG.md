@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.81.0
+ * INTVOLO-1643 Display voucher field for foodora Spain
+
 * 1.80.0
  * INTVOLO-1670 Temporary workaround to solve Redis issue
 
