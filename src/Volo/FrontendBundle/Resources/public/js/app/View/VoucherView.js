@@ -8,10 +8,16 @@ var VoucherView = Backbone.View.extend({
 
     initialize: function() {
         _.bindAll(this);
+        this.isMobile = new MobileDetect(window.navigator.userAgent).mobile();
         this.vendor_id = this.$el.data().vendor_id;
 
         this._initListeners();
         this._enableVoucher();
+
+        if (!this.isMobile && $('body').hasClass('country-es')) {
+            this.$('#checkout-add-voucher-link').hide();
+            this.$('#checkout-voucher-form').show();
+        }
     },
 
     _initListeners: function() {
@@ -35,7 +41,11 @@ var VoucherView = Backbone.View.extend({
             this.$('#checkout-add-voucher-link').hide();
         } else {
             this.$('#checkout-selected-voucher').hide();
-            this.$('#checkout-add-voucher-link').show();
+            if (!this.isMobile && $('body').hasClass('country-es')) {
+                this.$('#checkout-voucher-form').show();
+            } else {
+                this.$('#checkout-add-voucher-link').show();
+            }
             this.$('#checkout-selected-voucher-text').empty();
         }
     },
