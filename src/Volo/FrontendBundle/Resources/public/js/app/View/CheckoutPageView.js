@@ -215,7 +215,7 @@ var CheckoutPageView = Backbone.View.extend({
                 params.resURL = url;
                 this.redirectPost(data.hosted_payment_page_redirect.url, params);
             } else {
-                window.location.replace(data.hosted_payment_page_redirect.url); // paypal
+                window.location.assign(data.hosted_payment_page_redirect.url); // paypal
             }
         }
         this.spinner.stop();
