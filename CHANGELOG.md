@@ -1,6 +1,16 @@
 CHANGELOG
 =========
 
+* 1.84.0
+ * INTVOLO-1549: Index cms pages
+
+* 1.83.0
+ * INTVOLO-478: Paypal cancellation data loss fix
+ * INTVOLO-1346 Layout: price is slipped
+
+* 1.82.0
+ * INTVOLO-1463: Payment Method Exception
+
 * 1.81.0
  * INTVOLO-1643 Display voucher field for foodora Spain
 
