@@ -12,12 +12,13 @@ VOLO.FullAddressHomeSearchView = Backbone.View.extend({
     },
 
     events: function() {
-        return _.extend({}, CTATrackableView.prototype.events, {
+        return {
             'click .restaurants-search-form__button': this._submit,
             'submit': function() {
                 return false;
-            }
-        });
+            },
+            'click *[data-gtm-cta]': '_ctaClicked'
+        };
     },
 
     _submit: function() {
@@ -42,3 +43,5 @@ VOLO.FullAddressHomeSearchView = Backbone.View.extend({
         this.stopListening();
     }
 });
+
+_.extend(VOLO.FullAddressHomeSearchView.prototype, VOLO.CTAActionMixin);

@@ -3,7 +3,7 @@
  * options:
  * - geocodingService: GeocodingService
  */
-var HomeSearchView = CTATrackableView.extend({
+var HomeSearchView = Backbone.View.extend({
     initialize: function (options) {
         console.log('HomeSearchView.initialize ', this.cid);
         _.bindAll(this);
@@ -18,15 +18,14 @@ var HomeSearchView = CTATrackableView.extend({
         this.postInit();
     },
 
-    events: function() {
-        return _.extend({}, CTATrackableView.prototype.events, {
-            'click .restaurants-search-form__button': '_submitPressed',
-            'submit': '_submitPressed',
-            'focus #delivery-information-postal-index': '_hideTooltip',
-            'blur #delivery-information-postal-index': '_hideTooltip',
-            'click #delivery-information-postal-index': '_scrollToInput',
-            'keydown #delivery-information-postal-index': '_inputChanged'
-        });
+    events: {
+        'click .restaurants-search-form__button': '_submitPressed',
+        'submit': '_submitPressed',
+        'focus #delivery-information-postal-index': '_hideTooltip',
+        'blur #delivery-information-postal-index': '_hideTooltip',
+        'click #delivery-information-postal-index': '_scrollToInput',
+        'keydown #delivery-information-postal-index': '_inputChanged',
+        'click *[data-gtm-cta]': '_ctaClicked'
     },
 
     render: function() {
@@ -219,3 +218,4 @@ var HomeSearchView = CTATrackableView.extend({
 _.extend(HomeSearchView.prototype, VOLO.TooltipAlignMixin);
 _.extend(HomeSearchView.prototype, VOLO.DetectScreenSizeMixin);
 _.extend(HomeSearchView.prototype, VOLO.DetectIE);
+_.extend(HomeSearchView.prototype, VOLO.CTAActionMixin);

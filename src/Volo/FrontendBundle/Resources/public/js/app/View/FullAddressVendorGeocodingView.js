@@ -28,7 +28,8 @@ VOLO.FullAddressVendorSearchView = Backbone.View.extend({
         },
         'focus .restaurants-search-form__input': '_hideTooltip',
         'click .postal-index-form-overlay': '_hideTooltip',
-        'click .restaurants-search-form__button': '_submitAddress'
+        'click .restaurants-search-form__button': '_submitAddress',
+        'click *[data-gtm-cta]': '_ctaClicked'
     },
 
     render: function() {

@@ -506,7 +506,8 @@ VOLO.doBootstrap = function(configuration) {
         userAddressCollection,
         filterModel,
         vendorCollection,
-        fullAddressHomeSearchView
+        fullAddressHomeSearchView,
+        citiesOverviewView
     ;
 
     userAddressCollection = VOLO.createUserAddressCollection(VOLO.jsonUserAddress, VOLO.customer);
@@ -587,6 +588,13 @@ VOLO.doBootstrap = function(configuration) {
         }
     }
 
+    if ($('.home__cities').length > 0) {
+        citiesOverviewView = new VOLO.CitiesOverviewView({
+            el : '.home__cities'
+        });
+        VOLO.views.push(citiesOverviewView);
+    }
+
     if ($('.restaurants .restaurants-search-form').length > 0) {
         VOLO.createVendorsListSearchNoLocationView(locationModel).render();
         VOLO.createRestaurantsSearchView();
@@ -630,7 +638,8 @@ VOLO.doBootstrap = function(configuration) {
         checkoutVoucherView: checkoutViews.voucherView,
         loginButtonView: loginButtonView,
         restaurantsView: restaurantsView,
-        fullAddressHomeSearchView: fullAddressHomeSearchView
+        fullAddressHomeSearchView: fullAddressHomeSearchView,
+        citiesOverviewView: citiesOverviewView
     });
 
     if ($('.menu__list-wrapper').length > 0) {
