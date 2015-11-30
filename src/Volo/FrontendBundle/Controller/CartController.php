@@ -33,7 +33,7 @@ class CartController extends BaseController
                 $cartManager->saveCart($request->getSession(), $data['vendor_id'], $data);
             }
 
-            return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
+            return $this->get('volo_frontend.service.api_error_translator')->createJsonErrorResponse($e);
         }
 
         return new JsonResponse($apiResult);

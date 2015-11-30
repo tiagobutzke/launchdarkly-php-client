@@ -68,7 +68,7 @@ class CustomerAddressController extends BaseController
                 throw $this->createNotFoundException(sprintf('Address not found: "%s"', $id));
             }
 
-            return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
+            return $this->get('volo_frontend.service.api_error_translator')->createJsonErrorResponse($e);
         }
 
         return new JsonResponse($serializer->normalize($address));
@@ -95,7 +95,7 @@ class CustomerAddressController extends BaseController
         try {
             $newAddress = $this->getCustomerService()->updateAddress($address, $accessToken);
         } catch (ApiErrorException $e) {
-            return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
+            return $this->get('volo_frontend.service.api_error_translator')->createJsonErrorResponse($e);
         }
 
         return new JsonResponse($this->getSerializer()->normalize($newAddress));
@@ -119,7 +119,7 @@ class CustomerAddressController extends BaseController
         try {
             $this->getCustomerService()->deleteAddress($id, $accessToken);
         } catch (ApiErrorException $e) {
-            return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
+            return $this->get('volo_frontend.service.api_error_translator')->createJsonErrorResponse($e);
         }
 
         return new JsonResponse('', Response::HTTP_NO_CONTENT);
@@ -150,7 +150,7 @@ class CustomerAddressController extends BaseController
         try {
             $address = $this->getCustomerService()->create($address, $accessToken);
         } catch (ApiErrorException $e) {
-            return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
+            return $this->get('volo_frontend.service.api_error_translator')->createJsonErrorResponse($e);
         }
 
         $url = $this->generateUrl(

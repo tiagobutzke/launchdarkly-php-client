@@ -3,23 +3,63 @@
 namespace Volo\FrontendBundle\Service;
 
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
+use Foodpanda\ApiSdk\Exception\ApiException;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Translation\TranslatorInterface;
 use Volo\FrontendBundle\Http\JsonErrorResponse;
 
 class ApiErrorTranslator
 {
+    const UNKNOWN_PAYMENT_ERROR_MESSAGE = 'payment.unknown_error';
+
     /**
      * @var TranslatorInterface
      */
     protected $translator;
 
     /**
-     * @param TranslatorInterface $translator
+     * @var LoggerInterface
      */
-    public function __construct(TranslatorInterface $translator)
+    protected $logger;
+
+    /**
+     * @param TranslatorInterface $translator
+     * @param LoggerInterface $logger
+     */
+    public function __construct(TranslatorInterface $translator, LoggerInterface $logger)
     {
         $this->translator = $translator;
+        $this->logger = $logger;
+    }
+
+    /**
+     * @param ApiException $exception
+     *
+     * @return JsonErrorResponse
+     */
+    public function createJsonErrorResponse(ApiException $exception)
+    {
+        if ($exception instanceof ApiErrorException) {
+            $response =$this->createResponseforApiErrorException($exception);
+        }
+        else if ($exception instanceof ApiException) {
+            $response = $this->createResponseForUnknownError($exception);
+        } else {
+            $response = $this->createResponseForUnknownError($exception);
+        }
+
+        return $response;
+    }
+
+    /**
+     * @param \Exception $exception
+     *
+     * @return JsonErrorResponse
+     */
+    public function createUnknownErrorJsonResponse(\Exception $exception)
+    {
+        return $this->createResponseForUnknownError($exception);
     }
 
     /**
@@ -27,7 +67,7 @@ class ApiErrorTranslator
      *
      * @return JsonErrorResponse
      */
-    public function createTranslatedJsonResponse(ApiErrorException $exception)
+    private function createResponseForApiErrorException(ApiErrorException $exception)
     {
         $errorMessages = json_decode($exception->getJsonErrorMessage(), true);
         $status = Response::HTTP_BAD_REQUEST;
@@ -41,7 +81,14 @@ class ApiErrorTranslator
         }
 
         if (isset($errors['exception_type'])) {
-            $errors['message'] = $this->translator->trans($errors['exception_type']);
+            $exceptionType = $errors['exception_type'];
+            if (in_array($exceptionType, ['ApiCustomerAlreadyExistsException', 'ApiFacebookCustomerAlreadyExistsException'])) {
+                $exceptionType = 'ApiCustomerAlreadyExistsException';
+            }
+            $errors['message'] = $this->translator->trans($exceptionType);
+            if ($errors['message'] === $errors['exception_type']) {
+                $errors['message'] = $this->translator->trans(self::UNKNOWN_PAYMENT_ERROR_MESSAGE);
+            }
         }
 
         $data = [
@@ -51,7 +98,43 @@ class ApiErrorTranslator
             ],
         ];
 
-        
+        return new JsonErrorResponse($data, $status);
+    }
+
+    /**
+     * @param \Exception $exception
+     *
+     * @return JsonErrorResponse
+     */
+    private function createResponseForUnknownError(\Exception $exception)
+    {
+        $status = Response::HTTP_BAD_REQUEST;
+        $exceptionType = (new \ReflectionClass($exception))->getShortName();
+        $developerMessage = $exception->getMessage();
+
+        $message = $this->translator->trans($exceptionType);
+        if ($message === $exceptionType) {
+            $message = $this->translator->trans(self::UNKNOWN_PAYMENT_ERROR_MESSAGE);
+        }
+
+        $data = [
+            'error' => [
+                'code' => $status,
+                'errors' => [
+                    'exception_type' => get_class($exception),
+                    'message' => $message,
+                    'developer_message' => $developerMessage,
+                    'more_information' => null,
+                ],
+            ],
+        ];
+
+        $this->logger->error($developerMessage, array(
+            'exception' => $exception,
+            'stack_trace' => $exception->getTraceAsString(),
+            'json_response' => $data
+        ));
+
         return new JsonErrorResponse($data, $status);
     }
 }

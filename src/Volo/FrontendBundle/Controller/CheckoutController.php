@@ -8,6 +8,7 @@ use Foodpanda\ApiSdk\Entity\Order\GuestCustomer;
 use Foodpanda\ApiSdk\Entity\PaymentType\PaymentType;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
+use Foodpanda\ApiSdk\Exception\ApiException;
 use Foodpanda\ApiSdk\Exception\ValidationEntityException;
 use Foodpanda\ApiSdk\Provider\CustomerProvider;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -20,8 +21,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Volo\FrontendBundle\Exception\Payment\PaymentMethodException;
 use Volo\FrontendBundle\Service\CustomerLocationService;
-use Volo\FrontendBundle\Service\Exception\PhoneNumberValidationException;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -177,7 +178,7 @@ class CheckoutController extends BaseController
         try {
             $vendor = $this->get('volo_frontend.provider.vendor')->find($vendorCode);
         } catch (ApiErrorException $e) {
-            return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
+            return $this->get('volo_frontend.service.api_error_translator')->createJsonErrorResponse($e);
         }
         $cart = $this->getCart($request->getSession(), $vendor);
 
@@ -205,13 +206,8 @@ class CheckoutController extends BaseController
                 );
             } catch (ValidationEntityException $e) {
                 return new JsonResponse(['errors' => $e->getValidationMessages()], Response::HTTP_BAD_REQUEST);
-            } catch (ApiErrorException $e) {
-                $error = json_decode($e->getJsonErrorMessage(), true);
-                if (isset($error['data']['exception_type']) &&
-                    'ApiCustomerAlreadyExistsException' === $error['data']['exception_type']
-                ) {
-                    return new JsonResponse(['exists' => true], Response::HTTP_BAD_REQUEST);
-                }
+            } catch (ApiException $e) {
+                return $this->get('volo_frontend.service.api_error_translator')->createJsonErrorResponse($e);
             }
 
             $request->getSession()->set(
@@ -228,8 +224,10 @@ class CheckoutController extends BaseController
 
         try {
             $apiResult = $this->handleOrder($request->getSession(), $cart, $data, $guestCustomer);
+        } catch (PaymentMethodException $e) {
+            return $this->get('volo_frontend.service.api_error_translator')->createUnknownErrorJsonResponse($e);
         } catch (ApiErrorException $e) {
-            return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
+            return $this->get('volo_frontend.service.api_error_translator')->createJsonErrorResponse($e);
         }
 
         if (isset($data['isSubscribedNewsletter'])) {
@@ -386,7 +384,8 @@ class CheckoutController extends BaseController
                     ]
                 );
             }
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
     }
 
     /**

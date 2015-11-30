@@ -46,7 +46,7 @@ class CustomerController extends BaseController
                 throw $this->createNotFoundException(sprintf('Address not found: "%s"', $id));
             }
 
-            return $this->get('volo_frontend.service.api_error_translator')->createTranslatedJsonResponse($e);
+            return $this->get('volo_frontend.service.api_error_translator')->createJsonErrorResponse($e);
         } catch (PhoneNumberValidationException $e) {
             return new JsonResponse([
                 'error' => [

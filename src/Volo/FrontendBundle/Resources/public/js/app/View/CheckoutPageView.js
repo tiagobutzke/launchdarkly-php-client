@@ -48,7 +48,10 @@ var CheckoutPageView = Backbone.View.extend({
         });
 
         console.log('is guest user ', this.customerModel.isGuest);
-        this.model.save('is_guest_user', this.customerModel.isGuest);
+        this.model.save({
+            is_guest_user: this.customerModel.isGuest,
+            placing_order: false
+        });
 
         this.listenTo(this.model, 'change', this.renderPayButton, this);
 
@@ -219,14 +222,12 @@ var CheckoutPageView = Backbone.View.extend({
     },
 
     handlePaymentError: function (data) {
-        var exists = _.get(data, 'exists', {exists: false});
+        var defaultErrorMessage = this.$('.checkout__payment__finish-and-pay .form__error-message').data('error-message-unknown'),
+            errorMessage = _.get(data, 'error.errors.message', defaultErrorMessage);
 
-        if (_.isObject(data) && _.isString(_.get(data, 'error.errors.message'))) {
-            this.$('.checkout__payment__finish-and-pay .form__error-message').html(data.error.errors.message);
-            this.$('.checkout__payment__finish-and-pay .form__error-message').removeClass('hide');
-        } else {
-            console.log(data);
-        }
+        this.$('.checkout__payment__finish-and-pay .form__error-message').html(errorMessage);
+        this.$('.checkout__payment__finish-and-pay .form__error-message').removeClass('hide');
+
         this.spinner.stop();
     },
 
