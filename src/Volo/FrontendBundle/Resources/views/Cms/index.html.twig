@@ -2,6 +2,11 @@
 
 {% block title %}{{ element.metaTitle }} | {% trans %}brand{% endtrans %}{% endblock %}
 
+{% block head_meta_seo %}
+    <meta name="robots" content="{{ app.request.query | length > 0 ? 'noindex' : 'index' }}, follow">
+    <link rel="canonical" href="{{ app.request.uriForPath(app.request.pathInfo) }}" />
+{% endblock %}
+
 {% block body_class %}static-page{% endblock %}
 
 {% block content_wrapper_class %}menu-bg{% endblock content_wrapper_class %}
