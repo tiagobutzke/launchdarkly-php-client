@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.84.1
+ * INTVOLO-1629: Fixing issue in the performance of time-picker
+
 * 1.84.0
  * INTVOLO-1549: Index cms pages
 
