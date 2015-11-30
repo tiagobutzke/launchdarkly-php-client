@@ -233,7 +233,7 @@
   border-bottom: $base-border;
   line-height: normal;
   font-size: $font-size-1_4rem;
-  padding: 0 $space-sm;
+  padding: 0 $space-xs 0 $space-sm;
   float: left;
   width: 100%;
   display: table;
@@ -242,7 +242,6 @@
   @include respond-from("screen-md") {
     font-size: $font-size-1_4rem;
     min-height: 96px;
-    padding: 0 $space-xs 0 $space-lg;
   }
 }
 .menu__item:last-child {
@@ -289,6 +288,11 @@
   text-align: right;
   display: table-cell;
   vertical-align: middle;
+  white-space: nowrap;
+  padding-left: $space-sm;
+  @include respond-from("screen-sm") {
+    padding-left: 0;
+  }
 }
 
 .menu__item__price-button {
