@@ -89,7 +89,7 @@
   background-color: $color-bg-secondary;
   margin: 0;
   text-transform: uppercase;
-  border-bottom: $dropdown-border;
+  border-bottom: $dropdown-border-default;
   @include respond-from("screen-md") {
     padding: $grid-gutter-width;
     font-size: $font-size-1_6rem;
@@ -99,7 +99,7 @@
   }
 }
 .checkout__step--reduced .checkout__step__title {
-  border-bottom: $dropdown-border;
+  border-bottom: $dropdown-border-default;
 }
 .checkout__step:last-child .checkout__step__title {
   @include respond-from("screen-md") {
@@ -117,7 +117,7 @@
 // -------------------------- CHECKOUT ITEMS START --------------------------
 
 .checkout__step__items {
-  border-bottom: $dropdown-border;
+  border-bottom: $dropdown-border-default;
   @include make-xs-column(12, 0);
 }
 .checkout__contact-information .checkout__step__items {
@@ -127,7 +127,7 @@
   }
 }
 .checkout__contact-information.checkout__step--active .checkout__step__items {
-  border-bottom: $dropdown-border;
+  border-bottom: $dropdown-border-default;
   @include respond-from("screen-md") {
     border-bottom: 0;
   }
@@ -398,7 +398,7 @@ textarea.checkout__step__item-textarea {
 
 .checkout__delivery-information__form {
   padding: 0;
-  border-bottom: $dropdown-border;
+  border-bottom: $dropdown-border-default;
   @include respond-from("screen-md") {
     border-bottom: none;
   }
@@ -638,10 +638,10 @@ textarea.checkout__step__item-textarea {
 
 
 .checkout__payment__option-wrapper {
-  border-bottom: $dropdown-border;
+  border-bottom: $dropdown-border-default;
   padding: $space-sm;
   @include respond-from("screen-md") {
-    border: $dropdown-border;
+    border: $dropdown-border-default;
     padding: $space-sm 0;
     margin-bottom: $grid-gutter-width / 2;
     overflow: hidden;
@@ -811,14 +811,19 @@ textarea.checkout__step__item-textarea {
   padding: 0;
 }
 
+.checkout__add-voucher-link {
+  @include respond-from("screen-md") {
+    display: none;
+  }
+}
+
 .checkout__payment__voucher-form {
   display: none;
   padding-bottom: $grid-gutter-width;
   @extend .clearfix;
-}
-
-.checkout__payment__voucher-selected {
-  display: none;
+  @include respond-from("screen-md") {
+    display: block;
+  }
 }
 
 .checkout__payment__voucher-code {
@@ -892,7 +897,7 @@ textarea.checkout__step__item-textarea {
   color: $color-text-secondary;
   text-align: center;
   line-height: 1.4;
-  border-bottom: $dropdown-border;
+  border-bottom: $dropdown-border-default;
   @include respond-from("screen-md") {
     text-align: left;
     padding: $grid-gutter-width $grid-gutter-width $grid-gutter-width 0;

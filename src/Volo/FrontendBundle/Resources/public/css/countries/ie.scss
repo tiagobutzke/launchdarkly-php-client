@@ -1,6 +1,5 @@
 ﻿@import '../bootstrap/bootstrap';
-@import '../../dist/sass/sprite-common';
-@import '../variables';
+@import '../../dist/sass/countries/ie/sprite-common';
 
 
 // ----------------------- COUNTRY VARIABLES OVERRIDE START --------------------------
@@ -8,6 +7,7 @@
 // ----------------------- COUNTRY VARIABLES OVERRIDE END ----------------------------
 
 
+@import '../variables';
 @import "../shop";
 
 

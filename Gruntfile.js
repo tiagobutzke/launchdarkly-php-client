@@ -111,33 +111,38 @@ module.exports = function (grunt) {
         common: {},
         basePath: '/web/img/dist/'
     };
-    sprite.common.src = frontendAssetPath('/img/sprite/*.png');
-    sprite.common.srcFolder = frontendAssetPath('/img/sprite/');
-    sprite.common.hash = md5Files(sprite.common.src);
 
     var config = {};
 
     config.sprite = {};
 
-    config.sprite = {
-        spritesheet: {
-            src: sprite.common.src,
-            dest: frontendWebPath('/img/dist/sprite-' + sprite.common.hash + '.png'),
-            destCss: frontendAssetPath('/dist/sass/sprite-common.scss'),
-            imgPath: '/img/dist/sprite-' + sprite.common.hash + '.png',
-            algorithm: 'top-down'
-        },
-        retina: {
-            src: sprite.common.src,
-            dest: frontendWebPath('/img/dist/sprite-' + sprite.common.hash + '.png'),
-            retinaSrcFilter:  sprite.common.srcFolder + ['*-2x.png'],
-            retinaDest: frontendWebPath('/img/dist/sprite-' + sprite.common.hash + '-2x.png'),
-            destCss: frontendAssetPath('/dist/sass/sprite-common.scss'),
-            imgPath: '/img/dist/sprite-' + sprite.common.hash + '.png',
-            retinaImgPath: '/img/dist/sprite-' + sprite.common.hash + '-2x.png',
-            algorithm: 'top-down'
+    _.each(allCountriesSass, function(country) {
+        var countrySource = country;
+        if (!grunt.file.exists(frontendAssetPath('/img/countries/' + country))) {
+            countrySource = 'default';
         }
-    };
+
+        sprite.common.src = frontendAssetPath('/img/countries/' + countrySource + '/sprite/*.png');
+        sprite.common.srcFolder = frontendAssetPath('/img/countries/' + countrySource + '/sprite/');
+        sprite.common.hash = md5Files(sprite.common.src);
+        config.sprite['spritesheet_' + country] = {
+            src: sprite.common.src,
+            dest: frontendWebPath('/img/dist/countries/' + country + '/sprite-' + sprite.common.hash + '.png'),
+            destCss: frontendAssetPath('/dist/sass/countries/' + country + '/sprite-common.scss'),
+            imgPath: '/img/dist/countries/' + country + '/sprite-' + sprite.common.hash + '.png',
+            algorithm: 'top-down'
+        };
+        config.sprite['retina_' + country] = {
+            src: sprite.common.src,
+            dest: frontendWebPath('/img/dist/countries/' + country + '/sprite-' + sprite.common.hash + '.png'),
+            retinaSrcFilter:  sprite.common.srcFolder + ['*-2x.png'],
+            retinaDest: frontendWebPath('/img/dist/countries/' + country + '/sprite-' + sprite.common.hash + '-2x.png'),
+            destCss: frontendAssetPath('/dist/sass/countries/' + country + '/sprite-common.scss'),
+            imgPath: '/img/dist/countries/' + country + '/sprite-' + sprite.common.hash + '.png',
+            retinaImgPath: '/img/dist/countries/' + country + '/sprite-' + sprite.common.hash + '-2x.png',
+            algorithm: 'top-down'
+        };
+    });
 
     config.sass = {
         options: {
@@ -223,9 +228,7 @@ module.exports = function (grunt) {
             livereload: true
         },
         sprite: {
-            files: [
-                '<%= sprite.spritesheet.src %>'
-            ],
+            files: frontendAssetPath('/img/countries/*/sprite/*.png'),
             tasks: ['sprite']
         },
         css: {

@@ -155,7 +155,7 @@
   position: relative;
   cursor: pointer;
   height: 40px;
-  border: $input-border;
+  border: $input-border-default;
   border-radius: $border-radius-default;
   float: left;
   @include transition(width .4s ease);
