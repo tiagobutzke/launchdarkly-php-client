@@ -12,6 +12,7 @@ parameters:
     trackjs_application: ''
     monolog.handler.newrelic.class: Volo\FrontendBundle\EventListener\NewRelicHandler
     monolog.handler.slack.class: Volo\FrontendBundle\EventListener\SlackHandler
+    app_version: asset_version_placeholder
     localeSettings:
         detectBrowserLanguage: %detect_browser_language_enabled%
         locales: %supported_locales%
@@ -31,7 +32,7 @@ framework:
     templating:
         engines: ['twig']
     assets:
-        version: asset_version_placeholder
+        version: %app_version%
         packages:
             cdn_s3:
                 version: '3'
@@ -66,7 +67,8 @@ twig:
         locales: "%supported_locales%"
         address_config: '%address_config%'
         cart_vat_enabled: '%cart_vat_enabled%'
-        assets_version: asset_version_placeholder
+        assets_version: %app_version%
+        app_version: %app_version%
         checkout_invoice_message: '%show_checkout_invoice_message%'
 
 monolog:

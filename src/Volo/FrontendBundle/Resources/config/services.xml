@@ -43,6 +43,8 @@
         <parameter key="volo_frontend.security.ajax_authentication_success_handler.class">Volo\FrontendBundle\Security\AjaxAuthenticationSuccessListener</parameter>
         <parameter key="volo_frontend.security.ajax_authentication_failure_handler.class">Volo\FrontendBundle\Security\AjaxAuthenticationFailureListener</parameter>
         <parameter key="volo_frontend.event_listener.locale_listener.class">Volo\FrontendBundle\EventListener\LocaleListener</parameter>
+        <parameter key="volo_frontend.event_listener.app_version_cookie_factory.class">Volo\FrontendBundle\EventListener\AppVersionCookieFactory</parameter>
+        <parameter key="volo_frontend.event_listener.app_listener.class">Volo\FrontendBundle\EventListener\AppListener</parameter>
         <parameter key="volo_frontend.provider.locale_config_provider.class">Volo\FrontendBundle\Provider\LocaleConfigProvider</parameter>
         <parameter key="volo_frontend.provider.address_config_provider.class">Volo\FrontendBundle\Provider\AddressConfigProvider</parameter>
         <parameter key="volo_frontend.service.event_service.class">Volo\FrontendBundle\Service\EventService</parameter>
@@ -80,6 +82,21 @@
             <argument type="service" id="router.default" />
 
             <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
+        </service>
+
+        <service id="volo_frontend.event_listener.app_listener" class="%volo_frontend.event_listener.app_listener.class%">
+            <argument type="service" id="volo_frontend.event_listener.app_version_cookie" />
+            <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" />
+        </service>
+
+        <service id="volo_frontend.event_listener.app_version_cookie_factory" class="%volo_frontend.event_listener.app_version_cookie_factory.class%"/>
+
+        <service id="volo_frontend.event_listener.app_version_cookie"
+                 class="Symfony\Component\HttpFoundation\Cookie"
+                 factory-service="volo_frontend.event_listener.app_version_cookie_factory"
+                 factory-method="get"
+        >
+            <argument>%app_version%</argument>
         </service>
 
         <service id="volo_frontend.event_listener.default_time_zone_listener"
