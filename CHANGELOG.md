@@ -2,7 +2,7 @@ CHANGELOG
 =========
 
 * 1.87.0
- * Intvolo 1530 allergy information slip
+ * INTVOLO-1530 allergy information slip
 
 * 1.86.0
  * INTVOLO-1548: NOINDEX on Test Pages
