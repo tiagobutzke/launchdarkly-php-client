@@ -46,9 +46,17 @@ class OrderController extends BaseController
             $viewName = 'VoloFrontendBundle:Order:tracking_steps.html.twig';
         }
 
+        $deliveredOrders = $this->get('volo_frontend.service.order_manager')
+            ->retrieveAllDeliveredUserOrders($accessToken)
+            ->count();
+
+        // Here we add the current order to the old successful orders (i.e. this one + all the old)
+        $totalOrders = 1 + $deliveredOrders;
+
         $content = $this->renderView($viewName, [
             'order' => $orderPayment,
-            'status' => $status
+            'status' => $status,
+            'total_orders' => $totalOrders,
         ]);
 
         return new Response($content);
@@ -69,8 +77,7 @@ class OrderController extends BaseController
         array $status,
         OrderProvider $orderProvider,
         AccessToken $accessToken
-    )
-    {
+    ) {
         if (in_array($session->get(static::SESSION_ORDER_PAYMENT_CODE), ['cod', 'invoice'])) {
             $orderPayment = new OrderPayment();
             $orderPayment->setStatus('pending');
