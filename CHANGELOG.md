@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.85.0
+ * INTVOLO-1645 - CTO menu page for no confirmation surgarge config
+ * INTVOLO-1713 increase limit for fusy search limit
+
 * 1.84.1
  * INTVOLO-1629: Fixing issue in the performance of time-picker
 
