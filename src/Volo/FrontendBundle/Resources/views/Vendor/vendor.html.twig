@@ -125,50 +125,55 @@
                                 </ul>
                             </nav>
                         </div>
-                        <div class="menu__items">
-                            {% for menuCategory in vendor.menus.first.menuCategories %}
-                                <h3 class="menu__items__title"
-                                    id="menu__category-id-{{ menuCategory.id }}">{{ menuCategory.name }}</h3>
-                                {% for product in menuCategory.products %}
-                                    {# ------ Please toggle "menu__item--selected" class on click to style selected item  #}
-                                    <div class="menu__item" data-object='{{ serialize(product) }}'
-                                         data-variation-id='{{ product.productVariations.first.id }}'>
-                                        <div class="menu__item__wrapper">
-                                            <div class="menu__item__name">
-                                                {{ product.name }}
-                                                {% if product.productVariations.first.name %}
-                                                    <sup class="menu__item__product-variation"> {{ product.productVariations.first.name }}</sup>
-                                                {% endif %}
+
+                        <section class="menu__items-wrapper">
+                            <div class="menu__items">
+                                {% for menuCategory in vendor.menus.first.menuCategories %}
+                                    <h3 class="menu__items__title"
+                                        id="menu__category-id-{{ menuCategory.id }}">{{ menuCategory.name }}</h3>
+                                    {% for product in menuCategory.products %}
+                                        {# ------ Please toggle "menu__item--selected" class on click to style selected item  #}
+                                        <div class="menu__item" data-object='{{ serialize(product) }}'
+                                             data-variation-id='{{ product.productVariations.first.id }}'>
+                                            <div class="menu__item__wrapper">
+                                                <div class="menu__item__name">
+                                                    {{ product.name }}
+                                                    {% if product.productVariations.first.name %}
+                                                        <sup class="menu__item__product-variation"> {{ product.productVariations.first.name }}</sup>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="menu__item__description">
+                                                    {{ product.description }}
+                                                </div>
                                             </div>
-                                            <div class="menu__item__description">
-                                                {{ product.description }}
+                                            <div class="menu__item__price">
+                                                {{ product.productVariations.first.price|price }}
+                                                <button class="menu__item__price-button">
+                                                    <i class="menu__item__price-button-icon icon-plus"></i>
+                                                </button>
                                             </div>
                                         </div>
-                                        <div class="menu__item__price">
-                                            {{ product.productVariations.first.price|price }}
-                                            <button class="menu__item__price-button">
-                                                <i class="menu__item__price-button-icon icon-plus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
+                                        <div class="clearfix"></div>
+                                    {% endfor %}
                                 {% endfor %}
-                            {% endfor %}
-                        </div>
-                        <div class="menu__icon-legend">
-                            <i class="menu__icon-legend__info-icon icon-info-circled"></i>
-                            <a class="menu__icon-legend__link">{% trans %}allergy.headline{% endtrans %}</a>
-                        </div>
-                        {% set specialNote = cms('vendor-' ~ vendor.code ~ '-special-note') %}
-                        {% if specialNote is not empty %}
-                            <div class="menu__special-note"><span>{{ specialNote }}</span></div>
-                        {% endif %}
-                        {% if country_code != 'se' %}
-                            <div class="menu__legal">
+                            </div>
+                            <div class="menu__footer">
+                                <div class="menu__icon-legend">
+                                    <i class="menu__icon-legend__info-icon icon-info-circled"></i>
+                                    <a class="menu__icon-legend__link">{% trans %}allergy.headline{% endtrans %}</a>
+                                </div>
+                                {% set specialNote = cms('vendor-' ~ vendor.code ~ '-special-note') %}
+                                {% if specialNote is not empty %}
+                                    <div class="menu__special-note"><span>{{ specialNote }}</span></div>
+                                {% endif %}
+                                {% if country_code != 'se' %}
+                                    <div class="menu__legal">
                                 <span class="menu__legal__vendor-name">{% trans with {'%legal_name%': vendor.addressLine2 } %}
                                     vendor.sold_by %legal_name%{% endtrans %}</span>
+                                    </div>
+                                {% endif %}
                             </div>
-                        {% endif %}
+                        </section>
                     </div>
                 </div>
                 {% if vendor.isIsActive() and not isVendorFloodFeatureClosed(vendor) %}

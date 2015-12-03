@@ -201,9 +201,10 @@
    font-size: $font-size-1_4rem;
  }
 
-.menu__items {
+.menu__items-wrapper {
   @include make-md-column(12);
   @include make-lg-column(9);
+  padding-bottom: $space-md;
 }
 
 
@@ -310,11 +311,15 @@
   color: $color-text-highlight;
 }
 
+.menu__footer {
+  margin-top: $space-lg;
+  padding: 0 $space-sm;
+}
+
 .menu__icon-legend {
   text-align:  center;
   font-size: $font-size-1_4rem;
   color: $color-text-light;
-  padding-top: $space-sm * 3;
   padding-bottom: $space-sm;
   line-height: 1.83;
 }
@@ -326,20 +331,17 @@
 
 .menu__special-note {
   @extend .menu__legal;
-  padding: 0 $space-sm $space-sm;
 }
 
 .menu__legal {
-  text-align:  center;
   font-size: $font-size-1_4rem;
   color: $color-text-light;
-  padding: 0 $space-sm $space-lg;
   line-height: 1.83;
+  text-align: center;
 }
 
 .menu__legal__vendor-name {
   display: inline-block;
-  margin-right: 14px;
 }
 
 .menu__bottom-info {
