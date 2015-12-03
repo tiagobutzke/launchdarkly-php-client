@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.88.0
+ * INTVOLO-1487: Track User's Total Orders History
+
 * 1.87.0
  * INTVOLO-1530 allergy information slip
 
