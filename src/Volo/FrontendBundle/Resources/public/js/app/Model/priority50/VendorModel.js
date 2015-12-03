@@ -31,7 +31,8 @@ VOLO.VendorCollection = Backbone.Collection.extend({
             keys: ['name', 'description', 'cuisines.name', 'food_characteristics.name'],
             id: 'id',
             threshold: 0.25,
-            distance: 1000
+            distance: 1000,
+            maxPatternLength: 64
         });
 
     },
