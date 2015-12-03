@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.86.0
+ * INTVOLO-1548: NOINDEX on Test Pages
+ * INTVOLO-934-Surcharge-Pop-Behavior
+
 * 1.85.0
  * INTVOLO-1645 - CTO menu page for no confirmation surgarge config
  * INTVOLO-1713 increase limit for fusy search limit
