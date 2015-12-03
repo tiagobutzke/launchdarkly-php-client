@@ -374,18 +374,17 @@ var CartView = Backbone.View.extend({
 
     renderCheckoutButton: function() {
         var cachedVendorCart = this.model.getCart(this.vendor.id),
-            cacheCheckoutButtons = $('<div/>').html(
-            this.templateCheckoutButton(cachedVendorCart.attributes)
-            ),
+            cacheCheckoutButtons = $('<div/>').html(this.templateCheckoutButton(cachedVendorCart.attributes)),
             errorMessage = cacheCheckoutButtons.find('.desktop-cart__error__below-minimum-amount');
 
-        if (this.isMinOrderSetToDenyBellowMinimum() && cachedVendorCart.isSubtotalGreaterEqualMinOrderAmount() && cachedVendorCart.isSubtotalGreaterZero()) {
+        if (this._shouldDisplayNormalCheckoutButton(cachedVendorCart)) {
+            console.log('cart: normal checkout button');
             cacheCheckoutButtons.find('.btn-checkout.btn-to-checkout').removeClass('hide');
-        } else if (this.isMinOrderSetToAlwaysAsk() && cachedVendorCart.isSubtotalLessMinOrderAmount() && cachedVendorCart.isSubtotalGreaterZero()) {
+        } else if (this._shouldDisplayAlwaysAskCheckoutButton(cachedVendorCart)) {
+            console.log('cart: always ask checkout button');
             cacheCheckoutButtons.find('.btn-checkout.btn-confirm-below-minimum-amount').removeClass('hide');
-        } else if (this.isMinOrderSetToAlwaysAsk() && cachedVendorCart.isSubtotalGreaterEqualMinOrderAmount() && cachedVendorCart.isSubtotalGreaterZero()) {
-            cacheCheckoutButtons.find('.btn-checkout.btn-to-checkout').removeClass('hide');
         } else {
+            console.log('cart: below minimum checkout button');
             cacheCheckoutButtons.find('.btn-checkout.btn-below-minimum-amount').removeClass('hide');
         }
 
@@ -394,18 +393,38 @@ var CartView = Backbone.View.extend({
         );
     },
 
+    _shouldDisplayNormalCheckoutButton: function(vendorCart) {
+        var subtotalGreaterEqual = vendorCart.isSubtotalGreaterEqualMinOrderAmount(),
+            greaterThanZero = vendorCart.isSubtotalGreaterZero(),
+            noConfirmation = this._isNoConfirmationBelowMinimum();
+
+        return (subtotalGreaterEqual || noConfirmation) && greaterThanZero;
+    },
+
+    _shouldDisplayAlwaysAskCheckoutButton: function(vendorCart) {
+        var alwaysAsk = this._isMinOrderSetToAlwaysAsk(),
+            lessThanMin = vendorCart.isSubtotalLessMinOrderAmount(),
+            greaterThanZero = vendorCart.isSubtotalGreaterZero();
+
+        return alwaysAsk && lessThanMin && greaterThanZero;
+    },
+
     renderSubTotal: function () {
-        var cachedVendorCart = this.model.getCart(this.vendor.id);
+        var cachedVendorCart = this.model.getCart(this.vendor.id),
+            denyBelowMinimum = this._isMinOrderSetToDenyBelowMinimum(),
+            alwaysAsk = this._isMinOrderSetToAlwaysAsk(),
+            noConfirmationBelowMin = this._isNoConfirmationBelowMinimum(),
+            lessThanMin = cachedVendorCart.isSubtotalLessMinOrderAmount();
 
         this.$('.desktop-cart__order__subtotal-container').html(
             this.templateSubTotal(cachedVendorCart.attributes)
         );
 
-        if (this.isMinOrderSetToDenyBellowMinimum() && cachedVendorCart.isSubtotalLessMinOrderAmount()) {
+        if (denyBelowMinimum && lessThanMin) {
             this.$('.desktop-cart__order__min-order').removeClass('hide');
         }
 
-        if (this.isMinOrderSetToAlwaysAsk() && cachedVendorCart.isSubtotalLessMinOrderAmount()) {
+        if ((alwaysAsk || noConfirmationBelowMin) && lessThanMin) {
             if (cachedVendorCart.isSubtotalIsZero()) {
                 this.$('.desktop-cart__order__min-order').removeClass('hide');
             } else {
@@ -416,12 +435,16 @@ var CartView = Backbone.View.extend({
         return this;
     },
 
-    isMinOrderSetToAlwaysAsk: function() {
+    _isMinOrderSetToAlwaysAsk: function() {
         return 'always_ask' === this.minimumOrderValueSetting;
     },
 
-    isMinOrderSetToDenyBellowMinimum: function() {
+    _isMinOrderSetToDenyBelowMinimum: function() {
         return 'deny_bellow_minimum' === this.minimumOrderValueSetting;
+    },
+
+    _isNoConfirmationBelowMinimum: function() {
+        return 'no_confirmation' === this.minimumOrderValueSetting;
     },
 
     renderProducts: function () {
