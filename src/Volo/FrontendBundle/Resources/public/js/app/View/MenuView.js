@@ -94,9 +94,21 @@ var MenuView = Backbone.View.extend({
     },
 
     _navigateToAnchor: function(event) {
+        var offset,
+            targetTop;
+
+        if (event.target) {
+            offset = this.$($.attr(event.target, 'href')).offset();
+            targetTop = _.get(offset, 'top');
+        }
+
+        if (!targetTop) {
+            return false;
+        }
+
         $('html, body').animate({
             scrollTop:
-                this.$($.attr(event.target, 'href')).offset().top +
+                targetTop +
                 this.navigateToAnchorBuffer -
                 this.domObjects.$header.outerHeight()
         }, VOLO.configuration.anchorScrollSpeed);
