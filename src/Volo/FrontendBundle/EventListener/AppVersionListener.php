@@ -5,7 +5,7 @@ namespace Volo\FrontendBundle\EventListener;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpFoundation\Cookie;
 
-class AppListener
+class AppVersionListener
 {
     /**
      * @var Cookie
