@@ -225,6 +225,19 @@ A key of a translation is set in WTI's master file (which is English).
 You can edit the master in [WTI web site](https://webtranslateit.com/).
 The translations will be downloaded to ```Volo/FrontendBundle/Resources/translations```.
 
+Frontend tests
+---
+To run tests in Phantomjs:
+```shell
+$ grunt test
+```
+
+To run tests in browser, generate test runner and open it in browser
+```shell
+$ grunt jasmine:src:build
+$ open _specRunner.html
+```
+
 Useful links
 ---
 * [https://github.com/foodpanda/vagrant-dev](https://github.com/foodpanda/vagrant-dev) — setting up the vagrant machine
