@@ -502,7 +502,7 @@
   overflow: hidden;
   margin-bottom: $space-lg;
   position: relative;
-  @include transition(all 0.1s ease-out);
+  @include transition(top 0.1s ease-out);
   @include respond-from("screen-sm") {
     padding-bottom: 12px;
     border-radius: $border-radius-default;
