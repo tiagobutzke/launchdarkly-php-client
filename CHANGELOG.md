@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.89.0
+ * INTVOLO-1545 registration js error on empty submit
+ * INTVOLO-1732 fixed canUpdateCoordinates method
+
 * 1.88.0
  * INTVOLO-1487: Track User's Total Orders History
 
