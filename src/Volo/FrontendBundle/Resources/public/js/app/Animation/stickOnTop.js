@@ -26,11 +26,11 @@ var StickOnTop  = (function() {
     }
 
     // reset state, recalculate the starting values and save a new target
-    StickOnTop.prototype.init = function(newTarget) {
+    StickOnTop.prototype.init = function($newTarget) {
         if (this.isActiveGetter && !this.isActiveGetter()) {
             return;
         }
-        this.domObjects.$target = newTarget;
+        this.domObjects.$target = $newTarget;
         this.updateCoordinates();
 
         // rendering new position of sticking element on scroll, redoing the init on resize
@@ -41,12 +41,11 @@ var StickOnTop  = (function() {
     };
 
     StickOnTop.prototype._canUpdateCoordinates = function() {
-        return (
-            this.isActiveGetter &&
-            this.isActiveGetter() &&
-            this.stickOnTopValueGetter &&
-            this.startingPointGetter
-        );
+        if (this.isActiveGetter && !this.isActiveGetter()) {
+            return false;
+        }
+
+        return _.isFunction(this.stickOnTopValueGetter) && _.isFunction(this.startingPointGetter);
     };
 
     // reset state, recalculate the starting values and save a new target
