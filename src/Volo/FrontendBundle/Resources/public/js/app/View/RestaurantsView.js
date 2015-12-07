@@ -9,7 +9,7 @@ VOLO.RestaurantsView = Backbone.View.extend({
         _.bindAll(this);
 
         this.subViews = [];
-        this._eventTriggerDelay = options.triggerDelay || 300;
+        this._eventTriggerDelay = _.get(options, 'triggerDelay', 300);
         this._lastTimeOut = null;
         this._displayedRestaurants = [];
         this.$window = $(window);
@@ -19,6 +19,14 @@ VOLO.RestaurantsView = Backbone.View.extend({
         this.listenTo(this.collection, 'reset', this.render);
 
         _.each(this.$('.restaurants__list a > div'), this._initVendorModel);
+    },
+
+    _triggerRestaurantsLoaded: function(vendors, restaurantsCount) {
+        this.trigger('restaurants-view:gtm-restaurants-loaded', {
+            totalRestaurants: _.get(restaurantsCount, 'allVendors'),
+            openRestaurants: _.get(restaurantsCount, 'openVendors'),
+            allRestaurants: _.invoke(vendors, 'get', 'code')
+        });
     },
 
     _initVendorModel: function(item) {
@@ -74,11 +82,15 @@ VOLO.RestaurantsView = Backbone.View.extend({
     },
 
     onGtmServiceCreated: function() {
-        var newRestaurants = this._checkNewDisplayedRestaurants();
+        var newRestaurants = this._checkNewDisplayedRestaurants(),
+            vendors = _.map(this.subViews, 'model'),
+            restaurantsCount = this.$el.data('vendors-count');
 
         if (newRestaurants.length) {
             this.trigger('restaurantsView:restaurantsDisplayedOnLoad', _.map(newRestaurants, this._fetchDataFromNode));
         }
+
+        this._triggerRestaurantsLoaded(vendors, restaurantsCount);
     },
 
     _onScrollResize: function() {

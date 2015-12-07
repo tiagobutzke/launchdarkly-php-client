@@ -65,6 +65,12 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
                 'restaurantsView:restaurantsDisplayedOnScroll',
                 this.fireRestaurantsDisplayedOnScroll
             );
+
+            this.listenTo(
+                this.restaurantsView,
+                'restaurants-view:gtm-restaurants-loaded',
+                this._push
+            );
         }
 
         if (_.isObject(this.homeSearchView)) {
