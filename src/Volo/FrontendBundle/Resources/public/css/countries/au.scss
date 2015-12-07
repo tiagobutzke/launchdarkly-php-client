@@ -1,34 +1,27 @@
 ﻿@import '../bootstrap/bootstrap';
-@import '../../dist/sass/sprite-common';
-@import '../variables';
-
+@import '../../dist/sass/countries/au/sprite-common';
 
 
 // ----------------------- COUNTRY VARIABLES OVERRIDE START --------------------------
 
-$color-text-highlight: #CE3F44;
-$color-text-link: #CE3F44;
-$color-text-link-hover: #B0373B;
-$color-bg-text-selection: #CE3F44;
-$cta-color-bg-primary: #CE3F44;
-$cta-color-bg-primary-hover: #B0373B;
-$cta-color-bg-secondary-hover: #B0373B;
-$cta-color-text-secondary: #CE3F44;
-$cta-secondary-border: 1px solid #CE3F44;
-$tooltip-bg: #CE3F44;
-$tooltip-arrow-color: #CE3F44;
+$base-cta-color: #da1a32;
+$base-cta-hover-color: #c2172e;
+
 $cta-pressed-box-shadow: #742525;
 $color-bg-secondary: #f2eee5;
-$numbers-image-url: '#{$imagepath}/numbers/numbers-sprite-au.jpg';
 $color-icons-separator: #b9a36e;
+
+$numbers-image-url: '../../img/numbers/numbers-sprite-au.jpg';
 
 // ----------------------- COUNTRY VARIABLES OVERRIDE END ----------------------------
 
 
+@import '../variables';
 @import "../shop";
 
 
 // ----------------------- COUNTRY STYLES OVERRIDE START --------------------------
+
 
 .icon-logo {
   &:before {

@@ -116,10 +116,10 @@ a.button {
   text-align: $input-text-align;
   padding-left: $input-padding-left;
   padding-right: $input-padding-right;
-  border-radius: $input-border-radius;
+  border-radius: $input-border-radius-default;
   height: $input-height;
   line-height: inherit;
-  border: $input-border;
+  border: $input-border-default;
   color: $input-color-text;
   box-shadow: none;
   -webkit-box-shadow: none;
@@ -204,8 +204,8 @@ select {
   font-size: $font-size-1_4rem;
   text-align: left;
   background-color: $dropdown-color-bg-1;
-  border: $dropdown-border;
-  border-radius: $input-border-radius;
+  border: $dropdown-border-default;
+  border-radius: $input-border-radius-default;
   color: $dropdown-color-text;
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -213,7 +213,7 @@ select {
   width: 100%;
 }
 .dropdown-menu li {
-  border-bottom: $input-border;
+  border-bottom: $input-border-default;
 }
 .dropdown-menu li.selected {
   background-color: $color-bg-secondary;
@@ -244,10 +244,10 @@ select {
   height: $input-height;
   line-height: $input-height;
   background-color: $dropdown-color-bg-2;
-  border: $dropdown-border;
+  border: $dropdown-border-default;
   padding-left: $space-sm;
   padding-right: $space-xs;
-  border-radius: $input-border-radius;
+  border-radius: $input-border-radius-default;
   color: $dropdown-color-text;
   font-size: $font-size-1_4rem;
 

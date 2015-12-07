@@ -27,7 +27,7 @@
     left: 50%;
     margin-left: -$tooltip-arrow-width;
     border-width: 0 $tooltip-arrow-width $tooltip-arrow-width;
-    border-bottom-color: $tooltip-arrow-color;
+    border-bottom-color: $tooltip-arrow-color-default;
   }
 
   &.top .tooltip-arrow {
@@ -35,7 +35,7 @@
     left: 50%;
     margin-left: -$tooltip-arrow-width;
     border-width: $tooltip-arrow-width $tooltip-arrow-width 0;
-    border-top-color: $tooltip-arrow-color;
+    border-top-color: $tooltip-arrow-color-default;
   }
 }
 
@@ -64,7 +64,7 @@
   color: $tooltip-color;
   text-align: center;
   text-decoration: none;
-  background-color: $tooltip-bg;
+  background-color: $tooltip-bg-default;
 }
 
 // Arrows
