@@ -25,14 +25,6 @@ VOLO.MapModalView = Backbone.View.extend({
     },
 
     _onAutocompleteKeyDown: function(e) {
-        if(!this.autocomplete) {
-            this.autocomplete = new VOLO.Geocoding.Autocomplete();
-            this.autocomplete.init(this.$('.map-modal__autocomplete__input'), this.appConfig);
-
-            this.listenTo(this.autocomplete, 'autocomplete-search:place-found', this._placeFound);
-            this.listenTo(this.autocomplete, 'geocoder-search:place-found', this._placeFound);
-        }
-
         this._hideInputError();
         if (e.keyCode === 9) { // tab
             this._updatePositionFromInput();
@@ -88,15 +80,13 @@ VOLO.MapModalView = Backbone.View.extend({
     },
 
     _submit: function() {
-        this._initAutocomplete();
         this._updatePositionFromInput().then(function() {
             if (!this.model.validationError) {
                 this.trigger('map-dialog:address-submit', this.model.toJSON());
-                this.unbind();
             } else {
                 this._displayErrorMessage(this.model, this.model.validationError);
             }
-        }.bind(this), this._showInputError);
+        }.bind(this), this.showInputError);
 
         return false;
     },
@@ -109,7 +99,7 @@ VOLO.MapModalView = Backbone.View.extend({
             event: 'errorMap',
             errorCode: errorMessage
         });
-        this._showInputError(errorMessage);
+        this.showInputError(errorMessage);
 
         if (error === 'building' && _.get(this.appConfig, 'address_config.update_map_input')) {
             this._updateTitle(error);
@@ -136,8 +126,8 @@ VOLO.MapModalView = Backbone.View.extend({
         $input.val(inputVal);
     },
 
-    _showInputError: function(text) {
-        this.$('.map-modal__error-message').text(text).removeClass('hide');
+    showInputError: function(text) {
+        this.$('.map-modal__error-message').html(text).removeClass('hide');
     },
 
     _hideInputError: function() {
@@ -191,6 +181,10 @@ VOLO.MapModalView = Backbone.View.extend({
         }
     },
 
+    isVisible: function() {
+        return this.$('.map-modal').is(':visible');
+    },
+
     hide: function() {
         this.$('.map-modal').modal('hide');
     },
@@ -211,6 +205,8 @@ VOLO.MapModalView = Backbone.View.extend({
         this._updateTitle('default');
         this.map.resize(); //because of maps bug
         this.map.setCenter(address.latitude, address.longitude);
+        this._initAutocomplete();
+
         this.listenTo(this.map, 'map:center-changed', _.debounce(this._centerChanged, 400, {leading: false}));
         this.listenTo(this.map, 'map:drag-start', this._onMapDragStart);
 
@@ -246,7 +242,10 @@ VOLO.MapModalView = Backbone.View.extend({
         this._hideInputError();
 
         this._getCenterAddress(center).then(function(address) {
-            this.$('.map-modal__autocomplete__input').val(address.formattedAddress);
+            var $input = this.$('.map-modal__autocomplete__input');
+            $input.val(address.formattedAddress);
+            $input.focus().blur(); //update google autocomplete :(
+
             address.latitude = center.lat();
             address.longitude = center.lng();
 
