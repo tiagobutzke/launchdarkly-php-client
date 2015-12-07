@@ -35,7 +35,7 @@
   padding-left: $space-percent-lg;
   padding-right: $space-percent-lg;
   text-align: center;
-  font-family: $satisfy-font-family;
+  font-family: $special-header-font-family;
   color: $color-text-highlight;
   @include respond-from('screen-sm') {
     font-size: $font-size-2_4rem;
