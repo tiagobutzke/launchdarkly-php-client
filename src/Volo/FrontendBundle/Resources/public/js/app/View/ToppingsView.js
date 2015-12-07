@@ -168,8 +168,8 @@ var ToppingSpecialInstructionsView = Backbone.View.extend({
 
         this.$('.topping__options').toggleClass('hide');
         areInstructionsVisible = this.$('.topping__options').hasClass('hide');
-        this.$('.topping__header__arrow').toggleClass('icon-up-open-big', areInstructionsVisible);
-        this.$('.topping__header__arrow').toggleClass('icon-down-open-big', !areInstructionsVisible);
+        this.$('.topping__header__arrow').toggleClass('icon-down-open-big', areInstructionsVisible);
+        this.$('.topping__header__arrow').toggleClass('icon-up-open-big', !areInstructionsVisible);
 
         hasText = this.model.get('special_instructions') !== '';
         this.$('.topping__comment__help-text').toggleClass('hide', hasText);
