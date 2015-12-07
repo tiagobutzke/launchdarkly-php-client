@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.90.0
+ * INTVOLO-475 AU / 2 more suppertime rebranding issues
+
 * 1.89.0
  * INTVOLO-1545 registration js error on empty submit
  * INTVOLO-1732 fixed canUpdateCoordinates method
