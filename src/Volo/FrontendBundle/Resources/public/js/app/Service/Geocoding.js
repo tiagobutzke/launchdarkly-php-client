@@ -167,6 +167,11 @@ _.extend(GeocodingService.prototype, Backbone.Events, {
                     $(".pac-container .pac-item:first").addClass("pac-selected");
                     $(".pac-container").css("display", "none");
 
+                    if (results.length === 1 && results[0].types.indexOf('country') !== -1) {
+                        deferred.reject();
+                    }
+
+
                     results[0].place = {
                         geometry: results[0].geometry
                     };
