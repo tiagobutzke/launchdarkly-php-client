@@ -26,6 +26,7 @@ var LocationModel = Backbone.Model.extend({
     }
 });
 
+VOLO = VOLO || {};
 VOLO.FullAddressLocationModel = Backbone.Model.extend({
     defaults: {
         location_type: "polygon",

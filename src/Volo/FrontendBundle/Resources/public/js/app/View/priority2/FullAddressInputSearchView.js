@@ -5,6 +5,7 @@ VOLO.FullAddressInputSearchView = Backbone.View.extend({
         this.autocomplete = options.autocomplete || new VOLO.Geocoding.Autocomplete();
         this.appConfig = options.appConfig;
         this.tooltipPlacement = options.tooltipPlacement;
+        this.places = options.places || new VOLO.Geocoding.Places(options.appConfig, document.createElement('div'));
         this.deserializer =  options.deserializer || new VOLO.Geocoding.PlaceDeserializer();
         this.geocoder = options.geocoder || new VOLO.Geocoding.Geocoder(this.appConfig);
 
@@ -80,20 +81,15 @@ VOLO.FullAddressInputSearchView = Backbone.View.extend({
     },
 
     _parseGeocodedAddress: function(address) {
-        var locationModel = new VOLO.FullAddressLocationModel(address, this.appConfig),
-            userAddress = this.$el.val();
+        var userAddress = this.$el.val();
 
         this.$el.val(address.formattedAddress);
-        if (locationModel.isValid()) {
-            this._submitInput(address);
-        } else {
-            this._openMapModalDialog(address, userAddress);
-        }
+        this._checkForStreetDuplicity(address, userAddress);
     },
 
     _isValidUserInput: function(value, appConfig) {
         var validAddressRegex = _.get(appConfig, 'address_config.valid_address_input'),
-            trimmedValue = _.trim(value);
+            trimmedValue = value.trim();
 
         return trimmedValue.match(validAddressRegex) !== null;
     },
@@ -120,25 +116,34 @@ VOLO.FullAddressInputSearchView = Backbone.View.extend({
     },
 
     _getAddressFromPlace: function(place) {
-        var address = this.deserializer.deserialize(place[0], this.appConfig);
+        var address = this.deserializer.deserialize(place[0], this.appConfig),
+            deferred = $.Deferred();
 
-        console.log('VOLO.homeSearch - geocoder address', address);
-
-        return address;
+        return deferred.resolve(address);
     },
 
     _placeFound: function(geocodingPlace) {
         var address = this.deserializer.deserialize(geocodingPlace, this.appConfig);
-
-        var locationModel = new VOLO.FullAddressLocationModel(address, this.appConfig);
-        if (locationModel.isValid()) {
-            this._submitInput(address);
-        } else {
-
-            this._openMapModalDialog(address, address.formattedAddress);
-        }
-
         console.log('VOLO.homeSearch - autocomplete address', address);
+
+        this._checkForStreetDuplicity(address, this.$el.val());
+    },
+
+    _checkForStreetDuplicity: function (address, userAddress) {
+        var locationModel = new VOLO.FullAddressLocationModel(address, this.appConfig);
+
+        this.places.isAddressUnique(userAddress, address).then(function(isUnique) {
+            address.isUnique = isUnique;
+
+            if (isUnique && locationModel.isValid()) {
+                this._submitInput(address);
+            } else {
+                this._openMapModalDialog(address, userAddress);
+            }
+        }.bind(this), function(e) {
+            console.log('Places error:', e);
+            this._openMapModalDialog(address, userAddress);
+        }.bind(this));
     },
 
     _updateInputFromAddress: function(address) {

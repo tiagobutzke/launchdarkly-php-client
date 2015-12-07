@@ -40,5 +40,5 @@ _.extend(VOLO.Geocoding.Geocoder.prototype, Backbone.Events, {
 
     _isCountryAddressOnly: function(results) {
         return _.get(results, '[0]address_components.length') === 1 && _.get(results, '[0]address_components[0].types').indexOf('country') !== -1;
-    },
+    }
 });
