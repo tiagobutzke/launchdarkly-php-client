@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.92.0
+ * INTVOLO-1461 - apply map logic on vendors/menu page
+
 * 1.91.0
  * INTVOLO-1740 get targetTop and check if not null
  * INTVOLO-1663 Topping Overlay / Fix arrows
