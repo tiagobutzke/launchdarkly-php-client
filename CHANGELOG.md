@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+* 1.91.0
+ * INTVOLO-1740 get targetTop and check if not null
+ * INTVOLO-1663 Topping Overlay / Fix arrows
+ * INTVOLO-711 Windows 10 Edge Restaurant List: Closed restauran selection
+
 * 1.90.0
  * INTVOLO-475 AU / 2 more suppertime rebranding issues
 
