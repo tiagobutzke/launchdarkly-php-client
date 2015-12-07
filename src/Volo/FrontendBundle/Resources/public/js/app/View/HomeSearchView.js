@@ -182,7 +182,6 @@ var HomeSearchView = CTATrackableView.extend({
     _showInputPopup: function (text) {
         var $postalIndexFormInput = this.$('#delivery-information-postal-index');
 
-        console.log('display tooltip');
         if (!$postalIndexFormInput.hasClass('hide')) {
             console.log('_showInputPopup ', this.cid);
             $postalIndexFormInput.tooltip({
@@ -198,7 +197,6 @@ var HomeSearchView = CTATrackableView.extend({
     },
 
     _hideTooltip: function () {
-        console.log('hide tooltip');
         this.$('#delivery-information-postal-index').tooltip('destroy');
     },
 
