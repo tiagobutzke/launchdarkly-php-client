@@ -188,7 +188,7 @@ var LoginRegistrationView = Backbone.View.extend({
         var userService = new VOLO.UserService(),
             userData = this.$('form').serializeJSON(),
             addressData = this.address ? this.address.toJSON() : {},
-            redirectTo = $('body').hasClass('order-status-page') ? Routing.generate('home') : null,
+            redirectTo = this._isOrderStatusPage() ? Routing.generate('home') : null,
             login;
 
         this._disableForm();
@@ -253,7 +253,11 @@ var LoginRegistrationView = Backbone.View.extend({
     _registerSuccess: function() {
         this._fireSubmitEvent('loginRegistrationView:registration', 'success');
 
-        window.location.reload(true);
+        if (this._isOrderStatusPage() && this._isEmailChangedOnRegistration(this.$('form').serializeJSON())) {
+            window.location.replace(Routing.generate('home'));
+        } else {
+            window.location.reload(true);
+        }
     },
 
     _registerFail: function(response) {
@@ -325,5 +329,16 @@ var LoginRegistrationView = Backbone.View.extend({
             'method': 'email',
             'result': result
         });
+    },
+
+    _isEmailChangedOnRegistration: function(registrationData) {
+        var customerEmail = VOLO.customer.get('email'),
+            registrationEmail = _.get(registrationData, 'customer.email');
+
+        return customerEmail && (customerEmail !== registrationEmail);
+    },
+
+    _isOrderStatusPage: function () {
+        return $('body').hasClass('order-status-page');
     }
 });
