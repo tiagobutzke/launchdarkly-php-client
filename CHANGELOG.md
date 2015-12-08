@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.92.1
+ * INTVOLO-1791 Voucher field open in every country
+
 * 1.92.0
  * INTVOLO-1461 - apply map logic on vendors/menu page
 
