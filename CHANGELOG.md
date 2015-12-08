@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+* 1.94.0
+ * INTVOLO-1282 postcode missing error with false behavior
+ * INTVOLO-1262 Checkout Success Page / Registration / 404 Page if different email is used
+
+* 1.93.0
+ * INTVOLO-1679 flood feature 2 events
+
 * 1.92.1
  * INTVOLO-1791 Voucher field open in every country
 
