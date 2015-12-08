@@ -821,9 +821,6 @@ textarea.checkout__step__item-textarea {
   display: none;
   padding-bottom: $grid-gutter-width;
   @extend .clearfix;
-  @include respond-from("screen-md") {
-    display: block;
-  }
 }
 
 .checkout__payment__voucher-code {
