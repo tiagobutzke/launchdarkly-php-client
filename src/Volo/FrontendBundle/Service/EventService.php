@@ -6,7 +6,7 @@ use Foodpanda\ApiSdk\Entity\Cart\GpsLocation;
 use Foodpanda\ApiSdk\Entity\Event\Event;
 use Foodpanda\ApiSdk\Entity\Event\EventAction;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
-use Foodpanda\ApiSdk\Provider\VendorProvider;
+use Volo\FrontendBundle\Service;
 
 class EventService
 {
@@ -14,43 +14,46 @@ class EventService
     const CLOSE_REASON_EVENT = 'event';
 
     /**
-     * @var VendorProvider
+     * @var VendorService
      */
-    private $vendorProvider;
+    private $vendorService;
 
     /**
-     * @param VendorProvider $vendorProvider
+     * @param VendorService $vendorService
      */
-    public function __construct(VendorProvider $vendorProvider)
+    public function __construct(VendorService $vendorService)
     {
-        $this->vendorProvider = $vendorProvider;
+        $this->vendorService = $vendorService;
     }
 
     /**
-     * @param float $latitude
-     * @param float $longitude
+     * @param GpsLocation $location
      *
      * @return array
      */
-    public function getActionMessages($latitude, $longitude) {
+    public function getActionMessages(GpsLocation $location) {
         $eventMessages = [];
 
-        if ($latitude === null || $longitude === null) {
+        if ($location->getLatitude() === null || $location->getLongitude() === null) {
             return $eventMessages;
         }
 
-        $vendorItems = $this->vendorProvider->findVendorsMetaData(new GpsLocation($latitude, $longitude))->getItems();
+        $vendorItems = $this->vendorService->findAll($location);
 
         /** @var Vendor $vendor */
         foreach ($vendorItems as $vendor) {
             $events = $vendor->getMetadata()->getEvents();
-            /** @var Event $event */
             foreach ($events as $event) {
-                $messages = $event->getActions()->filter(function(EventAction $action) {
-                    return $action->getType() === static::ACTION_TYPE_MESSAGE;
-                })->map(function(EventAction $action) {
-                    return $action->getMessage();
-                });
+                /** @var Event $event */
+                $messages = $event->getActions()->filter(
+                    function (EventAction $action) {
+                        return $action->getType() === static::ACTION_TYPE_MESSAGE;
+                    }
+                )->map(
+                    function (EventAction $action) {
+                        return $action->getMessage();
+                    }
+                );
 
                 $eventMessages = array_merge($eventMessages, $messages->toArray());
             }

@@ -358,7 +358,7 @@ class VendorService
                 return !in_array($event->getName(), $userEventsNames, true);
             });
             if (!$hasEvent) {
-                $vendor->getMetadata()->setEvents($event);
+                $vendor->getMetadata()->getEvents()->add($event);
             }
         }
     }

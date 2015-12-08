@@ -2,6 +2,7 @@
 
 namespace Volo\FrontendBundle\Controller\Api;
 
+use Foodpanda\ApiSdk\Entity\Cart\GpsLocation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -32,7 +33,8 @@ class EventController extends BaseController
      */
     public function listAction($latitude, $longitude)
     {
-        $eventMessages = $this->get('volo_frontend.service.event_service')->getActionMessages($latitude, $longitude);
+        $location = new GpsLocation($latitude, $longitude);
+        $eventMessages = $this->get('volo_frontend.service.event_service')->getActionMessages($location);
 
         return new JsonResponse(['items' => $eventMessages]);
     }

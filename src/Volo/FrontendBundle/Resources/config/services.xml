@@ -252,7 +252,7 @@
         </service>
 
         <service id="volo_frontend.service.event_service" class="%volo_frontend.service.event_service.class%">
-            <argument type="service" id="volo_frontend.provider.vendor"/>
+            <argument type="service" id="volo_frontend.service.vendor"/>
         </service>
 
         <service id="volo_frontend.service.thumbor_service" class="%volo_frontend.service.thumbor_service.class%">
