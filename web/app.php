@@ -2,6 +2,7 @@
 
 use Symfony\Component\ClassLoader\ApcClassLoader;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 if ($_SERVER['REQUEST_URI'] === '/health/check/lb') {
     exit(0);
@@ -34,5 +35,10 @@ $request = Request::createFromGlobals();
 Request::setTrustedProxies([$request->server->get('REMOTE_ADDR')]);
 
 $response = $kernel->handle($request);
+
+if (Response::HTTP_NOT_FOUND === $response->getStatusCode()) {
+    require __DIR__.'/../app/seo-redirects.php';
+}
+
 $response->send();
 $kernel->terminate($request, $response);

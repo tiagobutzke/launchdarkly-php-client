@@ -4,6 +4,7 @@ imports:
     - { resource: revision.yml }
 
 parameters:
+    redirect_rules_folder: "%kernel.root_dir%/redirects"
     http_schema: http
     google_api_client_id: ''
     google_api_channel: ''
