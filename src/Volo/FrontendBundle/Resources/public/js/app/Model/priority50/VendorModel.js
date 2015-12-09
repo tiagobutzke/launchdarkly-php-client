@@ -42,6 +42,7 @@ VOLO.VendorCollection = Backbone.Collection.extend({
             'api_vendors_list', {
                 cuisine: this.filterModel.get('cuisines'),
                 food_characteristic: this.filterModel.get('food_characteristics'),
+                budgets: this.filterModel.get('budgets'),
                 latitude: this.locationModel.get('latitude'),
                 longitude: this.locationModel.get('longitude')
             }

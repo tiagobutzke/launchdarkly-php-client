@@ -70,6 +70,7 @@ class VoloExtension extends \Twig_Extension
             new \Twig_SimpleFunction('get_default_cart_value', array($this, 'getDefaultCartValue')),
             new \Twig_SimpleFunction('get_default_cart_vendor_id', array($this, 'getDefaultCartVendorId')),
             new \Twig_SimpleFunction('get_currency_symbol_iso', array($this, 'getCurrencySymbolIso')),
+            new \Twig_SimpleFunction('get_currency_symbol', array($this, 'getCurrencySymbol')),
             new \Twig_SimpleFunction('get_minimum_order_value_setting', array($this, 'getMinimumOrderValueSetting')),
 
             new \Twig_SimpleFunction('gtm_delivery_day', array($this, 'createDeliveryDay')),
@@ -84,6 +85,15 @@ class VoloExtension extends \Twig_Extension
     {
         return $this->config->getConfiguration()->getCurrencySymbolIso();
     }
+
+    /**
+     * @return string
+     */
+    public function getCurrencySymbol()
+    {
+        return $this->config->getConfiguration()->getCurrencySymbol();
+    }
+
 
     /**
      * @return string
