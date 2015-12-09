@@ -32,13 +32,15 @@ class VendorController extends BaseController
     {
         $cuisines = $request->query->get('cuisine');
         $foodCharacteristics = $request->query->get('food_characteristic');
+        $budgets = $request->query->get('budgets');
         $includes = $request->query->get('includes', ['cuisines', 'metadata', 'food_characteristics']);
 
         $vendors = $this->getVendorService()->findAll(
             $location,
             $includes,
             explode(',', $cuisines),
-            explode(',', $foodCharacteristics)
+            explode(',', $foodCharacteristics),
+            explode(',', $budgets)
         );
 
         return new JsonResponse($this->getSerializer()->normalize($vendors));
