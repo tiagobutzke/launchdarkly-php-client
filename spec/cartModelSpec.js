@@ -4,11 +4,11 @@ describe('A cart', function () {
     var cart, vendorId, dataProvider, cartResponse, response, product, vendorCart;
 
     beforeEach(function () {
-        VOLO = {
+        VOLO = _.extend({}, VOLO, {
             configuration: {
                 timeZone: 'Europe/Berlin'
             }
-        };
+        });
 
         vendorId = 4;
         cartResponse = {
