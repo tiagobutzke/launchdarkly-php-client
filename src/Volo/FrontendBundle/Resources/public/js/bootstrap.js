@@ -687,9 +687,19 @@ $(document).on('page:load page:restore', function () {
     VOLO.initIntl(VOLO.configuration).done(VOLO.doBootstrap);
 });
 
-$(document).on('page:before-unload', function () {
-    console.log('page:before-unload');
+$(document).on('page:receive', function (event) {
+    console.log('Config App Version: ' + VOLO.configuration.appVersion);
+    console.log('Cookie App Version: ' + Cookies("AppVersion"));
 
+    if (VOLO.configuration.appVersion !== Cookies("AppVersion")) {
+        $(this).off();
+        window.location.assign(event.originalEvent.data.url);
+    }
+});
+
+$(document).on('page:before-unload', function () {
+
+    console.log('page:before-unload');
     _.invoke(VOLO.views, 'unbind');
     VOLO.views.length = 0;
 
