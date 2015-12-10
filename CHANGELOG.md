@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+* 1.95.0
+ * INTVOLO-1192 Change Address field alignment
+ * INTVOLO-1731 Reload JS script if new version is deployed
+ * INTVOLO-1522 push restaurant's codes into dataLayer when vendor listing page
+ * INTVOLO-1795 revert changes of voucher field in spain
+ * INTVOLO-1779 Change curly header for Suppertime
+
 * 1.94.0
  * INTVOLO-1282 postcode missing error with false behavior
  * INTVOLO-1262 Checkout Success Page / Registration / 404 Page if different email is used
