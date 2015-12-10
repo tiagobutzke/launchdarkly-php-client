@@ -3,8 +3,6 @@
 */
 
 // ----------------------- FONTS START -----------------------
-$fontspath: "../../fonts/" !default;
-
 // icomoon font
 // For updating the icon font go to https://icomoon.io/app/#/projects
 // and import the file icomoon-foodora.json
@@ -19,43 +17,13 @@ $font-version: 13 !default;
 
 @font-face {
   font-family: 'icomoon';
-  src:url('#{$fontspath}icomoon.eot?#{$font-version}');
-  src:url('#{$fontspath}icomoon.eot?#{$font-version}') format('embedded-opentype'),
-  url('#{$fontspath}icomoon.ttf?#{$font-version}') format('truetype'),
-  url('#{$fontspath}icomoon.woff?#{$font-version}') format('woff'),
-  url('#{$fontspath}icomoon.svg?#{$font-version}#icomoon') format('svg');
+  src:url('../../fonts/icomoon.eot?#{$font-version}');
+  src:url('../../fonts/icomoon.eot?#{$font-version}') format('embedded-opentype'),
+  url('../../fonts/icomoon.ttf?#{$font-version}') format('truetype'),
+  url('../../fonts/icomoon.woff?#{$font-version}') format('woff'),
+  url('../../fonts/icomoon.svg?#{$font-version}#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
-}
-
-@font-face {
-  font-family: 'Avenir Book';
-  src: url('#{$fontspath}2ED58B_1_0.eot?#{$font-version}');
-  src: url('#{$fontspath}2ED58B_1_0.eot?#{$font-version}') format('embedded-opentype'),
-  url('#{$fontspath}2ED58B_1_0.woff?#{$font-version}') format('woff2'),
-  url('#{$fontspath}2ED58B_1_0.woff?#{$font-version}') format('woff'),
-  url('#{$fontspath}2ED58B_1_0.ttf?#{$font-version}') format('truetype'),
-  url('#{$fontspath}2ED58B_1_0.svg?#{$font-version}#2ED58B_1_0') format('svg');
-}
-
-@font-face {
-  font-family: 'Avenir Heavy';
-  src: url('#{$fontspath}2ED58B_0_0.eot?#{$font-version}');
-  src: url('#{$fontspath}2ED58B_0_0.eot?#{$font-version}') format('embedded-opentype'),
-  url('#{$fontspath}2ED58B_0_0.woff2?#{$font-version}') format('woff2'),
-  url('#{$fontspath}2ED58B_0_0.woff?#{$font-version}') format('woff'),
-  url('#{$fontspath}2ED58B_0_0.ttf?#{$font-version}') format('truetype'),
-  url('#{$fontspath}2ED58B_0_0.svg?#{$font-version}#2ED58B_0_0') format('svg');
-}
-
-@font-face {
-  font-family: 'Satisfy Regular';
-  src: url('#{$fontspath}SatisfyRegular.eot?#{$font-version}');
-  src: url('#{$fontspath}SatisfyRegular.eot?#{$font-version}') format('embedded-opentype'),
-  url('#{$fontspath}SatisfyRegular.woff2?#{$font-version}') format('woff2'),
-  url('#{$fontspath}SatisfyRegular.woff?#{$font-version}') format('woff'),
-  url('#{$fontspath}SatisfyRegular.ttf?#{$font-version}') format('truetype'),
-  url('#{$fontspath}SatisfyRegular.svg?#{$font-version}#SatisfyRegular') format('svg');
 }
 
 $base-cta-color: #d70f64 !default;
@@ -76,7 +44,7 @@ $color-text-link-hover: $base-cta-hover-color !default;
 $color-text-flood-banner: #fff !default;
 
 $bold-font-family: 'Avenir Heavy', Arial, sans-serif !default;
-$satisfy-font-family: 'Satisfy Regular', Arial, sans-serif !default;
+$special-header-font-family: 'Satisfy Regular', Arial, sans-serif !default;
 // ----------------------- FONTS END --------------------------
 
 // ----------------------- TEXT FONT SIZES -----------------------

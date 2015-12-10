@@ -1,8 +1,29 @@
 ﻿@import '../bootstrap/bootstrap';
 @import '../../dist/sass/countries/au/sprite-common';
 
+@font-face {
+  font-family: 'Avenir Book';
+  src: url('../../fonts/2ED58B_1_0.eot');
+  src: url('../../fonts/2ED58B_1_0.eot') format('embedded-opentype'),
+  url('../../fonts/2ED58B_1_0.woff') format('woff2'),
+  url('../../fonts/2ED58B_1_0.woff') format('woff'),
+  url('../../fonts/2ED58B_1_0.ttf') format('truetype'),
+  url('../../fonts/2ED58B_1_0.svg#2ED58B_1_0') format('svg');
+}
+
+@font-face {
+  font-family: 'Avenir Heavy';
+  src: url('../../fonts/2ED58B_0_0.eot');
+  src: url('../../fonts/2ED58B_0_0.eot') format('embedded-opentype'),
+  url('../../fonts/2ED58B_0_0.woff2') format('woff2'),
+  url('../../fonts/2ED58B_0_0.woff') format('woff'),
+  url('../../fonts/2ED58B_0_0.ttf') format('truetype'),
+  url('../../fonts/2ED58B_0_0.svg#2ED58B_0_0') format('svg');
+}
 
 // ----------------------- COUNTRY VARIABLES OVERRIDE START --------------------------
+
+$special-header-font-family: 'Avenir Book', Arial, sans-serif;
 
 $base-cta-color: #da1a32;
 $base-cta-hover-color: #c2172e;
