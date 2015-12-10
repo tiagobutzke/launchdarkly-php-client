@@ -11,6 +11,11 @@
         {% set closedVendors = closedVendors|merge([vendor]) %}
     {% endif %}
 {% endfor %}
+{%  set vendorsCount = {
+    'allVendors': vendors|length,
+    'openVendors': openVendors|length,
+    'closedVendors': closedVendors|length
+} %}
 
 {% if formattedLocation.city == '-' %}
     {% set promoAddress = formattedLocation.postcode %}
@@ -31,10 +36,6 @@
 {% block gtm_page_type %}Restaurant List Page{% endblock %}
 {% block google_tag_manager_before %}
 <script type="text/javascript" data-turbolinks-eval=always>
-    dataLayer.push({
-        'totalRestaurants': {{ vendors|length }},
-        'openRestaurants': {{ openVendors|length }}
-    });
     dataLayer.push({
         'event': 'enterZipcode',
         'zipcode': '{{ formattedLocation['postcode'] }}',
@@ -100,7 +101,7 @@
             </div>
         {% endif %}
     </div>
-    <div class="restaurants-container wrapper-fluid">
+    <div class="restaurants-container wrapper-fluid" data-vendors-count="{{ vendorsCount|json_encode }}" >
         {% if gpsSearch %}
             <div class="restaurants__filter-tooltip tooltip tooltip--align-left bottom in hide">
                 <div class="tooltip-inner tooltip-inner--white-with-border">
