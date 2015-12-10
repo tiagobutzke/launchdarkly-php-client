@@ -1,6 +1,7 @@
 <?php
 
 return [
+    // vendor pages
     'makizo' => 'restaurant/w0kq/makizo',
     'una-s-darlinghurst' => 'restaurant/u0in/unas-darlinghurst',
     'malabar' => 'restaurant/m0is/malabar',
@@ -240,5 +241,16 @@ return [
     'fiore-cafe' => 'restaurant/c2jv/fiore-cafe',
     'moroccan-feast' => 'restaurant/y3xk/moroccan-feast',
     'trovata' => 'restaurant/t1pr/trovata',
-    'bruce-leaves' => 'restaurant/f0bk/bruce-leaves'
+    'bruce-leaves' => 'restaurant/f0bk/bruce-leaves',
+
+    // suppertime pages
+    'corporate' => '',
+    'who-are-we' => 'contents/contact.htm',
+    'blog' => 'contents/contact.htm',
+    'how-it-works' => 'contents/contact.htm',
+    'contact' => 'contents/contact.htm',
+    'terms-and-conditions' => 'contents/terms-and-conditions.htm',
+    'Create-an-account' => '',
+    'Log-in' =>  '',
+    'become-a-driver' => 'contents/drivers-and-restaurants.htm',
 ];
