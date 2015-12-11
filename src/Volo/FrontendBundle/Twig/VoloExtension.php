@@ -49,6 +49,7 @@ class VoloExtension extends \Twig_Extension
         return array_merge(parent::getFilters(), [
             new \Twig_SimpleFilter('price', array($this, 'priceFilter')),
             new \Twig_SimpleFilter('formatTime', array($this, 'formatTime')),
+            new \Twig_SimpleFilter('formatTimeFromString', array($this, 'formatTimeFromString')),
             new \Twig_SimpleFilter('dayOfTheWeek', array($this, 'formatDayOfTheWeek')),
             new \Twig_SimpleFilter('formatOpeningDay', array($this, 'formatOpeningDay')),
             new \Twig_SimpleFilter('prepareLogoUrl', array($this, 'prepareLogoUrl')),
@@ -199,9 +200,21 @@ class VoloExtension extends \Twig_Extension
      */
     public function formatTime(\DateTime $dateTime)
     {
-        $formatter = \IntlDateFormatter::create($this->translator->getLocale(), \IntlDateFormatter::NONE, \IntlDateFormatter::SHORT);
+        $formatter = $this->getFormatter();
 
         return $formatter->format($dateTime);
+    }
+
+    /**
+     * @param string $dateTime
+     *
+     * @return string
+     */
+    public function formatTimeFromString($dateTime)
+    {
+        $date = new \DateTime($dateTime);
+
+        return $this->formatTime($date);
     }
 
     /**
@@ -284,5 +297,15 @@ class VoloExtension extends \Twig_Extension
     public function getLanguageName($locale)
     {
         return Intl::getLanguageBundle()->getLanguageName(substr($locale, 0, 2), null, $locale);
+    }
+
+    /**
+     * @return \IntlDateFormatter
+     */
+    private function getFormatter()
+    {
+        $formatter = \IntlDateFormatter::create($this->translator->getLocale(), \IntlDateFormatter::NONE, \IntlDateFormatter::SHORT);
+
+        return $formatter;
     }
 }
