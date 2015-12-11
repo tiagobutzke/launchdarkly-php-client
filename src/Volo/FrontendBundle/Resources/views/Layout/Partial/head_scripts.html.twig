@@ -1,7 +1,7 @@
 {% block head_scripts %}
     <script src="https://maps.googleapis.com/maps/api/js?v=3.2&amp;sensor=false&amp;libraries=places&amp;language={{ locale|replace('_', '-') }}&amp;client={{ google_api_client_id }}&amp;channel={{ google_api_channel }}"></script>
     {% if app.debug == true %}
-        <script src="{{ asset('js/dist/libs.js') }}"></script>
+        <script src="{{ asset('js/dist/all-libs.js') }}"></script>
         <script src="{{ asset('js/dist/head.js') }}"></script>
         <script src="{{ path('thumbor_configuration') }}"></script>
     {% else %}
