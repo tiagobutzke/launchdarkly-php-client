@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.95.1
+ * INTVOLO-1777 Australian redirects (suppertime) 
+
 * 1.95.0
  * INTVOLO-1192 Change Address field alignment
  * INTVOLO-1731 Reload JS script if new version is deployed
