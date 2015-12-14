@@ -6,6 +6,7 @@ use Foodpanda\ApiSdk\Entity\Cart\GpsLocation;
 use Foodpanda\ApiSdk\Entity\Event\Event;
 use Foodpanda\ApiSdk\Entity\Event\EventAction;
 use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
+use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Volo\FrontendBundle\Service;
 
 class EventService
@@ -31,7 +32,8 @@ class EventService
      *
      * @return array
      */
-    public function getActionMessages(GpsLocation $location) {
+    public function getActionMessages(GpsLocation $location)
+    {
         $eventMessages = [];
 
         if ($location->getLatitude() === null || $location->getLongitude() === null) {
@@ -57,6 +59,47 @@ class EventService
 
                 $eventMessages = array_merge($eventMessages, $messages->toArray());
             }
+        }
+
+        return array_unique($eventMessages);
+    }
+
+    /**
+     * @param int $vendorId
+     * @param GpsLocation $location
+     *
+     * @return array
+     */
+    public function getActionMessagesByVendor($vendorId, GpsLocation $location)
+    {
+        $eventMessages = [];
+
+        if ($location->getLatitude() === null || $location->getLongitude() === null) {
+            return $eventMessages;
+        }
+
+        try {
+            $vendor = $this->vendorService->findById($vendorId);
+            $this->vendorService->attachMetaData($vendor, $location->getLatitude(), $location->getLongitude());
+        } catch (ApiErrorException $e) {
+            return $eventMessages;
+        }
+
+        /** @var Vendor $vendor */
+        $events = $vendor->getMetadata()->getEvents();
+        foreach ($events as $event) {
+            /** @var Event $event */
+            $messages = $event->getActions()->filter(
+                function (EventAction $action) {
+                    return $action->getType() === static::ACTION_TYPE_MESSAGE;
+                }
+            )->map(
+                function (EventAction $action) {
+                    return $action->getMessage();
+                }
+            );
+
+            $eventMessages = array_merge($eventMessages, $messages->toArray());
         }
 
         return array_unique($eventMessages);

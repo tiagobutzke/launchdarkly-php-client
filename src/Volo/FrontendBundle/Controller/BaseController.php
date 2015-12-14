@@ -10,6 +10,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Volo\FrontendBundle\Provider\AddressConfigProvider;
+use Volo\FrontendBundle\Provider\CityLocationProvider;
 use Volo\FrontendBundle\Security\Token;
 use Volo\FrontendBundle\Service\CityService;
 use Volo\FrontendBundle\Service\CustomerLocationService;
@@ -118,6 +119,14 @@ class BaseController extends Controller
     protected function getAddressConfigProvider()
     {
         return $this->get('volo_frontend.provider.address_config_provider');
+    }
+
+    /**
+     * @return CityLocationProvider
+     */
+    protected function getCityLocationProvider()
+    {
+        return $this->get('volo_frontend.provider.city_location_provider');
     }
 
     /**

@@ -82,9 +82,24 @@ class LocationController extends BaseController
             return $this->redirectToRoute('volo_location_search_vendors_by_city', ['cityUrlKey' => $city->getUrlKey()]);
         }
 
-        $vendors = $this->getVendorService()->findAll($location);
+        try {
+            $gpsLocation = $this->getCityLocationProvider()->findGpsLocationByCode($city->getUrlKey());
+            $cityLocation = $this->getCustomerLocationService()->create(
+                $gpsLocation->getLatitude(),
+                $gpsLocation->getLongitude(),
+                null,
+                null,
+                null
+            );
+        } catch (CityNotFoundException $e) {
+            $gpsLocation = $location;
+            $cityLocation = [];
+        }
 
-        return $this->prepareViewData($request, $location, $formattedLocation, $vendors, $city);
+        $vendors = $this->getVendorService()->findAll($gpsLocation);
+
+        return $this->prepareViewData($request, $location, $formattedLocation, $vendors, $city, $cityLocation);
+
     }
 
     /**
@@ -162,6 +177,7 @@ class LocationController extends BaseController
      * @param array $formattedLocation
      * @param VendorsCollection $vendors
      * @param City $city
+     * @param array $cityLocation
      *
      * @return array
      */
@@ -170,7 +186,8 @@ class LocationController extends BaseController
         LocationInterface $location,
         array $formattedLocation,
         VendorsCollection $vendors,
-        $city
+        $city,
+        array $cityLocation = []
     ) {
         return [
             'hasQueryParams' => $request->query->count() > 0,
@@ -179,6 +196,7 @@ class LocationController extends BaseController
             'vendors' => $vendors,
             'city' => $city,
             'location' => $this->getCustomerLocationService()->get($request->getSession()),
+            'cityLocation' => $cityLocation,
             'filters' => $this->createFilters($vendors)
         ];
     }

@@ -56,13 +56,15 @@ class VendorController extends BaseController
                     $customerLocation[CustomerLocationService::KEY_LNG]
                 ) : false;
 
-            if ($isDeliverable) {
-                $vendorService->attachMetaData(
-                    $vendor,
-                    $customerLocation[CustomerLocationService::KEY_LAT],
-                    $customerLocation[CustomerLocationService::KEY_LNG]
-                );
+            $vendorLocation = [];
+            $lat = $customerLocation[CustomerLocationService::KEY_LAT];
+            $lng = $customerLocation[CustomerLocationService::KEY_LNG];
+            if (!$isDeliverable) {
+                $vendorLocation = $customerLocationService->create($vendor->getLatitude(), $vendor->getLongitude(), null, null, null);
+                $lat = $vendor->getLatitude();
+                $lng = $vendor->getLongitude();
             }
+            $vendorService->attachMetaData($vendor, $lat, $lng);
         } catch (ApiErrorException $exception) {
             throw $this->createNotFoundException('Vendor not found!', $exception);
         }
@@ -110,6 +112,7 @@ class VendorController extends BaseController
             'location'          => $customerLocation,
             'formattedLocation' => $formattedLocation,
             'isDeliverable'     => $isDeliverable,
+            'vendorLocation'    => $vendorLocation,
             // Temporary disabled
             'showSpecialInstructionsTutorial' => false && $specialInstructionsTutorialEnabled
         ];

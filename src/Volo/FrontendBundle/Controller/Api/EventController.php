@@ -38,4 +38,32 @@ class EventController extends BaseController
 
         return new JsonResponse(['items' => $eventMessages]);
     }
+
+    /**
+     * @Route(
+     *      "/{vendorId}/lat/{latitude}/lng/{longitude}",
+     *      requirements={
+     *          "vendorId"="\d+",
+     *          "latitude"="-?(\d*[.])?\d+",
+     *          "longitude"="-?(\d*[.])?\d+"
+     *      },
+     *      name="api_events_get_by_vendor",
+     *      options={"expose"=true},
+     *      condition="request.isXmlHttpRequest()"
+     * )
+     * @Method({"GET"})
+     *
+     * @param int $vendorId
+     * @param float $latitude
+     * @param float $longitude
+     *
+     * @return JsonResponse
+     */
+    public function vendorAction($vendorId, $latitude, $longitude)
+    {
+        $location = new GpsLocation($latitude, $longitude);
+        $eventMessages = $this->get('volo_frontend.service.event_service')->getActionMessagesByVendor($vendorId, $location);
+
+        return new JsonResponse(['items' => $eventMessages]);
+    }
 }

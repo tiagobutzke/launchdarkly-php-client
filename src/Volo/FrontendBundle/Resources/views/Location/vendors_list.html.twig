@@ -67,6 +67,7 @@
     <script data-turbolinks-eval=always>
         var VOLO = VOLO || {};
         VOLO.jsonLocation = {{ location|to_escaped_json }};
+        VOLO.jsonCityLocation = {{ cityLocation|to_escaped_json }};
     </script>
 
     <script type="text/template" id="template-restaurant-details">
