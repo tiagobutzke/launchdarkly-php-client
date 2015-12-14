@@ -207,7 +207,7 @@
   }
 }
 
-.header__account__login-text {
+.header__account__login-text, .header__christmas__campaign-link {
   border: 1px solid $color-bg-primary;
   padding: 3px;
   @include appear-from("screen-md");
@@ -218,6 +218,10 @@
   @include respond-from("screen-lg") {
     padding: 10px;
   }
+}
+
+.header__centered{
+  text-align: center;
 }
 
 .header__account__open {
