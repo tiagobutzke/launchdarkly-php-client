@@ -198,7 +198,7 @@
                                     <span class="menu__bottom-info__openings-day-name">{{ weekdayIndex|dayOfTheWeek }}</span>
                                 <span class="menu__bottom-info__openings-time">
                                     {% for schedule in schedules %}
-                                        {{ schedule.openingTime }} - {{ schedule.closingTime }}{% if not loop.last %}, {% endif %}
+                                        {{ schedule.openingTime|formatTimeFromString }} - {{ schedule.closingTime|formatTimeFromString }}{% if not loop.last %}, {% endif %}
                                     {% endfor %}
                                 </span>
                                 </li>
