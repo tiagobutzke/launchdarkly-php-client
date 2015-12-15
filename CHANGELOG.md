@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.96.0
+ * INTVOLO-935 format opening time
+
 * 1.95.2
  * INTVOLO-1816 add sticky link to header
 
