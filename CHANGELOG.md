@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.96.1
+ * INTVOLO-1783 homepage layout breaks after error page
+
 * 1.96.0
  * INTVOLO-935 format opening time
 
