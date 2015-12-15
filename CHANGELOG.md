@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.95.2
+ * INTVOLO-1816 add sticky link to header
+
 * 1.95.1
  * INTVOLO-1777 Australian redirects (suppertime) 
 
