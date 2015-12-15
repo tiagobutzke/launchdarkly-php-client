@@ -53,7 +53,7 @@ module.exports = function (grunt) {
         allCountriesSass = allCountriesOption.split(',');
     }
 
-    jsSources.libs = [
+    jsSources.errorLibs = [
         'web/bower_components/jquery/dist/jquery.js',
         'web/bower_components/real-shadow/realshadow.js',
         'web/js/lib/andr3pt-blazy.js'
@@ -65,7 +65,7 @@ module.exports = function (grunt) {
         frontendAssetPath('/js/app/Animation/*.js')
     ];
 
-    jsSources.allLibs = jsSources.libs.concat([
+    jsSources.allLibs = jsSources.errorLibs.concat([
         'web/bundles/heltheturbolinks/js/turbolinks.js',
         'web/bundles/fosjsrouting/js/router.js',
         'web/thumbor/configuration.js',
@@ -182,9 +182,14 @@ module.exports = function (grunt) {
             dest: frontendWebPath('/js/dist/head.js')
         },
 
-        libs: {
+        errorLibs: {
+            src: jsSources.errorLibs,
+            dest: frontendWebPath('/js/dist/error-libs.js')
+        },
+
+        allLibs: {
             src: jsSources.allLibs,
-            dest: frontendWebPath('/js/dist/libs.js')
+            dest: frontendWebPath('/js/dist/all-libs.js')
         },
 
         intl: {
@@ -243,18 +248,25 @@ module.exports = function (grunt) {
             tasks: ['uglify:head', 'jshint:head']
         },
 
-        jsLib: {
+        jsErrorLibs: {
             files: [
-                '<%= uglify.libs.src %>'
+                '<%= uglify.errorLibs.src %>'
             ],
-            tasks: ['uglify:libs']
+            tasks: ['uglify:errorLibs']
+        },
+
+        jsAllLibs: {
+            files: [
+                '<%= uglify.allLibs.src %>'
+            ],
+            tasks: ['uglify:allLibs']
         },
 
         jsAll: {
             files: [
                 'Gruntfile.js'
             ],
-            tasks: ['uglify:head', 'uglify:libs', 'jshint']
+            tasks: ['uglify:head', 'uglify:allLibs', 'uglify:errorLibs', 'jshint']
         }
     };
 
