@@ -53,6 +53,12 @@
                     </a>
                 {% endif %}
             {% endfor %}
+            {% set christmas = cms('christmas') %}
+            {% if christmas is not empty %}
+                <div class="header__campaign">
+                    <a href="/contents/christmas" class="header__campaign-link">{% trans %}christmas.campaign{% endtrans %}</a>
+                </div>
+            {% endif %}
         </div>
         <div class="header__wrapper__bg"></div>
     </header>
