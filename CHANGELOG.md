@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+* 1.96.0
+ * INTVOLO-1540 fixed layout issues with allergy modal
+ * INTVOLO-1782 fixed profile header resize issue
+ * INTVOLO-1821 fixed detection method isUserLogginIn
+
 * 1.96.1
  * INTVOLO-1783 homepage layout breaks after error page
 
