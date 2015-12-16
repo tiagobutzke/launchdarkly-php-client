@@ -79,7 +79,7 @@ VOLO.HeaderAnimations = (function() {
             //change header to Desktop when screen bigger that 800
         } else if (windowWidth >= VOLO.configuration.smallScreenMaxSize && $header.hasClass('header--mobile')) {
             //on checkout remove only header mobile
-            if ($body.hasClass('checkout') || $body.hasClass('error-page') || $body.hasClass('profile')) {
+            if ($body.hasClass('checkout') || $body.hasClass('error-page') || $body.hasClass('profile-page')) {
                 $header.removeClass('header--mobile');
             } else {
                 //if scrolled down don't remove the white header
