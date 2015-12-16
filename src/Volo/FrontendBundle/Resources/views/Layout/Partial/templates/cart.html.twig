@@ -171,3 +171,12 @@
         <span class="desktop-cart__order__total-price"><%= VOLO.formatCurrency(total_value) %></span>
     </div>
 </script>
+
+<script type="text/template" id="template-cart-invalid-products-list">
+    <h4 class="error-modal__invalid-product-list-headline">{% trans %}cart.invalidProductList{% endtrans %}</h4>
+    <ul>
+        <% _.each(invalidProducts, function(productName) { %>
+        <li><%= productName %></li>
+        <% }); %>
+    </ul>
+</script>

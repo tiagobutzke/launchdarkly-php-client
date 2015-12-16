@@ -18,6 +18,7 @@ var CheckoutPageView = Backbone.View.extend({
         this.userAddressCollection = options.userAddressCollection;
         this.locationModel = options.locationModel;
         this.cartModel = options.cartModel;
+        this.minimumOrderValueSetting = options.minimum_order_value_setting;
         this.contactInformationView = new VOLO.CheckoutContactInformationView({
             el: this.$('.checkout__contact-information'),
             vendorId: this.vendorId,
@@ -72,19 +73,20 @@ var CheckoutPageView = Backbone.View.extend({
         this.listenTo(this.contactInformationView, 'all', this.trigger);
         this.listenTo(this.checkoutDeliveryInformationView, 'all', this.trigger);
 
+        var vendorCart = this.cartModel.getCart(this.vendorId);
+        this.listenTo(vendorCart, 'cart:error', this._handleCartErrors);
         if (options.configuration.countryCode === 'fi') {
-            this.listenTo(this.cartModel.getCart(this.vendorId), 'cart:ready', this._updatePaymentsMethod);
+            this.listenTo(vendorCart, 'cart:ready', this._updatePaymentsMethod);
             this._updatePaymentsMethod();
         }
     },
 
-    _openRegistrationModal: function() {
+    _openRegistrationModal: function () {
         this.checkoutDeliveryInformationView._showRegistrationModal();
-
         return false;
     },
 
-    _updatePaymentsMethod: function() {
+    _updatePaymentsMethod: function () {
         var totalValue = this.cartModel.getCart(this.vendorId).get('total_value');
 
         if (totalValue > 0) {
@@ -114,6 +116,19 @@ var CheckoutPageView = Backbone.View.extend({
         return this;
     },
 
+    _initializeCheckoutInvalidProductsModalView: function () {
+        if (_.isObject(this.checkoutInvalidProductsModalView)) {
+            this.checkoutInvalidProductsModalView.unbind();
+        }
+        this.checkoutInvalidProductsModalView = new VOLO.PaymentInvalidItemModalView({
+            el: '.modal-payment-error',
+            cart: this.cartModel.getCart(this.vendorId),
+            minimumOrderValueSetting: this.minimumOrderValueSetting,
+            vendorObject: $('.desktop-cart--checkout').data('vendor')
+        });
+
+        return this.checkoutInvalidProductsModalView;
+    },
 
     renderPayButton: function () {
         var isButtonDisabled = !this.model.get('address_id') ||
@@ -160,6 +175,10 @@ var CheckoutPageView = Backbone.View.extend({
         this.contactInformationView.unbind();
         this.checkoutDeliveryInformationView.unbind();
         this.timePickerView.unbind();
+
+        if (_.isObject(this.checkoutInvalidProductsModalView)) {
+            this.checkoutInvalidProductsModalView.unbind();
+        }
     },
 
     _submitOrder: function () {
@@ -192,9 +211,9 @@ var CheckoutPageView = Backbone.View.extend({
         this.$('.form__error-message').addClass('hide');
     },
 
-    _scrollToError: function(msgOffset) {
+    _scrollToError: function (msgOffset) {
         var paddingFromHeader = 16,
-            scrollToOffset =  msgOffset - paddingFromHeader - this.domObjects.$header.outerHeight();
+            scrollToOffset = msgOffset - paddingFromHeader - this.domObjects.$header.outerHeight();
 
         $('html, body').animate({
             scrollTop: scrollToOffset
@@ -219,6 +238,15 @@ var CheckoutPageView = Backbone.View.extend({
             }
         }
         this.spinner.stop();
+    },
+
+    _handleCartErrors: function (errorObject) {
+        if (errorObject.ApiProductInvalidForVendorException) {
+            this._initializeCheckoutInvalidProductsModalView();
+            if (this.checkoutInvalidProductsModalView) {
+                this.checkoutInvalidProductsModalView.displayError(errorObject);
+            }
+        }
     },
 
     handlePaymentError: function (data) {

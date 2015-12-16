@@ -51,7 +51,8 @@ VOLO.createCartModel = function (jsonCart, defaultCartValues) {
     VOLO.cartModel = new CartModel(jsonCart, {
         dataProvider: new CartDataProvider(),
         defaultCartValues: defaultCartValues,
-        parse: true
+        parse: true,
+        timezone: VOLO.configuration.timeZone
     });
 
     return VOLO.cartModel;
@@ -103,7 +104,7 @@ VOLO.createCartViews = function (options) {
     var $header = $('.header'),
         $menuMain = $('.menu__list-wrapper'),
         $body = $('body'),
-        menuView, cartView, cartErrorModalView, confirmBelowMinimumAmountView;
+        menuView, cartView, confirmBelowMinimumAmountView;
 
     menuView = new MenuView({
         el: '.menu__list-wrapper',
@@ -114,16 +115,12 @@ VOLO.createCartViews = function (options) {
         $body: $body,
         gtmService: options.gtmService,
         vendorGeocodingView: options.vendorGeocodingView
-    }),
+    });
 
     confirmBelowMinimumAmountView = new ConfirmBelowMinimumAmountView({
         el: '.modal-confirm-below-minimum-amount',
         model: options.cartModel.getCart(options.vendor.id),
         gtmService: options.gtmService
-    }),
-    cartErrorModalView = new CartErrorModalView({
-        el: '#cartCalculationErrorModal',
-        model: options.cartModel
     });
 
     cartView = new CartView({
@@ -142,12 +139,11 @@ VOLO.createCartViews = function (options) {
         minimum_order_value_setting: VOLO.configuration.minimum_order_value_setting
     });
 
-    VOLO.views.push(menuView, cartView, cartErrorModalView, confirmBelowMinimumAmountView);
+    VOLO.views.push(menuView, cartView, confirmBelowMinimumAmountView);
 
     return {
         cartView: cartView,
         menuView: menuView,
-        cartErrorModalView: cartErrorModalView,
         confirmBelowMinimumAmountView: confirmBelowMinimumAmountView
     };
 };
@@ -185,7 +181,8 @@ VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel, us
             loginView: loginButtonView,
             locationModel: locationModel,
             deliveryCheck: deliveryCheck,
-            timePickerValues: VOLO.timePickerValues
+            timePickerValues: VOLO.timePickerValues,
+            minimum_order_value_setting: VOLO.configuration.minimum_order_value_setting
         });
     }
 
@@ -198,11 +195,6 @@ VOLO.createCheckoutViews = function (cartModel, checkoutModel, locationModel, us
             vendorId: $('.checkout__steps').data('vendor_id')
         });
     }
-
-    views.cartErrorModalView = new CartErrorModalView({
-        el: '#cartCalculationErrorModal',
-        model: cartModel
-    });
 
     VOLO.views = VOLO.views.concat(_.values(views));
 

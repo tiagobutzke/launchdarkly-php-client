@@ -46,6 +46,12 @@ var CheckoutCartView = CartView.extend({
      * @override
      * @private
      */
-    _initVendorGeocodingSubView: $.noop
+    _initVendorGeocodingSubView: $.noop,
+
+    /**
+     * @override
+     * @private
+     */
+    _initializeErrorModalView: $.noop
 });
 

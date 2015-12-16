@@ -1,6 +1,8 @@
-var CartErrorModalView = Backbone.View.extend({
+var VOLO = VOLO || {};
+
+VOLO.CartErrorModalView = Backbone.View.extend({
     events: {
-        'hide.bs.modal': '_reloadPage'
+        'hide.bs.modal': 'unbind'
     },
 
     supportedErrors: [
@@ -8,33 +10,59 @@ var CartErrorModalView = Backbone.View.extend({
         'ApiObjectDoesNotExistException'
     ],
 
-    initialize: function () {
+    initialize: function (options) {
         console.log('CartErrorModalView.initialize', this.cid);
         _.bindAll(this);
 
-        this.vendor_id = this.$el.data().vendor_id;
+        this.vendor_id = options.vendorId;
 
-        this.$el.modal({show: false});
+        this.template = _.template($('#template-cart-invalid-products-list').html());
 
-        this.listenTo(this.model.getCart(this.vendor_id), 'cart:error', this._cartCalculationErrorShowModal, this);
+        this.$el.modal({show: false, backdrop: 'static'});
     },
 
     unbind: function () {
+        this._reset();
         this.stopListening();
         this.undelegateEvents();
     },
 
-    _cartCalculationErrorShowModal: function (data) {
-        var showModal = _.isUndefined(data) ||
-            (_.isObject(data) && _.indexOf(this.supportedErrors, _.get(data, 'error.errors.exception_type')) !== -1) ||
-            (_.isObject(data) && 500 === _.get(data, 'error.code'));
-
-        if (showModal) {
-            this.$el.modal('show');
-        }
+    _reset: function () {
+        this._resetErrorHeadline();
+        this._resetErrorMessage();
     },
 
-    _reloadPage: function () {
-        location.reload();
+    _resetErrorHeadline: function () {
+        this.$('.modal__h4').empty();
+    },
+
+    _setErrorHeadline: function (headline) {
+        this.$('.modal__h4').text(headline);
+    },
+
+    _resetErrorMessage: function () {
+        this.$('.modal-error-cart__error-message').empty();
+    },
+
+    _setErrorMessage: function (message) {
+        this.$('.modal-error-cart__error-message').html(message);
+    },
+
+    displayError: function (errorObject) {
+        var errorHeadline = this.$('.modal__h4').data('default-error-headline'),
+            errorMessage = this.$('.modal-error-cart__error-message').data('default-error-message');
+
+        if (errorObject.ApiProductInvalidForVendorException) {
+            errorMessage = this.template({
+                invalidProducts: _.map(errorObject.invalidProducts, function (product) {
+                    return product.get('name');
+                })
+            });
+        }
+
+        this._setErrorHeadline(errorHeadline);
+        this._setErrorMessage(errorMessage);
+
+        this.$el.modal('show');
     }
 });

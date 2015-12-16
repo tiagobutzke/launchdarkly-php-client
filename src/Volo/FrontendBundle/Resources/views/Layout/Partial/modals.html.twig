@@ -4,17 +4,52 @@
     <div class="modal-confirm-below-minimum-amount"></div>
 
     {% if vendor is defined %}
-        <div class="modal fade" id="cartCalculationErrorModal" tabindex="-1" role="dialog"
-             aria-labelledby="cartCalculationErrorModalLabel" aria-hidden="true" data-vendor_id="{{ vendor.id }}"
-                >
+        <div class="modal fade headline-content-footer-modal modal-error-cart error-modal"
+             tabindex="-1"
+             role="dialog"
+             aria-labelledby="cartCalculationErrorModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <p>{% trans %}cart.calculation_error_message{% endtrans %}</p>
+                    <h4 class="modal__h4 text-center"
+                        data-default-error-headline="{% trans %}cart.error_modal_headline{% endtrans %}"></h4>
+                    <div class="modal-body error-modal__body">
+                        <div class="modal-error-cart__error-message"
+                           data-default-error-message="{% trans %}cart.calculation_error_message{% endtrans %}">
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="button" data-dismiss="modal">
-                            {% trans %}button.close{% endtrans %}
+                        <button type="button" class="button button--full-width button-secondary" data-dismiss="modal">
+                            {% trans %}label.continue_with_shopping{% endtrans %}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade headline-content-footer-modal modal-payment-error error-modal"
+             tabindex="-1"
+             role="dialog"
+             aria-labelledby="paymentInvalidItemErrorModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <h4 class="modal__h4 text-center"
+                        data-default-error-headline="{% trans %}cart.error_modal_headline{% endtrans %}">
+                    </h4>
+                    <div class="modal-body error-modal__body">
+                        <div class="modal-payment-error__invalid-product-list"></div>
+                        <p class="modal-payment-error__minimum-amount-message"
+                           data-below-minimum-confirm-template="{% trans %}content.confirm_below_minimum_amount{% endtrans %}"
+                           data-below-minimum-error-message="{% trans %}content.confirm_below_minimum_amount_forbidden{% endtrans %}">
+                        </p>
+                    </div>
+                    <div class="modal-footer modal-payment-error__loading-footer">
+                        <button type="button"
+                                class="button button--full-width modal-payment-error__continue-checkout-button"
+                                data-dismiss="modal">
+                            {% trans %}label.continue_with_checkout{% endtrans %}
+                        </button>
+                        <button type="button"
+                                class="button button--full-width button-secondary modal-payment-error__go-to-vendor-button">
+                            {% trans %}label.continue_with_shopping{% endtrans %}
                         </button>
                     </div>
                 </div>
@@ -30,7 +65,8 @@
     </div>
 
     {% if showVendorPopup is defined and showVendorPopup %}
-        <div class="modal fade vendor-popup__modal" tabindex="-1" role="dialog" aria-hidden="true" data-utm-source="{{utmSource}}">
+        <div class="modal fade vendor-popup__modal" tabindex="-1" role="dialog" aria-hidden="true"
+             data-utm-source="{{ utmSource }}">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body clearfix">

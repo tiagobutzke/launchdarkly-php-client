@@ -2,11 +2,11 @@ var CartToppingView = Backbone.View.extend({
     tagName: 'span',
     className: 'summary__item__extra',
 
-    initialize: function() {
+    initialize: function () {
         this.template = _.template($('#template-cart-summary-extra-item').html());
     },
 
-    render: function() {
+    render: function () {
         this.$el.html(this.template(this.model.toJSON()));
 
         return this;
@@ -26,7 +26,7 @@ var CartItemView = Backbone.View.extend({
         'click .summary__item__plus': '_increaseQuantity'
     },
 
-    initialize: function(options) {
+    initialize: function (options) {
         _.bindAll(this);
         this.template = _.template($('#template-cart-item').html());
         this.cartModel = options.cartModel;
@@ -35,7 +35,7 @@ var CartItemView = Backbone.View.extend({
         this.listenTo(this.model, 'change:quantity', this._updateItemQuantity);
     },
 
-    render: function() {
+    render: function () {
         this.$el.html(this.template(this.model.toJSON()));
         this._renderToppingViews(this.model.toppings.toJSON());
         this._toggleMinusAvailabilty(this.model.get('quantity'));
@@ -44,11 +44,11 @@ var CartItemView = Backbone.View.extend({
         return this;
     },
 
-    _renderToppingViews: function(toppings) {
+    _renderToppingViews: function (toppings) {
         _.each(toppings, this._renderToppingView, this);
     },
 
-    _renderToppingView: function(topping) {
+    _renderToppingView: function (topping) {
         var view = new CartToppingView({
             model: new ToppingModel(topping)
         });
@@ -56,9 +56,9 @@ var CartItemView = Backbone.View.extend({
         this.$('.summary__extra__items').append(view.render().el);
     },
 
-    _editItem: function() {
+    _editItem: function () {
         var variationId = this.model.get('product_variation_id'),
-            menuItemData = $('[data-variation-id="' + variationId +'"]').data('object'),
+            menuItemData = $('[data-variation-id="' + variationId + '"]').data('object'),
             menuToppings = menuItemData.product_variations[0].toppings;
 
         var clone = this.model.clone();
@@ -77,33 +77,33 @@ var CartItemView = Backbone.View.extend({
         $('#choices-toppings-modal').modal(); //show dialog
     },
 
-    _removeItem: function() {
+    _removeItem: function () {
         this.cartModel.getCart(this.vendor.id).removeItem(this.model);
     },
 
-    _decreaseQuantity: function() {
+    _decreaseQuantity: function () {
         if (this.model.get('quantity') > 1) {
             this.cartModel.getCart(this.vendor.id).increaseQuantity(this.model, -1);
         }
     },
 
-    _updateItemQuantity: function() {
+    _updateItemQuantity: function () {
         this.$('.summary__item__quantity-wrap').text(VOLO.formatNumber(this.model.get('quantity')));
     },
 
-    _increaseQuantity: function() {
+    _increaseQuantity: function () {
         this.cartModel.getCart(this.vendor.id).increaseQuantity(this.model, 1);
     },
 
-    _toggleMinusAvailabilty: function(quantity) {
+    _toggleMinusAvailabilty: function (quantity) {
         this.$('.summary__item__minus').toggleClass('summary__item__icon__disabled', quantity < 2);
     },
 
-    _toggleRemoveAvailabilty: function(quantity) {
+    _toggleRemoveAvailabilty: function (quantity) {
         this.$('.icon-cancel-circled').toggleClass('hide', quantity > 1);
     },
 
-    unbind: function() {
+    unbind: function () {
         if (_.isObject(this.gtmService)) {
             this.gtmService.unbind();
         }
@@ -128,7 +128,7 @@ var CartView = Backbone.View.extend({
         this.model.getCart(this.vendor.id).set('minimum_order_amount', this.$('.desktop-cart').data().minimum_order_amount);
         this.model.getCart(this.vendor.id).set('location', {
             location_type: this.locationModel.defaults.location_type,
-            latitude:  this.locationModel.get('latitude'),
+            latitude: this.locationModel.get('latitude'),
             longitude: this.locationModel.get('longitude')
         });
 
@@ -162,7 +162,7 @@ var CartView = Backbone.View.extend({
         this.stickOnTopCart = new StickOnTop({
             $container: this.$(this.stickOnTopCartContainerSelector),
             noStickyBreakPoint: this.smallScreenMaxSize,
-            stickOnTopValueGetter: function() {
+            stickOnTopValueGetter: function () {
                 var stickOnTopValue = this.domObjects.$header.outerHeight() + $('.top-banner:visible').outerHeight();
                 var $postalCodeBar = this.domObjects.$body.find('.menu__postal-code-bar');
                 if (!$postalCodeBar.hasClass('hidden')) {
@@ -171,13 +171,13 @@ var CartView = Backbone.View.extend({
 
                 return stickOnTopValue;
             }.bind(this),
-            startingPointGetter: function() {
+            startingPointGetter: function () {
                 return this.$(this.stickOnTopCartTargetSelector).offset().top;
             }.bind(this),
-            isActiveGetter: function() {
+            isActiveGetter: function () {
                 return !$('body').hasClass('checkout');
             }.bind(this),
-            endPointGetter: function() {
+            endPointGetter: function () {
                 return this.domObjects.$menuMain.offset().top + this.domObjects.$menuMain.outerHeight();
             }.bind(this)
         });
@@ -187,10 +187,10 @@ var CartView = Backbone.View.extend({
         this.initListener();
     },
 
-    setGtmService: function(gtmService) {
+    setGtmService: function (gtmService) {
         this.gtmService = gtmService;
 
-        _.each(this.subViews, function(cartItemView) {
+        _.each(this.subViews, function (cartItemView) {
             cartItemView.gtmService = gtmService;
         });
     },
@@ -199,25 +199,25 @@ var CartView = Backbone.View.extend({
     // when scrolling page from summary list
 
     events: {
-        'scroll .checkout__summary' : '_updateCartHeight',
+        'scroll .checkout__summary': '_updateCartHeight',
         'click .btn-below-minimum-amount': '_showBelowMinimumAmountMsg',
         'click .btn-checkout': '_handleCartSubmit',
-        'click .mobile-close__cart' : '_hideMobileCart'
+        'click .mobile-close__cart': '_hideMobileCart'
     },
 
-    _hideMobileCart: function() {
+    _hideMobileCart: function () {
         this.$('.desktop-cart').addClass('mobile-cart__hidden');
         $('body').removeClass('body-cart-fix');
     },
 
-    _showMobileCart: function() {
+    _showMobileCart: function () {
         console.log(arguments);
         this.$('.desktop-cart').removeClass('mobile-cart__hidden');
         $('body').addClass('body-cart-fix');
         window.blazy.revalidate();
     },
 
-    unbind: function() {
+    unbind: function () {
         // unbinding cart sticking behaviour
         this.stickOnTopCart.remove();
         // unbinding cart height resize behaviour
@@ -226,6 +226,10 @@ var CartView = Backbone.View.extend({
         if (_.isObject(this.timePickerView)) {
             this.timePickerView.unbind();
             this.timePickerView.remove();
+        }
+
+        if (_.isObject(this.cartErrorModalView)) {
+            this.cartErrorModalView.unbind();
         }
 
         _.invoke(this.subViews, 'unbind');
@@ -249,7 +253,7 @@ var CartView = Backbone.View.extend({
         this.listenTo(vendorCart, 'cart:ready', this.renderCheckoutButton, this);
         this.listenTo(vendorCart, 'cart:ready', this.stopSpinner, this);
 
-        this.listenTo(vendorCart, 'cart:error', this.handleVouchersErrors, this);
+        this.listenTo(vendorCart, 'cart:error', this.handleCartErrors, this);
         this.listenTo(vendorCart, 'cart:error', this.stopSpinner, this);
         this.listenTo(vendorCart, 'cart:error', this.renderProducts, this);
 
@@ -270,13 +274,13 @@ var CartView = Backbone.View.extend({
         this._initializeMobileCartIcon();
     },
 
-    _initializeMobileCartIcon: function() {
+    _initializeMobileCartIcon: function () {
         //listening on cart icon in header
         var $header = this.domObjects.$header;
         $header && $header.find('.header__cart').click(this._showMobileCart);
     },
 
-    _updateCartIcon: function() {
+    _updateCartIcon: function () {
         var productsCount = this.model.getCart(this.vendor.id).getProductsCount(),
             $header = this.domObjects.$header,
             $productCounter = $header ? $header.find('.header__cart__products__count') : null;
@@ -288,7 +292,7 @@ var CartView = Backbone.View.extend({
         }
     },
 
-    _animateAddToCart: function(counter) {
+    _animateAddToCart: function (counter) {
         var $counter = $(counter);
         if (!$counter) {
             return;
@@ -312,22 +316,22 @@ var CartView = Backbone.View.extend({
         });
     },
 
-    disableCart: function() {
+    disableCart: function () {
         this.$('.desktop-cart__footer').toggleClass('disabled', true);
         this.$('.btn-checkout').toggleClass('disabled', true);
         this._spinner.spin(this.$('.desktop-cart__footer')[0]);
     },
 
-    enableCart: function() {
+    enableCart: function () {
         this.$('.desktop-cart__footer').toggleClass('disabled', false);
         this.$('.btn-checkout').toggleClass('disabled', false);
     },
 
-    stopSpinner: function() {
+    stopSpinner: function () {
         this._spinner.stop();
     },
 
-    _handleCartSubmit: function() {
+    _handleCartSubmit: function () {
         if (!this.$('.btn-checkout').hasClass('disabled')) {
             if (this.$('.btn-checkout').hasClass('btn-confirm-below-minimum-amount')) {
                 this.confirmBelowMinimumAmountView.render();
@@ -339,14 +343,14 @@ var CartView = Backbone.View.extend({
         return false;
     },
 
-    _goToCheckout: function() {
+    _goToCheckout: function () {
         var vendorCode = this.$('.btn-checkout').data('vendor-code');
         Turbolinks.visit(Routing.generate('checkout_payment', {
             vendorCode: vendorCode
         }));
     },
 
-    render: function() {
+    render: function () {
         console.log('CartView:render');
         this.$('.desktop-cart').html(this.template(this.model.getCart(this.vendor.id).attributes));
         this.renderSubTotal();
@@ -368,11 +372,11 @@ var CartView = Backbone.View.extend({
         this.vendorGeocodingView.setZipCode(zipCode);
     },
 
-    _updateStickingOnTopCoordinates: function() {
+    _updateStickingOnTopCoordinates: function () {
         this.stickOnTopCart.updateCoordinates();
     },
 
-    renderCheckoutButton: function() {
+    renderCheckoutButton: function () {
         var cachedVendorCart = this.model.getCart(this.vendor.id),
             cacheCheckoutButtons = $('<div/>').html(this.templateCheckoutButton(cachedVendorCart.attributes)),
             errorMessage = cacheCheckoutButtons.find('.desktop-cart__error__below-minimum-amount');
@@ -447,6 +451,19 @@ var CartView = Backbone.View.extend({
         return 'no_confirmation' === this.minimumOrderValueSetting;
     },
 
+    _initializeErrorModalView: function () {
+        if (_.isObject(this.cartErrorModalView)) {
+            this.cartErrorModalView.unbind();
+        }
+
+        this.cartErrorModalView = new VOLO.CartErrorModalView({
+            el: '.modal-error-cart',
+            vendorId: this.vendor.id
+        });
+
+        return this.cartErrorModalView;
+    },
+
     renderProducts: function () {
         console.log('CartView renderProducts ', this.cid);
         _.invoke(this.subViews, 'unbind');
@@ -460,7 +477,7 @@ var CartView = Backbone.View.extend({
         this._updateCartHeight();
     },
 
-    renderNewItem: function(item) {
+    renderNewItem: function (item) {
         var view = new this.CartItemViewClass({
             model: item,
             cartModel: this.model,
@@ -517,7 +534,7 @@ var CartView = Backbone.View.extend({
         );
     },
 
-    _toggleContainerVisibility: function() {
+    _toggleContainerVisibility: function () {
         var $productsContainer = this.$('.desktop-cart__products'),
             $cartMsg = this.$('.desktop-cart_order__message'),
             cartEmpty = this.model.getCart(this.vendor.id).products.length === 0;
@@ -526,7 +543,7 @@ var CartView = Backbone.View.extend({
         $productsContainer.toggle(!cartEmpty);
     },
 
-    renderTimePicker: function() {
+    renderTimePicker: function () {
         this.timePickerView.setElement(this.$('.cart__time-picker'));
         this.timePickerView.render();
     },
@@ -535,8 +552,19 @@ var CartView = Backbone.View.extend({
         this.$('.desktop-cart__error__below-minimum-amount').removeClass('hide');
     },
 
-    handleVouchersErrors: function (data) {
-        var supportedErrors = [
+    _handleVoucherErrors: function () {
+        this.model.getCart(this.vendor.id).set('voucher', null);
+    },
+
+    _handleCartError: function (data) {
+        this._initializeErrorModalView();
+        if (this.cartErrorModalView) {
+            this.cartErrorModalView.displayError(data);
+        }
+    },
+
+    handleCartErrors: function (data) {
+        var supportedVoucherErrors = [
             'ApiVoucherInactiveException',
             'ApiVoucherDoesNotExistException',
             'ApiVoucherInvalidVendorException',
@@ -556,9 +584,15 @@ var CartView = Backbone.View.extend({
             'ApiVoucherInvalidPaymentTypeButAnotherOneIsAvailableException'
         ];
 
-        if (_.isObject(data) && _.indexOf(supportedErrors, _.get(data, 'error.errors.exception_type')) !== -1) {
-            this.model.getCart(this.vendor.id).set('voucher', null);
-            _.defer(this.model.getCart(this.vendor.id).updateCart);
+        var modalErrors = [
+            'ApiInvalidParameterException',
+            'ApiObjectDoesNotExistException'
+        ];
+
+        if (_.isObject(data) && _.indexOf(supportedVoucherErrors, _.get(data, 'error.errors.exception_type')) !== -1) {
+            this._handleVoucherErrors();
+        } else if ((_.isObject(data) && _.indexOf(modalErrors, _.get(data, 'error.errors.exception_type')) !== -1) || data.ApiProductInvalidForVendorException) {
+            this._handleCartError(data);
         }
     }
 });
@@ -567,27 +601,27 @@ _.extend(CartView.prototype, VOLO.DetectScreenSizeMixin);
 
 var VendorCartIconView = Backbone.View.extend({
     events: {
-        'click' : '_gotoMenuPage'
+        'click': '_gotoMenuPage'
     },
 
-    initialize: function(options) {
+    initialize: function (options) {
         _.bindAll(this);
 
         this.defaultCartValues = options.defaultCartValues || {};
     },
 
-    _gotoMenuPage: function() {
+    _gotoMenuPage: function () {
         var vendorId = this.$el.data().vendor_id + '';
         if (vendorId.length > 0) {
             Turbolinks.visit(Routing.generate('vendor_by_id', {id: vendorId}));
         }
     },
 
-    unbind: function() {
+    unbind: function () {
         this.undelegateEvents();
     },
 
-    render: function() {
+    render: function () {
         this.$el.data('vendor_id', this.defaultCartValues.vendor_id);
         this.$('.header__cart__products__count').html(Math.min(this.defaultCartValues.products_count, 99));
 

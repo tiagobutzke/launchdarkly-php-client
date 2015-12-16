@@ -61,8 +61,28 @@ var CheckoutModel = Backbone.Model.extend({
         return true;
     },
 
-    canBeSubmitted: function() {
+    canBeSubmitted: function () {
         return this.isValid() && !this.get('placing_order');
+    },
+
+    _processPaymentErrors: function (rawErrorData, settings) {
+        var errorObject = _.get(rawErrorData, 'error.errors', null),
+            processedError = {};
+
+        if (!errorObject) {
+            return {};
+        }
+
+        if (errorObject.exception_type === 'ApiProductInvalidForVendorException') {
+            processedError = {
+                ApiProductInvalidForVendorException: true
+            };
+            this.cartModel.getCart(settings.vendorId).updateCart();
+        } else {
+            processedError = _.assign(rawErrorData, {paymentMethod: settings.paymentMethod});
+        }
+
+        this.trigger('payment:error', processedError);
     },
 
     placeOrder: function (vendorCode, vendorId, customer, address, isSubscribedNewsletter) {
@@ -110,10 +130,14 @@ var CheckoutModel = Backbone.Model.extend({
         }.bind(this));
 
         xhr.fail(function (jqXHR) {
-            console.log("fail", jqXHR.responseJSON);
-            var eventData = jqXHR.responseJSON;
-            eventData.paymentMethod = this.get('payment_type_code');
-            this.trigger("payment:error", eventData);
+            console.log("fail", rawErrorData);
+            var rawErrorData = jqXHR.responseJSON || {},
+                settings = {
+                    vendorId: vendorId,
+                    paymentMethod: this.get('payment_type_code')
+                };
+
+            this._processPaymentErrors(rawErrorData, settings);
             this.set('placing_order', false);
         }.bind(this));
     }
