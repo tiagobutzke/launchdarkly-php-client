@@ -66,7 +66,13 @@ class NewsLetterController extends BaseController
     public function unsubscribeAction($code)
     {
         try {
-            $this->get('volo_frontend.provider.newsletter')->unsubscribeByCode($code);
+            $accessToken = null;
+
+            if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+                $accessToken = $this->getToken()->getAccessToken();
+            }
+
+            $this->get('volo_frontend.provider.newsletter')->unsubscribeByCode($code, $accessToken);
             $isUnsubscribed = true;
         } catch (ApiException $e) {
             $isUnsubscribed = false;
