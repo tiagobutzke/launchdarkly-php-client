@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.99.0
+ * INTVOLO-1819 handling access token in /customers API 2.62
+
 * 1.98.0
  * INTVOLO-1447 handling error from backend in _handleError method, cart
 
