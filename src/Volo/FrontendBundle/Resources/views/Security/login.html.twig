@@ -22,11 +22,11 @@
             <div class="form-group">
                 <input type="password" class="form-control" id="password" name="_password" placeholder="{% trans %}form.placeholder.password{% endtrans %}"
                        data-toggle="tooltip" data-validation-msg="{% trans %}validations.error.login.password{% endtrans %}"/>
+                <a class="position-absolute__top-right login__password__forgot-password-link">{% trans %}link.forgot_password{% endtrans %}</a>
             </div>
             <button class="button button--full-width modal__padding-left-right" type="submit">{% trans %}button.login{% endtrans %}</button>
         </form>
 
         <div class="text-center login-registration-link">{% trans %}content.dont_have_account{% endtrans %} <a class="register-link">{% trans %}link.signup{% endtrans %}</a></div>
-        <div class="text-center login-registration-link">{% trans %}content.forgot_password{% endtrans %} <a class="forgot-password-link">{% trans %}link.forgot_password{% endtrans %}</a></div>
     </div>
 {% endblock %}

@@ -6,9 +6,6 @@ var LoginRegistrationView = Backbone.View.extend({
     _loginConstraints: {
         _username: {
             presence: true
-        },
-        _password: {
-            presence: true
         }
     },
 
@@ -21,7 +18,6 @@ var LoginRegistrationView = Backbone.View.extend({
 
     _resetPasswordConstraints: {
         '_password': {
-            presence: true,
             length: {
                 minimum: 6
             }
@@ -91,7 +87,7 @@ var LoginRegistrationView = Backbone.View.extend({
     events: {
         'click .register-link': 'renderRegistration',
         'click .login-link': 'render',
-        'click .forgot-password-link': 'renderForgotPassword',
+        'click .login__password__forgot-password-link': 'renderForgotPassword',
         'submit .forgot-password-form': '_handingSubmitOfLostPasswordForm',
         'submit .reset-password-form': '_handingSubmitOfResetPasswordForm',
         'submit .login-form': '_submitLoginForm',

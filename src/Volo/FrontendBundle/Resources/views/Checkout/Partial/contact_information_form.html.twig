@@ -21,13 +21,12 @@
                value=""
                required="true" placeholder="{% trans %}form.placeholder.password{% endtrans %}"
                data-validation-msg="{% trans %}validations.error.register.password{% endtrans %}">
+        <a class="position-absolute__top-right checkout__contact-information__forgot-password-link">{% trans %}link.forgot_password{% endtrans %}</a>
         <div class="checkout__contact-information__server-error-message hide"></div>
         <div class="checkout__contact-information__hide-register-link-wrapper hide">
             <a class="checkout__contact-information__hide-register-link">{% trans %}checkout.create_account_hide{% endtrans %}</a>
         </div>
     </div>
-
-    <div class="text-center checkout__contact-information__forgot-password hide">{% trans %}content.forgot_password{% endtrans %} <a>{% trans %}link.forgot_password{% endtrans %}</a></div>
 
     <div class="form-group checkout__contact-information__form-first-name">
         <input type="text" class="form-control" id="contact-information-first-name" name="customer[first_name]"

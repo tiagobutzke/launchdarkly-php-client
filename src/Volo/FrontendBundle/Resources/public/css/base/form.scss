@@ -357,3 +357,10 @@ select {
 }
 
 // ----------------------- FORM ERRORS END -----------------------------
+
+.position-absolute__top-right {
+  position: absolute;
+  top: 13px;
+  right: $space-sm;
+  font-size: $font-size-1_4rem;
+}

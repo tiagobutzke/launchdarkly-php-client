@@ -5,7 +5,7 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
         'click .checkout__contact-information__title-link': '_switchFormVisibility',
         'click .checkout__contact-information__register-link': '_showRegistrationFields',
         'click .checkout__contact-information__hide-register-link': '_hideRegisterFields',
-        'click .checkout__contact-information__forgot-password': '_openForgotPasswordModal',
+        'click .checkout__contact-information__forgot-password-link': '_openForgotPasswordModal',
         'blur #contact-information-email': '_checkIfUserExists'
     },
 
@@ -103,9 +103,6 @@ VOLO.CheckoutContactInformationView = Backbone.View.extend({
 
     _showLoginField: function() {
         //additional validation
-        this.contactInformationForm.constraints["customer[password]"] = {
-            presence: true
-        };
 
         this.contactInformationForm.cleanErrorMessages();
         delete this.contactInformationForm.constraints["customer[mobile_number]"];
