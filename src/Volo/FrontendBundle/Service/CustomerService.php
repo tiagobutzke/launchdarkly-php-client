@@ -176,13 +176,20 @@ class CustomerService
      */
     protected function updateCustomerInSession(AuthenticatedCustomer $authenticatedCustomer)
     {
-        if ($authenticatedCustomer->getToken() === null) {
+        $accessToken = $authenticatedCustomer->getToken();
+
+        if ($accessToken === null) {
             return;
+        }
+
+        // Backwards compatibility, in API 2.62 the token field contains an accessToken object
+        if (is_array($accessToken)) {
+            $accessToken = $accessToken['access_token'];
         }
 
         $username = sprintf('%s %s', $authenticatedCustomer->getFirstName(), $authenticatedCustomer->getLastName());
         $token    = new Token($username, ['customer' => $authenticatedCustomer], ['ROLE_CUSTOMER']);
-        $token->setAttribute('tokens', new AccessToken($authenticatedCustomer->getToken(), 'bearer'));
+        $token->setAttribute('tokens', new AccessToken($accessToken, 'bearer'));
         $this->tokenStorage->setToken($token);
     }
 
