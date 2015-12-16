@@ -435,9 +435,9 @@
 }
 
 .menu__allergy-modal__item {
-  padding-left: 30px;
   line-height: 1.5;
-  padding-bottom: 5px;
+  white-space: nowrap;
+  margin-bottom: 5px;
 }
 
 .menu__allergy-modal__item-icon {
@@ -445,7 +445,22 @@
   font-size: 1.7rem;
   display: inline-block;
   width: 30px;
-  margin-left: -30px;
+}
+
+.menu__allergy-modal__item-number {
+  display: inline-block;
+  vertical-align:top;
+  width: 16px;
+  margin-right: 2px;
+  text-align: right;
+}
+
+.menu__allergy-modal__item-text {
+  display: inline-block;
+  white-space: normal;
+  word-break: normal;
+  vertical-align:top;
+  margin-right: 50px;
 }
 
 // -------------------------- ALLERGY MODAL END --------------------------
