@@ -13,7 +13,10 @@ VOLO.CheckoutContactInformationForm = VOLO.ContactInformationForm.extend({
     },
 
     isUserLoggingIn: function() {
-        return this.$('.checkout__contact-information__password-wrapper').is(':visible');
+        return (
+            this.$('.checkout__contact-information__password-wrapper').is(':visible') &&
+            !this.isUserRegistering()
+        );
     },
 
     processForm: function() {
