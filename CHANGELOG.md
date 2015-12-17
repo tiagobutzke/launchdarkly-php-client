@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.100.1
+ * INTVOLO-164 enabling newsletter section
+
 * 1.100.0
  * INTVOLO-712-edge-resize-cart-issue
  * INTVOLO-1288 Updates SEO for the vendors, locations, static pages
