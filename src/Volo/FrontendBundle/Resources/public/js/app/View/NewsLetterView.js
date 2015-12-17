@@ -68,13 +68,19 @@ VOLO.NewsLetterView = Backbone.View.extend({
     },
 
     _showSubscribeError: function(response) {
-        var errors = _.get(response, 'responseJSON.error.errors');
+        var errors = _.get(response, 'responseJSON.error.errors.data.items', []),
+            errorMessage = _.get(response, 'responseJSON.error.errors.message', null);
 
         this._enableSubmitButton();
         this.$('.form__error-message').remove();
-        _.each(errors, function(error) {
-            var $target = $('[name="newsletter[{fieldName}]"'.replace('{fieldName}', error.field_name));
-            this.validationView.createErrorMessage(error.violation_messages[0], $target);
-        }.bind(this));
+
+        if (null !== errorMessage) {
+            this.validationView.createErrorMessage(errorMessage, this.$('[name="newsletter[email]"]'));
+        } else {
+            _.each(errors, function (error) {
+                var $target = $('[name="newsletter[{fieldName}]"'.replace('{fieldName}', error.field_name));
+                this.validationView.createErrorMessage(error.violation_messages[0], $target);
+            }.bind(this));
+        }
     }
 });
