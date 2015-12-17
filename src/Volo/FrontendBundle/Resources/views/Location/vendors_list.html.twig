@@ -126,8 +126,23 @@
         {% if gpsSearch %}
             <div class="restaurants__filter-tooltip tooltip tooltip--align-left bottom in hide">
                 <div class="tooltip-inner tooltip-inner--white-with-border">
+                    <div class="restaurants__filter-form-budgets">
+                        <div class="restaurants__filter-form__head restaurants__filter-form-budgets-head clearfix">
+                            <div class="restaurants__filter-form__head-line">{% trans %}restaurants_filter.budget{% endtrans %}</div>
+                            <div class="restaurants__filter-form__head-cancel-budgets hide">{% trans %}restaurants_filter.clear{% endtrans %}</div>
+                        </div>
+                        <div class="restaurants__filter-budgets-button-wrapper">
+                            <div class="restaurants__filter-budgets-button" data-budget="1">$</div>
+                        </div>
+                        <div class="restaurants__filter-budgets-button-wrapper">
+                            <div class="restaurants__filter-budgets-button" data-budget="2">$$</div>
+                        </div>
+                        <div class="restaurants__filter-budgets-button-wrapper">
+                            <div class="restaurants__filter-budgets-button" data-budget="3">$$$</div>
+                        </div>
+                    </div>
                     {% if (filters.cuisine|length > 0) %}
-                        <form class="restaurants__filter-form-cuisines clearfix">
+                        <form class="restaurants__filter-form-cuisines restaurants__filter-form-border-top clearfix">
                             <div class="restaurants__filter-form__head clearfix">
                                 <div class="restaurants__filter-form__head-line">{% trans %}restaurants_filter.cuisines{% endtrans %}</div>
                                 <div class="restaurants__filter-form__head-cancel-cuisines hide">{% trans %}restaurants_filter.clear{% endtrans %}</div>

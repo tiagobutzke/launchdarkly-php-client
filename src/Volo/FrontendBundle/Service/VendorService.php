@@ -195,6 +195,7 @@ class VendorService
      * @param array $includes
      * @param array $cuisines
      * @param array $foodCharacteristics
+     * @param array $budgets
      *
      * @return VendorsCollection
      */
@@ -202,13 +203,15 @@ class VendorService
         LocationInterface $location,
         array $includes = ['cuisines', 'metadata', 'food_characteristics'],
         array $cuisines = [],
-        array $foodCharacteristics = []
+        array $foodCharacteristics = [],
+        array $budgets = []
     ) {
         $vendorsResult = $this->vendorProvider->findVendorsByLocation(
             $location,
             array_merge($includes, ['schedules']),
             $cuisines,
-            $foodCharacteristics
+            $foodCharacteristics,
+            $budgets
         );
 
         /** @var VendorsCollection $vendorsCollection */

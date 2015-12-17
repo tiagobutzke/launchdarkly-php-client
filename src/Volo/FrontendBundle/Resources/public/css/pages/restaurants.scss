@@ -150,6 +150,34 @@
   &::-webkit-input-placeholder  { opacity: 1; }
 }
 
+.restaurants__filter-form-budgets {
+  @include make-row(10px);
+}
+
+.restaurants__filter-budgets-button-wrapper {
+  @include make-xs-column(4, 10px);
+}
+
+.restaurants__filter-budgets-button {
+  border-radius: $border-radius-default;
+  cursor: pointer;
+  background-color: $color-bg-primary;
+  color: $color-text-secondary;
+  border: $base-border;
+  line-height: 30px;
+  height: 30px;
+  text-align: center;
+}
+
+.restaurants__filter-budgets-button--active {
+  color: $base-cta-color;
+  border-color: $base-cta-color;
+}
+
+.restaurants__filter-form-budgets-head {
+  @include make-xs-column(12, 10px);
+}
+
 .restaurants__filter {
   width: 13%;
   position: relative;
@@ -226,9 +254,13 @@
 }
 
 .restaurants__filter-form-border-top {
-  border-top: $base-border;
+  border-top: $base-border-lighter;
   margin-top: $space-md;
   padding-top: $space-md;
+}
+
+.restaurants__filter-form-food-characteristics {
+  margin-top: 6px;
 }
 
 .restaurants__filter-form-group {
@@ -245,7 +277,8 @@
 }
 
 .restaurants__filter-form__head-cancel-cuisines,
-.restaurants__filter-form__head-cancel-food-characteristics {
+.restaurants__filter-form__head-cancel-food-characteristics,
+.restaurants__filter-form__head-cancel-budgets {
   float: right;
   @include make-link();
   margin-left: $space-sm;
