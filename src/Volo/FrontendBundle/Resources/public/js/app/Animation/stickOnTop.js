@@ -45,7 +45,7 @@ var StickOnTop  = (function() {
             return false;
         }
 
-        return _.isFunction(this.stickOnTopValueGetter) && _.isFunction(this.startingPointGetter);
+        return this.isVisible() && _.isFunction(this.stickOnTopValueGetter) && _.isFunction(this.startingPointGetter);
     };
 
     // reset state, recalculate the starting values and save a new target
@@ -70,6 +70,15 @@ var StickOnTop  = (function() {
         }
     };
 
+    StickOnTop.prototype.isVisible = function() {
+        var root = (
+            _.get(this, 'domObjects.$target[0]') ||
+            _.get(this, 'domObjects.$container[0]')
+        );
+
+        return VOLO.util.isElementVisible(root);
+    };
+
     // rendering the position of the sticking element
     StickOnTop.prototype.redraw = function() {
         this.windowScrollTop = this.$window.scrollTop();
@@ -77,24 +86,20 @@ var StickOnTop  = (function() {
         // target after starting point
         if ((this.windowScrollTop + this.stickOnTopValue) > this.startingPoint) {
             // if not below not-sticking breakpoint start sticking
-            if (this.$window.outerWidth() >= this.noStickyBreakPoint) {
-                this._addSticking();
-
-                if (this.domObjects.$target && this.domObjects.$target.length) {
-                    this.targetHeight = this.domObjects.$target.outerHeight();
-                    if (this.endpoint) {
-                        // target is before end point
-                        if (this.endpoint > this.windowScrollTop + this.stickOnTopValue + this.targetHeight) {
-                            // reset this.target position to normal if just exited the 'under the endpoint area'
-                            this._setTargetTop(this.stickOnTopValue);
+            this._addSticking();
+            if (this.domObjects.$target && this.domObjects.$target.length) {
+                this.targetHeight = this.domObjects.$target.outerHeight();
+                if (this.endpoint) {
+                    // target is before end point
+                    if (this.endpoint > this.windowScrollTop + this.stickOnTopValue + this.targetHeight) {
+                        // reset this.target position to normal if just exited the 'under the endpoint area'
+                        this._setTargetTop(this.stickOnTopValue);
                         // target is after end point, stopping scroll by scrolling in opposite direction
-                        } else {
-                            this._setTargetTop(-(this.targetHeight - (this.endpoint - this.windowScrollTop)));
-                        }
+                    } else {
+                        this._setTargetTop(-(this.targetHeight - (this.endpoint - this.windowScrollTop)));
                     }
                 }
             }
-
         // target is before starting point
         } else {
             this._removeSticking();
