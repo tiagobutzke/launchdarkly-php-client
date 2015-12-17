@@ -1,6 +1,7 @@
 {% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
 
 {% set openVendors = [] %}
+{% set seoCmsBlockCode = 'seo-city-{city}' |  replace({'{city}': city.urlKey}) %}
 {% set closedVendors = [] %}
 {% set cuisineFilterMaximum = 14 %}
 {% set foodCharacteristicsFilterMaximum = 6 %}
@@ -29,9 +30,45 @@
     {% if gpsSearch %}
         {{ cms('seo.title.vendor_listing_page') | replace({'{city}': formattedLocation.city, '{zipcode}': formattedLocation.postcode}) }}
     {% else %}
-        {{ cms('seo.title.city_page') | replace({'{city}': city.name}) }}
+        {% set title = cms_title(seoCmsBlockCode, 'seo-city-default') %}
+        {% if title %}
+            {{ title | replace({'{city}': city.name}) | cms_seo_replace_company }}
+        {% else %}
+            {{ cms('seo.title.city_page') | replace({'{city}': city.name}) }}
+        {% endif %}
     {% endif %}
 {% endblock %}
+
+{% block head_meta_seo %}
+    {% if gpsSearch %}
+        <meta name="description" content="{{ cms('seo.description.vendor_listing_page') | replace({'{city}': formattedLocation.city, '{zipcode}': formattedLocation.postcode}) }}">
+    {% else %}
+        {% set seoDescription = cms_description(seoCmsBlockCode, 'seo-city-default') %}
+        {% if seoDescription %}
+            <meta name="description" content="{{ seoDescription | replace({'{city}': city.name}) | cms_seo_replace_company }}">
+        {% else %}
+            <meta name="description" content="{{ cms('seo.description.city_page') | replace({'{city}': city.name}) }}">
+        {% endif %}
+    {% endif %}
+
+    {% set seoRobots = cms_robots(seoCmsBlockCode, 'seo-city-default') %}
+    {% if seoRobots %}
+        <meta name="robots" content="{{ seoRobots }}">
+    {% else %}
+        <meta name="robots" content="{{ app.request.query | length > 0  or gpsSearch ? 'noindex' : 'index' }}, follow">
+    {% endif %}
+
+
+    {% if city is not null %}
+        <meta property="og:image" content="https://volo-images.s3.amazonaws.com/production/{{ country_code }}/city-{{ city.id }}.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="500" />
+        <link rel="canonical" href="{{ url('volo_location_search_vendors_by_city', {cityUrlKey: city.urlKey}) }}" />
+    {% endif %}
+
+    {{ cms_keywords(seoCmsBlockCode, 'seo-city-default') }}
+{% endblock %}
+
 {% block body_class %}restaurants {% if not gpsSearch %}restaurants--no-address{% endif %}{% endblock %}
 {% block gtm_page_type %}Restaurant List Page{% endblock %}
 {% block google_tag_manager_before %}
@@ -44,22 +81,6 @@
         'serviceArea': '{% if (openVendors|length > 0) or (closedVendors|length > 0) %}True{% else %}False{% endif %}'
     });
 </script>
-{% endblock %}
-
-{% block head_meta_seo %}
-    {% if gpsSearch %}
-        <meta name="description" content="{{ cms('seo.description.vendor_listing_page') | replace({'{city}': formattedLocation.city, '{zipcode}': formattedLocation.postcode}) }}">
-    {% else %}
-        <meta name="description" content="{{ cms('seo.description.city_page') | replace({'{city}': city.name}) }}">
-    {% endif %}
-    <meta name="robots" content="{{ app.request.query | length > 0  or gpsSearch ? 'noindex' : 'index' }}, follow">
-
-    {% if city is not null %}
-        <meta property="og:image" content="https://volo-images.s3.amazonaws.com/production/{{ country_code }}/city-{{ city.id }}.jpg" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="500" />
-        <link rel="canonical" href="{{ url('volo_location_search_vendors_by_city', {cityUrlKey: city.urlKey}) }}" />
-    {% endif %}
 {% endblock %}
 
 {% block footer_scripts %}

@@ -120,6 +120,7 @@
         <service id="volo_frontend.service.customer_manager" alias="volo_frontend.provider.customer" />
         <service id="volo_frontend.twig.cms_extension" class="%volo_frontend.twig.cms_extension.class%">
             <argument type="service" id="volo_frontend.service.cms" />
+            <argument>%country_code%</argument>
             <tag name="twig.extension" />
         </service>
 
