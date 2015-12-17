@@ -1,5 +1,7 @@
 CHANGELOG
 =========
+* 1.101.0
+ * INTVOLO-1801 add budget to filters
 
 * 1.100.1
  * INTVOLO-164 enabling newsletter section
