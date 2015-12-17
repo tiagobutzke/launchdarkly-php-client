@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.99.1
+ * INTVOLO-1859 fixed method isUserLoggingIn
+
 * 1.99.0
  * INTVOLO-1819 handling access token in /customers API 2.62
 
