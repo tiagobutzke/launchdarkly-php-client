@@ -404,7 +404,7 @@ class ScheduleService
     private function filterSpecialDays(Vendor $vendor, \DateTime $end)
     {
         foreach ($vendor->getSpecialDays() as $i => $specialDay) {
-            if ($i > 2 || $end->getTimestamp() < strtotime($specialDay->getDate())) {
+            if ($i > 10 || $end->getTimestamp() < strtotime($specialDay->getDate())) {
                 $vendor->getSpecialDays()->removeElement($specialDay);
             }
         }
