@@ -5,7 +5,7 @@ VOLO.gtmViews = []; //all views, which needs GTM should go here
 
 $(document).ready(VOLO.documentReadyFunction);
 VOLO.createFloodBannerModel = function() {
-    VOLO.floodBannerModel = VOLO.floodBannerModel || new Backbone.Model({
+    VOLO.floodBannerModel = new Backbone.Model({
         hiddenByUser: false
     });
 
@@ -62,6 +62,16 @@ VOLO.createLocationModel = function (jsonLocation) {
     VOLO.locationModel = VOLO.locationModel || new LocationModel(jsonLocation);
 
     return VOLO.locationModel;
+};
+
+VOLO.createEventLocationModel = function (jsonVendorLocation, jsonCityLocation, jsonUserLocation) {
+    if (!_.isEmpty(jsonVendorLocation)) {
+        return new LocationModel(jsonVendorLocation);
+    } else if (!_.isEmpty(jsonCityLocation)) {
+        return new LocationModel(jsonCityLocation);
+    }
+
+    return new LocationModel(jsonUserLocation);
 };
 
 VOLO.createCheckoutModel = function (cartModel) {
@@ -659,7 +669,8 @@ VOLO.doBootstrap = function(configuration) {
     GTMServiceInstance.fireVirtualPageView();
 
     var floodBannerModel = VOLO.createFloodBannerModel(),
-        bannersView = VOLO.createBannersView(locationModel, floodBannerModel);
+        eventLocationModel = VOLO.createEventLocationModel(VOLO.jsonVendorLocation, VOLO.jsonCityLocation, locationModel.toJSON()),
+        bannersView = VOLO.createBannersView(eventLocationModel, floodBannerModel);
     bannersView.render();
 
     _.invoke(VOLO.gtmViews, 'onGtmServiceCreated');

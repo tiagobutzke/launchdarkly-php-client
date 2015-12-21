@@ -40,7 +40,7 @@ VOLO.BannersView = Backbone.View.extend({
     },
 
     _locationChanged: function() {
-        this.floodBannerModel.set('hiddenByUser', false);
+        //this.floodBannerModel.set('hiddenByUser', false);
 
         if (this.iOSBanner.shouldBeDisplayed() || this.androidBanner.shouldBeDisplayed()) {
             return;

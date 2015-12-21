@@ -223,8 +223,7 @@ class VendorService
 
         $this->updateExtraProperties($vendorsCollection);
 
-        if (
-            $location instanceof GpsLocation
+        if ($location instanceof GpsLocation
             && $location->getLatitude() !== null
             && $location->getLongitude() !== null
         ) {
@@ -363,6 +362,10 @@ class VendorService
             if (!$hasEvent) {
                 $vendor->getMetadata()->getEvents()->add($event);
             }
+        }
+
+        if (count($userEvents) === 0) {
+            $vendor->getMetadata()->setEvents($vendorMetaData->getEvents());
         }
     }
 

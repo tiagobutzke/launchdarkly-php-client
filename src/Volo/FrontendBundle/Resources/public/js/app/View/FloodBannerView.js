@@ -20,7 +20,7 @@ VOLO.FloodBannerView = Backbone.View.extend({
 
     hide: function() {
         this.$body.removeClass('show-flood-banner');
-        this.model.set('hiddenByUser', true);
+        //this.model.set('hiddenByUser', true);
 
         this.trigger('flood-banner:hide');
     },
@@ -28,18 +28,19 @@ VOLO.FloodBannerView = Backbone.View.extend({
     shouldBeDisplayed: function() {
         var deferred = $.Deferred(),
             lat = this.locationModel.get('latitude'),
+            xhr,
             lng = this.locationModel.get('longitude');
 
-
-        if (this.model.get('hiddenByUser')) { //user hide msg, it should stay hidden
-            deferred.resolve(false);
-        } else if (!this.$body.hasClass('menu') && !this.$body.hasClass('restaurants')) { //only on vendors/menu pages
+        if (!this.$body.hasClass('menu') && !this.$body.hasClass('restaurants')) { //only on vendors/menu pages
             deferred.resolve(false);
         } else if (!lat || !lng) { //we need lat/lng, if we don't have it, don't show it
             deferred.resolve(false);
         } else { //else ask server
-            var xhr = this._getEvents(lat, lng);
-
+            if (this.$body.hasClass('menu') && _.has($('.menu__list-wrapper').data(), 'vendor.id')) {
+                xhr = this._getEventsByVendor(this.vendorId = $('.menu__list-wrapper').data().vendor.id, lat, lng);
+            } else {
+                xhr = this._getEvents(lat, lng);
+            }
             xhr.then(function(response) {
                 if (response.items && response.items.length) {
                     this.$('.flood-banner__content').text(response.items[0]);
@@ -58,6 +59,13 @@ VOLO.FloodBannerView = Backbone.View.extend({
         return $.ajax({
             method: 'GET',
             url: Routing.generate('api_events_get', {latitude: lat, longitude: lng})
+        });
+    },
+
+    _getEventsByVendor: function(vendorId, lat, lng) {
+        return $.ajax({
+            method: 'GET',
+            url: Routing.generate('api_events_get_by_vendor', {vendorId: vendorId, latitude: lat, longitude: lng})
         });
     },
 

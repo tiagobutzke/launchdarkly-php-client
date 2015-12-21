@@ -47,6 +47,7 @@
         <parameter key="volo_frontend.event_listener.app_version_listener.class">Volo\FrontendBundle\EventListener\AppVersionListener</parameter>
         <parameter key="volo_frontend.provider.locale_config_provider.class">Volo\FrontendBundle\Provider\LocaleConfigProvider</parameter>
         <parameter key="volo_frontend.provider.address_config_provider.class">Volo\FrontendBundle\Provider\AddressConfigProvider</parameter>
+        <parameter key="volo_frontend.provider.city_location_provider.class">Volo\FrontendBundle\Provider\CityLocationProvider</parameter>
         <parameter key="volo_frontend.service.event_service.class">Volo\FrontendBundle\Service\EventService</parameter>
         <parameter key="translator.class">Volo\FrontendBundle\Service\TranslatorService</parameter>
         <parameter key="volo_frontend.service.special_instructions_tutorial.class">Volo\FrontendBundle\Service\SpecialInstructionsTutorialService</parameter>
@@ -64,6 +65,8 @@
         <service id="volo_frontend.provider.address_config_provider" class="%volo_frontend.provider.address_config_provider.class%">
             <argument>%address_config%</argument>
         </service>
+
+        <service id="volo_frontend.provider.city_location_provider" class="%volo_frontend.provider.city_location_provider.class%" />
 
         <service id="volo_frontend.service.special_instructions_tutorial" class="%volo_frontend.service.special_instructions_tutorial.class%">
             <argument id="volo_frontend.service.customer" type="service"/>
