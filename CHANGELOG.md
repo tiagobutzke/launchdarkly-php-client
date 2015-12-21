@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-* 1.10.2.3
+* 1.102.3
  * INTVOLO-1893 city page hotfix
 
 * 1.102.2
