@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.102.1
+ * INTVOLO-1629 using +10 special days
+
 * 1.102.0
  * INTVOLO-1798 Flood Feature v2.0
 
