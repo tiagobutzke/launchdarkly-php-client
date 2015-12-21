@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.102.2
+ * INTVOLO-1629 using +14 special days
+
 * 1.102.1
  * INTVOLO-1629 using +10 special days
 
