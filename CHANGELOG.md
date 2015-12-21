@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.10.2.3
+ * INTVOLO-1893 city page hotfix
+
 * 1.102.2
  * INTVOLO-1629 using +14 special days
 
