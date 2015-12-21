@@ -82,24 +82,9 @@ class LocationController extends BaseController
             return $this->redirectToRoute('volo_location_search_vendors_by_city', ['cityUrlKey' => $city->getUrlKey()]);
         }
 
-        try {
-            $gpsLocation = $this->getCityLocationProvider()->findGpsLocationByCode($city->getUrlKey());
-            $cityLocation = $this->getCustomerLocationService()->create(
-                $gpsLocation->getLatitude(),
-                $gpsLocation->getLongitude(),
-                null,
-                null,
-                null
-            );
-        } catch (CityNotFoundException $e) {
-            $gpsLocation = $location;
-            $cityLocation = [];
-        }
+        $vendors = $this->getVendorService()->findAll($location);
 
-        $vendors = $this->getVendorService()->findAll($gpsLocation);
-
-        return $this->prepareViewData($request, $location, $formattedLocation, $vendors, $city, $cityLocation);
-
+        return $this->prepareViewData($request, $location, $formattedLocation, $vendors, $city);
     }
 
     /**
