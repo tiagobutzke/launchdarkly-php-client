@@ -1,5 +1,9 @@
 CHANGELOG
 =========
+
+* 1.102.0
+ * INTVOLO-1798 Flood Feature v2.0
+
 * 1.101.0
  * INTVOLO-1801 add budget to filters
 
