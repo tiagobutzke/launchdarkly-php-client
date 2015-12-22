@@ -15,15 +15,27 @@
   border-radius: 0;
 }
 
-.modal-error-message {
-  color: $error-msg-color-text;
+.modal-message {
   padding: $space-xs $space-sm;
-  background-color: $error-msg-color-bg;
   font-size: $font-size-1_4rem;
   @include respond-from("screen-md") {
     font-size: $font-size-1_4rem;
   }
 }
+
+.modal-success-message {
+  @extend .modal-message;
+  color: $success-msg-color-text;
+  background-color: $success-msg-color-bg;
+  margin-bottom: $space-md;
+}
+
+.modal-error-message {
+  @extend .modal-message;
+  color: $error-msg-color-text;
+  background-color: $error-msg-color-bg;
+}
+
 
 .modal-content--loading > * {
   opacity: 0.5;

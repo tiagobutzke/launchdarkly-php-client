@@ -155,6 +155,11 @@ var LoginRegistrationView = Backbone.View.extend({
             target = document.getElementById('spinner-wrapper'),
             spinner = new Spinner();
 
+
+        $(target).addClass('modal-content--loading');
+        spinner.spin(target);
+        $form.find('button').prop("disabled", true);
+
         $.ajax({
             type: $form.attr('method'),
             url: $form.attr('action'),
@@ -169,6 +174,7 @@ var LoginRegistrationView = Backbone.View.extend({
                 spinner.stop();
                 $(target).removeClass('modal-content--loading');
                 this.render();
+                this.$('.modal__success-message__reset-password.hide').removeClass('hide');
             }.bind(this),
             error: function (data) {
                 spinner.stop();
