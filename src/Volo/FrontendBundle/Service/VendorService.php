@@ -13,6 +13,7 @@ use Foodpanda\ApiSdk\Entity\Vendor\Vendor;
 use Foodpanda\ApiSdk\Entity\Vendor\VendorResults;
 use Foodpanda\ApiSdk\Entity\Vendor\VendorsCollection;
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
+use Foodpanda\ApiSdk\Exception\MalformedResponseException;
 use Foodpanda\ApiSdk\Provider\CityProvider;
 use Foodpanda\ApiSdk\Provider\VendorProvider;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -244,11 +245,15 @@ class VendorService
     public function attachMetaData(Vendor $vendor, $latitude, $longitude)
     {
         if ($latitude !== null && $longitude !== null) {
-            // Needed because vendor API call doesn't return all events metadata
-            $vendorMeta = $this->vendorProvider->findMetaData($vendor->getId(), $latitude, $longitude);
+            try {
+                // Needed because vendor API call doesn't return all events metadata
+                $vendorMeta = $this->vendorProvider->findMetaData($vendor->getId(), $latitude, $longitude);
+                $vendor->getMetadata()->setEvents($vendorMeta->getMetadata()->getEvents());
+                $vendor->getMetadata()->setCloseReasons($vendorMeta->getMetadata()->getCloseReasons());
+            } catch (MalformedResponseException $e) {
+                // check https://jira.rocket-internet.de/browse/INTVOLO-1898
+            }
 
-            $vendor->getMetadata()->setEvents($vendorMeta->getMetadata()->getEvents());
-            $vendor->getMetadata()->setCloseReasons($vendorMeta->getMetadata()->getCloseReasons());
         }
 
         return $vendor;
