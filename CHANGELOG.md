@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.102.4
+ * INTVOLO-1898 API returning false should be treated
+
 * 1.102.3
  * INTVOLO-1893 city page hotfix
 
