@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.103.0
+ * INTVOLO-1905 new relic transaction name
+
 * 1.102.4
  * INTVOLO-1898 API returning false should be treated
 
