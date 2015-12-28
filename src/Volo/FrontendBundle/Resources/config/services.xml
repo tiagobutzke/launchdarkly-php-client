@@ -45,6 +45,7 @@
         <parameter key="volo_frontend.event_listener.locale_listener.class">Volo\FrontendBundle\EventListener\LocaleListener</parameter>
         <parameter key="volo_frontend.event_listener.app_version_cookie_factory.class">Volo\FrontendBundle\EventListener\AppVersionCookieFactory</parameter>
         <parameter key="volo_frontend.event_listener.app_version_listener.class">Volo\FrontendBundle\EventListener\AppVersionListener</parameter>
+        <parameter key="volo_frontend.event_listener.new_relic_transaction_name_listener.class">Volo\FrontendBundle\EventListener\NewRelicTransactionNameListener</parameter>
         <parameter key="volo_frontend.provider.locale_config_provider.class">Volo\FrontendBundle\Provider\LocaleConfigProvider</parameter>
         <parameter key="volo_frontend.provider.address_config_provider.class">Volo\FrontendBundle\Provider\AddressConfigProvider</parameter>
         <parameter key="volo_frontend.provider.city_location_provider.class">Volo\FrontendBundle\Provider\CityLocationProvider</parameter>
@@ -105,6 +106,11 @@
                  class="Volo\FrontendBundle\EventListener\DefaultTimeZoneListener">
             <argument>%timezone%</argument>
             <tag name="kernel.event_listener" event="kernel.request" method="setDefaultTimeZone" priority="100" />
+        </service>
+
+        <service id="volo_frontend.event_listener.new_relic_transaction_name_listener"
+                 class="%volo_frontend.event_listener.new_relic_transaction_name_listener.class%">
+            <tag name="kernel.event_listener" event="kernel.controller" method="setTransactionName" priority="255" />
         </service>
 
         <service id="volo_frontend.twig.volo_extension" class="%volo_frontend.twig.volo_extension.class%">
