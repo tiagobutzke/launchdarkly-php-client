@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.103.2
+ * INTVOLO-1907 configuration object cached
+
 * 1.103.1
  * Added api-sdk caller parameter
 
