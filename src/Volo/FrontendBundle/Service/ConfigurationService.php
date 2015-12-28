@@ -12,6 +12,8 @@ class ConfigurationService
      */
     protected $configurationProvider;
 
+    private $configurationInstance;
+
     /**
      * @param ConfigurationProvider $configurationProvider
      */
@@ -27,6 +29,10 @@ class ConfigurationService
      */
     public function getConfiguration()
     {
-        return $this->configurationProvider->findAll();
+        if (null === $this->configurationInstance) {
+            $this->configurationInstance = $this->configurationProvider->findAll();
+        }
+
+        return $this->configurationInstance;
     }
 }
