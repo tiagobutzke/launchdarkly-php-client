@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.103.1
+ * Added api-sdk caller parameter
+
 * 1.103.0
  * INTVOLO-1905 new relic transaction name
 
