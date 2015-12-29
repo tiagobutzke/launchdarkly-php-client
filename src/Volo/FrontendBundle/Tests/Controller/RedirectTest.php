@@ -38,15 +38,13 @@ class RedirectTest extends VoloTestCase
      */
     public function testRestaurants($path, $target)
     {
-        $this->markTestSkipped('Temporarily skipped to deploy flood feature v2 (INTVOLO-1798)');
-
-        return;
 
         $client = static::createClient();
 
         $client->request('GET', $path);
 
-        $this->assertEquals(Response::HTTP_MOVED_PERMANENTLY,
+        $this->assertEquals(
+            Response::HTTP_MOVED_PERMANENTLY,
             $client->getResponse()->getStatusCode(),
             sprintf('status code should be "%s", got "%s" for "%s"', Response::HTTP_MOVED_PERMANENTLY, $client->getResponse()->getStatusCode(), $path)
         );

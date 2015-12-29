@@ -9,17 +9,14 @@ class RedirectTrailingSlashesControllerTest extends VoloTestCase
 {
     public function testRedirectTrailingSlashAction()
     {
-        $this->markTestSkipped('Temporarily skipped to deploy flood feature v2 (INTVOLO-1798)');
-
-        return;
-
         $client = static::createClient();
         $path = '/city/berlin/';
         $target = '/city/berlin';
 
         $client->request('GET', $path);
 
-        $this->assertEquals(Response::HTTP_MOVED_PERMANENTLY,
+        $this->assertEquals(
+            Response::HTTP_MOVED_PERMANENTLY,
             $client->getResponse()->getStatusCode(),
             sprintf('status code should be "%s", got "%s" for "%s"', Response::HTTP_MOVED_PERMANENTLY, $client->getResponse()->getStatusCode(), $path)
         );

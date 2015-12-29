@@ -9,12 +9,7 @@ class VendorControllerTest extends VoloTestCase
 {
     public function testRestaurants()
     {
-        $this->markTestSkipped('Temporarily skipped to deploy flood feature v2 (INTVOLO-1798)');
-
-        return;
-
         $client = static::createClient();
-
         $client->request('GET', '/restaurant/s9iz/la-piccola');
 
         $this->isSuccessful($client->getResponse());
@@ -22,10 +17,6 @@ class VendorControllerTest extends VoloTestCase
 
     public function testVendorByCode()
     {
-        $this->markTestSkipped('Temporarily skipped to deploy flood feature v2 (INTVOLO-1798)');
-
-        return;
-
         $client = static::createClient();
 
         $path = '/restaurant/s9iz';
@@ -33,7 +24,8 @@ class VendorControllerTest extends VoloTestCase
 
         $target = $client->getRequest()->getSchemeAndHttpHost() . '/restaurant/s9iz/la-piccola';
 
-        $this->assertEquals(Response::HTTP_FOUND,
+        $this->assertEquals(
+            Response::HTTP_FOUND,
             $client->getResponse()->getStatusCode(),
             sprintf('status code should be "%s", got "%s" for "%s"', Response::HTTP_FOUND, $client->getResponse()->getStatusCode(), $path)
         );
@@ -49,10 +41,6 @@ class VendorControllerTest extends VoloTestCase
 
     public function testVendorByUrlKey()
     {
-        $this->markTestSkipped('Temporarily skipped to deploy flood feature v2 (INTVOLO-1798)');
-
-        return;
-
         $client = static::createClient();
 
         $path = '/restaurant/la-piccola';
@@ -87,10 +75,6 @@ class VendorControllerTest extends VoloTestCase
 
     public function testVendorByUrlKeyWithWrongUrlKey()
     {
-        $this->markTestSkipped('Temporarily skipped to deploy flood feature v2 (INTVOLO-1798)');
-
-        return;
-
         $path = '/restaurant/foo-bar';
 
         $client = static::createClient();
@@ -112,9 +96,6 @@ class VendorControllerTest extends VoloTestCase
 
     public function testVendorByCodeWithWrongVendorCode()
     {
-        $this->markTestSkipped('Temporarily skipped to deploy flood feature v2 (INTVOLO-1798)');
-        return;
-
         $client = static::createClient();
 
         $client->request('GET', '/restaurant/a1bc');
@@ -125,9 +106,6 @@ class VendorControllerTest extends VoloTestCase
 
     public function testVendorByUpperCaseCodeWithoutUrlKey()
     {
-        $this->markTestSkipped('Temporarily skipped to deploy flood feature v2 (INTVOLO-1798)');
-        return;
-
         $client = static::createClient();
 
         $client->request('GET', '/restaurant/S9Iz');
@@ -137,10 +115,6 @@ class VendorControllerTest extends VoloTestCase
 
     public function testVendorByUpperCaseUrlKey()
     {
-        $this->markTestSkipped('Temporarily skipped to deploy flood feature v2 (INTVOLO-1798)');
-
-        return;
-
         $client = static::createClient();
 
         $client->request('GET', '/restaurant/LA-PICCOLA');
@@ -150,10 +124,6 @@ class VendorControllerTest extends VoloTestCase
 
     public function testVendorPageSeoIndexFollow()
     {
-        $this->markTestSkipped('Temporarily skipped to deploy flood feature v2 (INTVOLO-1798)');
-
-        return;
-
         $client = static::createClient();
 
         $client->request('GET', '/restaurant/s9iz/la-piccola');
@@ -165,10 +135,6 @@ class VendorControllerTest extends VoloTestCase
 
     public function testVendorByUpperCaseCodeWithUrlKey()
     {
-        $this->markTestSkipped('Temporarily skipped to deploy flood feature v2 (INTVOLO-1798)');
-
-        return;
-
         $client = static::createClient();
 
         $client->request('GET', '/restaurant/S9IZ/la-piccola');
@@ -178,10 +144,6 @@ class VendorControllerTest extends VoloTestCase
 
     public function testVendorByUpperCaseUrlKeyAndCode()
     {
-        $this->markTestSkipped('Temporarily skipped to deploy flood feature v2 (INTVOLO-1798)');
-
-        return;
-
         $client = static::createClient();
 
         $client->request('GET', '/restaurant/s9iz/LA-PICCOLA');
