@@ -22,7 +22,7 @@ class CityLocationProvider
         'dubai' => ['lat' => 25.2048493, 'lng' => 55.2707828],
         // au
         'sydney' => ['lat' => -33.8674769, 'lng' => 151.2069776],
-        'melbourne' => ['lat' => 28.0836269, 'lng' => -80.60810889999999],
+        'melbourne' => ['lat' => -37.815018, 'lng' => 144.946014],
         // at
         'wien' => ['lat' => 48.2081743, 'lng' => 16.3738189],
         // de
@@ -31,7 +31,7 @@ class CityLocationProvider
         'hamburg' => ['lat' => 53.5510846, 'lng' => 9.9936818],
         'muenchen' => ['lat' => 48.1351253, 'lng' => 11.5819806],
         'duesseldorf' => ['lat' => 51.2277411, 'lng' => 6.7734556],
-        'koeln' => ['lat' => 50.937531, 'lng' => 8.6821267],
+        'koeln' => ['lat' => 50.937531, 'lng' => 6.9602786],
         'stuttgart' => ['lat' => 48.7758459, 'lng' => 9.1829321],
         // es
         'barcelona' => ['lat' => 41.3850639, 'lng' => 2.1734035],
