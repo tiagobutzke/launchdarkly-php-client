@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.103.3
+ * INTVOLO-1910 Fix unit tests
+ * INTV0LO-1912 Koln and Melbourne lat/lng wrong
+
 * 1.103.2
  * INTVOLO-1907 configuration object cached
 
