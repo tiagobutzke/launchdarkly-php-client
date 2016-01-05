@@ -100,12 +100,8 @@ VOLO.MapModalView = Backbone.View.extend({
         this.map.setCenter(location.lat(), location.lng());
     },
 
-    _canSubmit: function() {
-        return !!this.autocomplete;
-    },
-
     _submit: function() {
-        if (!this._canSubmit()) {
+        if (!this.autocomplete) {
             return;
         }
 
