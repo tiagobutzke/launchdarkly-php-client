@@ -71,6 +71,7 @@ twig:
         assets_version: %app_version%
         app_version: %app_version%
         checkout_invoice_message: '%show_checkout_invoice_message%'
+        cms_clear_cache_password: '%cms_clear_cache_password%'
 
 monolog:
     channels: ["api", "wit"]
@@ -114,8 +115,8 @@ doctrine_cache:
         cms:
             namespace: %country_code%_%kernel.environment%_cms
             type: file_system
-        cms_all:
-            namespace: %country_code%_%kernel.environment%_cms_all
+        cms_collection:
+            namespace: %country_code%_%kernel.environment%_cms_collection
             type: file_system
 
         health_check_redis:

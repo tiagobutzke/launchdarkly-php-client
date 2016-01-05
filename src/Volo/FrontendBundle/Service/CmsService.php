@@ -2,7 +2,6 @@
 
 namespace Volo\FrontendBundle\Service;
 
-use Doctrine\Common\Cache\Cache;
 use Doctrine\Common\Cache\CacheProvider;
 use Foodpanda\ApiSdk\Entity\Cms\CmsItem;
 use Foodpanda\ApiSdk\Exception\EntityNotFoundException;
@@ -10,6 +9,8 @@ use Foodpanda\ApiSdk\Provider\CmsProvider;
 
 class CmsService
 {
+    const CACHE_CMS_BLOCK_TTL = 172800;
+
     /**
      * @var CmsProvider
      */
@@ -27,7 +28,8 @@ class CmsService
 
     /**
      * @param CmsProvider $cmsProvider
-     * @param Cache $cache
+     * @param CacheProvider $cache
+     * @param CacheProvider $cacheAll
      */
     public function __construct(CmsProvider $cmsProvider, CacheProvider $cache, CacheProvider $cacheAll)
     {
@@ -50,12 +52,11 @@ class CmsService
             $cmsItems = $this->cmsProvider->findAll();
 
             foreach ($cmsItems as $item) {
-                $this->cache->save(strtolower($item->getCode()), $item, 172800);
+                $this->cache->save(strtolower($item->getCode()), $item, self::CACHE_CMS_BLOCK_TTL);
             }
 
-            $this->cacheAll->save('all', 1, 172800);
+            $this->cacheAll->save('all', 1, self::CACHE_CMS_BLOCK_TTL);
         }
-
 
         if ($this->cache->contains($code)) {
             $element = $this->cache->fetch($code);
@@ -68,8 +69,8 @@ class CmsService
         return $element;
     }
 
-    public function delete()
+    public function clearCmsCache()
     {
-        $this->cache->delete('');
+        $this->cacheAll->delete('all');
     }
 }
