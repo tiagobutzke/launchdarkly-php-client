@@ -114,6 +114,10 @@ doctrine_cache:
         cms:
             namespace: %country_code%_%kernel.environment%_cms
             type: file_system
+        cms_all:
+            namespace: %country_code%_%kernel.environment%_cms_all
+            type: file_system
+
         health_check_redis:
             redis:
                 connection_id: volo_frontend_redis_connection_service
