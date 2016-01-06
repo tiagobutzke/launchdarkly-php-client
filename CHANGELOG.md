@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.105.0
+ * INTVOLO-1909 improve cms cache
+
 * 1.104.0
  * INTVOLO-1936 remove unused countries
 
