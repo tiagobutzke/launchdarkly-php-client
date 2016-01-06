@@ -102,7 +102,7 @@ VOLO.MapModalView = Backbone.View.extend({
 
     _submit: function() {
         if (!this.autocomplete) {
-            return;
+            return false;
         }
 
         this._updatePositionFromInput().then(function() {
