@@ -12,4 +12,4 @@ twig:
 monolog:
     handlers:
         slack:
-            channel:    C0920RZ46
+            channel:    C0HPTJCBD
