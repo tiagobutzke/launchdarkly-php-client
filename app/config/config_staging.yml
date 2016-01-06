@@ -6,6 +6,9 @@ parameters:
     trackjs_application: 'foodora-staging'
     cms_clear_cache_password: 'foodora-staging-cms-clear-cache'
 
+twig:
+    strict_variables: true
+
 monolog:
     handlers:
         slack:
