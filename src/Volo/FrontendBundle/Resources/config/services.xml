@@ -302,6 +302,7 @@
         <service id="volo_frontend.service.cms" class="Volo\FrontendBundle\Service\CmsService">
             <argument type="service" id="volo_frontend.provider.cms" />
             <argument type="service" id="doctrine_cache.providers.cms" />
+            <argument type="service" id="doctrine_cache.providers.cms_collection" />
         </service>
     </services>
 </container>

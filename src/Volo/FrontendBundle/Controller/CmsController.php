@@ -11,17 +11,21 @@ class CmsController extends BaseController
     /**
      * @Route("/contents/{code}", name="cms")
      * @Template()
+     *
+     * @param $code
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction($code)
     {
         try {
-            $element = $this->get('volo_frontend.service.cms')->findByCode($code, false);
+            $element = $this->get('volo_frontend.service.cms')->findByCode($code);
         } catch (EntityNotFoundException $exception) {
             throw $this->createNotFoundException('CMS item not found!', $exception);
         }
 
-        if ($element->getCode() !== $code) {
-            return $this->redirectToRoute('cms', ['code' => $element->getCode()]);
+        if ($element->getCode() !== $code && strtolower($element->getCode()) === strtolower($code)) {
+            return $this->redirectToRoute('cms', ['code' => strtolower($element->getCode())]);
         }
 
         return [
