@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.105.1
+  * INTVOLO-1936 removed IE country
+
 * 1.105.0
  * INTVOLO-1909 improve cms cache
 
