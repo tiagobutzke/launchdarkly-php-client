@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.105.2
+ * Updated slack token
+ * Added twig.strict_variables: true for staging
+
 * 1.105.1
   * INTVOLO-1936 removed IE country
 
