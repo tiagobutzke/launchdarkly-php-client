@@ -89,7 +89,7 @@ class CityService
             $address = $addresses->getItems()->first();
 
             return $this->cityProvider->find($address->getCityId());
-        } catch (ApiErrorException $e) {
+        } catch (ApiException $e) {
             throw new CityNotFoundException(
                 sprintf('No cities found with coordinates : %f/%f', $location->getLatitude(), $location->getLongitude())
             );
