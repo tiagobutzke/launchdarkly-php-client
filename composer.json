@@ -21,7 +21,7 @@
         "commerceguys/guzzle-oauth2-plugin": "2.1.*",
         "helthe/turbolinks-bundle": "1.1.*",
         "foodpanda/translation-library": "~1.1",
-        "foodpanda/api-sdk": "dev-legacy#2b657bb",
+        "foodpanda/api-sdk": "dev-legacy#2e67f70",
         "drak/native-session": "^1.0",
         "misd/phone-number-bundle": "~1.0",
         "jbouzekri/phumbor-bundle": "1.1.*",

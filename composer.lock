@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0add3af0125f3ff585e8ad5305994eba",
-    "content-hash": "8609d0e4da45ca1b2016ddc391a2e2fd",
+    "hash": "ec8ffb28803445cc73ec725c07b8b6c8",
+    "content-hash": "9ddbddc4c22248627ce6c50d211a56a5",
     "packages": [
         {
             "name": "99designs/phumbor",
@@ -664,7 +664,7 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:foodpanda/api-sdk.git",
-                "reference": "22e00a7"
+                "reference": "2e67f70"
             },
             "require": {
                 "commerceguys/guzzle-oauth2-plugin": "~2.0",
@@ -698,7 +698,7 @@
                 }
             ],
             "description": "Foodpanda API SDK",
-            "time": "2016-01-05 10:35:34"
+            "time": "2016-01-07 09:30:24"
         },
         {
             "name": "foodpanda/translation-library",
