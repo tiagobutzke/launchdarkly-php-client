@@ -6,6 +6,7 @@ use Foodpanda\ApiSdk\Entity\Cart\GpsLocation;
 use Foodpanda\ApiSdk\Entity\City\City;
 use Foodpanda\ApiSdk\Exception\ApiErrorException;
 use Foodpanda\ApiSdk\Provider\CityProvider;
+use Foodpanda\ApiSdk\Provider\AddressProvider;
 use Volo\FrontendBundle\Exception\CityNotFoundException;
 
 class CityService
@@ -16,11 +17,18 @@ class CityService
     protected $cityProvider;
 
     /**
-     * @param CityProvider $cityProvider
+     * @var AddressProvider
      */
-    public function __construct(CityProvider $cityProvider)
+    protected $addressProvider;
+
+    /**
+     * @param CityProvider $cityProvider
+     * @param AddressProvider $addressProvider
+     */
+    public function __construct(CityProvider $cityProvider, AddressProvider $addressProvider)
     {
         $this->cityProvider = $cityProvider;
+        $this->addressProvider = $addressProvider;
     }
 
 
@@ -68,19 +76,23 @@ class CityService
     public function findCityByGpsLocation(GpsLocation $location)
     {
         try {
-            $cities = $this->cityProvider->findCitiesByLocation($location);
+            $addresses = $this->addressProvider->findAddressByLocation($location);
+            if ($addresses->getAvailableCount() === 0) {
+                throw new CityNotFoundException(
+                    sprintf(
+                        'No cities found with coordinates : %f/%f',
+                        $location->getLatitude(),
+                        $location->getLongitude()
+                    )
+                );
+            }
+            $address = $addresses->getItems()->first();
+
+            return $this->cityProvider->find($address->getCityId());
         } catch (ApiErrorException $e) {
             throw new CityNotFoundException(
                 sprintf('No cities found with coordinates : %f/%f', $location->getLatitude(), $location->getLongitude())
             );
         }
-
-        if ($cities->getAvailableCount() === 0) {
-            throw new CityNotFoundException(
-                sprintf('No cities found with coordinates : %f/%f', $location->getLatitude(), $location->getLongitude())
-            );
-        }
-
-        return $cities->getItems()->first();
     }
 }
