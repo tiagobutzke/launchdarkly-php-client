@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.105.3
+ * INTVOLO-1942 Remove case sensitive parameter from api-sdk
+
 * 1.105.2
  * Updated slack token
  * Added twig.strict_variables: true for staging
