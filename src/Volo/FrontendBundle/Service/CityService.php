@@ -4,7 +4,7 @@ namespace Volo\FrontendBundle\Service;
 
 use Foodpanda\ApiSdk\Entity\Cart\GpsLocation;
 use Foodpanda\ApiSdk\Entity\City\City;
-use Foodpanda\ApiSdk\Exception\ApiErrorException;
+use Foodpanda\ApiSdk\Exception\ApiException;
 use Foodpanda\ApiSdk\Provider\CityProvider;
 use Foodpanda\ApiSdk\Provider\AddressProvider;
 use Volo\FrontendBundle\Exception\CityNotFoundException;
