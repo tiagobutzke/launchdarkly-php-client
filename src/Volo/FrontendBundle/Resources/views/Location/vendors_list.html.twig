@@ -1,7 +1,7 @@
 {% extends 'VoloFrontendBundle:Layout:page.html.twig' %}
 
 {% set openVendors = [] %}
-{% set seoCmsBlockCode = 'seo-city-{city}' |  replace({'{city}': city.urlKey|default('default')}) %}
+{% set seoCmsBlockCode = 'seo-city-{city}' |  replace({'{city}': city.urlKey}) %}
 {% set closedVendors = [] %}
 {% set cuisineFilterMaximum = 14 %}
 {% set foodCharacteristicsFilterMaximum = 6 %}
