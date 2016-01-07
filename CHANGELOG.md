@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.105.4
+ * INTVOLO-1952 fix missing address config
+
 * 1.105.3
  * INTVOLO-1942 Remove case sensitive parameter from api-sdk
 
