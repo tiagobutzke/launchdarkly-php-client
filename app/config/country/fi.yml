@@ -10,3 +10,4 @@ parameters:
             - "address"
         format: ':building :street, :plz'
         valid_address_input: '.*'
+        hide_checkout_postal_code: false
