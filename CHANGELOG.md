@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.105.9
+ * INTVOLO-1834 changed layout for password reset link
+
 * 1.105.8
  * INTVOLO-1914 ie11 Mobile throws error if domElement is not set in sticky element
 
