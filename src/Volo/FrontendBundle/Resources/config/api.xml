@@ -13,6 +13,7 @@
         <parameter key="volo_frontend.api.client.class">Foodpanda\ApiSdk\Api\FoodpandaClient</parameter>
         <parameter key="volo_frontend.provider.abstract.class">Foodpanda\ApiSdk\Provider\AbstractProvider</parameter>
         <parameter key="volo_frontend.provider.city.class">Foodpanda\ApiSdk\Provider\CityProvider</parameter>
+        <parameter key="volo_frontend.provider.address.class">Foodpanda\ApiSdk\Provider\AddressProvider</parameter>
         <parameter key="volo_frontend.api.authenticator.class">Foodpanda\ApiSdk\Api\Authenticator</parameter>
         <parameter key="volo_frontend.provider.customer.class">Foodpanda\ApiSdk\Provider\CustomerProvider</parameter>
         <parameter key="volo_frontend.provider.oauth.class">Foodpanda\ApiSdk\Provider\OAuthProvider</parameter>
@@ -39,6 +40,7 @@
         </service>
 
         <service id="volo_frontend.provider.city" class="%volo_frontend.provider.city.class%" parent="volo_frontend.provider.abstract" />
+        <service id="volo_frontend.provider.address" class="%volo_frontend.provider.address.class%" parent="volo_frontend.provider.abstract" />
         <service id="volo_frontend.provider.oauth" class="%volo_frontend.provider.oauth.class%" parent="volo_frontend.provider.abstract" />
         <service id="volo_frontend.provider.customer" class="%volo_frontend.provider.customer.class%" parent="volo_frontend.provider.abstract" />
         <service id="volo_frontend.provider.vendor" class="%volo_frontend.provider.vendor.class%" parent="volo_frontend.provider.abstract" />

@@ -288,6 +288,7 @@
 
         <service id="volo_frontend.service.city" class="%volo_frontend.service.city.class%">
             <argument type="service" id="volo_frontend.provider.city"/>
+            <argument type="service" id="volo_frontend.provider.address"/>
         </service>
 
         <service id="volo_frontend.site_map.client" class="%volo_frontend.site_map.client.class%" public="false">
