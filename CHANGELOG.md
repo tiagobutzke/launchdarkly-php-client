@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.105.7
+ * INTVOLO-1883 catch errors thrown by native getBoundingClientRect function
+
 * 1.105.6
  * INTVOLO-733 added GTM events findRestaurant_city and findRestaurant_main
 
