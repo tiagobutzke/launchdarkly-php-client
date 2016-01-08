@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.105.8
+ * INTVOLO-1914 ie11 Mobile throws error if domElement is not set in sticky element
+
 * 1.105.7
  * INTVOLO-1883 catch errors thrown by native getBoundingClientRect function
 
