@@ -15,7 +15,6 @@ VOLO.LoginRegistrationForm = VOLO.ContactInformationForm.extend({
                 emailApi: true
             },
             'customer[password]': {
-                presence: true,
                 length: {
                     minimum: 6
                 }
