@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.105.6
+ * INTVOLO-733 added GTM events findRestaurant_city and findRestaurant_main
+
 * 1.105.5
  * INTVOLO-1948 Error 500 searching restaurants
 
