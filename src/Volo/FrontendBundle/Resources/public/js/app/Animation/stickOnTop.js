@@ -72,8 +72,8 @@ var StickOnTop  = (function() {
 
     StickOnTop.prototype.isVisible = function() {
         var root = (
-            _.get(this, 'domObjects.$target[0]') ||
-            _.get(this, 'domObjects.$container[0]')
+            _.get(this.domObjects, '$target[0]') ||
+            _.get(this.domObjects, '$container[0]')
         );
 
         return VOLO.util.isElementVisible(root);
@@ -109,8 +109,8 @@ var StickOnTop  = (function() {
     StickOnTop.prototype._canChangeSticking = function(add) {
         add = add ? true : false;
         return (
-            this.domObjects.$target &&
-            this.domObjects.$target.length &&
+            _.get(this.domObjects, '$target.length') &&
+            this.domObjects.$container &&
             this.domObjects.$container.hasClass(this.stickingOnTopClass) != add
         );
     };
