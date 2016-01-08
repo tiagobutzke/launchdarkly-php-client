@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.106.0
+ * INTVOLO-1422 detect duplicate street names
+
 * 1.105.10
  * INTVOLO-1902 fixed creation of encryptedForm at each keystroke
 
