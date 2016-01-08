@@ -3,8 +3,6 @@ imports:
 
 parameters:
     http_schema: https
-    google_api_client_id: 'gme-rocketinternetag'
-    google_api_channel: 'foodora'
     google_tag_manager_container_id: 'GTM-5WN2Q7'
     trackjs_application: 'foodora-live'
     cms_clear_cache_password: 'foodora-live-cms-clear-cache'

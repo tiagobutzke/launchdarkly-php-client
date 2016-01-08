@@ -6,8 +6,8 @@ imports:
 parameters:
     redirect_rules_folder: "%kernel.root_dir%/redirects"
     http_schema: http
-    google_api_client_id: ''
-    google_api_channel: ''
+    google_api_client_id: 'gme-rocketinternetag'
+    google_api_channel: 'foodora'
     google_tag_manager_container_id: ''
     trackjs_token: '5fd69569810247f6b32ca1b8cfa0b22b'
     trackjs_application: ''

@@ -1,7 +1,7 @@
 VOLO = VOLO || {};
 VOLO.Geocoding = VOLO.Geocoding || {};
 
-VOLO.Geocoding.PlaceDeserializer = function() {},
+VOLO.Geocoding.PlaceDeserializer = function() {};
 _.extend(VOLO.Geocoding.PlaceDeserializer.prototype, {
     deserialize: function(geocodingPlace, appConfig) {
         var lat = geocodingPlace.geometry.location.lat(),
