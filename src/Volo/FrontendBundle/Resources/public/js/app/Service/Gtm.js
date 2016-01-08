@@ -13,6 +13,7 @@ VOLO.GTMService = function (options) {
     this.restaurantsView = options.restaurantsView;
     this.homeSearchView = options.homeSearchView;
     this.homeView = options.homeView;
+    this.citiesOverviewView = options.citiesOverviewView;
     this.checkoutVoucherView = options.checkoutVoucherView;
     this.fullAddressHomeSearchView = options.fullAddressHomeSearchView;
 
@@ -74,19 +75,15 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
         }
 
         if (_.isObject(this.homeSearchView)) {
-            this.listenTo(
-                this.homeSearchView,
-                'ctaTrackable:ctaClicked',
-                this.fireCTAClicked
-            );
+            this.listenTo(this.homeSearchView, 'ctaTrackable:ctaClicked', this._push);
         }
 
         if (_.isObject(this.homeView)) {
-            this.listenTo(
-                this.homeView,
-                'ctaTrackable:ctaClicked',
-                this.fireCTAClicked
-            );
+            this.listenTo(this.homeView, 'ctaTrackable:ctaClicked', this._push);
+        }
+
+        if (_.isObject(this.citiesOverviewView)) {
+            this.listenTo(this.citiesOverviewView, 'ctaTrackable:ctaClicked', this._push);
         }
 
         if (_.isObject(this.loginButtonView)) {
@@ -96,6 +93,7 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
         if (_.isObject(this.fullAddressHomeSearchView)) {
             this.listenTo(this.fullAddressHomeSearchView, 'home-search-view:gtm-open-map', this._push);
             this.listenTo(this.fullAddressHomeSearchView, 'home-search-view:gtm-submit', this._push);
+            this.listenTo(this.fullAddressHomeSearchView, 'ctaTrackable:ctaClicked', this._push);
             this.listenTo(this.fullAddressHomeSearchView.mapModalView, 'map-dialog:gtm-error-shown', this._push);
         }
 
@@ -293,13 +291,6 @@ _.extend(VOLO.GTMService.prototype, Backbone.Events, {
                 'currencyCode': this.options.currency,
                 'impressions': _.map(impressions, this._addListToImpressions, this)
             }
-        });
-    },
-
-    fireCTAClicked: function (data) {
-        this._push({
-            'event': 'homeCTAclick',
-            'ctaName': data.name
         });
     },
 
