@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.105.10
+ * INTVOLO-1902 fixed creation of encryptedForm at each keystroke
+
 * 1.105.9
  * INTVOLO-1834 changed layout for password reset link
 
