@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.105.5
+ * INTVOLO-1948 Error 500 searching restaurants
+
 * 1.105.4
  * INTVOLO-1952 fix missing address config
 
