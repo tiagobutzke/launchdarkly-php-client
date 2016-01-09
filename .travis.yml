@@ -51,8 +51,14 @@ script:
 notifications:
   slack:
     rooms:
-      - hydrolo:W3sf04Zamqrz1d0CMFW3omV2#general
-    on_success: [never]
+      - secure: "H5zMWPF6M5dNc4Yf31kTJkhDdQpDzJSCleSClz7kekjCTe28OwlDpe7N7nKG3QpYowHM/DU+ii8ll9z4PmsjoTKN7+tQrUiM6E4G6mHkEZwqrQAfRX99OImK/+Nsu85YcDsdImSDxRWI8SUknKaibS+aKBROr2q23Ixc+jZjlnM="
+    on_success: [change]
+    on_failure: [always]
+    on_pull_requests: false
+
+  email:
+    on_success: [change]
+    on_failure: [always]
 
 before_deploy:
     - $TRAVIS_BUILD_DIR/build-tools/create-artifact-archive -o $TRAVIS_BUILD_DIR/build-tools/build.tar.gz -b $TRAVIS_BRANCH -c $TRAVIS_COMMIT
