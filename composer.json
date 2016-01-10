@@ -8,6 +8,7 @@
     },
     "require": {
         "php": ">=5.5",
+        "ext-redis": "2.2.*",
         "symfony/symfony": "2.7.*",
         "twig/extensions": "1.2.*",
         "symfony/monolog-bundle": "2.7.*",

@@ -20,9 +20,9 @@ class SessionService implements CheckInterface
 
     /**
      * @param SessionInterface $session
-     * @param string $connectOptions
+     * @param array $connectOptions
      */
-    public function __construct(SessionInterface $session, $connectOptions)
+    public function __construct(SessionInterface $session, array $connectOptions)
     {
         $this->session = $session;
         $this->status = new Status();
@@ -41,7 +41,7 @@ class SessionService implements CheckInterface
         $storedValue = $this->session->get($sessionValue, null);
         $this->status->setStatus($storedValue === $sessionValue);
         $redis = new \Redis();
-        $redis->connect($this->connectOptions);
+        $redis->connect($this->connectOptions['host'], $this->connectOptions['port'], $this->connectOptions['timeout']);
         foreach ($this->doGetStats($redis->info()) as $k => $v) {
             $this->status->addMessage($k . ': ' . $v);
         }

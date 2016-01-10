@@ -12,7 +12,7 @@
     </imports>
 
     <parameters>
-        <parameter key="framework.service.session_handler.class">Drak\NativeSession\NativeRedisSessionHandler</parameter>
+        <parameter key="framework.service.session_handler.class">Volo\FrontendBundle\Http\Session\Handler\RedisSessionHandler</parameter>
         <parameter key="twig.extension.intl.class">Twig_Extensions_Extension_Intl</parameter>
         <parameter key="volo_frontend.security.authenticator.class">Volo\FrontendBundle\Security\ApiAuthenticator</parameter>
         <parameter key="volo_frontend.twig.cms_extension.class">Volo\FrontendBundle\Twig\CmsExtension</parameter>
@@ -75,7 +75,7 @@
         </service>
 
         <service id="session.handler.redis" class="%framework.service.session_handler.class%">
-            <argument type="string">%session_handler_redis_save_path%</argument>
+            <argument type="service" id="volo_frontend_redis_session_connection_service"/>
         </service>
 
         <service id="volo_frontend.event_listener.locale_listener" class="%volo_frontend.event_listener.locale_listener.class%">
