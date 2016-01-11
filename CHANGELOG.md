@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.107.0
+ * INTVOLO-507 Set session expiration date to a much sooner time
+
 * 1.106.0
  * INTVOLO-1422 detect duplicate street names
 
