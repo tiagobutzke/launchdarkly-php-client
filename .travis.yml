@@ -20,6 +20,7 @@ before_install:
     - gem update --system
     - gem install sass -v '~> 3.4.13'
     - sed "s/asset_version_placeholder/'${TRAVIS_COMMIT:0:7}\'/g" -i app/config/config.yml
+    - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 install:
     # Install composer dependencies

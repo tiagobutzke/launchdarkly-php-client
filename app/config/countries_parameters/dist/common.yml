@@ -13,13 +13,13 @@ parameters:
     foodpanda_web_translate_it_private_api_key: q0fqpiQyalsumAPeA5zEvw
     foodpanda_web_translate_it_main_translation_label: ~
 
-    session_handler_redis_save_path: "tcp://127.0.0.1:6379?prefix=%kernel.environment%_%country_code%"
-
     redis_cache_host: 127.0.0.1
     redis_cache_port: 6379
 
     redis_sessions_host: 127.0.0.1
     redis_sessions_port: 6379
+    redis_sessions_prefix: "volofront_%kernel.environment%_%country_code%:"
+    redis_sessions_timeout: 3
 
     volo_frontend.thumbor_base_url: 'https://euvolo-vpc-imageservice-lb.foodpanda.com'
     volo_frontend.thumbor_secret: ~
