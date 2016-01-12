@@ -99,7 +99,7 @@ VOLO.FullAddressInputSearchView = Backbone.View.extend({
             this.showInputMsg(this.$el.data('msg_error_not_found'));
         } else {
             console.log(error);
-            trackJs.console.error(error);
+            trackJs.console.error('FullAddressInputSearchError:' + error);
         }
     },
 
