@@ -10,5 +10,5 @@
         } catch (e) {}
 
         return box;
-    }
+    };
 })();
