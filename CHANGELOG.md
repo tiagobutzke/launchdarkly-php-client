@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+* 1.108.0
+ * INTVOLO-1919 check if submit can be processed without errors
+ * INTVOLO-1924 set model after submitting valid address
+ * INTVOLO-1945 swapped order in which gtm events are triggered
+
 * 1.107.0
  * INTVOLO-507 Set session expiration date to a much sooner time
 
