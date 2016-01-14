@@ -101,6 +101,10 @@ VOLO.MapModalView = Backbone.View.extend({
     },
 
     _submit: function() {
+        if (!this.autocomplete) {
+            return false;
+        }
+
         this._updatePositionFromInput().then(function() {
             if (!this.model.validationError) {
                 this.trigger('map-dialog:address-submit', this.model.toJSON());
