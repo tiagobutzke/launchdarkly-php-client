@@ -675,14 +675,13 @@ VOLO.doBootstrap = function(configuration) {
         VOLO.renderCheckoutViews(checkoutViews);
     }
 
+    _.invoke(VOLO.gtmViews, 'onGtmServiceCreated');
     GTMServiceInstance.fireVirtualPageView();
 
     var floodBannerModel = VOLO.createFloodBannerModel(),
         eventLocationModel = VOLO.createEventLocationModel(VOLO.jsonVendorLocation, VOLO.jsonCityLocation, locationModel.toJSON()),
         bannersView = VOLO.createBannersView(eventLocationModel, floodBannerModel);
     bannersView.render();
-
-    _.invoke(VOLO.gtmViews, 'onGtmServiceCreated');
 };
 
 VOLO.isFullAddressAutoComplete = function () {
