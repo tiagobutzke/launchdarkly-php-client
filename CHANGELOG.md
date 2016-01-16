@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 2.0.1
+ * Updated composer for Foodora
+
 * 1.108.0
  * INTVOLO-1919 check if submit can be processed without errors
  * INTVOLO-1924 set model after submitting valid address
