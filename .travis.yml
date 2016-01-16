@@ -5,6 +5,8 @@ php:
 env:
    global:
      - COUNTRY_CODE=test
+     # $GH_TOKEN
+     - secure: "tqi2m/2SIVY0YWrekgZIxtZOc7Ww+naOB4dBJ/Kx8KhTz40bwqiC70MdomZxdy7vnoaw/SVfRbYgjv24uZzpFVhYxkqEQ+I16vIT369IMOCcV/9rupwH392SrFRHaKRYvXSlbeMb5qoQZmaittp9cPBcO5jj0zqeiXbZS4r8hYsaPXRjUlcC+oe71wU35BcprISQFGEFZiC66DBRoKNBYlRM0A/ptkVMruc6ayWJp/fMmY+kkpLTKvFEQL8nJovbgCVc+TfpC8jVu3MBurJPfJ1rjcMo8Eu02hcP7UL+bV815gfPpqWd8OTlvmJZRyK9A1+m7yGzoytTwFrJ4+XK+EM3XX90Dp0hh6U8HQeewDoUoP/8kADZ5OfNdZdY7Ma9N5xRAd0R1JSFhHY6mhNQUskL342l1kIJWMALPvtQps16HA1dfILPu82KeheNNy1d22qae8IMTJ4XP4nvmRto5HBK5Fk0ZDQ5cKjzGz9zAIm4tmgL6m6C5FBrseTlhI16ai7SKBWCuqVESWhsPCQ/gkiXxrCnwQ22T5GIXOxc3Pap+O/qUofZ7CmFpw23YAtLYKQ9jUoWpK/yAqyXDS3HdmG649frRY5I3V9sGv7Adwa+h5326p1UR6DYOPuC9Br0sflRI0/9Ya1jY3KwTS5J6z9wZ9tqrsinXxzBKBlwuvE="
 
 sudo: false
 
@@ -15,6 +17,7 @@ addons:
       - libgraphicsmagick1-dev
 
 before_install:
+    - composer config --global github-oauth.github.com $GH_TOKEN
     - npm install -g grunt-cli
     - npm install -g bower
     - gem update --system
@@ -23,8 +26,6 @@ before_install:
     - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 install:
-    # Install composer dependencies
-    #    - cd $TRAVIS_BUILD_DIR && composer self-update
     - cd $TRAVIS_BUILD_DIR && composer install --no-interaction --optimize-autoloader
     - php app/console assets:install web --env=test
     - php app/console volo:thumbor:dump --env=test
@@ -36,7 +37,7 @@ cache:
     # Cache composer packages
     apt: true
     directories:
-        - $HOME/.composer
+        - $HOME/.composer/cache
         - node_modules
         - bower_components
 
@@ -52,14 +53,13 @@ script:
 notifications:
   slack:
     rooms:
-      - secure: "H5zMWPF6M5dNc4Yf31kTJkhDdQpDzJSCleSClz7kekjCTe28OwlDpe7N7nKG3QpYowHM/DU+ii8ll9z4PmsjoTKN7+tQrUiM6E4G6mHkEZwqrQAfRX99OImK/+Nsu85YcDsdImSDxRWI8SUknKaibS+aKBROr2q23Ixc+jZjlnM="
-    on_success: [change]
-    on_failure: [always]
-    on_pull_requests: false
+      - secure: "X693c/Js84V3Qwd18AGO4Nx+Dio6Yp2bXjgTeDYwocAuiTIMnHwEJBHGJFxifW9Cmin4YliMRIUae5dalFOxzh0ZT2wAxDB8XFeKhdaXA/Ggn6bcL8TvZvypbhgJNFMQPg3gtzmC0XGafHtX4jTRJKo+jxuU9ZVc/bW9EsU32tf+rNe17c2SaKFvbQXRGmJ0c6mkjrZwTB0UEaZrEsD2YDUg1GWeOSiSS0SSBfJPNbWqXBZYM6TnKSOS0ALlD481ObwTf/g7qsT9V/qTthl6TLCkjfMxXVx9zDxKBbyHritu5QjG1QygacD5c1qw0CzmAKOLRSNw0VyHwv4RaeIrVCtvJNVNHVYOD2GcOOMUoMPPPmAuADDA0l4W+FW5inrvAHTDEhEmfNem9P1QCljbLFjQxyHOSIkmwtF204BMsnMR8Cnvt8c4fcBPR/uVACx5HZMl/RgQdunZ7bNBooEmSB3kzA+brkTVqSs75Zb96yRRYglLi0A3xJw+Dy64dhunieNnzAg2otDHnkCIz8Chqaql/Z+FNshXAMMEKtPddU+Ws/Ki8RoHj8BWGQoDPznv7Rbu44Xlu0W/ElqkpAmqrANfTHc6k5J0yy+Q2eQeal62okOGLtyC+gKIW5ZWWBg97WmnKtkfSivDhLiibSmdvttODCQLvhr25K40SvVvijo="
+    on_success: never
+    on_failure: always
 
   email:
-    on_success: [change]
-    on_failure: [always]
+    on_success: change
+    on_failure: always
 
 before_deploy:
     - $TRAVIS_BUILD_DIR/build-tools/create-artifact-archive -o $TRAVIS_BUILD_DIR/build-tools/build.tar.gz -b $TRAVIS_BRANCH -c $TRAVIS_COMMIT
@@ -67,7 +67,8 @@ before_deploy:
 
 deploy:
     provider: releases
-    api-key: "4f43a5306c7dfbc3e7ab9d1d6791de2e4d98a711"
+    api_key:
+        secure: pbMNGWwzljO7+XbmS5bJzXZKOtyR/zh6N3SnZZroa/N2T3DmD2i0bHcO/XnfqE7PSMSA2pl6X/yBtSQGUNUt0VvkzXJyhKO7MP5i8pkncrJ0CXhP4TAI9MHmLqEhgK1FwxH+D//tivUNTJdONcErql1WPSY3R7oOCtawCDaqwJaLktWohTHOPas9Ze1w1UBI76XE1l5SsOQexF6cht7ejdWlYBQxHlG9vDgWg9b8TQnjOlu7VSWgmTuePtnZgNrsR80Vz7x+6Bl91R3x4CbmM2hliMtczXHiOcY+8F+gQ/XFREMFDGE7ZfKpVe97SxzrbeAKSrcVYzI5dkAXeX3XgXHA6lTUr4tI/7CiRL/dLHxyZHVOryzL56BIxBKtbl6gvTLUOwwTVdLk1hVhDE5wkTopqF+kedp42IneM2HVOnLbVVzVccd5lB45rtAzPApN4LTvJz2rwKZG9xcmRxivePq9Cwt7W/icuP+8zUYa6O3Miro7/g7l0zlPmyeRVRsAiSU6KwYe0DClPxoaiYZ8DjLeP9bjfLB+rDfh4GpEszwc1QI6FH4rgZUPJLvVrNtUwQm1yfgwQJZuAx2NMm9OPTMrj7/c+mx9CRFjlOdXJekvUHWOrI56f3T53mdg7hcB9qT0JsAFXZBoaiJKRzx8K9P2Nxy3Njp4rQ+CajUtZX8=
     file: $TRAVIS_BUILD_DIR/build-tools/build.tar.gz
     skip_cleanup: true
     on:
