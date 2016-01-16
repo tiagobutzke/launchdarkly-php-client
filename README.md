@@ -1,6 +1,6 @@
 #Volo Frontend
 
-[![Build Status](https://magnum.travis-ci.com/foodpanda/volo-frontend.svg?token=9eHFdnBaxCRVqqTYivpW&branch=master)](https://magnum.travis-ci.com/foodpanda/volo-frontend)
+[![Build Status](https://travis-ci.com/foodora/pfm-consumer-frontend.svg?token=9eHFdnBaxCRVqqTYivpW&branch=master)](https://travis-ci.com/foodora/pfm-consumer-frontend)
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/foodpanda/volo-frontend/badges/quality-score.png?b=master&s=fe3b7820a25ed19b25e9e9a98e300497928310f7)](https://scrutinizer-ci.com/g/foodpanda/volo-frontend/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/foodpanda/volo-frontend/badges/coverage.png?b=master&s=b5c39cd699602731616d7b2838bb994235c57317)](https://scrutinizer-ci.com/g/foodpanda/volo-frontend/?branch=master)

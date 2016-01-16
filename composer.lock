@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c3574af8aaca6cc8e6dcbb642193d92a",
-    "content-hash": "26312629eb3af55612a49c067e3bf24f",
+    "hash": "58daa50a9f8ec9bf1e7b286789f85f87",
+    "content-hash": "b02ecd4b0eb82f727e2fe3fcb6813e7b",
     "packages": [
         {
             "name": "99designs/phumbor",
@@ -663,8 +663,8 @@
             "version": "dev-legacy",
             "source": {
                 "type": "git",
-                "url": "git@github.com:foodpanda/api-sdk.git",
-                "reference": "4dd47b9"
+                "url": "git@github.com:foodora/fp-api-sdk.git",
+                "reference": "ad3fe84"
             },
             "require": {
                 "commerceguys/guzzle-oauth2-plugin": "~2.0",
@@ -698,14 +698,14 @@
                 }
             ],
             "description": "Foodpanda API SDK",
-            "time": "2016-01-07 13:50:31"
+            "time": "2016-01-16 10:11:02"
         },
         {
             "name": "foodpanda/translation-library",
             "version": "v1.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/foodpanda/translation-library.git",
+                "url": "git@github.com:foodora/fp-translation-library.git",
                 "reference": "323e6ff2c4f1d29cd71db3703b7c518828f48f6c"
             },
             "require": {
@@ -3345,7 +3345,7 @@
         "foodpanda/api-sdk": 20,
         "jms/i18n-routing-bundle": 20
     },
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": ">=5.5",
