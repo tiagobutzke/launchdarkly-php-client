@@ -31,7 +31,7 @@ set :repo_url, 'git@github.com:foodpanda/volo-frontend.git'
 
 # General config stuff
 set :keep_releases, 1
-set :linked_dirs, fetch(:linked_dirs, []).push("#{fetch :app_path}/logs", "node_modules", "#{fetch :web_path}/bower_components", "#{fetch :app_path}/config/countries_parameters")
+set :linked_dirs, fetch(:linked_dirs, []).push("#{fetch :app_path}/logs", "node_modules", "#{fetch :app_path}/config/countries_parameters")
 set :permission_method, :acl
 set :slack_web_hook, 'https://hooks.slack.com/services/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'
 

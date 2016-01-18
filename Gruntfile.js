@@ -1,6 +1,6 @@
 /* global require */
 var md5File = require('md5-file');
-var md5 = require('MD5');
+var md5 = require('md5');
 var _ = require('lodash');
 
 /*global module:false*/
@@ -54,41 +54,40 @@ module.exports = function (grunt) {
     }
 
     jsSources.errorLibs = [
-        'web/bower_components/jquery/dist/jquery.js',
-        'web/bower_components/real-shadow/realshadow.js',
+        'node_modules/jquery/dist/jquery.js',
+        'node_modules/real-shadow/realshadow.js',
         'web/js/lib/andr3pt-blazy.js'
     ];
 
     jsSources.comingSoon = [
-        'web/bower_components/jquery/dist/jquery.js',
+        'node_modules/jquery/dist/jquery.js',
         'web/js/lib/andr3pt-blazy.js',
         frontendAssetPath('/js/app/Animation/*.js')
     ];
 
     jsSources.allLibs = jsSources.errorLibs.concat([
+        'node_modules/promise-polyfill/Promise.js',
         'web/bundles/heltheturbolinks/js/turbolinks.js',
         'web/bundles/fosjsrouting/js/router.js',
         'web/thumbor/configuration.js',
-        'web/bower_components/lodash/lodash.js',
-        'web/bower_components/backbone/backbone.js',
-        'web/bower_components/backbone.localStorage/backbone.localStorage.js',
-        'web/bower_components/geocomplete/jquery.geocomplete.js',
-        'web/bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/modal.js',
-        'web/bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/tooltip.js',
-        'web/bower_components/twbs-bootstrap-sass/assets/javascripts/bootstrap/dropdown.js',
-        'web/bower_components/adyen-cse-js/js/adyen.encrypt.js',
-        'web/bower_components/spin.js/spin.js',
-        'web/bower_components/validate/validate.js',
-        'web/bower_components/mobile-detect/mobile-detect.js',
-        'web/bower_components/jquery.payment/lib/jquery.payment.js',
-        'web/bower_components/moment/moment.js',
-        'web/bower_components/bootstrap-select/dist/js/bootstrap-select.js',
-        'web/bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js',
-        'web/bower_components/js-cookie/src/js.cookie.js',
-        'web/bower_components/promise-polyfill/Promise.js',
-        'web/bower_components/jquery.serializeJSON/jquery.serializejson.js',
-        'web/bower_components/fuse.js/src/fuse.js',
-        'web/bower_components/devicejs/lib/device.min.js'
+        'node_modules/lodash/index.js',
+        'node_modules/backbone/backbone.js',
+        'node_modules/backbone.localstorage/backbone.localStorage.js',
+        'node_modules/bootstrap-sass/assets/javascripts/bootstrap/modal.js',
+        'node_modules/bootstrap-sass/assets/javascripts/bootstrap/tooltip.js',
+        'node_modules/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js',
+        'node_modules/bootstrap-select/dist/js/bootstrap-select.js',
+        'node_modules/adyen-cse-js/js/adyen.encrypt.js',
+        'node_modules/spin/dist/spin.js',
+        'node_modules/validate.js/validate.js',
+        'node_modules/mobile-detect/mobile-detect.js',
+        'node_modules/jquery.payment/lib/jquery.payment.js',
+        'node_modules/jquery-serializejson/jquery.serializejson.js',
+        'node_modules/moment/moment.js',
+        'node_modules/moment-timezone/builds/moment-timezone-with-data-2010-2020.js',
+        'node_modules/js-cookie/src/js.cookie.js',
+        'node_modules/fuse.js/src/fuse.js',
+        'node_modules/devicejs/lib/device.js'
     ]);
 
     jsSources.head = [].concat([
@@ -193,7 +192,7 @@ module.exports = function (grunt) {
         },
 
         intl: {
-            src: 'web/bower_components/intl/Intl.js',
+            src: 'node_modules/intl/dist/Intl.js',
             dest: frontendWebPath('/js/dist/intl.js')
         },
 
@@ -205,7 +204,7 @@ module.exports = function (grunt) {
 
     config.copy = {
         main: {
-            src: 'web/bower_components/intl/locale-data/json/*',
+            src: 'node_modules/intl/locale-data/json/*',
             dest: frontendWebPath('/js/dist/intl/locale/'),
             expand: true,
             flatten: true,
@@ -270,16 +269,6 @@ module.exports = function (grunt) {
         }
     };
 
-    config.bower = {
-        install: {
-            options: {
-                targetDir: './build/bower',
-                cleanTargetDir: true,
-                copy: false
-            }
-        }
-    };
-
 
     config.jasmine = {
         src: [
@@ -293,6 +282,15 @@ module.exports = function (grunt) {
         }
     };
 
+    config.auto_install = {
+        local: {
+            options: {
+                failOnError: true,
+                bower: false
+            }
+        }
+    };
+
     grunt.initConfig(config);
 
     grunt.loadNpmTasks('grunt-contrib-sass');
@@ -301,11 +299,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-spritesmith');
-    grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.loadNpmTasks('grunt-auto-install');
 
     // grunt additional tasks
-    grunt.registerTask('default', ['bower:install', 'sprite', 'sass', 'copy', 'uglify', 'jshint']);
-    grunt.registerTask('deploy', ['bower:install', 'sprite', 'sass', 'copy', 'uglify']);
+    grunt.registerTask('default', ['auto_install', 'sprite', 'sass', 'copy', 'uglify', 'jshint']);
+    grunt.registerTask('deploy', ['auto_install', 'sprite', 'sass', 'copy', 'uglify']);
     grunt.registerTask('test', ['jshint', 'jasmine']);
 };
