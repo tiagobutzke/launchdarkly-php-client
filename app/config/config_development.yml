@@ -4,6 +4,7 @@ imports:
 parameters:
     google_tag_manager_container_id: ''
     cms_clear_cache_password: 'foodora-development-cms-clear-cache'
+    guzzle_client_timeout: 10
 
 framework:
     router:

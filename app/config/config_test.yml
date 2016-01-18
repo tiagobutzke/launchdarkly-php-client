@@ -25,3 +25,4 @@ parameters:
         localeMapping: []
         defaultLocale: %locale%
 
+    guzzle_client_timeout: 10
