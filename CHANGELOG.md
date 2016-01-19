@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 2.0.3
+ * INTVOLO-2069 - remove dependency on bower
+
 * 2.0.2
  * INTVOLO-2037 missing parameters on listing page using filter
  * INTVOLO-752 added succes message to login view after resetting password
