@@ -34,6 +34,7 @@ VOLO.FullAddressVendorsSearchNoLocationView = Backbone.View.extend({
     },
 
     _submitAddress: function(address) {
+        this.model.set(address);
         VOLO.vendorsRoute.navigateToVendorsList(address);
     },
 
