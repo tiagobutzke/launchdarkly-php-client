@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 2.1.0
+ * INTVOLO-2045 guzzle timeout settings
+
 * 2.0.3
  * INTVOLO-2069 - remove dependency on bower
 
