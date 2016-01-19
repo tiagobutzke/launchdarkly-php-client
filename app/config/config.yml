@@ -19,6 +19,7 @@ parameters:
         locales: %supported_locales%
         localeMapping: %short_to_full_locale_name_mapping%
         defaultLocale: %locale%
+    guzzle_client_timeout: 3
 
 framework:
     #esi:             ~

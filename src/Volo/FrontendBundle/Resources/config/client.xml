@@ -76,6 +76,8 @@
                     <argument key="headers" type="collection">
                         <argument key="X-FP-API-KEY" type="string">%foodpanda.api.client_id%</argument>
                     </argument>
+                    <argument key="timeout">%guzzle_client_timeout%</argument>
+                    <argument key="connect_timeout">%guzzle_client_timeout%</argument>
                 </argument>
             </argument>
         </service>
