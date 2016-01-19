@@ -21,7 +21,6 @@
 
 # nodejs
 node_modules/*
-/web/bower_components/*
 
 # generated assets
 /src/Volo/FrontendBundle/Resources/public/js/dist/*
