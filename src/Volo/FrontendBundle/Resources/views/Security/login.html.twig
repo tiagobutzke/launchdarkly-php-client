@@ -13,6 +13,10 @@
             {{ errorMessage }}
         </div>
 
+        <div class="modal-success-message modal__success-message__reset-password hide">
+            {% trans %}customer.validation.password.successful_reset{% endtrans %}
+        </div>
+
         <form class="login-form" action="{{ path('login_check') }}" method="post" role="form" id="login-form" novalidate>
             <div class="form-group">
                 <input type="text" class="form-control" id="username" name="_username"
