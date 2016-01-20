@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 2.1.1
+ * INTVOLO-2108 guzzle Client timeout needs to be 20 in all POST methods from OrderProvider
+
 * 2.1.0
  * INTVOLO-2045 guzzle timeout settings
 
