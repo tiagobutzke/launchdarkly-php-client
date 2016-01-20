@@ -17,5 +17,5 @@ parameters:
             - "building"
             - "postcode"
             - "city"
-        format: ':street :building, :plz'
+        format: ':street :building, :plz :city'
         valid_address_input: "\\D+"

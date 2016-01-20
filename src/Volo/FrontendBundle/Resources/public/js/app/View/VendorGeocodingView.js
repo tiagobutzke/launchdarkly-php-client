@@ -163,12 +163,13 @@ var VendorGeocodingView = HomeSearchView.extend({
         return this.model.get('postcode');
     },
 
-    _formatDeliveryLocation: function(){
+    _formatDeliveryLocation: function() {
         var format = _.get(VOLO, 'configuration.address_config.format');
 
         return format.replace(':building', this.model.get('building'))
             .replace(':street', this.model.get('street'))
-            .replace(':plz', this.model.get('postcode'));
+            .replace(':plz', this.model.get('postcode'))
+            .replace(':city', '');
     },
 
     _parseIsDeliverable: function (response) {

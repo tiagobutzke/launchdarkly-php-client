@@ -7,6 +7,13 @@ parameters:
     address_config:
         autocomplete_type:
             - "address"
-        format: ':building :street, :plz'
+        format: ':street :building, :plz :city'
         valid_address_input: '.*'
         hide_checkout_postal_code: false
+        map_enabled: true
+        update_map_input: true
+        required_fields:
+            - "street"
+            - "building"
+            - "postcode"
+            - "city"

@@ -9,6 +9,7 @@ VOLO.MapModalView = Backbone.View.extend({
         this.model = options.fullAddressLocationModel || new VOLO.FullAddressLocationModel({}, {
             appConfig: options.appConfig
         });
+        this.addressFormatter = options.addressFormatter || new VOLO.Service.AddressFormater(options.appConfig);
     },
 
     events: function() {
@@ -22,8 +23,7 @@ VOLO.MapModalView = Backbone.View.extend({
 
     _changePostalCode: function() {
         this._updateTitle('insert_postcode');
-        this._updateInputField(true);
-
+        this._updateInputFieldToInsertPostcode();
     },
 
     _initListeners: function () {
@@ -128,7 +128,7 @@ VOLO.MapModalView = Backbone.View.extend({
 
         if (error === 'building' && _.get(this.appConfig, 'address_config.update_map_input')) {
             this._updateTitle(error);
-            this._updateInputField();
+            this._updateInputFieldToStreet();
         }
     },
 
@@ -144,18 +144,27 @@ VOLO.MapModalView = Backbone.View.extend({
         this.map.resize();
     },
 
-    _updateInputField: function(isPostcodeUpdate) {
-        var $input = this.$('.map-modal__autocomplete__input'),
-            inputVal = $input.val().split(',')[0].trim();
 
-        if (isPostcodeUpdate) {
-            inputVal += ', ';
-        } else {
-            inputVal += ' ';
-        }
+    _updateInputFieldToStreet: function() {
+        var $input = this.$('.map-modal__autocomplete__input'),
+            inputVal = this.addressFormatter.getFormattedStreet($input.val());
+
         $input.val(inputVal);
         $input.focus();
-        $input[0].setSelectionRange($input.val().length, $input.val().length);
+
+        if (this.addressFormatter.getBuildingNumberIndex() === 0) {
+            $input[0].setSelectionRange(0,0);
+        } else {
+            $input[0].setSelectionRange($input.val().length, $input.val().length);
+        }
+    },
+
+    _updateInputFieldToInsertPostcode: function() {
+        var $input = this.$('.map-modal__autocomplete__input'),
+            addressWithoutPostcode = this.addressFormatter.getFormattedStreetAndBuilding(this.model.toJSON());
+
+        $input.val(addressWithoutPostcode);
+        $input.focus();
     },
 
     showInputError: function(text) {
@@ -206,13 +215,11 @@ VOLO.MapModalView = Backbone.View.extend({
         modalDialog.on('hide.bs.modal', this._dialogHide);
         modalDialog.modal();
 
+
         if (this.model.validationError === 'building' && _.get(this.appConfig, 'address_config.update_map_input')) {
             this._hideInputError();
             this._updateTitle(this.model.validationError);
-            this._updateInputField();
-
-            $element.focus();
-            $element[0].setSelectionRange($element.val().length, $element.val().length);
+            this._updateInputFieldToStreet();
         }
     },
 
@@ -240,7 +247,6 @@ VOLO.MapModalView = Backbone.View.extend({
 
         this.listenTo(this.map, 'map:center-changed', _.debounce(this._centerChanged, 400, {leading: false}));
         this.listenTo(this.map, 'map:drag-start', this._onMapDragStart);
-
 
         this._updateAddress(address);
     },

@@ -8,6 +8,6 @@ parameters:
     address_config:
         autocomplete_type:
             - "address"
-        format: ':building :street, :plz'
+        format: ':street :building, :plz :city'
         valid_address_input: '.*'
         hide_checkout_postal_code: false

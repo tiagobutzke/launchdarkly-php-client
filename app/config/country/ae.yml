@@ -23,5 +23,5 @@ parameters:
             - 'neighborhood'
         autocomplete_type: []
         hide_checkout_postal_code: false
-        format: ':building :street, :plz'
+        format: ':building :street, :plz :city'
         valid_address_input: '.*'
