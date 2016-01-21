@@ -152,6 +152,7 @@ VOLO.FullAddressVendorSearchView = Backbone.View.extend({
 
         return format.replace(':building', this.model.get('building'))
             .replace(':street', this.model.get('street'))
-            .replace(':plz', this.model.get('postcode'));
+            .replace(':plz', this.model.get('postcode'))
+            .replace(':city', '');
     }
 });

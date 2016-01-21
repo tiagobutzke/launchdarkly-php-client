@@ -4,3 +4,16 @@ parameters:
     locale: nl_NL
     timezone: "Europe/Amsterdam"
     average_delivery_time: 30
+    address_config:
+        autocomplete_type:
+            - "address"
+        hide_checkout_postal_code: false
+        format: ':street :building, :plz :city'
+        valid_address_input: '.*'
+        map_enabled: true
+        update_map_input: true
+        required_fields:
+            - "street"
+            - "building"
+            - "postcode"
+            - "city"

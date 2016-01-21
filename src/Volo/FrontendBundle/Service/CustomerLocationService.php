@@ -109,7 +109,7 @@ class CustomerLocationService
     {
         $deliveryAddress = trim(
             str_replace(
-                [':building', ':street', ':plz'],
+                [':building', ':street', ':plz', ':city'],
                 [
                     urldecode($location[self::KEY_BUILDING]),
                     urldecode($location[self::KEY_STREET]),

@@ -1,2 +1,0 @@
-imports:
-    - { resource: nl_staging.yml }
