@@ -1,11 +1,17 @@
 CHANGELOG
 =========
 
+* 2.2.0
+ * INTVOLO-2116 - map enabled for NL, SE and AT
+
 * 2.1.1
  * INTVOLO-2108 guzzle Client timeout needs to be 20 in all POST methods from OrderProvider
 
 * 2.1.0
  * INTVOLO-2045 guzzle timeout settings
+
+* 2.0.4 (cherry-pick)
+ * INTVOLO-2116 - map enabled for NL, SE and AT
 
 * 2.0.3
  * INTVOLO-2069 - remove dependency on bower
