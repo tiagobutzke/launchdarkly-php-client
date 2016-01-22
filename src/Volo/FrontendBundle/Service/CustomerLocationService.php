@@ -114,10 +114,13 @@ class CustomerLocationService
                     urldecode($location[self::KEY_BUILDING]),
                     urldecode($location[self::KEY_STREET]),
                     urldecode($location[self::KEY_PLZ]),
+                    urldecode($location[self::KEY_CITY]),
                 ],
                 $this->locationConfig['format']
             )
         );
+        $deliveryAddress = str_replace(', ,', ',', $deliveryAddress);
+        $deliveryAddress = str_replace(' ,', ',', $deliveryAddress);
 
         return trim($deliveryAddress, ',');
     }
