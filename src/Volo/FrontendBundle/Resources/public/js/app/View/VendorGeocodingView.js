@@ -169,7 +169,9 @@ var VendorGeocodingView = HomeSearchView.extend({
         return format.replace(':building', this.model.get('building'))
             .replace(':street', this.model.get('street'))
             .replace(':plz', this.model.get('postcode'))
-            .replace(':city', '');
+            .replace(':city', this.model.get('city'))
+            .replace(', ,', ',')
+            .replace(' ,', ',');
     },
 
     _parseIsDeliverable: function (response) {
