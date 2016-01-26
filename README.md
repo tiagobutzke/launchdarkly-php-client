@@ -52,6 +52,18 @@ $ npm install -g bower
 $ brew install imagemagick
 ```
 
+Elasticsearch
+```
+$ brew install elasticsearch17
+```
+
+Download elasticsearch plugin from https://github.com/foodpanda/elasticsearch-extension/releases/download/3.3.0/foodpanda-extension-3.3.0.jar 
+
+```
+$ cd /usr/local/Cellar/elasticsearch17/1.7.4
+$ bin/plugin --url file:///<path-to-downloaded>/foodpanda-extension-3.3.0.jar --install foodpanda-extension
+```
+
 ## Debian / Ubuntu
 
 ```shell
