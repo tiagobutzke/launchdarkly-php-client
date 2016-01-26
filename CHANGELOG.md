@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 2.2.1
+ * INTVOLO-2135 - address formating fix
+
 * 2.2.0
  * INTVOLO-2116 - map enabled for NL, SE and AT
 
