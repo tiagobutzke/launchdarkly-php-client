@@ -39,8 +39,10 @@ $ brew tap homebrew/homebrew-php
 $ brew install php55 --with-fpm
 $ brew install php55-curl
 $ brew install php55-intl
+$ brew install igbinary
 $ brew install php55-redis
 $ brew install php55-xdebug
+$ brew install php55-mcrypt
 $ brew install redis
 $ brew install nginx
 $ brew install nodejs
@@ -80,7 +82,9 @@ max_execution_time = 300
 *Debian/Ubuntu* `/etc/php5/fpm/conf.d/zzz_custom.ini` 
 
 ```shell
+$ brew services restart php55
 $ gem install sass --user-install -v '~> 3.4.13'
+$ npm install -g less
 $ npm install -g grunt-cli
 $ npm install -g bower
 $ brew install imagemagick
@@ -121,12 +125,18 @@ server {
 ```
 Adjust `root`, `error_log` and `access_log` according to your system
 
+```
+$ nginx -s reload
+```
+
 ## Environment setup
 
 Please add in your ```.bashrc``` or ```.zshrc```
 
 ```
 export COUNTRY_CODE=de
+export SYMFONY_ENV=dev
+export PLATFORM=volo
 ```
 
 run
