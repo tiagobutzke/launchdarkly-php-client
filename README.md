@@ -44,7 +44,7 @@ Fetching flags
 There are two approaches to fetching the flag rules from LaunchDarkly:
 
 * Making HTTP requests (using Guzzle)
-* Setting up the [ld-daemon](https://github.com/launchdarkly/ld-daemon) to store the flags in Redis
+* Setting up the [ld-relay](https://github.com/launchdarkly/ld-relay) to store the flags in Redis
 
 Using Guzzle
 ============
@@ -65,7 +65,7 @@ Using Redis
 
 2. Create the LDClient with the Redis feature requester as an option:
 
-    $client = new LaunchDarkly\LDClient("your_sdk_key", ['feature_requester_class' => 'LaunchDarkly\LDDFeatureRequester']);
+    $client = new LaunchDarkly\LDClient("your_sdk_key", ['feature_requester_class' => 'LaunchDarkly\LDDFeatureRequester', 'redis_host' => 'your.redis.host', 'redis_port' => 6379]);
 
 Testing
 -------
